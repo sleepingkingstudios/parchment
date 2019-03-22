@@ -49,4 +49,6 @@ group :test do
 
   gem 'rubocop', '~> 0.66.0'
   gem 'rubocop-rspec', '~> 1.32.0'
+
+  gem 'simplecov', '~> 0.16', '>= 0.16.1'
 end
