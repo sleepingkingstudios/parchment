@@ -1,3 +1,6 @@
+require:
+  - rubocop-rspec
+
 AllCops:
   TargetRubyVersion: 2.6
   Exclude:
@@ -6,6 +9,14 @@ AllCops:
     - 'tmp/**/*'
     - 'vendor/**/*'
 
+Layout/AlignHash:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+
 Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
   IndentationWidth: ~
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
