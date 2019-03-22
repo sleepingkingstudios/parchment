@@ -1,0 +1,17 @@
+{
+  "name": "parchment",
+  "private": true,
+  "dependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "@rails/actioncable": "^6.0.0-alpha",
+    "@rails/ujs": "^6.0.0-alpha",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "webpack-dev-server": "^3.2.1"
+  }
+}
