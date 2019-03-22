@@ -37,6 +37,11 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
+  # Run commands to aggregate CI steps, generate templated files, etc.
+  gem 'sleeping_king_studios-tasks',
+    git: 'https://github.com/sleepingkingstudios/sleeping_king_studios-tasks'
+  gem 'thor', '~> 0.20', '>= 0.20.3'
+
   # Access an interactive console on exception pages or by calling 'console'
   # anywhere in the code.
   gem 'web-console', '>= 3.3.0'

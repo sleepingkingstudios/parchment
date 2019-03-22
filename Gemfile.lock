@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/sleepingkingstudios/sleeping_king_studios-tasks
+  revision: 550f9c37dfc1645f56e53b370cdbf043a571c4df
+  specs:
+    sleeping_king_studios-tasks (0.1.0)
+      erubi (~> 1.6)
+      rake (~> 12.0)
+      sleeping_king_studios-tools (~> 0.7, >= 0.7.1)
+      thor (~> 0.19, >= 0.19.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -226,8 +236,10 @@ DEPENDENCIES
   rubocop (~> 0.66.0)
   rubocop-rspec (~> 1.32.0)
   simplecov (~> 0.16, >= 0.16.1)
+  sleeping_king_studios-tasks!
   spring
   spring-watcher-listen (~> 2.0.0)
+  thor (~> 0.20, >= 0.20.3)
   web-console (>= 3.3.0)
   webpacker (>= 4.0.0.rc.3)
 

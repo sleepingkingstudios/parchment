@@ -5,3 +5,7 @@ AllCops:
     - 'config/**/*'
     - 'tmp/**/*'
     - 'vendor/**/*'
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+  IndentationWidth: ~
