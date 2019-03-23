@@ -6,6 +6,7 @@ AllCops:
   Exclude:
     - 'bin/**/*'
     - 'config/**/*'
+    - 'db/schema.rb'
     - 'tmp/**/*'
     - 'vendor/**/*'
 
@@ -17,6 +18,28 @@ Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
   IndentationWidth: ~
 
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/*.rb'
+
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
+
+RSpec/ExampleWording:
+  Enabled: false
+
+RSpec/HookArgument:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Exclude:
+    - 'db/migrate/*'
+    - 'spec/**/*'
