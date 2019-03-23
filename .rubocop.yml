@@ -20,19 +20,23 @@ Layout/AlignParameters:
 
 Metrics/AbcSize:
   Exclude:
-    - 'db/migrate/*.rb'
+    - 'db/migrate/*'
 
 Metrics/MethodLength:
   Exclude:
-    - 'db/migrate/*.rb'
+    - 'db/migrate/*'
 
 Metrics/ModuleLength:
   Exclude:
-    - 'spec/**/*.rb'
+    - 'spec/**/*'
 
 Metrics/BlockLength:
   Exclude:
-    - 'spec/**/*.rb'
+    - 'spec/**/*'
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/routing/**/*'
 
 RSpec/ExampleWording:
   Enabled: false
@@ -46,4 +50,8 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Exclude:
     - 'db/migrate/*'
+    - 'spec/**/*'
+
+Style/NestedParenthesizedCalls:
+  Exclude:
     - 'spec/**/*'
