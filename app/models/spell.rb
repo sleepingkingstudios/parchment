@@ -20,10 +20,11 @@ class Spell < ApplicationRecord
   attribute :ritual, :boolean, default: false
   attribute :school, :string, default: ''
 
+  attribute :material_component, :string, default: ''
+
   validates :casting_time, presence: true
   validates :description, presence: true
   validates :duration, presence: true
-  validates :name, presence: true
   validates :level,
     numericality: {
       greater_than_or_equal_to: 0,
@@ -31,6 +32,12 @@ class Spell < ApplicationRecord
       only_integer:             true
     },
     presence:     true
+  validates :material_component,
+    exclusion: {
+      in:      [nil],
+      message: I18n.t('errors.messages.blank')
+    }
+  validates :name, presence: true
   validates :ritual,
     exclusion: {
       in:      [nil],

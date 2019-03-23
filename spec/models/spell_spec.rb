@@ -302,6 +302,8 @@ RSpec.describe Spell, type: :model do
 
     include_examples 'should validate the presence of', :level
 
+    include_examples 'should validate the presence of', :material_component
+
     include_examples 'should validate the presence of', :name, type: String
 
     include_examples 'should validate the presence of', :range
