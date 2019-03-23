@@ -4,9 +4,13 @@ rvm: 2.6.2
 before_script:
   - cp .rspec.example .rspec
   - cp .rubocop.example .rubocop
+  - bundle exec rake db:setup
+  - bundle exec rake db:test:prepare
 script:
   - bundle exec thor ci:steps
 
 # Travis-CI Configuration
 cache: bundler
 sudo:  false # Enable containerized builds.
+addons:
+  postgresql: 9.6
