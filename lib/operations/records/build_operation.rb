@@ -8,25 +8,9 @@ module Operations::Records
     private
 
     def process(attributes = {})
-      unless attributes.is_a?(Hash)
-        result.errors = [['attributes', 'must be a Hash']]
+      return unless validate_attributes(attributes)
 
-        return
-      end
-
-      record_class.new(attributes)
-    rescue ActiveModel::UnknownAttributeError => exception
-      attribute_name = unknown_attribute_name(exception)
-
-      result.errors = [[attribute_name, 'unknown attribute']]
-    end
-
-    def unknown_attribute_name(exception)
-      unknown_attribute_pattern.match(exception.message)['attribute_name']
-    end
-
-    def unknown_attribute_pattern
-      /unknown attribute '(?<attribute_name>.*)'/
+      handle_unknown_attribute { record_class.new(attributes) }
     end
   end
 end

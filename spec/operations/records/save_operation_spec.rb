@@ -24,7 +24,7 @@ RSpec.describe Operations::Records::SaveOperation do
     it { expect(operation).to respond_to(:call).with(1).argument }
 
     describe 'with nil' do
-      let(:record) { nil }
+      let(:record)          { nil }
       let(:expected_errors) { ['record', 'must be a Spell'] }
 
       it 'should have a failing result' do
@@ -34,7 +34,7 @@ RSpec.describe Operations::Records::SaveOperation do
     end
 
     describe 'with an Object' do
-      let(:record) { Object.new }
+      let(:record)          { Object.new }
       let(:expected_errors) { ['record', 'must be a Spell'] }
 
       it 'should have a failing result' do

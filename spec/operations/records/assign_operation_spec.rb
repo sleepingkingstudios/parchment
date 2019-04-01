@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-require 'operations/records/build_operation'
+require 'operations/records/assign_operation'
 
-RSpec.describe Operations::Records::BuildOperation do
+RSpec.describe Operations::Records::AssignOperation do
   subject(:operation) { described_class.new(record_class) }
 
   let(:record_class) { Spell }
@@ -14,29 +14,17 @@ RSpec.describe Operations::Records::BuildOperation do
   end
 
   describe '#call' do
-    let(:attributes) { nil }
+    let(:attributes) { {} }
     let(:expected)   { record_class.new.attributes }
-    let(:record)     { call_operation.value }
+    let(:record)     { record_class.new }
 
     def call_operation
-      operation.call(attributes)
+      operation.call(record, attributes)
     end
 
-    it { expect(operation).to respond_to(:call).with(0..1).arguments }
+    it { expect(operation).to respond_to(:call).with(2).arguments }
 
-    describe 'with no arguments' do
-      def call_operation
-        operation.call
-      end
-
-      it { expect(call_operation).to have_passing_result }
-
-      it { expect(record).to be_a record_class }
-
-      it { expect(record.attributes).to be == expected }
-    end
-
-    describe 'with nil' do
+    describe 'with nil attributes' do
       let(:attributes)      { nil }
       let(:expected_errors) { ['attributes', 'must be a Hash'] }
 
@@ -46,7 +34,7 @@ RSpec.describe Operations::Records::BuildOperation do
       end
     end
 
-    describe 'with an Object' do
+    describe 'with an attributes Object' do
       let(:attributes)      { Object.new }
       let(:expected_errors) { [['attributes', 'must be a Hash']] }
 
@@ -56,14 +44,24 @@ RSpec.describe Operations::Records::BuildOperation do
       end
     end
 
-    describe 'with an empty hash' do
-      let(:attributes) { {} }
+    describe 'with a nil record' do
+      let(:record)          { nil }
+      let(:expected_errors) { ['record', 'must be a Spell'] }
 
-      it { expect(call_operation).to have_passing_result }
+      it 'should have a failing result' do
+        expect(call_operation)
+          .to have_failing_result.with_errors(expected_errors)
+      end
+    end
 
-      it { expect(record).to be_a record_class }
+    describe 'with a record Object' do
+      let(:record)          { Object.new }
+      let(:expected_errors) { ['record', 'must be a Spell'] }
 
-      it { expect(record.attributes).to be == expected }
+      it 'should have a failing result' do
+        expect(call_operation)
+          .to have_failing_result.with_errors(expected_errors)
+      end
     end
 
     describe 'with a hash with unknown attributes' do
@@ -80,6 +78,8 @@ RSpec.describe Operations::Records::BuildOperation do
         expect(call_operation)
           .to have_failing_result.with_errors(*expected_errors)
       end
+
+      it { expect { call_operation }.not_to change(record, :attributes) }
     end
 
     describe 'with a hash with valid attributes' do
@@ -92,11 +92,13 @@ RSpec.describe Operations::Records::BuildOperation do
       end
       let(:expected) { super().merge(attributes) }
 
-      it { expect(call_operation).to have_passing_result }
+      it { expect(call_operation).to have_passing_result.with_value(record) }
 
-      it { expect(record).to be_a record_class }
-
-      it { expect(record.attributes).to be == expected }
+      it 'should update the attributes' do
+        expect { call_operation }
+          .to change(record, :attributes)
+          .to be >= attributes
+      end
     end
   end
 

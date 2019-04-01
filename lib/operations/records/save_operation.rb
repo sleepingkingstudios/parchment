@@ -8,11 +8,7 @@ module Operations::Records
     private
 
     def process(record)
-      unless record.is_a?(record_class)
-        result.errors = [['record', "must be a #{record_class.name}"]]
-
-        return
-      end
+      return unless validate_record(record)
 
       return record if record.save
 
