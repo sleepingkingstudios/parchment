@@ -15,7 +15,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '>= 4.0.0.rc.3'
+gem 'webpacker', '~> 4.0.0', '>= 4.0.2'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
