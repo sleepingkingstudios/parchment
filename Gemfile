@@ -55,7 +55,9 @@ end
 group :test do
   gem 'rspec', '~> 3.8'
   gem 'rspec-rails', '~> 3.8.2'
-  gem 'rspec-sleeping_king_studios', '~> 2.5'
+  gem 'rspec-sleeping_king_studios',
+    git:    'https://github.com/sleepingkingstudios/rspec-sleeping_king_studios',
+    branch: 'chore/rails-6'
 
   gem 'rubocop', '~> 0.66.0'
   gem 'rubocop-rspec', '~> 1.32.0'

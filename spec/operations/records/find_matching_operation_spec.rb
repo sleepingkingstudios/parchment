@@ -20,11 +20,7 @@ RSpec.describe Operations::Records::FindMatchingOperation do
 
     it { expect(operation).to respond_to(:call).with(0).arguments }
 
-    it { expect(call_operation.success?).to be true }
-
-    it { expect(call_operation.errors).to be_empty }
-
-    it { expect(call_operation.value).to be == [] }
+    it { expect(call_operation).to have_passing_result.with_value([]) }
 
     context 'when there are many records' do
       let(:record_attributes) do
@@ -34,7 +30,11 @@ RSpec.describe Operations::Records::FindMatchingOperation do
         record_attributes.map { |hsh| FactoryBot.create(:spell, hsh) }
       end
 
-      it { expect(call_operation.value).to be == records }
+      it 'should find the matching records' do
+        expect(call_operation)
+          .to have_passing_result
+          .with_value(contain_exactly(*records))
+      end
     end
   end
 
