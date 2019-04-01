@@ -1,11 +1,13 @@
 require:
   - rubocop-rspec
+  - ./spec/support/rubocop_patch
 
 AllCops:
   TargetRubyVersion: 2.6
   Exclude:
     - 'bin/**/*'
     - 'config/**/*'
+    - 'db/schema.rb'
     - 'tmp/**/*'
     - 'vendor/**/*'
 
@@ -17,6 +19,46 @@ Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
   IndentationWidth: ~
 
+Metrics/AbcSize:
+  Exclude:
+    - 'db/migrate/*'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/*'
+
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/**/*'
+
 Metrics/BlockLength:
   Exclude:
-    - 'spec/**/*.rb'
+    - 'spec/**/*'
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/routing/**/*'
+
+RSpec/ExampleWording:
+  Enabled: false
+
+RSpec/HookArgument:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
+
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Exclude:
+    - 'db/migrate/*'
+    - 'spec/**/*'
+
+Style/NestedParenthesizedCalls:
+  Exclude:
+    - 'spec/**/*'

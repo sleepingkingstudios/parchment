@@ -8,7 +8,9 @@ require File.expand_path('../config/environment', __dir__)
 
 # Prevent database truncation if the environment is production
 if Rails.env.production?
+  # :nocov:
   abort('The Rails environment is running in production mode!')
+  # :nocov:
 end
 
 require 'rspec/rails'
@@ -19,8 +21,10 @@ require 'rspec/rails'
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
+  # :nocov:
   puts e.to_s.strip
   exit 1
+  # :nocov:
 end
 
 RSpec.configure do |config|

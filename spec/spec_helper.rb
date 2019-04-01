@@ -12,6 +12,8 @@ require 'byebug'
 # Isolated namespace for defining spec-only or transient objects.
 module Spec; end
 
+require 'support/matchers/be_a_result'
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.extend  RSpec::SleepingKingStudios::Concerns::ExampleConstants
@@ -29,7 +31,7 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = 'spec/examples.txt'
 
   # Print the 10 slowest examples and example groups.
-  config.profile_examples = 10
+  config.profile_examples = 10 if ENV['CI']
 
   # Run specs in random order to surface order dependencies.
   config.order = :random

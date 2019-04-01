@@ -23,10 +23,15 @@ gem 'webpacker', '>= 4.0.0.rc.3'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.1', require: false
 
+gem 'cuprum', '~> 0.8'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
   # console.
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+
+  gem 'factory_bot', '~> 5.0', '~> 5.0.2'
+  gem 'factory_bot_rails', '~> 5.0', '~> 5.0.1'
 end
 
 group :development do
@@ -50,7 +55,9 @@ end
 group :test do
   gem 'rspec', '~> 3.8'
   gem 'rspec-rails', '~> 3.8.2'
-  gem 'rspec-sleeping_king_studios', '~> 2.5'
+  gem 'rspec-sleeping_king_studios',
+    git:    'https://github.com/sleepingkingstudios/rspec-sleeping_king_studios',
+    branch: 'chore/rails-6'
 
   gem 'rubocop', '~> 0.66.0'
   gem 'rubocop-rspec', '~> 1.32.0'
