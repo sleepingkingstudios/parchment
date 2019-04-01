@@ -1,43 +1,41 @@
 # frozen_string_literal: true
 
+require 'operations/records/create_operation'
+require 'operations/records/destroy_operation'
+require 'operations/records/find_matching_operation'
+require 'operations/records/find_one_operation'
+require 'operations/records/update_operation'
+
 # Controller for performing CRUD actions on Spells via a JSON API.
 class Api::SpellsController < ApplicationController
   before_action :require_spell, only: %i[destroy show update]
 
   def create
-    @spell = Spell.new(spell_params)
+    create_operation.call(spell_params)
 
-    if @spell.save
-      render_json(@spell, status: :created)
-    else
-      render_errors(@spell.errors.entries)
-    end
+    render_operation(create_operation, status: :created)
   end
 
   def destroy
-    @spell.destroy
+    destroy_operation.call(find_operation.value)
 
     render_json(nil)
   end
 
   def index
-    @spells = Spell.all
+    index_operation.call
 
-    render_json(@spells)
+    render_operation(index_operation)
   end
 
   def show
-    render_json(@spell)
+    render_operation(find_operation)
   end
 
   def update
-    @spell.assign_attributes(spell_params)
+    update_operation.call(find_operation.value, spell_params)
 
-    if @spell.save
-      render_json(@spell)
-    else
-      render_errors(@spell.errors.entries)
-    end
+    render_operation(update_operation)
   end
 
   private
@@ -56,14 +54,20 @@ class Api::SpellsController < ApplicationController
     }
   end
 
-  # rubocop:disable Naming/MemoizedInstanceVariableName
-  def find_spell
-    @spell ||= Spell.where(id: spell_id).first
+  def create_operation
+    @create_operation ||= Operations::Records::CreateOperation.new(Spell)
   end
-  # rubocop:enable Naming/MemoizedInstanceVariableName
 
-  def not_found_errors
-    [['spell', 'not found']]
+  def destroy_operation
+    @destroy_operation ||= Operations::Records::DestroyOperation.new(Spell)
+  end
+
+  def find_operation
+    @find_operation ||= Operations::Records::FindOneOperation.new(Spell)
+  end
+
+  def index_operation
+    @index_operation ||= Operations::Records::FindMatchingOperation.new(Spell)
   end
 
   def render_errors(errors, status: :unprocessable_entity)
@@ -74,10 +78,20 @@ class Api::SpellsController < ApplicationController
     render json: build_json_response(data), status: status
   end
 
-  def require_spell
-    return if find_spell
+  def render_operation(operation, status: :ok)
+    if operation.success?
+      render_json(operation.value, status: status)
+    else
+      render_errors(operation.errors, status: :unprocessable_entity)
+    end
+  end
 
-    render_errors(not_found_errors, status: :not_found)
+  def require_spell
+    find_operation.call(spell_id)
+
+    return if find_operation.success?
+
+    render_errors(find_operation.errors, status: :not_found)
   end
 
   def spell_id
@@ -98,7 +112,11 @@ class Api::SpellsController < ApplicationController
       :school,
       :somatic_component,
       :verbal_component
-    )
+    ).to_hash
   end
   # rubocop:enable Metrics/MethodLength
+
+  def update_operation
+    @update_operation ||= Operations::Records::UpdateOperation.new(Spell)
+  end
 end
