@@ -14,5 +14,11 @@ module Operations::Records
     # @return [Class] the class of record that the operation's business logic
     #   operates on.
     attr_reader :record_class
+
+    private
+
+    def record_errors(record)
+      record.errors.entries.map { |(key, message)| [key.to_s, message] }
+    end
   end
 end
