@@ -27,6 +27,7 @@ class Spell < ApplicationRecord
   validates :duration, presence: true
   validates :level,
     numericality: {
+      allow_nil:                true,
       greater_than_or_equal_to: 0,
       less_than_or_equal_to:    9,
       only_integer:             true
@@ -46,9 +47,10 @@ class Spell < ApplicationRecord
   validates :range, presence: true
   validates :school,
     inclusion: {
-      in:      Schools.all.values,
-      message: 'must be abjuration, conjuration, divination, enchantment, ' \
-               'evocation, illusion, necromancy, or transmutation'
+      allow_nil: true,
+      in:        Schools.all.values,
+      message:   'must be abjuration, conjuration, divination, enchantment, ' \
+                 'evocation, illusion, necromancy, or transmutation'
     },
     presence:  true
   validates :somatic_component,
