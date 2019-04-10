@@ -2,6 +2,8 @@
 language: ruby
 rvm: 2.6.2
 before_script:
+  - yarn install
+  - bin/webpack
   - cp .rspec.example .rspec
   - cp .rubocop.example .rubocop
   - bundle exec rake db:setup
