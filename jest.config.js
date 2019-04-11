@@ -3,6 +3,7 @@ module.exports = {
   testPathIgnorePatterns: [
     '/config/',
     '/node_modules/',
+    '/vendor/',
   ],
   verbose: true,
 };
