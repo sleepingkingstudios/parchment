@@ -7,7 +7,7 @@ SleepingKingStudios::Tasks.configure do |config|
     # Handle Travis-CI log length limit.
     ci.rspec.update format: 'progress' if ENV['TRAVIS']
 
-    ci.steps = %i[rspec rubocop simplecov]
+    ci.steps = %i[rspec rubocop simplecov jest]
   end
 
   config.file do |file|
