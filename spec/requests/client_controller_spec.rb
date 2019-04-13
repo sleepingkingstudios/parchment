@@ -7,7 +7,7 @@ RSpec.describe ClientController do
   let(:params)  { {} }
 
   describe 'GET /' do
-    let(:pack_name) { 'hello_react' }
+    let(:pack_name) { 'client' }
     let(:pack_script) do
       %r{\<script src="/packs-test/js/#{pack_name}-[0-9a-f]+\.js"\>}
     end

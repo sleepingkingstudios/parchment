@@ -2,23 +2,12 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 
-const Hello = ({ name }) => (
-  <div>Hello {name}!</div>
-);
-
-Hello.defaultProps = {
-  name: 'David',
-};
-
-Hello.propTypes = {
-  name: PropTypes.string,
-};
+import Page from '../components/page';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Hello name="React" />,
+    <Page title="Parchment" subtitle="5e Campaign Companion" />,
     document.body.appendChild(document.createElement('div')),
   );
 });
