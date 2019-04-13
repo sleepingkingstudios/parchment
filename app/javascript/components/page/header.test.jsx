@@ -3,8 +3,8 @@ import { shallow } from 'enzyme';
 import Header from './header';
 
 describe('<Header />', () => {
-  const props = { title: "Example Title" };
-  const rendered = shallow(<Header { ...props } />);
+  const props = { title: 'Example Title' };
+  const rendered = shallow(<Header {...props} />);
 
   it('should wrap the contents in a <header> element', () => {
     expect(rendered).toHaveDisplayName('header');
@@ -15,9 +15,10 @@ describe('<Header />', () => {
   });
 
   describe('when the subtitle is set', () => {
-    const subtitle = "Example Subtitle";
-    const renderedWithSubtitle =
-      shallow(<Header { ...props } subtitle={ subtitle } />);
+    const subtitle = 'Example Subtitle';
+    const renderedWithSubtitle = shallow(
+      <Header {...props} subtitle={subtitle} />,
+    );
 
     it('should render the title in an <h1> element', () => {
       expect(renderedWithSubtitle.find('h1')).toIncludeText(props.title);

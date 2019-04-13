@@ -1,37 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const renderHeading = (props) => {
-  if (!props.subtitle) {
+const renderHeading = ({ title, subtitle }) => {
+  if (!subtitle) {
     return (
-      <h1>{ props.title }</h1>
+      <h1>{ title }</h1>
     );
   }
 
   return (
     <h1>
-      { props.title }
+      { title }
       { ' ' }
-      <small>{ props.subtitle }</small>
+      <small>{ subtitle }</small>
     </h1>
-  )
-}
+  );
+};
 
 const Header = (props) => {
+  const { title, subtitle } = props;
+
   return (
     <header>
-      { renderHeading(props) }
+      { renderHeading({ title, subtitle }) }
     </header>
-  )
+  );
 };
 
 Header.defaultProps = {
-  title: 'Page Title'
-}
+  subtitle: null,
+};
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
-}
+};
 
 export default Header;

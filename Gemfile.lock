@@ -10,8 +10,8 @@ GIT
 
 GIT
   remote: https://github.com/sleepingkingstudios/sleeping_king_studios-tasks
-  revision: 815ed4efcc72dc9bc5224066e5fd19ad4d7c73f4
-  branch: feature/jest-task
+  revision: 0ca90b8fff86d4ea6ebc8623d5b819982d1db20e
+  branch: feature/eslint-task
   specs:
     sleeping_king_studios-tasks (0.1.0)
       erubi (~> 1.6)
