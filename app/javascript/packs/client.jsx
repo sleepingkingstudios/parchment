@@ -3,11 +3,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Page from '../components/page';
+import Routes from '../routes';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Page title="Parchment" subtitle="5e Campaign Companion" />,
+    <Routes />,
     document.body.appendChild(document.createElement('div')),
   );
 });
