@@ -23,6 +23,7 @@ SpellsPage.propTypes = {
   layout: PropTypes.string,
   spells: PropTypes.arrayOf(PropTypes.object).isRequired,
   subtitle: PropTypes.string,
+  spellsRequestStatus: PropTypes.string.isRequired,
   title: PropTypes.string,
 };
 

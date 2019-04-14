@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Page from '../components/page';
 
@@ -8,7 +9,9 @@ const HomePage = props => (
     <h1>Resources</h1>
 
     <ul>
-      <li>Spells</li>
+      <li>
+        <Link to="/spells">Spells</Link>
+      </li>
     </ul>
   </Page>
 );

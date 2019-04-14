@@ -1,11 +1,12 @@
 import React from 'react';
+import { MemoryRouter as Router, Link } from 'react-router-dom';
 import { mount } from 'enzyme';
 
 import HomePage from './index';
 
 describe('<HomePage />', () => {
   const props = {};
-  const rendered = mount(<HomePage {...props} />);
+  const rendered = mount(<Router><HomePage {...props} /></Router>);
 
   it('should wrap the contents in a <Page>', () => {
     expect(rendered.find('Page')).toExist();
@@ -24,6 +25,6 @@ describe('<HomePage />', () => {
   });
 
   it('should render the spells link', () => {
-    expect(rendered).toIncludeText('Spells');
+    expect(rendered).toContainReact(<Link to="/spells">Spells</Link>);
   });
 });

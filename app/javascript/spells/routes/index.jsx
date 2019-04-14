@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import SpellsPage from '../page';
+import Spells from '../index';
 
 const Routes = () => (
   <Switch>
-    <Route path="/spells" component={SpellsPage} />
+    <Route path="/spells" component={Spells} />
   </Switch>
 );
 
