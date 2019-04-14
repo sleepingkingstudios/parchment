@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Page from '../components/page';
+import Table from './table/index';
 
 const SpellsPage = props => (
   <Page {...props}>
     <h1>Spells</h1>
+
+    <Table {...props} />
   </Page>
 );
 
