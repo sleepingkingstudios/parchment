@@ -2,32 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Page from '../components/page';
-import Table from './table/index';
+import SpellsTable from './table/index';
 
-const SpellsPage = props => (
-  <Page {...props}>
-    <h1>Spells</h1>
+class SpellsPage extends React.Component {
+  componentDidMount() {
+    const { requestSpells } = this.props;
 
-    <Table {...props} />
-  </Page>
-);
+    requestSpells();
+  }
 
-SpellsPage.defaultProps = {
-  children: null,
-  className: null,
-  layout: null,
-  subtitle: '5e Campaign Companion',
-  title: 'Parchment',
-};
+  render() {
+    const title = 'Parchment';
+    const subtitle = '5e Campaign Companion';
+    const { spells, spellsRequestStatus } = this.props;
+
+    return (
+      <Page className="page-spells" title={title} subtitle={subtitle}>
+        <h1>Spells</h1>
+
+        <SpellsTable {...{ spells, spellsRequestStatus }} />
+      </Page>
+    );
+  }
+}
+
+SpellsPage.defaultProps = {};
 
 SpellsPage.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  layout: PropTypes.string,
+  requestSpells: PropTypes.func.isRequired,
   spells: PropTypes.arrayOf(PropTypes.object).isRequired,
-  subtitle: PropTypes.string,
   spellsRequestStatus: PropTypes.string.isRequired,
-  title: PropTypes.string,
 };
 
 export default SpellsPage;
