@@ -8,7 +8,7 @@ import {
   FAILURE,
   PENDING,
   SUCCESS,
-} from '../../store/request_status';
+} from '../../store/requestStatus';
 import { spellsData } from '../fixtures';
 
 describe('<TableBody />', () => {

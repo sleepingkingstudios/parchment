@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Table from './index';
-import { INITIALIZED } from '../../store/request_status';
+import { INITIALIZED } from '../../store/requestStatus';
 import { spellsData } from '../fixtures';
 
 describe('<Table />', () => {

@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import { INITIALIZED } from '../../store/request_status';
+import { INITIALIZED } from '../../store/requestStatus';
 
 describe('Spells store initialState', () => {
   it('should set the spells to an empty array', () => {

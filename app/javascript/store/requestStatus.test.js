@@ -3,7 +3,7 @@ const {
   INITIALIZED,
   PENDING,
   SUCCESS,
-} = require('./request_status');
+} = require('./requestStatus');
 
 describe('request status', () => {
   describe('FAILURE', () => {

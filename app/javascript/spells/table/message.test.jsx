@@ -7,7 +7,7 @@ import {
   INITIALIZED,
   FAILURE,
   PENDING,
-} from '../../store/request_status';
+} from '../../store/requestStatus';
 
 const numColumns = columns.length;
 

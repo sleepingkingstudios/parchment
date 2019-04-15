@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import spellType from '../spell';
 import TableMessage from './message';
 import TableRow from './row';
-import { SUCCESS } from '../../store/request_status';
+import { SUCCESS } from '../../store/requestStatus';
 
 const tableRows = spells => (
   spells.map(spell => (
