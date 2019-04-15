@@ -9,7 +9,7 @@ const SpellsTable = (props) => {
   const { spells, spellsRequestStatus } = props;
 
   return (
-    <table>
+    <table className="table">
       <TableHeader />
 
       <TableBody {...{ spells, spellsRequestStatus }} />

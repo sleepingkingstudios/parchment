@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 const renderHeading = ({ title, subtitle }) => {
   if (!subtitle) {
     return (
-      <h1>{ title }</h1>
+      <h1 className="display-4">{ title }</h1>
     );
   }
 
   return (
-    <h1>
+    <h1 className="display-4">
       { title }
       { ' ' }
-      <small>{ subtitle }</small>
+      <small style={{ fontWeight: 300 }}>{ subtitle }</small>
     </h1>
   );
 };
