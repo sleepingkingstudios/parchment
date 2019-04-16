@@ -15,27 +15,28 @@ describe('Spells table columns', () => {
   describe('Level', () => {
     it('should have the expected properties', () => {
       const matching = columns.find(column => (column.label === 'Level'));
-      const expected = { label: 'Level', prop: 'level' };
 
-      expect(matching).toEqual(expected);
+      expect(matching.prop).toEqual('level');
+      expect(matching.value).toBeUndefined();
     });
   });
 
   describe('Name', () => {
     it('should have the expected properties', () => {
       const matching = columns.find(column => (column.label === 'Name'));
-      const expected = { label: 'Name', prop: 'name' };
 
-      expect(matching).toEqual(expected);
+      expect(matching.prop).toEqual('name');
+      expect(matching.value).toBeUndefined();
     });
   });
 
   describe('School', () => {
     it('should have the expected properties', () => {
       const matching = columns.find(column => (column.label === 'School'));
-      const expected = { label: 'School', prop: 'school' };
 
-      expect(matching).toEqual(expected);
+      expect(matching.prop).toEqual('school');
+      expect(typeof matching.value).toEqual('function');
+      expect(matching.value({ school: 'nullamancy' })).toEqual('Nullamancy');
     });
   });
 });

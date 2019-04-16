@@ -1,3 +1,5 @@
+const { capitalize } = require('../../utils/string');
+
 const columns = [
   {
     label: 'Name',
@@ -6,6 +8,7 @@ const columns = [
   {
     label: 'School',
     prop: 'school',
+    value: spell => capitalize(spell.school),
   },
   {
     label: 'Level',
