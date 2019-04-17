@@ -1,9 +1,9 @@
-const {
+import {
   FAILURE,
   INITIALIZED,
   PENDING,
   SUCCESS,
-} = require('./requestStatus');
+} from './requestStatus';
 
 describe('request status', () => {
   describe('FAILURE', () => {

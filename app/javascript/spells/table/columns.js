@@ -1,4 +1,4 @@
-const { capitalize } = require('../../utils/string');
+import { capitalize } from '../../utils/string';
 
 const columns = [
   {

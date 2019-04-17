@@ -1,4 +1,4 @@
-const { humanizeList } = require('../../utils/array');
+import { humanizeList } from '../../utils/array';
 
 export const formatCrewCapacity = (item) => {
   const count = item.crewCapacity;
