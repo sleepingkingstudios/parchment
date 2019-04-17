@@ -57,5 +57,8 @@ export const spellsData = [
   .map(spell => Object.assign(
     {},
     spell,
-    { description: trimMultilineLiteral(spell.description) },
+    {
+      castingTime: trimMultilineLiteral(spell.castingTime),
+      description: trimMultilineLiteral(spell.description),
+    },
   ));
