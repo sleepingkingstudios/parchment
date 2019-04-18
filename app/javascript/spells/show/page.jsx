@@ -37,8 +37,19 @@ const contents = ({ spell, findSpellRequestStatus }) => {
   );
 };
 
+const getSpellId = ({ match }) => {
+  const { params } = match;
+
+  return params.id;
+};
+
 class ShowSpellPage extends React.Component {
-  componentDidMount() {}
+  componentDidMount() {
+    const { requestFindSpell } = this.props;
+    const spellId = getSpellId(this.props);
+
+    requestFindSpell(spellId);
+  }
 
   render() {
     const title = 'Parchment';
@@ -59,6 +70,12 @@ ShowSpellPage.defaultProps = {};
 
 ShowSpellPage.propTypes = {
   findSpellRequestStatus: PropTypes.string.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  requestFindSpell: PropTypes.func.isRequired,
   spell: PropTypes.oneOfType([
     spellType,
     PropTypes.object,

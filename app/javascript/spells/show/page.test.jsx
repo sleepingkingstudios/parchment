@@ -11,7 +11,15 @@ import {
 } from '../../store/requestStatus';
 
 describe('<ShowSpellPage />', () => {
-  const props = { findSpellRequestStatus: INITIALIZED, spell: {} };
+  const requestFindSpell = jest.fn();
+  const spellId = '00000000-0000-0000-0000-000000000000';
+  const match = { params: { id: spellId } };
+  const props = {
+    findSpellRequestStatus: INITIALIZED,
+    match,
+    requestFindSpell,
+    spell: {},
+  };
   const rendered = shallow(<ShowSpellPage {...props} />);
 
   it('should set the className', () => {
@@ -26,6 +34,10 @@ describe('<ShowSpellPage />', () => {
     const message = 'Loading spell from the server...';
 
     expect(rendered.find('Page').shallow()).toIncludeText(message);
+  });
+
+  it('should call requestFindSpell()', () => {
+    expect(requestFindSpell).toHaveBeenCalledWith(spellId);
   });
 
   describe('when the request status is PENDING', () => {
@@ -60,7 +72,7 @@ describe('<ShowSpellPage />', () => {
 
   describe('when the request status is SUCCESS', () => {
     const spell = spellsData[0];
-    const successProps = { findSpellRequestStatus: SUCCESS, spell };
+    const successProps = { ...props, findSpellRequestStatus: SUCCESS, spell };
     const renderedSuccess = shallow(<ShowSpellPage {...successProps} />);
 
     it('should render the spell block', () => {
