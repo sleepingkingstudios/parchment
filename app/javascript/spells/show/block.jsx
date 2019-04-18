@@ -7,6 +7,8 @@ import {
   formatSchoolAndLevel,
 } from '../utils';
 
+import './block-styles.css';
+
 const SpellBlock = ({ spell }) => {
   const data = { 'spell-id': spell.id, 'spell-name': spell.name };
 
