@@ -14,6 +14,9 @@ import {
   requestSpellsSuccess,
 } from './actions';
 import { spellsData } from '../fixtures';
+import {
+  underscoreKeys,
+} from '../../utils/object';
 
 jest.mock('cross-fetch');
 
@@ -60,7 +63,7 @@ describe('Spells API actions', () => {
           const json = {
             ok: true,
             data: {
-              spell,
+              spell: underscoreKeys(spell),
             },
           };
           const response = { ok: true, json: () => json };
@@ -127,7 +130,7 @@ describe('Spells API actions', () => {
         const json = {
           ok: true,
           data: {
-            spells: spellsData,
+            spells: underscoreKeys(spellsData),
           },
         };
         const response = { ok: true, json: () => json };
