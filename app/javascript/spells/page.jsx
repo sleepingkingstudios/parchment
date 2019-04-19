@@ -5,6 +5,18 @@ import Page from '../components/page';
 import SpellsTable from './table/index';
 import spellType from './spell';
 
+const breadcrumbs = [
+  {
+    label: 'Home',
+    url: '/',
+  },
+  {
+    label: 'Spells',
+    url: '/spells',
+    active: true,
+  },
+];
+
 class SpellsPage extends React.Component {
   componentDidMount() {
     const { requestSpells } = this.props;
@@ -18,7 +30,7 @@ class SpellsPage extends React.Component {
     const { spells, spellsRequestStatus } = this.props;
 
     return (
-      <Page className="page-spells" title={title} subtitle={subtitle}>
+      <Page breadcrumbs={breadcrumbs} className="page-spells" title={title} subtitle={subtitle}>
         <h1>Spells</h1>
 
         <SpellsTable {...{ spells, spellsRequestStatus }} />

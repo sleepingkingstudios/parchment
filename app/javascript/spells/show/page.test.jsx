@@ -21,9 +21,26 @@ describe('<ShowSpellPage />', () => {
     spell: {},
   };
   const rendered = shallow(<ShowSpellPage {...props} />);
+  const breadcrumbs = [
+    {
+      label: 'Home',
+      url: '/',
+    },
+    {
+      label: 'Spells',
+      url: '/spells',
+    },
+    {
+      label: 'Loading...',
+      active: true,
+    },
+  ];
 
-  it('should set the className', () => {
+  it('should wrap the contents in a Page', () => {
+    expect(rendered).toHaveDisplayName('Page');
+
     expect(rendered).toHaveClassName('page-spells');
+    expect(rendered).toHaveProp('breadcrumbs', breadcrumbs);
   });
 
   it('should not render a spell block', () => {
@@ -74,6 +91,24 @@ describe('<ShowSpellPage />', () => {
     const spell = spellsData[0];
     const successProps = { ...props, findSpellRequestStatus: SUCCESS, spell };
     const renderedSuccess = shallow(<ShowSpellPage {...successProps} />);
+    const successBreadcrumbs = [
+      {
+        label: 'Home',
+        url: '/',
+      },
+      {
+        label: 'Spells',
+        url: '/spells',
+      },
+      {
+        label: spell.name,
+        active: true,
+      },
+    ];
+
+    it('should update the breadcrumbs', () => {
+      expect(renderedSuccess).toHaveProp('breadcrumbs', successBreadcrumbs);
+    });
 
     it('should render the spell block', () => {
       const block = renderedSuccess.find('SpellBlock');

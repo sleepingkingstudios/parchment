@@ -11,6 +11,27 @@ import {
   SUCCESS,
 } from '../../store/requestStatus';
 
+const generateBreadcrumbs = (spell) => {
+  let label = 'Loading...';
+
+  if (spell.name) { label = spell.name; }
+
+  return [
+    {
+      label: 'Home',
+      url: '/',
+    },
+    {
+      label: 'Spells',
+      url: '/spells',
+    },
+    {
+      label,
+      active: true,
+    },
+  ];
+};
+
 const emptyMessage = (status) => {
   switch (status) {
     case INITIALIZED:
@@ -55,9 +76,10 @@ class ShowSpellPage extends React.Component {
     const title = 'Parchment';
     const subtitle = '5e Campaign Companion';
     const { spell, findSpellRequestStatus } = this.props;
+    const breadcrumbs = generateBreadcrumbs(spell);
 
     return (
-      <Page className="page-spells" title={title} subtitle={subtitle}>
+      <Page {...{ title, subtitle, breadcrumbs }} className="page-spells">
         <h1>Show Spell</h1>
 
         { contents({ spell, findSpellRequestStatus }) }
