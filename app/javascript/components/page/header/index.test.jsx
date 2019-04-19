@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Header from './header';
+import PageHeader from './index';
 
-describe('<Header />', () => {
+describe('<PageHeader />', () => {
   const props = { title: 'Example Title' };
-  const rendered = shallow(<Header {...props} />);
+  const rendered = shallow(<PageHeader {...props} />);
 
   it('should wrap the contents in a <header> element', () => {
     expect(rendered).toHaveDisplayName('header');
@@ -18,7 +18,7 @@ describe('<Header />', () => {
   describe('when the subtitle is set', () => {
     const subtitle = 'Example Subtitle';
     const renderedWithSubtitle = shallow(
-      <Header {...props} subtitle={subtitle} />,
+      <PageHeader {...props} subtitle={subtitle} />,
     );
 
     it('should render the title in an <h1> element', () => {
