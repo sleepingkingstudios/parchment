@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Page from '../../components/page';
 import SpellBlock from './block';
-import spellType from '../spell';
+import { spellType } from '../entities';
 import {
   INITIALIZED,
   PENDING,
@@ -80,8 +80,6 @@ class ShowSpellPage extends React.Component {
 
     return (
       <Page {...{ title, subtitle, breadcrumbs }} className="page-spells">
-        <h1>Show Spell</h1>
-
         { contents({ spell, findSpellRequestStatus }) }
       </Page>
     );

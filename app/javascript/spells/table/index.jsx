@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Table from '../../components/table';
 import columns from './columns';
-import spellType from '../spell';
+import { spellListType } from '../entities';
 import {
   INITIALIZED,
   FAILURE,
@@ -31,7 +31,7 @@ const SpellsTable = ({ spells, spellsRequestStatus }) => (
 SpellsTable.defaultProps = {};
 
 SpellsTable.propTypes = {
-  spells: PropTypes.arrayOf(spellType).isRequired,
+  spells: spellListType.isRequired,
   spellsRequestStatus: PropTypes.string.isRequired,
 };
 

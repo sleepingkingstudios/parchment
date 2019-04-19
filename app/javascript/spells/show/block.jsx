@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PlainText from '../../components/plain-text';
-import spellType from '../spell';
+import { spellType } from '../entities';
 import {
   formatComponents,
   formatSchoolAndLevel,

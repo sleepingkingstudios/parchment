@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Page from '../components/page';
 import SpellsTable from './table/index';
-import spellType from './spell';
+import { spellListType } from './entities';
 
 const breadcrumbs = [
   {
@@ -43,7 +43,7 @@ SpellsPage.defaultProps = {};
 
 SpellsPage.propTypes = {
   requestSpells: PropTypes.func.isRequired,
-  spells: PropTypes.arrayOf(spellType).isRequired,
+  spells: spellListType.isRequired,
   spellsRequestStatus: PropTypes.string.isRequired,
 };
 
