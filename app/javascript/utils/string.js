@@ -32,3 +32,9 @@ export const underscore = (str) => {
     .replace(/([A-Z]+)([A-Z][a-z\d]+)/g, '$1_$2')
     .toLowerCase();
 };
+
+export const titleize = (str) => {
+  if (typeof str === 'undefined' || str == null) { return ''; }
+
+  return underscore(str).split(/[\s_]/).map(capitalize).join(' ');
+};

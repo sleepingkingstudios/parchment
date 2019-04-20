@@ -12,6 +12,17 @@
     }
   ],
   "rules": {
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "labelComponents": [],
+        "labelAttributes": [],
+        "controlComponents": [],
+        "assert": "htmlFor",
+        "depth": 3
+      }
+    ],
+    "jsx-a11y/label-has-for": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/prop-types": ["error", { "skipUndeclared": true }]
   },

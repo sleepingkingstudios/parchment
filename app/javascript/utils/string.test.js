@@ -1,6 +1,7 @@
 import {
   camelize,
   capitalize,
+  titleize,
   truncate,
   underscore,
 } from './string';
@@ -30,19 +31,19 @@ describe('String utils', () => {
     });
 
     describe('with a lowercase string', () => {
-      it('should return an empty string', () => {
+      it('should return the string', () => {
         expect(camelize('greetings')).toEqual('greetings');
       });
     });
 
-    describe('with a camel-case string', () => {
-      it('should return an empty string', () => {
+    describe('with a camelCase string', () => {
+      it('should return the string', () => {
         expect(camelize('greetingsPrograms')).toEqual('greetingsPrograms');
       });
     });
 
     describe('with an underscored string', () => {
-      it('should return an empty string', () => {
+      it('should convert the string to camelCase', () => {
         expect(camelize('greetings_programs')).toEqual('greetingsPrograms');
       });
     });
@@ -145,6 +146,54 @@ describe('String utils', () => {
     });
   });
 
+  describe('titleize', () => {
+    it('should be a function', () => {
+      expect(typeof titleize).toEqual('function');
+    });
+
+    describe('with undefined', () => {
+      it('should return an empty string', () => {
+        expect(titleize(undefined)).toEqual('');
+      });
+    });
+
+    describe('with null', () => {
+      it('should return an empty string', () => {
+        expect(titleize(null)).toEqual('');
+      });
+    });
+
+    describe('with an empty string', () => {
+      it('should return an empty string', () => {
+        expect(titleize('')).toEqual('');
+      });
+    });
+
+    describe('with a lowercase string', () => {
+      it('should capitalize the string', () => {
+        expect(titleize('greetings')).toEqual('Greetings');
+      });
+    });
+
+    describe('with a multi-word string', () => {
+      it('should capitalize the string', () => {
+        expect(titleize('greetings programs')).toEqual('Greetings Programs');
+      });
+    });
+
+    describe('with a camelCase string', () => {
+      it('should capitalize the string', () => {
+        expect(titleize('greetingsPrograms')).toEqual('Greetings Programs');
+      });
+    });
+
+    describe('with an underscored string', () => {
+      it('should capitalize the string', () => {
+        expect(titleize('greetings_programs')).toEqual('Greetings Programs');
+      });
+    });
+  });
+
   describe('underscore', () => {
     it('should be a function', () => {
       expect(typeof underscore).toEqual('function');
@@ -169,19 +218,19 @@ describe('String utils', () => {
     });
 
     describe('with a lowercase string', () => {
-      it('should return an empty string', () => {
+      it('should return the string', () => {
         expect(underscore('greetings')).toEqual('greetings');
       });
     });
 
-    describe('with a camel-case string', () => {
-      it('should return an empty string', () => {
+    describe('with a camelCase string', () => {
+      it('should convert the string to underscore_case', () => {
         expect(underscore('greetingsPrograms')).toEqual('greetings_programs');
       });
     });
 
     describe('with an underscored string', () => {
-      it('should return an empty string', () => {
+      it('should return the string', () => {
         expect(underscore('greetings_programs')).toEqual('greetings_programs');
       });
     });
