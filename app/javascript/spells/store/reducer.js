@@ -6,12 +6,21 @@ import {
   REQUEST_SPELLS_FAILURE,
   REQUEST_SPELLS_PENDING,
   REQUEST_SPELLS_SUCCESS,
+  UPDATE_SPELL_FORM_FIELD,
 } from './actions';
 import {
   FAILURE,
   PENDING,
   SUCCESS,
 } from '../../store/requestStatus';
+
+const updateDraftSpell = (state, { propName, value }) => {
+  const draftSpell = Object.assign({}, state.draftSpell);
+
+  draftSpell[propName] = value;
+
+  return Object.assign({}, state, { draftSpell });
+};
 
 const spellsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -45,6 +54,8 @@ const spellsReducer = (state = initialState, action) => {
         spells: action.payload.spells,
         spellsRequestStatus: SUCCESS,
       });
+    case UPDATE_SPELL_FORM_FIELD:
+      return updateDraftSpell(state, action.payload);
     default:
       return state;
   }

@@ -43,6 +43,7 @@ const wrapperClassName = ({ colWidth }) => {
 const FormField = ({
   colWidth,
   inputId,
+  inputClass,
   label,
   namespace,
   prop,
@@ -59,18 +60,19 @@ const FormField = ({
     onChange,
     'data-prop-name': prop,
   };
+  const InputClass = inputClass || FormInput;
 
   return (
     <div className={wrapperClassName({ colWidth })}>
       <label htmlFor={id}>{ labelText({ label, prop }) }</label>
-      <FormInput {...inputProps} />
+      <InputClass {...inputProps} />
     </div>
   );
 };
 
 FormField.defaultProps = {
   colWidth: null,
-  InputClass: null,
+  inputClass: null,
   inputId: null,
   label: null,
   namespace: null,
@@ -80,7 +82,7 @@ FormField.defaultProps = {
 FormField.propTypes = {
   colWidth: PropTypes.number,
   onChange: PropTypes.func.isRequired,
-  InputClass: PropTypes.func,
+  inputClass: PropTypes.func,
   inputId: PropTypes.string,
   label: PropTypes.string,
   namespace: PropTypes.string,

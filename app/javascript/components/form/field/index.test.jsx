@@ -3,6 +3,10 @@ import { shallow } from 'enzyme';
 
 import FormField from './index';
 
+const MockInput = props => (
+  <span {...props} />
+);
+
 describe('<FormField />', () => {
   const onChange = () => {};
   const props = { prop: 'propertyName', value: 'Property Value', onChange };
@@ -42,6 +46,31 @@ describe('<FormField />', () => {
       expect(renderedWithWidth).toHaveDisplayName('div');
       expect(renderedWithWidth).toHaveClassName('form-group');
       expect(renderedWithWidth).toHaveClassName('col-sm-6');
+    });
+  });
+
+  describe('with inputClass: custom component', () => {
+    const propsWithInput = { ...props, inputClass: MockInput };
+    const renderedWithInput = shallow(<FormField {...propsWithInput} />);
+
+    it('should create the label', () => {
+      const label = renderedWithInput.find('label');
+
+      expect(label).toExist();
+      expect(label).toHaveProp('htmlFor', 'property-name-input');
+      expect(label).toHaveProp('children', 'Property Name');
+    });
+
+    it('should create the input', () => {
+      const input = renderedWithInput.find('MockInput');
+      const { prop, value } = propsWithInput;
+
+      expect(input).toExist();
+      expect(input).toHaveProp('id', 'property-name-input');
+      expect(input).toHaveProp('type', 'text');
+      expect(input).toHaveProp('value', value);
+      expect(input).toHaveProp('onChange', onChange);
+      expect(input).toHaveProp('data-prop-name', prop);
     });
   });
 

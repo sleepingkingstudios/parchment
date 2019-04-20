@@ -7,6 +7,7 @@ import {
   requestSpellsFailure,
   requestSpellsPending,
   requestSpellsSuccess,
+  updateSpellFormField,
 } from './actions';
 import {
   FAILURE,
@@ -136,6 +137,24 @@ describe('Spells reducer', () => {
         spells: spellsData,
         spellsRequestStatus: SUCCESS,
       });
+
+      expect(reducer(initialState, action)).toEqual(expected);
+    });
+  });
+
+  describe('when UPDATE_SPELL_FORM_FIELD is dispatched', () => {
+    it('should update the spell draft', () => {
+      const propName = 'name';
+      const value = 'Spontaneous Combustion';
+      const action = updateSpellFormField({ propName, value });
+      const draft = Object.assign({}, initialState.draftSpell, { name: value });
+      const expected = Object.assign(
+        {},
+        initialState,
+        {
+          draftSpell: draft,
+        },
+      );
 
       expect(reducer(initialState, action)).toEqual(expected);
     });
