@@ -43,15 +43,26 @@ export const spellsData = [
   },
   {
     id: 'e3641970-fc98-4674-b873-5532d89d9f26',
-    level: 3,
-    name: "Dragon's Breath",
-    school: 'evocation',
-  },
-  {
-    id: 'a74d8c21-607d-4a3f-8cfd-2bbb48ec196a',
-    level: 9,
-    name: 'Wrath of the Titans',
-    school: 'evocation',
+    level: 2,
+    name: 'Mudball',
+    school: 'conjuration',
+    castingTime: '1 action',
+    range: '30 feet',
+    verbalComponent: true,
+    somaticComponent: true,
+    materialComponent: 'a small pinch of moist earth',
+    duration: 'Instantaneous',
+    shortDescription: '',
+    description:
+      `You hurl a ball of elementally-charged mud at a creature or object
+      within range. Make a ranged spell attack against the target. On a hit, the
+      target takes 2d6 bludgeoning damage and is blinded for one minute. The
+      target or an adjacent ally can wipe off the mud as an action, removing the
+      blindness.
+
+      **At Higher Levels:** When you cast this spell with a spell slot of 3rd
+      level or higher, the damage increases by 1d6 for each spell slot above
+      3rd.`,
   },
 ]
   .map(spell => Object.assign(

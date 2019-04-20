@@ -39,7 +39,7 @@ describe('<FormField />', () => {
   });
 
   describe('with colWidth: value', () => {
-    const propsWithWidth = { ...props, colWidth: 6 };
+    const propsWithWidth = { ...props, colWidth: '6' };
     const renderedWithWidth = shallow(<FormField {...propsWithWidth} />);
 
     it('should wrap the contents in a div.form-group', () => {

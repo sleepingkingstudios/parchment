@@ -80,7 +80,7 @@ FormField.defaultProps = {
 };
 
 FormField.propTypes = {
-  colWidth: PropTypes.number,
+  colWidth: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   inputClass: PropTypes.func,
   inputId: PropTypes.string,
