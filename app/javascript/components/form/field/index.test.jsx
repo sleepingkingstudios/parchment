@@ -100,6 +100,26 @@ describe('<FormField />', () => {
     });
   });
 
+  describe('with inputProps: object', () => {
+    const inputProps = { customProp: 'Custom Value' };
+    const propsWithInputProps = { ...props, inputProps };
+    const renderedWithInputProps = shallow(<FormField {...propsWithInputProps} />);
+
+    it('should create the input', () => {
+      const input = renderedWithInputProps.find('FormInput');
+      const { prop, value } = propsWithInputProps;
+      const { customProp } = inputProps;
+
+      expect(input).toExist();
+      expect(input).toHaveProp('id', 'property-name-input');
+      expect(input).toHaveProp('type', 'text');
+      expect(input).toHaveProp('value', value);
+      expect(input).toHaveProp('onChange', onChange);
+      expect(input).toHaveProp('data-prop-name', prop);
+      expect(input).toHaveProp('customProp', customProp);
+    });
+  });
+
   describe('with label: value', () => {
     const propsWithLabel = { ...props, label: 'Custom Label' };
     const renderedWithLabel = shallow(<FormField {...propsWithLabel} />);

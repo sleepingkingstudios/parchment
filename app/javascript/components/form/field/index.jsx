@@ -44,6 +44,7 @@ const FormField = ({
   colWidth,
   inputId,
   inputClass,
+  inputProps,
   label,
   namespace,
   prop,
@@ -52,20 +53,20 @@ const FormField = ({
   onChange,
 }) => {
   const id = fieldId({ inputId, namespace, prop });
-  const inputProps = {
+  const propsForInput = Object.assign({}, {
     id,
     prop,
     type,
     value,
     onChange,
     'data-prop-name': prop,
-  };
+  }, inputProps);
   const InputClass = inputClass || FormInput;
 
   return (
     <div className={wrapperClassName({ colWidth })}>
       <label htmlFor={id}>{ labelText({ label, prop }) }</label>
-      <InputClass {...inputProps} />
+      <InputClass {...propsForInput} />
     </div>
   );
 };
@@ -74,6 +75,7 @@ FormField.defaultProps = {
   colWidth: null,
   inputClass: null,
   inputId: null,
+  inputProps: null,
   label: null,
   namespace: null,
   type: 'text',
@@ -84,6 +86,8 @@ FormField.propTypes = {
   onChange: PropTypes.func.isRequired,
   inputClass: PropTypes.func,
   inputId: PropTypes.string,
+  /* eslint-disable-next-line react/forbid-prop-types */
+  inputProps: PropTypes.object,
   label: PropTypes.string,
   namespace: PropTypes.string,
   prop: PropTypes.string.isRequired,
