@@ -29,5 +29,24 @@ describe('Form actions', () => {
 
       expect(action).toEqual({ payload: { propName, value } });
     });
+
+    describe('with a checkbox target', () => {
+      const checked = true;
+      const type = 'checkbox';
+      const checkboxTarget = { checked, dataset, type };
+      const checkboxEvent = { target: checkboxTarget };
+
+      it('should call the action creator', () => {
+        handler(checkboxEvent);
+
+        expect(actionCreator).toHaveBeenCalledWith({ propName, value: checked });
+      });
+
+      it('should return the created action', () => {
+        const action = handler(checkboxEvent);
+
+        expect(action).toEqual({ payload: { propName, value: checked } });
+      });
+    });
   });
 });
