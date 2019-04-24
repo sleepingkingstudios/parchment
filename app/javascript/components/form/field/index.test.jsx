@@ -120,6 +120,24 @@ describe('<FormField />', () => {
     });
   });
 
+  describe('with label: false', () => {
+    const propsWithoutLabel = { ...props, label: false };
+    const renderedWithoutLabel = shallow(<FormField {...propsWithoutLabel} />);
+
+    it('should wrap the contents in a div.form-group', () => {
+      expect(renderedWithoutLabel).toHaveDisplayName('div');
+      expect(renderedWithoutLabel).toHaveClassName('form-group');
+      expect(renderedWithoutLabel).toHaveClassName('form-group-no-label');
+      expect(renderedWithoutLabel).toHaveClassName('col');
+    });
+
+    it('should not create the label', () => {
+      const label = renderedWithoutLabel.find('label');
+
+      expect(label).not.toExist();
+    });
+  });
+
   describe('with label: value', () => {
     const propsWithLabel = { ...props, label: 'Custom Label' };
     const renderedWithLabel = shallow(<FormField {...propsWithLabel} />);

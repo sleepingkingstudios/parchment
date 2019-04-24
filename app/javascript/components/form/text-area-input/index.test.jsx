@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import TextAreaInput from './index';
+import FormTextAreaInput from './index';
 
-describe('<TextAreaInput />', () => {
+describe('<FormTextAreaInput />', () => {
   const onChange = () => {};
   const props = {
     id: 'property-name',
@@ -11,7 +11,7 @@ describe('<TextAreaInput />', () => {
     value: 'Property Value',
     onChange,
   };
-  const rendered = shallow(<TextAreaInput {...props} />);
+  const rendered = shallow(<FormTextAreaInput {...props} />);
 
   it('should create the textarea', () => {
     const { id, prop, value } = props;
@@ -27,7 +27,7 @@ describe('<TextAreaInput />', () => {
 
   describe('with rows: count', () => {
     const propsWithRows = { ...props, rows: 5 };
-    const renderedWithRows = shallow(<TextAreaInput {...propsWithRows} />);
+    const renderedWithRows = shallow(<FormTextAreaInput {...propsWithRows} />);
 
     it('should create the textarea', () => {
       const {

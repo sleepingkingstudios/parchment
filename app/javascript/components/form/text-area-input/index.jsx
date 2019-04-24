@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TextAreaInput = ({
+const FormTextAreaInput = ({
   id,
   prop,
   rows,
@@ -11,11 +11,11 @@ const TextAreaInput = ({
   <textarea className="form-control" data-prop-name={prop} id={id} rows={rows} value={value} onChange={onChange} />
 );
 
-TextAreaInput.defaultProps = {
+FormTextAreaInput.defaultProps = {
   rows: 3,
 };
 
-TextAreaInput.propTypes = {
+FormTextAreaInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   prop: PropTypes.string.isRequired,
@@ -23,4 +23,4 @@ TextAreaInput.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
-export default TextAreaInput;
+export default FormTextAreaInput;

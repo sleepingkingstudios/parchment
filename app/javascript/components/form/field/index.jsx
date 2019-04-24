@@ -2,25 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import FormInput from '../input';
+import { generateFieldId } from '../utils';
+import { titleize } from '../../../utils/string';
 
-import {
-  titleize,
-  underscore,
-} from '../../../utils/string';
-
-const fieldId = ({ inputId, namespace, prop }) => {
-  if (inputId) { return inputId; }
-
-  const segments = [];
-
-  if (namespace) { segments.push(namespace); }
-
-  segments.push(underscore(prop).replace('_', '-'));
-
-  segments.push('input');
-
-  return segments.join('-');
-};
+import './styles.css';
 
 const labelText = ({ label, prop }) => {
   if (label) { return label; }
@@ -28,8 +13,18 @@ const labelText = ({ label, prop }) => {
   return titleize(prop);
 };
 
-const wrapperClassName = ({ colWidth }) => {
+const renderLabel = ({ id, label, prop }) => {
+  if (label === false) { return null; }
+
+  return (
+    <label htmlFor={id}>{ labelText({ label, prop }) }</label>
+  );
+};
+
+const wrapperClassName = ({ colWidth, label }) => {
   const classes = ['form-group'];
+
+  if (label === false) { classes.push('form-group-no-label'); }
 
   if (colWidth) {
     classes.push(`col-sm-${Math.round(colWidth)}`);
@@ -52,7 +47,7 @@ const FormField = ({
   value,
   onChange,
 }) => {
-  const id = fieldId({ inputId, namespace, prop });
+  const id = generateFieldId({ inputId, namespace, prop });
   const propsForInput = Object.assign({}, {
     id,
     prop,
@@ -64,8 +59,8 @@ const FormField = ({
   const InputClass = inputClass || FormInput;
 
   return (
-    <div className={wrapperClassName({ colWidth })}>
-      <label htmlFor={id}>{ labelText({ label, prop }) }</label>
+    <div className={wrapperClassName({ colWidth, label })}>
+      { renderLabel({ id, label, prop }) }
       <InputClass {...propsForInput} />
     </div>
   );
@@ -88,11 +83,17 @@ FormField.propTypes = {
   inputId: PropTypes.string,
   /* eslint-disable-next-line react/forbid-prop-types */
   inputProps: PropTypes.object,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+  ]),
   namespace: PropTypes.string,
   prop: PropTypes.string.isRequired,
   type: PropTypes.string,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+  ]).isRequired,
 };
 
 export default FormField;
