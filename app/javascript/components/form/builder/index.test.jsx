@@ -13,8 +13,8 @@ describe('FormBuilder', () => {
   };
   const namespace = 'namespace';
   const id = 'namespace-property-name-input';
-  const onChange = jest.fn();
-  const builder = new FormBuilder({ data, namespace, onChange });
+  const onChangeAction = jest.fn(obj => ({ payload: obj }));
+  const builder = new FormBuilder({ data, namespace, onChangeAction });
 
   describe('checkboxField()', () => {
     const boolProp = 'boolPropertyName';
@@ -29,9 +29,21 @@ describe('FormBuilder', () => {
       expect(field).toHaveProp('inputProps', { label });
       expect(field).toHaveProp('label', false);
       expect(field).toHaveProp('namespace', namespace);
-      expect(field).toHaveProp('prop', boolProp);
       expect(field).toHaveProp('value', data.boolPropertyName);
-      expect(field).toHaveProp('onChange', onChange);
+    });
+
+    it('should set the onChange event handler', () => {
+      const field = rendered.find('FormField');
+      const value = true;
+      const { onChange } = field.props();
+      const event = { target: { checked: value, type: 'checkbox' } };
+
+      expect(typeof onChange).toEqual('function');
+
+      const action = onChange(event);
+
+      expect(onChangeAction).toHaveBeenCalledWith({ propName: boolProp, value });
+      expect(action).toEqual({ payload: { propName: boolProp, value } });
     });
 
     describe('with custom options', () => {
@@ -47,9 +59,21 @@ describe('FormBuilder', () => {
         expect(field).toHaveProp('inputProps', { label });
         expect(field).toHaveProp('label', false);
         expect(field).toHaveProp('namespace', namespace);
-        expect(field).toHaveProp('prop', boolProp);
         expect(field).toHaveProp('value', data.boolPropertyName);
-        expect(field).toHaveProp('onChange', onChange);
+      });
+
+      it('should set the onChange event handler', () => {
+        const field = rendered.find('FormField');
+        const value = true;
+        const { onChange } = field.props();
+        const event = { target: { checked: value, type: 'checkbox' } };
+
+        expect(typeof onChange).toEqual('function');
+
+        const action = onChange(event);
+
+        expect(onChangeAction).toHaveBeenCalledWith({ propName: boolProp, value });
+        expect(action).toEqual({ payload: { propName: boolProp, value } });
       });
     });
   });
@@ -64,9 +88,22 @@ describe('FormBuilder', () => {
 
       expect(input).toExist();
       expect(input).toHaveProp('id', boolId);
-      expect(input).toHaveProp('prop', boolProp);
+      expect(input).toHaveProp('label', 'Bool Property Name');
       expect(input).toHaveProp('value', data.boolPropertyName);
-      expect(input).toHaveProp('onChange', onChange);
+    });
+
+    it('should set the onChange event handler', () => {
+      const field = rendered.find('FormCheckboxInput');
+      const value = true;
+      const { onChange } = field.props();
+      const event = { target: { checked: value, type: 'checkbox' } };
+
+      expect(typeof onChange).toEqual('function');
+
+      const action = onChange(event);
+
+      expect(onChangeAction).toHaveBeenCalledWith({ propName: boolProp, value });
+      expect(action).toEqual({ payload: { propName: boolProp, value } });
     });
 
     describe('with custom options', () => {
@@ -80,9 +117,21 @@ describe('FormBuilder', () => {
         expect(input).toExist();
         expect(input).toHaveProp('id', boolId);
         expect(input).toHaveProp('label', label);
-        expect(input).toHaveProp('prop', boolProp);
         expect(input).toHaveProp('value', data.boolPropertyName);
-        expect(input).toHaveProp('onChange', onChange);
+      });
+
+      it('should set the onChange event handler', () => {
+        const field = rendered.find('FormCheckboxInput');
+        const value = true;
+        const { onChange } = field.props();
+        const event = { target: { checked: value, type: 'checkbox' } };
+
+        expect(typeof onChange).toEqual('function');
+
+        const action = onChange(event);
+
+        expect(onChangeAction).toHaveBeenCalledWith({ propName: boolProp, value });
+        expect(action).toEqual({ payload: { propName: boolProp, value } });
       });
     });
   });
@@ -95,9 +144,21 @@ describe('FormBuilder', () => {
 
       expect(field).toExist();
       expect(field).toHaveProp('namespace', namespace);
-      expect(field).toHaveProp('prop', prop);
       expect(field).toHaveProp('value', data.propertyName);
-      expect(field).toHaveProp('onChange', onChange);
+    });
+
+    it('should set the onChange event handler', () => {
+      const field = rendered.find('FormField');
+      const value = 'Property Value';
+      const { onChange } = field.props();
+      const event = { target: { checked: value, type: 'checkbox' } };
+
+      expect(typeof onChange).toEqual('function');
+
+      const action = onChange(event);
+
+      expect(onChangeAction).toHaveBeenCalledWith({ propName: prop, value });
+      expect(action).toEqual({ payload: { propName: prop, value } });
     });
 
     describe('with custom options', () => {
@@ -115,9 +176,21 @@ describe('FormBuilder', () => {
         expect(field).toHaveProp('inputClass', inputClass);
         expect(field).toHaveProp('inputProps', inputProps);
         expect(field).toHaveProp('namespace', namespace);
-        expect(field).toHaveProp('prop', prop);
         expect(field).toHaveProp('value', data.propertyName);
-        expect(field).toHaveProp('onChange', onChange);
+      });
+
+      it('should set the onChange event handler', () => {
+        const field = rendered.find('FormField');
+        const value = 'Property Value';
+        const { onChange } = field.props();
+        const event = { target: { checked: value, type: 'checkbox' } };
+
+        expect(typeof onChange).toEqual('function');
+
+        const action = onChange(event);
+
+        expect(onChangeAction).toHaveBeenCalledWith({ propName: prop, value });
+        expect(action).toEqual({ payload: { propName: prop, value } });
       });
     });
   });
@@ -130,9 +203,21 @@ describe('FormBuilder', () => {
 
       expect(input).toExist();
       expect(input).toHaveProp('id', id);
-      expect(input).toHaveProp('prop', prop);
       expect(input).toHaveProp('value', data.propertyName);
-      expect(input).toHaveProp('onChange', onChange);
+    });
+
+    it('should set the onChange event handler', () => {
+      const field = rendered.find('FormInput');
+      const value = 'Property Value';
+      const { onChange } = field.props();
+      const event = { target: { checked: value, type: 'checkbox' } };
+
+      expect(typeof onChange).toEqual('function');
+
+      const action = onChange(event);
+
+      expect(onChangeAction).toHaveBeenCalledWith({ propName: prop, value });
+      expect(action).toEqual({ payload: { propName: prop, value } });
     });
 
     describe('with custom options', () => {
@@ -149,10 +234,22 @@ describe('FormBuilder', () => {
         expect(input).toExist();
         expect(input).toHaveProp('id', id);
         expect(input).toHaveProp('placeholder', placeholder);
-        expect(input).toHaveProp('prop', prop);
         expect(input).toHaveProp('type', type);
         expect(input).toHaveProp('value', data.propertyName);
-        expect(input).toHaveProp('onChange', onChange);
+      });
+
+      it('should set the onChange event handler', () => {
+        const field = rendered.find('FormInput');
+        const value = 'Property Value';
+        const { onChange } = field.props();
+        const event = { target: { checked: value, type: 'checkbox' } };
+
+        expect(typeof onChange).toEqual('function');
+
+        const action = onChange(event);
+
+        expect(onChangeAction).toHaveBeenCalledWith({ propName: prop, value });
+        expect(action).toEqual({ payload: { propName: prop, value } });
       });
     });
   });
@@ -169,7 +266,20 @@ describe('FormBuilder', () => {
       expect(field).toHaveProp('namespace', namespace);
       expect(field).toHaveProp('prop', prop);
       expect(field).toHaveProp('value', data.propertyName);
-      expect(field).toHaveProp('onChange', onChange);
+    });
+
+    it('should set the onChange event handler', () => {
+      const field = rendered.find('FormField');
+      const value = 'Property Value';
+      const { onChange } = field.props();
+      const event = { target: { checked: value, type: 'checkbox' } };
+
+      expect(typeof onChange).toEqual('function');
+
+      const action = onChange(event);
+
+      expect(onChangeAction).toHaveBeenCalledWith({ propName: prop, value });
+      expect(action).toEqual({ payload: { propName: prop, value } });
     });
 
     describe('with custom options', () => {
@@ -186,7 +296,20 @@ describe('FormBuilder', () => {
         expect(field).toHaveProp('namespace', namespace);
         expect(field).toHaveProp('prop', prop);
         expect(field).toHaveProp('value', data.propertyName);
-        expect(field).toHaveProp('onChange', onChange);
+      });
+
+      it('should set the onChange event handler', () => {
+        const field = rendered.find('FormField');
+        const value = 'Property Value';
+        const { onChange } = field.props();
+        const event = { target: { checked: value, type: 'checkbox' } };
+
+        expect(typeof onChange).toEqual('function');
+
+        const action = onChange(event);
+
+        expect(onChangeAction).toHaveBeenCalledWith({ propName: prop, value });
+        expect(action).toEqual({ payload: { propName: prop, value } });
       });
     });
   });
@@ -200,9 +323,21 @@ describe('FormBuilder', () => {
       expect(input).toExist();
       expect(input).toHaveProp('id', id);
       expect(input).toHaveProp('rows', 3);
-      expect(input).toHaveProp('prop', prop);
       expect(input).toHaveProp('value', data.propertyName);
-      expect(input).toHaveProp('onChange', onChange);
+    });
+
+    it('should set the onChange event handler', () => {
+      const field = rendered.find('FormTextAreaInput');
+      const value = 'Property Value';
+      const { onChange } = field.props();
+      const event = { target: { checked: value, type: 'checkbox' } };
+
+      expect(typeof onChange).toEqual('function');
+
+      const action = onChange(event);
+
+      expect(onChangeAction).toHaveBeenCalledWith({ propName: prop, value });
+      expect(action).toEqual({ payload: { propName: prop, value } });
     });
 
     describe('with custom options', () => {
@@ -216,9 +351,21 @@ describe('FormBuilder', () => {
         expect(input).toExist();
         expect(input).toHaveProp('id', id);
         expect(input).toHaveProp('rows', rows);
-        expect(input).toHaveProp('prop', prop);
         expect(input).toHaveProp('value', data.propertyName);
-        expect(input).toHaveProp('onChange', onChange);
+      });
+
+      it('should set the onChange event handler', () => {
+        const field = rendered.find('FormTextAreaInput');
+        const value = 'Property Value';
+        const { onChange } = field.props();
+        const event = { target: { checked: value, type: 'checkbox' } };
+
+        expect(typeof onChange).toEqual('function');
+
+        const action = onChange(event);
+
+        expect(onChangeAction).toHaveBeenCalledWith({ propName: prop, value });
+        expect(action).toEqual({ payload: { propName: prop, value } });
       });
     });
   });

@@ -6,11 +6,11 @@ import FormCheckboxInput from './index';
 describe('<FormCheckboxInput />', () => {
   const id = 'property-name-input';
   const onChange = jest.fn();
-  const prop = 'propertyName';
+  const labelText = 'Property Name';
   const props = {
     id,
+    label: labelText,
     onChange,
-    prop,
     value: false,
   };
   const rendered = shallow(<FormCheckboxInput {...props} />);
@@ -26,7 +26,7 @@ describe('<FormCheckboxInput />', () => {
     expect(label).toExist();
     expect(label).toHaveClassName('form-check-label');
     expect(label).toHaveProp('htmlFor', id);
-    expect(label).toHaveText('Property Name');
+    expect(label).toHaveText(labelText);
   });
 
   it('should render the checkbox', () => {
@@ -38,7 +38,6 @@ describe('<FormCheckboxInput />', () => {
     expect(checkbox).toHaveProp('checked', false);
     expect(checkbox).toHaveProp('onChange', onChange);
     expect(checkbox).toHaveProp('type', 'checkbox');
-    expect(checkbox).toHaveProp('data-prop-name', prop);
   });
 
   describe('when the checkbox is checked', () => {
@@ -54,7 +53,6 @@ describe('<FormCheckboxInput />', () => {
       expect(checkbox).toHaveProp('checked', true);
       expect(checkbox).toHaveProp('onChange', onChange);
       expect(checkbox).toHaveProp('type', 'checkbox');
-      expect(checkbox).toHaveProp('data-prop-name', prop);
     });
   });
 
@@ -82,22 +80,6 @@ describe('<FormCheckboxInput />', () => {
       expect(checkbox).toHaveProp('checked', false);
       expect(checkbox).toHaveProp('onChange', onChange);
       expect(checkbox).toHaveProp('type', 'checkbox');
-      expect(checkbox).toHaveProp('data-prop-name', prop);
-    });
-  });
-
-  describe('with label: value', () => {
-    const labelText = 'Custom Label';
-    const propsWithLabel = { ...props, label: labelText };
-    const renderedWithLabel = shallow(<FormCheckboxInput {...propsWithLabel} />);
-
-    it('should render the label', () => {
-      const label = renderedWithLabel.find('label');
-
-      expect(label).toExist();
-      expect(label).toHaveClassName('form-check-label');
-      expect(label).toHaveProp('htmlFor', id);
-      expect(label).toHaveText(labelText);
     });
   });
 });

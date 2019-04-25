@@ -5,6 +5,7 @@ import FormField from '../field';
 import FormInput from '../input';
 import FormTextAreaInput from '../text-area-input';
 
+import { handleInputChangeWith } from '../actions';
 import { generateFieldId } from '../utils';
 import { titleize } from '../../../utils/string';
 
@@ -20,10 +21,11 @@ const deleteOption = (options, prop, defaultValue = null) => {
 };
 
 class FormBuilder {
-  constructor({ data, namespace, onChange }) {
+  constructor({ data, namespace, onChangeAction }) {
     this.data = data;
     this.namespace = namespace;
-    this.onChange = onChange;
+    this.onChangeAction = onChangeAction;
+    this.onInputChange = handleInputChangeWith(onChangeAction);
   }
 
   checkboxField(prop, opts) {
@@ -36,14 +38,14 @@ class FormBuilder {
   }
 
   checkboxInput(prop, opts) {
-    const { data, namespace, onChange } = this;
+    const { data, namespace, onInputChange } = this;
     const value = data[prop];
     const id = generateFieldId({ namespace, prop });
     const props = Object.assign(
       {
         id,
-        onChange,
-        prop,
+        label: titleize(prop),
+        onChange: onInputChange(prop),
         value,
       },
       opts,
@@ -55,12 +57,12 @@ class FormBuilder {
   }
 
   field(prop, opts) {
-    const { data, namespace, onChange } = this;
+    const { data, namespace, onInputChange } = this;
     const value = data[prop];
     const props = Object.assign(
       {
         namespace,
-        onChange,
+        onChange: onInputChange(prop),
         prop,
         value,
       },
@@ -73,14 +75,13 @@ class FormBuilder {
   }
 
   input(prop, opts) {
-    const { data, namespace, onChange } = this;
+    const { data, namespace, onInputChange } = this;
     const value = data[prop];
     const id = generateFieldId({ namespace, prop });
     const props = Object.assign(
       {
         id,
-        onChange,
-        prop,
+        onChange: onInputChange(prop),
         value,
       },
       opts,
@@ -103,14 +104,13 @@ class FormBuilder {
   }
 
   textAreaInput(prop, opts) {
-    const { data, namespace, onChange } = this;
+    const { data, namespace, onInputChange } = this;
     const value = data[prop];
     const id = generateFieldId({ namespace, prop });
     const props = Object.assign(
       {
         id,
-        onChange,
-        prop,
+        onChange: onInputChange(prop),
         value,
       },
       opts,

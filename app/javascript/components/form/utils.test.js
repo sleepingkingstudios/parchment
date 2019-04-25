@@ -1,4 +1,7 @@
-import { generateFieldId } from './utils';
+import {
+  generateFieldId,
+  getInputValue,
+} from './utils';
 
 describe('Form utils', () => {
   describe('generateFieldId()', () => {
@@ -22,6 +25,35 @@ describe('Form utils', () => {
 
       it('should generate the field id', () => {
         expect(generateFieldId({ namespace, prop })).toEqual(`${namespace}-${expected}`);
+      });
+    });
+  });
+
+  describe('getInputValue()', () => {
+    describe('with a checkbox input', () => {
+      describe('with checked: false', () => {
+        const checkbox = { checked: false, type: 'checkbox' };
+
+        it('should return false', () => {
+          expect(getInputValue(checkbox)).toBe(false);
+        });
+      });
+
+      describe('with checked: true', () => {
+        const checkbox = { checked: true, type: 'checkbox' };
+
+        it('should return false', () => {
+          expect(getInputValue(checkbox)).toBe(true);
+        });
+      });
+    });
+
+    describe('with a text input', () => {
+      const value = 'Input Value';
+      const input = { type: 'text', value };
+
+      it('should return the value', () => {
+        expect(getInputValue(input)).toBe(value);
       });
     });
   });

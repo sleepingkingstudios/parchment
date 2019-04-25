@@ -7,14 +7,13 @@ describe('<FormInput />', () => {
   const onChange = () => {};
   const props = {
     id: 'property-name',
-    prop: 'propertyName',
     value: 'Property Value',
     onChange,
   };
   const rendered = shallow(<FormInput {...props} />);
 
   it('should create the input', () => {
-    const { id, prop, value } = props;
+    const { id, value } = props;
 
     expect(rendered).toHaveDisplayName('input');
     expect(rendered).toHaveClassName('form-control');
@@ -22,7 +21,6 @@ describe('<FormInput />', () => {
     expect(rendered).toHaveProp('type', 'text');
     expect(rendered).toHaveProp('value', value);
     expect(rendered).toHaveProp('onChange', onChange);
-    expect(rendered).toHaveProp('data-prop-name', prop);
   });
 
   describe('with placeholder: value', () => {
@@ -33,7 +31,6 @@ describe('<FormInput />', () => {
     it('should create the input', () => {
       const {
         id,
-        prop,
         value,
       } = propsWithPlaceholder;
 
@@ -44,7 +41,6 @@ describe('<FormInput />', () => {
       expect(renderedWithPlaceholder).toHaveProp('type', 'text');
       expect(renderedWithPlaceholder).toHaveProp('value', value);
       expect(renderedWithPlaceholder).toHaveProp('onChange', onChange);
-      expect(renderedWithPlaceholder).toHaveProp('data-prop-name', prop);
     });
   });
 
@@ -55,7 +51,6 @@ describe('<FormInput />', () => {
     it('should create the input', () => {
       const {
         id,
-        prop,
         type,
         value,
       } = propsWithType;
@@ -66,7 +61,6 @@ describe('<FormInput />', () => {
       expect(renderedWithType).toHaveProp('type', type);
       expect(renderedWithType).toHaveProp('value', value);
       expect(renderedWithType).toHaveProp('onChange', onChange);
-      expect(renderedWithType).toHaveProp('data-prop-name', prop);
     });
   });
 });

@@ -54,7 +54,6 @@ const FormField = ({
     type,
     value,
     onChange,
-    'data-prop-name': prop,
   }, inputProps);
   const InputClass = inputClass || FormInput;
 

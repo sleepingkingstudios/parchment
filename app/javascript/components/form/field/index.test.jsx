@@ -28,14 +28,13 @@ describe('<FormField />', () => {
 
   it('should create the input', () => {
     const input = rendered.find('FormInput');
-    const { prop, value } = props;
+    const { value } = props;
 
     expect(input).toExist();
     expect(input).toHaveProp('id', 'property-name-input');
     expect(input).toHaveProp('type', 'text');
     expect(input).toHaveProp('value', value);
     expect(input).toHaveProp('onChange', onChange);
-    expect(input).toHaveProp('data-prop-name', prop);
   });
 
   describe('with colWidth: value', () => {
@@ -63,14 +62,13 @@ describe('<FormField />', () => {
 
     it('should create the input', () => {
       const input = renderedWithInput.find('MockInput');
-      const { prop, value } = propsWithInput;
+      const { value } = propsWithInput;
 
       expect(input).toExist();
       expect(input).toHaveProp('id', 'property-name-input');
       expect(input).toHaveProp('type', 'text');
       expect(input).toHaveProp('value', value);
       expect(input).toHaveProp('onChange', onChange);
-      expect(input).toHaveProp('data-prop-name', prop);
     });
   });
 
@@ -89,14 +87,13 @@ describe('<FormField />', () => {
 
     it('should create the input', () => {
       const input = renderedWithId.find('FormInput');
-      const { inputId, prop, value } = propsWithId;
+      const { inputId, value } = propsWithId;
 
       expect(input).toExist();
       expect(input).toHaveProp('id', inputId);
       expect(input).toHaveProp('type', 'text');
       expect(input).toHaveProp('value', value);
       expect(input).toHaveProp('onChange', onChange);
-      expect(input).toHaveProp('data-prop-name', prop);
     });
   });
 
@@ -107,7 +104,7 @@ describe('<FormField />', () => {
 
     it('should create the input', () => {
       const input = renderedWithInputProps.find('FormInput');
-      const { prop, value } = propsWithInputProps;
+      const { value } = propsWithInputProps;
       const { customProp } = inputProps;
 
       expect(input).toExist();
@@ -115,7 +112,6 @@ describe('<FormField />', () => {
       expect(input).toHaveProp('type', 'text');
       expect(input).toHaveProp('value', value);
       expect(input).toHaveProp('onChange', onChange);
-      expect(input).toHaveProp('data-prop-name', prop);
       expect(input).toHaveProp('customProp', customProp);
     });
   });
@@ -166,14 +162,13 @@ describe('<FormField />', () => {
 
     it('should create the input', () => {
       const input = renderedWithNamespace.find('FormInput');
-      const { prop, value } = propsWithNamespace;
+      const { value } = propsWithNamespace;
 
       expect(input).toExist();
       expect(input).toHaveProp('id', 'namespace-property-name-input');
       expect(input).toHaveProp('type', 'text');
       expect(input).toHaveProp('value', value);
       expect(input).toHaveProp('onChange', onChange);
-      expect(input).toHaveProp('data-prop-name', prop);
     });
   });
 
@@ -183,14 +178,13 @@ describe('<FormField />', () => {
 
     it('should create the input', () => {
       const input = renderedWithType.find('FormInput');
-      const { prop, type, value } = propsWithType;
+      const { type, value } = propsWithType;
 
       expect(input).toExist();
       expect(input).toHaveProp('id', 'property-name-input');
       expect(input).toHaveProp('type', type);
       expect(input).toHaveProp('value', value);
       expect(input).toHaveProp('onChange', onChange);
-      expect(input).toHaveProp('data-prop-name', prop);
     });
   });
 });

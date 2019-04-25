@@ -1,16 +1,13 @@
-const inputValue = (input) => {
-  const { checked, type, value } = input;
-
-  if (type === 'checkbox') { return checked; }
-
-  return value;
-};
+import { getInputValue } from './utils';
 
 /* eslint-disable-next-line import/prefer-default-export */
-export const handleChangeEvent = actionCreator => (event) => {
-  const { dataset } = event.target;
-  const value = inputValue(event.target);
-  const { propName } = dataset;
+export const handleInputChangeWith = actionCreator => (
+  propName => (
+    (event) => {
+      const { target } = event;
+      const value = getInputValue(target);
 
-  return actionCreator({ propName, value });
-};
+      return actionCreator({ propName, value });
+    }
+  )
+);

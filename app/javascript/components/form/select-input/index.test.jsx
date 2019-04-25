@@ -13,21 +13,19 @@ describe('<FormSelectInput />', () => {
   const props = {
     id: 'property-name',
     options,
-    prop: 'propertyName',
     value: 'Property Value',
     onChange,
   };
   const rendered = shallow(<FormSelectInput {...props} />);
 
   it('should create the select input', () => {
-    const { id, prop, value } = props;
+    const { id, value } = props;
 
     expect(rendered).toHaveDisplayName('select');
     expect(rendered).toHaveClassName('custom-select');
     expect(rendered).toHaveProp('id', id);
     expect(rendered).toHaveProp('value', value);
     expect(rendered).toHaveProp('onChange', onChange);
-    expect(rendered).toHaveProp('data-prop-name', prop);
   });
 
   it('should create the select options', () => {
@@ -49,7 +47,6 @@ describe('<FormSelectInput />', () => {
       id: 'property-name',
       defaultOption,
       options,
-      prop: 'propertyName',
       value: 'Property Value',
       onChange,
     };

@@ -21,11 +21,10 @@ const FormSelectInput = ({
   defaultOption,
   id,
   options,
-  prop,
   value,
   onChange,
 }) => (
-  <select id={id} data-prop-name={prop} className="custom-select" value={value} onChange={onChange}>
+  <select id={id} className="custom-select" value={value} onChange={onChange}>
     { buildOptions({ defaultOption, options }) }
   </select>
 );
@@ -38,7 +37,6 @@ FormSelectInput.propTypes = {
   defaultOption: PropTypes.string,
   id: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  prop: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };

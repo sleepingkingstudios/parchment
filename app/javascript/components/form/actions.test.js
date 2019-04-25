@@ -1,51 +1,45 @@
-import { handleChangeEvent } from './actions';
+import { handleInputChangeWith } from './actions';
 
 describe('Form actions', () => {
-  describe('handleChangeEvent()', () => {
+  describe('handleInputChangeWith()', () => {
+    const propName = 'propertyName';
     const actionCreator = jest.fn(obj => ({ payload: obj }));
-    const propName = 'property-name';
-    const value = 'Property Value';
-    const dataset = { propName };
-    const target = { dataset, value };
-    const event = { target };
-    const handler = handleChangeEvent(actionCreator);
+    const handleChangeProp = handleInputChangeWith(actionCreator);
+    const onPropChange = handleChangeProp(propName);
+
+    afterEach(() => actionCreator.mockClear());
 
     it('should be a function', () => {
-      expect(typeof handleChangeEvent).toEqual('function');
+      expect(typeof handleInputChangeWith).toEqual('function');
     });
 
-    it('should return a function', () => {
-      expect(typeof handleChangeEvent(actionCreator)).toEqual('function');
-    });
-
-    it('should call the action creator', () => {
-      handler(event);
-
-      expect(actionCreator).toHaveBeenCalledWith({ propName, value });
-    });
-
-    it('should return the created action', () => {
-      const action = handler(event);
-
-      expect(action).toEqual({ payload: { propName, value } });
+    it('should return a higher-order function', () => {
+      expect(typeof handleInputChangeWith(actionCreator)(propName)).toEqual('function');
     });
 
     describe('with a checkbox target', () => {
-      const checked = true;
       const type = 'checkbox';
-      const checkboxTarget = { checked, dataset, type };
-      const checkboxEvent = { target: checkboxTarget };
+      const value = true;
+      const event = { target: { checked: value, type } };
 
       it('should call the action creator', () => {
-        handler(checkboxEvent);
+        const action = onPropChange(event);
 
-        expect(actionCreator).toHaveBeenCalledWith({ propName, value: checked });
+        expect(actionCreator).toHaveBeenCalledWith({ propName, value });
+        expect(action).toEqual({ payload: { propName, value } });
       });
+    });
 
-      it('should return the created action', () => {
-        const action = handler(checkboxEvent);
+    describe('with a text input target', () => {
+      const type = 'text';
+      const value = 'Property Value';
+      const event = { target: { type, value } };
 
-        expect(action).toEqual({ payload: { propName, value: checked } });
+      it('should call the action creator', () => {
+        const action = onPropChange(event);
+
+        expect(actionCreator).toHaveBeenCalledWith({ propName, value });
+        expect(action).toEqual({ payload: { propName, value } });
       });
     });
   });
