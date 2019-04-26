@@ -1,9 +1,32 @@
 import {
+  coerceInputValue,
   generateFieldId,
   getInputValue,
 } from './utils';
 
 describe('Form utils', () => {
+  describe('coerceInputValue', () => {
+    const handler = jest.fn();
+    const fn = str => str.toUpperCase();
+
+    it('should be a function', () => {
+      expect(typeof coerceInputValue).toEqual('function');
+    });
+
+    it('should return a function', () => {
+      expect(typeof coerceInputValue(handler, fn)).toEqual('function');
+    });
+
+    it('should coerce the value and call the handler', () => {
+      const value = 'input value';
+      const event = { target: { value } };
+
+      coerceInputValue(handler, fn)(event);
+
+      expect(handler).toHaveBeenCalledWith({ target: { value: fn(value) } });
+    });
+  });
+
   describe('generateFieldId()', () => {
     const prop = 'propertyName';
     const expected = 'property-name-input';

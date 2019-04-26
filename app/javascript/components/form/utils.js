@@ -19,3 +19,12 @@ export const getInputValue = ({ checked, type, value }) => {
 
   return value;
 };
+
+export const coerceInputValue = (handler, fn) => (
+  (event) => {
+    const { target } = event;
+    const value = fn(getInputValue(target));
+
+    return handler({ target: { value } });
+  }
+);

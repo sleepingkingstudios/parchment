@@ -91,6 +91,7 @@ FormField.propTypes = {
   type: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.bool,
+    PropTypes.number,
     PropTypes.string,
   ]).isRequired,
 };

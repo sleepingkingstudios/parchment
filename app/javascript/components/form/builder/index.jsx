@@ -3,6 +3,7 @@ import React from 'react';
 import FormCheckboxInput from '../checkbox-input';
 import FormField from '../field';
 import FormInput from '../input';
+import FormNumericInput from '../numeric-input';
 import FormTextAreaInput from '../text-area-input';
 
 import { handleInputChangeWith } from '../actions';
@@ -89,6 +90,31 @@ class FormBuilder {
 
     return (
       <FormInput {...props} />
+    );
+  }
+
+  numericField(prop, opts) {
+    const inputClass = FormNumericInput;
+    const options = Object.assign({}, opts, { inputClass });
+
+    return this.field(prop, options);
+  }
+
+  numericInput(prop, opts) {
+    const { data, namespace, onInputChange } = this;
+    const value = data[prop];
+    const id = generateFieldId({ namespace, prop });
+    const props = Object.assign(
+      {
+        id,
+        onChange: onInputChange(prop),
+        value,
+      },
+      opts,
+    );
+
+    return (
+      <FormNumericInput {...props} />
     );
   }
 
