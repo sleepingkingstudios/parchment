@@ -1,6 +1,5 @@
 import { getInputValue } from './utils';
 
-/* eslint-disable-next-line import/prefer-default-export */
 export const handleInputChangeWith = actionCreator => (
   propName => (
     (event) => {
@@ -10,4 +9,12 @@ export const handleInputChangeWith = actionCreator => (
       return actionCreator({ propName, value });
     }
   )
+);
+
+export const handleSubmitWith = actionCreator => (
+  (event) => {
+    event.preventDefault();
+
+    return actionCreator();
+  }
 );

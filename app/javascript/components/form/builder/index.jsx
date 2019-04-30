@@ -1,12 +1,16 @@
 import React from 'react';
 
+import Button from '../../button';
 import FormCheckboxInput from '../checkbox-input';
 import FormField from '../field';
 import FormInput from '../input';
 import FormNumericInput from '../numeric-input';
 import FormTextAreaInput from '../text-area-input';
 
-import { handleInputChangeWith } from '../actions';
+import {
+  handleInputChangeWith,
+  handleSubmitWith,
+} from '../actions';
 import { generateFieldId } from '../utils';
 import { titleize } from '../../../utils/string';
 
@@ -22,11 +26,19 @@ const deleteOption = (options, prop, defaultValue = null) => {
 };
 
 class FormBuilder {
-  constructor({ data, namespace, onChangeAction }) {
+  constructor({
+    data,
+    namespace,
+    onChangeAction,
+    onSubmitAction,
+  }) {
     this.data = data;
     this.namespace = namespace;
     this.onChangeAction = onChangeAction;
+    this.onSubmitAction = onSubmitAction;
+
     this.onInputChange = handleInputChangeWith(onChangeAction);
+    this.onSubmit = handleSubmitWith(onSubmitAction);
   }
 
   checkboxField(prop, opts) {
@@ -115,6 +127,21 @@ class FormBuilder {
 
     return (
       <FormNumericInput {...props} />
+    );
+  }
+
+  submitButton(label, opts) {
+    const { onSubmit } = this;
+    const props = Object.assign(
+      {
+        block: true,
+        onClick: onSubmit,
+      },
+      opts,
+    );
+
+    return (
+      <Button {...props}>{ label }</Button>
     );
   }
 

@@ -16,7 +16,13 @@ describe('FormBuilder', () => {
   const namespace = 'namespace';
   const id = 'namespace-property-name-input';
   const onChangeAction = jest.fn(obj => ({ payload: obj }));
-  const builder = new FormBuilder({ data, namespace, onChangeAction });
+  const onSubmitAction = jest.fn(() => ({ payload: {} }));
+  const builder = new FormBuilder({
+    data,
+    namespace,
+    onChangeAction,
+    onSubmitAction,
+  });
 
   describe('checkboxField()', () => {
     const boolProp = 'boolPropertyName';
@@ -289,6 +295,51 @@ describe('FormBuilder', () => {
         expect(input).toHaveProp('id', numericId);
         expect(input).toHaveProp('placeholder', placeholder);
         expect(input).toHaveProp('value', data.numericPropertyName);
+      });
+    });
+  });
+
+  describe('submitButton()', () => {
+    const label = 'Button Label';
+
+    it('should generate a form input', () => {
+      const rendered = shallow(<form>{ builder.submitButton(label) }</form>);
+      const button = rendered.find('Button');
+
+      expect(button).toExist();
+      expect(button).toHaveProp('block', true);
+      expect(button).toHaveProp('children', label);
+    });
+
+    it('should set the onSubmit event handler', () => {
+      const rendered = shallow(<form>{ builder.submitButton(label) }</form>);
+      const button = rendered.find('Button');
+      const { onClick } = button.props();
+      const event = { preventDefault: () => {} };
+
+      expect(typeof onClick).toEqual('function');
+
+      const action = onClick(event);
+
+      expect(onSubmitAction).toHaveBeenCalled();
+      expect(action).toEqual({ payload: {} });
+    });
+
+    describe('with custom options', () => {
+      const opts = {
+        block: false,
+        buttonType: 'danger',
+      };
+
+      it('should generate a form input', () => {
+        const rendered = shallow(<form>{ builder.submitButton(label, opts) }</form>);
+        const button = rendered.find('Button');
+        const { block, buttonType } = opts;
+
+        expect(button).toExist();
+        expect(button).toHaveProp('block', block);
+        expect(button).toHaveProp('buttonType', buttonType);
+        expect(button).toHaveProp('children', label);
       });
     });
   });
