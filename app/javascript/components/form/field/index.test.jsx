@@ -9,16 +9,18 @@ const MockInput = props => (
 
 describe('<FormField />', () => {
   const onChange = () => {};
-  const props = { prop: 'propertyName', value: 'Property Value', onChange };
-  const rendered = shallow(<FormField {...props} />);
+  const defaultProps = { prop: 'propertyName', value: 'Property Value', onChange };
 
-  it('should wrap the contents in a div.form-group', () => {
-    expect(rendered).toHaveDisplayName('div');
-    expect(rendered).toHaveClassName('form-group');
-    expect(rendered).toHaveClassName('col');
+  it('should wrap the contents in a FormGroup', () => {
+    const rendered = shallow(<FormField {...defaultProps} />);
+
+    expect(rendered).toHaveDisplayName('FormGroup');
+    expect(rendered).toHaveClassName('form-field');
+    expect(rendered).not.toHaveClassName('form-field-no-label');
   });
 
   it('should create the label', () => {
+    const rendered = shallow(<FormField {...defaultProps} />);
     const label = rendered.find('label');
 
     expect(label).toExist();
@@ -27,8 +29,9 @@ describe('<FormField />', () => {
   });
 
   it('should create the input', () => {
+    const rendered = shallow(<FormField {...defaultProps} />);
     const input = rendered.find('FormInput');
-    const { value } = props;
+    const { value } = defaultProps;
 
     expect(input).toExist();
     expect(input).toHaveProp('id', 'property-name-input');
@@ -38,31 +41,25 @@ describe('<FormField />', () => {
   });
 
   describe('with colWidth: value', () => {
-    const propsWithWidth = { ...props, colWidth: '6' };
-    const renderedWithWidth = shallow(<FormField {...propsWithWidth} />);
+    const props = { ...defaultProps, colWidth: '6' };
 
-    it('should wrap the contents in a div.form-group', () => {
-      expect(renderedWithWidth).toHaveDisplayName('div');
-      expect(renderedWithWidth).toHaveClassName('form-group');
-      expect(renderedWithWidth).toHaveClassName('col-sm-6');
+    it('should wrap the contents in a FormGroup', () => {
+      const rendered = shallow(<FormField {...props} />);
+      const { colWidth } = props;
+
+      expect(rendered).toHaveDisplayName('FormGroup');
+      expect(rendered).toHaveClassName('form-field');
+      expect(rendered).toHaveProp('colWidth', colWidth);
     });
   });
 
   describe('with inputClass: custom component', () => {
-    const propsWithInput = { ...props, inputClass: MockInput };
-    const renderedWithInput = shallow(<FormField {...propsWithInput} />);
-
-    it('should create the label', () => {
-      const label = renderedWithInput.find('label');
-
-      expect(label).toExist();
-      expect(label).toHaveProp('htmlFor', 'property-name-input');
-      expect(label).toHaveProp('children', 'Property Name');
-    });
+    const props = { ...defaultProps, inputClass: MockInput };
 
     it('should create the input', () => {
-      const input = renderedWithInput.find('MockInput');
-      const { value } = propsWithInput;
+      const rendered = shallow(<FormField {...props} />);
+      const input = rendered.find('MockInput');
+      const { value } = props;
 
       expect(input).toExist();
       expect(input).toHaveProp('id', 'property-name-input');
@@ -73,12 +70,12 @@ describe('<FormField />', () => {
   });
 
   describe('with inputId: value', () => {
-    const propsWithId = { ...props, inputId: 'custom-id' };
-    const renderedWithId = shallow(<FormField {...propsWithId} />);
+    const props = { ...defaultProps, inputId: 'custom-id' };
 
     it('should create the label', () => {
-      const label = renderedWithId.find('label');
-      const { inputId } = propsWithId;
+      const rendered = shallow(<FormField {...props} />);
+      const label = rendered.find('label');
+      const { inputId } = props;
 
       expect(label).toExist();
       expect(label).toHaveProp('htmlFor', inputId);
@@ -86,8 +83,9 @@ describe('<FormField />', () => {
     });
 
     it('should create the input', () => {
-      const input = renderedWithId.find('FormInput');
-      const { inputId, value } = propsWithId;
+      const rendered = shallow(<FormField {...props} />);
+      const input = rendered.find('FormInput');
+      const { inputId, value } = props;
 
       expect(input).toExist();
       expect(input).toHaveProp('id', inputId);
@@ -99,12 +97,12 @@ describe('<FormField />', () => {
 
   describe('with inputProps: object', () => {
     const inputProps = { customProp: 'Custom Value' };
-    const propsWithInputProps = { ...props, inputProps };
-    const renderedWithInputProps = shallow(<FormField {...propsWithInputProps} />);
+    const props = { ...defaultProps, inputProps };
 
     it('should create the input', () => {
-      const input = renderedWithInputProps.find('FormInput');
-      const { value } = propsWithInputProps;
+      const rendered = shallow(<FormField {...props} />);
+      const input = rendered.find('FormInput');
+      const { value } = props;
       const { customProp } = inputProps;
 
       expect(input).toExist();
@@ -117,30 +115,31 @@ describe('<FormField />', () => {
   });
 
   describe('with label: false', () => {
-    const propsWithoutLabel = { ...props, label: false };
-    const renderedWithoutLabel = shallow(<FormField {...propsWithoutLabel} />);
+    const props = { ...defaultProps, label: false };
 
-    it('should wrap the contents in a div.form-group', () => {
-      expect(renderedWithoutLabel).toHaveDisplayName('div');
-      expect(renderedWithoutLabel).toHaveClassName('form-group');
-      expect(renderedWithoutLabel).toHaveClassName('form-group-no-label');
-      expect(renderedWithoutLabel).toHaveClassName('col');
+    it('should wrap the contents in a FormGroup', () => {
+      const rendered = shallow(<FormField {...props} />);
+
+      expect(rendered).toHaveDisplayName('FormGroup');
+      expect(rendered).toHaveClassName('form-field');
+      expect(rendered).toHaveClassName('form-field-no-label');
     });
 
     it('should not create the label', () => {
-      const label = renderedWithoutLabel.find('label');
+      const rendered = shallow(<FormField {...props} />);
+      const label = rendered.find('label');
 
       expect(label).not.toExist();
     });
   });
 
   describe('with label: value', () => {
-    const propsWithLabel = { ...props, label: 'Custom Label' };
-    const renderedWithLabel = shallow(<FormField {...propsWithLabel} />);
+    const props = { ...defaultProps, label: 'Custom Label' };
 
     it('should create the label', () => {
-      const label = renderedWithLabel.find('label');
-      const labelText = propsWithLabel.label;
+      const rendered = shallow(<FormField {...props} />);
+      const label = rendered.find('label');
+      const labelText = props.label;
 
       expect(label).toExist();
       expect(label).toHaveProp('htmlFor', 'property-name-input');
@@ -149,11 +148,11 @@ describe('<FormField />', () => {
   });
 
   describe('with namespace: value', () => {
-    const propsWithNamespace = { ...props, namespace: 'namespace' };
-    const renderedWithNamespace = shallow(<FormField {...propsWithNamespace} />);
+    const props = { ...defaultProps, namespace: 'namespace' };
 
     it('should create the label', () => {
-      const label = renderedWithNamespace.find('label');
+      const rendered = shallow(<FormField {...props} />);
+      const label = rendered.find('label');
 
       expect(label).toExist();
       expect(label).toHaveProp('htmlFor', 'namespace-property-name-input');
@@ -161,8 +160,9 @@ describe('<FormField />', () => {
     });
 
     it('should create the input', () => {
-      const input = renderedWithNamespace.find('FormInput');
-      const { value } = propsWithNamespace;
+      const rendered = shallow(<FormField {...props} />);
+      const input = rendered.find('FormInput');
+      const { value } = props;
 
       expect(input).toExist();
       expect(input).toHaveProp('id', 'namespace-property-name-input');
@@ -173,12 +173,12 @@ describe('<FormField />', () => {
   });
 
   describe('with type: value', () => {
-    const propsWithType = { ...props, type: 'password' };
-    const renderedWithType = shallow(<FormField {...propsWithType} />);
+    const props = { ...defaultProps, type: 'password' };
 
     it('should create the input', () => {
-      const input = renderedWithType.find('FormInput');
-      const { type, value } = propsWithType;
+      const rendered = shallow(<FormField {...props} />);
+      const input = rendered.find('FormInput');
+      const { type, value } = props;
 
       expect(input).toExist();
       expect(input).toHaveProp('id', 'property-name-input');

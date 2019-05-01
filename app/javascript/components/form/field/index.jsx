@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import FormGroup from '../group';
 import FormInput from '../input';
 import { generateFieldId } from '../utils';
 import { titleize } from '../../../utils/string';
@@ -21,18 +22,10 @@ const renderLabel = ({ id, label, prop }) => {
   );
 };
 
-const wrapperClassName = ({ colWidth, label }) => {
-  const classes = ['form-group'];
+const groupClassName = ({ label }) => {
+  if (label === false) { return 'form-field form-field-no-label'; }
 
-  if (label === false) { classes.push('form-group-no-label'); }
-
-  if (colWidth) {
-    classes.push(`col-sm-${Math.round(colWidth)}`);
-  } else {
-    classes.push('col');
-  }
-
-  return classes.join(' ');
+  return 'form-field';
 };
 
 const FormField = ({
@@ -58,10 +51,10 @@ const FormField = ({
   const InputClass = inputClass || FormInput;
 
   return (
-    <div className={wrapperClassName({ colWidth, label })}>
+    <FormGroup className={groupClassName({ label })} colWidth={colWidth}>
       { renderLabel({ id, label, prop }) }
       <InputClass {...propsForInput} />
-    </div>
+    </FormGroup>
   );
 };
 
@@ -76,7 +69,10 @@ FormField.defaultProps = {
 };
 
 FormField.propTypes = {
-  colWidth: PropTypes.string,
+  colWidth: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
   onChange: PropTypes.func.isRequired,
   inputClass: PropTypes.func,
   inputId: PropTypes.string,

@@ -12,7 +12,7 @@ describe('<FormRow />', () => {
 
     expect(rendered).toHaveDisplayName('div');
     expect(rendered).toHaveClassName('form-row');
-    expect(rendered).toHaveClassName('align-items-top');
+    expect(rendered).toHaveClassName('align-items-center');
     expect(rendered).toHaveClassName('justify-content-start');
     expect(rendered).toHaveProp('children', children);
   });
@@ -25,7 +25,7 @@ describe('<FormRow />', () => {
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('form-row');
-      expect(rendered).toHaveClassName('align-items-top');
+      expect(rendered).toHaveClassName('align-items-center');
       expect(rendered).toHaveClassName('justify-content-center');
       expect(rendered).toHaveProp('children', children);
     });
@@ -39,7 +39,7 @@ describe('<FormRow />', () => {
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('form-row');
-      expect(rendered).toHaveClassName('align-items-top');
+      expect(rendered).toHaveClassName('align-items-center');
       expect(rendered).toHaveClassName('justify-content-start');
       expect(rendered).toHaveProp('children', children);
     });
@@ -53,7 +53,7 @@ describe('<FormRow />', () => {
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('form-row');
-      expect(rendered).toHaveClassName('align-items-top');
+      expect(rendered).toHaveClassName('align-items-center');
       expect(rendered).toHaveClassName('justify-content-end');
       expect(rendered).toHaveProp('children', children);
     });
@@ -68,7 +68,7 @@ describe('<FormRow />', () => {
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('form-row');
-      expect(rendered).toHaveClassName('align-items-top');
+      expect(rendered).toHaveClassName('align-items-center');
       expect(rendered).toHaveClassName('justify-content-start');
       expect(rendered).toHaveClassName(className);
       expect(rendered).toHaveProp('children', children);
