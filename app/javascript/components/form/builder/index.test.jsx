@@ -165,48 +165,28 @@ describe('FormBuilder', () => {
     });
   });
 
-  describe('input()', () => {
-    const rendered = shallow(<form>{ builder.input(prop) }</form>);
-
-    it('should generate a form input', () => {
-      const input = rendered.find('FormInput');
+  describe('hiddenSubmit()', () => {
+    it('should generate a hidden submit input', () => {
+      const rendered = shallow(<form>{ builder.hiddenSubmit() }</form>);
+      const input = rendered.find('input');
 
       expect(input).toExist();
-      expect(input).toHaveProp('id', id);
-      expect(input).toHaveProp('value', data.propertyName);
+      expect(input).toHaveClassName('d-none');
+      expect(input).toHaveProp('type', 'submit');
     });
 
-    it('should set the onChange event handler', () => {
-      const field = rendered.find('FormInput');
-      const value = 'Property Value';
-      const { onChange } = field.props();
-      const event = { target: { checked: value, type: 'checkbox' } };
+    it('should set the onClick event handler', () => {
+      const rendered = shallow(<form>{ builder.hiddenSubmit() }</form>);
+      const input = rendered.find('input');
+      const { onClick } = input.props();
+      const event = { preventDefault: () => {} };
 
-      expect(typeof onChange).toEqual('function');
+      expect(typeof onClick).toEqual('function');
 
-      const action = onChange(event);
+      const action = onClick(event);
 
-      expect(onChangeAction).toHaveBeenCalledWith({ propName: prop, value });
-      expect(action).toEqual({ payload: { propName: prop, value } });
-    });
-
-    describe('with custom options', () => {
-      const opts = {
-        placeholder: 'Enter your password.',
-        type: 'password',
-      };
-      const renderedWithOpts = shallow(<form>{ builder.input(prop, opts) }</form>);
-
-      it('should generate a form input', () => {
-        const input = renderedWithOpts.find('FormInput');
-        const { placeholder, type } = opts;
-
-        expect(input).toExist();
-        expect(input).toHaveProp('id', id);
-        expect(input).toHaveProp('placeholder', placeholder);
-        expect(input).toHaveProp('type', type);
-        expect(input).toHaveProp('value', data.propertyName);
-      });
+      expect(onSubmitAction).toHaveBeenCalled();
+      expect(action).toEqual({ payload: {} });
     });
   });
 

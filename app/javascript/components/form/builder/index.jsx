@@ -87,6 +87,14 @@ class FormBuilder {
     );
   }
 
+  hiddenSubmit() {
+    const { onSubmit } = this;
+
+    return (
+      <input type="submit" className="d-none" onClick={onSubmit} />
+    );
+  }
+
   input(prop, opts) {
     const { data, namespace, onInputChange } = this;
     const value = data[prop];
