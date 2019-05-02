@@ -3,13 +3,11 @@ import { shallow } from 'enzyme';
 
 import FormField from './index';
 
-const MockInput = props => (
-  <span {...props} />
-);
+const MockInput = () => (<input type="text" />);
 
 describe('<FormField />', () => {
-  const onChange = () => {};
-  const defaultProps = { prop: 'propertyName', value: 'Property Value', onChange };
+  const children = <MockInput />;
+  const defaultProps = { children, prop: 'propertyName' };
 
   it('should wrap the contents in a FormGroup', () => {
     const rendered = shallow(<FormField {...defaultProps} />);
@@ -30,14 +28,15 @@ describe('<FormField />', () => {
 
   it('should create the input', () => {
     const rendered = shallow(<FormField {...defaultProps} />);
-    const input = rendered.find('FormInput');
-    const { value } = defaultProps;
+    const input = rendered.find('MockInput');
 
     expect(input).toExist();
-    expect(input).toHaveProp('id', 'property-name-input');
-    expect(input).toHaveProp('type', 'text');
-    expect(input).toHaveProp('value', value);
-    expect(input).toHaveProp('onChange', onChange);
+  });
+
+  it('should match the snapshot', () => {
+    const rendered = shallow(<FormField {...defaultProps} />);
+
+    expect(rendered).toMatchSnapshot();
   });
 
   describe('with colWidth: value', () => {
@@ -53,22 +52,6 @@ describe('<FormField />', () => {
     });
   });
 
-  describe('with inputClass: custom component', () => {
-    const props = { ...defaultProps, inputClass: MockInput };
-
-    it('should create the input', () => {
-      const rendered = shallow(<FormField {...props} />);
-      const input = rendered.find('MockInput');
-      const { value } = props;
-
-      expect(input).toExist();
-      expect(input).toHaveProp('id', 'property-name-input');
-      expect(input).toHaveProp('type', 'text');
-      expect(input).toHaveProp('value', value);
-      expect(input).toHaveProp('onChange', onChange);
-    });
-  });
-
   describe('with inputId: value', () => {
     const props = { ...defaultProps, inputId: 'custom-id' };
 
@@ -80,37 +63,6 @@ describe('<FormField />', () => {
       expect(label).toExist();
       expect(label).toHaveProp('htmlFor', inputId);
       expect(label).toHaveProp('children', 'Property Name');
-    });
-
-    it('should create the input', () => {
-      const rendered = shallow(<FormField {...props} />);
-      const input = rendered.find('FormInput');
-      const { inputId, value } = props;
-
-      expect(input).toExist();
-      expect(input).toHaveProp('id', inputId);
-      expect(input).toHaveProp('type', 'text');
-      expect(input).toHaveProp('value', value);
-      expect(input).toHaveProp('onChange', onChange);
-    });
-  });
-
-  describe('with inputProps: object', () => {
-    const inputProps = { customProp: 'Custom Value' };
-    const props = { ...defaultProps, inputProps };
-
-    it('should create the input', () => {
-      const rendered = shallow(<FormField {...props} />);
-      const input = rendered.find('FormInput');
-      const { value } = props;
-      const { customProp } = inputProps;
-
-      expect(input).toExist();
-      expect(input).toHaveProp('id', 'property-name-input');
-      expect(input).toHaveProp('type', 'text');
-      expect(input).toHaveProp('value', value);
-      expect(input).toHaveProp('onChange', onChange);
-      expect(input).toHaveProp('customProp', customProp);
     });
   });
 
@@ -130,6 +82,12 @@ describe('<FormField />', () => {
       const label = rendered.find('label');
 
       expect(label).not.toExist();
+    });
+
+    it('should match the snapshot', () => {
+      const rendered = shallow(<FormField {...defaultProps} />);
+
+      expect(rendered).toMatchSnapshot();
     });
   });
 
@@ -157,34 +115,6 @@ describe('<FormField />', () => {
       expect(label).toExist();
       expect(label).toHaveProp('htmlFor', 'namespace-property-name-input');
       expect(label).toHaveProp('children', 'Property Name');
-    });
-
-    it('should create the input', () => {
-      const rendered = shallow(<FormField {...props} />);
-      const input = rendered.find('FormInput');
-      const { value } = props;
-
-      expect(input).toExist();
-      expect(input).toHaveProp('id', 'namespace-property-name-input');
-      expect(input).toHaveProp('type', 'text');
-      expect(input).toHaveProp('value', value);
-      expect(input).toHaveProp('onChange', onChange);
-    });
-  });
-
-  describe('with type: value', () => {
-    const props = { ...defaultProps, type: 'password' };
-
-    it('should create the input', () => {
-      const rendered = shallow(<FormField {...props} />);
-      const input = rendered.find('FormInput');
-      const { type, value } = props;
-
-      expect(input).toExist();
-      expect(input).toHaveProp('id', 'property-name-input');
-      expect(input).toHaveProp('type', type);
-      expect(input).toHaveProp('value', value);
-      expect(input).toHaveProp('onChange', onChange);
     });
   });
 });

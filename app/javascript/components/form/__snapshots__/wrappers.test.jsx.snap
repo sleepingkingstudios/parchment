@@ -1,0 +1,198 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form component wrappers formField() should match the snapshot 1`] = `
+<FormFieldWrapper
+  form={
+    Object {
+      "data": Object {
+        "propertyName": "Property Value",
+      },
+      "namespace": "namespace",
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+    }
+  }
+>
+  <FormField
+    colWidth={null}
+    inputId={null}
+    label={null}
+    namespace="namespace"
+    prop="propertyName"
+  >
+    <FormGroup
+      className="form-field"
+      colWidth={null}
+    >
+      <div
+        className="form-group col form-field"
+      >
+        <label
+          htmlFor="namespace-property-name-input"
+        >
+          Property Name
+        </label>
+        <Component
+          form={
+            Object {
+              "data": Object {
+                "propertyName": "Property Value",
+              },
+              "namespace": "namespace",
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+            }
+          }
+        >
+          <FormInput
+            id="namespace-property-name-input"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+            value="Property Value"
+          >
+            <input
+              className="form-control"
+              id="namespace-property-name-input"
+              onChange={[Function]}
+              placeholder=""
+              type="text"
+              value="Property Value"
+            />
+          </FormInput>
+        </Component>
+      </div>
+    </FormGroup>
+  </FormField>
+</FormFieldWrapper>
+`;
+
+exports[`Form component wrappers formField() with custom properties should match the snapshot 1`] = `
+<FormFieldWrapper
+  colWidth="12"
+  form={
+    Object {
+      "data": Object {
+        "propertyName": "Property Value",
+      },
+      "namespace": "namespace",
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+    }
+  }
+  placeholder="Placeholder Text"
+>
+  <FormField
+    colWidth="12"
+    inputId={null}
+    label={null}
+    namespace="namespace"
+    prop="propertyName"
+  >
+    <FormGroup
+      className="form-field"
+      colWidth="12"
+    >
+      <div
+        className="form-group col-sm-12 form-field"
+      >
+        <label
+          htmlFor="namespace-property-name-input"
+        >
+          Property Name
+        </label>
+        <Component
+          form={
+            Object {
+              "data": Object {
+                "propertyName": "Property Value",
+              },
+              "namespace": "namespace",
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+            }
+          }
+          placeholder="Placeholder Text"
+        >
+          <FormInput
+            id="namespace-property-name-input"
+            onChange={[Function]}
+            placeholder="Placeholder Text"
+            type="text"
+            value="Property Value"
+          >
+            <input
+              className="form-control"
+              id="namespace-property-name-input"
+              onChange={[Function]}
+              placeholder="Placeholder Text"
+              type="text"
+              value="Property Value"
+            />
+          </FormInput>
+        </Component>
+      </div>
+    </FormGroup>
+  </FormField>
+</FormFieldWrapper>
+`;
+
+exports[`Form component wrappers formGroup() should match the snapshot 1`] = `
+<FormGroup
+  className=""
+  colWidth={null}
+>
+  <MockInput
+    form={
+      Object {
+        "data": Object {
+          "propertyName": "Property Value",
+        },
+        "namespace": "namespace",
+        "onChangeAction": [MockFunction],
+        "onSubmitAction": [MockFunction],
+      }
+    }
+  />
+</FormGroup>
+`;
+
+exports[`Form component wrappers formInput() should match the snapshot 1`] = `
+<FormInput
+  id="namespace-property-name-input"
+  onChange={[Function]}
+  placeholder=""
+  type="text"
+  value="Property Value"
+/>
+`;
+
+exports[`Form component wrappers formInput() with custom properties should match the snapshot 1`] = `
+<FormInput
+  id="namespace-property-name-input"
+  onChange={[Function]}
+  placeholder=""
+  type="text"
+  value="Property Value"
+/>
+`;
+
+exports[`Form component wrappers formSubmit() should match the snapshot 1`] = `
+<Button
+  block={false}
+  buttonStyle="primary"
+  onClick={[Function]}
+>
+  Button Text
+</Button>
+`;
+
+exports[`Form component wrappers formSubmit() with custom properties should match the snapshot 1`] = `
+<Button
+  block={false}
+  buttonStyle="dark"
+  onClick={[Function]}
+>
+  Button Text
+</Button>
+`;
