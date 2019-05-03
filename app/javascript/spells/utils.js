@@ -21,10 +21,18 @@ export const formatComponents = (spell, includeMaterials = false) => {
   return components.join(', ');
 };
 
-export const formatSchoolAndLevel = (spell) => {
-  if (spell.level === 0) {
-    return `${capitalize(spell.school)} cantrip`;
+export const formatSchoolAndLevel = ({ level, ritual, school }) => {
+  const fragments = [];
+
+  if (level === 0) {
+    fragments.push(capitalize(school));
+    fragments.push('cantrip');
+  } else {
+    fragments.push(`${shortOrdinal(level)}-level`);
+    fragments.push(school.toLowerCase());
   }
 
-  return `${shortOrdinal(spell.level)}-level ${spell.school.toLowerCase()}`;
+  if (ritual) { fragments.push('(ritual)'); }
+
+  return fragments.join(' ');
 };
