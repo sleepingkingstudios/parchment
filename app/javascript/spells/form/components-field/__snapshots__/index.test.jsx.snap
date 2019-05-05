@@ -1,0 +1,295 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SpellFormComponentsField /> should match the snapshot 1`] = `
+<SpellFormComponentsField
+  colWidth="12"
+  form={
+    Object {
+      "data": Object {
+        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+        "duration": "Instantaneous",
+        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+        "level": 0,
+        "materialComponent": "",
+        "name": "Thunderclap",
+        "range": "Self",
+        "ritual": false,
+        "school": "illusion",
+        "shortDescription": "Create an ominous thunderclap when your name is spoken",
+        "somaticComponent": false,
+        "verbalComponent": false,
+      },
+      "namespace": "spell",
+      "onChangeAction": [MockFunction],
+    }
+  }
+>
+  <FormGroup
+    className="mb-0"
+    colWidth="12"
+  >
+    <div
+      className="form-group col-sm-12 mb-0"
+    >
+      <label>
+        Components
+      </label>
+      <FormRow
+        align="left"
+        className=""
+        verticalAlign="center"
+      >
+        <div
+          className="form-row justify-content-start align-items-center"
+        >
+          <VerbalInput
+            colWidth="2"
+            form={
+              Object {
+                "data": Object {
+                  "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                  "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                  "duration": "Instantaneous",
+                  "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                  "level": 0,
+                  "materialComponent": "",
+                  "name": "Thunderclap",
+                  "range": "Self",
+                  "ritual": false,
+                  "school": "illusion",
+                  "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                  "somaticComponent": false,
+                  "verbalComponent": false,
+                },
+                "namespace": "spell",
+                "onChangeAction": [MockFunction],
+              }
+            }
+            label="Verbal"
+          >
+            <FormGroup
+              className=""
+              colWidth="2"
+            >
+              <div
+                className="form-group col-sm-2"
+              >
+                <VerbalComponentInput
+                  form={
+                    Object {
+                      "data": Object {
+                        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                        "duration": "Instantaneous",
+                        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                        "level": 0,
+                        "materialComponent": "",
+                        "name": "Thunderclap",
+                        "range": "Self",
+                        "ritual": false,
+                        "school": "illusion",
+                        "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                        "somaticComponent": false,
+                        "verbalComponent": false,
+                      },
+                      "namespace": "spell",
+                      "onChangeAction": [MockFunction],
+                    }
+                  }
+                  label="Verbal"
+                >
+                  <FormCheckboxInput
+                    id="spell-verbal-component-input"
+                    label="Verbal"
+                    onChange={[Function]}
+                    value={false}
+                  >
+                    <div
+                      className="form-check"
+                    >
+                      <input
+                        checked={false}
+                        className="form-check-input"
+                        id="spell-verbal-component-input"
+                        onChange={[Function]}
+                        type="checkbox"
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="spell-verbal-component-input"
+                      >
+                        Verbal
+                      </label>
+                    </div>
+                  </FormCheckboxInput>
+                </VerbalComponentInput>
+              </div>
+            </FormGroup>
+          </VerbalInput>
+          <SomaticInput
+            colWidth="2"
+            form={
+              Object {
+                "data": Object {
+                  "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                  "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                  "duration": "Instantaneous",
+                  "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                  "level": 0,
+                  "materialComponent": "",
+                  "name": "Thunderclap",
+                  "range": "Self",
+                  "ritual": false,
+                  "school": "illusion",
+                  "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                  "somaticComponent": false,
+                  "verbalComponent": false,
+                },
+                "namespace": "spell",
+                "onChangeAction": [MockFunction],
+              }
+            }
+            label="Somatic"
+          >
+            <FormGroup
+              className=""
+              colWidth="2"
+            >
+              <div
+                className="form-group col-sm-2"
+              >
+                <SomaticComponentInput
+                  form={
+                    Object {
+                      "data": Object {
+                        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                        "duration": "Instantaneous",
+                        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                        "level": 0,
+                        "materialComponent": "",
+                        "name": "Thunderclap",
+                        "range": "Self",
+                        "ritual": false,
+                        "school": "illusion",
+                        "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                        "somaticComponent": false,
+                        "verbalComponent": false,
+                      },
+                      "namespace": "spell",
+                      "onChangeAction": [MockFunction],
+                    }
+                  }
+                  label="Somatic"
+                >
+                  <FormCheckboxInput
+                    id="spell-somatic-component-input"
+                    label="Somatic"
+                    onChange={[Function]}
+                    value={false}
+                  >
+                    <div
+                      className="form-check"
+                    >
+                      <input
+                        checked={false}
+                        className="form-check-input"
+                        id="spell-somatic-component-input"
+                        onChange={[Function]}
+                        type="checkbox"
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="spell-somatic-component-input"
+                      >
+                        Somatic
+                      </label>
+                    </div>
+                  </FormCheckboxInput>
+                </SomaticComponentInput>
+              </div>
+            </FormGroup>
+          </SomaticInput>
+          <MaterialInput
+            colWidth="8"
+            form={
+              Object {
+                "data": Object {
+                  "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                  "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                  "duration": "Instantaneous",
+                  "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                  "level": 0,
+                  "materialComponent": "",
+                  "name": "Thunderclap",
+                  "range": "Self",
+                  "ritual": false,
+                  "school": "illusion",
+                  "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                  "somaticComponent": false,
+                  "verbalComponent": false,
+                },
+                "namespace": "spell",
+                "onChangeAction": [MockFunction],
+              }
+            }
+            placeholder="Material"
+          >
+            <FormGroup
+              className=""
+              colWidth="8"
+            >
+              <div
+                className="form-group col-sm-8"
+              >
+                <MaterialComponentInput
+                  form={
+                    Object {
+                      "data": Object {
+                        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                        "duration": "Instantaneous",
+                        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                        "level": 0,
+                        "materialComponent": "",
+                        "name": "Thunderclap",
+                        "range": "Self",
+                        "ritual": false,
+                        "school": "illusion",
+                        "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                        "somaticComponent": false,
+                        "verbalComponent": false,
+                      },
+                      "namespace": "spell",
+                      "onChangeAction": [MockFunction],
+                    }
+                  }
+                  placeholder="Material"
+                >
+                  <FormInput
+                    id="spell-material-component-input"
+                    onChange={[Function]}
+                    placeholder="Material"
+                    type="text"
+                    value=""
+                  >
+                    <input
+                      className="form-control"
+                      id="spell-material-component-input"
+                      onChange={[Function]}
+                      placeholder="Material"
+                      type="text"
+                      value=""
+                    />
+                  </FormInput>
+                </MaterialComponentInput>
+              </div>
+            </FormGroup>
+          </MaterialInput>
+        </div>
+      </FormRow>
+    </div>
+  </FormGroup>
+</SpellFormComponentsField>
+`;
