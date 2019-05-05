@@ -8,9 +8,17 @@ import {
   handleSubmitWith,
 } from './actions';
 import { generateFieldId } from './utils';
+import { upperCamelize } from '../../utils/string';
 
-export const formInput = (WrappedInput, prop) => (
-  (props) => {
+const getInputDisplayName = Component => (
+  Component.inputDisplayName
+    || Component.displayName
+    || Component.name
+    || 'Component'
+);
+
+export const formInput = (WrappedInput, prop, opts = {}) => {
+  const FormInputWrapper = (props) => {
     const { form, ...injectedProps } = props;
     const {
       data,
@@ -32,10 +40,17 @@ export const formInput = (WrappedInput, prop) => (
     return (
       <WrappedInput {...inputProps} />
     );
-  }
-);
+  };
 
-export const formField = (WrappedInput, prop) => {
+  const { displayName } = opts;
+
+  FormInputWrapper.displayName = displayName || `${upperCamelize(prop)}Input`;
+  FormInputWrapper.inputDisplayName = getInputDisplayName(WrappedInput);
+
+  return FormInputWrapper;
+};
+
+export const formField = (WrappedInput, prop, opts = {}) => {
   const InputClass = formInput(WrappedInput, prop);
   const FormFieldWrapper = (props) => {
     const { colWidth, form, ...injectedProps } = props;
@@ -48,10 +63,15 @@ export const formField = (WrappedInput, prop) => {
     );
   };
 
+  const { displayName } = opts;
+
+  FormFieldWrapper.displayName = displayName || `${upperCamelize(prop)}Field`;
+  FormFieldWrapper.inputDisplayName = getInputDisplayName(WrappedInput);
+
   return FormFieldWrapper;
 };
 
-export const formGroup = (WrappedInput) => {
+export const formGroup = (WrappedInput, opts = {}) => {
   const FormGroupWrapper = (props) => {
     const { colWidth, form, ...injectedProps } = props;
 
@@ -62,20 +82,34 @@ export const formGroup = (WrappedInput) => {
     );
   };
 
+  const { displayName } = opts;
+
+  FormGroupWrapper.displayName = displayName || 'FormGroupWrapper';
+  FormGroupWrapper.inputDisplayName = getInputDisplayName(WrappedInput);
+
   return FormGroupWrapper;
 };
 
-export const formSubmit = WrappedButton => (props) => {
-  const { form, ...injectedProps } = props;
+export const formSubmit = (WrappedButton, opts = {}) => {
+  const FormSubmitWrapper = (props) => {
+    const { form, ...injectedProps } = props;
 
-  const { onSubmitAction } = form;
-  const onClick = handleSubmitWith(onSubmitAction);
-  const buttonProps = Object.assign(
-    { onClick },
-    injectedProps,
-  );
+    const { onSubmitAction } = form;
+    const onClick = handleSubmitWith(onSubmitAction);
+    const buttonProps = Object.assign(
+      { onClick },
+      injectedProps,
+    );
 
-  return (
-    <WrappedButton {...buttonProps} />
-  );
+    return (
+      <WrappedButton {...buttonProps} />
+    );
+  };
+
+  const { displayName } = opts;
+
+  FormSubmitWrapper.displayName = displayName || 'FormSubmitWrapper';
+  FormSubmitWrapper.inputDisplayName = getInputDisplayName(WrappedButton);
+
+  return FormSubmitWrapper;
 };

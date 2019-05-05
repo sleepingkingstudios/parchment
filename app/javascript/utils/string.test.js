@@ -4,6 +4,7 @@ import {
   titleize,
   truncate,
   underscore,
+  upperCamelize,
 } from './string';
 
 describe('String utils', () => {
@@ -232,6 +233,48 @@ describe('String utils', () => {
     describe('with an underscored string', () => {
       it('should return the string', () => {
         expect(underscore('greetings_programs')).toEqual('greetings_programs');
+      });
+    });
+  });
+
+  describe('upperCamelize', () => {
+    it('should be a function', () => {
+      expect(typeof upperCamelize).toEqual('function');
+    });
+
+    describe('with undefined', () => {
+      it('should return an empty string', () => {
+        expect(upperCamelize(undefined)).toEqual('');
+      });
+    });
+
+    describe('with null', () => {
+      it('should return an empty string', () => {
+        expect(upperCamelize(null)).toEqual('');
+      });
+    });
+
+    describe('with an empty string', () => {
+      it('should return an empty string', () => {
+        expect(upperCamelize('')).toEqual('');
+      });
+    });
+
+    describe('with a lowercase string', () => {
+      it('should capitalize the string', () => {
+        expect(upperCamelize('greetings')).toEqual('Greetings');
+      });
+    });
+
+    describe('with a camelCase string', () => {
+      it('should capitalize the string', () => {
+        expect(upperCamelize('greetingsPrograms')).toEqual('GreetingsPrograms');
+      });
+    });
+
+    describe('with an underscored string', () => {
+      it('should convert the string to upperCamelCase', () => {
+        expect(upperCamelize('greetings_programs')).toEqual('GreetingsPrograms');
       });
     });
   });

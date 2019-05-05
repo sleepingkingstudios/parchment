@@ -33,6 +33,12 @@ export const underscore = (str) => {
     .toLowerCase();
 };
 
+export const upperCamelize = (str) => {
+  const camel = camelize(str);
+
+  return camel.charAt(0).toUpperCase() + camel.slice(1);
+};
+
 export const titleize = (str) => {
   if (typeof str === 'undefined' || str == null) { return ''; }
 

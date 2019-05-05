@@ -38,6 +38,18 @@ describe('Form component wrappers', () => {
       expect(typeof Wrapped).toEqual('function');
     });
 
+    it('should set the display name', () => {
+      const Wrapped = formField(FormInput, propName);
+
+      expect(Wrapped.displayName).toEqual('PropertyNameField');
+    });
+
+    it('should set the input display name', () => {
+      const Wrapped = formField(FormInput, propName);
+
+      expect(Wrapped.inputDisplayName).toEqual('FormInput');
+    });
+
     it('should wrap the component in a FormField', () => {
       const Wrapped = formField(FormInput, propName);
       const rendered = shallow(<Wrapped form={form} />);
@@ -99,6 +111,16 @@ describe('Form component wrappers', () => {
         expect(rendered).toMatchSnapshot();
       });
     });
+
+    describe('with displayName: value', () => {
+      const displayName = 'CustomField';
+
+      it('should set the display name', () => {
+        const Wrapped = formField(FormInput, propName, { displayName });
+
+        expect(Wrapped.displayName).toEqual(displayName);
+      });
+    });
   });
 
   describe('formGroup()', () => {
@@ -112,6 +134,18 @@ describe('Form component wrappers', () => {
       const Wrapped = formGroup(MockInput);
 
       expect(typeof Wrapped).toEqual('function');
+    });
+
+    it('should set the display name', () => {
+      const Wrapped = formGroup(MockInput);
+
+      expect(Wrapped.displayName).toEqual('FormGroupWrapper');
+    });
+
+    it('should set the input display name', () => {
+      const Wrapped = formGroup(MockInput);
+
+      expect(Wrapped.inputDisplayName).toEqual('MockInput');
     });
 
     it('should render the wrapped component', () => {
@@ -144,6 +178,16 @@ describe('Form component wrappers', () => {
         expect(input).toHaveProp({ form });
       });
     });
+
+    describe('with displayName: value', () => {
+      const displayName = 'CustomGroup';
+
+      it('should set the display name', () => {
+        const Wrapped = formGroup(MockInput, { displayName });
+
+        expect(Wrapped.displayName).toEqual(displayName);
+      });
+    });
   });
 
   describe('formInput()', () => {
@@ -157,6 +201,18 @@ describe('Form component wrappers', () => {
       const Wrapped = formInput(FormInput, propName);
 
       expect(typeof Wrapped).toEqual('function');
+    });
+
+    it('should set the display name', () => {
+      const Wrapped = formInput(FormInput, propName);
+
+      expect(Wrapped.displayName).toEqual('PropertyNameInput');
+    });
+
+    it('should set the input display name', () => {
+      const Wrapped = formInput(FormInput, propName);
+
+      expect(Wrapped.inputDisplayName).toEqual('FormInput');
     });
 
     it('should render the input', () => {
@@ -212,6 +268,16 @@ describe('Form component wrappers', () => {
         expect(rendered).toMatchSnapshot();
       });
     });
+
+    describe('with displayName: value', () => {
+      const displayName = 'CustomInput';
+
+      it('should set the display name', () => {
+        const Wrapped = formInput(FormInput, propName, { displayName });
+
+        expect(Wrapped.displayName).toEqual(displayName);
+      });
+    });
   });
 
   describe('formSubmit()', () => {
@@ -226,6 +292,18 @@ describe('Form component wrappers', () => {
       const Wrapped = formSubmit(Button);
 
       expect(typeof Wrapped).toEqual('function');
+    });
+
+    it('should set the display name', () => {
+      const Wrapped = formSubmit(Button);
+
+      expect(Wrapped.displayName).toEqual('FormSubmitWrapper');
+    });
+
+    it('should set the input display name', () => {
+      const Wrapped = formSubmit(Button);
+
+      expect(Wrapped.inputDisplayName).toEqual('Button');
     });
 
     it('should render the button', () => {
@@ -277,6 +355,16 @@ describe('Form component wrappers', () => {
         const rendered = shallow(<Wrapped form={form} {...props} />);
 
         expect(rendered).toMatchSnapshot();
+      });
+    });
+
+    describe('with displayName: value', () => {
+      const displayName = 'CustomSubmit';
+
+      it('should set the display name', () => {
+        const Wrapped = formSubmit(Button, { displayName });
+
+        expect(Wrapped.displayName).toEqual(displayName);
       });
     });
   });
