@@ -2,40 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Form from '../../components/form';
-import FormCheckboxInput from '../../components/form/checkbox-input';
-import FormInput from '../../components/form/input';
-import FormNumericInput from '../../components/form/numeric-input';
 import FormRow from '../../components/form/row';
-import FormSelectInput from '../../components/form/select-input';
-import FormSubmitButton from '../../components/form/submit-button';
-import FormTextAreaInput from '../../components/form/text-area-input';
 import SpellFormComponentsField from './components-field';
+import {
+  CastingTimeField,
+  DescriptionField,
+  DurationField,
+  LevelField,
+  NameField,
+  RangeField,
+  RitualField,
+  SchoolField,
+  SubmitButton,
+} from './fields';
 
 import { spellType } from '../entities';
-
-import {
-  formField,
-  formGroup,
-} from '../../components/form/wrappers';
-import selectSchoolOptions from './selectSchoolOptions';
-
-export const NameField = formField(FormInput, 'name');
-
-export const SchoolField = formField(FormSelectInput, 'school');
-
-export const LevelField = formField(FormNumericInput, 'level');
-
-export const RitualField = formField(FormCheckboxInput, 'ritual');
-
-export const CastingTimeField = formField(FormInput, 'castingTime');
-
-export const RangeField = formField(FormInput, 'range');
-
-export const DurationField = formField(FormInput, 'duration');
-
-export const DescriptionField = formField(FormTextAreaInput, 'description');
-
-export const SubmitButton = formGroup(FormSubmitButton, { displayName: 'SubmitButton' });
 
 const submitLabel = isUpdate => (isUpdate ? 'Update Spell' : 'Create Spell');
 
@@ -54,7 +35,7 @@ const SpellForm = ({
       <FormRow>
         <NameField form={form} colWidth="12" />
 
-        <SchoolField form={form} colWidth="8" options={selectSchoolOptions} />
+        <SchoolField form={form} colWidth="8" />
 
         <LevelField form={form} colWidth="2" />
 

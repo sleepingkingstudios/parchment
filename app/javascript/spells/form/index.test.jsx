@@ -1,23 +1,15 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
-import SpellForm, {
-  LevelField,
-  NameField,
-  RitualField,
-  SchoolField,
-  CastingTimeField,
-  RangeField,
-  DurationField,
-  DescriptionField,
-  SubmitButton,
-} from './index';
+import SpellForm from './index';
 
 import { spellsData } from '../fixtures';
 import selectSchoolOptions from './selectSchoolOptions';
 
 describe('<SpellForm />', () => {
-  const onChangeAction = jest.fn(({ propName, value }) => ({ payload: { propName, value } }));
+  const onChangeAction = jest.fn(
+    ({ propName, value }) => ({ payload: { propName, value } }),
+  );
   const onSubmitAction = jest.fn(() => ({ ok: true }));
   const spell = spellsData[0];
   const defaultProps = {
@@ -40,8 +32,6 @@ describe('<SpellForm />', () => {
   });
 
   it('should render the name input field', () => {
-    expect(NameField.inputDisplayName).toEqual('FormInput');
-
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('NameField');
 
@@ -50,8 +40,6 @@ describe('<SpellForm />', () => {
   });
 
   it('should render the school select field', () => {
-    expect(SchoolField.inputDisplayName).toEqual('FormSelectInput');
-
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('SchoolField');
     const options = selectSchoolOptions;
@@ -62,8 +50,6 @@ describe('<SpellForm />', () => {
   });
 
   it('should render the level input field', () => {
-    expect(LevelField.inputDisplayName).toEqual('FormNumericInput');
-
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('LevelField');
 
@@ -72,8 +58,6 @@ describe('<SpellForm />', () => {
   });
 
   it('should render the ritual checkbox field', () => {
-    expect(RitualField.inputDisplayName).toEqual('FormCheckboxInput');
-
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('RitualField');
 
@@ -82,8 +66,6 @@ describe('<SpellForm />', () => {
   });
 
   it('should render the casting time input field', () => {
-    expect(CastingTimeField.inputDisplayName).toEqual('FormInput');
-
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('CastingTimeField');
 
@@ -92,8 +74,6 @@ describe('<SpellForm />', () => {
   });
 
   it('should render the range input field', () => {
-    expect(RangeField.inputDisplayName).toEqual('FormInput');
-
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('RangeField');
 
@@ -102,8 +82,6 @@ describe('<SpellForm />', () => {
   });
 
   it('should render the duration input field', () => {
-    expect(DurationField.inputDisplayName).toEqual('FormInput');
-
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('DurationField');
 
@@ -120,8 +98,6 @@ describe('<SpellForm />', () => {
   });
 
   it('should render the description textarea field', () => {
-    expect(DescriptionField.inputDisplayName).toEqual('FormTextAreaInput');
-
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('DescriptionField');
 
@@ -130,8 +106,6 @@ describe('<SpellForm />', () => {
   });
 
   it('should render the submit button', () => {
-    expect(SubmitButton.inputDisplayName).toEqual('Button');
-
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('SubmitButton');
 
@@ -141,7 +115,7 @@ describe('<SpellForm />', () => {
   });
 
   it('should match the snapshot', () => {
-    const rendered = mount(<SpellForm {...defaultProps} />);
+    const rendered = shallow(<SpellForm {...defaultProps} />);
 
     expect(rendered).toMatchSnapshot();
   });
@@ -150,8 +124,6 @@ describe('<SpellForm />', () => {
     const props = { ...defaultProps, isUpdate: true };
 
     it('should render the submit button', () => {
-      expect(SubmitButton.inputDisplayName).toEqual('Button');
-
       const rendered = shallow(<SpellForm {...props} />);
       const input = rendered.find('SubmitButton');
 
@@ -161,7 +133,7 @@ describe('<SpellForm />', () => {
     });
 
     it('should match the snapshot', () => {
-      const rendered = mount(<SpellForm {...props} />);
+      const rendered = shallow(<SpellForm {...props} />);
 
       expect(rendered).toMatchSnapshot();
     });

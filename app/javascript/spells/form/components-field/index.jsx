@@ -1,31 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormCheckboxInput from '../../../components/form/checkbox-input';
-import FormInput from '../../../components/form/input';
 import FormRow from '../../../components/form/row';
 import FormGroup from '../../../components/form/group';
-
 import {
-  formGroup,
-  formInput,
-} from '../../../components/form/wrappers';
+  MaterialInput,
+  SomaticInput,
+  VerbalInput,
+} from './fields';
+
 import { formType } from '../../../components/form/entities';
-
-export const VerbalInput = formGroup(
-  formInput(FormCheckboxInput, 'verbalComponent'),
-  { displayName: 'VerbalInput' },
-);
-
-export const SomaticInput = formGroup(
-  formInput(FormCheckboxInput, 'somaticComponent'),
-  { displayName: 'SomaticInput' },
-);
-
-export const MaterialInput = formGroup(
-  formInput(FormInput, 'materialComponent'),
-  { displayName: 'MaterialInput' },
-);
 
 const SpellFormComponentsField = ({ colWidth, form }) => (
   <FormGroup className="mb-0" colWidth={colWidth}>

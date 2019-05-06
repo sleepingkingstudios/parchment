@@ -1,16 +1,14 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
-import SpellFormComponentsField, {
-  MaterialInput,
-  SomaticInput,
-  VerbalInput,
-} from './index';
+import SpellFormComponentsField from './index';
 
 import { spellsData } from '../../fixtures';
 
 describe('<SpellFormComponentsField />', () => {
-  const onChangeAction = jest.fn(({ propName, value }) => ({ payload: { propName, value } }));
+  const onChangeAction = jest.fn(
+    ({ propName, value }) => ({ payload: { propName, value } }),
+  );
   const spell = spellsData[0];
   const form = {
     data: spell,
@@ -27,8 +25,6 @@ describe('<SpellFormComponentsField />', () => {
   });
 
   it('should render the material component input', () => {
-    expect(MaterialInput.inputDisplayName).toEqual('FormInput');
-
     const rendered = shallow(<SpellFormComponentsField {...defaultProps} />);
     const input = rendered.find('MaterialInput');
     const placeholder = 'Material';
@@ -39,8 +35,6 @@ describe('<SpellFormComponentsField />', () => {
   });
 
   it('should render the somatic component input', () => {
-    expect(SomaticInput.inputDisplayName).toEqual('FormCheckboxInput');
-
     const rendered = shallow(<SpellFormComponentsField {...defaultProps} />);
     const input = rendered.find('SomaticInput');
     const label = 'Somatic';
@@ -51,8 +45,6 @@ describe('<SpellFormComponentsField />', () => {
   });
 
   it('should render the verbal component input', () => {
-    expect(VerbalInput.inputDisplayName).toEqual('FormCheckboxInput');
-
     const rendered = shallow(<SpellFormComponentsField {...defaultProps} />);
     const input = rendered.find('VerbalInput');
     const label = 'Verbal';
@@ -63,7 +55,7 @@ describe('<SpellFormComponentsField />', () => {
   });
 
   it('should match the snapshot', () => {
-    const rendered = mount(<SpellFormComponentsField {...defaultProps} />);
+    const rendered = shallow(<SpellFormComponentsField {...defaultProps} />);
 
     expect(rendered).toMatchSnapshot();
   });

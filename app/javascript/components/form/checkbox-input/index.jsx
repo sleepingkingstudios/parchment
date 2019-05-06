@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './styles.css';
+
 const buildLabel = ({ id, label }) => {
   if (label === false) { return null; }
 
   return (
-    <label className="form-check-label" htmlFor={id}>{ label }</label>
+    <label className="custom-control-label" htmlFor={id}>{ label }</label>
   );
 };
 
@@ -22,8 +24,8 @@ const FormCheckboxInput = ({
   };
 
   return (
-    <div className="form-check">
-      <input type="checkbox" className="form-check-input" {...props} />
+    <div className="custom-control custom-checkbox">
+      <input type="checkbox" className="custom-control-input" {...props} />
       { buildLabel({ id, label }) }
     </div>
   );

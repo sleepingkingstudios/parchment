@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FormCheckboxInput /> should match the snapshot 1`] = `
+<div
+  className="custom-control custom-checkbox"
+>
+  <input
+    checked={false}
+    className="custom-control-input"
+    id="property-name-input"
+    onChange={[MockFunction]}
+    type="checkbox"
+  />
+  <label
+    className="custom-control-label"
+    htmlFor="property-name-input"
+  >
+    Property Name
+  </label>
+</div>
+`;
+
+exports[`<FormCheckboxInput /> with label: false should match the snapshot 1`] = `
+<div
+  className="custom-control custom-checkbox"
+>
+  <input
+    checked={false}
+    className="custom-control-input"
+    id="property-name-input"
+    onChange={[MockFunction]}
+    type="checkbox"
+  />
+  <label
+    className="custom-control-label"
+    htmlFor="property-name-input"
+  >
+    Property Name
+  </label>
+</div>
+`;
