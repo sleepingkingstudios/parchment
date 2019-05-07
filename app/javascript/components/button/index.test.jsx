@@ -20,6 +20,7 @@ describe('<Button />', () => {
     expect(rendered).toHaveClassName('btn-outline-primary');
     expect(rendered).not.toHaveClassName('btn-block');
     expect(rendered).toHaveProp('children', children);
+    expect(rendered).toHaveProp('disabled', false);
     expect(rendered).toHaveProp('onClick', onClick);
   });
 
@@ -143,7 +144,7 @@ describe('<Button />', () => {
     });
   });
 
-  describe('with an unknown buttonStyle', () => {
+  describe('with buttonStyle: unknown value', () => {
     const props = { ...defaultProps, buttonStyle: 'enigmatic' };
 
     it('should create the button', () => {
@@ -152,6 +153,31 @@ describe('<Button />', () => {
       expect(rendered).toHaveClassName('btn');
       expect(rendered).toHaveClassName('btn-outline-primary');
       expect(rendered).not.toHaveClassName('btn-block');
+    });
+  });
+
+  describe('with disabled: true', () => {
+    const props = { ...defaultProps, disabled: true };
+
+    it('should create the button', () => {
+      const rendered = shallow(<Button {...props} />);
+
+      expect(rendered).toHaveClassName('btn');
+      expect(rendered).toHaveProp('disabled', true);
+    });
+
+    it('should stub out the onClick handler', () => {
+      const rendered = shallow(<Button {...props} />);
+      const handler = rendered.props().onClick;
+      const preventDefault = jest.fn();
+      const event = { preventDefault };
+
+      expect(typeof handler).toEqual('function');
+
+      handler(event);
+
+      expect(onClick).not.toHaveBeenCalled();
+      expect(preventDefault).toHaveBeenCalled();
     });
   });
 });

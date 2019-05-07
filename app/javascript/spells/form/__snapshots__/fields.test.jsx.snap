@@ -985,10 +985,12 @@ exports[`<SpellForm /> fields <SubmitButton /> should match the snapshot 1`] = `
         <Button
           block={false}
           buttonStyle="primary"
+          disabled={false}
           onClick={[Function]}
         >
           <button
             className="btn btn-outline-primary"
+            disabled={false}
             onClick={[Function]}
             type="button"
           >

@@ -49,7 +49,8 @@ Page.defaultProps = {
   children: null,
   className: null,
   layout: null,
-  subtitle: null,
+  subtitle: '5e Campaign Companion',
+  title: 'Parchment',
 };
 
 Page.propTypes = {
@@ -58,7 +59,7 @@ Page.propTypes = {
   className: PropTypes.string,
   layout: PropTypes.string,
   subtitle: PropTypes.string,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };
 
 export default Page;

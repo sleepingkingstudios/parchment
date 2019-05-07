@@ -27,13 +27,21 @@ const buttonClass = ({ block, buttonStyle }) => {
   return classes.join(' ');
 };
 
+const disabledOnClick = ({ preventDefault }) => { preventDefault(); };
+
 const Button = ({
   block,
   buttonStyle,
   children,
+  disabled,
   onClick,
 }) => (
-  <button type="button" className={buttonClass({ block, buttonStyle })} onClick={onClick}>
+  <button
+    type="button"
+    className={buttonClass({ block, buttonStyle })}
+    disabled={disabled}
+    onClick={disabled ? disabledOnClick : onClick}
+  >
     { children }
   </button>
 );
@@ -41,6 +49,7 @@ const Button = ({
 Button.defaultProps = {
   block: false,
   buttonStyle: 'primary',
+  disabled: false,
 };
 
 Button.propTypes = {
@@ -50,6 +59,7 @@ Button.propTypes = {
     PropTypes.arrayOf(PropTypes.object),
     PropTypes.string,
   ]).isRequired,
+  disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
 };
 
