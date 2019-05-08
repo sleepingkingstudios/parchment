@@ -55,10 +55,7 @@ Button.defaultProps = {
 Button.propTypes = {
   block: PropTypes.bool,
   buttonStyle: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.object),
-    PropTypes.string,
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
 };

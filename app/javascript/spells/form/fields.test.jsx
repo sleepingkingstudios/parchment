@@ -14,6 +14,7 @@ import {
 } from './fields';
 
 import { spellsData } from '../fixtures';
+import { INITIALIZED } from '../../store/requestStatus';
 
 describe('<SpellForm /> fields', () => {
   const onChangeAction = jest.fn(
@@ -190,7 +191,7 @@ describe('<SpellForm /> fields', () => {
 
   describe('<SubmitButton />', () => {
     const children = 'Do Something';
-    const defaultProps = { children, form };
+    const defaultProps = { children, form, requestStatus: INITIALIZED };
 
     it('should set the display name', () => {
       expect(SubmitButton.displayName).toEqual('SubmitButton');

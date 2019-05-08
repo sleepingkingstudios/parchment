@@ -5,6 +5,7 @@ import SpellForm from './index';
 
 import { spellsData } from '../fixtures';
 import selectSchoolOptions from './selectSchoolOptions';
+import { INITIALIZED } from '../../store/requestStatus';
 
 describe('<SpellForm />', () => {
   const onChangeAction = jest.fn(
@@ -15,6 +16,7 @@ describe('<SpellForm />', () => {
   const defaultProps = {
     onChangeAction,
     onSubmitAction,
+    requestStatus: INITIALIZED,
     spell,
   };
   const form = {
@@ -111,31 +113,11 @@ describe('<SpellForm />', () => {
 
     expect(input).toExist();
     expect(input).toHaveProp({ form });
-    expect(input).toHaveProp('children', 'Create Spell');
   });
 
   it('should match the snapshot', () => {
     const rendered = shallow(<SpellForm {...defaultProps} />);
 
     expect(rendered).toMatchSnapshot();
-  });
-
-  describe('with isUpdate: true', () => {
-    const props = { ...defaultProps, isUpdate: true };
-
-    it('should render the submit button', () => {
-      const rendered = shallow(<SpellForm {...props} />);
-      const input = rendered.find('SubmitButton');
-
-      expect(input).toExist();
-      expect(input).toHaveProp({ form });
-      expect(input).toHaveProp('children', 'Update Spell');
-    });
-
-    it('should match the snapshot', () => {
-      const rendered = shallow(<SpellForm {...props} />);
-
-      expect(rendered).toMatchSnapshot();
-    });
   });
 });

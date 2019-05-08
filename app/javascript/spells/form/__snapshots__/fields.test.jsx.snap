@@ -928,6 +928,7 @@ exports[`<SpellForm /> fields <SchoolField /> should match the snapshot 1`] = `
 
 exports[`<SpellForm /> fields <SubmitButton /> should match the snapshot 1`] = `
 <SubmitButton
+  disabled={false}
   form={
     Object {
       "data": Object {
@@ -950,6 +951,7 @@ exports[`<SpellForm /> fields <SubmitButton /> should match the snapshot 1`] = `
       "onSubmitAction": [MockFunction],
     }
   }
+  requestStatus="initialized"
 >
   <FormGroup
     className=""
@@ -958,7 +960,8 @@ exports[`<SpellForm /> fields <SubmitButton /> should match the snapshot 1`] = `
     <div
       className="form-group col"
     >
-      <FormSubmitWrapper
+      <SpellFormSubmitButton
+        disabled={false}
         form={
           Object {
             "data": Object {
@@ -981,23 +984,52 @@ exports[`<SpellForm /> fields <SubmitButton /> should match the snapshot 1`] = `
             "onSubmitAction": [MockFunction],
           }
         }
+        isUpdate={false}
+        requestStatus="initialized"
       >
-        <Button
-          block={false}
-          buttonStyle="primary"
+        <FormSubmitWrapper
+          block={true}
           disabled={false}
-          onClick={[Function]}
+          form={
+            Object {
+              "data": Object {
+                "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                "duration": "Instantaneous",
+                "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                "level": 0,
+                "materialComponent": "",
+                "name": "Thunderclap",
+                "range": "Self",
+                "ritual": false,
+                "school": "illusion",
+                "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                "somaticComponent": false,
+                "verbalComponent": false,
+              },
+              "namespace": "spell",
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+            }
+          }
         >
-          <button
-            className="btn btn-outline-primary"
+          <Button
+            block={true}
+            buttonStyle="primary"
             disabled={false}
             onClick={[Function]}
-            type="button"
           >
-            Do Something
-          </button>
-        </Button>
-      </FormSubmitWrapper>
+            <button
+              className="btn btn-outline-primary btn-block"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              Create Spell
+            </button>
+          </Button>
+        </FormSubmitWrapper>
+      </SpellFormSubmitButton>
     </div>
   </FormGroup>
 </SubmitButton>

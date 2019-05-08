@@ -4,8 +4,8 @@ import FormCheckboxInput from '../../components/form/checkbox-input';
 import FormInput from '../../components/form/input';
 import FormNumericInput from '../../components/form/numeric-input';
 import FormSelectInput from '../../components/form/select-input';
-import FormSubmitButton from '../../components/form/submit-button';
 import FormTextAreaInput from '../../components/form/text-area-input';
+import SpellFormSubmitButton from './submit-button';
 
 import {
   formField,
@@ -86,13 +86,16 @@ SchoolField.propTypes = {
   ),
 };
 
-const SubmitButton = formGroup(FormSubmitButton, { displayName: 'SubmitButton' });
+const SubmitButton = formGroup(SpellFormSubmitButton, { displayName: 'SubmitButton' });
 
-SubmitButton.defaultProps = {};
+SubmitButton.defaultProps = {
+  disabled: false,
+};
 
 SubmitButton.propTypes = {
-  children: PropTypes.node.isRequired,
+  disabled: PropTypes.bool,
   form: formType.isRequired,
+  requestStatus: PropTypes.string.isRequired,
 };
 
 export {

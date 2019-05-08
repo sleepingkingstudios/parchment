@@ -18,10 +18,8 @@ import {
 
 import { spellType } from '../entities';
 
-const submitLabel = isUpdate => (isUpdate ? 'Update Spell' : 'Create Spell');
-
 const SpellForm = ({
-  isUpdate, onChangeAction, onSubmitAction, spell,
+  isUpdate, onChangeAction, onSubmitAction, requestStatus, spell,
 }) => {
   const form = {
     data: spell,
@@ -53,7 +51,12 @@ const SpellForm = ({
       </FormRow>
 
       <FormRow align="right">
-        <SubmitButton colWidth="4" form={form} block>{ submitLabel(isUpdate) }</SubmitButton>
+        <SubmitButton
+          colWidth="4"
+          form={form}
+          isUpdate={isUpdate}
+          requestStatus={requestStatus}
+        />
       </FormRow>
     </Form>
   );
@@ -67,6 +70,7 @@ SpellForm.propTypes = {
   isUpdate: PropTypes.bool,
   onChangeAction: PropTypes.func.isRequired,
   onSubmitAction: PropTypes.func.isRequired,
+  requestStatus: PropTypes.string.isRequired,
   spell: spellType.isRequired,
 };
 

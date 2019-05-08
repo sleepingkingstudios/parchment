@@ -25,12 +25,10 @@ class SpellsPage extends React.Component {
   }
 
   render() {
-    const title = 'Parchment';
-    const subtitle = '5e Campaign Companion';
     const { spells, spellsRequestStatus } = this.props;
 
     return (
-      <Page {...{ title, subtitle, breadcrumbs }} className="page-spells">
+      <Page breadcrumbs={breadcrumbs} className="page-spells">
         <h1>Spells</h1>
 
         <SpellsTable {...{ spells, spellsRequestStatus }} />
