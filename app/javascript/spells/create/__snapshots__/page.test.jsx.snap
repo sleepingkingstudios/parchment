@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CreateSpellPage /> should match the snapshot 1`] = `
+<Page
+  breadcrumbs={
+    Array [
+      Object {
+        "label": "Home",
+        "url": "/",
+      },
+      Object {
+        "label": "Spells",
+        "url": "/spells",
+      },
+      Object {
+        "active": true,
+        "label": "Create",
+        "url": "/spells/create",
+      },
+    ]
+  }
+  className="page-spells page-create-spell"
+  layout={null}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <h1>
+    Create Spell
+  </h1>
+  <SpellForm
+    isUpdate={false}
+    onChangeAction={[MockFunction]}
+    onSubmitAction={[MockFunction]}
+    requestStatus="initialized"
+    spell={
+      Object {
+        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+        "duration": "Instantaneous",
+        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+        "level": 0,
+        "materialComponent": "",
+        "name": "Thunderclap",
+        "range": "Self",
+        "ritual": false,
+        "school": "illusion",
+        "shortDescription": "Create an ominous thunderclap when your name is spoken",
+        "somaticComponent": false,
+        "verbalComponent": false,
+      }
+    }
+  />
+</Page>
+`;
