@@ -7,8 +7,9 @@ require 'operations/records/find_one_operation'
 require 'operations/records/update_operation'
 
 # Controller for performing CRUD actions on Spells via a JSON API.
-class Api::SpellsController < ApplicationController
+class Api::SpellsController < Api::BaseController
   before_action :require_spell, only: %i[destroy show update]
+  before_action :require_spell_params, only: %i[create update]
 
   def create
     create_operation.call(spell_params)
@@ -94,6 +95,12 @@ class Api::SpellsController < ApplicationController
     render_errors(find_operation.errors, status: :not_found)
   end
 
+  def require_spell_params
+    return unless spell_params.empty?
+
+    render_errors([['spell', "can't be blank"]], status: :unprocessable_entity)
+  end
+
   def resource_name
     'spells'
   end
@@ -104,7 +111,7 @@ class Api::SpellsController < ApplicationController
 
   # rubocop:disable Metrics/MethodLength
   def spell_params
-    params[:spell].permit(
+    @spell_params ||= params.fetch(:spell, {}).permit(
       :casting_time,
       :description,
       :duration,
