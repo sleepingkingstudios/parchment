@@ -1,6 +1,9 @@
 import reducer from './reducer';
 import initialState from './initialState';
 import {
+  requestCreateSpellFailure,
+  requestCreateSpellPending,
+  requestCreateSpellSuccess,
   requestFindSpellFailure,
   requestFindSpellPending,
   requestFindSpellSuccess,
@@ -17,6 +20,39 @@ import {
 import { spellsData } from '../fixtures';
 
 describe('Spells reducer', () => {
+  describe('when REQUEST_CREATE_SPELL_FAILURE is dispatched', () => {
+    it('should mark the request as failed', () => {
+      const action = requestCreateSpellFailure();
+      const expected = Object.assign({}, initialState, {
+        createSpellRequestStatus: FAILURE,
+      });
+
+      expect(reducer(initialState, action)).toEqual(expected);
+    });
+  });
+
+  describe('when REQUEST_CREATE_SPELL_PENDING is dispatched', () => {
+    it('should mark the request as failed', () => {
+      const action = requestCreateSpellPending();
+      const expected = Object.assign({}, initialState, {
+        createSpellRequestStatus: PENDING,
+      });
+
+      expect(reducer(initialState, action)).toEqual(expected);
+    });
+  });
+
+  describe('when REQUEST_CREATE_SPELL_SUCCESS is dispatched', () => {
+    it('should mark the request as successful', () => {
+      const action = requestCreateSpellSuccess();
+      const expected = Object.assign({}, initialState, {
+        createSpellRequestStatus: SUCCESS,
+      });
+
+      expect(reducer(initialState, action)).toEqual(expected);
+    });
+  });
+
   describe('when REQUEST_FIND_SPELL_FAILURE is dispatched', () => {
     it('should mark the request as failed', () => {
       const action = requestFindSpellFailure();

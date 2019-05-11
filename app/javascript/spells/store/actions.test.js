@@ -1,4 +1,7 @@
 import {
+  REQUEST_CREATE_SPELL_FAILURE,
+  REQUEST_CREATE_SPELL_PENDING,
+  REQUEST_CREATE_SPELL_SUCCESS,
   REQUEST_FIND_SPELL_FAILURE,
   REQUEST_FIND_SPELL_PENDING,
   REQUEST_FIND_SPELL_SUCCESS,
@@ -6,6 +9,9 @@ import {
   REQUEST_SPELLS_PENDING,
   REQUEST_SPELLS_SUCCESS,
   UPDATE_SPELL_FORM_FIELD,
+  requestCreateSpellFailure,
+  requestCreateSpellPending,
+  requestCreateSpellSuccess,
   requestFindSpellFailure,
   requestFindSpellPending,
   requestFindSpellSuccess,
@@ -17,6 +23,24 @@ import {
 import { spellsData } from '../fixtures';
 
 describe('Spells actions', () => {
+  describe('REQUEST_CREATE_SPELL_FAILURE', () => {
+    it('should define the action', () => {
+      expect(REQUEST_CREATE_SPELL_FAILURE).toEqual('spells/requestCreateSpellFailure');
+    });
+  });
+
+  describe('REQUEST_CREATE_SPELL_PENDING', () => {
+    it('should define the action', () => {
+      expect(REQUEST_CREATE_SPELL_PENDING).toEqual('spells/requestCreateSpellPending');
+    });
+  });
+
+  describe('REQUEST_CREATE_SPELL_SUCCESS', () => {
+    it('should define the action', () => {
+      expect(REQUEST_CREATE_SPELL_SUCCESS).toEqual('spells/requestCreateSpellSuccess');
+    });
+  });
+
   describe('REQUEST_FIND_SPELL_FAILURE', () => {
     it('should define the action', () => {
       expect(REQUEST_FIND_SPELL_FAILURE).toEqual('spells/requestFindSpellFailure');
@@ -56,6 +80,46 @@ describe('Spells actions', () => {
   describe('UPDATE_SPELL_FORM_FIELD', () => {
     it('should define the action', () => {
       expect(UPDATE_SPELL_FORM_FIELD).toEqual('spells/updateSpellFormField');
+    });
+  });
+
+  describe('requestCreateSpellFailure', () => {
+    it('should be a function', () => {
+      expect(typeof requestCreateSpellFailure).toEqual('function');
+    });
+
+    it('should create the action', () => {
+      const action = requestCreateSpellFailure();
+
+      expect(action).toEqual({ type: REQUEST_CREATE_SPELL_FAILURE });
+    });
+  });
+
+  describe('requestCreateSpellPending', () => {
+    it('should be a function', () => {
+      expect(typeof requestCreateSpellPending).toEqual('function');
+    });
+
+    it('should create the action', () => {
+      const action = requestCreateSpellPending();
+
+      expect(action).toEqual({ type: REQUEST_CREATE_SPELL_PENDING });
+    });
+  });
+
+  describe('requestCreateSpellSuccess', () => {
+    it('should be a function', () => {
+      expect(typeof requestCreateSpellSuccess).toEqual('function');
+    });
+
+    it('should create the action', () => {
+      const spell = spellsData[0];
+      const action = requestCreateSpellSuccess(spell);
+
+      expect(action).toEqual({
+        type: REQUEST_CREATE_SPELL_SUCCESS,
+        payload: { spell },
+      });
     });
   });
 

@@ -1,5 +1,8 @@
 import initialState from './initialState';
 import {
+  REQUEST_CREATE_SPELL_FAILURE,
+  REQUEST_CREATE_SPELL_PENDING,
+  REQUEST_CREATE_SPELL_SUCCESS,
   REQUEST_FIND_SPELL_FAILURE,
   REQUEST_FIND_SPELL_PENDING,
   REQUEST_FIND_SPELL_SUCCESS,
@@ -24,6 +27,18 @@ const updateDraftSpell = (state, { propName, value }) => {
 
 const spellsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case REQUEST_CREATE_SPELL_FAILURE:
+      return Object.assign({}, state, {
+        createSpellRequestStatus: FAILURE,
+      });
+    case REQUEST_CREATE_SPELL_PENDING:
+      return Object.assign({}, state, {
+        createSpellRequestStatus: PENDING,
+      });
+    case REQUEST_CREATE_SPELL_SUCCESS:
+      return Object.assign({}, state, {
+        createSpellRequestStatus: SUCCESS,
+      });
     case REQUEST_FIND_SPELL_FAILURE:
       return Object.assign({}, state, {
         spell: {},
