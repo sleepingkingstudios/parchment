@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HeadingWithButtons /> should match the snapshot 1`] = `
+<div
+  className="heading-with-buttons"
+>
+  <h1>
+    Heading Label
+  </h1>
+  <LinkButton
+    block={false}
+    buttonStyle="primary"
+    className="btn-sm float-right"
+    key="button-0"
+    outline={false}
+    url="path/to/url"
+  >
+    Button Label
+  </LinkButton>
+</div>
+`;
+
+exports[`<HeadingWithButtons /> with many buttons should match the snapshot 1`] = `
+<div
+  className="heading-with-buttons"
+>
+  <h1>
+    Heading Label
+  </h1>
+  <LinkButton
+    block={false}
+    buttonStyle="primary"
+    className="btn-sm float-right"
+    key="button-0"
+    outline={false}
+    url="button/three"
+  >
+    Third Button
+  </LinkButton>
+  <LinkButton
+    block={false}
+    buttonStyle="primary"
+    className="btn-sm float-right"
+    key="button-1"
+    outline={false}
+    url="button/two"
+  >
+    Second Button
+  </LinkButton>
+  <LinkButton
+    block={false}
+    buttonStyle="primary"
+    className="btn-sm float-right"
+    key="button-2"
+    outline={false}
+    url="button/one"
+  >
+    First Button
+  </LinkButton>
+</div>
+`;
