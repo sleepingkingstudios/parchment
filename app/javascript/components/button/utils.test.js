@@ -1,6 +1,7 @@
 import {
   buttonClass,
   buttonStyleClass,
+  disabledOnClick,
 } from './utils';
 
 const buttonStyles = [
@@ -142,5 +143,20 @@ describe('buttonStyleClass()', () => {
         expect(buttonStyleClass(props)).toEqual(expected);
       });
     });
+  });
+});
+
+describe('disabledOnClick()', () => {
+  const preventDefault = jest.fn();
+  const event = { preventDefault };
+
+  it('should be a function', () => {
+    expect(typeof disabledOnClick).toEqual('function');
+  });
+
+  it('should call preventDefault()', () => {
+    disabledOnClick(event);
+
+    expect(preventDefault).toHaveBeenCalled();
   });
 });

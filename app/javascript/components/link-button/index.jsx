@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-import { buttonClass, disabledOnClick } from './utils';
+import { buttonClass } from '../button/utils';
 
-const Button = ({
+const LinkButton = ({
   block,
   buttonStyle,
   children,
   className,
-  disabled,
-  onClick,
   outline,
+  url,
 }) => {
   const generatedClassName = buttonClass({
     block,
@@ -20,33 +20,26 @@ const Button = ({
   });
 
   return (
-    <button
-      type="button"
-      className={generatedClassName}
-      disabled={disabled}
-      onClick={disabled ? disabledOnClick : onClick}
-    >
+    <Link to={url} className={generatedClassName}>
       { children }
-    </button>
+    </Link>
   );
 };
 
-Button.defaultProps = {
+LinkButton.defaultProps = {
   block: false,
   buttonStyle: 'primary',
   className: null,
-  disabled: false,
   outline: false,
 };
 
-Button.propTypes = {
+LinkButton.propTypes = {
   block: PropTypes.bool,
   buttonStyle: PropTypes.string,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  disabled: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
   outline: PropTypes.bool,
+  url: PropTypes.string.isRequired,
 };
 
-export default Button;
+export default LinkButton;

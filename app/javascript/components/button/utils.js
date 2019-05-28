@@ -30,3 +30,5 @@ export const buttonClass = ({
 
   return classes.join(' ');
 };
+
+export const disabledOnClick = ({ preventDefault }) => { preventDefault(); };
