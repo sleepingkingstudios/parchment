@@ -181,8 +181,10 @@ exports[`Form component wrappers formSubmit() should match the snapshot 1`] = `
 <Button
   block={false}
   buttonStyle="primary"
+  className={null}
   disabled={false}
   onClick={[Function]}
+  outline={false}
 >
   Button Text
 </Button>
@@ -192,8 +194,10 @@ exports[`Form component wrappers formSubmit() with custom properties should matc
 <Button
   block={false}
   buttonStyle="dark"
+  className={null}
   disabled={false}
   onClick={[Function]}
+  outline={false}
 >
   Button Text
 </Button>

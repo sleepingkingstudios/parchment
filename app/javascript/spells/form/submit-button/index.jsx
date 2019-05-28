@@ -38,7 +38,7 @@ const submitLabel = ({ isUpdate, requestStatus }) => {
 };
 
 const SpellFormSubmitButton = ({ form, isUpdate, requestStatus }) => (
-  <FormSubmitButton block form={form} disabled={isButtonDisabled(requestStatus)}>
+  <FormSubmitButton block outline form={form} disabled={isButtonDisabled(requestStatus)}>
     { submitLabel({ isUpdate, requestStatus }) }
   </FormSubmitButton>
 );

@@ -1,31 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const buttonStyleClass = ({ buttonStyle }) => {
-  switch (buttonStyle) {
-    case 'link':
-      return 'btn-link';
-    case 'primary':
-    case 'secondary':
-    case 'success':
-    case 'danger':
-    case 'warning':
-    case 'info':
-    case 'light':
-    case 'dark':
-      return `btn-outline-${buttonStyle}`;
-    default:
-      return 'btn-outline-primary';
-  }
-};
-
-const buttonClass = ({ block, buttonStyle }) => {
-  const classes = ['btn', buttonStyleClass({ buttonStyle })];
-
-  if (block) { classes.push('btn-block'); }
-
-  return classes.join(' ');
-};
+import { buttonClass } from './utils';
 
 const disabledOnClick = ({ preventDefault }) => { preventDefault(); };
 
@@ -33,31 +9,46 @@ const Button = ({
   block,
   buttonStyle,
   children,
+  className,
   disabled,
   onClick,
-}) => (
-  <button
-    type="button"
-    className={buttonClass({ block, buttonStyle })}
-    disabled={disabled}
-    onClick={disabled ? disabledOnClick : onClick}
-  >
-    { children }
-  </button>
-);
+  outline,
+}) => {
+  const generatedClassName = buttonClass({
+    block,
+    buttonStyle,
+    className,
+    outline,
+  });
+
+  return (
+    <button
+      type="button"
+      className={generatedClassName}
+      disabled={disabled}
+      onClick={disabled ? disabledOnClick : onClick}
+    >
+      { children }
+    </button>
+  );
+};
 
 Button.defaultProps = {
   block: false,
   buttonStyle: 'primary',
+  className: null,
   disabled: false,
+  outline: false,
 };
 
 Button.propTypes = {
   block: PropTypes.bool,
   buttonStyle: PropTypes.string,
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+  outline: PropTypes.bool,
 };
 
 export default Button;

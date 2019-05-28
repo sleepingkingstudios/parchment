@@ -1012,12 +1012,15 @@ exports[`<SpellForm /> fields <SubmitButton /> should match the snapshot 1`] = `
               "onSubmitAction": [MockFunction],
             }
           }
+          outline={true}
         >
           <Button
             block={true}
             buttonStyle="primary"
+            className={null}
             disabled={false}
             onClick={[Function]}
+            outline={true}
           >
             <button
               className="btn btn-outline-primary btn-block"

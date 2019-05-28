@@ -25,6 +25,7 @@ exports[`<SpellFormSubmitButton /> should match the snapshot 1`] = `
       "onSubmitAction": [MockFunction],
     }
   }
+  outline={true}
 >
   Create Spell
 </FormSubmitWrapper>
@@ -55,6 +56,7 @@ exports[`<SpellFormSubmitButton /> with isUpdate: true should match the snapshot
       "onSubmitAction": [MockFunction],
     }
   }
+  outline={true}
 >
   Update Spell
 </FormSubmitWrapper>
