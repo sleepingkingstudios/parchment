@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import HeadingWithButtons from '../components/heading-with-buttons';
 import Page from '../components/page';
 import SpellsTable from './table/index';
 import { spellListType } from './entities';
@@ -17,6 +18,14 @@ const breadcrumbs = [
   },
 ];
 
+const buttons = [
+  {
+    label: 'Create Spell',
+    outline: true,
+    url: '/spells/create',
+  },
+];
+
 class SpellsPage extends React.Component {
   componentDidMount() {
     const { requestSpells } = this.props;
@@ -29,7 +38,7 @@ class SpellsPage extends React.Component {
 
     return (
       <Page breadcrumbs={breadcrumbs} className="page-spells">
-        <h1>Spells</h1>
+        <HeadingWithButtons buttons={buttons}>Spells</HeadingWithButtons>
 
         <SpellsTable {...{ spells, spellsRequestStatus }} />
       </Page>

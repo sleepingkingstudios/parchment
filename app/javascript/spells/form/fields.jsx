@@ -5,6 +5,7 @@ import FormInput from '../../components/form/input';
 import FormNumericInput from '../../components/form/numeric-input';
 import FormSelectInput from '../../components/form/select-input';
 import FormTextAreaInput from '../../components/form/text-area-input';
+import SpellFormCancelButton from './cancel-button';
 import SpellFormSubmitButton from './submit-button';
 
 import {
@@ -86,6 +87,15 @@ SchoolField.propTypes = {
   ),
 };
 
+const CancelButton = formGroup(SpellFormCancelButton, { displayName: 'CancelButton' });
+
+CancelButton.defaultProps = {};
+
+CancelButton.propTypes = {
+  form: formType.isRequired,
+  isUpdate: PropTypes.bool.isRequired,
+};
+
 const SubmitButton = formGroup(SpellFormSubmitButton, { displayName: 'SubmitButton' });
 
 SubmitButton.defaultProps = {
@@ -99,6 +109,7 @@ SubmitButton.propTypes = {
 };
 
 export {
+  CancelButton,
   CastingTimeField,
   DescriptionField,
   DurationField,

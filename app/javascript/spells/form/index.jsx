@@ -5,6 +5,7 @@ import Form from '../../components/form';
 import FormRow from '../../components/form/row';
 import SpellFormComponentsField from './components-field';
 import {
+  CancelButton,
   CastingTimeField,
   DescriptionField,
   DurationField,
@@ -51,8 +52,13 @@ const SpellForm = ({
       </FormRow>
 
       <FormRow align="right">
+        <CancelButton
+          colWidth="3"
+          form={form}
+          isUpdate={isUpdate}
+        />
         <SubmitButton
-          colWidth="4"
+          colWidth="3"
           form={form}
           isUpdate={isUpdate}
           requestStatus={requestStatus}
