@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Alert /> should match the snapshot 1`] = `
+<div
+  className="alert alert-primary"
+>
+  <strong>
+    Primary
+    :
+  </strong>
+   This is a test of the Emergency Broadcast System. This is only a test.
+</div>
+`;
+
+exports[`<Alert /> with children: value should match the snapshot 1`] = `
+<div
+  className="alert alert-primary"
+>
+  <dl>
+    <dt>
+      What lies beyond the furthest reaches of the sky?
+    </dt>
+    <dd>
+      That which will lead the lost child back to her mother's arms. Exile.
+    </dd>
+  </dl>
+</div>
+`;
