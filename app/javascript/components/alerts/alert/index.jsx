@@ -1,7 +1,20 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { capitalize } from '../../utils/string';
+import { alertType } from '../entities';
+import { capitalize } from '../../../utils/string';
+
+const alertBadge = ({ alertStyle }) => {
+  switch (alertStyle) {
+    case 'danger':
+    case 'info':
+    case 'success':
+    case 'warning':
+      return capitalize(alertStyle);
+    default:
+      return 'Notice';
+  }
+};
 
 const alertStyleClass = ({ alertStyle }) => {
   switch (alertStyle) {
@@ -32,35 +45,29 @@ const renderChildren = ({ alertStyle, children, message }) => {
 
   return (
     <Fragment>
-      <strong>{ capitalize(alertStyle) }:</strong>
+      <strong>{ alertBadge({ alertStyle }) }:</strong>
       { ` ${message}` }
     </Fragment>
   );
 };
 
-const Alert = ({
-  alertStyle,
-  className,
-  children,
-  message,
-}) => (
-  <div className={alertClass({ alertStyle, className })}>
-    { renderChildren({ alertStyle, children, message }) }
-  </div>
-);
+const Alert = ({ alert, className }) => {
+  const { alertStyle, children, message } = alert;
+
+  return (
+    <div className={alertClass({ alertStyle, className })}>
+      { renderChildren({ alertStyle, children, message }) }
+    </div>
+  );
+};
 
 Alert.defaultProps = {
-  alertStyle: 'primary',
   className: null,
-  children: null,
-  message: '',
 };
 
 Alert.propTypes = {
-  alertStyle: PropTypes.string,
+  alert: alertType.isRequired,
   className: PropTypes.string,
-  children: PropTypes.node,
-  message: PropTypes.string,
 };
 
 export default Alert;

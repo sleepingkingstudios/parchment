@@ -3,13 +3,13 @@ import { shallow } from 'enzyme';
 
 import Alert from './index';
 
-import { capitalize } from '../../utils/string';
-
 describe('<Alert />', () => {
-  const defaultProps = {
+  const defaultAlert = {
+    id: '00000000-0000-0000-0000-000000000000',
     message:
       'This is a test of the Emergency Broadcast System. This is only a test.',
   };
+  const defaultProps = { alert: defaultAlert };
 
   it('should wrap the contents in a div', () => {
     const rendered = shallow(<Alert {...defaultProps} />);
@@ -21,11 +21,10 @@ describe('<Alert />', () => {
 
   it('should render the message', () => {
     const rendered = shallow(<Alert {...defaultProps} />);
-    const alertStyle = 'primary';
-    const { message } = defaultProps;
+    const { message } = defaultAlert;
 
     expect(rendered).toContainReact(
-      <strong>{ `${capitalize(alertStyle)}:` }</strong>,
+      <strong>Notice:</strong>,
     );
     expect(rendered).toIncludeText(message);
   });
@@ -37,11 +36,12 @@ describe('<Alert />', () => {
   });
 
   describe('with alertStyle: danger', () => {
-    const props = { ...defaultProps, alertStyle: 'danger' };
+    const alert = { ...defaultAlert, alertStyle: 'danger' };
+    const props = { ...defaultProps, alert };
 
     it('should wrap the contents in a div', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle } = props;
+      const { alertStyle } = alert;
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('alert');
@@ -50,21 +50,22 @@ describe('<Alert />', () => {
 
     it('should render the message', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle, message } = props;
+      const { message } = alert;
 
       expect(rendered).toContainReact(
-        <strong>{ `${capitalize(alertStyle)}:` }</strong>,
+        <strong>Danger:</strong>,
       );
       expect(rendered).toIncludeText(message);
     });
   });
 
   describe('with alertStyle: dark', () => {
-    const props = { ...defaultProps, alertStyle: 'dark' };
+    const alert = { ...defaultAlert, alertStyle: 'dark' };
+    const props = { ...defaultProps, alert };
 
     it('should wrap the contents in a div', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle } = props;
+      const { alertStyle } = alert;
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('alert');
@@ -73,21 +74,22 @@ describe('<Alert />', () => {
 
     it('should render the message', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle, message } = props;
+      const { message } = alert;
 
       expect(rendered).toContainReact(
-        <strong>{ `${capitalize(alertStyle)}:` }</strong>,
+        <strong>Notice:</strong>,
       );
       expect(rendered).toIncludeText(message);
     });
   });
 
   describe('with alertStyle: info', () => {
-    const props = { ...defaultProps, alertStyle: 'info' };
+    const alert = { ...defaultAlert, alertStyle: 'info' };
+    const props = { ...defaultProps, alert };
 
     it('should wrap the contents in a div', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle } = props;
+      const { alertStyle } = alert;
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('alert');
@@ -96,21 +98,22 @@ describe('<Alert />', () => {
 
     it('should render the message', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle, message } = props;
+      const { message } = alert;
 
       expect(rendered).toContainReact(
-        <strong>{ `${capitalize(alertStyle)}:` }</strong>,
+        <strong>Info:</strong>,
       );
       expect(rendered).toIncludeText(message);
     });
   });
 
   describe('with alertStyle: light', () => {
-    const props = { ...defaultProps, alertStyle: 'light' };
+    const alert = { ...defaultAlert, alertStyle: 'light' };
+    const props = { ...defaultProps, alert };
 
     it('should wrap the contents in a div', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle } = props;
+      const { alertStyle } = alert;
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('alert');
@@ -119,21 +122,22 @@ describe('<Alert />', () => {
 
     it('should render the message', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle, message } = props;
+      const { message } = alert;
 
       expect(rendered).toContainReact(
-        <strong>{ `${capitalize(alertStyle)}:` }</strong>,
+        <strong>Notice:</strong>,
       );
       expect(rendered).toIncludeText(message);
     });
   });
 
   describe('with alertStyle: primary', () => {
-    const props = { ...defaultProps, alertStyle: 'primary' };
+    const alert = { ...defaultAlert, alertStyle: 'primary' };
+    const props = { ...defaultProps, alert };
 
     it('should wrap the contents in a div', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle } = props;
+      const { alertStyle } = alert;
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('alert');
@@ -142,21 +146,22 @@ describe('<Alert />', () => {
 
     it('should render the message', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle, message } = props;
+      const { message } = alert;
 
       expect(rendered).toContainReact(
-        <strong>{ `${capitalize(alertStyle)}:` }</strong>,
+        <strong>Notice:</strong>,
       );
       expect(rendered).toIncludeText(message);
     });
   });
 
   describe('with alertStyle: secondary', () => {
-    const props = { ...defaultProps, alertStyle: 'secondary' };
+    const alert = { ...defaultAlert, alertStyle: 'secondary' };
+    const props = { ...defaultProps, alert };
 
     it('should wrap the contents in a div', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle } = props;
+      const { alertStyle } = alert;
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('alert');
@@ -165,21 +170,22 @@ describe('<Alert />', () => {
 
     it('should render the message', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle, message } = props;
+      const { message } = alert;
 
       expect(rendered).toContainReact(
-        <strong>{ `${capitalize(alertStyle)}:` }</strong>,
+        <strong>Notice:</strong>,
       );
       expect(rendered).toIncludeText(message);
     });
   });
 
   describe('with alertStyle: success', () => {
-    const props = { ...defaultProps, alertStyle: 'success' };
+    const alert = { ...defaultAlert, alertStyle: 'success' };
+    const props = { ...defaultProps, alert };
 
     it('should wrap the contents in a div', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle } = props;
+      const { alertStyle } = alert;
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('alert');
@@ -188,21 +194,22 @@ describe('<Alert />', () => {
 
     it('should render the message', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle, message } = props;
+      const { message } = alert;
 
       expect(rendered).toContainReact(
-        <strong>{ `${capitalize(alertStyle)}:` }</strong>,
+        <strong>Success:</strong>,
       );
       expect(rendered).toIncludeText(message);
     });
   });
 
   describe('with alertStyle: warning', () => {
-    const props = { ...defaultProps, alertStyle: 'warning' };
+    const alert = { ...defaultAlert, alertStyle: 'warning' };
+    const props = { ...defaultProps, alert };
 
     it('should wrap the contents in a div', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle } = props;
+      const { alertStyle } = alert;
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('alert');
@@ -211,17 +218,18 @@ describe('<Alert />', () => {
 
     it('should render the message', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle, message } = props;
+      const { message } = alert;
 
       expect(rendered).toContainReact(
-        <strong>{ `${capitalize(alertStyle)}:` }</strong>,
+        <strong>Warning:</strong>,
       );
       expect(rendered).toIncludeText(message);
     });
   });
 
   describe('with alertStyle: unknown value', () => {
-    const props = { ...defaultProps, alertStyle: 'enigmatic' };
+    const alert = { ...defaultAlert, alertStyle: 'enigmatic' };
+    const props = { ...defaultProps, alert };
 
     it('should wrap the contents in a div', () => {
       const rendered = shallow(<Alert {...props} />);
@@ -233,10 +241,10 @@ describe('<Alert />', () => {
 
     it('should render the message', () => {
       const rendered = shallow(<Alert {...props} />);
-      const { alertStyle, message } = props;
+      const { message } = alert;
 
       expect(rendered).toContainReact(
-        <strong>{ `${capitalize(alertStyle)}:` }</strong>,
+        <strong>Notice:</strong>,
       );
       expect(rendered).toIncludeText(message);
     });
@@ -268,13 +276,17 @@ describe('<Alert />', () => {
         </dd>
       </dl>
     );
-    const props = { ...defaultProps, children };
+    const alert = {
+      id: '00000000-0000-0000-0000-000000000000',
+      children,
+    };
+    const props = { ...defaultProps, alert };
 
     it('should render the children', () => {
       const rendered = shallow(<Alert {...props} />);
 
       expect(rendered).toContainReact(children);
-      expect(rendered).not.toIncludeText('Primary:');
+      expect(rendered).not.toIncludeText('Notice:');
     });
 
     it('should match the snapshot', () => {

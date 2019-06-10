@@ -5,7 +5,7 @@ exports[`<Alert /> should match the snapshot 1`] = `
   className="alert alert-primary"
 >
   <strong>
-    Primary
+    Notice
     :
   </strong>
    This is a test of the Emergency Broadcast System. This is only a test.
