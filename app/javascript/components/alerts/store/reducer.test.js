@@ -5,6 +5,9 @@ import {
   dismissAlert,
   dismissAllAlerts,
 } from './actions';
+import {
+  isUuid,
+} from '../../../utils/uuid';
 
 describe('Alerts reducer', () => {
   const alerts = [
@@ -23,30 +26,78 @@ describe('Alerts reducer', () => {
   ];
 
   describe('when ADD_ALERT is dispatched', () => {
-    const alert = {
-      id: '10000000-0000-0000-0000-000000000000',
-      message: 'New Alert',
-    };
+    describe('when the alert does not have an id', () => {
+      const alert = { message: 'New Alert' };
 
-    it('should add the alert to the alerts', () => {
-      const action = addAlert(alert);
-      const expected = Object.assign({}, initialState, {
-        alerts: [alert],
+      it('should add the alert to the alerts', () => {
+        const action = addAlert(alert);
+        const { message } = alert;
+        const newState = reducer(initialState, action);
+        const newAlert = newState.alerts[0];
+
+        expect(newAlert.message).toEqual(message);
+        expect(isUuid(newAlert.id)).toEqual(true);
       });
+    });
 
-      expect(reducer(initialState, action)).toEqual(expected);
+    describe('when the alert has an id', () => {
+      const alert = {
+        id: '10000000-0000-0000-0000-000000000000',
+        message: 'New Alert',
+      };
+
+      it('should add the alert to the alerts', () => {
+        const action = addAlert(alert);
+        const expected = Object.assign({}, initialState, {
+          alerts: [alert],
+        });
+
+        expect(reducer(initialState, action)).toEqual(expected);
+      });
     });
 
     describe('when there are many alerts', () => {
       const state = { ...initialState, alerts };
 
-      it('should add the alert to the alerts', () => {
-        const action = addAlert(alert);
-        const expected = Object.assign({}, state, {
-          alerts: [...alerts, alert],
-        });
+      describe('when the alert does not have an id', () => {
+        const alert = { message: 'New Alert' };
 
-        expect(reducer(state, action)).toEqual(expected);
+        it('should add the alert to the alerts', () => {
+          const action = addAlert(alert);
+          const { message } = alert;
+          const newState = reducer(state, action);
+          const newAlert = newState.alerts[alerts.length];
+
+          expect(newAlert.message).toEqual(message);
+          expect(isUuid(newAlert.id)).toEqual(true);
+        });
+      });
+
+      describe('when the alert has a new id', () => {
+        const alert = {
+          id: '10000000-0000-0000-0000-000000000000',
+          message: 'New Alert',
+        };
+
+        it('should add the alert to the alerts', () => {
+          const action = addAlert(alert);
+          const expected = Object.assign({}, state, {
+            alerts: [...alerts, alert],
+          });
+
+          expect(reducer(state, action)).toEqual(expected);
+        });
+      });
+
+      describe('when the alert has an existing id', () => {
+        const alert = alerts[0];
+
+        it('should not change the state', () => {
+          const action = addAlert(alert);
+          const expected = state;
+
+          expect(reducer(state, action)).toEqual(expected);
+        });
       });
     });
   });

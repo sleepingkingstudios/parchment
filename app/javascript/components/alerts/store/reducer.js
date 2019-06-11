@@ -4,11 +4,35 @@ import {
   DISMISS_ALERT,
   DISMISS_ALL_ALERTS,
 } from './actions';
+import {
+  generateRandomUuid,
+} from '../../../utils/uuid';
+
+const alertAlreadyExists = (alerts, alert) => {
+  let exists = false;
+
+  alerts.forEach((existing) => {
+    if (existing.id === alert.id) { exists = true; }
+
+    return null;
+  });
+
+  return exists;
+};
+
+const addIdToAlert = (alert) => {
+  if (alert.id) { return alert; }
+
+  return Object.assign({}, alert, { id: generateRandomUuid() });
+};
 
 const addAlert = (alerts, alert) => {
+  if (alertAlreadyExists(alerts, alert)) { return alerts; }
+
+  const alertWithId = addIdToAlert(alert);
   const dup = alerts.slice(0);
 
-  dup.push(alert);
+  dup.push(alertWithId);
 
   return dup;
 };
