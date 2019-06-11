@@ -10,6 +10,7 @@ Array [
       }
     }
     className={null}
+    dismissAlert={[MockFunction]}
     key="00000000-0000-0000-0000-000000000000"
   />,
   <Alert
@@ -21,6 +22,7 @@ Array [
       }
     }
     className={null}
+    dismissAlert={[MockFunction]}
     key="00000000-0000-0000-0000-000000000001"
   />,
   <Alert
@@ -33,6 +35,7 @@ Array [
       }
     }
     className={null}
+    dismissAlert={[MockFunction]}
     key="00000000-0000-0000-0000-000000000002"
   />,
 ]

@@ -21,7 +21,8 @@ describe('<Alerts />', () => {
       ),
     },
   ];
-  const defaultProps = { alerts: alertsData };
+  const dismissAlert = jest.fn();
+  const defaultProps = { alerts: alertsData, dismissAlert };
 
   it('should render each alert', () => {
     const rendered = shallow(<Alerts {...defaultProps} />);
@@ -34,6 +35,7 @@ describe('<Alerts />', () => {
 
       expect(alert).toHaveDisplayName('Alert');
       expect(alert).toHaveProp('alert', data);
+      expect(alert).toHaveProp({ dismissAlert });
     });
   });
 

@@ -6,10 +6,11 @@ import Alert from './index';
 describe('<Alert />', () => {
   const defaultAlert = {
     id: '00000000-0000-0000-0000-000000000000',
+    dismissible: false,
     message:
       'This is a test of the Emergency Broadcast System. This is only a test.',
   };
-  const defaultProps = { alert: defaultAlert };
+  const defaultProps = { alert: defaultAlert, dismissAlert: jest.fn() };
 
   it('should wrap the contents in a div', () => {
     const rendered = shallow(<Alert {...defaultProps} />);
@@ -27,6 +28,12 @@ describe('<Alert />', () => {
       <strong>Notice:</strong>,
     );
     expect(rendered).toIncludeText(message);
+  });
+
+  it('should not render a dismiss button', () => {
+    const rendered = shallow(<Alert {...defaultProps} />);
+
+    expect(rendered).not.toContainMatchingElement('AlertDismissButton');
   });
 
   it('should match the snapshot', () => {
@@ -287,6 +294,28 @@ describe('<Alert />', () => {
 
       expect(rendered).toContainReact(children);
       expect(rendered).not.toIncludeText('Notice:');
+    });
+
+    it('should match the snapshot', () => {
+      const rendered = shallow(<Alert {...props} />);
+
+      expect(rendered).toMatchSnapshot();
+    });
+  });
+
+  describe('with dismissible: true', () => {
+    const alert = { ...defaultAlert, dismissible: true };
+    const props = { ...defaultProps, alert };
+
+    it('should render a dismiss button', () => {
+      const rendered = shallow(<Alert {...props} />);
+      const button = rendered.find('AlertDismissButton');
+      const { id } = alert;
+      const { dismissAlert } = props;
+
+      expect(button).toExist();
+      expect(button).toHaveProp({ id });
+      expect(button).toHaveProp({ dismissAlert });
     });
 
     it('should match the snapshot', () => {

@@ -1,14 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Alert from './alert';
 import { alertListType } from './entities';
 
-const Alerts = ({ alerts }) => (
-  alerts.map(alert => (<Alert key={alert.id} alert={alert} />))
+const Alerts = ({ alerts, dismissAlert }) => (
+  alerts.map(alert => (<Alert key={alert.id} alert={alert} dismissAlert={dismissAlert} />))
 );
 
 Alerts.propTypes = {
   alerts: alertListType.isRequired,
+  dismissAlert: PropTypes.func.isRequired,
 };
 
 export default Alerts;

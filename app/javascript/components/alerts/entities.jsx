@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 const alertProps = {
   alertStyle: PropTypes.string,
+  dismissible: PropTypes.bool,
   id: PropTypes.string.isRequired,
 };
 

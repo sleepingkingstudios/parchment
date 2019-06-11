@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+import AlertDismissButton from './dismissButton';
 import { alertType } from '../entities';
 import { capitalize } from '../../../utils/string';
 
@@ -51,12 +52,22 @@ const renderChildren = ({ alertStyle, children, message }) => {
   );
 };
 
-const Alert = ({ alert, className }) => {
+const renderDismissButton = ({ alert, dismissAlert }) => {
+  if (!alert.dismissible) { return null; }
+
+  return (
+    <AlertDismissButton id={alert.id} dismissAlert={dismissAlert} />
+  );
+};
+
+const Alert = ({ alert, className, dismissAlert }) => {
   const { alertStyle, children, message } = alert;
 
   return (
     <div className={alertClass({ alertStyle, className })}>
       { renderChildren({ alertStyle, children, message }) }
+
+      { renderDismissButton({ alert, dismissAlert }) }
     </div>
   );
 };
@@ -68,6 +79,7 @@ Alert.defaultProps = {
 Alert.propTypes = {
   alert: alertType.isRequired,
   className: PropTypes.string,
+  dismissAlert: PropTypes.func.isRequired,
 };
 
 export default Alert;
