@@ -3,7 +3,6 @@ export const humanizeList = (ary, opts = {}) => {
   if (typeof ary === 'undefined' || ary == null) { return ''; }
 
   const options = Object.assign(
-    {},
     {
       conjunction: 'and',
       default: '',

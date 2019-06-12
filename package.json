@@ -33,11 +33,14 @@
     "eslint-plugin-react": "^7.12.4",
     "jest": "^24.7.1",
     "jest-enzyme": "^7.0.2",
+    "stylelint": "^10.0.1",
+    "stylelint-config-standard": "^18.3.0",
     "webpack-dev-server": "^3.2.1"
   },
   "scripts": {
-    "ci": "yarn test && yarn lint",
+    "ci": "yarn test && yarn lint && yarn lint:css",
     "lint": "eslint --ext .js,.jsx app/javascript/",
+    "lint:css": "stylelint app/javascript/**/*.css",
     "test": "jest app/javascript --verbose"
   }
 }

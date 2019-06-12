@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Page from './index';
-import Header from './header';
 
 describe('<Page />', () => {
   const props = { title: 'Example Title' };
@@ -13,7 +12,10 @@ describe('<Page />', () => {
   });
 
   it('should render the header', () => {
-    expect(rendered.contains(<Header title={props.title} />)).toBe(true);
+    const header = rendered.find('PageHeader');
+
+    expect(header).toExist();
+    expect(header).toHaveProp('title', props.title);
   });
 
   describe('with className', () => {

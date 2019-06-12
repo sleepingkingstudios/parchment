@@ -17,23 +17,24 @@ const renderHeading = ({ title, subtitle }) => {
   );
 };
 
-const Header = (props) => {
+const PageHeader = (props) => {
   const { title, subtitle } = props;
 
   return (
     <header>
       { renderHeading({ title, subtitle }) }
+      <hr />
     </header>
   );
 };
 
-Header.defaultProps = {
+PageHeader.defaultProps = {
   subtitle: null,
 };
 
-Header.propTypes = {
+PageHeader.propTypes = {
   subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
 };
 
-export default Header;
+export default PageHeader;

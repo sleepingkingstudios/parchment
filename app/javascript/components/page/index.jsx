@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Header from './header';
+import PageFooter from './footer';
+import PageHeader from './header';
+import './styles.css';
 
 class Page extends React.Component {
   buildClassName() {
@@ -19,19 +21,31 @@ class Page extends React.Component {
   }
 
   render() {
-    const { children, title, subtitle } = this.props;
+    const {
+      breadcrumbs,
+      children,
+      title,
+      subtitle,
+    } = this.props;
 
     return (
       <div className={this.buildClassName()}>
-        <Header {...{ title, subtitle }} />
+        <div className="page-flex-container">
+          <PageHeader {...{ title, subtitle }} />
 
-        { children }
+          <main className="page-body">
+            { children }
+          </main>
+
+          <PageFooter breadcrumbs={breadcrumbs} />
+        </div>
       </div>
     );
   }
 }
 
 Page.defaultProps = {
+  breadcrumbs: [],
   children: null,
   className: null,
   layout: null,
@@ -39,6 +53,7 @@ Page.defaultProps = {
 };
 
 Page.propTypes = {
+  breadcrumbs: PropTypes.arrayOf(PropTypes.object),
   children: PropTypes.node,
   className: PropTypes.string,
   layout: PropTypes.string,

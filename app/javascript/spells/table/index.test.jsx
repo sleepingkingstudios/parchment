@@ -16,7 +16,7 @@ describe('<SpellsTable />', () => {
   const rendered = shallow(<SpellsTable {...props} />);
   const loadingMessage = 'Loading spells data from the server...';
 
-  it('should render the Table with', () => {
+  it('should render the Table', () => {
     const table = rendered.find('Table');
 
     expect(table).toExist();

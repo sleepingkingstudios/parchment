@@ -1,4 +1,17 @@
-import { capitalize } from '../../utils/string';
+import SpellsTableActions from './actions';
+
+import {
+  capitalize,
+  truncate,
+} from '../../utils/string';
+
+const spellDescription = (spell) => {
+  if (spell.shortDescription) {
+    return truncate(spell.shortDescription, 60);
+  }
+
+  return truncate(spell.description, 60);
+};
 
 const columns = [
   {
@@ -13,6 +26,16 @@ const columns = [
   {
     label: 'Level',
     prop: 'level',
+  },
+  {
+    label: 'Description',
+    prop: 'description',
+    value: spellDescription,
+  },
+  {
+    label: ' ',
+    prop: 'actions',
+    value: SpellsTableActions,
   },
 ];
 

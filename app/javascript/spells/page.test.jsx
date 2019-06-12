@@ -6,6 +6,17 @@ import { spellsData } from './fixtures';
 import { SUCCESS } from '../store/requestStatus';
 
 describe('<SpellsPage />', () => {
+  const breadcrumbs = [
+    {
+      label: 'Home',
+      url: '/',
+    },
+    {
+      label: 'Spells',
+      url: '/spells',
+      active: true,
+    },
+  ];
   const requestSpells = jest.fn();
   const props = {
     spells: spellsData,
@@ -14,8 +25,11 @@ describe('<SpellsPage />', () => {
   };
   const rendered = shallow(<SpellsPage {...props} />);
 
-  it('should set the className', () => {
-    expect(rendered.find('Page')).toHaveClassName('page-spells');
+  it('should wrap the contents in a Page', () => {
+    expect(rendered).toHaveDisplayName('Page');
+
+    expect(rendered).toHaveClassName('page-spells');
+    expect(rendered).toHaveProp('breadcrumbs', breadcrumbs);
   });
 
   it('should render the spells table', () => {

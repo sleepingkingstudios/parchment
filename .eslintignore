@@ -1,0 +1,6 @@
+# Ignore CSS files.
+**/*/*.css
+**/*/*.scss
+
+# Ignore snapshots.
+**/*/*.snap

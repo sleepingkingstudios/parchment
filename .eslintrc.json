@@ -14,5 +14,16 @@
   "rules": {
     "react/jsx-one-expression-per-line": "off",
     "react/prop-types": ["error", { "skipUndeclared": true }]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".css",
+          ".js",
+          ".jsx"
+        ]
+      }
+    }
   }
 }
