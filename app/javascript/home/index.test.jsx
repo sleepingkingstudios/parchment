@@ -1,12 +1,12 @@
 import React from 'react';
 import { MemoryRouter as Router, Link } from 'react-router-dom';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import HomePage from './index';
 
 describe('<HomePage />', () => {
   const props = {};
-  const rendered = mount(<Router><HomePage {...props} /></Router>);
+  const rendered = shallow(<HomePage {...props} />, { wrappingComponent: Router });
 
   it('should wrap the contents in a <Page>', () => {
     expect(rendered.find('Page')).toExist();

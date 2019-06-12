@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Page /> should match the snapshot 1`] = `
+<div
+  className="container page"
+>
+  <div
+    className="page-flex-container"
+  >
+    <PageHeader
+      subtitle="5e Campaign Companion"
+      title="Parchment"
+    />
+    <main
+      className="page-body"
+    >
+      <ConnectFunction />
+      <dl
+        className="mysteria"
+      >
+        <dt>
+          What lies beyond the furthest reaches of the sky?
+        </dt>
+        <dd>
+          That which will lead the lost child back to her mother's arms. Exile.
+        </dd>
+      </dl>
+    </main>
+    <PageFooter
+      breadcrumbs={Array []}
+    />
+  </div>
+</div>
+`;
