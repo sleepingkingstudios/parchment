@@ -122,7 +122,9 @@ RSpec.describe Api::SpellsController do
     let(:expected_json) do
       {
         'ok'   => true,
-        'data' => expected_data
+        'data' => {
+          'spells' => expected_data
+        }
       }
     end
 
@@ -263,7 +265,9 @@ RSpec.describe Api::SpellsController do
       let(:expected_json) do
         {
           'ok'   => true,
-          'data' => expected_data
+          'data' => {
+            'spell' => expected_data
+          }
         }
       end
 
@@ -313,8 +317,10 @@ RSpec.describe Api::SpellsController do
     let(:expected_data) { spell.as_json }
     let(:expected_json) do
       {
-        'data' => expected_data,
-        'ok'   => true
+        'ok'   => true,
+        'data' => {
+          'spell' => expected_data
+        }
       }
     end
 
@@ -439,7 +445,9 @@ RSpec.describe Api::SpellsController do
       let(:expected_json) do
         {
           'ok'   => true,
-          'data' => expected_data
+          'data' => {
+            'spell' => expected_data
+          }
         }
       end
 

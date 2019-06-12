@@ -80,7 +80,7 @@ class Api::SpellsController < ApplicationController
 
   def render_operation(operation, status: :ok)
     if operation.success?
-      render_json(operation.value, status: status)
+      render_json(wrap_value(operation.value), status: status)
     else
       render_errors(operation.errors, status: :unprocessable_entity)
     end
@@ -92,6 +92,10 @@ class Api::SpellsController < ApplicationController
     return if find_operation.success?
 
     render_errors(find_operation.errors, status: :not_found)
+  end
+
+  def resource_name
+    'spells'
   end
 
   def spell_id
@@ -118,5 +122,11 @@ class Api::SpellsController < ApplicationController
 
   def update_operation
     @update_operation ||= Operations::Records::UpdateOperation.new(Spell)
+  end
+
+  def wrap_value(value)
+    name = value.is_a?(Array) ? resource_name : resource_name.singularize
+
+    { name => value }
   end
 end

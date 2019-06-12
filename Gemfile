@@ -15,7 +15,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '>= 4.0.0.rc.3'
+gem 'webpacker', '~> 4.0.0', '>= 4.0.2'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -44,7 +44,8 @@ group :development do
 
   # Run commands to aggregate CI steps, generate templated files, etc.
   gem 'sleeping_king_studios-tasks',
-    git: 'https://github.com/sleepingkingstudios/sleeping_king_studios-tasks'
+    git:    'https://github.com/sleepingkingstudios/sleeping_king_studios-tasks',
+    branch: 'feature/eslint-task'
   gem 'thor', '~> 0.20', '>= 0.20.3'
 
   # Access an interactive console on exception pages or by calling 'console'

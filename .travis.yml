@@ -1,7 +1,15 @@
 # Build Options
 language: ruby
 rvm: 2.6.2
+node_js: "10.15.3"
+install:
+  - bundle install
+  - nvm install 10.15.3
+  - node -v
+  - npm i -g yarn
+  - yarn install
 before_script:
+  - bin/webpack
   - cp .rspec.example .rspec
   - cp .rubocop.example .rubocop
   - bundle exec rake db:setup
@@ -10,7 +18,11 @@ script:
   - bundle exec thor ci:steps
 
 # Travis-CI Configuration
-cache: bundler
-sudo:  false # Enable containerized builds.
+sudo: false # Enable containerized builds.
+cache:
+  bundler: true
+  yarn: true
+  directories:
+    - node_modules
 addons:
   postgresql: 9.6

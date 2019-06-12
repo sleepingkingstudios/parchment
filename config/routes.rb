@@ -16,4 +16,9 @@ Rails.application.routes.draw do
   namespace :api do
     api_resources :spells
   end
+
+  get 'spells/*path', to: 'client#index'
+  get 'spells', to: 'client#index'
+
+  root to: 'client#index'
 end
