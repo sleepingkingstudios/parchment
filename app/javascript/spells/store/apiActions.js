@@ -1,5 +1,8 @@
 import fetch from 'cross-fetch';
 import {
+  requestCreateSpellFailure,
+  requestCreateSpellPending,
+  requestCreateSpellSuccess,
   requestFindSpellFailure,
   requestFindSpellPending,
   requestFindSpellSuccess,
@@ -9,9 +12,32 @@ import {
 } from './actions';
 import {
   camelizeKeys,
+  underscoreKeys,
 } from '../../utils/object';
 
 export const SPELLS_API_URL = '/api/spells';
+
+const handleRequestCreateSpellFailure = dispatch => () => {
+  const action = requestCreateSpellFailure();
+
+  dispatch(action);
+};
+
+const handleRequestCreateSpellSuccess = dispatch => async (response) => {
+  const json = await response.json();
+  const { spell } = camelizeKeys(json.data);
+  const action = requestCreateSpellSuccess(spell);
+
+  dispatch(action);
+};
+
+const handleRequestCreateSpellResponse = dispatch => (response) => {
+  if (response.ok) {
+    handleRequestCreateSpellSuccess(dispatch)(response);
+  } else {
+    handleRequestCreateSpellFailure(dispatch)(response);
+  }
+};
 
 const handleRequestFindSpellFailure = dispatch => () => {
   const action = requestFindSpellFailure();
@@ -55,6 +81,26 @@ const handleRequestSpellsResponse = dispatch => (response) => {
   } else {
     handleRequestSpellsFailure(dispatch)(response);
   }
+};
+
+export const requestCreateSpell = () => async (dispatch, getState) => {
+  dispatch(requestCreateSpellPending());
+
+  const state = getState();
+  const { spells } = state;
+  const { draftSpell } = spells;
+  const data = underscoreKeys(draftSpell);
+
+  const url = SPELLS_API_URL;
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return handleRequestCreateSpellResponse(dispatch)(response);
 };
 
 export const requestFindSpell = spellId => async (dispatch) => {

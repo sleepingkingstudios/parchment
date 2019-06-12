@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FormField /> should match the snapshot 1`] = `
+<FormGroup
+  className="form-field"
+  colWidth={null}
+>
+  <label
+    htmlFor="property-name-input"
+  >
+    Property Name
+  </label>
+  <MockInput />
+</FormGroup>
+`;
+
+exports[`<FormField /> with label: false should match the snapshot 1`] = `
+<FormGroup
+  className="form-field"
+  colWidth={null}
+>
+  <label
+    htmlFor="property-name-input"
+  >
+    Property Name
+  </label>
+  <MockInput />
+</FormGroup>
+`;

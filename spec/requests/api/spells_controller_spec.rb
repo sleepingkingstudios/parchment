@@ -113,6 +113,24 @@ RSpec.describe Api::SpellsController do
     end
   end
 
+  shared_examples 'should require valid spell params' do
+    describe 'with missing spell params' do
+      let(:params) { super().tap { |hsh| hsh.delete :spell } }
+
+      it 'should respond with 422 Unprocessable Entity' do
+        call_action
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'should respond with JSON content' do
+        call_action
+
+        expect(response.content_type).to be == 'application/json'
+      end
+    end
+  end
+
   let(:headers) { { 'ACCEPT' => 'application/json' } }
   let(:params)  { {} }
   let(:json)    { JSON.parse(response.body) }
@@ -170,6 +188,8 @@ RSpec.describe Api::SpellsController do
     def call_action
       post '/api/spells.json', headers: headers, params: params
     end
+
+    include_examples 'should require valid spell params'
 
     describe 'with invalid attributes' do
       let(:spell_params) do
@@ -362,6 +382,8 @@ RSpec.describe Api::SpellsController do
     end
 
     include_examples 'should require a valid spell id'
+
+    include_examples 'should require valid spell params'
 
     describe 'with invalid attributes' do
       let(:spell_params) do

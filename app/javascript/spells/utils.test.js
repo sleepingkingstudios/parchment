@@ -103,6 +103,18 @@ describe('Spell utils', () => {
       expect(typeof formatSchoolAndLevel).toEqual('function');
     });
 
+    describe('with a 0th-level ritual spell', () => {
+      const spell = {
+        level: 0,
+        ritual: true,
+        school: 'illusion',
+      };
+
+      it('should return the school and "cantrip"', () => {
+        expect(formatSchoolAndLevel(spell)).toEqual('Illusion cantrip (ritual)');
+      });
+    });
+
     describe('with a 0th-level spell', () => {
       const spell = {
         level: 0,
@@ -111,6 +123,18 @@ describe('Spell utils', () => {
 
       it('should return the school and "cantrip"', () => {
         expect(formatSchoolAndLevel(spell)).toEqual('Illusion cantrip');
+      });
+    });
+
+    describe('with a 1st-level ritual spell', () => {
+      const spell = {
+        level: 1,
+        ritual: true,
+        school: 'transmutation',
+      };
+
+      it('should return the level and school', () => {
+        expect(formatSchoolAndLevel(spell)).toEqual('1st-level transmutation (ritual)');
       });
     });
 

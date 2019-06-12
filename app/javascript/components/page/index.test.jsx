@@ -4,69 +4,111 @@ import { shallow } from 'enzyme';
 import Page from './index';
 
 describe('<Page />', () => {
-  const props = { title: 'Example Title' };
-  const rendered = shallow(<Page {...props} />);
+  const children = (
+    <dl className="mysteria">
+      <dt>What lies beyond the furthest reaches of the sky?</dt>
+      <dd>
+        That which will lead the lost child back to her mother&apos;s arms.
+        Exile.
+      </dd>
+    </dl>
+  );
+  const defaultProps = { children };
 
-  it('should set the className', () => {
-    expect(rendered).toHaveClassName('container page');
+  it('should wrap the contents in a div', () => {
+    const rendered = shallow(<Page {...defaultProps} />);
+
+    expect(rendered).toHaveDisplayName('div');
+    expect(rendered).toHaveClassName('container');
+    expect(rendered).toHaveClassName('page');
   });
 
   it('should render the header', () => {
+    const rendered = shallow(<Page {...defaultProps} />);
     const header = rendered.find('PageHeader');
 
     expect(header).toExist();
-    expect(header).toHaveProp('title', props.title);
+    expect(header).toHaveProp('title', 'Parchment');
+    expect(header).toHaveProp('subtitle', '5e Campaign Companion');
   });
 
-  describe('with className', () => {
-    const renderedWithProps = shallow(
-      <Page {...props} className="page-example" />,
-    );
+  it('should render the children', () => {
+    const rendered = shallow(<Page {...defaultProps} />);
 
-    it('should set the className', () => {
-      expect(renderedWithProps).toHaveClassName('container page page-example');
+    expect(rendered).toContainReact(children);
+  });
+
+  it('should render the footer', () => {
+    const rendered = shallow(<Page {...defaultProps} />);
+    const footer = rendered.find('PageFooter');
+
+    expect(footer).toExist();
+  });
+
+  describe('with custom props', () => {
+    const props = {
+      ...defaultProps,
+      className: 'page-example',
+      subtitle: 'Example Subtitle',
+      title: 'Example Title',
+    };
+
+    it('should wrap the contents in a div', () => {
+      const rendered = shallow(<Page {...props} />);
+      const { className } = props;
+
+      expect(rendered).toHaveDisplayName('div');
+      expect(rendered).toHaveClassName('container');
+      expect(rendered).toHaveClassName('page');
+      expect(rendered).toHaveClassName(className);
+    });
+
+    it('should render the header', () => {
+      const rendered = shallow(<Page {...props} />);
+      const header = rendered.find('PageHeader');
+      const { title, subtitle } = props;
+
+      expect(header).toExist();
+      expect(header).toHaveProp({ title });
+      expect(header).toHaveProp({ subtitle });
+    });
+  });
+
+  describe('with breadcrumbs: value', () => {
+    const breadcrumbs = [
+      {
+        label: 'Root',
+        url: '/',
+      },
+      {
+        label: 'Directory',
+        url: '/directory',
+      },
+      {
+        label: 'Page',
+        active: true,
+      },
+    ];
+    const props = { ...defaultProps, breadcrumbs };
+
+    it('should render the footer', () => {
+      const rendered = shallow(<Page {...props} />);
+      const footer = rendered.find('PageFooter');
+
+      expect(footer).toExist();
+      expect(footer).toHaveProp({ breadcrumbs });
     });
   });
 
   describe('with layout: fluid', () => {
-    const renderedWithProps = shallow(<Page {...props} layout="fluid" />);
+    const props = { ...defaultProps, layout: 'fluid' };
 
-    it('should set the className', () => {
-      expect(renderedWithProps).toHaveClassName('container-fluid page');
-    });
-  });
+    it('should wrap the contents in a div', () => {
+      const rendered = shallow(<Page {...props} />);
 
-  describe('with children', () => {
-    const children = (
-      <dl className="mysteria">
-        <dt>What lies beyond the furthest reaches of the sky?</dt>
-        <dd>
-          That which will lead the lost child back to her mother&apos;s arms.
-          Exile.
-        </dd>
-      </dl>
-    );
-    const renderedWithChildren = shallow(
-      <Page {...props}>
-        { children }
-      </Page>,
-    );
-
-    it('should render the children', () => {
-      expect(renderedWithChildren).toContainMatchingElement('dl');
-    });
-
-    it('should render the term', () => {
-      expect(renderedWithChildren.text())
-        .toContain('What lies beyond the furthest reaches of the sky?');
-    });
-
-    it('should render the definition', () => {
-      expect(renderedWithChildren.text())
-        .toContain(
-          'That which will lead the lost child back to her mother\'s arms. '
-          + 'Exile.',
-        );
+      expect(rendered).toHaveDisplayName('div');
+      expect(rendered).toHaveClassName('container-fluid');
+      expect(rendered).toHaveClassName('page');
     });
   });
 });

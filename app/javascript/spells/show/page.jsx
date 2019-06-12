@@ -73,13 +73,11 @@ class ShowSpellPage extends React.Component {
   }
 
   render() {
-    const title = 'Parchment';
-    const subtitle = '5e Campaign Companion';
     const { spell, findSpellRequestStatus } = this.props;
     const breadcrumbs = generateBreadcrumbs(spell);
 
     return (
-      <Page {...{ title, subtitle, breadcrumbs }} className="page-spells">
+      <Page breadcrumbs={breadcrumbs} className="page-spells">
         { contents({ spell, findSpellRequestStatus }) }
       </Page>
     );

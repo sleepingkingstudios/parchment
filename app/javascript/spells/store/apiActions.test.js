@@ -2,14 +2,18 @@ import fetch from 'cross-fetch';
 
 import {
   SPELLS_API_URL,
+  requestCreateSpell,
   requestFindSpell,
   requestSpells,
 } from './apiActions';
 import {
+  REQUEST_CREATE_SPELL_PENDING,
   REQUEST_FIND_SPELL_FAILURE,
   REQUEST_FIND_SPELL_PENDING,
   REQUEST_SPELLS_FAILURE,
   REQUEST_SPELLS_PENDING,
+  requestCreateSpellFailure,
+  requestCreateSpellSuccess,
   requestFindSpellSuccess,
   requestSpellsSuccess,
 } from './actions';
@@ -21,6 +25,92 @@ import {
 jest.mock('cross-fetch');
 
 describe('Spells API actions', () => {
+  describe('requestCreateSpell()', () => {
+    const buildState = draftSpell => ({ spells: { draftSpell } });
+
+    it('should be a function', () => {
+      expect(typeof requestCreateSpell).toEqual('function');
+    });
+
+    it('should return a function', () => {
+      expect(typeof requestCreateSpell()).toEqual('function');
+    });
+
+    it('should dispatch REQUEST_CREATE_SPELL_PENDING', async () => {
+      const draftSpell = {};
+      const state = buildState(draftSpell);
+      const dispatch = jest.fn();
+      const getState = jest.fn(() => state);
+      const response = { ok: true, json: () => ({ data: {} }) };
+
+      fetch.mockResolvedValue(response);
+
+      await requestCreateSpell()(dispatch, getState);
+
+      expect(dispatch).toBeCalledWith({ type: REQUEST_CREATE_SPELL_PENDING });
+    });
+
+    it('should post the draft spell to /api/spells', async () => {
+      const draftSpell = spellsData[0];
+      const state = buildState(draftSpell);
+      const dispatch = jest.fn();
+      const getState = jest.fn(() => state);
+      const response = { ok: true, json: () => ({ data: {} }) };
+      const method = 'POST';
+      const body = JSON.stringify(underscoreKeys(draftSpell));
+      const headers = { 'Content-Type': 'application/json' };
+      const options = { method, body, headers };
+
+      fetch.mockResolvedValue(response);
+
+      await requestCreateSpell()(dispatch, getState);
+
+      expect(fetch).toBeCalledWith(SPELLS_API_URL, options);
+    });
+
+    describe('when the API request succeeds', () => {
+      it('should dispatch REQUEST_CREATE_SPELL_SUCCESS', async () => {
+        const draftSpell = {};
+        const state = buildState(draftSpell);
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const json = {
+          ok: true,
+          data: {},
+        };
+        const response = { ok: true, json: () => json };
+        const expected = requestCreateSpellSuccess();
+
+        fetch.mockResolvedValue(response);
+
+        await requestCreateSpell()(dispatch, getState);
+
+        expect(dispatch).toBeCalledWith(expected);
+      });
+    });
+
+    describe('when the API request fails', () => {
+      it('should dispatch REQUEST_CREATE_SPELL_FAILURE', async () => {
+        const draftSpell = {};
+        const state = buildState(draftSpell);
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const json = {
+          ok: false,
+          data: {},
+        };
+        const response = { ok: false, json: () => json };
+        const expected = requestCreateSpellFailure();
+
+        fetch.mockResolvedValue(response);
+
+        await requestCreateSpell()(dispatch, getState);
+
+        expect(dispatch).toBeCalledWith(expected);
+      });
+    });
+  });
+
   describe('requestFindSpell()', () => {
     it('should be a function', () => {
       expect(typeof requestFindSpell).toEqual('function');

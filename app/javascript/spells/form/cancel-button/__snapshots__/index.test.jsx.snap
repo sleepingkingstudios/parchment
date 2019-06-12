@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SpellFormCancelButton /> should match the snapshot 1`] = `
+<LinkButton
+  block={true}
+  buttonStyle="secondary"
+  className={null}
+  outline={true}
+  url="/spells"
+>
+  Cancel
+</LinkButton>
+`;

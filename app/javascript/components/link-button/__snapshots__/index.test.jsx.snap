@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LinkButton /> should match the snapshot 1`] = `
+<Link
+  className="btn btn-primary"
+  to="path/to/url"
+>
+  Button Label
+</Link>
+`;

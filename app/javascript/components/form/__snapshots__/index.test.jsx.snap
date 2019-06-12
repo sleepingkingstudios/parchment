@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Form /> should match the snapshot 1`] = `
+<form
+  className={null}
+  onSubmit={[Function]}
+>
+  <input
+    className="d-none"
+    onClick={[Function]}
+    type="submit"
+  />
+  <MockInput />
+</form>
+`;
