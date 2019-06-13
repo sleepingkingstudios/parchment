@@ -1,4 +1,14 @@
-/* eslint-disable-next-line import/prefer-default-export */
+export const indexOfMatching = (ary, fn) => {
+  let i;
+  const len = ary.length;
+
+  for (i = 0; i < len; i += 1) {
+    if (fn(ary[i])) { return i; }
+  }
+
+  return -1;
+};
+
 export const humanizeList = (ary, opts = {}) => {
   if (typeof ary === 'undefined' || ary == null) { return ''; }
 

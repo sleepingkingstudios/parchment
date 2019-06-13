@@ -90,11 +90,20 @@ describe('Alerts reducer', () => {
       });
 
       describe('when the alert has an existing id', () => {
-        const alert = alerts[0];
+        const alert = {
+          id: alerts[0].id,
+          message: 'New Alert',
+        };
 
-        it('should not change the state', () => {
+        it('should update the alert', () => {
           const action = addAlert(alert);
-          const expected = state;
+          const expectedAlerts = alerts.slice(0);
+
+          expectedAlerts.splice(0, 1, alert);
+
+          const expected = Object.assign({}, state, {
+            alerts: expectedAlerts,
+          });
 
           expect(reducer(state, action)).toEqual(expected);
         });
