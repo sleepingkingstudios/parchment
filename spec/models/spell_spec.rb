@@ -306,6 +306,17 @@ RSpec.describe Spell, type: :model do
 
     include_examples 'should validate the presence of', :name, type: String
 
+    include_examples 'should validate the uniqueness of',
+      :name,
+      attributes: {
+        casting_time: '1 minute',
+        description:  'Example description',
+        duration:     '1 hour',
+        level:        1,
+        range:        'Self',
+        school:       'abjuration'
+      }
+
     include_examples 'should validate the presence of', :range
 
     include_examples 'should validate the presence of', :ritual

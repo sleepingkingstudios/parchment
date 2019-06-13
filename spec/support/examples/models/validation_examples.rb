@@ -34,7 +34,7 @@ module Spec::Support::Examples::Models
       context "when #{attr_name} is an invalid value" do
         let(:attributes) { super().merge(attr_name => Object.new) }
 
-        it 'should not have an error' do
+        it 'should have an error' do
           expect(subject).to have_errors.on(attr_name).with_message(message)
         end
       end
@@ -167,6 +167,22 @@ module Spec::Support::Examples::Models
           it 'should have an error' do
             expect(subject).to have_errors.on(attr_name).with_message(message)
           end
+        end
+      end
+    end
+
+    shared_examples 'should validate the uniqueness of' \
+    do |attr_name, attributes: {}|
+      context "when a #{described_class} exists with the same #{attr_name}" do
+        let(:value)   { subject.send(attr_name) }
+        let(:message) { 'has already been taken' }
+
+        before do
+          described_class.create!(attributes.merge(attr_name => value))
+        end
+
+        it 'should have an error' do
+          expect(subject).to have_errors.on(attr_name).with_message(message)
         end
       end
     end
