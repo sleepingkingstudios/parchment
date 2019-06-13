@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Alerts from '../alerts';
 import PageFooter from './footer';
 import PageHeader from './header';
 import './styles.css';
@@ -34,6 +35,8 @@ class Page extends React.Component {
           <PageHeader {...{ title, subtitle }} />
 
           <main className="page-body">
+            <Alerts />
+
             { children }
           </main>
 

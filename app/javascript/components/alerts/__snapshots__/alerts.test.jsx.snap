@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Alerts /> should match the snapshot 1`] = `
+Array [
+  <Alert
+    alert={
+      Object {
+        "id": "00000000-0000-0000-0000-000000000000",
+        "message": "Alert with Message",
+      }
+    }
+    className={null}
+    dismissAlert={[MockFunction]}
+    key="00000000-0000-0000-0000-000000000000"
+  />,
+  <Alert
+    alert={
+      Object {
+        "alertStyle": "danger",
+        "id": "00000000-0000-0000-0000-000000000001",
+        "message": "Alert with Style",
+      }
+    }
+    className={null}
+    dismissAlert={[MockFunction]}
+    key="00000000-0000-0000-0000-000000000001"
+  />,
+  <Alert
+    alert={
+      Object {
+        "children": <strong>
+          Alert with Children
+        </strong>,
+        "id": "00000000-0000-0000-0000-000000000002",
+      }
+    }
+    className={null}
+    dismissAlert={[MockFunction]}
+    key="00000000-0000-0000-0000-000000000002"
+  />,
+]
+`;

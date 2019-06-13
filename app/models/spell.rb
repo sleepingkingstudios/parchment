@@ -38,7 +38,9 @@ class Spell < ApplicationRecord
       in:      [nil],
       message: I18n.t('errors.messages.blank')
     }
-  validates :name, presence: true
+  validates :name,
+    presence:   true,
+    uniqueness: true
   validates :ritual,
     exclusion: {
       in:      [nil],

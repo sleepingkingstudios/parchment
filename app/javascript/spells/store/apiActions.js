@@ -11,9 +11,15 @@ import {
   requestSpellsSuccess,
 } from './actions';
 import {
+  addAlert,
+} from '../../components/alerts/store/actions';
+import {
   camelizeKeys,
   underscoreKeys,
 } from '../../utils/object';
+import {
+  generateFingerprintUuid,
+} from '../../utils/uuid';
 
 export const SPELLS_API_URL = '/api/spells';
 
@@ -21,6 +27,14 @@ const handleRequestCreateSpellFailure = dispatch => () => {
   const action = requestCreateSpellFailure();
 
   dispatch(action);
+
+  const alert = {
+    id: generateFingerprintUuid('spells/create'),
+    alertStyle: 'warning',
+    dismissible: true,
+    message: 'Unable to create spell.',
+  };
+  dispatch(addAlert(alert));
 };
 
 const handleRequestCreateSpellSuccess = dispatch => async (response) => {
@@ -29,6 +43,14 @@ const handleRequestCreateSpellSuccess = dispatch => async (response) => {
   const action = requestCreateSpellSuccess(spell);
 
   dispatch(action);
+
+  const alert = {
+    id: generateFingerprintUuid('spells/create'),
+    alertStyle: 'success',
+    dismissible: true,
+    message: 'Successfully created spell.',
+  };
+  dispatch(addAlert(alert));
 };
 
 const handleRequestCreateSpellResponse = dispatch => (response) => {

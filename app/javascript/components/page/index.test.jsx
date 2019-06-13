@@ -32,6 +32,15 @@ describe('<Page />', () => {
     expect(header).toHaveProp('subtitle', '5e Campaign Companion');
   });
 
+  it('should render the alerts', () => {
+    const rendered = shallow(<Page {...defaultProps} />);
+    const connected = rendered.find('ConnectFunction').at(0);
+    const wrappedName = connected.getElement().type.WrappedComponent.name;
+
+    expect(connected).toExist();
+    expect(wrappedName).toEqual('Alerts');
+  });
+
   it('should render the children', () => {
     const rendered = shallow(<Page {...defaultProps} />);
 
@@ -43,6 +52,12 @@ describe('<Page />', () => {
     const footer = rendered.find('PageFooter');
 
     expect(footer).toExist();
+  });
+
+  it('should match the snapshot', () => {
+    const rendered = shallow(<Page {...defaultProps} />);
+
+    expect(rendered).toMatchSnapshot();
   });
 
   describe('with custom props', () => {

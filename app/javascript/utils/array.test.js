@@ -1,5 +1,6 @@
 import {
   humanizeList,
+  indexOfMatching,
 } from './array';
 
 describe('Array utils', () => {
@@ -93,6 +94,68 @@ describe('Array utils', () => {
 
           expect(humanizeList(ary, opts)).toEqual(expected);
         });
+      });
+    });
+  });
+
+  describe('indexOfMatching', () => {
+    it('should be a function', () => {
+      expect(typeof indexOfMatching).toEqual('function');
+    });
+
+    describe('with undefined', () => {
+      it('should throw an error', () => {
+        expect(() => indexOfMatching(undefined, () => {})).toThrow(TypeError);
+      });
+    });
+
+    describe('with null', () => {
+      it('should throw an error', () => {
+        expect(() => indexOfMatching(null, () => {})).toThrow(TypeError);
+      });
+    });
+
+    describe('with a String', () => {
+      it('should return -1', () => {
+        expect(indexOfMatching('', () => {})).toEqual(-1);
+      });
+    });
+
+    describe('with an Object', () => {
+      it('should return -1', () => {
+        expect(indexOfMatching('', () => {})).toEqual(-1);
+      });
+    });
+
+    describe('with an empty Array', () => {
+      it('should return -1', () => {
+        expect(indexOfMatching('', () => {})).toEqual(-1);
+      });
+    });
+
+    describe('with an Array with a non-matching function', () => {
+      const ary = [
+        { id: 0 },
+        { id: 1 },
+        { id: 2 },
+      ];
+      const fn = item => (item.id === -1);
+
+      it('should return -1', () => {
+        expect(indexOfMatching(ary, fn)).toEqual(-1);
+      });
+    });
+
+    describe('with an Array with a matching function', () => {
+      const ary = [
+        { id: 0 },
+        { id: 1 },
+        { id: 2 },
+      ];
+      const fn = item => (item.id === 1);
+
+      it('should return -1', () => {
+        expect(indexOfMatching(ary, fn)).toEqual(1);
       });
     });
   });
