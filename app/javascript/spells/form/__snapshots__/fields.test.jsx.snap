@@ -799,6 +799,7 @@ exports[`<SpellForm /> fields <SchoolField /> should match the snapshot 1`] = `
           }
         >
           <FormSelectInput
+            className={null}
             defaultOption={null}
             id="spell-school-input"
             onChange={[Function]}
@@ -838,6 +839,7 @@ exports[`<SpellForm /> fields <SchoolField /> should match the snapshot 1`] = `
                 },
               ]
             }
+            validStatus={null}
             value="illusion"
           >
             <select

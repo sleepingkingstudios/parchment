@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import FormSelectOption from './option';
+import { addClassName } from '../../../utils/react';
 
 const buildOptions = ({ defaultOption, options }) => {
   const modOptions = options.map(item => item);
@@ -17,26 +18,56 @@ const buildOptions = ({ defaultOption, options }) => {
   ));
 };
 
+const validClassName = (validStatus) => {
+  switch (validStatus) {
+    case 'valid':
+      return 'is-valid';
+    case 'invalid':
+      return 'is-invalid';
+    default:
+      return null;
+  }
+};
+
 const FormSelectInput = ({
+  className,
   defaultOption,
   id,
   options,
   value,
   onChange,
-}) => (
-  <select id={id} className="custom-select" value={value} onChange={onChange}>
-    { buildOptions({ defaultOption, options }) }
-  </select>
-);
+  validStatus,
+}) => {
+  const props = {
+    className: addClassName(
+      'custom-select',
+      className,
+      validClassName(validStatus),
+    ),
+    id,
+    value,
+    onChange,
+  };
+
+  return (
+    <select {...props}>
+      { buildOptions({ defaultOption, options }) }
+    </select>
+  );
+};
 
 FormSelectInput.defaultProps = {
+  className: null,
   defaultOption: null,
+  validStatus: null,
 };
 
 FormSelectInput.propTypes = {
+  className: PropTypes.string,
   defaultOption: PropTypes.string,
   id: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  validStatus: PropTypes.oneOf(['valid', 'invalid', null]),
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
