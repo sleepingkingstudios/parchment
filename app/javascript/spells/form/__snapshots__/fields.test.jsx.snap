@@ -346,18 +346,27 @@ exports[`<SpellForm /> fields <LevelField /> should match the snapshot 1`] = `
           <FormNumericInput
             id="spell-level-input"
             onChange={[Function]}
-            placeholder=""
             type="number"
             value={0}
           >
-            <input
-              className="form-control"
+            <FormInput
+              className={null}
               id="spell-level-input"
               onChange={[Function]}
               placeholder=""
               type="number"
-              value={0}
-            />
+              validStatus={null}
+              value="0"
+            >
+              <input
+                className="form-control"
+                id="spell-level-input"
+                onChange={[Function]}
+                placeholder=""
+                type="number"
+                value="0"
+              />
+            </FormInput>
           </FormNumericInput>
         </LevelInput>
       </div>
