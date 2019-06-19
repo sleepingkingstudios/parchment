@@ -57,10 +57,12 @@ exports[`<SpellFormComponentsField /> fields <MaterialInput /> should match the 
         placeholder="Material"
       >
         <FormInput
+          className={null}
           id="spell-material-component-input"
           onChange={[Function]}
           placeholder="Material"
           type="text"
+          validStatus={null}
           value=""
         >
           <input

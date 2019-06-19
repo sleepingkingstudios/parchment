@@ -5,62 +5,133 @@ import FormInput from './index';
 
 describe('<FormInput />', () => {
   const onChange = () => {};
-  const props = {
+  const defaultProps = {
     id: 'property-name',
     value: 'Property Value',
     onChange,
   };
-  const rendered = shallow(<FormInput {...props} />);
 
   it('should create the input', () => {
-    const { id, value } = props;
+    const rendered = shallow(<FormInput {...defaultProps} />);
+    const { id, value } = defaultProps;
 
     expect(rendered).toHaveDisplayName('input');
     expect(rendered).toHaveClassName('form-control');
-    expect(rendered).toHaveProp('id', id);
+    expect(rendered).toHaveProp({ id });
     expect(rendered).toHaveProp('type', 'text');
-    expect(rendered).toHaveProp('value', value);
-    expect(rendered).toHaveProp('onChange', onChange);
+    expect(rendered).toHaveProp({ value });
+    expect(rendered).toHaveProp({ onChange });
+  });
+
+  describe('with className: value', () => {
+    const props = { ...defaultProps, className: 'example-class' };
+
+    it('should create the input', () => {
+      const rendered = shallow(<FormInput {...props} />);
+      const {
+        className,
+        id,
+        value,
+      } = props;
+
+      expect(rendered).toHaveDisplayName('input');
+      expect(rendered).toHaveClassName('form-control');
+      expect(rendered).toHaveClassName(className);
+      expect(rendered).toHaveProp({ id });
+      expect(rendered).toHaveProp('type', 'text');
+      expect(rendered).toHaveProp({ value });
+      expect(rendered).toHaveProp({ onChange });
+    });
+
+    describe('with validStatus: value', () => {
+      it('should create the input', () => {
+        const rendered = shallow(<FormInput {...props} validStatus="invalid" />);
+        const { className, id, value } = props;
+
+        expect(rendered).toHaveDisplayName('input');
+        expect(rendered).toHaveClassName('form-control');
+        expect(rendered).toHaveClassName(className);
+        expect(rendered).toHaveClassName('is-invalid');
+        expect(rendered).toHaveProp({ id });
+        expect(rendered).toHaveProp('type', 'text');
+        expect(rendered).toHaveProp({ value });
+        expect(rendered).toHaveProp({ onChange });
+      });
+    });
   });
 
   describe('with placeholder: value', () => {
     const placeholder = 'Placeholder Text';
-    const propsWithPlaceholder = { ...props, placeholder };
-    const renderedWithPlaceholder = shallow(<FormInput {...propsWithPlaceholder} />);
+    const props = { ...defaultProps, placeholder };
 
     it('should create the input', () => {
+      const rendered = shallow(<FormInput {...props} />);
       const {
         id,
         value,
-      } = propsWithPlaceholder;
+      } = props;
 
-      expect(renderedWithPlaceholder).toHaveDisplayName('input');
-      expect(renderedWithPlaceholder).toHaveClassName('form-control');
-      expect(renderedWithPlaceholder).toHaveProp('id', id);
-      expect(renderedWithPlaceholder).toHaveProp('placeholder', placeholder);
-      expect(renderedWithPlaceholder).toHaveProp('type', 'text');
-      expect(renderedWithPlaceholder).toHaveProp('value', value);
-      expect(renderedWithPlaceholder).toHaveProp('onChange', onChange);
+      expect(rendered).toHaveDisplayName('input');
+      expect(rendered).toHaveClassName('form-control');
+      expect(rendered).toHaveProp({ id });
+      expect(rendered).toHaveProp({ placeholder });
+      expect(rendered).toHaveProp('type', 'text');
+      expect(rendered).toHaveProp({ value });
+      expect(rendered).toHaveProp({ onChange });
     });
   });
 
   describe('with type: value', () => {
-    const propsWithType = { ...props, type: 'password' };
-    const renderedWithType = shallow(<FormInput {...propsWithType} />);
+    const props = { ...defaultProps, type: 'password' };
 
     it('should create the input', () => {
+      const rendered = shallow(<FormInput {...props} />);
       const {
         id,
         type,
         value,
-      } = propsWithType;
+      } = props;
 
-      expect(renderedWithType).toHaveDisplayName('input');
-      expect(renderedWithType).toHaveClassName('form-control');
-      expect(renderedWithType).toHaveProp('id', id);
-      expect(renderedWithType).toHaveProp('type', type);
-      expect(renderedWithType).toHaveProp('value', value);
-      expect(renderedWithType).toHaveProp('onChange', onChange);
+      expect(rendered).toHaveDisplayName('input');
+      expect(rendered).toHaveClassName('form-control');
+      expect(rendered).toHaveProp({ id });
+      expect(rendered).toHaveProp({ type });
+      expect(rendered).toHaveProp({ value });
+      expect(rendered).toHaveProp({ onChange });
+    });
+  });
+
+  describe('with validStatus: invalid', () => {
+    const props = { ...defaultProps, validStatus: 'invalid' };
+
+    it('should create the input', () => {
+      const rendered = shallow(<FormInput {...props} />);
+      const { id, value } = props;
+
+      expect(rendered).toHaveDisplayName('input');
+      expect(rendered).toHaveClassName('form-control');
+      expect(rendered).toHaveClassName('is-invalid');
+      expect(rendered).toHaveProp({ id });
+      expect(rendered).toHaveProp('type', 'text');
+      expect(rendered).toHaveProp({ value });
+      expect(rendered).toHaveProp({ onChange });
+    });
+  });
+
+  describe('with validStatus: valid', () => {
+    const props = { ...defaultProps, validStatus: 'valid' };
+
+    it('should create the input', () => {
+      const rendered = shallow(<FormInput {...props} />);
+      const { id, value } = props;
+
+      expect(rendered).toHaveDisplayName('input');
+      expect(rendered).toHaveClassName('form-control');
+      expect(rendered).toHaveClassName('is-valid');
+      expect(rendered).toHaveProp({ id });
+      expect(rendered).toHaveProp('type', 'text');
+      expect(rendered).toHaveProp({ value });
+      expect(rendered).toHaveProp({ onChange });
     });
   });
 });
