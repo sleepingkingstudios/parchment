@@ -162,9 +162,11 @@ exports[`<SpellForm /> fields <DescriptionField /> should match the snapshot 1`]
           }
         >
           <FormTextAreaInput
+            className={null}
             id="spell-description-input"
             onChange={[Function]}
             rows={3}
+            validStatus={null}
             value="Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap."
           >
             <textarea
