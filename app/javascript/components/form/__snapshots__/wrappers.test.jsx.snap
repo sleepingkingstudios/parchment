@@ -7,6 +7,7 @@ exports[`Form component wrappers formField() should match the snapshot 1`] = `
       "data": Object {
         "propertyName": "Property Value",
       },
+      "errors": Object {},
       "namespace": "namespace",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
@@ -38,6 +39,7 @@ exports[`Form component wrappers formField() should match the snapshot 1`] = `
               "data": Object {
                 "propertyName": "Property Value",
               },
+              "errors": Object {},
               "namespace": "namespace",
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
@@ -77,6 +79,7 @@ exports[`Form component wrappers formField() with custom properties should match
       "data": Object {
         "propertyName": "Property Value",
       },
+      "errors": Object {},
       "namespace": "namespace",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
@@ -109,6 +112,7 @@ exports[`Form component wrappers formField() with custom properties should match
               "data": Object {
                 "propertyName": "Property Value",
               },
+              "errors": Object {},
               "namespace": "namespace",
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
@@ -152,6 +156,7 @@ exports[`Form component wrappers formGroup() should match the snapshot 1`] = `
         "data": Object {
           "propertyName": "Property Value",
         },
+        "errors": Object {},
         "namespace": "namespace",
         "onChangeAction": [MockFunction],
         "onSubmitAction": [MockFunction],

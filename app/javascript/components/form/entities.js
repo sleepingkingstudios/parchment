@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
 
-/* eslint-disable-next-line import/prefer-default-export */
+export const formErrorsType = PropTypes.objectOf(
+  PropTypes.arrayOf(PropTypes.string),
+);
+
 export const formType = PropTypes.shape({
   data: PropTypes.object.isRequired,
+  errors: formErrorsType,
   namespace: PropTypes.string,
   onChangeAction: PropTypes.func,
   onSubmitAction: PropTypes.func,

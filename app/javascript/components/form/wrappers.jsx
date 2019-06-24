@@ -17,6 +17,16 @@ const getInputDisplayName = Component => (
     || 'Component'
 );
 
+const errorFeedback = (propErrors) => {
+  if (typeof propErrors === 'undefined') { return null; }
+  if (propErrors === null) { return null; }
+  if (propErrors.length === 0) { return null; }
+
+  return (
+    <div className="invalid-feedback">{ propErrors.join(', ') }</div>
+  );
+};
+
 export const formInput = (WrappedInput, prop, opts = {}) => {
   const FormInputWrapper = (props) => {
     const { form, ...injectedProps } = props;
@@ -54,11 +64,17 @@ export const formField = (WrappedInput, prop, opts = {}) => {
   const InputClass = formInput(WrappedInput, prop);
   const FormFieldWrapper = (props) => {
     const { colWidth, form, ...injectedProps } = props;
-    const { namespace } = form;
+    const { errors, namespace } = form;
+    const propErrors = errors ? errors[prop] : [];
+
+    if (propErrors && propErrors.length > 0) {
+      injectedProps.validStatus = 'invalid';
+    }
 
     return (
       <FormField colWidth={colWidth} prop={prop} namespace={namespace}>
         <InputClass form={form} {...injectedProps} />
+        { errorFeedback(propErrors) }
       </FormField>
     );
   };
@@ -72,12 +88,21 @@ export const formField = (WrappedInput, prop, opts = {}) => {
 };
 
 export const formGroup = (WrappedInput, opts = {}) => {
+  const { propName } = opts;
+
   const FormGroupWrapper = (props) => {
     const { colWidth, form, ...injectedProps } = props;
+    const { errors } = form;
+    const propErrors = errors ? errors[propName] : [];
+
+    if (propErrors && propErrors.length > 0) {
+      injectedProps.validStatus = 'invalid';
+    }
 
     return (
       <FormGroup colWidth={colWidth}>
         <WrappedInput form={form} {...injectedProps} />
+        { errorFeedback(propErrors) }
       </FormGroup>
     );
   };
