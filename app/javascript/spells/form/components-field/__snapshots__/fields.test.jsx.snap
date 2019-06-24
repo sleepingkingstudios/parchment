@@ -137,9 +137,11 @@ exports[`<SpellFormComponentsField /> fields <SomaticInput /> should match the s
         label="Somatic"
       >
         <FormCheckboxInput
+          className={null}
           id="spell-somatic-component-input"
           label="Somatic"
           onChange={[Function]}
+          validStatus={null}
           value={false}
         >
           <div
@@ -223,9 +225,11 @@ exports[`<SpellFormComponentsField /> fields <VerbalInput /> should match the sn
         label="Verbal"
       >
         <FormCheckboxInput
+          className={null}
           id="spell-verbal-component-input"
           label="Verbal"
           onChange={[Function]}
+          validStatus={null}
           value={false}
         >
           <div

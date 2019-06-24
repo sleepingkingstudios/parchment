@@ -65,7 +65,7 @@ describe('<FormSelectInput />', () => {
 
     describe('with validStatus: value', () => {
       it('should create the select input', () => {
-        const rendered = shallow(<FormSelectInput {...props} validStatus="invalid"/>);
+        const rendered = shallow(<FormSelectInput {...props} validStatus="invalid" />);
         const { className, id, value } = props;
 
         expect(rendered).toHaveDisplayName('select');

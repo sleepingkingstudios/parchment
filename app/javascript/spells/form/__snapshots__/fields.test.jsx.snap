@@ -630,9 +630,11 @@ exports[`<SpellForm /> fields <RitualField /> should match the snapshot 1`] = `
           }
         >
           <FormCheckboxInput
+            className={null}
             id="spell-ritual-input"
             label={null}
             onChange={[Function]}
+            validStatus={null}
             value={false}
           >
             <div

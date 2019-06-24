@@ -2,3 +2,7 @@
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+
+.custom-checkbox.custom-checkbox-validated ~ .invalid-feedback {
+  display: block;
+}
