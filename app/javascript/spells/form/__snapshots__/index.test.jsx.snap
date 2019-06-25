@@ -29,7 +29,7 @@ exports[`<SpellForm /> should match the snapshot 1`] = `
   <FormRow
     align="left"
     className=""
-    verticalAlign="center"
+    verticalAlign="top"
   >
     <NameField
       colWidth="12"
@@ -297,7 +297,7 @@ exports[`<SpellForm /> should match the snapshot 1`] = `
   <FormRow
     align="right"
     className=""
-    verticalAlign="center"
+    verticalAlign="top"
   >
     <CancelButton
       colWidth="3"

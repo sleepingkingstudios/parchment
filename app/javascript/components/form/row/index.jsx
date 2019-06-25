@@ -16,11 +16,11 @@ const verticalAlignClass = (verticalAlign) => {
   switch (verticalAlign) {
     case 'bottom':
       return 'align-items-bottom';
-    case 'top':
-      return 'align-items-top';
     case 'center':
-    default:
       return 'align-items-center';
+    case 'top':
+    default:
+      return 'align-items-top';
   }
 };
 
@@ -42,7 +42,7 @@ const FormRow = ({
 FormRow.defaultProps = {
   align: 'left',
   className: '',
-  verticalAlign: 'center',
+  verticalAlign: 'top',
 };
 
 FormRow.propTypes = {

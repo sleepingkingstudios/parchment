@@ -1,4 +1,5 @@
-.form-field .custom-control.custom-checkbox {
+.form-field .custom-control.custom-checkbox,
+.form-group .custom-control.custom-checkbox {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
