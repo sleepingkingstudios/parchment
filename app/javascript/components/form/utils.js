@@ -1,4 +1,25 @@
-import { underscore } from '../../utils/string';
+import {
+  camelize,
+  underscore,
+} from '../../utils/string';
+
+export const formatErrors = (errors) => {
+  if (typeof errors === 'undefined') { return {}; }
+  if (errors === null) { return {}; }
+
+  const formatted = {};
+
+  errors.forEach((tuple) => {
+    const property = camelize(tuple[0]);
+    const message = tuple[1];
+
+    if (!formatted[property]) { formatted[property] = []; }
+
+    formatted[property].push(message);
+  });
+
+  return formatted;
+};
 
 export const generateFieldId = ({ inputId, namespace, prop }) => {
   if (inputId) { return inputId; }

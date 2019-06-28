@@ -1,5 +1,6 @@
 import {
   coerceInputValue,
+  formatErrors,
   generateFieldId,
   getInputValue,
 } from './utils';
@@ -24,6 +25,66 @@ describe('Form utils', () => {
       coerceInputValue(handler, fn)(event);
 
       expect(handler).toHaveBeenCalledWith({ target: { value: fn(value) } });
+    });
+  });
+
+  describe('formatErrors()', () => {
+    it('should be a function', () => {
+      expect(typeof formatErrors).toEqual('function');
+    });
+
+    describe('with undefined', () => {
+      it('should return an empty object', () => {
+        expect(formatErrors(undefined)).toEqual({});
+      });
+    });
+
+    describe('with null', () => {
+      it('should return an empty object', () => {
+        expect(formatErrors(null)).toEqual({});
+      });
+    });
+
+    describe('with an empty array', () => {
+      const err = [];
+
+      it('should return an empty object', () => {
+        expect(formatErrors(err)).toEqual({});
+      });
+    });
+
+    describe('with an array with one errors tuple', () => {
+      const err = [['who', 'is on first']];
+
+      it('should convert the errors to an object with array values', () => {
+        expect(formatErrors(err)).toEqual({ who: ['is on first'] });
+      });
+    });
+
+    describe('with an array with an errors tuple with underscored prop', () => {
+      const err = [['i_dont_know', 'is on third']];
+
+      it('should convert the prop to camelCase', () => {
+        expect(formatErrors(err)).toEqual({ iDontKnow: ['is on third'] });
+      });
+    });
+
+    describe('with an array with multiple errors tuples', () => {
+      const err = [
+        ['who', 'is on first'],
+        ['what', 'is on second'],
+        ['i_dont_know', 'is on third'],
+        ['i_dont_know', "we're not talking about him"],
+      ];
+      const expected = {
+        who: ['is on first'],
+        what: ['is on second'],
+        iDontKnow: ['is on third', "we're not talking about him"],
+      };
+
+      it('should group the errors', () => {
+        expect(formatErrors(err)).toEqual(expected);
+      });
     });
   });
 
