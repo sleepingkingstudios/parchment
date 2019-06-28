@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Page from '../../components/page';
 import SpellForm from '../form';
 
+import { formErrorsType } from '../../components/form/entities';
 import { spellType } from '../entities';
 
 const breadcrumbs = [
@@ -25,6 +26,7 @@ const breadcrumbs = [
 const CreateSpellPage = ({
   createSpellRequestStatus,
   draftSpell,
+  draftSpellErrors,
   requestCreateSpell,
   updateSpellFormField,
 }) => (
@@ -32,6 +34,7 @@ const CreateSpellPage = ({
     <h1>Create Spell</h1>
 
     <SpellForm
+      errors={draftSpellErrors}
       requestStatus={createSpellRequestStatus}
       spell={draftSpell}
       onChangeAction={updateSpellFormField}
@@ -45,6 +48,7 @@ CreateSpellPage.defaultProps = {};
 CreateSpellPage.propTypes = {
   createSpellRequestStatus: PropTypes.string.isRequired,
   draftSpell: spellType.isRequired,
+  draftSpellErrors: formErrorsType.isRequired,
   requestCreateSpell: PropTypes.func.isRequired,
   updateSpellFormField: PropTypes.func.isRequired,
 };

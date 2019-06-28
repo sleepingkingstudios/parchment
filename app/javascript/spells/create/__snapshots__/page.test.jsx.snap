@@ -28,6 +28,13 @@ exports[`<CreateSpellPage /> should match the snapshot 1`] = `
     Create Spell
   </h1>
   <SpellForm
+    errors={
+      Object {
+        "name": Array [
+          "can't be blank",
+        ],
+      }
+    }
     isUpdate={false}
     onChangeAction={[MockFunction]}
     onSubmitAction={[MockFunction]}

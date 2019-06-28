@@ -13,14 +13,17 @@ describe('<SpellForm />', () => {
   );
   const onSubmitAction = jest.fn(() => ({ ok: true }));
   const spell = spellsData[0];
+  const errors = {};
   const defaultProps = {
     onChangeAction,
     onSubmitAction,
     requestStatus: INITIALIZED,
+    errors,
     spell,
   };
   const form = {
     data: spell,
+    errors,
     namespace: 'spell',
     onChangeAction,
     onSubmitAction,
