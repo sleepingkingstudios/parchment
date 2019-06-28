@@ -10,21 +10,21 @@ import {
   requestSpellsPending,
   requestSpellsSuccess,
 } from './actions';
-import {
-  addAlert,
-} from '../../components/alerts/store/actions';
+import { addAlert } from '../../components/alerts/store/actions';
+import { formatErrors } from '../../components/form/utils';
 import {
   camelizeKeys,
   underscoreKeys,
 } from '../../utils/object';
-import {
-  generateFingerprintUuid,
-} from '../../utils/uuid';
+import { generateFingerprintUuid } from '../../utils/uuid';
 
 export const SPELLS_API_URL = '/api/spells';
 
-const handleRequestCreateSpellFailure = dispatch => () => {
-  const action = requestCreateSpellFailure();
+const handleRequestCreateSpellFailure = dispatch => async (response) => {
+  const json = await response.json();
+  const { errors } = json;
+
+  const action = requestCreateSpellFailure(formatErrors(errors));
 
   dispatch(action);
 
