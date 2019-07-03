@@ -21,13 +21,20 @@ import { spellsData } from '../fixtures';
 
 describe('Spells reducer', () => {
   describe('when REQUEST_CREATE_SPELL_FAILURE is dispatched', () => {
+    const initialErrors = { name: ["can't be blank"] };
+    const state = { ...initialState, draftSpellErrors: initialErrors };
+
     it('should mark the request as failed', () => {
-      const action = requestCreateSpellFailure();
-      const expected = Object.assign({}, initialState, {
+      const errors = {
+        name: ['is Inigo Montoya', 'you kill my father', 'prepare to die'],
+      };
+      const action = requestCreateSpellFailure(errors);
+      const expected = Object.assign({}, state, {
         createSpellRequestStatus: FAILURE,
+        draftSpellErrors: errors,
       });
 
-      expect(reducer(initialState, action)).toEqual(expected);
+      expect(reducer(state, action)).toEqual(expected);
     });
   });
 
@@ -43,13 +50,17 @@ describe('Spells reducer', () => {
   });
 
   describe('when REQUEST_CREATE_SPELL_SUCCESS is dispatched', () => {
+    const initialErrors = { name: ["can't be blank"] };
+    const state = { ...initialState, draftSpellErrors: initialErrors };
+
     it('should mark the request as successful', () => {
       const action = requestCreateSpellSuccess();
-      const expected = Object.assign({}, initialState, {
+      const expected = Object.assign({}, state, {
         createSpellRequestStatus: SUCCESS,
+        draftSpellErrors: {},
       });
 
-      expect(reducer(initialState, action)).toEqual(expected);
+      expect(reducer(state, action)).toEqual(expected);
     });
   });
 

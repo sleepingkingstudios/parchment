@@ -11,7 +11,7 @@ exports[`<SpellFormComponentsField /> should match the snapshot 1`] = `
   <FormRow
     align="left"
     className=""
-    verticalAlign="center"
+    verticalAlign="top"
   >
     <VerbalInput
       colWidth="2"

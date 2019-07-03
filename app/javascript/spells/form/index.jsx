@@ -17,13 +17,20 @@ import {
   SubmitButton,
 } from './fields';
 
+import { formErrorsType } from '../../components/form/entities';
 import { spellType } from '../entities';
 
 const SpellForm = ({
-  isUpdate, onChangeAction, onSubmitAction, requestStatus, spell,
+  errors,
+  isUpdate,
+  onChangeAction,
+  onSubmitAction,
+  requestStatus,
+  spell,
 }) => {
   const form = {
     data: spell,
+    errors,
     namespace: 'spell',
     onChangeAction,
     onSubmitAction,
@@ -73,6 +80,7 @@ SpellForm.defaultProps = {
 };
 
 SpellForm.propTypes = {
+  errors: formErrorsType.isRequired,
   isUpdate: PropTypes.bool,
   onChangeAction: PropTypes.func.isRequired,
   onSubmitAction: PropTypes.func.isRequired,

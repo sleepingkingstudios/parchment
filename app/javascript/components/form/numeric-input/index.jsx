@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import FormInput from '../input';
 import { coerceInputValue } from '../utils';
 
 const coerceToIntegerOrEmptyString = (value) => {
@@ -10,34 +11,29 @@ const coerceToIntegerOrEmptyString = (value) => {
 };
 
 const FormNumericInput = ({
-  id,
-  placeholder,
   type,
   value,
   onChange,
+  ...injectedProps
 }) => {
   const props = {
-    id,
-    placeholder,
     type,
-    value: coerceToIntegerOrEmptyString(value),
+    value: coerceToIntegerOrEmptyString(value).toString(),
     onChange: coerceInputValue(onChange, coerceToIntegerOrEmptyString),
+    ...injectedProps,
   };
 
   return (
-    <input className="form-control" {...props} />
+    <FormInput {...props} />
   );
 };
 
 FormNumericInput.defaultProps = {
-  placeholder: '',
   type: 'number',
 };
 
 FormNumericInput.propTypes = {
   onChange: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.number,

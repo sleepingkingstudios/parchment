@@ -69,10 +69,12 @@ exports[`<SpellForm /> fields <CastingTimeField /> should match the snapshot 1`]
           }
         >
           <FormInput
+            className={null}
             id="spell-casting-time-input"
             onChange={[Function]}
             placeholder=""
             type="text"
+            validStatus={null}
             value="1 reaction, which you take when you speak your own name or hear it spoken"
           >
             <input
@@ -160,9 +162,11 @@ exports[`<SpellForm /> fields <DescriptionField /> should match the snapshot 1`]
           }
         >
           <FormTextAreaInput
+            className={null}
             id="spell-description-input"
             onChange={[Function]}
             rows={3}
+            validStatus={null}
             value="Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap."
           >
             <textarea
@@ -249,10 +253,12 @@ exports[`<SpellForm /> fields <DurationField /> should match the snapshot 1`] = 
           }
         >
           <FormInput
+            className={null}
             id="spell-duration-input"
             onChange={[Function]}
             placeholder=""
             type="text"
+            validStatus={null}
             value="Instantaneous"
           >
             <input
@@ -342,18 +348,27 @@ exports[`<SpellForm /> fields <LevelField /> should match the snapshot 1`] = `
           <FormNumericInput
             id="spell-level-input"
             onChange={[Function]}
-            placeholder=""
             type="number"
             value={0}
           >
-            <input
-              className="form-control"
+            <FormInput
+              className={null}
               id="spell-level-input"
               onChange={[Function]}
               placeholder=""
               type="number"
-              value={0}
-            />
+              validStatus={null}
+              value="0"
+            >
+              <input
+                className="form-control"
+                id="spell-level-input"
+                onChange={[Function]}
+                placeholder=""
+                type="number"
+                value="0"
+              />
+            </FormInput>
           </FormNumericInput>
         </LevelInput>
       </div>
@@ -431,10 +446,12 @@ exports[`<SpellForm /> fields <NameField /> should match the snapshot 1`] = `
           }
         >
           <FormInput
+            className={null}
             id="spell-name-input"
             onChange={[Function]}
             placeholder=""
             type="text"
+            validStatus={null}
             value="Thunderclap"
           >
             <input
@@ -522,10 +539,12 @@ exports[`<SpellForm /> fields <RangeField /> should match the snapshot 1`] = `
           }
         >
           <FormInput
+            className={null}
             id="spell-range-input"
             onChange={[Function]}
             placeholder=""
             type="text"
+            validStatus={null}
             value="Self"
           >
             <input
@@ -613,9 +632,11 @@ exports[`<SpellForm /> fields <RitualField /> should match the snapshot 1`] = `
           }
         >
           <FormCheckboxInput
+            className={null}
             id="spell-ritual-input"
             label={null}
             onChange={[Function]}
+            validStatus={null}
             value={false}
           >
             <div
@@ -782,6 +803,7 @@ exports[`<SpellForm /> fields <SchoolField /> should match the snapshot 1`] = `
           }
         >
           <FormSelectInput
+            className={null}
             defaultOption={null}
             id="spell-school-input"
             onChange={[Function]}
@@ -821,6 +843,7 @@ exports[`<SpellForm /> fields <SchoolField /> should match the snapshot 1`] = `
                 },
               ]
             }
+            validStatus={null}
             value="illusion"
           >
             <select

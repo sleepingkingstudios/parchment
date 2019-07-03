@@ -14,8 +14,9 @@ export const REQUEST_SPELLS_SUCCESS = `${namespace}/requestSpellsSuccess`;
 
 export const UPDATE_SPELL_FORM_FIELD = `${namespace}/updateSpellFormField`;
 
-export const requestCreateSpellFailure = () => ({
+export const requestCreateSpellFailure = errors => ({
   type: REQUEST_CREATE_SPELL_FAILURE,
+  payload: { errors },
 });
 
 export const requestCreateSpellPending = () => ({

@@ -30,6 +30,7 @@ const spellsReducer = (state = initialState, action) => {
     case REQUEST_CREATE_SPELL_FAILURE:
       return Object.assign({}, state, {
         createSpellRequestStatus: FAILURE,
+        draftSpellErrors: action.payload.errors,
       });
     case REQUEST_CREATE_SPELL_PENDING:
       return Object.assign({}, state, {
@@ -38,6 +39,7 @@ const spellsReducer = (state = initialState, action) => {
     case REQUEST_CREATE_SPELL_SUCCESS:
       return Object.assign({}, state, {
         createSpellRequestStatus: SUCCESS,
+        draftSpellErrors: {},
       });
     case REQUEST_FIND_SPELL_FAILURE:
       return Object.assign({}, state, {

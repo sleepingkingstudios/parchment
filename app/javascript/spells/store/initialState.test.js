@@ -11,6 +11,10 @@ describe('Spells store initialState', () => {
     expect(initialState.draftSpell).toEqual(spellDefaultAttributes);
   });
 
+  it('should set the draft spell errors to an empty object', () => {
+    expect(initialState.draftSpellErrors).toEqual({});
+  });
+
   it('should set the find spell request status to "initialized"', () => {
     expect(initialState.findSpellRequestStatus).toEqual(INITIALIZED);
   });

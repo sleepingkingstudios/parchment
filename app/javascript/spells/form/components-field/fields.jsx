@@ -11,7 +11,10 @@ import { formType } from '../../../components/form/entities';
 
 const MaterialInput = formGroup(
   formInput(FormInput, 'materialComponent'),
-  { displayName: 'MaterialInput' },
+  {
+    displayName: 'MaterialInput',
+    propName: 'materialComponent',
+  },
 );
 
 MaterialInput.defaultProps = {
@@ -25,7 +28,10 @@ MaterialInput.propTypes = {
 
 const SomaticInput = formGroup(
   formInput(FormCheckboxInput, 'somaticComponent'),
-  { displayName: 'SomaticInput' },
+  {
+    displayName: 'SomaticInput',
+    propName: 'somaticComponent',
+  },
 );
 
 SomaticInput.defaultProps = {
@@ -39,7 +45,10 @@ SomaticInput.propTypes = {
 
 const VerbalInput = formGroup(
   formInput(FormCheckboxInput, 'verbalComponent'),
-  { displayName: 'VerbalInput' },
+  {
+    displayName: 'VerbalInput',
+    propName: 'verbalComponent',
+  },
 );
 
 VerbalInput.defaultProps = {

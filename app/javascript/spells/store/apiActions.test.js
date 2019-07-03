@@ -26,7 +26,9 @@ jest.mock('cross-fetch');
 
 describe('Spells API actions', () => {
   describe('requestCreateSpell()', () => {
-    const buildState = draftSpell => ({ spells: { draftSpell } });
+    const buildState = (draftSpell, draftSpellErrors) => (
+      { spells: { draftSpell, draftSpellErrors } }
+    );
 
     it('should be a function', () => {
       expect(typeof requestCreateSpell).toEqual('function');
@@ -95,12 +97,20 @@ describe('Spells API actions', () => {
         const state = buildState(draftSpell);
         const dispatch = jest.fn();
         const getState = jest.fn(() => state);
+        const errors = [
+          ['name', 'is Inigo Montoya'],
+          ['name', 'you kill my father'],
+          ['name', 'prepare to die'],
+        ];
+        const expectedErrors = {
+          name: ['is Inigo Montoya', 'you kill my father', 'prepare to die'],
+        };
         const json = {
           ok: false,
-          data: {},
+          errors,
         };
         const response = { ok: false, json: () => json };
-        const expected = requestCreateSpellFailure();
+        const expected = requestCreateSpellFailure(expectedErrors);
 
         fetch.mockResolvedValue(response);
 

@@ -7,6 +7,7 @@ exports[`Form component wrappers formField() should match the snapshot 1`] = `
       "data": Object {
         "propertyName": "Property Value",
       },
+      "errors": Object {},
       "namespace": "namespace",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
@@ -38,6 +39,7 @@ exports[`Form component wrappers formField() should match the snapshot 1`] = `
               "data": Object {
                 "propertyName": "Property Value",
               },
+              "errors": Object {},
               "namespace": "namespace",
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
@@ -45,10 +47,12 @@ exports[`Form component wrappers formField() should match the snapshot 1`] = `
           }
         >
           <FormInput
+            className={null}
             id="namespace-property-name-input"
             onChange={[Function]}
             placeholder=""
             type="text"
+            validStatus={null}
             value="Property Value"
           >
             <input
@@ -75,6 +79,7 @@ exports[`Form component wrappers formField() with custom properties should match
       "data": Object {
         "propertyName": "Property Value",
       },
+      "errors": Object {},
       "namespace": "namespace",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
@@ -107,6 +112,7 @@ exports[`Form component wrappers formField() with custom properties should match
               "data": Object {
                 "propertyName": "Property Value",
               },
+              "errors": Object {},
               "namespace": "namespace",
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
@@ -115,10 +121,12 @@ exports[`Form component wrappers formField() with custom properties should match
           placeholder="Placeholder Text"
         >
           <FormInput
+            className={null}
             id="namespace-property-name-input"
             onChange={[Function]}
             placeholder="Placeholder Text"
             type="text"
+            validStatus={null}
             value="Property Value"
           >
             <input
@@ -148,6 +156,7 @@ exports[`Form component wrappers formGroup() should match the snapshot 1`] = `
         "data": Object {
           "propertyName": "Property Value",
         },
+        "errors": Object {},
         "namespace": "namespace",
         "onChangeAction": [MockFunction],
         "onSubmitAction": [MockFunction],
@@ -159,20 +168,24 @@ exports[`Form component wrappers formGroup() should match the snapshot 1`] = `
 
 exports[`Form component wrappers formInput() should match the snapshot 1`] = `
 <FormInput
+  className={null}
   id="namespace-property-name-input"
   onChange={[Function]}
   placeholder=""
   type="text"
+  validStatus={null}
   value="Property Value"
 />
 `;
 
 exports[`Form component wrappers formInput() with custom properties should match the snapshot 1`] = `
 <FormInput
+  className={null}
   id="namespace-property-name-input"
   onChange={[Function]}
   placeholder=""
   type="text"
+  validStatus={null}
   value="Property Value"
 />
 `;

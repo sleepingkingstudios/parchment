@@ -20,6 +20,7 @@ describe('Form component wrappers', () => {
   const onSubmitAction = jest.fn(() => ({ payload: { ok: true } }));
   const form = {
     data,
+    errors: {},
     namespace,
     onChangeAction,
     onSubmitAction,
@@ -121,6 +122,33 @@ describe('Form component wrappers', () => {
         expect(Wrapped.displayName).toEqual(displayName);
       });
     });
+
+    describe('with errors: matching error', () => {
+      const errors = { propertyName: ['has an error', 'has another error'] };
+      const formWithErrors = { ...form, errors };
+
+      it('should render the input', () => {
+        const Wrapped = formField(FormInput, propName);
+        const rendered = mount(<Wrapped form={formWithErrors} />);
+        const input = rendered.find('FormInput');
+
+        expect(rendered).toContainMatchingElement('FormInput');
+        expect(input).toExist();
+        expect(input).toHaveProp({ id });
+        expect(input).toHaveProp({ value });
+        expect(input).toHaveProp('validStatus', 'invalid');
+      });
+
+      it('should render the error feedback', () => {
+        const Wrapped = formField(FormInput, propName);
+        const rendered = mount(<Wrapped form={formWithErrors} />);
+        const feedback = rendered.find('div.invalid-feedback');
+        const expected = errors.propertyName.join(', ');
+
+        expect(feedback).toExist();
+        expect(feedback).toHaveText(expected);
+      });
+    });
   });
 
   describe('formGroup()', () => {
@@ -186,6 +214,31 @@ describe('Form component wrappers', () => {
         const Wrapped = formGroup(MockInput, { displayName });
 
         expect(Wrapped.displayName).toEqual(displayName);
+      });
+    });
+
+    describe('with errors: matching error', () => {
+      const errors = { propertyName: ['has an error', 'has another error'] };
+      const formWithErrors = { ...form, errors };
+
+      it('should render the wrapped component', () => {
+        const Wrapped = formGroup(MockInput, { propName });
+        const rendered = shallow(<Wrapped form={formWithErrors} />);
+        const input = rendered.find('MockInput');
+
+        expect(input).toExist();
+        expect(input).toHaveProp('form', formWithErrors);
+        expect(input).toHaveProp('validStatus', 'invalid');
+      });
+
+      it('should render the error feedback', () => {
+        const Wrapped = formGroup(MockInput, { propName });
+        const rendered = mount(<Wrapped form={formWithErrors} />);
+        const feedback = rendered.find('div.invalid-feedback');
+        const expected = errors.propertyName.join(', ');
+
+        expect(feedback).toExist();
+        expect(feedback).toHaveText(expected);
       });
     });
   });

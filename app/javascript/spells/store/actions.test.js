@@ -89,9 +89,15 @@ describe('Spells actions', () => {
     });
 
     it('should create the action', () => {
-      const action = requestCreateSpellFailure();
+      const errors = {
+        name: ['is Inigo Montoya', 'you kill my father', 'prepare to die'],
+      };
+      const action = requestCreateSpellFailure(errors);
 
-      expect(action).toEqual({ type: REQUEST_CREATE_SPELL_FAILURE });
+      expect(action).toEqual({
+        type: REQUEST_CREATE_SPELL_FAILURE,
+        payload: { errors },
+      });
     });
   });
 

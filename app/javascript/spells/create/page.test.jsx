@@ -12,6 +12,7 @@ describe('<CreateSpellPage />', () => {
   const defaultProps = {
     createSpellRequestStatus: INITIALIZED,
     draftSpell: spellsData[0],
+    draftSpellErrors: { name: ["can't be blank"] },
     requestCreateSpell,
     updateSpellFormField,
   };
@@ -42,12 +43,17 @@ describe('<CreateSpellPage />', () => {
   it('should render the spell form', () => {
     const rendered = shallow(<CreateSpellPage {...defaultProps} />);
     const form = rendered.find('SpellForm');
-    const { createSpellRequestStatus, draftSpell } = defaultProps;
+    const {
+      createSpellRequestStatus,
+      draftSpell,
+      draftSpellErrors,
+    } = defaultProps;
 
     expect(form).toExist();
     expect(form).toHaveProp('onChangeAction', updateSpellFormField);
     expect(form).toHaveProp('onSubmitAction', requestCreateSpell);
     expect(form).toHaveProp('requestStatus', createSpellRequestStatus);
+    expect(form).toHaveProp('errors', draftSpellErrors);
     expect(form).toHaveProp('spell', draftSpell);
   });
 

@@ -20,6 +20,7 @@ describe('<FormCheckboxInput />', () => {
     expect(rendered).toHaveDisplayName('div');
     expect(rendered).toHaveClassName('custom-checkbox');
     expect(rendered).toHaveClassName('custom-control');
+    expect(rendered).not.toHaveClassName('custom-checkbox-validated');
   });
 
   it('should render the label', () => {
@@ -38,9 +39,9 @@ describe('<FormCheckboxInput />', () => {
 
     expect(checkbox).toExist();
     expect(checkbox).toHaveClassName('custom-control-input');
-    expect(checkbox).toHaveProp('id', id);
+    expect(checkbox).toHaveProp({ id });
     expect(checkbox).toHaveProp('checked', false);
-    expect(checkbox).toHaveProp('onChange', onChange);
+    expect(checkbox).toHaveProp({ onChange });
     expect(checkbox).toHaveProp('type', 'checkbox');
   });
 
@@ -63,6 +64,41 @@ describe('<FormCheckboxInput />', () => {
       expect(checkbox).toHaveProp('checked', true);
       expect(checkbox).toHaveProp('onChange', onChange);
       expect(checkbox).toHaveProp('type', 'checkbox');
+    });
+  });
+
+  describe('with className: value', () => {
+    const props = { ...defaultProps, className: 'example-class' };
+
+    it('should render the checkbox', () => {
+      const rendered = shallow(<FormCheckboxInput {...props} />);
+      const checkbox = rendered.find('input');
+      const { className } = props;
+
+      expect(checkbox).toExist();
+      expect(checkbox).toHaveClassName('custom-control-input');
+      expect(checkbox).toHaveClassName(className);
+      expect(checkbox).toHaveProp({ id });
+      expect(checkbox).toHaveProp('checked', false);
+      expect(checkbox).toHaveProp({ onChange });
+      expect(checkbox).toHaveProp('type', 'checkbox');
+    });
+
+    describe('with validStatus: value', () => {
+      it('should render the checkbox', () => {
+        const rendered = shallow(<FormCheckboxInput {...props} validStatus="invalid" />);
+        const checkbox = rendered.find('input');
+        const { className } = props;
+
+        expect(checkbox).toExist();
+        expect(checkbox).toHaveClassName('custom-control-input');
+        expect(checkbox).toHaveClassName(className);
+        expect(checkbox).toHaveClassName('is-invalid');
+        expect(checkbox).toHaveProp({ id });
+        expect(checkbox).toHaveProp('checked', false);
+        expect(checkbox).toHaveProp({ onChange });
+        expect(checkbox).toHaveProp('type', 'checkbox');
+      });
     });
   });
 
@@ -92,6 +128,58 @@ describe('<FormCheckboxInput />', () => {
       const rendered = shallow(<FormCheckboxInput {...defaultProps} />);
 
       expect(rendered).toMatchSnapshot();
+    });
+  });
+
+  describe('with validStatus: invalid', () => {
+    const props = { ...defaultProps, validStatus: 'invalid' };
+
+    it('should wrap the checkbox in a div', () => {
+      const rendered = shallow(<FormCheckboxInput {...props} />);
+
+      expect(rendered).toHaveDisplayName('div');
+      expect(rendered).toHaveClassName('custom-checkbox');
+      expect(rendered).toHaveClassName('custom-control');
+      expect(rendered).toHaveClassName('custom-checkbox-validated');
+    });
+
+    it('should render the checkbox', () => {
+      const rendered = shallow(<FormCheckboxInput {...props} />);
+      const checkbox = rendered.find('input');
+
+      expect(checkbox).toExist();
+      expect(checkbox).toHaveClassName('custom-control-input');
+      expect(checkbox).toHaveClassName('is-invalid');
+      expect(checkbox).toHaveProp({ id });
+      expect(checkbox).toHaveProp('checked', false);
+      expect(checkbox).toHaveProp({ onChange });
+      expect(checkbox).toHaveProp('type', 'checkbox');
+    });
+  });
+
+  describe('with validStatus: valid', () => {
+    const props = { ...defaultProps, validStatus: 'valid' };
+
+    it('should wrap the checkbox in a div', () => {
+      const rendered = shallow(<FormCheckboxInput {...props} />);
+
+      expect(rendered).toHaveDisplayName('div');
+      expect(rendered).toHaveClassName('custom-checkbox');
+      expect(rendered).toHaveClassName('custom-control');
+      expect(rendered).toHaveClassName('custom-checkbox-validated');
+    });
+
+    it('should render the checkbox', () => {
+      const rendered = shallow(<FormCheckboxInput {...props} />);
+      const checkbox = rendered.find('input');
+
+      expect(checkbox).toExist();
+      expect(checkbox).toHaveClassName('custom-control-input');
+      expect(checkbox).toHaveClassName('is-valid');
+      expect(checkbox).toHaveProp({ id });
+      expect(checkbox).toHaveProp('checked', false);
+      expect(checkbox).toHaveProp({ onChange });
+      expect(checkbox).toHaveProp('type', 'checkbox');
     });
   });
 });
