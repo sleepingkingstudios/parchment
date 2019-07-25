@@ -1,4 +1,6 @@
 import fetch from 'cross-fetch';
+import { push } from 'connected-react-router';
+
 import {
   requestCreateSpellFailure,
   requestCreateSpellPending,
@@ -43,6 +45,9 @@ const handleRequestCreateSpellSuccess = dispatch => async (response) => {
   const action = requestCreateSpellSuccess(spell);
 
   dispatch(action);
+
+  const spellUrl = `/spells/${spell.id}`;
+  dispatch(push(spellUrl));
 
   const alert = {
     id: generateFingerprintUuid('spells/create'),

@@ -1,4 +1,5 @@
 import fetch from 'cross-fetch';
+import { push } from 'connected-react-router';
 
 import {
   SPELLS_API_URL,
@@ -82,6 +83,26 @@ describe('Spells API actions', () => {
         };
         const response = { ok: true, json: () => json };
         const expected = requestCreateSpellSuccess();
+
+        fetch.mockResolvedValue(response);
+
+        await requestCreateSpell()(dispatch, getState);
+
+        expect(dispatch).toBeCalledWith(expected);
+      });
+
+      it('should redirect to the show spell page', async () => {
+        const id = '00000000-0000-0000-0000-000000000000';
+        const draftSpell = { id };
+        const state = buildState(draftSpell);
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const json = {
+          ok: true,
+          data: { spell: draftSpell },
+        };
+        const response = { ok: true, json: () => json };
+        const expected = push(`/spells/${id}`);
 
         fetch.mockResolvedValue(response);
 
