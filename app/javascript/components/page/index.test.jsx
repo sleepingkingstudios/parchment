@@ -34,11 +34,9 @@ describe('<Page />', () => {
 
   it('should render the alerts', () => {
     const rendered = shallow(<Page {...defaultProps} />);
-    const connected = rendered.find('ConnectFunction').at(0);
-    const wrappedName = connected.getElement().type.WrappedComponent.name;
+    const connected = rendered.find('Connect(Alerts)').at(0);
 
     expect(connected).toExist();
-    expect(wrappedName).toEqual('Alerts');
   });
 
   it('should render the children', () => {
