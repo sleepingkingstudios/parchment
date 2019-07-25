@@ -7,11 +7,11 @@ import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Routes from '../routes';
-import store from '../store';
+import store, { history } from '../store';
 
 const Client = () => (
   <Provider store={store}>
-    <Routes />
+    <Routes history={history} />
   </Provider>
 );
 
