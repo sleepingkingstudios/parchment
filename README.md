@@ -1,24 +1,35 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Local Development
 
-Things you may want to cover:
+### Setup
 
-* Ruby version
+```bash
+bundle install # Install gem dependencies.
+yarn install   # Install npm dependencies.
 
-* System dependencies
+# Start up the PostgreSQL database, run the migrations, and stop the database.
+pg_ctl start
+bundle exec rake db:reset
+pg_ctl stop
+```
 
-* Configuration
+### Running The App
 
-* Database creation
+Parchment uses a Procfile for local development. The recommended tool for running the local dependencies is [Overmind](https://github.com/DarthSim/overmind).
 
-* Database initialization
+To start up the app, run the following command:
 
-* How to run the test suite
+```bash
+OVERMIND_PROCFILE=Procfile.dev overmind start
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+### Attaching A Debugger
 
-* Deployment instructions
+To connect to a process, use the `overmind connect` command. For example, to connect to a debugger in a Rails process, run the following command:
 
-* ...
+```bash
+overmind connect web
+```
+
+To disconnect from a process, enter `CTRL+b`, then `d`.
