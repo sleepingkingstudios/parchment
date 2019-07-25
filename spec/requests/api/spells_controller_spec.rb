@@ -99,17 +99,13 @@ RSpec.describe Api::SpellsController do
         expect(response).to have_http_status(:not_found)
       end
 
-      it 'should respond with JSON content' do
-        call_action
-
-        expect(response.content_type).to be == 'application/json'
-      end
-
       it 'should serialize the spells' do
         call_action
 
         expect(json).to be == expected_json
       end
+
+      include_examples 'should respond with JSON content'
     end
   end
 
@@ -123,11 +119,15 @@ RSpec.describe Api::SpellsController do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'should respond with JSON content' do
-        call_action
+      include_examples 'should respond with JSON content'
+    end
+  end
 
-        expect(response.content_type).to be == 'application/json'
-      end
+  shared_examples 'should respond with JSON content' do
+    it 'should respond with JSON content' do
+      call_action
+
+      expect(response.content_type).to be == 'application/json; charset=utf-8'
     end
   end
 
@@ -156,17 +156,13 @@ RSpec.describe Api::SpellsController do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'should respond with JSON content' do
-      call_action
-
-      expect(response.content_type).to be == 'application/json'
-    end
-
     it 'should serialize the spells' do
       call_action
 
       expect(json).to be == expected_json
     end
+
+    include_examples 'should respond with JSON content'
 
     context 'when there are many spells' do
       include_context 'when there are many spells'
@@ -235,12 +231,6 @@ RSpec.describe Api::SpellsController do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'should respond with JSON content' do
-        call_action
-
-        expect(response.content_type).to be == 'application/json'
-      end
-
       it 'should serialize the errors' do
         call_action
 
@@ -256,6 +246,8 @@ RSpec.describe Api::SpellsController do
         expect(query.exists?).to be false
       end
       # rubocop:enable RSpec/MultipleExpectations
+
+      include_examples 'should respond with JSON content'
     end
 
     describe 'with valid attributes' do
@@ -297,12 +289,6 @@ RSpec.describe Api::SpellsController do
         expect(response).to have_http_status(:created)
       end
 
-      it 'should respond with JSON content' do
-        call_action
-
-        expect(response.content_type).to be == 'application/json'
-      end
-
       it 'should serialize the spell' do
         call_action
 
@@ -326,6 +312,8 @@ RSpec.describe Api::SpellsController do
       end
       # rubocop:enable RSpec/ExampleLength
       # rubocop:enable RSpec/MultipleExpectations
+
+      include_examples 'should respond with JSON content'
     end
   end
 
@@ -356,17 +344,13 @@ RSpec.describe Api::SpellsController do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'should respond with JSON content' do
-      call_action
-
-      expect(response.content_type).to be == 'application/json'
-    end
-
     it 'should serialize the spells' do
       call_action
 
       expect(json).to be == expected_json
     end
+
+    include_examples 'should respond with JSON content'
   end
 
   describe 'PATCH /api/spells/:id.json' do
@@ -426,12 +410,6 @@ RSpec.describe Api::SpellsController do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'should respond with JSON content' do
-        call_action
-
-        expect(response.content_type).to be == 'application/json'
-      end
-
       it 'should serialize the errors' do
         call_action
 
@@ -447,6 +425,8 @@ RSpec.describe Api::SpellsController do
           expect(spell.send attribute).not_to be == value
         end
       end
+
+      include_examples 'should respond with JSON content'
     end
 
     describe 'with valid attributes' do
@@ -479,12 +459,6 @@ RSpec.describe Api::SpellsController do
         expect(response).to have_http_status(:ok)
       end
 
-      it 'should respond with JSON content' do
-        call_action
-
-        expect(response.content_type).to be == 'application/json'
-      end
-
       it 'should serialize the spell' do
         call_action
 
@@ -500,6 +474,8 @@ RSpec.describe Api::SpellsController do
           expect(spell.send attribute).to be == value
         end
       end
+
+      include_examples 'should respond with JSON content'
     end
   end
 
@@ -527,12 +503,6 @@ RSpec.describe Api::SpellsController do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'should respond with JSON content' do
-      call_action
-
-      expect(response.content_type).to be == 'application/json'
-    end
-
     it 'should serialize the spells' do
       call_action
 
@@ -548,5 +518,7 @@ RSpec.describe Api::SpellsController do
       expect(query.exists?).to be false
     end
     # rubocop:enable RSpec/MultipleExpectations
+
+    include_examples 'should respond with JSON content'
   end
 end
