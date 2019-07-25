@@ -17,6 +17,7 @@ import {
   PENDING,
   SUCCESS,
 } from '../../store/requestStatus';
+import { spellDefaultAttributes } from '../entities';
 import { spellsData } from '../fixtures';
 
 describe('Spells reducer', () => {
@@ -51,12 +52,17 @@ describe('Spells reducer', () => {
 
   describe('when REQUEST_CREATE_SPELL_SUCCESS is dispatched', () => {
     const initialErrors = { name: ["can't be blank"] };
-    const state = { ...initialState, draftSpellErrors: initialErrors };
+    const state = {
+      ...initialState,
+      draftSpell: spellsData[0],
+      draftSpellErrors: initialErrors,
+    };
 
     it('should mark the request as successful', () => {
       const action = requestCreateSpellSuccess();
       const expected = Object.assign({}, state, {
         createSpellRequestStatus: SUCCESS,
+        draftSpell: spellDefaultAttributes,
         draftSpellErrors: {},
       });
 

@@ -16,6 +16,7 @@ import {
   PENDING,
   SUCCESS,
 } from '../../store/requestStatus';
+import { buildSpell } from '../entities';
 
 const updateDraftSpell = (state, { propName, value }) => {
   const draftSpell = Object.assign({}, state.draftSpell);
@@ -39,6 +40,7 @@ const spellsReducer = (state = initialState, action) => {
     case REQUEST_CREATE_SPELL_SUCCESS:
       return Object.assign({}, state, {
         createSpellRequestStatus: SUCCESS,
+        draftSpell: buildSpell(),
         draftSpellErrors: {},
       });
     case REQUEST_FIND_SPELL_FAILURE:
