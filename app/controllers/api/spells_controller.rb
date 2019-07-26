@@ -132,8 +132,10 @@ class Api::SpellsController < Api::BaseController
   end
 
   def wrap_value(value)
-    name = value.is_a?(Array) ? resource_name : resource_name.singularize
-
-    { name => value }
+    if value.is_a?(Array)
+      { resource_name => value.map { |item| serialize(item) } }
+    else
+      { resource_name.singularize => serialize(value) }
+    end
   end
 end

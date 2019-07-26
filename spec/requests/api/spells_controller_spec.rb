@@ -102,7 +102,7 @@ RSpec.describe Api::SpellsController do
       it 'should serialize the spells' do
         call_action
 
-        expect(json).to be == expected_json
+        expect(json).to deep_match expected_json
       end
 
       include_examples 'should respond with JSON content'
@@ -159,7 +159,7 @@ RSpec.describe Api::SpellsController do
     it 'should serialize the spells' do
       call_action
 
-      expect(json).to be == expected_json
+      expect(json).to deep_match expected_json
     end
 
     include_examples 'should respond with JSON content'
@@ -167,12 +167,16 @@ RSpec.describe Api::SpellsController do
     context 'when there are many spells' do
       include_context 'when there are many spells'
 
-      let(:expected_data) { spells.map(&:as_json) }
+      let(:expected_data) do
+        serializer = SpellSerializer.new
+
+        spells.map { |spell| serializer.serialize(spell) }
+      end
 
       it 'should serialize the spells' do
         call_action
 
-        expect(json).to be == expected_json
+        expect(json).to deep_match expected_json
       end
     end
   end
@@ -234,7 +238,7 @@ RSpec.describe Api::SpellsController do
       it 'should serialize the errors' do
         call_action
 
-        expect(json).to be == expected_json
+        expect(json).to deep_match expected_json
       end
 
       # rubocop:disable RSpec/MultipleExpectations
@@ -273,12 +277,13 @@ RSpec.describe Api::SpellsController do
       end
       let(:params)        { super().merge(spell: spell_params) }
       let(:created_spell) { Spell.where(name: 'Glowing Gaze').first }
-      let(:expected_data) { created_spell.as_json }
       let(:expected_json) do
+        serializer = SpellSerializer.new
+
         {
           'ok'   => true,
           'data' => {
-            'spell' => expected_data
+            'spell' => serializer.serialize(created_spell)
           }
         }
       end
@@ -292,7 +297,7 @@ RSpec.describe Api::SpellsController do
       it 'should serialize the spell' do
         call_action
 
-        expect(json).to be == expected_json
+        expect(json).to deep_match expected_json
       end
 
       # rubocop:disable RSpec/ExampleLength
@@ -322,12 +327,13 @@ RSpec.describe Api::SpellsController do
 
     let(:spell)         { spells.first }
     let(:spell_id)      { spell.id }
-    let(:expected_data) { spell.as_json }
     let(:expected_json) do
+      serializer = SpellSerializer.new
+
       {
         'ok'   => true,
         'data' => {
-          'spell' => expected_data
+          'spell' => serializer.serialize(spell)
         }
       }
     end
@@ -347,7 +353,7 @@ RSpec.describe Api::SpellsController do
     it 'should serialize the spells' do
       call_action
 
-      expect(json).to be == expected_json
+      expect(json).to deep_match expected_json
     end
 
     include_examples 'should respond with JSON content'
@@ -413,7 +419,7 @@ RSpec.describe Api::SpellsController do
       it 'should serialize the errors' do
         call_action
 
-        expect(json).to be == expected_json
+        expect(json).to deep_match expected_json
       end
 
       it 'should not update the spell' do
@@ -443,12 +449,13 @@ RSpec.describe Api::SpellsController do
       end
       let(:params)        { super().merge(spell: spell_params) }
       let(:updated_spell) { Spell.where(name: 'Glowing Gaze').first }
-      let(:expected_data) { updated_spell.as_json }
       let(:expected_json) do
+        serializer = SpellSerializer.new
+
         {
           'ok'   => true,
           'data' => {
-            'spell' => expected_data
+            'spell' => serializer.serialize(updated_spell)
           }
         }
       end
@@ -462,7 +469,7 @@ RSpec.describe Api::SpellsController do
       it 'should serialize the spell' do
         call_action
 
-        expect(json).to be == expected_json
+        expect(json).to deep_match expected_json
       end
 
       it 'should update the spell' do
@@ -506,7 +513,7 @@ RSpec.describe Api::SpellsController do
     it 'should serialize the spells' do
       call_action
 
-      expect(json).to be == expected_json
+      expect(json).to deep_match expected_json
     end
 
     # rubocop:disable RSpec/MultipleExpectations
