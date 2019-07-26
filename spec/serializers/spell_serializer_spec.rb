@@ -9,7 +9,7 @@ RSpec.describe SpellSerializer do
 
   subject(:serializer) { described_class.new }
 
-  let(:spell) { FactoryBot.create(:spell) }
+  let(:spell) { FactoryBot.build(:spell) }
 
   describe '::new' do
     it { expect(described_class).to be_constructible.with(0).arguments }
