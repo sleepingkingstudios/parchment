@@ -1,16 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
 
 import SpellsRoutes from '../spells/routes';
 import HomePage from '../home';
 
-const Routes = () => (
-  <Router>
+const Routes = ({ history }) => (
+  <ConnectedRouter history={history}>
     <Switch>
       <Route path="/spells" component={SpellsRoutes} />
       <Route path="/" component={HomePage} />
     </Switch>
-  </Router>
+  </ConnectedRouter>
 );
 
 export default Routes;

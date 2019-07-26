@@ -22,11 +22,6 @@
 
 - create Spell serializer
 
-## Spells UI
-
-- on successful create/update, redirect to spell
-- on successful create/update, clear draftSpell
-
 ### Tags
 
 - damage
