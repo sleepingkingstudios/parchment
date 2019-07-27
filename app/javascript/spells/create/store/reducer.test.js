@@ -12,15 +12,37 @@ import {
 } from '../../../store/requestStatus';
 
 describe('Create Spell reducer', () => {
+  const initialErrors = { name: ["can't be blank"] };
+
   describe('when REQUEST_FAILURE is dispatched', () => {
-    it('should mark the request as failed', () => {
+    it('should mark the request as failed and set the errors', () => {
       const state = { ...initialState };
-      const action = requestFailure();
+      const errors = {
+        name: ['is Inigo Montoya', 'you kill my father', 'prepare to die'],
+      };
+      const action = requestFailure(errors);
       const expected = Object.assign({}, state, {
+        errors,
         requestStatus: FAILURE,
       });
 
       expect(reducer(state, action)).toEqual(expected);
+    });
+
+    describe('when the state has errors', () => {
+      it('should mark the request as failed and set the errors', () => {
+        const state = { ...initialState, errors: initialErrors };
+        const errors = {
+          name: ['is Inigo Montoya', 'you kill my father', 'prepare to die'],
+        };
+        const action = requestFailure(errors);
+        const expected = Object.assign({}, state, {
+          errors,
+          requestStatus: FAILURE,
+        });
+
+        expect(reducer(state, action)).toEqual(expected);
+      });
     });
   });
 
@@ -37,10 +59,22 @@ describe('Create Spell reducer', () => {
   });
 
   describe('when REQUEST_SUCCESS is dispatched', () => {
-    it('should mark the request as pending', () => {
+    it('should mark the request as pending and clear the errors', () => {
       const state = { ...initialState };
       const action = requestSuccess();
       const expected = Object.assign({}, state, {
+        errors: {},
+        requestStatus: SUCCESS,
+      });
+
+      expect(reducer(state, action)).toEqual(expected);
+    });
+
+    describe('when the state has errors', () => {
+      const state = { ...initialState, errors: initialErrors };
+      const action = requestSuccess();
+      const expected = Object.assign({}, state, {
+        errors: {},
         requestStatus: SUCCESS,
       });
 

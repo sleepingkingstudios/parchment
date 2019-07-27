@@ -16,6 +16,7 @@ const createSpellReducer = (state = initialState, action) => {
       /* eslint-disable-next-line no-console */
       console.log('createSpellReducer: REQUEST_FAILURE', action.payload);
       return Object.assign({}, state, {
+        errors: action.payload.errors,
         requestStatus: FAILURE,
       });
     case REQUEST_PENDING:
@@ -28,6 +29,7 @@ const createSpellReducer = (state = initialState, action) => {
       /* eslint-disable-next-line no-console */
       console.log('createSpellReducer: REQUEST_SUCCESS', action.payload);
       return Object.assign({}, state, {
+        errors: {},
         requestStatus: SUCCESS,
       });
     default:
