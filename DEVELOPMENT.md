@@ -18,6 +18,10 @@
 - attribute short_description:string
 - attribute slug (source abbrev + short_name) - e.g. phb-spontaneous-combustion
 
+### API Controller
+
+- sort spells by name
+
 ### Serializer
 
 - create Spell serializer
