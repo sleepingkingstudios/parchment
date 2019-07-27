@@ -1,7 +1,12 @@
 import initialState from './initialState';
 import { INITIALIZED } from '../../../store/requestStatus';
+import { spellDefaultAttributes } from '../../entities';
 
 describe('Create Spell store initialState', () => {
+  it('should set the data to a default spell', () => {
+    expect(initialState.data).toEqual(spellDefaultAttributes);
+  });
+
   it('should set the errors to an empty object', () => {
     expect(initialState.errors).toEqual({});
   });

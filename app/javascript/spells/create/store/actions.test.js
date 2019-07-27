@@ -2,9 +2,11 @@ import {
   REQUEST_FAILURE,
   REQUEST_PENDING,
   REQUEST_SUCCESS,
+  UPDATE_FORM_FIELD,
   requestFailure,
   requestPending,
   requestSuccess,
+  updateFormField,
 } from './actions';
 import { spellsData } from '../../fixtures';
 
@@ -24,6 +26,12 @@ describe('Create Spell actions', () => {
   describe('REQUEST_SUCCESS', () => {
     it('should define the action', () => {
       expect(REQUEST_SUCCESS).toEqual('spells/create/requestSuccess');
+    });
+  });
+
+  describe('UPDATE_FORM_FIELD', () => {
+    it('should define the action', () => {
+      expect(UPDATE_FORM_FIELD).toEqual('spells/create/updateFormField');
     });
   });
 
@@ -69,6 +77,26 @@ describe('Create Spell actions', () => {
       expect(action).toEqual({
         type: REQUEST_SUCCESS,
         payload: { data },
+      });
+    });
+  });
+
+  describe('updateFormField', () => {
+    it('should be a function', () => {
+      expect(typeof updateFormField).toEqual('function');
+    });
+
+    it('should create the action', () => {
+      const propName = 'name';
+      const value = 'Spontaneous Combustion';
+      const action = updateFormField({ propName, value });
+
+      expect(action).toEqual({
+        type: UPDATE_FORM_FIELD,
+        payload: {
+          propName,
+          value,
+        },
       });
     });
   });
