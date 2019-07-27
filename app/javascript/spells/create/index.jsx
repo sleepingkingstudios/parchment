@@ -1,14 +1,17 @@
 import { connect } from 'react-redux';
 
 import CreateSpellPage from './page';
-import { updateSpellFormField } from '../store/actions';
-import { requestCreateSpell } from '../store/apiActions';
+import { updateFormField } from './store/actions';
+import { performRequest } from './store/apiActions';
 
-const mapStateToProps = state => state.spells;
+const mapStateToProps = state => Object.assign(
+  {},
+  state.createSpell,
+);
 
 const mapDispatchToProps = {
-  requestCreateSpell,
-  updateSpellFormField,
+  performRequest,
+  updateFormField,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateSpellPage);

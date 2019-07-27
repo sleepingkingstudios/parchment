@@ -28,18 +28,7 @@ exports[`<CreateSpellPage /> should match the snapshot 1`] = `
     Create Spell
   </h1>
   <SpellForm
-    errors={
-      Object {
-        "name": Array [
-          "can't be blank",
-        ],
-      }
-    }
-    isUpdate={false}
-    onChangeAction={[MockFunction]}
-    onSubmitAction={[MockFunction]}
-    requestStatus="initialized"
-    spell={
+    data={
       Object {
         "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
         "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
@@ -56,6 +45,17 @@ exports[`<CreateSpellPage /> should match the snapshot 1`] = `
         "verbalComponent": false,
       }
     }
+    errors={
+      Object {
+        "name": Array [
+          "can't be blank",
+        ],
+      }
+    }
+    isUpdate={false}
+    onChangeAction={[MockFunction]}
+    onSubmitAction={[MockFunction]}
+    requestStatus="initialized"
   />
 </Page>
 `;

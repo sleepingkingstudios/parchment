@@ -24,21 +24,21 @@ const breadcrumbs = [
 ];
 
 const CreateSpellPage = ({
-  createSpellRequestStatus,
-  draftSpell,
-  draftSpellErrors,
-  requestCreateSpell,
-  updateSpellFormField,
+  data,
+  errors,
+  performRequest,
+  requestStatus,
+  updateFormField,
 }) => (
   <Page breadcrumbs={breadcrumbs} className="page-spells page-create-spell">
     <h1>Create Spell</h1>
 
     <SpellForm
-      errors={draftSpellErrors}
-      requestStatus={createSpellRequestStatus}
-      spell={draftSpell}
-      onChangeAction={updateSpellFormField}
-      onSubmitAction={requestCreateSpell}
+      data={data}
+      errors={errors}
+      requestStatus={requestStatus}
+      onChangeAction={updateFormField}
+      onSubmitAction={performRequest}
     />
   </Page>
 );
@@ -46,11 +46,11 @@ const CreateSpellPage = ({
 CreateSpellPage.defaultProps = {};
 
 CreateSpellPage.propTypes = {
-  createSpellRequestStatus: PropTypes.string.isRequired,
-  draftSpell: spellType.isRequired,
-  draftSpellErrors: formErrorsType.isRequired,
-  requestCreateSpell: PropTypes.func.isRequired,
-  updateSpellFormField: PropTypes.func.isRequired,
+  data: spellType.isRequired,
+  errors: formErrorsType.isRequired,
+  performRequest: PropTypes.func.isRequired,
+  requestStatus: PropTypes.string.isRequired,
+  updateFormField: PropTypes.func.isRequired,
 };
 
 export default CreateSpellPage;
