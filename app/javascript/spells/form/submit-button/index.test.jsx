@@ -15,8 +15,8 @@ describe('<SpellFormSubmitButton />', () => {
   const onSubmitAction = jest.fn(() => ({ payload: { ok: true } }));
   const spell = spellsData[0];
   const form = {
-    data: spell,
-    namespace: 'spell',
+    data: { spell },
+    path: ['spell'],
     onSubmitAction,
   };
   const defaultProps = {

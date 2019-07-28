@@ -11,11 +11,9 @@ export const formPathType = PropTypes.arrayOf(
   ]),
 );
 
-// TODO: Deprecate namespace.
 export const formType = PropTypes.shape({
   data: PropTypes.object.isRequired,
   errors: formErrorsType,
-  namespace: PropTypes.string,
   path: formPathType,
   onChangeAction: PropTypes.func,
   onSubmitAction: PropTypes.func,

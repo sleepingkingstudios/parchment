@@ -9,7 +9,6 @@ exports[`Form component wrappers formField() with custom properties should match
         "propertyName": "Property Value",
       },
       "errors": Object {},
-      "namespace": "namespace",
     }
   }
   placeholder="Placeholder Text"
@@ -18,7 +17,6 @@ exports[`Form component wrappers formField() with custom properties should match
     colWidth="12"
     inputId={null}
     label={null}
-    namespace="namespace"
     path={Array []}
     prop="propertyName"
   >
@@ -30,7 +28,7 @@ exports[`Form component wrappers formField() with custom properties should match
         className="form-group col-sm-12 form-field"
       >
         <label
-          htmlFor="namespace-property-name-input"
+          htmlFor="property-name-input"
         >
           Property Name
         </label>
@@ -41,14 +39,13 @@ exports[`Form component wrappers formField() with custom properties should match
                 "propertyName": "Property Value",
               },
               "errors": Object {},
-              "namespace": "namespace",
             }
           }
           placeholder="Placeholder Text"
         >
           <FormInput
             className={null}
-            id="namespace-property-name-input"
+            id="property-name-input"
             onChange={[Function]}
             placeholder="Placeholder Text"
             type="text"
@@ -57,7 +54,7 @@ exports[`Form component wrappers formField() with custom properties should match
           >
             <input
               className="form-control"
-              id="namespace-property-name-input"
+              id="property-name-input"
               onChange={[Function]}
               placeholder="Placeholder Text"
               type="text"
@@ -79,7 +76,6 @@ exports[`Form component wrappers formField() with default properties should matc
         "propertyName": "Property Value",
       },
       "errors": Object {},
-      "namespace": "namespace",
     }
   }
 >
@@ -87,7 +83,6 @@ exports[`Form component wrappers formField() with default properties should matc
     colWidth={null}
     inputId={null}
     label={null}
-    namespace="namespace"
     path={Array []}
     prop="propertyName"
   >
@@ -99,7 +94,7 @@ exports[`Form component wrappers formField() with default properties should matc
         className="form-group col form-field"
       >
         <label
-          htmlFor="namespace-property-name-input"
+          htmlFor="property-name-input"
         >
           Property Name
         </label>
@@ -110,13 +105,12 @@ exports[`Form component wrappers formField() with default properties should matc
                 "propertyName": "Property Value",
               },
               "errors": Object {},
-              "namespace": "namespace",
             }
           }
         >
           <FormInput
             className={null}
-            id="namespace-property-name-input"
+            id="property-name-input"
             onChange={[Function]}
             placeholder=""
             type="text"
@@ -125,7 +119,7 @@ exports[`Form component wrappers formField() with default properties should matc
           >
             <input
               className="form-control"
-              id="namespace-property-name-input"
+              id="property-name-input"
               onChange={[Function]}
               placeholder=""
               type="text"
@@ -151,7 +145,6 @@ exports[`Form component wrappers formGroup() should match the snapshot 1`] = `
           "propertyName": "Property Value",
         },
         "errors": Object {},
-        "namespace": "namespace",
       }
     }
   />
@@ -161,7 +154,7 @@ exports[`Form component wrappers formGroup() should match the snapshot 1`] = `
 exports[`Form component wrappers formInput() with custom properties should match the snapshot 1`] = `
 <FormInput
   className={null}
-  id="namespace-property-name-input"
+  id="property-name-input"
   onChange={[Function]}
   placeholder=""
   type="text"
@@ -173,7 +166,7 @@ exports[`Form component wrappers formInput() with custom properties should match
 exports[`Form component wrappers formInput() with default properties should match the snapshot 1`] = `
 <FormInput
   className={null}
-  id="namespace-property-name-input"
+  id="property-name-input"
   onChange={[Function]}
   placeholder=""
   type="text"

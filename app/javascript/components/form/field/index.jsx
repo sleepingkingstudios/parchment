@@ -33,16 +33,10 @@ const FormField = ({
   colWidth,
   inputId,
   label,
-  namespace,
   path,
   prop,
 }) => {
-  const id = generateFieldId({
-    inputId,
-    namespace,
-    path,
-    prop,
-  });
+  const id = generateFieldId({ inputId, path, prop });
 
   return (
     <FormGroup className={groupClassName({ label })} colWidth={colWidth}>
@@ -56,7 +50,6 @@ FormField.defaultProps = {
   colWidth: null,
   inputId: null,
   label: null,
-  namespace: null,
   path: [],
 };
 
@@ -71,7 +64,6 @@ FormField.propTypes = {
     PropTypes.bool,
     PropTypes.string,
   ]),
-  namespace: PropTypes.string,
   path: formPathType,
   prop: PropTypes.string.isRequired,
 };

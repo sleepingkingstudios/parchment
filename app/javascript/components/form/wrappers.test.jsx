@@ -15,13 +15,11 @@ describe('Form component wrappers', () => {
   describe('formField()', () => {
     const propName = 'propertyName';
     const value = 'Property Value';
-    const namespace = 'namespace';
-    const id = 'namespace-property-name-input';
+    const id = 'property-name-input';
     const data = { propertyName: value };
     const defaultForm = {
       data,
       errors: {},
-      namespace,
     };
 
     it('should be a function', () => {
@@ -54,7 +52,6 @@ describe('Form component wrappers', () => {
         const rendered = shallow(<Wrapped form={form} />);
 
         expect(rendered).toHaveDisplayName('FormField');
-        expect(rendered).toHaveProp('namespace', namespace);
         expect(rendered).toHaveProp('path', []);
         expect(rendered).toHaveProp('prop', propName);
       });
@@ -89,7 +86,6 @@ describe('Form component wrappers', () => {
 
         expect(rendered).toHaveDisplayName('FormField');
         expect(rendered).toHaveProp('colWidth', colWidth);
-        expect(rendered).toHaveProp('namespace', namespace);
         expect(rendered).toHaveProp('prop', propName);
       });
 
@@ -161,7 +157,6 @@ describe('Form component wrappers', () => {
         const rendered = shallow(<Wrapped form={form} />);
 
         expect(rendered).toHaveDisplayName('FormField');
-        expect(rendered).toHaveProp('namespace', namespace);
         expect(rendered).toHaveProp('path', path);
         expect(rendered).toHaveProp('prop', propName);
       });
@@ -176,7 +171,6 @@ describe('Form component wrappers', () => {
         const rendered = shallow(<Wrapped form={form} />);
 
         expect(rendered).toHaveDisplayName('FormField');
-        expect(rendered).toHaveProp('namespace', namespace);
         expect(rendered).toHaveProp('path', [path]);
         expect(rendered).toHaveProp('prop', propName);
       });
@@ -186,12 +180,10 @@ describe('Form component wrappers', () => {
   describe('formGroup()', () => {
     const propName = 'propertyName';
     const value = 'Property Value';
-    const namespace = 'namespace';
     const data = { propertyName: value };
     const form = {
       data,
       errors: {},
-      namespace,
     };
 
     const MockInput = () => (<span />);
@@ -288,13 +280,11 @@ describe('Form component wrappers', () => {
   describe('formInput()', () => {
     const propName = 'propertyName';
     const value = 'Property Value';
-    const namespace = 'namespace';
     const data = { propertyName: value };
     const onChangeAction = jest.fn(obj => ({ payload: obj }));
     const defaultForm = {
       data,
       errors: {},
-      namespace,
       onChangeAction,
     };
 
@@ -322,7 +312,7 @@ describe('Form component wrappers', () => {
 
     describe('with default properties', () => {
       const form = { ...defaultForm };
-      const id = 'namespace-property-name-input';
+      const id = 'property-name-input';
 
       it('should render the input', () => {
         const Wrapped = formInput(FormInput, propName);
@@ -360,7 +350,7 @@ describe('Form component wrappers', () => {
 
     describe('with custom properties', () => {
       const form = { ...defaultForm };
-      const id = 'namespace-property-name-input';
+      const id = 'property-name-input';
       const props = { placeholder: 'Placeholder Text' };
 
       it('should render the input', () => {
@@ -467,13 +457,11 @@ describe('Form component wrappers', () => {
 
   describe('formSubmit()', () => {
     const value = 'Property Value';
-    const namespace = 'namespace';
     const data = { propertyName: value };
     const onSubmitAction = jest.fn(() => ({ payload: { ok: true } }));
     const form = {
       data,
       errors: {},
-      namespace,
       onSubmitAction,
     };
     const children = 'Button Text';

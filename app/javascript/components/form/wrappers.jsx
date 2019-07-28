@@ -34,13 +34,11 @@ export const formInput = (WrappedInput, prop, opts = {}) => {
     const { form, ...injectedProps } = props;
     const {
       data,
-      namespace,
       path,
       onChangeAction,
     } = form;
-    // TODO: Deprecate namespace property.
     const actualPath = convertToArray(path);
-    const id = generateFieldId({ namespace, path, prop });
+    const id = generateFieldId({ path, prop });
     const value = deepAccessProperty(data, prop, actualPath);
     const onChange = handleInputChangeWith(onChangeAction)(prop, actualPath);
     const inputProps = Object.assign(
@@ -69,9 +67,8 @@ export const formField = (WrappedInput, prop, opts = {}) => {
   const InputClass = formInput(WrappedInput, prop);
   const FormFieldWrapper = (props) => {
     const { colWidth, form, ...injectedProps } = props;
-    const { errors, namespace, path } = form;
+    const { errors, path } = form;
     const propErrors = errors ? errors[prop] : [];
-    // TODO: Deprecate namespace property.
     const actualPath = convertToArray(path);
 
     if (propErrors && propErrors.length > 0) {
@@ -79,7 +76,7 @@ export const formField = (WrappedInput, prop, opts = {}) => {
     }
 
     return (
-      <FormField colWidth={colWidth} path={actualPath} prop={prop} namespace={namespace}>
+      <FormField colWidth={colWidth} path={actualPath} prop={prop}>
         <InputClass form={form} {...injectedProps} />
         { errorFeedback(propErrors) }
       </FormField>

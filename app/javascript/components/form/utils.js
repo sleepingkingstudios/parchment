@@ -24,18 +24,10 @@ export const formatErrors = (errors) => {
   return formatted;
 };
 
-// TODO: Deprecate namespace.
-export const generateFieldId = ({
-  inputId,
-  namespace,
-  path,
-  prop,
-}) => {
+export const generateFieldId = ({ inputId, path, prop }) => {
   if (inputId) { return inputId; }
 
   const segments = convertToArray(path).slice();
-
-  if (namespace && segments.length === 0) { segments.push(namespace); }
 
   segments.push(prop);
 

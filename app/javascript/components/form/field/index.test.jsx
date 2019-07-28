@@ -105,19 +105,6 @@ describe('<FormField />', () => {
     });
   });
 
-  describe('with namespace: value', () => {
-    const props = { ...defaultProps, namespace: 'namespace' };
-
-    it('should create the label', () => {
-      const rendered = shallow(<FormField {...props} />);
-      const label = rendered.find('label');
-
-      expect(label).toExist();
-      expect(label).toHaveProp('htmlFor', 'namespace-property-name-input');
-      expect(label).toHaveProp('children', 'Property Name');
-    });
-  });
-
   describe('with path: value', () => {
     const path = ['weapons', 'swords', 'japanese'];
     const props = { ...defaultProps, path };

@@ -104,14 +104,6 @@ describe('Form utils', () => {
       });
     });
 
-    describe('with a namespace', () => {
-      const namespace = 'rocket';
-
-      it('should generate the field id', () => {
-        expect(generateFieldId({ namespace, prop })).toEqual(`${namespace}-${expected}`);
-      });
-    });
-
     describe('with a path', () => {
       const path = ['weapons', 'swords', 'japanese'];
 
