@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
 
 import CreateSpellPage from './page';
-import { updateFormField } from './store/actions';
-import { performRequest } from './store/apiActions';
+import { actions, apiActions } from './store';
+
+const { updateFormField } = actions;
+const { requestSubmitForm } = apiActions;
 
 const mapStateToProps = state => Object.assign(
   {},
@@ -10,7 +12,7 @@ const mapStateToProps = state => Object.assign(
 );
 
 const mapDispatchToProps = {
-  performRequest,
+  requestSubmitForm,
   updateFormField,
 };
 

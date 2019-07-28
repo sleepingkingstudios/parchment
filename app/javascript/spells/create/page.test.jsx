@@ -7,13 +7,13 @@ import { INITIALIZED } from '../../store/requestStatus';
 import { spellsData } from '../fixtures';
 
 describe('<CreateSpellPage />', () => {
-  const performRequest = jest.fn();
+  const requestSubmitForm = jest.fn();
   const updateFormField = jest.fn();
   const defaultProps = {
     data: spellsData[0],
     errors: { name: ["can't be blank"] },
-    performRequest,
-    requestStatus: INITIALIZED,
+    requestSubmitForm,
+    status: INITIALIZED,
     updateFormField,
   };
   const breadcrumbs = [
@@ -46,15 +46,15 @@ describe('<CreateSpellPage />', () => {
     const {
       data,
       errors,
-      requestStatus,
+      status,
     } = defaultProps;
 
     expect(form).toExist();
     expect(form).toHaveProp('onChangeAction', updateFormField);
-    expect(form).toHaveProp('onSubmitAction', performRequest);
+    expect(form).toHaveProp('onSubmitAction', requestSubmitForm);
     expect(form).toHaveProp('data', data);
     expect(form).toHaveProp('errors', errors);
-    expect(form).toHaveProp('requestStatus', requestStatus);
+    expect(form).toHaveProp('requestStatus', status);
   });
 
   it('should match the snapshot', () => {

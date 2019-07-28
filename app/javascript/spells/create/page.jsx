@@ -26,8 +26,8 @@ const breadcrumbs = [
 const CreateSpellPage = ({
   data,
   errors,
-  performRequest,
-  requestStatus,
+  status,
+  requestSubmitForm,
   updateFormField,
 }) => (
   <Page breadcrumbs={breadcrumbs} className="page-spells page-create-spell">
@@ -36,9 +36,9 @@ const CreateSpellPage = ({
     <SpellForm
       data={data}
       errors={errors}
-      requestStatus={requestStatus}
+      requestStatus={status}
       onChangeAction={updateFormField}
-      onSubmitAction={performRequest}
+      onSubmitAction={requestSubmitForm}
     />
   </Page>
 );
@@ -48,8 +48,8 @@ CreateSpellPage.defaultProps = {};
 CreateSpellPage.propTypes = {
   data: spellType.isRequired,
   errors: formErrorsType.isRequired,
-  performRequest: PropTypes.func.isRequired,
-  requestStatus: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  requestSubmitForm: PropTypes.func.isRequired,
   updateFormField: PropTypes.func.isRequired,
 };
 
