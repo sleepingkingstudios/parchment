@@ -1,9 +1,72 @@
 import {
+  convertToArray,
   humanizeList,
   indexOfMatching,
 } from './array';
 
 describe('Array utils', () => {
+  describe('convertToArray', () => {
+    it('should be a function', () => {
+      expect(typeof convertToArray).toEqual('function');
+    });
+
+    describe('with undefined', () => {
+      it('should return an empty array', () => {
+        expect(convertToArray(undefined)).toEqual([]);
+      });
+    });
+
+    describe('with null', () => {
+      it('should return an empty array', () => {
+        expect(convertToArray(null)).toEqual([]);
+      });
+    });
+
+    describe('with false', () => {
+      it('should return an array containing the object', () => {
+        expect(convertToArray(false)).toEqual([false]);
+      });
+    });
+
+    describe('with true', () => {
+      it('should return an array containing the object', () => {
+        expect(convertToArray(true)).toEqual([true]);
+      });
+    });
+
+    describe('with a number', () => {
+      it('should return an array containing the object', () => {
+        expect(convertToArray(3)).toEqual([3]);
+      });
+    });
+
+    describe('with a string', () => {
+      it('should return an array containing the object', () => {
+        expect(convertToArray('string')).toEqual(['string']);
+      });
+    });
+
+    describe('with an object', () => {
+      it('should return an array containing the object', () => {
+        expect(convertToArray({ key: 'value' })).toEqual([{ key: 'value' }]);
+      });
+    });
+
+    describe('with an empty array', () => {
+      it('should return the array', () => {
+        expect(convertToArray([])).toEqual([]);
+      });
+    });
+
+    describe('with an array with many items', () => {
+      const ary = ['ichi', 'ni', 'san'];
+
+      it('should return the array', () => {
+        expect(convertToArray(ary)).toEqual(ary);
+      });
+    });
+  });
+
   describe('humanizeList', () => {
     it('should be a function', () => {
       expect(typeof humanizeList).toEqual('function');
