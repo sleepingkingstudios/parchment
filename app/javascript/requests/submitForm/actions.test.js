@@ -105,9 +105,46 @@ describe('Form request actions', () => {
       expect(action).toEqual({
         type: UPDATE_FORM_FIELD,
         payload: {
+          path: [],
           propName,
           value,
         },
+      });
+    });
+
+    describe('with path: array', () => {
+      it('should create the action', () => {
+        const path = ['films', 'romance', 'characters'];
+        const propName = 'name';
+        const value = 'Inigo Montoya';
+        const action = updateFormField({ path, propName, value });
+
+        expect(action).toEqual({
+          type: UPDATE_FORM_FIELD,
+          payload: {
+            path,
+            propName,
+            value,
+          },
+        });
+      });
+    });
+
+    describe('with path: value', () => {
+      it('should create the action', () => {
+        const path = 'characters';
+        const propName = 'name';
+        const value = 'Inigo Montoya';
+        const action = updateFormField({ path, propName, value });
+
+        expect(action).toEqual({
+          type: UPDATE_FORM_FIELD,
+          payload: {
+            path: [path],
+            propName,
+            value,
+          },
+        });
       });
     });
   });

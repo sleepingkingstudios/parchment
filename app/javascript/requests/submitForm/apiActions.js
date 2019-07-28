@@ -27,9 +27,8 @@ const generateApiActions = ({ actions, namespace, url }) => {
 
   const handleRequestSubmitFormSuccess = dispatch => async (response) => {
     const json = await response.json();
-    const { spell } = camelizeKeys(json.data);
 
-    dispatch(requestSuccess(spell));
+    dispatch(requestSuccess(camelizeKeys(json.data)));
   };
 
   const requestSubmitForm = () => async (dispatch, getState) => {

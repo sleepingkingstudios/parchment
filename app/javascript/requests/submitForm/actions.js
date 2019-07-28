@@ -1,3 +1,5 @@
+import { convertToArray } from '../../utils/array';
+
 const generateActions = ({ namespace }) => {
   const REQUEST_FAILURE = `${namespace}/requestFailure`;
   const REQUEST_PENDING = `${namespace}/requestPending`;
@@ -19,9 +21,9 @@ const generateActions = ({ namespace }) => {
     payload: { data },
   });
 
-  const updateFormField = ({ propName, value }) => ({
+  const updateFormField = ({ path, propName, value }) => ({
     type: UPDATE_FORM_FIELD,
-    payload: { propName, value },
+    payload: { path: convertToArray(path), propName, value },
   });
 
   return {

@@ -3,13 +3,14 @@ import {
   PENDING,
   SUCCESS,
 } from '../../store/requestStatus';
+import { deepAssignProperty } from '../../utils/object';
 
-const updateData = (state, { propName, value }) => {
-  const data = Object.assign({}, state.data);
+const updateData = (state, { path, propName, value }) => {
+  const { data } = state;
 
-  data[propName] = value;
-
-  return Object.assign({}, state, { data });
+  return Object.assign({}, state, {
+    data: deepAssignProperty(data, propName, value, path),
+  });
 };
 
 const generateReducer = ({ actions, initialState }) => {

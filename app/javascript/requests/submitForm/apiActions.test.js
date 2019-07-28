@@ -118,9 +118,7 @@ describe('Form request actions', () => {
           const getState = jest.fn(() => state);
           const json = {
             ok: true,
-            data: {
-              spell: underscoreKeys(data),
-            },
+            data: underscoreKeys(data),
           };
           const response = { ok: true, json: () => json };
           const dispatchedActions = dispatch.mock.calls;

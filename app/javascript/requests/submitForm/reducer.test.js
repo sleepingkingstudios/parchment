@@ -6,6 +6,7 @@ import {
   PENDING,
   SUCCESS,
 } from '../../store/requestStatus';
+import { deepAssignProperty } from '../../utils/object';
 
 describe('Form request reducer', () => {
   const namespace = 'createWidget';
@@ -158,6 +159,64 @@ describe('Form request reducer', () => {
         );
 
         expect(reducer(state, action)).toEqual(expected);
+      });
+    });
+
+    describe('with path: many levels', () => {
+      const path = ['films', 0, 'characters', 0];
+
+      it('should update the data', () => {
+        const action = updateFormField({ path, propName, value });
+        const data = deepAssignProperty(initialState.data, propName, value, path);
+        const expected = Object.assign(
+          {},
+          initialState,
+          { data },
+        );
+
+        expect(reducer(initialState, action)).toEqual(expected);
+      });
+
+      describe('when the state has data', () => {
+        const previousNestedData = {
+          books: [
+            {
+              author: 'J.R.R. Tolkien',
+              title: 'The Fellowship of the Ring',
+            },
+          ],
+          films: [
+            {
+              title: 'The Princess Bride',
+              characters: [
+                {
+                  id: '00000000-0000-0000-0000-000000000000',
+                  name: 'Westley',
+                },
+                {
+                  id: '00000000-0000-0000-0000-000000000001',
+                  name: 'Buttercup',
+                },
+              ],
+            },
+            {
+              title: 'TRON',
+            },
+          ],
+        };
+
+        it('should update the data', () => {
+          const state = { ...initialState, data: previousNestedData };
+          const action = updateFormField({ path, propName, value });
+          const data = deepAssignProperty(state.data, propName, value, path);
+          const expected = Object.assign(
+            {},
+            state,
+            { data },
+          );
+
+          expect(reducer(state, action)).toEqual(expected);
+        });
       });
     });
   });
