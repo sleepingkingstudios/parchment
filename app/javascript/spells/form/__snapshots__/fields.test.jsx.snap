@@ -30,6 +30,7 @@ exports[`<SpellForm /> fields <CastingTimeField /> should match the snapshot 1`]
     inputId={null}
     label={null}
     namespace="spell"
+    path={Array []}
     prop="castingTime"
   >
     <FormGroup
@@ -123,6 +124,7 @@ exports[`<SpellForm /> fields <DescriptionField /> should match the snapshot 1`]
     inputId={null}
     label={null}
     namespace="spell"
+    path={Array []}
     prop="description"
   >
     <FormGroup
@@ -214,6 +216,7 @@ exports[`<SpellForm /> fields <DurationField /> should match the snapshot 1`] = 
     inputId={null}
     label={null}
     namespace="spell"
+    path={Array []}
     prop="duration"
   >
     <FormGroup
@@ -307,6 +310,7 @@ exports[`<SpellForm /> fields <LevelField /> should match the snapshot 1`] = `
     inputId={null}
     label={null}
     namespace="spell"
+    path={Array []}
     prop="level"
   >
     <FormGroup
@@ -407,6 +411,7 @@ exports[`<SpellForm /> fields <NameField /> should match the snapshot 1`] = `
     inputId={null}
     label={null}
     namespace="spell"
+    path={Array []}
     prop="name"
   >
     <FormGroup
@@ -500,6 +505,7 @@ exports[`<SpellForm /> fields <RangeField /> should match the snapshot 1`] = `
     inputId={null}
     label={null}
     namespace="spell"
+    path={Array []}
     prop="range"
   >
     <FormGroup
@@ -593,6 +599,7 @@ exports[`<SpellForm /> fields <RitualField /> should match the snapshot 1`] = `
     inputId={null}
     label={null}
     namespace="spell"
+    path={Array []}
     prop="ritual"
   >
     <FormGroup
@@ -728,6 +735,7 @@ exports[`<SpellForm /> fields <SchoolField /> should match the snapshot 1`] = `
     inputId={null}
     label={null}
     namespace="spell"
+    path={Array []}
     prop="school"
   >
     <FormGroup

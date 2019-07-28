@@ -1,4 +1,7 @@
 import {
+  convertToArray,
+} from '../../utils/array';
+import {
   camelize,
   underscore,
 } from '../../utils/string';
@@ -21,18 +24,26 @@ export const formatErrors = (errors) => {
   return formatted;
 };
 
-export const generateFieldId = ({ inputId, namespace, prop }) => {
+// TODO: Deprecate namespace.
+export const generateFieldId = ({
+  inputId,
+  namespace,
+  path,
+  prop,
+}) => {
   if (inputId) { return inputId; }
 
-  const segments = [];
+  const segments = convertToArray(path).slice();
 
-  if (namespace) { segments.push(namespace); }
+  if (namespace && segments.length === 0) { segments.push(namespace); }
 
-  segments.push(underscore(prop).replace(/_/g, '-'));
+  segments.push(prop);
 
   segments.push('input');
 
-  return segments.join('-');
+  return segments
+    .map(str => underscore(str).replace(/_/g, '-'))
+    .join('-');
 };
 
 export const getInputValue = ({ checked, type, value }) => {

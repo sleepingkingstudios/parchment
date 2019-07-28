@@ -1,76 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Form component wrappers formField() should match the snapshot 1`] = `
-<PropertyNameField
-  form={
-    Object {
-      "data": Object {
-        "propertyName": "Property Value",
-      },
-      "errors": Object {},
-      "namespace": "namespace",
-      "onChangeAction": [MockFunction],
-      "onSubmitAction": [MockFunction],
-    }
-  }
->
-  <FormField
-    colWidth={null}
-    inputId={null}
-    label={null}
-    namespace="namespace"
-    prop="propertyName"
-  >
-    <FormGroup
-      className="form-field"
-      colWidth={null}
-    >
-      <div
-        className="form-group col form-field"
-      >
-        <label
-          htmlFor="namespace-property-name-input"
-        >
-          Property Name
-        </label>
-        <PropertyNameInput
-          form={
-            Object {
-              "data": Object {
-                "propertyName": "Property Value",
-              },
-              "errors": Object {},
-              "namespace": "namespace",
-              "onChangeAction": [MockFunction],
-              "onSubmitAction": [MockFunction],
-            }
-          }
-        >
-          <FormInput
-            className={null}
-            id="namespace-property-name-input"
-            onChange={[Function]}
-            placeholder=""
-            type="text"
-            validStatus={null}
-            value="Property Value"
-          >
-            <input
-              className="form-control"
-              id="namespace-property-name-input"
-              onChange={[Function]}
-              placeholder=""
-              type="text"
-              value="Property Value"
-            />
-          </FormInput>
-        </PropertyNameInput>
-      </div>
-    </FormGroup>
-  </FormField>
-</PropertyNameField>
-`;
-
 exports[`Form component wrappers formField() with custom properties should match the snapshot 1`] = `
 <PropertyNameField
   colWidth="12"
@@ -81,8 +10,6 @@ exports[`Form component wrappers formField() with custom properties should match
       },
       "errors": Object {},
       "namespace": "namespace",
-      "onChangeAction": [MockFunction],
-      "onSubmitAction": [MockFunction],
     }
   }
   placeholder="Placeholder Text"
@@ -92,6 +19,7 @@ exports[`Form component wrappers formField() with custom properties should match
     inputId={null}
     label={null}
     namespace="namespace"
+    path={Array []}
     prop="propertyName"
   >
     <FormGroup
@@ -114,8 +42,6 @@ exports[`Form component wrappers formField() with custom properties should match
               },
               "errors": Object {},
               "namespace": "namespace",
-              "onChangeAction": [MockFunction],
-              "onSubmitAction": [MockFunction],
             }
           }
           placeholder="Placeholder Text"
@@ -145,6 +71,74 @@ exports[`Form component wrappers formField() with custom properties should match
 </PropertyNameField>
 `;
 
+exports[`Form component wrappers formField() with default properties should match the snapshot 1`] = `
+<PropertyNameField
+  form={
+    Object {
+      "data": Object {
+        "propertyName": "Property Value",
+      },
+      "errors": Object {},
+      "namespace": "namespace",
+    }
+  }
+>
+  <FormField
+    colWidth={null}
+    inputId={null}
+    label={null}
+    namespace="namespace"
+    path={Array []}
+    prop="propertyName"
+  >
+    <FormGroup
+      className="form-field"
+      colWidth={null}
+    >
+      <div
+        className="form-group col form-field"
+      >
+        <label
+          htmlFor="namespace-property-name-input"
+        >
+          Property Name
+        </label>
+        <PropertyNameInput
+          form={
+            Object {
+              "data": Object {
+                "propertyName": "Property Value",
+              },
+              "errors": Object {},
+              "namespace": "namespace",
+            }
+          }
+        >
+          <FormInput
+            className={null}
+            id="namespace-property-name-input"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+            validStatus={null}
+            value="Property Value"
+          >
+            <input
+              className="form-control"
+              id="namespace-property-name-input"
+              onChange={[Function]}
+              placeholder=""
+              type="text"
+              value="Property Value"
+            />
+          </FormInput>
+        </PropertyNameInput>
+      </div>
+    </FormGroup>
+  </FormField>
+</PropertyNameField>
+`;
+
 exports[`Form component wrappers formGroup() should match the snapshot 1`] = `
 <FormGroup
   className=""
@@ -158,15 +152,13 @@ exports[`Form component wrappers formGroup() should match the snapshot 1`] = `
         },
         "errors": Object {},
         "namespace": "namespace",
-        "onChangeAction": [MockFunction],
-        "onSubmitAction": [MockFunction],
       }
     }
   />
 </FormGroup>
 `;
 
-exports[`Form component wrappers formInput() should match the snapshot 1`] = `
+exports[`Form component wrappers formInput() with custom properties should match the snapshot 1`] = `
 <FormInput
   className={null}
   id="namespace-property-name-input"
@@ -178,7 +170,7 @@ exports[`Form component wrappers formInput() should match the snapshot 1`] = `
 />
 `;
 
-exports[`Form component wrappers formInput() with custom properties should match the snapshot 1`] = `
+exports[`Form component wrappers formInput() with default properties should match the snapshot 1`] = `
 <FormInput
   className={null}
   id="namespace-property-name-input"

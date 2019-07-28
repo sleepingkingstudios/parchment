@@ -111,6 +111,14 @@ describe('Form utils', () => {
         expect(generateFieldId({ namespace, prop })).toEqual(`${namespace}-${expected}`);
       });
     });
+
+    describe('with a path', () => {
+      const path = ['weapons', 'swords', 'japanese'];
+
+      it('should generate the field id', () => {
+        expect(generateFieldId({ path, prop })).toEqual(`${path.join('-')}-${expected}`);
+      });
+    });
   });
 
   describe('getInputValue()', () => {
