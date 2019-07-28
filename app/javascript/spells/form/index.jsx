@@ -18,7 +18,7 @@ import {
 } from './fields';
 
 import { formErrorsType } from '../../components/form/entities';
-import { spellType } from '../entities';
+import { spellFormType } from '../entities';
 
 const SpellForm = ({
   data,
@@ -31,7 +31,7 @@ const SpellForm = ({
   const form = {
     data,
     errors,
-    namespace: 'spell',
+    path: ['spell'],
     onChangeAction,
     onSubmitAction,
   };
@@ -80,7 +80,7 @@ SpellForm.defaultProps = {
 };
 
 SpellForm.propTypes = {
-  data: spellType.isRequired,
+  data: spellFormType.isRequired,
   errors: formErrorsType.isRequired,
   isUpdate: PropTypes.bool,
   onChangeAction: PropTypes.func.isRequired,

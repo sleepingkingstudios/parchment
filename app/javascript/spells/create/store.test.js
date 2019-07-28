@@ -33,7 +33,7 @@ describe('Create Spell store', () => {
         const initialState = reducer(undefined, action);
         const { data } = initialState;
 
-        expect(data).toEqual(spellDefaultAttributes);
+        expect(data).toEqual({ spell: spellDefaultAttributes });
       });
     });
   });

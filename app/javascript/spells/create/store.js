@@ -8,4 +8,4 @@ export const {
   actions,
   apiActions,
   reducer,
-} = submitForm({ data: buildSpell(), namespace, url: REQUEST_URL });
+} = submitForm({ data: { spell: buildSpell() }, namespace, url: REQUEST_URL });

@@ -5,7 +5,7 @@ import Page from '../../components/page';
 import SpellForm from '../form';
 
 import { formErrorsType } from '../../components/form/entities';
-import { spellType } from '../entities';
+import { spellFormType } from '../entities';
 
 const breadcrumbs = [
   {
@@ -46,7 +46,7 @@ const CreateSpellPage = ({
 CreateSpellPage.defaultProps = {};
 
 CreateSpellPage.propTypes = {
-  data: spellType.isRequired,
+  data: spellFormType.isRequired,
   errors: formErrorsType.isRequired,
   status: PropTypes.string.isRequired,
   requestSubmitForm: PropTypes.func.isRequired,
