@@ -87,4 +87,41 @@ describe('Form request', () => {
       });
     });
   });
+
+  describe('with middleware: array', () => {
+    const calledMiddleware = [];
+    const generateMiddleware = label => ({
+      handleAction: next => (state, action) => {
+        calledMiddleware.push(label);
+
+        next(state, action);
+      },
+    });
+    const middleware = [
+      generateMiddleware('A'),
+      generateMiddleware('B'),
+      generateMiddleware('C'),
+    ];
+    const options = { ...defaultOptions, middleware };
+    const {
+      reducer,
+    } = generateFormRequest(options);
+
+    afterEach(() => calledMiddleware.splice(0, calledMiddleware.length));
+
+    describe('reducer', () => {
+      const state = { key: 'value' };
+      const action = { type: 'test/exampleAction' };
+
+      it('should be a function', () => {
+        expect(typeof reducer).toEqual('function');
+      });
+
+      it('should call the middleware', () => {
+        reducer(state, action);
+
+        expect(calledMiddleware).toEqual(['A', 'B', 'C']);
+      });
+    });
+  });
 });

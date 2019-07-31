@@ -3,7 +3,17 @@ import generateApiActions from './apiActions';
 import generateInitialState from './initialState';
 import generateReducer from './reducer';
 
-const generateFormRequest = ({ data, namespace, url }) => {
+import {
+  applyMiddleware,
+  selectMiddleware,
+} from '../middleware/utils';
+
+const generateFormRequest = ({
+  data,
+  middleware,
+  namespace,
+  url,
+}) => {
   const actions = generateActions({ namespace });
   const apiActions = generateApiActions({ actions, namespace, url });
   const initialState = generateInitialState({ data, namespace });
@@ -12,7 +22,7 @@ const generateFormRequest = ({ data, namespace, url }) => {
   return {
     actions,
     apiActions,
-    reducer,
+    reducer: applyMiddleware(reducer, selectMiddleware(middleware, 'handleAction')),
   };
 };
 
