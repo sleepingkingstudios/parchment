@@ -170,7 +170,9 @@ RSpec.describe Api::SpellsController do
       let(:expected_data) do
         serializer = SpellSerializer.new
 
-        spells.map { |spell| serializer.serialize(spell) }
+        spells
+          .sort_by(&:name)
+          .map { |spell| serializer.serialize(spell) }
       end
 
       it 'should serialize the spells' do

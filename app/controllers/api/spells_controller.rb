@@ -2,7 +2,7 @@
 
 require 'operations/records/create_operation'
 require 'operations/records/destroy_operation'
-require 'operations/records/find_matching_operation'
+require 'operations/spells/find_matching_operation'
 require 'operations/records/find_one_operation'
 require 'operations/records/update_operation'
 
@@ -68,7 +68,7 @@ class Api::SpellsController < Api::BaseController
   end
 
   def index_operation
-    @index_operation ||= Operations::Records::FindMatchingOperation.new(Spell)
+    @index_operation ||= Operations::Spells::FindMatchingOperation.new
   end
 
   def render_errors(errors, status: :unprocessable_entity)
