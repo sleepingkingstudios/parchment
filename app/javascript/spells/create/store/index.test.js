@@ -2,8 +2,8 @@ import {
   actions,
   reducer,
   request,
-} from './store';
-import { spellDefaultAttributes } from '../entities';
+} from './index';
+import { spellDefaultAttributes } from '../../entities';
 
 describe('Create Spell store', () => {
   describe('actions', () => {

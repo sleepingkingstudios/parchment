@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import CreateSpellPage from './page';
-import { actions, request } from './store';
+import { actions, request } from './store/index';
 
 const { updateFormField } = actions;
 const { performRequest } = request;
