@@ -1,3 +1,9 @@
+export const convertToArray = (obj) => {
+  if (typeof obj === 'undefined' || obj === null) { return []; }
+
+  return Array.isArray(obj) ? obj : [obj];
+};
+
 export const indexOfMatching = (ary, fn) => {
   let i;
   const len = ary.length;

@@ -5,23 +5,27 @@ exports[`<SpellForm /> fields <CastingTimeField /> should match the snapshot 1`]
   form={
     Object {
       "data": Object {
-        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-        "duration": "Instantaneous",
-        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-        "level": 0,
-        "materialComponent": "",
-        "name": "Thunderclap",
-        "range": "Self",
-        "ritual": false,
-        "school": "illusion",
-        "shortDescription": "Create an ominous thunderclap when your name is spoken",
-        "somaticComponent": false,
-        "verbalComponent": false,
+        "spell": Object {
+          "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+          "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+          "duration": "Instantaneous",
+          "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+          "level": 0,
+          "materialComponent": "",
+          "name": "Thunderclap",
+          "range": "Self",
+          "ritual": false,
+          "school": "illusion",
+          "shortDescription": "Create an ominous thunderclap when your name is spoken",
+          "somaticComponent": false,
+          "verbalComponent": false,
+        },
       },
-      "namespace": "spell",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
+      "path": Array [
+        "spell",
+      ],
     }
   }
 >
@@ -29,7 +33,11 @@ exports[`<SpellForm /> fields <CastingTimeField /> should match the snapshot 1`]
     colWidth={null}
     inputId={null}
     label={null}
-    namespace="spell"
+    path={
+      Array [
+        "spell",
+      ]
+    }
     prop="castingTime"
   >
     <FormGroup
@@ -48,23 +56,27 @@ exports[`<SpellForm /> fields <CastingTimeField /> should match the snapshot 1`]
           form={
             Object {
               "data": Object {
-                "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-                "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-                "duration": "Instantaneous",
-                "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-                "level": 0,
-                "materialComponent": "",
-                "name": "Thunderclap",
-                "range": "Self",
-                "ritual": false,
-                "school": "illusion",
-                "shortDescription": "Create an ominous thunderclap when your name is spoken",
-                "somaticComponent": false,
-                "verbalComponent": false,
+                "spell": Object {
+                  "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                  "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                  "duration": "Instantaneous",
+                  "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                  "level": 0,
+                  "materialComponent": "",
+                  "name": "Thunderclap",
+                  "range": "Self",
+                  "ritual": false,
+                  "school": "illusion",
+                  "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                  "somaticComponent": false,
+                  "verbalComponent": false,
+                },
               },
-              "namespace": "spell",
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
+              "path": Array [
+                "spell",
+              ],
             }
           }
         >
@@ -98,23 +110,27 @@ exports[`<SpellForm /> fields <DescriptionField /> should match the snapshot 1`]
   form={
     Object {
       "data": Object {
-        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-        "duration": "Instantaneous",
-        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-        "level": 0,
-        "materialComponent": "",
-        "name": "Thunderclap",
-        "range": "Self",
-        "ritual": false,
-        "school": "illusion",
-        "shortDescription": "Create an ominous thunderclap when your name is spoken",
-        "somaticComponent": false,
-        "verbalComponent": false,
+        "spell": Object {
+          "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+          "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+          "duration": "Instantaneous",
+          "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+          "level": 0,
+          "materialComponent": "",
+          "name": "Thunderclap",
+          "range": "Self",
+          "ritual": false,
+          "school": "illusion",
+          "shortDescription": "Create an ominous thunderclap when your name is spoken",
+          "somaticComponent": false,
+          "verbalComponent": false,
+        },
       },
-      "namespace": "spell",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
+      "path": Array [
+        "spell",
+      ],
     }
   }
 >
@@ -122,7 +138,11 @@ exports[`<SpellForm /> fields <DescriptionField /> should match the snapshot 1`]
     colWidth={null}
     inputId={null}
     label={null}
-    namespace="spell"
+    path={
+      Array [
+        "spell",
+      ]
+    }
     prop="description"
   >
     <FormGroup
@@ -141,23 +161,27 @@ exports[`<SpellForm /> fields <DescriptionField /> should match the snapshot 1`]
           form={
             Object {
               "data": Object {
-                "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-                "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-                "duration": "Instantaneous",
-                "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-                "level": 0,
-                "materialComponent": "",
-                "name": "Thunderclap",
-                "range": "Self",
-                "ritual": false,
-                "school": "illusion",
-                "shortDescription": "Create an ominous thunderclap when your name is spoken",
-                "somaticComponent": false,
-                "verbalComponent": false,
+                "spell": Object {
+                  "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                  "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                  "duration": "Instantaneous",
+                  "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                  "level": 0,
+                  "materialComponent": "",
+                  "name": "Thunderclap",
+                  "range": "Self",
+                  "ritual": false,
+                  "school": "illusion",
+                  "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                  "somaticComponent": false,
+                  "verbalComponent": false,
+                },
               },
-              "namespace": "spell",
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
+              "path": Array [
+                "spell",
+              ],
             }
           }
         >
@@ -189,23 +213,27 @@ exports[`<SpellForm /> fields <DurationField /> should match the snapshot 1`] = 
   form={
     Object {
       "data": Object {
-        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-        "duration": "Instantaneous",
-        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-        "level": 0,
-        "materialComponent": "",
-        "name": "Thunderclap",
-        "range": "Self",
-        "ritual": false,
-        "school": "illusion",
-        "shortDescription": "Create an ominous thunderclap when your name is spoken",
-        "somaticComponent": false,
-        "verbalComponent": false,
+        "spell": Object {
+          "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+          "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+          "duration": "Instantaneous",
+          "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+          "level": 0,
+          "materialComponent": "",
+          "name": "Thunderclap",
+          "range": "Self",
+          "ritual": false,
+          "school": "illusion",
+          "shortDescription": "Create an ominous thunderclap when your name is spoken",
+          "somaticComponent": false,
+          "verbalComponent": false,
+        },
       },
-      "namespace": "spell",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
+      "path": Array [
+        "spell",
+      ],
     }
   }
 >
@@ -213,7 +241,11 @@ exports[`<SpellForm /> fields <DurationField /> should match the snapshot 1`] = 
     colWidth={null}
     inputId={null}
     label={null}
-    namespace="spell"
+    path={
+      Array [
+        "spell",
+      ]
+    }
     prop="duration"
   >
     <FormGroup
@@ -232,23 +264,27 @@ exports[`<SpellForm /> fields <DurationField /> should match the snapshot 1`] = 
           form={
             Object {
               "data": Object {
-                "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-                "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-                "duration": "Instantaneous",
-                "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-                "level": 0,
-                "materialComponent": "",
-                "name": "Thunderclap",
-                "range": "Self",
-                "ritual": false,
-                "school": "illusion",
-                "shortDescription": "Create an ominous thunderclap when your name is spoken",
-                "somaticComponent": false,
-                "verbalComponent": false,
+                "spell": Object {
+                  "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                  "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                  "duration": "Instantaneous",
+                  "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                  "level": 0,
+                  "materialComponent": "",
+                  "name": "Thunderclap",
+                  "range": "Self",
+                  "ritual": false,
+                  "school": "illusion",
+                  "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                  "somaticComponent": false,
+                  "verbalComponent": false,
+                },
               },
-              "namespace": "spell",
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
+              "path": Array [
+                "spell",
+              ],
             }
           }
         >
@@ -282,23 +318,27 @@ exports[`<SpellForm /> fields <LevelField /> should match the snapshot 1`] = `
   form={
     Object {
       "data": Object {
-        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-        "duration": "Instantaneous",
-        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-        "level": 0,
-        "materialComponent": "",
-        "name": "Thunderclap",
-        "range": "Self",
-        "ritual": false,
-        "school": "illusion",
-        "shortDescription": "Create an ominous thunderclap when your name is spoken",
-        "somaticComponent": false,
-        "verbalComponent": false,
+        "spell": Object {
+          "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+          "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+          "duration": "Instantaneous",
+          "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+          "level": 0,
+          "materialComponent": "",
+          "name": "Thunderclap",
+          "range": "Self",
+          "ritual": false,
+          "school": "illusion",
+          "shortDescription": "Create an ominous thunderclap when your name is spoken",
+          "somaticComponent": false,
+          "verbalComponent": false,
+        },
       },
-      "namespace": "spell",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
+      "path": Array [
+        "spell",
+      ],
     }
   }
 >
@@ -306,7 +346,11 @@ exports[`<SpellForm /> fields <LevelField /> should match the snapshot 1`] = `
     colWidth={null}
     inputId={null}
     label={null}
-    namespace="spell"
+    path={
+      Array [
+        "spell",
+      ]
+    }
     prop="level"
   >
     <FormGroup
@@ -325,23 +369,27 @@ exports[`<SpellForm /> fields <LevelField /> should match the snapshot 1`] = `
           form={
             Object {
               "data": Object {
-                "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-                "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-                "duration": "Instantaneous",
-                "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-                "level": 0,
-                "materialComponent": "",
-                "name": "Thunderclap",
-                "range": "Self",
-                "ritual": false,
-                "school": "illusion",
-                "shortDescription": "Create an ominous thunderclap when your name is spoken",
-                "somaticComponent": false,
-                "verbalComponent": false,
+                "spell": Object {
+                  "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                  "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                  "duration": "Instantaneous",
+                  "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                  "level": 0,
+                  "materialComponent": "",
+                  "name": "Thunderclap",
+                  "range": "Self",
+                  "ritual": false,
+                  "school": "illusion",
+                  "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                  "somaticComponent": false,
+                  "verbalComponent": false,
+                },
               },
-              "namespace": "spell",
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
+              "path": Array [
+                "spell",
+              ],
             }
           }
         >
@@ -382,23 +430,27 @@ exports[`<SpellForm /> fields <NameField /> should match the snapshot 1`] = `
   form={
     Object {
       "data": Object {
-        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-        "duration": "Instantaneous",
-        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-        "level": 0,
-        "materialComponent": "",
-        "name": "Thunderclap",
-        "range": "Self",
-        "ritual": false,
-        "school": "illusion",
-        "shortDescription": "Create an ominous thunderclap when your name is spoken",
-        "somaticComponent": false,
-        "verbalComponent": false,
+        "spell": Object {
+          "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+          "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+          "duration": "Instantaneous",
+          "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+          "level": 0,
+          "materialComponent": "",
+          "name": "Thunderclap",
+          "range": "Self",
+          "ritual": false,
+          "school": "illusion",
+          "shortDescription": "Create an ominous thunderclap when your name is spoken",
+          "somaticComponent": false,
+          "verbalComponent": false,
+        },
       },
-      "namespace": "spell",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
+      "path": Array [
+        "spell",
+      ],
     }
   }
 >
@@ -406,7 +458,11 @@ exports[`<SpellForm /> fields <NameField /> should match the snapshot 1`] = `
     colWidth={null}
     inputId={null}
     label={null}
-    namespace="spell"
+    path={
+      Array [
+        "spell",
+      ]
+    }
     prop="name"
   >
     <FormGroup
@@ -425,23 +481,27 @@ exports[`<SpellForm /> fields <NameField /> should match the snapshot 1`] = `
           form={
             Object {
               "data": Object {
-                "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-                "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-                "duration": "Instantaneous",
-                "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-                "level": 0,
-                "materialComponent": "",
-                "name": "Thunderclap",
-                "range": "Self",
-                "ritual": false,
-                "school": "illusion",
-                "shortDescription": "Create an ominous thunderclap when your name is spoken",
-                "somaticComponent": false,
-                "verbalComponent": false,
+                "spell": Object {
+                  "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                  "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                  "duration": "Instantaneous",
+                  "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                  "level": 0,
+                  "materialComponent": "",
+                  "name": "Thunderclap",
+                  "range": "Self",
+                  "ritual": false,
+                  "school": "illusion",
+                  "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                  "somaticComponent": false,
+                  "verbalComponent": false,
+                },
               },
-              "namespace": "spell",
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
+              "path": Array [
+                "spell",
+              ],
             }
           }
         >
@@ -475,23 +535,27 @@ exports[`<SpellForm /> fields <RangeField /> should match the snapshot 1`] = `
   form={
     Object {
       "data": Object {
-        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-        "duration": "Instantaneous",
-        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-        "level": 0,
-        "materialComponent": "",
-        "name": "Thunderclap",
-        "range": "Self",
-        "ritual": false,
-        "school": "illusion",
-        "shortDescription": "Create an ominous thunderclap when your name is spoken",
-        "somaticComponent": false,
-        "verbalComponent": false,
+        "spell": Object {
+          "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+          "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+          "duration": "Instantaneous",
+          "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+          "level": 0,
+          "materialComponent": "",
+          "name": "Thunderclap",
+          "range": "Self",
+          "ritual": false,
+          "school": "illusion",
+          "shortDescription": "Create an ominous thunderclap when your name is spoken",
+          "somaticComponent": false,
+          "verbalComponent": false,
+        },
       },
-      "namespace": "spell",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
+      "path": Array [
+        "spell",
+      ],
     }
   }
 >
@@ -499,7 +563,11 @@ exports[`<SpellForm /> fields <RangeField /> should match the snapshot 1`] = `
     colWidth={null}
     inputId={null}
     label={null}
-    namespace="spell"
+    path={
+      Array [
+        "spell",
+      ]
+    }
     prop="range"
   >
     <FormGroup
@@ -518,23 +586,27 @@ exports[`<SpellForm /> fields <RangeField /> should match the snapshot 1`] = `
           form={
             Object {
               "data": Object {
-                "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-                "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-                "duration": "Instantaneous",
-                "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-                "level": 0,
-                "materialComponent": "",
-                "name": "Thunderclap",
-                "range": "Self",
-                "ritual": false,
-                "school": "illusion",
-                "shortDescription": "Create an ominous thunderclap when your name is spoken",
-                "somaticComponent": false,
-                "verbalComponent": false,
+                "spell": Object {
+                  "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                  "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                  "duration": "Instantaneous",
+                  "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                  "level": 0,
+                  "materialComponent": "",
+                  "name": "Thunderclap",
+                  "range": "Self",
+                  "ritual": false,
+                  "school": "illusion",
+                  "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                  "somaticComponent": false,
+                  "verbalComponent": false,
+                },
               },
-              "namespace": "spell",
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
+              "path": Array [
+                "spell",
+              ],
             }
           }
         >
@@ -568,23 +640,27 @@ exports[`<SpellForm /> fields <RitualField /> should match the snapshot 1`] = `
   form={
     Object {
       "data": Object {
-        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-        "duration": "Instantaneous",
-        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-        "level": 0,
-        "materialComponent": "",
-        "name": "Thunderclap",
-        "range": "Self",
-        "ritual": false,
-        "school": "illusion",
-        "shortDescription": "Create an ominous thunderclap when your name is spoken",
-        "somaticComponent": false,
-        "verbalComponent": false,
+        "spell": Object {
+          "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+          "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+          "duration": "Instantaneous",
+          "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+          "level": 0,
+          "materialComponent": "",
+          "name": "Thunderclap",
+          "range": "Self",
+          "ritual": false,
+          "school": "illusion",
+          "shortDescription": "Create an ominous thunderclap when your name is spoken",
+          "somaticComponent": false,
+          "verbalComponent": false,
+        },
       },
-      "namespace": "spell",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
+      "path": Array [
+        "spell",
+      ],
     }
   }
 >
@@ -592,7 +668,11 @@ exports[`<SpellForm /> fields <RitualField /> should match the snapshot 1`] = `
     colWidth={null}
     inputId={null}
     label={null}
-    namespace="spell"
+    path={
+      Array [
+        "spell",
+      ]
+    }
     prop="ritual"
   >
     <FormGroup
@@ -611,23 +691,27 @@ exports[`<SpellForm /> fields <RitualField /> should match the snapshot 1`] = `
           form={
             Object {
               "data": Object {
-                "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-                "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-                "duration": "Instantaneous",
-                "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-                "level": 0,
-                "materialComponent": "",
-                "name": "Thunderclap",
-                "range": "Self",
-                "ritual": false,
-                "school": "illusion",
-                "shortDescription": "Create an ominous thunderclap when your name is spoken",
-                "somaticComponent": false,
-                "verbalComponent": false,
+                "spell": Object {
+                  "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                  "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                  "duration": "Instantaneous",
+                  "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                  "level": 0,
+                  "materialComponent": "",
+                  "name": "Thunderclap",
+                  "range": "Self",
+                  "ritual": false,
+                  "school": "illusion",
+                  "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                  "somaticComponent": false,
+                  "verbalComponent": false,
+                },
               },
-              "namespace": "spell",
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
+              "path": Array [
+                "spell",
+              ],
             }
           }
         >
@@ -667,23 +751,27 @@ exports[`<SpellForm /> fields <SchoolField /> should match the snapshot 1`] = `
   form={
     Object {
       "data": Object {
-        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-        "duration": "Instantaneous",
-        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-        "level": 0,
-        "materialComponent": "",
-        "name": "Thunderclap",
-        "range": "Self",
-        "ritual": false,
-        "school": "illusion",
-        "shortDescription": "Create an ominous thunderclap when your name is spoken",
-        "somaticComponent": false,
-        "verbalComponent": false,
+        "spell": Object {
+          "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+          "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+          "duration": "Instantaneous",
+          "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+          "level": 0,
+          "materialComponent": "",
+          "name": "Thunderclap",
+          "range": "Self",
+          "ritual": false,
+          "school": "illusion",
+          "shortDescription": "Create an ominous thunderclap when your name is spoken",
+          "somaticComponent": false,
+          "verbalComponent": false,
+        },
       },
-      "namespace": "spell",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
+      "path": Array [
+        "spell",
+      ],
     }
   }
   options={
@@ -727,7 +815,11 @@ exports[`<SpellForm /> fields <SchoolField /> should match the snapshot 1`] = `
     colWidth={null}
     inputId={null}
     label={null}
-    namespace="spell"
+    path={
+      Array [
+        "spell",
+      ]
+    }
     prop="school"
   >
     <FormGroup
@@ -746,23 +838,27 @@ exports[`<SpellForm /> fields <SchoolField /> should match the snapshot 1`] = `
           form={
             Object {
               "data": Object {
-                "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-                "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-                "duration": "Instantaneous",
-                "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-                "level": 0,
-                "materialComponent": "",
-                "name": "Thunderclap",
-                "range": "Self",
-                "ritual": false,
-                "school": "illusion",
-                "shortDescription": "Create an ominous thunderclap when your name is spoken",
-                "somaticComponent": false,
-                "verbalComponent": false,
+                "spell": Object {
+                  "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                  "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                  "duration": "Instantaneous",
+                  "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                  "level": 0,
+                  "materialComponent": "",
+                  "name": "Thunderclap",
+                  "range": "Self",
+                  "ritual": false,
+                  "school": "illusion",
+                  "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                  "somaticComponent": false,
+                  "verbalComponent": false,
+                },
               },
-              "namespace": "spell",
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
+              "path": Array [
+                "spell",
+              ],
             }
           }
           options={
@@ -955,23 +1051,27 @@ exports[`<SpellForm /> fields <SubmitButton /> should match the snapshot 1`] = `
   form={
     Object {
       "data": Object {
-        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-        "duration": "Instantaneous",
-        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-        "level": 0,
-        "materialComponent": "",
-        "name": "Thunderclap",
-        "range": "Self",
-        "ritual": false,
-        "school": "illusion",
-        "shortDescription": "Create an ominous thunderclap when your name is spoken",
-        "somaticComponent": false,
-        "verbalComponent": false,
+        "spell": Object {
+          "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+          "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+          "duration": "Instantaneous",
+          "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+          "level": 0,
+          "materialComponent": "",
+          "name": "Thunderclap",
+          "range": "Self",
+          "ritual": false,
+          "school": "illusion",
+          "shortDescription": "Create an ominous thunderclap when your name is spoken",
+          "somaticComponent": false,
+          "verbalComponent": false,
+        },
       },
-      "namespace": "spell",
       "onChangeAction": [MockFunction],
       "onSubmitAction": [MockFunction],
+      "path": Array [
+        "spell",
+      ],
     }
   }
   requestStatus="initialized"
@@ -988,34 +1088,7 @@ exports[`<SpellForm /> fields <SubmitButton /> should match the snapshot 1`] = `
         form={
           Object {
             "data": Object {
-              "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
-              "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
-              "duration": "Instantaneous",
-              "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
-              "level": 0,
-              "materialComponent": "",
-              "name": "Thunderclap",
-              "range": "Self",
-              "ritual": false,
-              "school": "illusion",
-              "shortDescription": "Create an ominous thunderclap when your name is spoken",
-              "somaticComponent": false,
-              "verbalComponent": false,
-            },
-            "namespace": "spell",
-            "onChangeAction": [MockFunction],
-            "onSubmitAction": [MockFunction],
-          }
-        }
-        isUpdate={false}
-        requestStatus="initialized"
-      >
-        <FormSubmitWrapper
-          block={true}
-          disabled={false}
-          form={
-            Object {
-              "data": Object {
+              "spell": Object {
                 "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
                 "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
                 "duration": "Instantaneous",
@@ -1030,9 +1103,44 @@ exports[`<SpellForm /> fields <SubmitButton /> should match the snapshot 1`] = `
                 "somaticComponent": false,
                 "verbalComponent": false,
               },
-              "namespace": "spell",
+            },
+            "onChangeAction": [MockFunction],
+            "onSubmitAction": [MockFunction],
+            "path": Array [
+              "spell",
+            ],
+          }
+        }
+        isUpdate={false}
+        requestStatus="initialized"
+      >
+        <FormSubmitWrapper
+          block={true}
+          disabled={false}
+          form={
+            Object {
+              "data": Object {
+                "spell": Object {
+                  "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                  "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                  "duration": "Instantaneous",
+                  "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                  "level": 0,
+                  "materialComponent": "",
+                  "name": "Thunderclap",
+                  "range": "Self",
+                  "ritual": false,
+                  "school": "illusion",
+                  "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                  "somaticComponent": false,
+                  "verbalComponent": false,
+                },
+              },
               "onChangeAction": [MockFunction],
               "onSubmitAction": [MockFunction],
+              "path": Array [
+                "spell",
+              ],
             }
           }
           outline={true}

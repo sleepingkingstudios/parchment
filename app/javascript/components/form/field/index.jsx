@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import FormGroup from '../group';
+import { formPathType } from '../entities';
 import { generateFieldId } from '../utils';
 import { titleize } from '../../../utils/string';
 
@@ -32,10 +33,10 @@ const FormField = ({
   colWidth,
   inputId,
   label,
-  namespace,
+  path,
   prop,
 }) => {
-  const id = generateFieldId({ inputId, namespace, prop });
+  const id = generateFieldId({ inputId, path, prop });
 
   return (
     <FormGroup className={groupClassName({ label })} colWidth={colWidth}>
@@ -49,7 +50,7 @@ FormField.defaultProps = {
   colWidth: null,
   inputId: null,
   label: null,
-  namespace: null,
+  path: [],
 };
 
 FormField.propTypes = {
@@ -63,7 +64,7 @@ FormField.propTypes = {
     PropTypes.bool,
     PropTypes.string,
   ]),
-  namespace: PropTypes.string,
+  path: formPathType,
   prop: PropTypes.string.isRequired,
 };
 

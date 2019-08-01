@@ -104,11 +104,11 @@ describe('Form utils', () => {
       });
     });
 
-    describe('with a namespace', () => {
-      const namespace = 'rocket';
+    describe('with a path', () => {
+      const path = ['weapons', 'swords', 'japanese'];
 
       it('should generate the field id', () => {
-        expect(generateFieldId({ namespace, prop })).toEqual(`${namespace}-${expected}`);
+        expect(generateFieldId({ path, prop })).toEqual(`${path.join('-')}-${expected}`);
       });
     });
   });

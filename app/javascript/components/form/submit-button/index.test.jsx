@@ -5,13 +5,11 @@ import FormSubmitButton from './index';
 
 describe('<FormSubmitButton />', () => {
   const value = 'Property Value';
-  const namespace = 'namespace';
   const data = { propertyName: value };
   const onChangeAction = jest.fn(obj => ({ payload: obj }));
   const onSubmitAction = jest.fn(() => ({ payload: { ok: true } }));
   const form = {
     data,
-    namespace,
     onChangeAction,
     onSubmitAction,
   };

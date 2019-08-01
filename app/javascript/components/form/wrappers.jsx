@@ -8,6 +8,8 @@ import {
   handleSubmitWith,
 } from './actions';
 import { generateFieldId } from './utils';
+import { convertToArray } from '../../utils/array';
+import { deepAccessProperty } from '../../utils/object';
 import { upperCamelize } from '../../utils/string';
 
 const getInputDisplayName = Component => (
@@ -32,12 +34,13 @@ export const formInput = (WrappedInput, prop, opts = {}) => {
     const { form, ...injectedProps } = props;
     const {
       data,
-      namespace,
+      path,
       onChangeAction,
     } = form;
-    const id = generateFieldId({ namespace, prop });
-    const value = data[prop];
-    const onChange = handleInputChangeWith(onChangeAction)(prop);
+    const actualPath = convertToArray(path);
+    const id = generateFieldId({ path, prop });
+    const value = deepAccessProperty(data, prop, actualPath);
+    const onChange = handleInputChangeWith(onChangeAction)(prop, actualPath);
     const inputProps = Object.assign(
       {
         id,
@@ -64,15 +67,16 @@ export const formField = (WrappedInput, prop, opts = {}) => {
   const InputClass = formInput(WrappedInput, prop);
   const FormFieldWrapper = (props) => {
     const { colWidth, form, ...injectedProps } = props;
-    const { errors, namespace } = form;
+    const { errors, path } = form;
     const propErrors = errors ? errors[prop] : [];
+    const actualPath = convertToArray(path);
 
     if (propErrors && propErrors.length > 0) {
       injectedProps.validStatus = 'invalid';
     }
 
     return (
-      <FormField colWidth={colWidth} prop={prop} namespace={namespace}>
+      <FormField colWidth={colWidth} path={actualPath} prop={prop}>
         <InputClass form={form} {...injectedProps} />
         { errorFeedback(propErrors) }
       </FormField>

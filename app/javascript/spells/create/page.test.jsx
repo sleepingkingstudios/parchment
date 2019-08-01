@@ -7,14 +7,14 @@ import { INITIALIZED } from '../../store/requestStatus';
 import { spellsData } from '../fixtures';
 
 describe('<CreateSpellPage />', () => {
-  const requestCreateSpell = jest.fn();
-  const updateSpellFormField = jest.fn();
+  const requestSubmitForm = jest.fn();
+  const updateFormField = jest.fn();
   const defaultProps = {
-    createSpellRequestStatus: INITIALIZED,
-    draftSpell: spellsData[0],
-    draftSpellErrors: { name: ["can't be blank"] },
-    requestCreateSpell,
-    updateSpellFormField,
+    data: spellsData[0],
+    errors: { name: ["can't be blank"] },
+    requestSubmitForm,
+    status: INITIALIZED,
+    updateFormField,
   };
   const breadcrumbs = [
     {
@@ -44,17 +44,17 @@ describe('<CreateSpellPage />', () => {
     const rendered = shallow(<CreateSpellPage {...defaultProps} />);
     const form = rendered.find('SpellForm');
     const {
-      createSpellRequestStatus,
-      draftSpell,
-      draftSpellErrors,
+      data,
+      errors,
+      status,
     } = defaultProps;
 
     expect(form).toExist();
-    expect(form).toHaveProp('onChangeAction', updateSpellFormField);
-    expect(form).toHaveProp('onSubmitAction', requestCreateSpell);
-    expect(form).toHaveProp('requestStatus', createSpellRequestStatus);
-    expect(form).toHaveProp('errors', draftSpellErrors);
-    expect(form).toHaveProp('spell', draftSpell);
+    expect(form).toHaveProp('onChangeAction', updateFormField);
+    expect(form).toHaveProp('onSubmitAction', requestSubmitForm);
+    expect(form).toHaveProp('data', data);
+    expect(form).toHaveProp('errors', errors);
+    expect(form).toHaveProp('requestStatus', status);
   });
 
   it('should match the snapshot', () => {

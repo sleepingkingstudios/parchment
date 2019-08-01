@@ -5,7 +5,7 @@ import Page from '../../components/page';
 import SpellForm from '../form';
 
 import { formErrorsType } from '../../components/form/entities';
-import { spellType } from '../entities';
+import { spellFormType } from '../entities';
 
 const breadcrumbs = [
   {
@@ -24,21 +24,21 @@ const breadcrumbs = [
 ];
 
 const CreateSpellPage = ({
-  createSpellRequestStatus,
-  draftSpell,
-  draftSpellErrors,
-  requestCreateSpell,
-  updateSpellFormField,
+  data,
+  errors,
+  status,
+  requestSubmitForm,
+  updateFormField,
 }) => (
   <Page breadcrumbs={breadcrumbs} className="page-spells page-create-spell">
     <h1>Create Spell</h1>
 
     <SpellForm
-      errors={draftSpellErrors}
-      requestStatus={createSpellRequestStatus}
-      spell={draftSpell}
-      onChangeAction={updateSpellFormField}
-      onSubmitAction={requestCreateSpell}
+      data={data}
+      errors={errors}
+      requestStatus={status}
+      onChangeAction={updateFormField}
+      onSubmitAction={requestSubmitForm}
     />
   </Page>
 );
@@ -46,11 +46,11 @@ const CreateSpellPage = ({
 CreateSpellPage.defaultProps = {};
 
 CreateSpellPage.propTypes = {
-  createSpellRequestStatus: PropTypes.string.isRequired,
-  draftSpell: spellType.isRequired,
-  draftSpellErrors: formErrorsType.isRequired,
-  requestCreateSpell: PropTypes.func.isRequired,
-  updateSpellFormField: PropTypes.func.isRequired,
+  data: spellFormType.isRequired,
+  errors: formErrorsType.isRequired,
+  status: PropTypes.string.isRequired,
+  requestSubmitForm: PropTypes.func.isRequired,
+  updateFormField: PropTypes.func.isRequired,
 };
 
 export default CreateSpellPage;

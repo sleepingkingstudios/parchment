@@ -11,8 +11,8 @@ describe('<SpellFormComponentsField />', () => {
   );
   const spell = spellsData[0];
   const form = {
-    data: spell,
-    namespace: 'spell',
+    data: { spell },
+    path: ['spell'],
     onChangeAction,
   };
   const defaultProps = { form };

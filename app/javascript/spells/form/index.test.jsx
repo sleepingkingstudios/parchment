@@ -12,19 +12,19 @@ describe('<SpellForm />', () => {
     ({ propName, value }) => ({ payload: { propName, value } }),
   );
   const onSubmitAction = jest.fn(() => ({ ok: true }));
-  const spell = spellsData[0];
+  const data = { spell: spellsData[0] };
   const errors = {};
   const defaultProps = {
+    data,
     onChangeAction,
     onSubmitAction,
     requestStatus: INITIALIZED,
     errors,
-    spell,
   };
   const form = {
-    data: spell,
+    data,
     errors,
-    namespace: 'spell',
+    path: ['spell'],
     onChangeAction,
     onSubmitAction,
   };

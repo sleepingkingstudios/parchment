@@ -16,6 +16,12 @@ export const spellType = PropTypes.shape({
   description: PropTypes.string.isRequired,
 });
 
+export const spellFormType = PropTypes.shape(
+  {
+    spell: spellType,
+  },
+);
+
 export const spellListType = PropTypes.arrayOf(spellType);
 
 export const spellDefaultAttributes = {

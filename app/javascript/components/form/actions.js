@@ -1,12 +1,12 @@
 import { getInputValue } from './utils';
 
 export const handleInputChangeWith = actionCreator => (
-  propName => (
+  (propName, path = []) => (
     (event) => {
       const { target } = event;
       const value = getInputValue(target);
 
-      return actionCreator({ propName, value });
+      return actionCreator({ path, propName, value });
     }
   )
 );

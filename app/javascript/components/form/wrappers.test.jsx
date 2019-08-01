@@ -12,22 +12,15 @@ import {
 } from './wrappers';
 
 describe('Form component wrappers', () => {
-  const propName = 'propertyName';
-  const value = 'Property Value';
-  const namespace = 'namespace';
-  const data = { propertyName: value };
-  const onChangeAction = jest.fn(obj => ({ payload: obj }));
-  const onSubmitAction = jest.fn(() => ({ payload: { ok: true } }));
-  const form = {
-    data,
-    errors: {},
-    namespace,
-    onChangeAction,
-    onSubmitAction,
-  };
-
   describe('formField()', () => {
-    const id = 'namespace-property-name-input';
+    const propName = 'propertyName';
+    const value = 'Property Value';
+    const id = 'property-name-input';
+    const data = { propertyName: value };
+    const defaultForm = {
+      data,
+      errors: {},
+    };
 
     it('should be a function', () => {
       expect(typeof formField).toEqual('function');
@@ -51,34 +44,39 @@ describe('Form component wrappers', () => {
       expect(Wrapped.inputDisplayName).toEqual('FormInput');
     });
 
-    it('should wrap the component in a FormField', () => {
-      const Wrapped = formField(FormInput, propName);
-      const rendered = shallow(<Wrapped form={form} />);
+    describe('with default properties', () => {
+      const form = { ...defaultForm };
 
-      expect(rendered).toHaveDisplayName('FormField');
-      expect(rendered).toHaveProp('namespace', namespace);
-      expect(rendered).toHaveProp('prop', propName);
-    });
+      it('should wrap the component in a FormField', () => {
+        const Wrapped = formField(FormInput, propName);
+        const rendered = shallow(<Wrapped form={form} />);
 
-    it('should render the input', () => {
-      const Wrapped = formField(FormInput, propName);
-      const rendered = mount(<Wrapped form={form} />);
-      const input = rendered.find('FormInput');
+        expect(rendered).toHaveDisplayName('FormField');
+        expect(rendered).toHaveProp('path', []);
+        expect(rendered).toHaveProp('prop', propName);
+      });
 
-      expect(rendered).toContainMatchingElement('FormInput');
-      expect(input).toExist();
-      expect(input).toHaveProp('id', id);
-      expect(input).toHaveProp('value', value);
-    });
+      it('should render the input', () => {
+        const Wrapped = formField(FormInput, propName);
+        const rendered = mount(<Wrapped form={form} />);
+        const input = rendered.find('FormInput');
 
-    it('should match the snapshot', () => {
-      const Wrapped = formField(FormInput, propName);
-      const rendered = mount(<Wrapped form={form} />);
+        expect(rendered).toContainMatchingElement('FormInput');
+        expect(input).toExist();
+        expect(input).toHaveProp('id', id);
+        expect(input).toHaveProp('value', value);
+      });
 
-      expect(rendered).toMatchSnapshot();
+      it('should match the snapshot', () => {
+        const Wrapped = formField(FormInput, propName);
+        const rendered = mount(<Wrapped form={form} />);
+
+        expect(rendered).toMatchSnapshot();
+      });
     });
 
     describe('with custom properties', () => {
+      const form = { ...defaultForm };
       const props = { colWidth: '12', placeholder: 'Placeholder Text' };
 
       it('should wrap the component in a FormField', () => {
@@ -88,7 +86,6 @@ describe('Form component wrappers', () => {
 
         expect(rendered).toHaveDisplayName('FormField');
         expect(rendered).toHaveProp('colWidth', colWidth);
-        expect(rendered).toHaveProp('namespace', namespace);
         expect(rendered).toHaveProp('prop', propName);
       });
 
@@ -124,6 +121,7 @@ describe('Form component wrappers', () => {
     });
 
     describe('with errors: matching error', () => {
+      const form = { ...defaultForm };
       const errors = { propertyName: ['has an error', 'has another error'] };
       const formWithErrors = { ...form, errors };
 
@@ -149,9 +147,45 @@ describe('Form component wrappers', () => {
         expect(feedback).toHaveText(expected);
       });
     });
+
+    describe('with path: array', () => {
+      const path = ['weapons', 'swords', 'japanese'];
+      const form = { ...defaultForm, path };
+
+      it('should wrap the component in a FormField', () => {
+        const Wrapped = formField(FormInput, propName);
+        const rendered = shallow(<Wrapped form={form} />);
+
+        expect(rendered).toHaveDisplayName('FormField');
+        expect(rendered).toHaveProp('path', path);
+        expect(rendered).toHaveProp('prop', propName);
+      });
+    });
+
+    describe('with path: value', () => {
+      const path = 'sword';
+      const form = { ...defaultForm, path };
+
+      it('should wrap the component in a FormField', () => {
+        const Wrapped = formField(FormInput, propName);
+        const rendered = shallow(<Wrapped form={form} />);
+
+        expect(rendered).toHaveDisplayName('FormField');
+        expect(rendered).toHaveProp('path', [path]);
+        expect(rendered).toHaveProp('prop', propName);
+      });
+    });
   });
 
   describe('formGroup()', () => {
+    const propName = 'propertyName';
+    const value = 'Property Value';
+    const data = { propertyName: value };
+    const form = {
+      data,
+      errors: {},
+    };
+
     const MockInput = () => (<span />);
 
     it('should be a function', () => {
@@ -244,7 +278,15 @@ describe('Form component wrappers', () => {
   });
 
   describe('formInput()', () => {
-    const id = 'namespace-property-name-input';
+    const propName = 'propertyName';
+    const value = 'Property Value';
+    const data = { propertyName: value };
+    const onChangeAction = jest.fn(obj => ({ payload: obj }));
+    const defaultForm = {
+      data,
+      errors: {},
+      onChangeAction,
+    };
 
     it('should be a function', () => {
       expect(typeof formInput).toEqual('function');
@@ -268,39 +310,47 @@ describe('Form component wrappers', () => {
       expect(Wrapped.inputDisplayName).toEqual('FormInput');
     });
 
-    it('should render the input', () => {
-      const Wrapped = formInput(FormInput, propName);
-      const rendered = shallow(<Wrapped form={form} />);
+    describe('with default properties', () => {
+      const form = { ...defaultForm };
+      const id = 'property-name-input';
 
-      expect(rendered).toHaveDisplayName('FormInput');
-      expect(rendered).toHaveProp('id', id);
-      expect(rendered).toHaveProp('value', value);
-    });
+      it('should render the input', () => {
+        const Wrapped = formInput(FormInput, propName);
+        const rendered = shallow(<Wrapped form={form} />);
 
-    it('should set the onChange event handler', () => {
-      const Wrapped = formInput(FormInput, propName);
-      const rendered = shallow(<Wrapped form={form} />);
-      const input = rendered.find('FormInput');
-      const { onChange } = input.props();
-      const newValue = 'New Property Value';
-      const event = { target: { type: 'text', value: newValue } };
+        expect(rendered).toHaveDisplayName('FormInput');
+        expect(rendered).toHaveProp('id', id);
+        expect(rendered).toHaveProp('value', value);
+      });
 
-      expect(typeof onChange).toEqual('function');
+      it('should set the onChange event handler', () => {
+        const Wrapped = formInput(FormInput, propName);
+        const rendered = shallow(<Wrapped form={form} />);
+        const input = rendered.find('FormInput');
+        const { onChange } = input.props();
+        const newValue = 'New Property Value';
+        const event = { target: { type: 'text', value: newValue } };
 
-      const action = onChange(event);
+        expect(typeof onChange).toEqual('function');
 
-      expect(onChangeAction).toHaveBeenCalledWith({ propName, value: newValue });
-      expect(action).toEqual({ payload: { propName, value: newValue } });
-    });
+        const action = onChange(event);
+        const payload = { path: [], propName, value: newValue };
 
-    it('should match the snapshot', () => {
-      const Wrapped = formInput(FormInput, propName);
-      const rendered = shallow(<Wrapped form={form} />);
+        expect(onChangeAction).toHaveBeenCalledWith(payload);
+        expect(action).toEqual({ payload });
+      });
 
-      expect(rendered).toMatchSnapshot();
+      it('should match the snapshot', () => {
+        const Wrapped = formInput(FormInput, propName);
+        const rendered = shallow(<Wrapped form={form} />);
+
+        expect(rendered).toMatchSnapshot();
+      });
     });
 
     describe('with custom properties', () => {
+      const form = { ...defaultForm };
+      const id = 'property-name-input';
       const props = { placeholder: 'Placeholder Text' };
 
       it('should render the input', () => {
@@ -331,9 +381,89 @@ describe('Form component wrappers', () => {
         expect(Wrapped.displayName).toEqual(displayName);
       });
     });
+
+    describe('with path: array', () => {
+      const nestedData = {
+        weapons: {
+          swords: {
+            japanese: data,
+          },
+        },
+      };
+      const path = ['weapons', 'swords', 'japanese'];
+      const form = { ...defaultForm, data: nestedData, path };
+      const id = 'weapons-swords-japanese-property-name-input';
+
+      it('should render the input', () => {
+        const Wrapped = formInput(FormInput, propName);
+        const rendered = shallow(<Wrapped form={form} />);
+
+        expect(rendered).toHaveDisplayName('FormInput');
+        expect(rendered).toHaveProp('id', id);
+        expect(rendered).toHaveProp('value', value);
+      });
+
+      it('should set the onChange event handler', () => {
+        const Wrapped = formInput(FormInput, propName);
+        const rendered = shallow(<Wrapped form={form} />);
+        const input = rendered.find('FormInput');
+        const { onChange } = input.props();
+        const newValue = 'New Property Value';
+        const event = { target: { type: 'text', value: newValue } };
+
+        expect(typeof onChange).toEqual('function');
+
+        const action = onChange(event);
+        const payload = { path, propName, value: newValue };
+
+        expect(onChangeAction).toHaveBeenCalledWith(payload);
+        expect(action).toEqual({ payload });
+      });
+    });
+
+    describe('with path: value', () => {
+      const nestedData = { sword: data };
+      const path = 'sword';
+      const form = { ...defaultForm, data: nestedData, path };
+      const id = 'sword-property-name-input';
+
+      it('should render the input', () => {
+        const Wrapped = formInput(FormInput, propName);
+        const rendered = shallow(<Wrapped form={form} />);
+
+        expect(rendered).toHaveDisplayName('FormInput');
+        expect(rendered).toHaveProp('id', id);
+        expect(rendered).toHaveProp('value', value);
+      });
+
+      it('should set the onChange event handler', () => {
+        const Wrapped = formInput(FormInput, propName);
+        const rendered = shallow(<Wrapped form={form} />);
+        const input = rendered.find('FormInput');
+        const { onChange } = input.props();
+        const newValue = 'New Property Value';
+        const event = { target: { type: 'text', value: newValue } };
+
+        expect(typeof onChange).toEqual('function');
+
+        const action = onChange(event);
+        const payload = { path: [path], propName, value: newValue };
+
+        expect(onChangeAction).toHaveBeenCalledWith(payload);
+        expect(action).toEqual({ payload });
+      });
+    });
   });
 
   describe('formSubmit()', () => {
+    const value = 'Property Value';
+    const data = { propertyName: value };
+    const onSubmitAction = jest.fn(() => ({ payload: { ok: true } }));
+    const form = {
+      data,
+      errors: {},
+      onSubmitAction,
+    };
     const children = 'Button Text';
     const defaultProps = { children };
 
