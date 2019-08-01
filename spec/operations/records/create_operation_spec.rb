@@ -30,41 +30,17 @@ RSpec.describe Operations::Records::CreateOperation do
       end
 
       let(:expected_errors) do
-        [
-          [
-            'casting_time',
-            "can't be blank"
-          ],
-          [
-            'description',
-            "can't be blank"
-          ],
-          [
-            'duration',
-            "can't be blank"
-          ],
-          [
-            'level',
-            "can't be blank"
-          ],
-          [
-            'name',
-            "can't be blank"
-          ],
-          [
-            'range',
-            "can't be blank"
-          ],
-          [
-            'school',
-            "can't be blank"
-          ]
-        ]
+        record_class
+          .new
+          .tap(&:valid?)
+          .errors
+          .entries
+          .map { |(key, message)| [key.to_s, message] }
       end
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
 
       it { expect { call_operation }.not_to change(Spell, :count) }
@@ -72,11 +48,11 @@ RSpec.describe Operations::Records::CreateOperation do
 
     describe 'with nil' do
       let(:attributes)      { nil }
-      let(:expected_errors) { ['attributes', 'must be a Hash'] }
+      let(:expected_errors) { [['attributes', 'must be a Hash']] }
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
@@ -86,48 +62,24 @@ RSpec.describe Operations::Records::CreateOperation do
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
     describe 'with an empty hash' do
       let(:attributes) { {} }
       let(:expected_errors) do
-        [
-          [
-            'casting_time',
-            "can't be blank"
-          ],
-          [
-            'description',
-            "can't be blank"
-          ],
-          [
-            'duration',
-            "can't be blank"
-          ],
-          [
-            'level',
-            "can't be blank"
-          ],
-          [
-            'name',
-            "can't be blank"
-          ],
-          [
-            'range',
-            "can't be blank"
-          ],
-          [
-            'school',
-            "can't be blank"
-          ]
-        ]
+        record_class
+          .new
+          .tap(&:valid?)
+          .errors
+          .entries
+          .map { |(key, message)| [key.to_s, message] }
       end
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
 
       it { expect { call_operation }.not_to change(Spell, :count) }
@@ -167,7 +119,7 @@ RSpec.describe Operations::Records::CreateOperation do
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
 
       it { expect { call_operation }.not_to change(Spell, :count) }
@@ -201,7 +153,7 @@ RSpec.describe Operations::Records::CreateOperation do
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
 
       it { expect { call_operation }.not_to change(Spell, :count) }

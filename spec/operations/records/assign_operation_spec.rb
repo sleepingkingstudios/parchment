@@ -26,11 +26,11 @@ RSpec.describe Operations::Records::AssignOperation do
 
     describe 'with nil attributes' do
       let(:attributes)      { nil }
-      let(:expected_errors) { ['attributes', 'must be a Hash'] }
+      let(:expected_errors) { [['attributes', 'must be a Hash']] }
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
@@ -40,27 +40,27 @@ RSpec.describe Operations::Records::AssignOperation do
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
     describe 'with a nil record' do
       let(:record)          { nil }
-      let(:expected_errors) { ['record', 'must be a Spell'] }
+      let(:expected_errors) { [['record', 'must be a Spell']] }
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
     describe 'with a record Object' do
       let(:record)          { Object.new }
-      let(:expected_errors) { ['record', 'must be a Spell'] }
+      let(:expected_errors) { [['record', 'must be a Spell']] }
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
@@ -76,7 +76,7 @@ RSpec.describe Operations::Records::AssignOperation do
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
 
       it { expect { call_operation }.not_to change(record, :attributes) }

@@ -24,41 +24,41 @@ RSpec.describe Operations::Records::FindOneOperation do
 
     describe 'with nil' do
       let(:id) { nil }
-      let(:expected_errors) { ['id', "can't be blank"] }
+      let(:expected_errors) { [['id', "can't be blank"]] }
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
     describe 'with an Object' do
       let(:id) { Object.new }
-      let(:expected_errors) { ['id', 'must be a String'] }
+      let(:expected_errors) { [['id', 'must be a String']] }
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
     describe 'with an empty String' do
       let(:id) { '' }
-      let(:expected_errors) { ['id', "can't be blank"] }
+      let(:expected_errors) { [['id', "can't be blank"]] }
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
     describe 'with an invalid id' do
       let(:id) { '00000000-0000-0000-0000-000000000000' }
-      let(:expected_errors) { ['spell', 'not found'] }
+      let(:expected_errors) { [['spell', 'not found']] }
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
@@ -69,11 +69,11 @@ RSpec.describe Operations::Records::FindOneOperation do
 
       describe 'with an invalid id' do
         let(:id)              { '00000000-0000-0000-0000-000000000000' }
-        let(:expected_errors) { ['spell', 'not found'] }
+        let(:expected_errors) { [['spell', 'not found']] }
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_errors(expected_errors)
+            .to have_failing_result.with_error(expected_errors)
         end
       end
 

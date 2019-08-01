@@ -38,11 +38,11 @@ RSpec.describe Operations::Records::BuildOperation do
 
     describe 'with nil' do
       let(:attributes)      { nil }
-      let(:expected_errors) { ['attributes', 'must be a Hash'] }
+      let(:expected_errors) { [['attributes', 'must be a Hash']] }
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Operations::Records::BuildOperation do
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
@@ -78,7 +78,7 @@ RSpec.describe Operations::Records::BuildOperation do
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 

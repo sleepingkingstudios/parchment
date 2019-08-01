@@ -17,12 +17,24 @@ module Operations::Records
 
     private
 
+    def handle_invalid_attributes(attributes)
+      return if attributes.is_a?(Hash)
+
+      failure([['attributes', 'must be a Hash']])
+    end
+
+    def handle_invalid_record(record)
+      return if record.is_a?(record_class)
+
+      failure([['record', "must be a #{record_class.name}"]])
+    end
+
     def handle_unknown_attribute
       yield
     rescue ActiveModel::UnknownAttributeError => exception
       attribute_name = unknown_attribute_name(exception)
 
-      result.errors = [[attribute_name, 'unknown attribute']]
+      failure([[attribute_name, 'unknown attribute']])
     end
 
     def record_errors(record)
@@ -35,22 +47,6 @@ module Operations::Records
 
     def unknown_attribute_pattern
       /unknown attribute '(?<attribute_name>.*)'/
-    end
-
-    def validate_attributes(attributes)
-      return true if attributes.is_a?(Hash)
-
-      result.errors = [['attributes', 'must be a Hash']]
-
-      false
-    end
-
-    def validate_record(record)
-      return true if record.is_a?(record_class)
-
-      result.errors = [['record', "must be a #{record_class.name}"]]
-
-      false
     end
   end
 end

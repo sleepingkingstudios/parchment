@@ -25,21 +25,21 @@ RSpec.describe Operations::Records::SaveOperation do
 
     describe 'with nil' do
       let(:record)          { nil }
-      let(:expected_errors) { ['record', 'must be a Spell'] }
+      let(:expected_errors) { [['record', 'must be a Spell']] }
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
     describe 'with an Object' do
       let(:record)          { Object.new }
-      let(:expected_errors) { ['record', 'must be a Spell'] }
+      let(:expected_errors) { [['record', 'must be a Spell']] }
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
@@ -77,7 +77,7 @@ RSpec.describe Operations::Records::SaveOperation do
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
 
       it { expect { call_operation }.not_to change(record, :persisted?) }

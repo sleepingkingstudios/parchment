@@ -83,7 +83,7 @@ class Api::SpellsController < Api::BaseController
     if operation.success?
       render_json(wrap_value(operation.value), status: status)
     else
-      render_errors(operation.errors, status: :unprocessable_entity)
+      render_errors(operation.error, status: :unprocessable_entity)
     end
   end
 
@@ -92,7 +92,7 @@ class Api::SpellsController < Api::BaseController
 
     return if find_operation.success?
 
-    render_errors(find_operation.errors, status: :not_found)
+    render_errors(find_operation.error, status: :not_found)
   end
 
   def require_spell_params

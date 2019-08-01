@@ -8,13 +8,13 @@ module Operations::Records
     private
 
     def process(record)
-      return unless validate_record(record)
+      handle_invalid_record(record) || persist_record(record)
+    end
 
+    def persist_record(record)
       return record if record.save
 
-      result.errors = record_errors(record)
-
-      record
+      failure(record_errors(record))
     end
   end
 end
