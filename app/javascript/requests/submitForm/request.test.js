@@ -1,15 +1,15 @@
 import fetch from 'cross-fetch';
 
 import generateActions from './actions';
-import generateApiActions from './apiActions';
+import FormRequest from './request';
 import {
   underscoreKeys,
 } from '../../utils/object';
 
 jest.mock('cross-fetch');
 
-describe('Form request actions', () => {
-  const url = '/api/widgets';
+describe('FormRequest', () => {
+  const requestUrl = '/api/widgets';
   const namespace = 'createWidget';
   const actions = generateActions({ namespace });
   const {
@@ -20,28 +20,17 @@ describe('Form request actions', () => {
   const defaultOptions = {
     actions,
     namespace,
-    url,
+    url: requestUrl,
   };
 
-  describe('generateApiActions', () => {
-    it('should be a function', () => {
-      expect(typeof generateApiActions).toEqual('function');
-    });
-  });
-
   describe('with default options', () => {
+    const request = new FormRequest(defaultOptions);
     const {
-      REQUEST_URL,
-      requestSubmitForm,
-    } = generateApiActions(defaultOptions);
+      performRequest,
+      url,
+    } = request;
 
-    describe('REQUEST_URL', () => {
-      it('should be the configured url', () => {
-        expect(REQUEST_URL).toEqual(url);
-      });
-    });
-
-    describe('requestSubmitForm', () => {
+    describe('performRequest', () => {
       const buildState = ({ data, errors }) => {
         const obj = {};
 
@@ -62,11 +51,11 @@ describe('Form request actions', () => {
       ];
 
       it('should be a function', () => {
-        expect(typeof requestSubmitForm).toEqual('function');
+        expect(typeof performRequest).toEqual('function');
       });
 
       it('should return a function', () => {
-        expect(typeof requestSubmitForm()).toEqual('function');
+        expect(typeof performRequest()).toEqual('function');
       });
 
       it('should POST the data to the API endpoint', async () => {
@@ -81,7 +70,7 @@ describe('Form request actions', () => {
 
         fetch.mockResolvedValue(response);
 
-        await requestSubmitForm()(dispatch, getState);
+        await performRequest()(dispatch, getState);
 
         expect(fetch).toBeCalledWith(url, options);
       });
@@ -103,7 +92,7 @@ describe('Form request actions', () => {
 
           fetch.mockResolvedValue(response);
 
-          await requestSubmitForm()(dispatch, getState);
+          await performRequest()(dispatch, getState);
 
           expect(dispatchedActions.length).toBe(2);
           expect(dispatchedActions[0][0]).toEqual(requestPending());
@@ -125,12 +114,18 @@ describe('Form request actions', () => {
 
           fetch.mockResolvedValue(response);
 
-          await requestSubmitForm()(dispatch, getState);
+          await performRequest()(dispatch, getState);
 
           expect(dispatchedActions.length).toBe(2);
           expect(dispatchedActions[0][0]).toEqual(requestPending());
           expect(dispatchedActions[1][0]).toEqual(requestSuccess(data));
         });
+      });
+    });
+
+    describe('url', () => {
+      it('should be the configured url', () => {
+        expect(url).toEqual(url);
       });
     });
   });

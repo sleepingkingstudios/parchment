@@ -6,6 +6,10 @@ const REQUEST_URL = '/api/spells';
 
 export const {
   actions,
-  apiActions,
   reducer,
-} = submitForm({ data: { spell: buildSpell() }, namespace, url: REQUEST_URL });
+  request,
+} = submitForm({
+  data: { spell: buildSpell() },
+  namespace,
+  url: REQUEST_URL,
+});

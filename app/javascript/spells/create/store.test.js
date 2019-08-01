@@ -1,7 +1,7 @@
 import {
   actions,
-  apiActions,
   reducer,
+  request,
 } from './store';
 import { spellDefaultAttributes } from '../entities';
 
@@ -16,16 +16,6 @@ describe('Create Spell store', () => {
     });
   });
 
-  describe('apiActions', () => {
-    const { REQUEST_URL } = apiActions;
-
-    describe('REQUEST_URL', () => {
-      it('should define the namespaced action', () => {
-        expect(REQUEST_URL).toEqual('/api/spells');
-      });
-    });
-  });
-
   describe('reducer', () => {
     describe('initial state', () => {
       it('should set the data to an empty spell', () => {
@@ -34,6 +24,16 @@ describe('Create Spell store', () => {
         const { data } = initialState;
 
         expect(data).toEqual({ spell: spellDefaultAttributes });
+      });
+    });
+  });
+
+  describe('request', () => {
+    const { url } = request;
+
+    describe('url', () => {
+      it('should define the namespaced action', () => {
+        expect(url).toEqual('/api/spells');
       });
     });
   });

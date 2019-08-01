@@ -1,7 +1,7 @@
 import generateActions from './actions';
-import generateApiActions from './apiActions';
 import generateInitialState from './initialState';
 import generateReducer from './reducer';
+import FormRequest from './request';
 
 import {
   applyMiddleware,
@@ -15,14 +15,14 @@ const generateFormRequest = ({
   url,
 }) => {
   const actions = generateActions({ namespace });
-  const apiActions = generateApiActions({ actions, namespace, url });
+  const request = new FormRequest({ actions, namespace, url });
   const initialState = generateInitialState({ data, namespace });
   const reducer = generateReducer({ actions, initialState });
 
   return {
     actions,
-    apiActions,
     reducer: applyMiddleware(reducer, selectMiddleware(middleware, 'handleAction')),
+    request,
   };
 };
 

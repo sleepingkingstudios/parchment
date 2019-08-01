@@ -3,8 +3,8 @@ import generateFormRequest from './index';
 
 describe('Form request', () => {
   const namespace = 'createWidget';
-  const url = '/api/widgets';
-  const defaultOptions = { namespace, url };
+  const requestUrl = '/api/widgets';
+  const defaultOptions = { namespace, url: requestUrl };
 
   describe('generateFormRequest', () => {
     it('should be a function', () => {
@@ -16,8 +16,8 @@ describe('Form request', () => {
     const initialState = generateInitialState({ data: {}, namespace });
     const {
       actions,
-      apiActions,
       reducer,
+      request,
     } = generateFormRequest(defaultOptions);
 
     describe('actions', () => {
@@ -32,25 +32,6 @@ describe('Form request', () => {
       });
     });
 
-    describe('apiActions', () => {
-      const {
-        REQUEST_URL,
-        requestSubmitForm,
-      } = apiActions;
-
-      describe('REQUEST_URL', () => {
-        it('should be the configured url', () => {
-          expect(REQUEST_URL).toEqual(url);
-        });
-      });
-
-      describe('requestSubmitForm', () => {
-        it('should be a function', () => {
-          expect(typeof requestSubmitForm).toEqual('function');
-        });
-      });
-    });
-
     describe('reducer', () => {
       it('should be a function', () => {
         expect(typeof reducer).toEqual('function');
@@ -61,6 +42,25 @@ describe('Form request', () => {
           const action = { type: 'test/unknownAction' };
 
           expect(reducer(undefined, action)).toEqual(initialState);
+        });
+      });
+    });
+
+    describe('request', () => {
+      const {
+        performRequest,
+        url,
+      } = request;
+
+      describe('performRequest', () => {
+        it('should be a function', () => {
+          expect(typeof performRequest).toEqual('function');
+        });
+      });
+
+      describe('url', () => {
+        it('should be the configured url', () => {
+          expect(url).toEqual(requestUrl);
         });
       });
     });
