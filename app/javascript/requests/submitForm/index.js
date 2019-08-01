@@ -17,11 +17,23 @@ const generateFormRequest = ({
   const actions = generateActions({ namespace });
   const request = new FormRequest({ actions, namespace, url });
   const initialState = generateInitialState({ data, namespace });
-  const reducer = generateReducer({ actions, initialState });
+  const reducer = applyMiddleware(
+    generateReducer({ actions, initialState }),
+    selectMiddleware(middleware, 'handleAction'),
+  );
+
+  request.handleFailure = applyMiddleware(
+    request.handleFailure,
+    selectMiddleware(middleware, 'handleFailure'),
+  );
+  request.handleSuccess = applyMiddleware(
+    request.handleSuccess,
+    selectMiddleware(middleware, 'handleSuccess'),
+  );
 
   return {
     actions,
-    reducer: applyMiddleware(reducer, selectMiddleware(middleware, 'handleAction')),
+    reducer,
     request,
   };
 };

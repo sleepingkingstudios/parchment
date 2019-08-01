@@ -92,9 +92,19 @@ describe('Form request', () => {
     const calledMiddleware = [];
     const generateMiddleware = label => ({
       handleAction: next => (state, action) => {
-        calledMiddleware.push(label);
+        calledMiddleware.push(`action ${label}`);
 
         next(state, action);
+      },
+      handleFailure: next => ({ dispatch, getState, response }) => {
+        calledMiddleware.push(`failure ${label}`);
+
+        next({ dispatch, getState, response });
+      },
+      handleSuccess: next => ({ dispatch, getState, response }) => {
+        calledMiddleware.push(`success ${label}`);
+
+        next({ dispatch, getState, response });
       },
     });
     const middleware = [
@@ -105,6 +115,7 @@ describe('Form request', () => {
     const options = { ...defaultOptions, middleware };
     const {
       reducer,
+      request,
     } = generateFormRequest(options);
 
     afterEach(() => calledMiddleware.splice(0, calledMiddleware.length));
@@ -120,7 +131,46 @@ describe('Form request', () => {
       it('should call the middleware', () => {
         reducer(state, action);
 
-        expect(calledMiddleware).toEqual(['A', 'B', 'C']);
+        expect(calledMiddleware).toEqual(['action A', 'action B', 'action C']);
+      });
+    });
+
+    describe('request', () => {
+      const {
+        handleFailure,
+        handleSuccess,
+      } = request;
+
+      describe('handleFailure()', () => {
+        const dispatch = jest.fn();
+        const getState = jest.fn();
+        const response = { ok: false, json: {} };
+
+        it('should be a function', () => {
+          expect(typeof handleFailure).toEqual('function');
+        });
+
+        it('should call the middleware', () => {
+          handleFailure({ dispatch, getState, response });
+
+          expect(calledMiddleware).toEqual(['failure A', 'failure B', 'failure C']);
+        });
+      });
+
+      describe('handleSuccess()', () => {
+        const dispatch = jest.fn();
+        const getState = jest.fn();
+        const response = { ok: false, json: {} };
+
+        it('should be a function', () => {
+          expect(typeof handleSuccess).toEqual('function');
+        });
+
+        it('should call the middleware', () => {
+          handleSuccess({ dispatch, getState, response });
+
+          expect(calledMiddleware).toEqual(['success A', 'success B', 'success C']);
+        });
       });
     });
   });

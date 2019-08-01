@@ -5,6 +5,24 @@ import {
   underscoreKeys,
 } from '../../utils/object';
 
+const processResponse = async (response) => {
+  const {
+    headers,
+    ok,
+    status,
+    statusText,
+  } = response;
+  const json = await response.json();
+
+  return {
+    headers,
+    json,
+    ok,
+    status,
+    statusText,
+  };
+};
+
 class FormRequest {
   constructor({ actions, namespace, url }) {
     this.namespace = namespace;
@@ -23,8 +41,8 @@ class FormRequest {
       requestSuccess,
     } = actions;
 
-    this.handleFailure = async ({ dispatch, response }) => {
-      const json = await response.json();
+    this.handleFailure = ({ dispatch, response }) => {
+      const { json } = response;
       const { errors } = json;
 
       dispatch(requestFailure(formatErrors(errors)));
@@ -35,7 +53,7 @@ class FormRequest {
     };
 
     this.handleSuccess = async ({ dispatch, response }) => {
-      const json = await response.json();
+      const { json } = response;
 
       dispatch(requestSuccess(camelizeKeys(json.data)));
     };
@@ -58,13 +76,14 @@ class FormRequest {
       const state = getState();
       const data = underscoreKeys(state[namespace].data);
 
-      const response = await fetch(url, {
+      const rawResponse = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',
         },
       });
+      const response = await processResponse(rawResponse);
 
       if (response.ok) {
         handleSuccess({ dispatch, getState, response });
