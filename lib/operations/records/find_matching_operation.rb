@@ -8,12 +8,22 @@ module Operations::Records
   class FindMatchingOperation < Operations::Records::BaseOperation
     private
 
+    def default_order
+      { created_at: :asc }
+    end
+
+    def order
+      default_order
+    end
+
     def process
       query.to_a
     end
 
     def query
-      record_class.all
+      record_class
+        .all
+        .order(order)
     end
   end
 end
