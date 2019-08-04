@@ -33,23 +33,10 @@ RSpec.describe Operations::Records::AssignOperation do
 
     include_examples 'should validate the record'
 
-    describe 'with a hash with unknown attributes' do
-      let(:attributes) do
-        {
-          'difficulty' => 'high',
-          'element'    => 'radiance',
-          'explosion'  => 'megacolossal'
-        }
-      end
-      let(:expected_errors) { [['difficulty', 'unknown attribute']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-
-      it { expect { call_operation }.not_to change(record, :attributes) }
-    end
+    include_examples 'should handle unknown attributes',
+      lambda {
+        it { expect { call_operation }.not_to change(record, :attributes) }
+      }
 
     describe 'with a hash with valid attributes' do
       let(:attributes) do

@@ -30,6 +30,8 @@ RSpec.describe Operations::Records::CreateOperation do
 
     include_examples 'should validate the attributes'
 
+    include_examples 'should handle unknown attributes'
+
     describe 'with an empty hash' do
       let(:attributes) { {} }
       let(:expected_errors) do
@@ -80,40 +82,6 @@ RSpec.describe Operations::Records::CreateOperation do
           ]
         ]
       end
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-
-      it { expect { call_operation }.not_to change(Spell, :count) }
-    end
-
-    describe 'with a hash with unknown attributes' do
-      let(:attributes) do
-        {
-          name:         'Glowing Gaze',
-          casting_time: '1 reaction, which you take when a creature within ' \
-                        'range takes fire damage',
-          duration:     'Instantaneous',
-          level:        1,
-          range:        '60 feet',
-          school:       Spell::Schools::EVOCATION,
-          difficulty:   'high',
-          element:      'radiance',
-          explosion:    'megacolossal',
-          description:  <<~DESCRIPTION
-            Your eyes glow with an inner fire. The target creature must make a
-            Dexterity saving throw. A target takes 2d6 fire damage on a failed
-            save, or half as much damage on a successful one.
-
-            **At Higher Levels:** When you cast this spell using a spell slot of
-            2nd level or higher, the damage increases by 1d6 for each slot level
-            above 1st.
-          DESCRIPTION
-        }
-      end
-      let(:expected_errors) { [['difficulty', 'unknown attribute']] }
 
       it 'should have a failing result' do
         expect(call_operation)

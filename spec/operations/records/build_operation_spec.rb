@@ -42,6 +42,8 @@ RSpec.describe Operations::Records::BuildOperation do
 
     include_examples 'should validate the attributes'
 
+    include_examples 'should handle unknown attributes'
+
     describe 'with an empty hash' do
       let(:attributes) { {} }
 
@@ -50,22 +52,6 @@ RSpec.describe Operations::Records::BuildOperation do
       it { expect(record).to be_a record_class }
 
       it { expect(record.attributes).to be == expected }
-    end
-
-    describe 'with a hash with unknown attributes' do
-      let(:attributes) do
-        {
-          'difficulty' => 'high',
-          'element'    => 'radiance',
-          'explosion'  => 'megacolossal'
-        }
-      end
-      let(:expected_errors) { [['difficulty', 'unknown attribute']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
     end
 
     describe 'with a hash with valid attributes' do

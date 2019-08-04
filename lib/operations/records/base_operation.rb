@@ -2,6 +2,7 @@
 
 require 'errors/invalid_parameters'
 require 'errors/invalid_record'
+require 'errors/unknown_attributes'
 require 'operations/records'
 
 module Operations::Records
@@ -40,9 +41,12 @@ module Operations::Records
     def handle_unknown_attribute
       yield
     rescue ActiveModel::UnknownAttributeError => exception
-      attribute_name = unknown_attribute_name(exception)
+      error = Errors::UnknownAttributes.new(
+        attributes:   [unknown_attribute_name(exception)],
+        record_class: record_class
+      )
 
-      failure([[attribute_name, 'unknown attribute']])
+      failure(error)
     end
 
     def record_errors(record)

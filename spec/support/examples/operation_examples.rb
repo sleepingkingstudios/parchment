@@ -8,6 +8,31 @@ module Spec::Support::Examples
   module OperationExamples
     extend RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
 
+    shared_examples 'should handle unknown attributes' do |proc|
+      describe 'with an attributes hash with unknown attributes' do
+        let(:attributes) do
+          {
+            'difficulty' => 'high',
+            'element'    => 'radiance',
+            'explosion'  => 'megacolossal'
+          }
+        end
+        let(:expected_errors) do
+          Errors::UnknownAttributes.new(
+            attributes:   %w[difficulty],
+            record_class: record_class
+          )
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_errors)
+        end
+
+        instance_exec(&proc) if proc.is_a?(Proc)
+      end
+    end
+
     shared_examples 'should validate the attributes' do
       describe 'with nil attributes' do
         let(:attributes) { nil }

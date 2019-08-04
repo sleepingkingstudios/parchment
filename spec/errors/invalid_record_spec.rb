@@ -25,7 +25,9 @@ RSpec.describe Errors::InvalidRecord do
   describe '#as_json' do
     let(:expected) do
       {
-        'data'    => record_class.name,
+        'data'    => {
+          'record_class' => record_class.name
+        },
         'message' => error.message,
         'type'    => described_class::TYPE
       }

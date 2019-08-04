@@ -23,7 +23,7 @@ RSpec.describe Errors::InvalidParameters do
   describe '#as_json' do
     let(:expected) do
       {
-        'data'    => errors,
+        'data'    => { 'errors' => errors },
         'message' => error.message,
         'type'    => described_class::TYPE
       }
@@ -47,7 +47,7 @@ RSpec.describe Errors::InvalidParameters do
     end
 
     context 'when the errors have one item' do
-      let(:errors) { [['attributes', 'must be a Hash']] }
+      let(:errors)   { [['attributes', 'must be a Hash']] }
       let(:expected) { 'invalid request parameters: attributes must be a Hash' }
 
       it { expect(error.message).to be == expected }
