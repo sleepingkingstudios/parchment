@@ -30,25 +30,7 @@ RSpec.describe Operations::Records::UpdateOperation do
 
     include_examples 'should validate the attributes'
 
-    describe 'with a nil record' do
-      let(:record)          { nil }
-      let(:expected_errors) { [['record', 'must be a Spell']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-    end
-
-    describe 'with a record Object' do
-      let(:record)          { Object.new }
-      let(:expected_errors) { [['record', 'must be a Spell']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-    end
+    include_examples 'should validate the record'
 
     describe 'with a hash with unknown attributes' do
       let(:attributes) do

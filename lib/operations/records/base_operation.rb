@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'errors/invalid_parameters'
+require 'errors/invalid_record'
 require 'operations/records'
 
 module Operations::Records
@@ -31,7 +32,9 @@ module Operations::Records
     def handle_invalid_record(record)
       return if record.is_a?(record_class)
 
-      failure([['record', "must be a #{record_class.name}"]])
+      error = Errors::InvalidRecord.new(record_class: record_class)
+
+      failure(error)
     end
 
     def handle_unknown_attribute

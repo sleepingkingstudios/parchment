@@ -76,5 +76,31 @@ module Spec::Support::Examples
         end
       end
     end
+
+    shared_examples 'should validate the record' do
+      describe 'with a nil record' do
+        let(:record) { nil }
+        let(:expected_errors) do
+          Errors::InvalidRecord.new(record_class: record_class)
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_errors)
+        end
+      end
+
+      describe 'with a record Object' do
+        let(:record) { Object.new }
+        let(:expected_errors) do
+          Errors::InvalidRecord.new(record_class: record_class)
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_errors)
+        end
+      end
+    end
   end
 end

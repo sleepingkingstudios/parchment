@@ -7,6 +7,10 @@ RSpec.describe Errors::InvalidParameters do
 
   let(:errors) { [['attributes', 'must be a Hash']] }
 
+  describe '::TYPE' do
+    include_examples 'should define constant', :TYPE, 'invalid_parameters'
+  end
+
   describe '::new' do
     it 'should define the constructor' do
       expect(described_class)
@@ -16,16 +20,12 @@ RSpec.describe Errors::InvalidParameters do
     end
   end
 
-  describe '::TYPE' do
-    include_examples 'should define constant', :TYPE, 'invalid_parameters'
-  end
-
   describe '#as_json' do
     let(:expected) do
       {
-        data:    errors,
-        message: error.message,
-        type:    described_class::TYPE
+        'data'    => errors,
+        'message' => error.message,
+        'type'    => described_class::TYPE
       }
     end
 

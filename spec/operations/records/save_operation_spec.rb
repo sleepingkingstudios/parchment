@@ -4,7 +4,11 @@ require 'rails_helper'
 
 require 'operations/records/save_operation'
 
+require 'support/examples/operation_examples'
+
 RSpec.describe Operations::Records::SaveOperation do
+  include Spec::Support::Examples::OperationExamples
+
   subject(:operation) { described_class.new(record_class) }
 
   let(:record_class) { Spell }
@@ -23,25 +27,7 @@ RSpec.describe Operations::Records::SaveOperation do
 
     it { expect(operation).to respond_to(:call).with(1).argument }
 
-    describe 'with nil' do
-      let(:record)          { nil }
-      let(:expected_errors) { [['record', 'must be a Spell']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-    end
-
-    describe 'with an Object' do
-      let(:record)          { Object.new }
-      let(:expected_errors) { [['record', 'must be a Spell']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-    end
+    include_examples 'should validate the record'
 
     describe 'with a record with invalid attributes' do
       let(:attributes) do

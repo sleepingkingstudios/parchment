@@ -26,9 +26,9 @@ module Errors
     # @return [Hash] a serializable hash representation of the error.
     def as_json
       {
-        data:    errors,
-        message: message,
-        type:    type
+        'data'    => errors,
+        'message' => message,
+        'type'    => type
       }
     end
 
