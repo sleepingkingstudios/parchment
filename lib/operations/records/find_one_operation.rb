@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'errors/invalid_parameters'
+require 'errors/not_found'
 require 'operations/records/base_operation'
 
 module Operations::Records
@@ -48,11 +49,12 @@ module Operations::Records
     def find_record(id)
       record_class.find(id)
     rescue ActiveRecord::RecordNotFound
-      failure([not_found_error])
-    end
+      error = Errors::NotFound.new(
+        attributes:   { id: id },
+        record_class: record_class
+      )
 
-    def not_found_error
-      [record_class.name.underscore, 'not found']
+      failure(error)
     end
 
     def process(id)

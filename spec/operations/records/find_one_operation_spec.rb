@@ -30,7 +30,12 @@ RSpec.describe Operations::Records::FindOneOperation do
 
     describe 'with an invalid id' do
       let(:id) { '00000000-0000-0000-0000-000000000000' }
-      let(:expected_errors) { [['spell', 'not found']] }
+      let(:expected_errors) do
+        Errors::NotFound.new(
+          attributes:   { id: id },
+          record_class: record_class
+        )
+      end
 
       it 'should have a failing result' do
         expect(call_operation)
@@ -45,7 +50,12 @@ RSpec.describe Operations::Records::FindOneOperation do
 
       describe 'with an invalid id' do
         let(:id)              { '00000000-0000-0000-0000-000000000000' }
-        let(:expected_errors) { [['spell', 'not found']] }
+        let(:expected_errors) do
+          Errors::NotFound.new(
+            attributes:   { id: id },
+            record_class: record_class
+          )
+        end
 
         it 'should have a failing result' do
           expect(call_operation)

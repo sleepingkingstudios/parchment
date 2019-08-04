@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+require 'errors/not_found'
 require 'operations/records/create_operation'
 require 'operations/records/destroy_operation'
-require 'operations/spells/find_matching_operation'
 require 'operations/records/find_one_operation'
 require 'operations/records/update_operation'
+require 'operations/spells/find_matching_operation'
+
+# rubocop:disable Metrics/ClassLength
 
 # Controller for performing CRUD actions on Spells via a JSON API.
 class Api::SpellsController < Api::BaseController
@@ -43,7 +46,7 @@ class Api::SpellsController < Api::BaseController
 
   def build_error_response(errors)
     {
-      errors: errors,
+      errors: serialize_error(errors),
       ok:     false
     }
   end
@@ -105,6 +108,19 @@ class Api::SpellsController < Api::BaseController
     'spells'
   end
 
+  def serialize_error(error)
+    case error
+    when Errors::NotFound
+      error.as_json
+    when Cuprum::Error
+      # :nocov:
+      { 'message' => 'Something went wrong when processing the request.' }
+      # :nocov:
+    else
+      error.as_json
+    end
+  end
+
   def spell_id
     params[:id]
   end
@@ -139,3 +155,4 @@ class Api::SpellsController < Api::BaseController
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

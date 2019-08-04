@@ -79,16 +79,14 @@ RSpec.describe Api::SpellsController do
     describe 'with an invalid spell id' do
       let(:spell_id) { '00000000-0000-0000-0000-000000000000' }
       let(:expected_errors) do
-        [
-          [
-            'spell',
-            'not found'
-          ]
-        ]
+        Errors::NotFound.new(
+          attributes:   { id: spell_id },
+          record_class: Spell
+        )
       end
       let(:expected_json) do
         {
-          'errors' => expected_errors,
+          'errors' => expected_errors.as_json,
           'ok'     => false
         }
       end
