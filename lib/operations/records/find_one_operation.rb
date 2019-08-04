@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'errors/invalid_parameters'
 require 'operations/records/base_operation'
 
 module Operations::Records
@@ -11,13 +12,21 @@ module Operations::Records
     def handle_id_not_empty(id)
       return unless id.empty?
 
-      failure([['id', "can't be blank"]])
+      error = Errors::InvalidParameters.new(
+        errors: [['id', "can't be blank"]]
+      )
+
+      failure(error)
     end
 
     def handle_id_type_invalid(id)
       return if id.is_a?(String)
 
-      failure([['id', 'must be a String']])
+      error = Errors::InvalidParameters.new(
+        errors: [['id', 'must be a String']]
+      )
+
+      failure(error)
     end
 
     def handle_invalid_id(id)
@@ -29,7 +38,11 @@ module Operations::Records
     def handle_nil_id(id)
       return unless id.nil?
 
-      failure([['id', "can't be blank"]])
+      error = Errors::InvalidParameters.new(
+        errors: [['id', "can't be blank"]]
+      )
+
+      failure(error)
     end
 
     def find_record(id)

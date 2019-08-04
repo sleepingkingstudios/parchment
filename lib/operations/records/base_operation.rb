@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'errors/invalid_parameters'
 require 'operations/records'
 
 module Operations::Records
@@ -20,7 +21,11 @@ module Operations::Records
     def handle_invalid_attributes(attributes)
       return if attributes.is_a?(Hash)
 
-      failure([['attributes', 'must be a Hash']])
+      error = Errors::InvalidParameters.new(
+        errors: [['attributes', 'must be a Hash']]
+      )
+
+      failure(error)
     end
 
     def handle_invalid_record(record)

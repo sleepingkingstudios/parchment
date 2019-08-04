@@ -4,7 +4,11 @@ require 'rails_helper'
 
 require 'operations/records/update_operation'
 
+require 'support/examples/operation_examples'
+
 RSpec.describe Operations::Records::UpdateOperation do
+  include Spec::Support::Examples::OperationExamples
+
   subject(:operation) { described_class.new(record_class) }
 
   let(:record_class) { Spell }
@@ -24,25 +28,7 @@ RSpec.describe Operations::Records::UpdateOperation do
 
     it { expect(operation).to respond_to(:call).with(2).arguments }
 
-    describe 'with nil attributes' do
-      let(:attributes)      { nil }
-      let(:expected_errors) { [['attributes', 'must be a Hash']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-    end
-
-    describe 'with an attributes Object' do
-      let(:attributes)      { Object.new }
-      let(:expected_errors) { [['attributes', 'must be a Hash']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-    end
+    include_examples 'should validate the attributes'
 
     describe 'with a nil record' do
       let(:record)          { nil }

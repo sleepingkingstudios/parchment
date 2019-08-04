@@ -4,7 +4,11 @@ require 'rails_helper'
 
 require 'operations/records/create_operation'
 
+require 'support/examples/operation_examples'
+
 RSpec.describe Operations::Records::CreateOperation do
+  include Spec::Support::Examples::OperationExamples
+
   subject(:operation) { described_class.new(record_class) }
 
   let(:record_class) { Spell }
@@ -24,47 +28,7 @@ RSpec.describe Operations::Records::CreateOperation do
 
     it { expect(operation).to respond_to(:call).with(0..1).arguments }
 
-    describe 'with no arguments' do
-      def call_operation
-        operation.call
-      end
-
-      let(:expected_errors) do
-        record_class
-          .new
-          .tap(&:valid?)
-          .errors
-          .entries
-          .map { |(key, message)| [key.to_s, message] }
-      end
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-
-      it { expect { call_operation }.not_to change(Spell, :count) }
-    end
-
-    describe 'with nil' do
-      let(:attributes)      { nil }
-      let(:expected_errors) { [['attributes', 'must be a Hash']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-    end
-
-    describe 'with an Object' do
-      let(:attributes)      { Object.new }
-      let(:expected_errors) { [['attributes', 'must be a Hash']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-    end
+    include_examples 'should validate the attributes'
 
     describe 'with an empty hash' do
       let(:attributes) { {} }
