@@ -2,8 +2,14 @@ import fetch from 'cross-fetch';
 import { formatErrors } from '../../components/form/utils';
 import {
   camelizeKeys,
+  deepAccessProperty,
   underscoreKeys,
+  valueOrDefault,
 } from '../../utils/object';
+
+const extractErrors = json => valueOrDefault(
+  deepAccessProperty(json, 'errors', ['error', 'data']), [],
+);
 
 const processResponse = async (response) => {
   const {
@@ -43,7 +49,7 @@ class FormRequest {
 
     this.handleFailure = ({ dispatch, response }) => {
       const { json } = response;
-      const { errors } = json;
+      const errors = extractErrors(json);
 
       dispatch(requestFailure(formatErrors(errors)));
     };

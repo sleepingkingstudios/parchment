@@ -78,7 +78,7 @@ RSpec.describe Api::SpellsController do
   shared_examples 'should require a valid spell id' do
     describe 'with an invalid spell id' do
       let(:spell_id) { '00000000-0000-0000-0000-000000000000' }
-      let(:expected_errors) do
+      let(:expected_error) do
         Errors::NotFound.new(
           attributes:   { id: spell_id },
           record_class: Spell
@@ -86,8 +86,8 @@ RSpec.describe Api::SpellsController do
       end
       let(:expected_json) do
         {
-          'errors' => expected_errors.as_json,
-          'ok'     => false
+          'error' => expected_error.as_json,
+          'ok'    => false
         }
       end
 
@@ -205,7 +205,7 @@ RSpec.describe Api::SpellsController do
           DESCRIPTION
         }
       end
-      let(:expected_errors) do
+      let(:expected_error) do
         {
           'data'    => {
             'errors'       => [
@@ -235,8 +235,8 @@ RSpec.describe Api::SpellsController do
       end
       let(:expected_json) do
         {
-          'ok'     => false,
-          'errors' => expected_errors
+          'ok'    => false,
+          'error' => expected_error
         }
       end
 
@@ -397,7 +397,7 @@ RSpec.describe Api::SpellsController do
           school:       'Transubstantiation'
         }
       end
-      let(:expected_errors) do
+      let(:expected_error) do
         {
           'data'    => {
             'errors'       => [
@@ -427,8 +427,8 @@ RSpec.describe Api::SpellsController do
       end
       let(:expected_json) do
         {
-          'ok'     => false,
-          'errors' => expected_errors
+          'ok'    => false,
+          'error' => expected_error
         }
       end
 
