@@ -32,58 +32,25 @@ RSpec.describe Operations::Records::UpdateOperation do
 
     include_examples 'should validate the record'
 
+    # rubocop:disable RSpec/RepeatedExample
+    include_examples 'should handle invalid attributes',
+      lambda {
+        it 'should update the attributes' do
+          expect { call_operation }
+            .to change(record, :attributes)
+            .to be >= attributes.stringify_keys
+        end
+
+        it { expect { call_operation }.not_to change(record, :persisted?) }
+      }
+
     include_examples 'should handle unknown attributes',
       lambda {
         it { expect { call_operation }.not_to change(record, :attributes) }
 
         it { expect { call_operation }.not_to change(record, :persisted?) }
       }
-
-    describe 'with a hash with invalid attributes' do
-      let(:attributes) do
-        {
-          'name'         => 'Fire Festival',
-          'casting_time' => nil,
-          'duration'     => 'Too Long',
-          'level'        => 10,
-          'range'        => 'Foreman',
-          'school'       => 'Transubstantiation',
-          'description'  => <<~DESCRIPTION
-            Pretend to hold a music festival. Rake in the dough, yo.
-          DESCRIPTION
-        }
-      end
-      let(:expected_errors) do
-        [
-          [
-            'casting_time',
-            "can't be blank"
-          ],
-          [
-            'level',
-            'must be less than or equal to 9'
-          ],
-          [
-            'school',
-            'must be abjuration, conjuration, divination, enchantment, ' \
-            'evocation, illusion, necromancy, or transmutation'
-          ]
-        ]
-      end
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-
-      it 'should update the attributes' do
-        expect { call_operation }
-          .to change(record, :attributes)
-          .to be >= attributes
-      end
-
-      it { expect { call_operation }.not_to change(record, :persisted?) }
-    end
+    # rubocop:enable RSpec/RepeatedExample
 
     describe 'with a record with valid attributes' do
       let(:attributes) do

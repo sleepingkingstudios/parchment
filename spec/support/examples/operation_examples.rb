@@ -8,6 +8,36 @@ module Spec::Support::Examples
   module OperationExamples
     extend RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
 
+    shared_examples 'should handle invalid attributes' do |proc|
+      describe 'when the attributes fail validation' do
+        let(:attributes) do
+          {
+            name:         'Fire Festival',
+            casting_time: nil,
+            duration:     'Too Long',
+            level:        10,
+            range:        'Foreman',
+            school:       'Transubstantiation',
+            description:  <<~DESCRIPTION
+              Pretend to hold a music festival. Rake in the dough, yo.
+            DESCRIPTION
+          }
+        end
+        let(:expected_errors) do
+          Errors::FailedValidation.new(
+            record: record_class.new(attributes).tap(&:valid?)
+          )
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_errors)
+        end
+
+        instance_exec(&proc) if proc.is_a?(Proc)
+      end
+    end
+
     shared_examples 'should handle unknown attributes' do |proc|
       describe 'with an attributes hash with unknown attributes' do
         let(:attributes) do

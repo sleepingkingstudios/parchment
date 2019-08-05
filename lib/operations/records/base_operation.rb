@@ -49,10 +49,6 @@ module Operations::Records
       failure(error)
     end
 
-    def record_errors(record)
-      record.errors.entries.map { |(key, message)| [key.to_s, message] }
-    end
-
     def unknown_attribute_name(exception)
       unknown_attribute_pattern.match(exception.message)['attribute_name']
     end

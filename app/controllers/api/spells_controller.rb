@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'errors/failed_validation'
 require 'errors/not_found'
 require 'operations/records/create_operation'
 require 'operations/records/destroy_operation'
@@ -110,7 +111,7 @@ class Api::SpellsController < Api::BaseController
 
   def serialize_error(error)
     case error
-    when Errors::NotFound
+    when Errors::FailedValidation, Errors::NotFound
       error.as_json
     when Cuprum::Error
       # :nocov:

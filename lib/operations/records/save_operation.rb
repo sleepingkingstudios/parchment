@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'errors/failed_validation'
 require 'operations/records/base_operation'
 
 module Operations::Records
@@ -14,7 +15,9 @@ module Operations::Records
     def persist_record(record)
       return record if record.save
 
-      failure(record_errors(record))
+      error = Errors::FailedValidation.new(record: record)
+
+      failure(error)
     end
   end
 end

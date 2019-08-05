@@ -206,21 +206,32 @@ RSpec.describe Api::SpellsController do
         }
       end
       let(:expected_errors) do
-        [
-          [
-            'casting_time',
-            "can't be blank"
-          ],
-          [
-            'level',
-            'must be less than or equal to 9'
-          ],
-          [
-            'school',
-            'must be abjuration, conjuration, divination, enchantment, ' \
-            'evocation, illusion, necromancy, or transmutation'
-          ]
-        ]
+        {
+          'data'    => {
+            'errors'       => [
+              [
+                'casting_time',
+                "can't be blank"
+              ],
+              [
+                'level',
+                'must be less than or equal to 9'
+              ],
+              [
+                'school',
+                'must be abjuration, conjuration, divination, enchantment, ' \
+                'evocation, illusion, necromancy, or transmutation'
+              ]
+            ],
+            'record_class' => 'Spell'
+          },
+          'message' => "Spell has validation errors: casting_time can't be" \
+                       ' blank, level must be less than or equal to 9, school' \
+                       ' must be abjuration, conjuration, divination,' \
+                       ' enchantment, evocation, illusion, necromancy,' \
+                       ' or transmutation',
+          'type'    => 'failed_validation'
+        }
       end
       let(:expected_json) do
         {
@@ -387,21 +398,32 @@ RSpec.describe Api::SpellsController do
         }
       end
       let(:expected_errors) do
-        [
-          [
-            'casting_time',
-            "can't be blank"
-          ],
-          [
-            'level',
-            'must be less than or equal to 9'
-          ],
-          [
-            'school',
-            'must be abjuration, conjuration, divination, enchantment, ' \
-            'evocation, illusion, necromancy, or transmutation'
-          ]
-        ]
+        {
+          'data'    => {
+            'errors'       => [
+              [
+                'casting_time',
+                "can't be blank"
+              ],
+              [
+                'level',
+                'must be less than or equal to 9'
+              ],
+              [
+                'school',
+                'must be abjuration, conjuration, divination, enchantment, ' \
+                'evocation, illusion, necromancy, or transmutation'
+              ]
+            ],
+            'record_class' => 'Spell'
+          },
+          'message' => "Spell has validation errors: casting_time can't be" \
+                       ' blank, level must be less than or equal to 9, school' \
+                       ' must be abjuration, conjuration, divination,' \
+                       ' enchantment, evocation, illusion, necromancy,' \
+                       ' or transmutation',
+          'type'    => 'failed_validation'
+        }
       end
       let(:expected_json) do
         {

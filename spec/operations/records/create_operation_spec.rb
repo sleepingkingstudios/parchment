@@ -30,66 +30,17 @@ RSpec.describe Operations::Records::CreateOperation do
 
     include_examples 'should validate the attributes'
 
-    include_examples 'should handle unknown attributes'
+    # rubocop:disable RSpec/RepeatedExample
+    include_examples 'should handle invalid attributes',
+      lambda {
+        it { expect { call_operation }.not_to change(Spell, :count) }
+      }
 
-    describe 'with an empty hash' do
-      let(:attributes) { {} }
-      let(:expected_errors) do
-        record_class
-          .new
-          .tap(&:valid?)
-          .errors
-          .entries
-          .map { |(key, message)| [key.to_s, message] }
-      end
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-
-      it { expect { call_operation }.not_to change(Spell, :count) }
-    end
-
-    describe 'with a hash with invalid attributes' do
-      let(:attributes) do
-        {
-          name:         'Fire Festival',
-          casting_time: nil,
-          duration:     'Too Long',
-          level:        10,
-          range:        'Foreman',
-          school:       'Transubstantiation',
-          description:  <<~DESCRIPTION
-            Pretend to hold a music festival. Rake in the dough, yo.
-          DESCRIPTION
-        }
-      end
-      let(:expected_errors) do
-        [
-          [
-            'casting_time',
-            "can't be blank"
-          ],
-          [
-            'level',
-            'must be less than or equal to 9'
-          ],
-          [
-            'school',
-            'must be abjuration, conjuration, divination, enchantment, ' \
-            'evocation, illusion, necromancy, or transmutation'
-          ]
-        ]
-      end
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
-      end
-
-      it { expect { call_operation }.not_to change(Spell, :count) }
-    end
+    include_examples 'should handle unknown attributes',
+      lambda {
+        it { expect { call_operation }.not_to change(Spell, :count) }
+      }
+    # rubocop:enable RSpec/RepeatedExample
 
     describe 'with a hash with valid attributes' do
       let(:attributes) do
