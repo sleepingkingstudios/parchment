@@ -27,8 +27,15 @@ describe('FormRequest', () => {
     const request = new FormRequest(defaultOptions);
     const {
       performRequest,
+      method,
       url,
     } = request;
+
+    describe('method', () => {
+      it('should be the configured method', () => {
+        expect(method).toEqual('POST');
+      });
+    });
 
     describe('performRequest', () => {
       const buildState = ({ data, errors }) => {
@@ -63,16 +70,15 @@ describe('FormRequest', () => {
         const dispatch = jest.fn();
         const getState = jest.fn(() => state);
         const response = { ok: true, json: () => ({ data: {} }) };
-        const method = 'POST';
         const body = JSON.stringify(underscoreKeys(data));
         const headers = { 'Content-Type': 'application/json' };
-        const options = { method, body, headers };
+        const opts = { method, body, headers };
 
         fetch.mockResolvedValue(response);
 
         await performRequest()(dispatch, getState);
 
-        expect(fetch).toBeCalledWith(url, options);
+        expect(fetch).toBeCalledWith(url, opts);
       });
 
       describe('when the API request fails', () => {
@@ -125,7 +131,67 @@ describe('FormRequest', () => {
 
     describe('url', () => {
       it('should be the configured url', () => {
-        expect(url).toEqual(url);
+        expect(url).toEqual(requestUrl);
+      });
+    });
+  });
+
+  describe('with method: PATCH', () => {
+    const options = { ...defaultOptions, method: 'PATCH' };
+    const request = new FormRequest(options);
+    const {
+      performRequest,
+      method,
+      url,
+    } = request;
+
+    describe('method', () => {
+      it('should be the configured method', () => {
+        expect(method).toEqual('PATCH');
+      });
+    });
+
+    describe('performRequest', () => {
+      const buildState = ({ data, errors }) => {
+        const obj = {};
+
+        obj[namespace] = { data, errors };
+
+        return obj;
+      };
+      const data = {
+        id: '00000000-0000-0000-0000-000000000000',
+        name: 'Inigo Montoya',
+        firstName: 'Inigo',
+        lastName: 'Montoya',
+      };
+
+      it('should be a function', () => {
+        expect(typeof performRequest).toEqual('function');
+      });
+
+      it('should return a function', () => {
+        expect(typeof performRequest()).toEqual('function');
+      });
+
+      it('should PATCH the data to the API endpoint', async () => {
+        const state = buildState({ data });
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const response = { ok: true, json: () => ({ data: {} }) };
+        const expected = {
+          ...data,
+          _method: 'PATCH',
+        };
+        const body = JSON.stringify(underscoreKeys(expected));
+        const headers = { 'Content-Type': 'application/json' };
+        const opts = { method: 'POST', body, headers };
+
+        fetch.mockResolvedValue(response);
+
+        await performRequest()(dispatch, getState);
+
+        expect(fetch).toBeCalledWith(url, opts);
       });
     });
   });

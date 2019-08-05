@@ -30,7 +30,15 @@ const processResponse = async (response) => {
 };
 
 class FormRequest {
-  constructor({ actions, namespace, url }) {
+  constructor(options) {
+    const {
+      actions,
+      method,
+      namespace,
+      url,
+    } = options;
+
+    this.method = valueOrDefault(method, 'POST');
     this.namespace = namespace;
     this.url = url;
 
@@ -73,6 +81,7 @@ class FormRequest {
         handleFailure,
         handlePending,
         handleSuccess,
+        method,
         namespace,
         url,
       } = request;
@@ -81,6 +90,9 @@ class FormRequest {
 
       const state = getState();
       const data = underscoreKeys(state[namespace].data);
+
+      /* eslint-disable-next-line dot-notation */
+      if (method !== 'POST') { data['_method'] = method; }
 
       const rawResponse = await fetch(url, {
         method: 'POST',

@@ -29,10 +29,19 @@ describe('Create Spell store', () => {
   });
 
   describe('request', () => {
-    const { url } = request;
+    const {
+      method,
+      url,
+    } = request;
+
+    describe('method', () => {
+      it('should be POST', () => {
+        expect(method).toEqual('POST');
+      });
+    });
 
     describe('url', () => {
-      it('should define the namespaced action', () => {
+      it('should be the spell create URL', () => {
         expect(url).toEqual('/api/spells');
       });
     });
