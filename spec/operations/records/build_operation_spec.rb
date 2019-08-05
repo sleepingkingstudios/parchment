@@ -4,7 +4,11 @@ require 'rails_helper'
 
 require 'operations/records/build_operation'
 
+require 'support/examples/operation_examples'
+
 RSpec.describe Operations::Records::BuildOperation do
+  include Spec::Support::Examples::OperationExamples
+
   subject(:operation) { described_class.new(record_class) }
 
   let(:record_class) { Spell }
@@ -36,25 +40,9 @@ RSpec.describe Operations::Records::BuildOperation do
       it { expect(record.attributes).to be == expected }
     end
 
-    describe 'with nil' do
-      let(:attributes)      { nil }
-      let(:expected_errors) { ['attributes', 'must be a Hash'] }
+    include_examples 'should validate the attributes'
 
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
-      end
-    end
-
-    describe 'with an Object' do
-      let(:attributes)      { Object.new }
-      let(:expected_errors) { [['attributes', 'must be a Hash']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
-      end
-    end
+    include_examples 'should handle unknown attributes'
 
     describe 'with an empty hash' do
       let(:attributes) { {} }
@@ -64,22 +52,6 @@ RSpec.describe Operations::Records::BuildOperation do
       it { expect(record).to be_a record_class }
 
       it { expect(record.attributes).to be == expected }
-    end
-
-    describe 'with a hash with unknown attributes' do
-      let(:attributes) do
-        {
-          'difficulty' => 'high',
-          'element'    => 'radiance',
-          'explosion'  => 'megacolossal'
-        }
-      end
-      let(:expected_errors) { [['difficulty', 'unknown attribute']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
-      end
     end
 
     describe 'with a hash with valid attributes' do

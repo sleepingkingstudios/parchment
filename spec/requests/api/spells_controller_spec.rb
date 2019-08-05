@@ -78,18 +78,16 @@ RSpec.describe Api::SpellsController do
   shared_examples 'should require a valid spell id' do
     describe 'with an invalid spell id' do
       let(:spell_id) { '00000000-0000-0000-0000-000000000000' }
-      let(:expected_errors) do
-        [
-          [
-            'spell',
-            'not found'
-          ]
-        ]
+      let(:expected_error) do
+        Errors::NotFound.new(
+          attributes:   { id: spell_id },
+          record_class: Spell
+        )
       end
       let(:expected_json) do
         {
-          'errors' => expected_errors,
-          'ok'     => false
+          'error' => expected_error.as_json,
+          'ok'    => false
         }
       end
 
@@ -207,27 +205,38 @@ RSpec.describe Api::SpellsController do
           DESCRIPTION
         }
       end
-      let(:expected_errors) do
-        [
-          [
-            'casting_time',
-            "can't be blank"
-          ],
-          [
-            'level',
-            'must be less than or equal to 9'
-          ],
-          [
-            'school',
-            'must be abjuration, conjuration, divination, enchantment, ' \
-            'evocation, illusion, necromancy, or transmutation'
-          ]
-        ]
+      let(:expected_error) do
+        {
+          'data'    => {
+            'errors'       => [
+              [
+                'casting_time',
+                "can't be blank"
+              ],
+              [
+                'level',
+                'must be less than or equal to 9'
+              ],
+              [
+                'school',
+                'must be abjuration, conjuration, divination, enchantment, ' \
+                'evocation, illusion, necromancy, or transmutation'
+              ]
+            ],
+            'record_class' => 'Spell'
+          },
+          'message' => "Spell has validation errors: casting_time can't be" \
+                       ' blank, level must be less than or equal to 9, school' \
+                       ' must be abjuration, conjuration, divination,' \
+                       ' enchantment, evocation, illusion, necromancy,' \
+                       ' or transmutation',
+          'type'    => 'failed_validation'
+        }
       end
       let(:expected_json) do
         {
-          'ok'     => false,
-          'errors' => expected_errors
+          'ok'    => false,
+          'error' => expected_error
         }
       end
 
@@ -388,27 +397,38 @@ RSpec.describe Api::SpellsController do
           school:       'Transubstantiation'
         }
       end
-      let(:expected_errors) do
-        [
-          [
-            'casting_time',
-            "can't be blank"
-          ],
-          [
-            'level',
-            'must be less than or equal to 9'
-          ],
-          [
-            'school',
-            'must be abjuration, conjuration, divination, enchantment, ' \
-            'evocation, illusion, necromancy, or transmutation'
-          ]
-        ]
+      let(:expected_error) do
+        {
+          'data'    => {
+            'errors'       => [
+              [
+                'casting_time',
+                "can't be blank"
+              ],
+              [
+                'level',
+                'must be less than or equal to 9'
+              ],
+              [
+                'school',
+                'must be abjuration, conjuration, divination, enchantment, ' \
+                'evocation, illusion, necromancy, or transmutation'
+              ]
+            ],
+            'record_class' => 'Spell'
+          },
+          'message' => "Spell has validation errors: casting_time can't be" \
+                       ' blank, level must be less than or equal to 9, school' \
+                       ' must be abjuration, conjuration, divination,' \
+                       ' enchantment, evocation, illusion, necromancy,' \
+                       ' or transmutation',
+          'type'    => 'failed_validation'
+        }
       end
       let(:expected_json) do
         {
-          'ok'     => false,
-          'errors' => expected_errors
+          'ok'    => false,
+          'error' => expected_error
         }
       end
 

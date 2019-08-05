@@ -16,9 +16,8 @@ RSpec.describe Operations::Records::BaseOperation do
   describe '#call' do
     it { expect(operation).to respond_to(:call) }
 
-    it 'should raise an error' do
-      expect { operation.call }
-        .to raise_error Cuprum::Errors::ProcessNotImplementedError
+    it 'should return a failing result' do
+      expect(operation.call).to be_a_failing_result
     end
   end
 

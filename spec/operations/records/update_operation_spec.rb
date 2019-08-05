@@ -4,7 +4,11 @@ require 'rails_helper'
 
 require 'operations/records/update_operation'
 
+require 'support/examples/operation_examples'
+
 RSpec.describe Operations::Records::UpdateOperation do
+  include Spec::Support::Examples::OperationExamples
+
   subject(:operation) { described_class.new(record_class) }
 
   let(:record_class) { Spell }
@@ -24,111 +28,29 @@ RSpec.describe Operations::Records::UpdateOperation do
 
     it { expect(operation).to respond_to(:call).with(2).arguments }
 
-    describe 'with nil attributes' do
-      let(:attributes)      { nil }
-      let(:expected_errors) { ['attributes', 'must be a Hash'] }
+    include_examples 'should validate the attributes'
 
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
-      end
-    end
+    include_examples 'should validate the record'
 
-    describe 'with an attributes Object' do
-      let(:attributes)      { Object.new }
-      let(:expected_errors) { [['attributes', 'must be a Hash']] }
+    # rubocop:disable RSpec/RepeatedExample
+    include_examples 'should handle invalid attributes',
+      lambda {
+        it 'should update the attributes' do
+          expect { call_operation }
+            .to change(record, :attributes)
+            .to be >= attributes.stringify_keys
+        end
 
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
-      end
-    end
+        it { expect { call_operation }.not_to change(record, :persisted?) }
+      }
 
-    describe 'with a nil record' do
-      let(:record)          { nil }
-      let(:expected_errors) { ['record', 'must be a Spell'] }
+    include_examples 'should handle unknown attributes',
+      lambda {
+        it { expect { call_operation }.not_to change(record, :attributes) }
 
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
-      end
-    end
-
-    describe 'with a record Object' do
-      let(:record)          { Object.new }
-      let(:expected_errors) { ['record', 'must be a Spell'] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
-      end
-    end
-
-    describe 'with a hash with unknown attributes' do
-      let(:attributes) do
-        {
-          'difficulty' => 'high',
-          'element'    => 'radiance',
-          'explosion'  => 'megacolossal'
-        }
-      end
-      let(:expected_errors) { [['difficulty', 'unknown attribute']] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
-      end
-
-      it { expect { call_operation }.not_to change(record, :attributes) }
-
-      it { expect { call_operation }.not_to change(record, :persisted?) }
-    end
-
-    describe 'with a hash with invalid attributes' do
-      let(:attributes) do
-        {
-          'name'         => 'Fire Festival',
-          'casting_time' => nil,
-          'duration'     => 'Too Long',
-          'level'        => 10,
-          'range'        => 'Foreman',
-          'school'       => 'Transubstantiation',
-          'description'  => <<~DESCRIPTION
-            Pretend to hold a music festival. Rake in the dough, yo.
-          DESCRIPTION
-        }
-      end
-      let(:expected_errors) do
-        [
-          [
-            'casting_time',
-            "can't be blank"
-          ],
-          [
-            'level',
-            'must be less than or equal to 9'
-          ],
-          [
-            'school',
-            'must be abjuration, conjuration, divination, enchantment, ' \
-            'evocation, illusion, necromancy, or transmutation'
-          ]
-        ]
-      end
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_errors(*expected_errors)
-      end
-
-      it 'should update the attributes' do
-        expect { call_operation }
-          .to change(record, :attributes)
-          .to be >= attributes
-      end
-
-      it { expect { call_operation }.not_to change(record, :persisted?) }
-    end
+        it { expect { call_operation }.not_to change(record, :persisted?) }
+      }
+    # rubocop:enable RSpec/RepeatedExample
 
     describe 'with a record with valid attributes' do
       let(:attributes) do

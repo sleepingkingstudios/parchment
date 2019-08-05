@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
+require 'errors/invalid_parameters'
+require 'errors/failed_validation'
+require 'errors/not_found'
 require 'operations/records/create_operation'
 require 'operations/records/destroy_operation'
-require 'operations/spells/find_matching_operation'
 require 'operations/records/find_one_operation'
 require 'operations/records/update_operation'
+require 'operations/spells/find_matching_operation'
+
+# rubocop:disable Metrics/ClassLength
 
 # Controller for performing CRUD actions on Spells via a JSON API.
 class Api::SpellsController < Api::BaseController
@@ -41,10 +46,10 @@ class Api::SpellsController < Api::BaseController
 
   private
 
-  def build_error_response(errors)
+  def build_error_response(error)
     {
-      errors: errors,
-      ok:     false
+      error: serialize_error(error),
+      ok:    false
     }
   end
 
@@ -71,8 +76,8 @@ class Api::SpellsController < Api::BaseController
     @index_operation ||= Operations::Spells::FindMatchingOperation.new
   end
 
-  def render_errors(errors, status: :unprocessable_entity)
-    render json: build_error_response(errors), status: status
+  def render_error(error, status: :unprocessable_entity)
+    render json: build_error_response(error), status: status
   end
 
   def render_json(data, status: :ok)
@@ -83,7 +88,7 @@ class Api::SpellsController < Api::BaseController
     if operation.success?
       render_json(wrap_value(operation.value), status: status)
     else
-      render_errors(operation.errors, status: :unprocessable_entity)
+      render_error(operation.error, status: :unprocessable_entity)
     end
   end
 
@@ -92,17 +97,32 @@ class Api::SpellsController < Api::BaseController
 
     return if find_operation.success?
 
-    render_errors(find_operation.errors, status: :not_found)
+    render_error(find_operation.error, status: :not_found)
   end
 
   def require_spell_params
     return unless spell_params.empty?
 
-    render_errors([['spell', "can't be blank"]], status: :unprocessable_entity)
+    error = Errors::InvalidParameters.new(
+      errors: [['spell', "can't be blank"]]
+    )
+
+    render_error(error, status: :unprocessable_entity)
   end
 
   def resource_name
     'spells'
+  end
+
+  def serialize_error(error)
+    case error
+    when Errors::FailedValidation, Errors::NotFound
+      error.as_json
+    else
+      # :nocov:
+      { 'message' => 'Something went wrong when processing the request.' }
+      # :nocov:
+    end
   end
 
   def spell_id
@@ -139,3 +159,4 @@ class Api::SpellsController < Api::BaseController
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

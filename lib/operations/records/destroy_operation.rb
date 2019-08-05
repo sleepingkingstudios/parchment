@@ -8,9 +8,7 @@ module Operations::Records
     private
 
     def process(record)
-      return unless validate_record(record)
-
-      record.tap(&:destroy)
+      handle_invalid_record(record) || record.tap(&:destroy)
     end
   end
 end

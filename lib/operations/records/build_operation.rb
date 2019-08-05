@@ -8,9 +8,8 @@ module Operations::Records
     private
 
     def process(attributes = {})
-      return unless validate_attributes(attributes)
-
-      handle_unknown_attribute { record_class.new(attributes) }
+      handle_invalid_attributes(attributes) ||
+        handle_unknown_attribute { record_class.new(attributes) }
     end
   end
 end

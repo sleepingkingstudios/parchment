@@ -4,7 +4,11 @@ require 'rails_helper'
 
 require 'operations/records/find_one_operation'
 
+require 'support/examples/operation_examples'
+
 RSpec.describe Operations::Records::FindOneOperation do
+  include Spec::Support::Examples::OperationExamples
+
   subject(:operation) { described_class.new(record_class) }
 
   let(:record_class) { Spell }
@@ -22,43 +26,20 @@ RSpec.describe Operations::Records::FindOneOperation do
 
     it { expect(operation).to respond_to(:call).with(1).argument }
 
-    describe 'with nil' do
-      let(:id) { nil }
-      let(:expected_errors) { ['id', "can't be blank"] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
-      end
-    end
-
-    describe 'with an Object' do
-      let(:id) { Object.new }
-      let(:expected_errors) { ['id', 'must be a String'] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
-      end
-    end
-
-    describe 'with an empty String' do
-      let(:id) { '' }
-      let(:expected_errors) { ['id', "can't be blank"] }
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
-      end
-    end
+    include_examples 'should validate the primary key'
 
     describe 'with an invalid id' do
       let(:id) { '00000000-0000-0000-0000-000000000000' }
-      let(:expected_errors) { ['spell', 'not found'] }
+      let(:expected_errors) do
+        Errors::NotFound.new(
+          attributes:   { id: id },
+          record_class: record_class
+        )
+      end
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_errors(expected_errors)
+          .to have_failing_result.with_error(expected_errors)
       end
     end
 
@@ -69,11 +50,16 @@ RSpec.describe Operations::Records::FindOneOperation do
 
       describe 'with an invalid id' do
         let(:id)              { '00000000-0000-0000-0000-000000000000' }
-        let(:expected_errors) { ['spell', 'not found'] }
+        let(:expected_errors) do
+          Errors::NotFound.new(
+            attributes:   { id: id },
+            record_class: record_class
+          )
+        end
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_errors(expected_errors)
+            .to have_failing_result.with_error(expected_errors)
         end
       end
 

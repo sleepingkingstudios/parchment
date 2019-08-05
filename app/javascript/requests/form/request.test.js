@@ -85,7 +85,7 @@ describe('FormRequest', () => {
           };
           const json = {
             ok: false,
-            errors,
+            error: { data: { errors } },
           };
           const response = { ok: false, json: () => json };
           const dispatchedActions = dispatch.mock.calls;
