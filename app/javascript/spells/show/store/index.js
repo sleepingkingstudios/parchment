@@ -1,4 +1,5 @@
 import alerts from './alerts';
+import redirect from './redirect';
 import findOne from '../../../requests/findOne';
 import { buildSpell } from '../../entities';
 
@@ -12,6 +13,7 @@ export const {
 } = findOne({
   data: { spell: buildSpell() },
   middleware: [
+    redirect,
     alerts,
   ],
   namespace,
