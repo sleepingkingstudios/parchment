@@ -3,12 +3,21 @@ import { formatErrors } from '../../components/form/utils';
 import {
   camelizeKeys,
   deepAccessProperty,
-  underscoreKeys,
   valueOrDefault,
 } from '../../utils/object';
 
 const extractErrors = json => valueOrDefault(
   deepAccessProperty(json, 'errors', ['error', 'data']), [],
+);
+
+const joinUrl = (...segments) => (
+  segments
+    .map((str) => {
+      if (str[str.length - 1] === '/') { return str.slice(0, str.length - 1); }
+
+      return str;
+    })
+    .join('/')
 );
 
 const processResponse = async (response) => {
@@ -29,16 +38,14 @@ const processResponse = async (response) => {
   };
 };
 
-class FormRequest {
+class FindOneRequest {
   constructor(options) {
     const {
       actions,
-      method,
       namespace,
       url,
     } = options;
 
-    this.method = valueOrDefault(method, 'POST');
     this.namespace = namespace;
     this.url = url;
 
@@ -73,7 +80,7 @@ class FormRequest {
     };
   }
 
-  performRequest() {
+  performRequest({ id }) {
     const request = this;
 
     return async (dispatch, getState) => {
@@ -81,22 +88,15 @@ class FormRequest {
         handleFailure,
         handlePending,
         handleSuccess,
-        method,
-        namespace,
         url,
       } = request;
 
       handlePending({ dispatch, getState });
 
-      const state = getState();
-      const data = underscoreKeys(state[namespace].data);
+      const fullUrl = joinUrl(url, id);
 
-      /* eslint-disable-next-line dot-notation */
-      if (method !== 'POST') { data['_method'] = method; }
-
-      const rawResponse = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
+      const rawResponse = await fetch(fullUrl, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -112,4 +112,4 @@ class FormRequest {
   }
 }
 
-export default FormRequest;
+export default FindOneRequest;

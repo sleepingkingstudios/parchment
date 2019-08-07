@@ -11,14 +11,14 @@ import {
 } from '../../store/requestStatus';
 
 describe('<ShowSpellPage />', () => {
-  const requestFindSpell = jest.fn();
+  const requestGetData = jest.fn();
   const spellId = '00000000-0000-0000-0000-000000000000';
   const match = { params: { id: spellId } };
   const props = {
-    findSpellRequestStatus: INITIALIZED,
+    data: { spell: {} },
     match,
-    requestFindSpell,
-    spell: {},
+    requestGetData,
+    status: INITIALIZED,
   };
   const rendered = shallow(<ShowSpellPage {...props} />);
   const breadcrumbs = [
@@ -53,12 +53,12 @@ describe('<ShowSpellPage />', () => {
     expect(rendered.find('Page').shallow()).toIncludeText(message);
   });
 
-  it('should call requestFindSpell()', () => {
-    expect(requestFindSpell).toHaveBeenCalledWith(spellId);
+  it('should call requestGetData()', () => {
+    expect(requestGetData).toHaveBeenCalledWith({ id: spellId });
   });
 
   describe('when the request status is PENDING', () => {
-    const pendingProps = { ...props, findSpellRequestStatus: PENDING };
+    const pendingProps = { ...props, status: PENDING };
     const renderedPending = shallow(<ShowSpellPage {...pendingProps} />);
 
     it('should not render a spell block', () => {
@@ -73,7 +73,7 @@ describe('<ShowSpellPage />', () => {
   });
 
   describe('when the request status is FAILURE', () => {
-    const failureProps = { ...props, findSpellRequestStatus: FAILURE };
+    const failureProps = { ...props, status: FAILURE };
     const renderedFailure = shallow(<ShowSpellPage {...failureProps} />);
 
     it('should not render a spell block', () => {
@@ -89,7 +89,7 @@ describe('<ShowSpellPage />', () => {
 
   describe('when the request status is SUCCESS', () => {
     const spell = spellsData[0];
-    const successProps = { ...props, findSpellRequestStatus: SUCCESS, spell };
+    const successProps = { ...props, status: SUCCESS, data: { spell } };
     const renderedSuccess = shallow(<ShowSpellPage {...successProps} />);
     const successBreadcrumbs = [
       {

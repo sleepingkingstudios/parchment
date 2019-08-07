@@ -44,14 +44,14 @@ const emptyMessage = (status) => {
   }
 };
 
-const contents = ({ spell, findSpellRequestStatus }) => {
-  if (findSpellRequestStatus === SUCCESS) {
+const contents = ({ spell, status }) => {
+  if (status === SUCCESS) {
     return (
       <SpellBlock spell={spell} />
     );
   }
 
-  const message = emptyMessage(findSpellRequestStatus);
+  const message = emptyMessage(status);
 
   return (
     <p>{ message }</p>
@@ -66,19 +66,20 @@ const getSpellId = ({ match }) => {
 
 class ShowSpellPage extends React.Component {
   componentDidMount() {
-    const { requestFindSpell } = this.props;
-    const spellId = getSpellId(this.props);
+    const { requestGetData } = this.props;
+    const id = getSpellId(this.props);
 
-    requestFindSpell(spellId);
+    requestGetData({ id });
   }
 
   render() {
-    const { spell, findSpellRequestStatus } = this.props;
+    const { data, status } = this.props;
+    const { spell } = data;
     const breadcrumbs = generateBreadcrumbs(spell);
 
     return (
       <Page breadcrumbs={breadcrumbs} className="page-spells">
-        { contents({ spell, findSpellRequestStatus }) }
+        { contents({ spell, status }) }
       </Page>
     );
   }
@@ -87,17 +88,19 @@ class ShowSpellPage extends React.Component {
 ShowSpellPage.defaultProps = {};
 
 ShowSpellPage.propTypes = {
-  findSpellRequestStatus: PropTypes.string.isRequired,
+  data: PropTypes.shape({
+    spell: PropTypes.oneOfType([
+      spellType,
+      PropTypes.object,
+    ]).isRequired,
+  }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  requestFindSpell: PropTypes.func.isRequired,
-  spell: PropTypes.oneOfType([
-    spellType,
-    PropTypes.object,
-  ]).isRequired,
+  requestGetData: PropTypes.func.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 export default ShowSpellPage;
