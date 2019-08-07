@@ -1,4 +1,5 @@
-import submitForm from '../../../requests/findOne';
+import alerts from './alerts';
+import findOne from '../../../requests/findOne';
 import { buildSpell } from '../../entities';
 
 const namespace = 'findSpell';
@@ -8,9 +9,11 @@ export const {
   actions,
   reducer,
   request,
-} = submitForm({
+} = findOne({
   data: { spell: buildSpell() },
-  middleware: [],
+  middleware: [
+    alerts,
+  ],
   namespace,
   url: REQUEST_URL,
 });
