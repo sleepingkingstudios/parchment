@@ -4,7 +4,7 @@ import findOne from '../../../requests/findOne';
 import { buildSpell } from '../../entities';
 
 const namespace = 'findSpell';
-const REQUEST_URL = '/api/spells';
+const REQUEST_URL = '/api/spells/:id';
 
 export const {
   actions,

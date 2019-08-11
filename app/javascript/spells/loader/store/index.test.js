@@ -6,7 +6,7 @@ describe('Find Spell store', () => {
 
     describe('url', () => {
       it('should be the spell create URL', () => {
-        expect(url).toEqual('/api/spells');
+        expect(url).toEqual('/api/spells/:id');
       });
     });
   });

@@ -16,6 +16,14 @@ export const capitalize = (word) => {
   return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 };
 
+export const interpolate = (str, rxp, params) => {
+  if (typeof str === 'undefined' || str == null) { return ''; }
+
+  if (typeof rxp === 'undefined' || rxp == null) { return str; }
+
+  return str.replace(rxp, (_, key) => params[key]);
+};
+
 export const truncate = (str, len) => {
   if (typeof str === 'undefined' || str == null) { return ''; }
 
