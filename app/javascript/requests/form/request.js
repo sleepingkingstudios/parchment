@@ -6,6 +6,7 @@ import {
   underscoreKeys,
   valueOrDefault,
 } from '../../utils/object';
+import { interpolate } from '../../utils/string';
 
 const extractErrors = json => valueOrDefault(
   deepAccessProperty(json, 'errors', ['error', 'data']), [],
@@ -73,7 +74,7 @@ class FormRequest {
     };
   }
 
-  performRequest() {
+  performRequest(params = {}) {
     const request = this;
 
     return async (dispatch, getState) => {
@@ -88,14 +89,12 @@ class FormRequest {
 
       handlePending({ dispatch, getState });
 
+      const fullUrl = interpolate(url, /:(\w+)/g, params);
       const state = getState();
       const data = underscoreKeys(state[namespace].data);
 
-      /* eslint-disable-next-line dot-notation */
-      if (method !== 'POST') { data['_method'] = method; }
-
-      const rawResponse = await fetch(url, {
-        method: 'POST',
+      const rawResponse = await fetch(fullUrl, {
+        method,
         body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',

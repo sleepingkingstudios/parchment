@@ -71,7 +71,7 @@ class FindOneRequest {
     };
   }
 
-  performRequest(params) {
+  performRequest(params = {}) {
     const request = this;
 
     return async (dispatch, getState) => {
