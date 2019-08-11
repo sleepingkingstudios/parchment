@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ConnectedSpellLoader from '../loader/index';
+import ConnectSpellLoader from '../loader/index';
 import SpellPage from './page';
+import findSpell from './store/index';
 
 const getSpellId = (match) => {
   const { params } = match;
@@ -10,7 +11,9 @@ const getSpellId = (match) => {
   return params.id;
 };
 
-const LoadedSpellPage = (props) => {
+const ConnectedSpellLoader = ConnectSpellLoader(findSpell);
+
+const SpellPageLoader = (props) => {
   const { match, ...rest } = props;
   const id = getSpellId(match);
 
@@ -24,9 +27,9 @@ const LoadedSpellPage = (props) => {
   );
 };
 
-LoadedSpellPage.defaultProps = {};
+SpellPageLoader.defaultProps = {};
 
-LoadedSpellPage.propTypes = {
+SpellPageLoader.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -34,4 +37,4 @@ LoadedSpellPage.propTypes = {
   }).isRequired,
 };
 
-export default LoadedSpellPage;
+export default SpellPageLoader;

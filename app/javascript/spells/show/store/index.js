@@ -3,19 +3,22 @@ import redirect from './redirect';
 import findOne from '../../../requests/findOne';
 import { buildSpell } from '../../entities';
 
-const namespace = 'findSpell';
 const REQUEST_URL = '/api/spells/:id';
-
-export const {
-  actions,
-  reducer,
-  request,
-} = findOne({
+const findSpell = findOne({
   data: { spell: buildSpell() },
   middleware: [
     redirect,
     alerts,
   ],
-  namespace,
+  namespace: 'findSpell',
   url: REQUEST_URL,
 });
+
+export default findSpell;
+
+export const {
+  actions,
+  namespace,
+  reducer,
+  request,
+} = findSpell;

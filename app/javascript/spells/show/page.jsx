@@ -12,9 +12,7 @@ import {
 } from '../../store/requestStatus';
 
 const generateBreadcrumbs = (spell) => {
-  let label = 'Loading...';
-
-  if (spell.name) { label = spell.name; }
+  const label = (spell && spell.name) ? spell.name : 'Loading...';
 
   return [
     {

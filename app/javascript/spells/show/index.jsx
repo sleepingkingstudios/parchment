@@ -1,12 +1,11 @@
 import { connect } from 'react-redux';
 
-import LoadedSpellPage from './loaded';
+import SpellPageLoader from './loader';
 
 const mapStateToProps = state => Object.assign(
   {},
-  state.findSpell,
   state.router.location,
 );
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoadedSpellPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SpellPageLoader);

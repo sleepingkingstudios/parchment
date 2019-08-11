@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import LoadedSpellPage from './loaded';
+import SpellPageLoader from './loader';
 import { spellsData } from '../fixtures';
 import { SUCCESS } from '../../store/requestStatus';
 
-describe('LoadedSpellPage', () => {
+describe('SpellPageLoader', () => {
   const id = '00000000-0000-0000-0000-000000000000';
   const defaultProps = {
     match: {
@@ -14,7 +14,7 @@ describe('LoadedSpellPage', () => {
   };
 
   it('should render a connected SpellLoader', () => {
-    const rendered = shallow(<LoadedSpellPage {...defaultProps} />);
+    const rendered = shallow(<SpellPageLoader {...defaultProps} />);
 
     expect(rendered).toHaveDisplayName('Connect(SpellLoader)');
   });
@@ -22,7 +22,7 @@ describe('LoadedSpellPage', () => {
   it('should render a ShowSpellPage with the spell and status', () => {
     const spell = spellsData[0];
     const status = SUCCESS;
-    const rendered = shallow(<LoadedSpellPage {...defaultProps} />);
+    const rendered = shallow(<SpellPageLoader {...defaultProps} />);
     const page = rendered.renderProp('render')({ spell, status });
 
     expect(page).toHaveDisplayName('ShowSpellPage');
