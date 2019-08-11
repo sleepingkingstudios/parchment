@@ -42,19 +42,9 @@ describe('<CreateSpellPage />', () => {
 
   it('should render the spell form', () => {
     const rendered = shallow(<CreateSpellPage {...defaultProps} />);
-    const form = rendered.find('SpellForm');
-    const {
-      data,
-      errors,
-      status,
-    } = defaultProps;
+    const form = rendered.find('Connect(SpellForm)');
 
     expect(form).toExist();
-    expect(form).toHaveProp('onChangeAction', updateFormField);
-    expect(form).toHaveProp('onSubmitAction', requestSubmitForm);
-    expect(form).toHaveProp('data', data);
-    expect(form).toHaveProp('errors', errors);
-    expect(form).toHaveProp('requestStatus', status);
   });
 
   it('should match the snapshot', () => {

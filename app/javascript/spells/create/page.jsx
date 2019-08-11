@@ -1,11 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Page from '../../components/page';
-import SpellForm from '../form';
-
-import { formErrorsType } from '../../components/form/entities';
-import { spellFormType } from '../entities';
+import CreateSpellForm from './form';
 
 const breadcrumbs = [
   {
@@ -23,34 +19,16 @@ const breadcrumbs = [
   },
 ];
 
-const CreateSpellPage = ({
-  data,
-  errors,
-  status,
-  requestSubmitForm,
-  updateFormField,
-}) => (
+const CreateSpellPage = () => (
   <Page breadcrumbs={breadcrumbs} className="page-spells page-create-spell">
     <h1>Create Spell</h1>
 
-    <SpellForm
-      data={data}
-      errors={errors}
-      requestStatus={status}
-      onChangeAction={updateFormField}
-      onSubmitAction={requestSubmitForm}
-    />
+    <CreateSpellForm />
   </Page>
 );
 
 CreateSpellPage.defaultProps = {};
 
-CreateSpellPage.propTypes = {
-  data: spellFormType.isRequired,
-  errors: formErrorsType.isRequired,
-  status: PropTypes.string.isRequired,
-  requestSubmitForm: PropTypes.func.isRequired,
-  updateFormField: PropTypes.func.isRequired,
-};
+CreateSpellPage.propTypes = {};
 
 export default CreateSpellPage;
