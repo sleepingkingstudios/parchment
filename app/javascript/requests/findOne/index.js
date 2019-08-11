@@ -33,6 +33,7 @@ const generateFindOneRequest = ({
 
   return {
     actions,
+    namespace,
     reducer,
     request,
   };

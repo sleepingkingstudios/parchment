@@ -39,6 +39,7 @@ const generateFormRequest = ({
 
   return {
     actions,
+    namespace,
     reducer,
     request,
   };

@@ -18,6 +18,7 @@ const generateReducer = ({ actions, initialState }) => {
     REQUEST_FAILURE,
     REQUEST_PENDING,
     REQUEST_SUCCESS,
+    SET_DATA,
     UPDATE_FORM_FIELD,
   } = actions;
 
@@ -38,6 +39,10 @@ const generateReducer = ({ actions, initialState }) => {
             data: initialState.data,
             errors: {},
             status: SUCCESS,
+          });
+        case SET_DATA:
+          return Object.assign({}, state, {
+            data: action.payload.data,
           });
         case UPDATE_FORM_FIELD:
           return updateData(state, action.payload);

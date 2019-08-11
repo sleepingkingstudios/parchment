@@ -2,9 +2,8 @@ import generateInitialState from './initialState';
 import generateFormRequest from './index';
 
 describe('Form request', () => {
-  const namespace = 'createWidget';
   const requestUrl = '/api/widgets';
-  const defaultOptions = { namespace, url: requestUrl };
+  const defaultOptions = { namespace: 'createWidget', url: requestUrl };
 
   describe('generateFormRequest', () => {
     it('should be a function', () => {
@@ -13,9 +12,10 @@ describe('Form request', () => {
   });
 
   describe('with default options', () => {
-    const initialState = generateInitialState({ data: {}, namespace });
+    const initialState = generateInitialState({ data: {} });
     const {
       actions,
+      namespace,
       reducer,
       request,
     } = generateFormRequest(defaultOptions);
@@ -29,6 +29,12 @@ describe('Form request', () => {
         it('should be a function', () => {
           expect(typeof updateFormField).toEqual('function');
         });
+      });
+    });
+
+    describe('namespace', () => {
+      it('should return the namespace', () => {
+        expect(namespace).toEqual('createWidget');
       });
     });
 
@@ -71,7 +77,7 @@ describe('Form request', () => {
       id: '00000000-0000-0000-0000-000000000000',
       name: 'Westley',
     };
-    const initialState = generateInitialState({ data, namespace });
+    const initialState = generateInitialState({ data });
     const options = { ...defaultOptions, data };
     const {
       reducer,
