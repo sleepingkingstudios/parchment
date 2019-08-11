@@ -1,13 +1,14 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
-import SpellPage from './page';
+import LoadedSpellPage from './loaded';
 import { request } from './store/index';
 
 const { performRequest } = request;
-
-const mapStateToProps = state => state.findSpell;
-
+const mapStateToProps = state => Object.assign(
+  {},
+  state.findSpell,
+  state.router.location,
+);
 const mapDispatchToProps = { requestGetData: performRequest };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SpellPage));
+export default connect(mapStateToProps, mapDispatchToProps)(LoadedSpellPage);

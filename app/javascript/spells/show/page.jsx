@@ -58,48 +58,19 @@ const contents = ({ spell, status }) => {
   );
 };
 
-const getSpellId = ({ match }) => {
-  const { params } = match;
-
-  return params.id;
-};
-
-class ShowSpellPage extends React.Component {
-  componentDidMount() {
-    const { requestGetData } = this.props;
-    const id = getSpellId(this.props);
-
-    requestGetData({ id });
-  }
-
-  render() {
-    const { data, status } = this.props;
-    const { spell } = data;
-    const breadcrumbs = generateBreadcrumbs(spell);
-
-    return (
-      <Page breadcrumbs={breadcrumbs} className="page-spells">
-        { contents({ spell, status }) }
-      </Page>
-    );
-  }
-}
+const ShowSpellPage = ({ spell, status }) => (
+  <Page breadcrumbs={generateBreadcrumbs(spell)} className="page-spells">
+    { contents({ spell, status }) }
+  </Page>
+);
 
 ShowSpellPage.defaultProps = {};
 
 ShowSpellPage.propTypes = {
-  data: PropTypes.shape({
-    spell: PropTypes.oneOfType([
-      spellType,
-      PropTypes.object,
-    ]).isRequired,
-  }).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-  requestGetData: PropTypes.func.isRequired,
+  spell: PropTypes.oneOfType([
+    spellType,
+    PropTypes.object,
+  ]).isRequired,
   status: PropTypes.string.isRequired,
 };
 
