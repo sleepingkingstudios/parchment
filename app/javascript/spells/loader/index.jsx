@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import SpellLoader from './loader';
-import { request } from '../show/store/index';
+import { request } from './store/index';
 
 const { performRequest } = request;
 const mapStateToProps = state => state.findSpell;

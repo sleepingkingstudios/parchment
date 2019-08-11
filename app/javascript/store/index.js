@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 
 import alerts from '../components/alerts/store/reducer';
 import { reducer as createSpell } from '../spells/create/store/index';
-import { reducer as findSpell } from '../spells/show/store/index';
+import { reducer as findSpell } from '../spells/loader/store/index';
 import spells from '../spells/store/reducer';
 
 export const history = createBrowserHistory();
