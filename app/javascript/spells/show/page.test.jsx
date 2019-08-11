@@ -11,16 +11,10 @@ import {
 } from '../../store/requestStatus';
 
 describe('<ShowSpellPage />', () => {
-  const requestGetData = jest.fn();
-  const spellId = '00000000-0000-0000-0000-000000000000';
-  const match = { params: { id: spellId } };
-  const props = {
-    data: { spell: {} },
-    match,
-    requestGetData,
+  const defaultProps = {
+    spell: {},
     status: INITIALIZED,
   };
-  const rendered = shallow(<ShowSpellPage {...props} />);
   const breadcrumbs = [
     {
       label: 'Home',
@@ -37,60 +31,63 @@ describe('<ShowSpellPage />', () => {
   ];
 
   it('should wrap the contents in a Page', () => {
-    expect(rendered).toHaveDisplayName('Page');
+    const rendered = shallow(<ShowSpellPage {...defaultProps} />);
 
+    expect(rendered).toHaveDisplayName('Page');
     expect(rendered).toHaveClassName('page-spells');
     expect(rendered).toHaveProp('breadcrumbs', breadcrumbs);
   });
 
   it('should not render a spell block', () => {
+    const rendered = shallow(<ShowSpellPage {...defaultProps} />);
+
     expect(rendered.find('SpellBlock')).not.toExist();
   });
 
   it('should show the loading message', () => {
+    const rendered = shallow(<ShowSpellPage {...defaultProps} />);
     const message = 'Loading spell from the server...';
 
     expect(rendered.find('Page').shallow()).toIncludeText(message);
   });
 
-  it('should call requestGetData()', () => {
-    expect(requestGetData).toHaveBeenCalledWith({ id: spellId });
-  });
-
   describe('when the request status is PENDING', () => {
-    const pendingProps = { ...props, status: PENDING };
-    const renderedPending = shallow(<ShowSpellPage {...pendingProps} />);
+    const props = { ...defaultProps, status: PENDING };
 
     it('should not render a spell block', () => {
-      expect(renderedPending.find('SpellBlock')).not.toExist();
+      const rendered = shallow(<ShowSpellPage {...props} />);
+
+      expect(rendered.find('SpellBlock')).not.toExist();
     });
 
     it('should show the loading message', () => {
+      const rendered = shallow(<ShowSpellPage {...props} />);
       const message = 'Loading spell from the server...';
 
-      expect(renderedPending.find('Page').shallow()).toIncludeText(message);
+      expect(rendered.find('Page').shallow()).toIncludeText(message);
     });
   });
 
   describe('when the request status is FAILURE', () => {
-    const failureProps = { ...props, status: FAILURE };
-    const renderedFailure = shallow(<ShowSpellPage {...failureProps} />);
+    const props = { ...defaultProps, status: FAILURE };
 
     it('should not render a spell block', () => {
-      expect(renderedFailure.find('SpellBlock')).not.toExist();
+      const rendered = shallow(<ShowSpellPage {...props} />);
+
+      expect(rendered.find('SpellBlock')).not.toExist();
     });
 
     it('should show the failure message', () => {
+      const rendered = shallow(<ShowSpellPage {...props} />);
       const message = 'Spell not found.';
 
-      expect(renderedFailure.find('Page').shallow()).toIncludeText(message);
+      expect(rendered.find('Page').shallow()).toIncludeText(message);
     });
   });
 
   describe('when the request status is SUCCESS', () => {
     const spell = spellsData[0];
-    const successProps = { ...props, status: SUCCESS, data: { spell } };
-    const renderedSuccess = shallow(<ShowSpellPage {...successProps} />);
+    const props = { ...defaultProps, status: SUCCESS, spell };
     const successBreadcrumbs = [
       {
         label: 'Home',
@@ -107,11 +104,14 @@ describe('<ShowSpellPage />', () => {
     ];
 
     it('should update the breadcrumbs', () => {
-      expect(renderedSuccess).toHaveProp('breadcrumbs', successBreadcrumbs);
+      const rendered = shallow(<ShowSpellPage {...props} />);
+
+      expect(rendered).toHaveProp('breadcrumbs', successBreadcrumbs);
     });
 
     it('should render the spell block', () => {
-      const block = renderedSuccess.find('SpellBlock');
+      const rendered = shallow(<ShowSpellPage {...props} />);
+      const block = rendered.find('SpellBlock');
 
       expect(block).toExist();
       expect(block).toHaveProp('spell', spell);
