@@ -1,5 +1,5 @@
 import generateActions from './actions';
-import generateInitialState from './initialState';
+import generateInitialState from '../endpoint/initialState';
 import generateReducer from './reducer';
 import {
   FAILURE,

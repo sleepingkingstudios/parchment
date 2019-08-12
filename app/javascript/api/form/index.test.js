@@ -1,4 +1,4 @@
-import generateInitialState from './initialState';
+import generateInitialState from '../endpoint/initialState';
 import generateFormRequest from './index';
 
 describe('Form request', () => {

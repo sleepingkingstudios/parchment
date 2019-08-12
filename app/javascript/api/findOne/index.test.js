@@ -1,4 +1,4 @@
-import generateInitialState from './initialState';
+import generateInitialState from '../endpoint/initialState';
 import generateFindOneRequest from './index';
 
 describe('Find one request', () => {

@@ -1,11 +1,9 @@
 import generateInitialState from './initialState';
 import { INITIALIZED } from '../../store/requestStatus';
 
-describe('Find one initial state', () => {
-  describe('generateInitialState', () => {
-    it('should be a function', () => {
-      expect(typeof generateInitialState).toEqual('function');
-    });
+describe('API endpoint initial state', () => {
+  it('should be a function', () => {
+    expect(typeof generateInitialState).toEqual('function');
   });
 
   describe('with no arguments', () => {
