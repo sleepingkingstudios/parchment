@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 
-import generateActions from './actions';
+import generateActions from '../endpoint/actions';
 import FindOneRequest from './request';
 import {
   underscoreKeys,

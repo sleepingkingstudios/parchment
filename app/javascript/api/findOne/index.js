@@ -1,4 +1,4 @@
-import generateActions from './actions';
+import generateActions from '../endpoint/actions';
 import generateInitialState from './initialState';
 import generateReducer from './reducer';
 import FindOneRequest from './request';

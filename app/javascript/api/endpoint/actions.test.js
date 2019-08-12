@@ -1,7 +1,7 @@
 import generateActions from './actions';
 
-describe('Find one request actions', () => {
-  const namespace = 'findWidget';
+describe('API endpoint actions', () => {
+  const namespace = 'api/endpoint';
   const {
     REQUEST_FAILURE,
     REQUEST_PENDING,
