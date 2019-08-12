@@ -1,6 +1,6 @@
 import alerts from './alerts';
 import redirect from './redirect';
-import findOne from '../../../../requests/findOne';
+import findOne from '../../../../api/findOne';
 import { buildSpell } from '../../../entities';
 import { actions as formActions } from '../form/index';
 

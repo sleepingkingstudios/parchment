@@ -1,4 +1,4 @@
-import submitForm from '../../../requests/form';
+import submitForm from '../../../api/form';
 import { buildSpell } from '../../entities';
 import alerts from './alerts';
 import redirect from './redirect';
