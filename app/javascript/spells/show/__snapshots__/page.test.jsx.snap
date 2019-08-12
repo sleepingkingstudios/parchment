@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ShowSpellPage /> should match the snapshot 1`] = `
+<Page
+  breadcrumbs={
+    Array [
+      Object {
+        "label": "Home",
+        "url": "/",
+      },
+      Object {
+        "label": "Spells",
+        "url": "/spells",
+      },
+      Object {
+        "active": true,
+        "label": "Loading...",
+      },
+    ]
+  }
+  className="page-spells"
+  layout={null}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <HeadingWithButtons
+    buttons={
+      Array [
+        Object {
+          "label": "Update Spell",
+          "outline": true,
+          "url": "/spells/undefined/update",
+        },
+      ]
+    }
+  >
+    Show Spell
+  </HeadingWithButtons>
+  <p>
+    Loading spell from the server...
+  </p>
+</Page>
+`;
+
+exports[`<ShowSpellPage /> when the request status is SUCCESS should match the snapshot 1`] = `
+<Page
+  breadcrumbs={
+    Array [
+      Object {
+        "label": "Home",
+        "url": "/",
+      },
+      Object {
+        "label": "Spells",
+        "url": "/spells",
+      },
+      Object {
+        "active": true,
+        "label": "Thunderclap",
+      },
+    ]
+  }
+  className="page-spells"
+  layout={null}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <HeadingWithButtons
+    buttons={
+      Array [
+        Object {
+          "label": "Update Spell",
+          "outline": true,
+          "url": "/spells/e17bca01-24d3-48d3-a308-099dd6dca373/update",
+        },
+      ]
+    }
+  >
+    Show Spell
+  </HeadingWithButtons>
+  <SpellBlock
+    spell={
+      Object {
+        "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+        "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+        "duration": "Instantaneous",
+        "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+        "level": 0,
+        "materialComponent": "",
+        "name": "Thunderclap",
+        "range": "Self",
+        "ritual": false,
+        "school": "illusion",
+        "shortDescription": "Create an ominous thunderclap when your name is spoken",
+        "somaticComponent": false,
+        "verbalComponent": false,
+      }
+    }
+  />
+</Page>
+`;

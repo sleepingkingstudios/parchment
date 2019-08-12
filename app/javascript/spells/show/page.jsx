@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import HeadingWithButtons from '../../components/heading-with-buttons';
 import Page from '../../components/page';
 import SpellBlock from './block';
 import { spellType } from '../entities';
@@ -26,6 +27,18 @@ const generateBreadcrumbs = (spell) => {
     {
       label,
       active: true,
+    },
+  ];
+};
+
+const generateButtons = (spell) => {
+  if (!spell) { return []; }
+
+  return [
+    {
+      label: 'Update Spell',
+      outline: true,
+      url: `/spells/${spell.id}/update`,
     },
   ];
 };
@@ -58,6 +71,8 @@ const contents = ({ spell, status }) => {
 
 const ShowSpellPage = ({ spell, status }) => (
   <Page breadcrumbs={generateBreadcrumbs(spell)} className="page-spells">
+    <HeadingWithButtons buttons={generateButtons(spell)}>Show Spell</HeadingWithButtons>
+
     { contents({ spell, status }) }
   </Page>
 );

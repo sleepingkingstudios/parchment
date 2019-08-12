@@ -51,6 +51,12 @@ describe('<ShowSpellPage />', () => {
     expect(rendered.find('Page').shallow()).toIncludeText(message);
   });
 
+  it('should match the snapshot', () => {
+    const rendered = shallow(<ShowSpellPage {...defaultProps} />);
+
+    expect(rendered).toMatchSnapshot();
+  });
+
   describe('when the request status is PENDING', () => {
     const props = { ...defaultProps, status: PENDING };
 
@@ -115,6 +121,12 @@ describe('<ShowSpellPage />', () => {
 
       expect(block).toExist();
       expect(block).toHaveProp('spell', spell);
+    });
+
+    it('should match the snapshot', () => {
+      const rendered = shallow(<ShowSpellPage {...props} />);
+
+      expect(rendered).toMatchSnapshot();
     });
   });
 });
