@@ -1,17 +1,18 @@
+import submitForm from '../../../../requests/form';
+import { buildSpell } from '../../../entities';
 import alerts from './alerts';
 import redirect from './redirect';
-import findOne from '../../../requests/findOne';
-import { buildSpell } from '../../entities';
 
-const namespace = 'findSpell';
-const REQUEST_URL = '/api/spells';
+const namespace = 'updateSpellForm';
+const REQUEST_URL = '/api/spells/:id';
 
 export const {
   actions,
   reducer,
   request,
-} = findOne({
+} = submitForm({
   data: { spell: buildSpell() },
+  method: 'PATCH',
   middleware: [
     redirect,
     alerts,

@@ -18,9 +18,11 @@
 - attribute short_description:string
 - attribute slug (source abbrev + short_name) - e.g. phb-spontaneous-combustion
 
-### API Controller
+### Client
 
-- sort spells by name
+- namespace all Spell reducers in the 'spells' namespace
+  - support nested namespaces in requests (rename to API objects?)
+  - extract FindAll request
 
 ### Serializer
 

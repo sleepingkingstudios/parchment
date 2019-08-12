@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import SpellPageLoader from './loader';
+import UpdateSpellPageLoader from './loader';
 
 const mapStateToProps = state => Object.assign(
   {},
@@ -8,4 +8,4 @@ const mapStateToProps = state => Object.assign(
 );
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(SpellPageLoader);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateSpellPageLoader);

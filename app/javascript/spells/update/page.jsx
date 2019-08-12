@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import HeadingWithButtons from '../../components/heading-with-buttons';
 import Page from '../../components/page';
-import SpellBlock from './block';
+import UpdateSpellForm from './form';
 import { spellType } from '../entities';
 import {
   INITIALIZED,
@@ -12,8 +11,23 @@ import {
   SUCCESS,
 } from '../../store/requestStatus';
 
+const emptyBreadcrumbs = [
+  {
+    label: 'Home',
+    url: '/',
+  },
+  {
+    label: 'Spells',
+    url: '/spells',
+  },
+  {
+    label: 'Loading...',
+    active: true,
+  },
+];
+
 const generateBreadcrumbs = (spell) => {
-  const label = (spell && spell.name) ? spell.name : 'Loading...';
+  if (!(spell && spell.name)) { return emptyBreadcrumbs; }
 
   return [
     {
@@ -25,20 +39,12 @@ const generateBreadcrumbs = (spell) => {
       url: '/spells',
     },
     {
-      label,
-      active: true,
+      label: spell.name,
+      url: `/spells/${spell.id}`,
     },
-  ];
-};
-
-const generateButtons = (spell) => {
-  if (!spell) { return []; }
-
-  return [
     {
-      label: 'Update Spell',
-      outline: true,
-      url: `/spells/${spell.id}/update`,
+      label: 'Update',
+      active: true,
     },
   ];
 };
@@ -55,10 +61,14 @@ const emptyMessage = (status) => {
   }
 };
 
-const contents = ({ spell, status }) => {
+const contents = ({ status }) => {
   if (status === SUCCESS) {
     return (
-      <SpellBlock spell={spell} />
+      <Fragment>
+        <h1>Update Spell</h1>
+
+        <UpdateSpellForm isUpdate />
+      </Fragment>
     );
   }
 
@@ -69,17 +79,15 @@ const contents = ({ spell, status }) => {
   );
 };
 
-const ShowSpellPage = ({ spell, status }) => (
+const UpdateSpellPage = ({ spell, status }) => (
   <Page breadcrumbs={generateBreadcrumbs(spell)} className="page-spells">
-    <HeadingWithButtons buttons={generateButtons(spell)}>Show Spell</HeadingWithButtons>
-
-    { contents({ spell, status }) }
+    { contents({ status }) }
   </Page>
 );
 
-ShowSpellPage.defaultProps = {};
+UpdateSpellPage.defaultProps = {};
 
-ShowSpellPage.propTypes = {
+UpdateSpellPage.propTypes = {
   spell: PropTypes.oneOfType([
     spellType,
     PropTypes.object,
@@ -87,4 +95,4 @@ ShowSpellPage.propTypes = {
   status: PropTypes.string.isRequired,
 };
 
-export default ShowSpellPage;
+export default UpdateSpellPage;

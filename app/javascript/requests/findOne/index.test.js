@@ -2,9 +2,8 @@ import generateInitialState from './initialState';
 import generateFindOneRequest from './index';
 
 describe('Find one request', () => {
-  const namespace = 'createWidget';
   const requestUrl = '/api/widgets';
-  const defaultOptions = { namespace, url: requestUrl };
+  const defaultOptions = { namespace: 'findWidget', url: requestUrl };
 
   describe('generateFindOneRequest', () => {
     it('should be a function', () => {
@@ -13,11 +12,18 @@ describe('Find one request', () => {
   });
 
   describe('with default options', () => {
-    const initialState = generateInitialState({ data: {}, namespace });
+    const initialState = generateInitialState({ data: {} });
     const {
+      namespace,
       reducer,
       request,
     } = generateFindOneRequest(defaultOptions);
+
+    describe('namespace', () => {
+      it('should return the namespace', () => {
+        expect(namespace).toEqual('findWidget');
+      });
+    });
 
     describe('reducer', () => {
       it('should be a function', () => {
@@ -58,7 +64,7 @@ describe('Find one request', () => {
       id: '00000000-0000-0000-0000-000000000000',
       name: 'Westley',
     };
-    const initialState = generateInitialState({ data, namespace });
+    const initialState = generateInitialState({ data });
     const options = { ...defaultOptions, data };
     const {
       reducer,

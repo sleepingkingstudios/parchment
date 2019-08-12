@@ -5,19 +5,10 @@ import {
   deepAccessProperty,
   valueOrDefault,
 } from '../../utils/object';
+import { interpolate } from '../../utils/string';
 
 const extractErrors = json => valueOrDefault(
   deepAccessProperty(json, 'errors', ['error', 'data']), [],
-);
-
-const joinUrl = (...segments) => (
-  segments
-    .map((str) => {
-      if (str[str.length - 1] === '/') { return str.slice(0, str.length - 1); }
-
-      return str;
-    })
-    .join('/')
 );
 
 const processResponse = async (response) => {
@@ -80,7 +71,7 @@ class FindOneRequest {
     };
   }
 
-  performRequest({ id }) {
+  performRequest(params = {}) {
     const request = this;
 
     return async (dispatch, getState) => {
@@ -93,7 +84,7 @@ class FindOneRequest {
 
       handlePending({ dispatch, getState });
 
-      const fullUrl = joinUrl(url, id);
+      const fullUrl = interpolate(url, /:(\w+)/g, params);
 
       const rawResponse = await fetch(fullUrl, {
         method: 'GET',

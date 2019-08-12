@@ -10,12 +10,18 @@ import {
 
 const generateFormRequest = ({
   data,
+  method,
   middleware,
   namespace,
   url,
 }) => {
   const actions = generateActions({ namespace });
-  const request = new FormRequest({ actions, namespace, url });
+  const request = new FormRequest({
+    actions,
+    method,
+    namespace,
+    url,
+  });
   const initialState = generateInitialState({ data, namespace });
   const reducer = applyMiddleware(
     generateReducer({ actions, initialState }),
@@ -33,6 +39,7 @@ const generateFormRequest = ({
 
   return {
     actions,
+    namespace,
     reducer,
     request,
   };

@@ -17,6 +17,10 @@ describe('<SpellsTableActions />', () => {
         label: 'Show',
         url: `/spells/${props.id}`,
       },
+      {
+        label: 'Update',
+        url: `/spells/${props.id}/update`,
+      },
     ];
     const links = rendered.find('Link');
 

@@ -1,6 +1,7 @@
 import {
   camelize,
   capitalize,
+  interpolate,
   titleize,
   truncate,
   underscore,
@@ -94,6 +95,50 @@ describe('String utils', () => {
     describe('with a mixed-case string', () => {
       it('should return the capitalized string', () => {
         expect(capitalize('mIxEdCaSe')).toEqual('Mixedcase');
+      });
+    });
+  });
+
+  describe('interpolate', () => {
+    it('should be a function', () => {
+      expect(typeof interpolate).toEqual('function');
+    });
+
+    describe('with undefined', () => {
+      it('should return an empty string', () => {
+        expect(interpolate(undefined)).toEqual('');
+      });
+    });
+
+    describe('with null', () => {
+      it('should return an empty string', () => {
+        expect(interpolate(null)).toEqual('');
+      });
+    });
+
+    describe('with an empty string', () => {
+      it('should return an empty string', () => {
+        expect(interpolate('')).toEqual('');
+      });
+    });
+
+    describe('with a string and a non-matching pattern', () => {
+      it('should return the string', () => {
+        const str = '/path/to/resource';
+        const rxp = /:(\w+)/g;
+
+        expect(interpolate(str, rxp, {})).toEqual(str);
+      });
+    });
+
+    describe('with a string and matching pattern', () => {
+      it('should interpolate the values', () => {
+        const str = '/path/to/resource/:id/with?:option';
+        const rxp = /:(\w+)/g;
+        const params = { id: 0, option: 'option=value' };
+        const expected = '/path/to/resource/0/with?option=value';
+
+        expect(interpolate(str, rxp, params)).toEqual(expected);
       });
     });
   });

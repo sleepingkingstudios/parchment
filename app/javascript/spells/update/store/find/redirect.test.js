@@ -1,13 +1,13 @@
-import alerts from './alerts';
-import { addAlert } from '../../../components/alerts/store/actions';
-import { generateFingerprintUuid } from '../../../utils/uuid';
+import { push } from 'connected-react-router';
 
-describe('Spell create form alerts', () => {
-  const { handleFailure } = alerts;
+import redirect from './redirect';
+
+describe('Spell update redirect', () => {
+  const { handleFailure } = redirect;
 
   describe('handleFailure()', () => {
     const getState = jest.fn();
-    const response = { ok: false, json: {} };
+    const response = { ok: false };
 
     it('should be a function', () => {
       expect(typeof handleFailure).toEqual('function');
@@ -28,16 +28,11 @@ describe('Spell create form alerts', () => {
       expect(next).toHaveBeenCalledWith({ dispatch, getState, response });
     });
 
-    it('should dispatch an addAlert action', () => {
+    it('should dispatch a push action', () => {
       const next = jest.fn();
       const dispatch = jest.fn();
-      const alert = {
-        id: generateFingerprintUuid('spells/show'),
-        alertStyle: 'warning',
-        dismissible: true,
-        message: 'Unable to find spell.',
-      };
-      const expected = addAlert(alert);
+      const url = '/spells';
+      const expected = push(url);
 
       handleFailure(next)({ dispatch, getState, response });
 

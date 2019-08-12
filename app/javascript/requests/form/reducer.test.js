@@ -17,6 +17,7 @@ describe('Form request reducer', () => {
     requestFailure,
     requestPending,
     requestSuccess,
+    setData,
     updateFormField,
   } = actions;
   const previousData = {
@@ -125,6 +126,28 @@ describe('Form request reducer', () => {
           errors: {},
           status: SUCCESS,
         });
+
+        expect(reducer(state, action)).toEqual(expected);
+      });
+    });
+  });
+
+  describe('when SET_DATA is dispatched', () => {
+    const data = { name: 'Inigo Montoya' };
+
+    it('should set the data', () => {
+      const state = { ...initialState };
+      const action = setData(data);
+      const expected = Object.assign({}, state, { data });
+
+      expect(reducer(state, action)).toEqual(expected);
+    });
+
+    describe('when the state has data', () => {
+      it('should mark the request as passing and clear the data and errors', () => {
+        const state = { ...initialState, data: previousData };
+        const action = setData(data);
+        const expected = Object.assign({}, state, { data });
 
         expect(reducer(state, action)).toEqual(expected);
       });

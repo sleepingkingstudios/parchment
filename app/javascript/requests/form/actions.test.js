@@ -6,10 +6,12 @@ describe('Form request actions', () => {
     REQUEST_FAILURE,
     REQUEST_PENDING,
     REQUEST_SUCCESS,
+    SET_DATA,
     UPDATE_FORM_FIELD,
     requestFailure,
     requestPending,
     requestSuccess,
+    setData,
     updateFormField,
   } = generateActions({ namespace });
 
@@ -34,6 +36,12 @@ describe('Form request actions', () => {
   describe('REQUEST_SUCCESS', () => {
     it('should define the namespaced action', () => {
       expect(REQUEST_SUCCESS).toEqual(`${namespace}/requestSuccess`);
+    });
+  });
+
+  describe('SET_DATA', () => {
+    it('should define the namespaced action', () => {
+      expect(SET_DATA).toEqual(`${namespace}/setData`);
     });
   });
 
@@ -87,6 +95,25 @@ describe('Form request actions', () => {
 
       expect(action).toEqual({
         type: REQUEST_SUCCESS,
+        payload: { data },
+      });
+    });
+  });
+
+  describe('setData', () => {
+    it('should be a function', () => {
+      expect(typeof setData).toEqual('function');
+    });
+
+    it('should create the action', () => {
+      const data = {
+        id: '00000000-0000-0000-0000-000000000000',
+        name: 'Inigo Montoya',
+      };
+      const action = setData(data);
+
+      expect(action).toEqual({
+        type: SET_DATA,
         payload: { data },
       });
     });

@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ConnectedSpellLoader from '../loader/index';
-import SpellPage from './page';
+import ConnectSpellLoader from '../loader/index';
+import UpdateSpellPage from './page';
+import findSpell from './store/find/index';
 
 const getSpellId = (match) => {
   const { params } = match;
 
   return params.id;
 };
+
+const ConnectedSpellLoader = ConnectSpellLoader(findSpell);
 
 const LoadedSpellPage = (props) => {
   const { match, ...rest } = props;
@@ -18,7 +21,11 @@ const LoadedSpellPage = (props) => {
     <ConnectedSpellLoader
       spellId={id}
       render={({ spell, status }) => (
-        <SpellPage {...rest} spell={spell} status={status} />
+        <UpdateSpellPage
+          {...rest}
+          spell={spell}
+          status={status}
+        />
       )}
     />
   );
