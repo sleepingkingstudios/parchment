@@ -8,7 +8,8 @@ const cancelUrl = ({ form, isUpdate }) => {
   if (!isUpdate) { return '/spells'; }
 
   const { data } = form;
-  const { id } = data;
+  const { spell } = data;
+  const { id } = spell;
 
   return `/spells/${id}`;
 };

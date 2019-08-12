@@ -7,7 +7,7 @@ import { spellsData } from '../../fixtures';
 
 describe('<SpellFormCancelButton />', () => {
   const spell = spellsData[0];
-  const form = { data: spell };
+  const form = { data: { spell } };
   const defaultProps = {
     form,
     isUpdate: false,
