@@ -56,22 +56,28 @@ const recursivelyMapKeys = (obj, fn) => {
   return mapped;
 };
 
-export const camelizeKeys = (obj) => {
-  if (typeof obj === 'undefined' || obj == null) { return {}; }
+export const exists = obj => !(obj === null || typeof obj === 'undefined');
 
-  return recursivelyMapKeys(obj, camelize);
-};
+export const camelizeKeys = obj => (
+  exists(obj) ? recursivelyMapKeys(obj, camelize) : {}
+);
 
-export const underscoreKeys = (obj) => {
-  if (typeof obj === 'undefined' || obj == null) { return {}; }
+export const underscoreKeys = obj => (
+  exists(obj) ? recursivelyMapKeys(obj, underscore) : {}
+);
 
-  return recursivelyMapKeys(obj, underscore);
-};
+export const valueOrDefault = (obj, defaultValue = null) => (
+  exists(obj) ? obj : defaultValue
+);
 
-export const valueOrDefault = (obj, defaultValue = null) => {
-  if (typeof obj === 'undefined' || obj === null) { return defaultValue; }
+export const dig = (obj, ...path) => {
+  if (path.length === 0) { return obj; }
 
-  return obj;
+  const childName = path[0];
+
+  if (!Object.prototype.hasOwnProperty.call(obj, childName)) { return null; }
+
+  return dig(obj[childName], ...path.slice(1));
 };
 
 export const deepAccessProperty = (obj, propName, maybePath) => {
