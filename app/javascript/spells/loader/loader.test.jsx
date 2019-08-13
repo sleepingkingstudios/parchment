@@ -37,6 +37,6 @@ describe('SpellLoader', () => {
 
     shallow(<SpellLoader {...defaultProps} performRequest={performRequest} />);
 
-    expect(performRequest).toHaveBeenCalledWith({ id: spellId });
+    expect(performRequest).toHaveBeenCalledWith({ wildcards: { id: spellId } });
   });
 });

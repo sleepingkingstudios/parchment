@@ -8,6 +8,38 @@ import {
 } from '../../utils/object';
 import { interpolate } from '../../utils/string';
 
+const getData = ({ namespace, state }) => {
+  const segments = namespace.split('/');
+  const raw = deepAccessProperty(state, 'data', segments);
+
+  return underscoreKeys(raw);
+};
+
+const buildRequest = ({ getState, method, namespace }) => {
+  const request = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (method === 'GET' || method === 'DELETE') { return request; }
+
+  const state = getState();
+  const data = getData({ namespace, state });
+
+  return Object.assign(
+    request,
+    { body: JSON.stringify(data) },
+  );
+};
+
+const buildUrl = (url, options) => {
+  const wildcards = valueOrDefault(options.wildcards, {});
+
+  return interpolate(url, /:(\w+)/g, wildcards);
+};
+
 const extractErrors = json => valueOrDefault(
   deepAccessProperty(json, 'errors', ['error', 'data']), [],
 );
@@ -30,7 +62,7 @@ const processResponse = async (response) => {
   };
 };
 
-class FormRequest {
+class ApiRequest {
   constructor(options) {
     const {
       actions,
@@ -39,7 +71,7 @@ class FormRequest {
       url,
     } = options;
 
-    this.method = valueOrDefault(method, 'POST');
+    this.method = method.toUpperCase();
     this.namespace = namespace;
     this.url = url;
 
@@ -89,17 +121,15 @@ class FormRequest {
 
       handlePending({ dispatch, getState });
 
-      const fullUrl = interpolate(url, /:(\w+)/g, params);
-      const state = getState();
-      const data = underscoreKeys(state[namespace].data);
-
-      const rawResponse = await fetch(fullUrl, {
-        method,
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const fullUrl = buildUrl(url, params);
+      const rawResponse = await fetch(
+        fullUrl,
+        buildRequest({
+          getState,
+          method,
+          namespace,
+        }),
+      );
       const response = await processResponse(rawResponse);
 
       if (response.ok) {
@@ -111,4 +141,4 @@ class FormRequest {
   }
 }
 
-export default FormRequest;
+export default ApiRequest;

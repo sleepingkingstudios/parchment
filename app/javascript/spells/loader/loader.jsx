@@ -10,7 +10,7 @@ class SpellLoader extends React.Component {
       spellId,
     } = this.props;
 
-    performRequest({ id: spellId });
+    performRequest({ wildcards: { id: spellId } });
   }
 
   render() {

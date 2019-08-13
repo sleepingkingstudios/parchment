@@ -1,16 +1,16 @@
 import fetch from 'cross-fetch';
 
-import generateActions from './actions';
-import FormRequest from './request';
+import generateActions from '../endpoint/actions';
+import FindOneRequest from './request';
 import {
   underscoreKeys,
 } from '../../utils/object';
 
 jest.mock('cross-fetch');
 
-describe('FormRequest', () => {
+describe('FindOneRequest', () => {
   const requestUrl = '/api/widgets';
-  const namespace = 'createWidget';
+  const namespace = 'findWidget';
   const actions = generateActions({ namespace });
   const {
     requestFailure,
@@ -24,18 +24,12 @@ describe('FormRequest', () => {
   };
 
   describe('with default options', () => {
-    const request = new FormRequest(defaultOptions);
+    const method = 'GET';
+    const request = new FindOneRequest(defaultOptions);
     const {
       performRequest,
-      method,
       url,
     } = request;
-
-    describe('method', () => {
-      it('should be the configured method', () => {
-        expect(method).toEqual('POST');
-      });
-    });
 
     describe('performRequest', () => {
       const buildState = ({ data, errors }) => {
@@ -62,17 +56,18 @@ describe('FormRequest', () => {
       });
 
       it('should return a function', () => {
-        expect(typeof performRequest()).toEqual('function');
+        const { id } = data;
+
+        expect(typeof performRequest({ id })).toEqual('function');
       });
 
-      it('should POST the data to the API endpoint', async () => {
+      it('should GET the data from the API endpoint', async () => {
         const state = buildState({ data });
         const dispatch = jest.fn();
         const getState = jest.fn(() => state);
         const response = { ok: true, json: () => ({ data: {} }) };
-        const body = JSON.stringify(underscoreKeys(data));
         const headers = { 'Content-Type': 'application/json' };
-        const opts = { method, body, headers };
+        const opts = { method, headers };
 
         fetch.mockResolvedValue(response);
 
@@ -136,72 +131,15 @@ describe('FormRequest', () => {
     });
   });
 
-  describe('with method: PATCH', () => {
-    const options = { ...defaultOptions, method: 'PATCH' };
-    const request = new FormRequest(options);
-    const {
-      performRequest,
-      method,
-      url,
-    } = request;
-
-    describe('method', () => {
-      it('should be the configured method', () => {
-        expect(method).toEqual('PATCH');
-      });
-    });
-
-    describe('performRequest', () => {
-      const buildState = ({ data, errors }) => {
-        const obj = {};
-
-        obj[namespace] = { data, errors };
-
-        return obj;
-      };
-      const data = {
-        id: '00000000-0000-0000-0000-000000000000',
-        name: 'Inigo Montoya',
-        firstName: 'Inigo',
-        lastName: 'Montoya',
-      };
-
-      it('should be a function', () => {
-        expect(typeof performRequest).toEqual('function');
-      });
-
-      it('should return a function', () => {
-        expect(typeof performRequest()).toEqual('function');
-      });
-
-      it('should PATCH the data to the API endpoint', async () => {
-        const state = buildState({ data });
-        const dispatch = jest.fn();
-        const getState = jest.fn(() => state);
-        const response = { ok: true, json: () => ({ data: {} }) };
-        const body = JSON.stringify(underscoreKeys(data));
-        const headers = { 'Content-Type': 'application/json' };
-        const opts = { method, body, headers };
-
-        fetch.mockResolvedValue(response);
-
-        await performRequest()(dispatch, getState);
-
-        expect(fetch).toBeCalledWith(url, opts);
-      });
-    });
-  });
-
   describe('with a URL with parameters', () => {
     const options = {
       ...defaultOptions,
       url: `${requestUrl}/:id`,
     };
-    const request = new FormRequest(options);
+    const method = 'GET';
+    const request = new FindOneRequest(options);
     const {
-      method,
       performRequest,
-      url,
     } = request;
 
     describe('performRequest', () => {
@@ -229,29 +167,30 @@ describe('FormRequest', () => {
       });
 
       it('should return a function', () => {
-        expect(typeof performRequest()).toEqual('function');
+        const { id } = data;
+
+        expect(typeof performRequest({ id })).toEqual('function');
       });
 
-      it('should POST the data to the API endpoint', async () => {
-        const id = '00000000-0000-0000-0000-000000000000';
+      it('should GET the data from the API endpoint', async () => {
+        const { id } = data;
         const state = buildState({ data });
         const dispatch = jest.fn();
         const getState = jest.fn(() => state);
         const response = { ok: true, json: () => ({ data: {} }) };
-        const body = JSON.stringify(underscoreKeys(data));
         const headers = { 'Content-Type': 'application/json' };
-        const opts = { method, body, headers };
+        const opts = { method, headers };
 
         fetch.mockResolvedValue(response);
 
-        await performRequest({ id })(dispatch, getState);
+        await performRequest({ wildcards: { id } })(dispatch, getState);
 
         expect(fetch).toBeCalledWith(`${requestUrl}/${id}`, opts);
       });
 
       describe('when the API request fails', () => {
         it('should dispatch REQUEST_PENDING and REQUEST_FAILURE', async () => {
-          const id = '00000000-0000-0000-0000-000000000000';
+          const { id } = data;
           const state = buildState({ data });
           const dispatch = jest.fn();
           const getState = jest.fn(() => state);
@@ -267,7 +206,7 @@ describe('FormRequest', () => {
 
           fetch.mockResolvedValue(response);
 
-          await performRequest({ id })(dispatch, getState);
+          await performRequest({ wildcards: { id } })(dispatch, getState);
 
           expect(dispatchedActions.length).toBe(2);
           expect(dispatchedActions[0][0]).toEqual(requestPending());
@@ -277,7 +216,7 @@ describe('FormRequest', () => {
 
       describe('when the API request succeeds', () => {
         it('should dispatch REQUEST_PENDING and REQUEST_SUCCESS', async () => {
-          const id = '00000000-0000-0000-0000-000000000000';
+          const { id } = data;
           const state = buildState({ data });
           const dispatch = jest.fn();
           const getState = jest.fn(() => state);
@@ -290,18 +229,12 @@ describe('FormRequest', () => {
 
           fetch.mockResolvedValue(response);
 
-          await performRequest({ id })(dispatch, getState);
+          await performRequest({ wildcards: { id } })(dispatch, getState);
 
           expect(dispatchedActions.length).toBe(2);
           expect(dispatchedActions[0][0]).toEqual(requestPending());
           expect(dispatchedActions[1][0]).toEqual(requestSuccess(data));
         });
-      });
-    });
-
-    describe('url', () => {
-      it('should be the configured url', () => {
-        expect(url).toEqual(`${requestUrl}/:id`);
       });
     });
   });
