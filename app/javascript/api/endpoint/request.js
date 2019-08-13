@@ -34,6 +34,12 @@ const buildRequest = ({ getState, method, namespace }) => {
   );
 };
 
+const buildUrl = (url, options) => {
+  const wildcards = valueOrDefault(options.wildcards, {});
+
+  return interpolate(url, /:(\w+)/g, wildcards);
+};
+
 const extractErrors = json => valueOrDefault(
   deepAccessProperty(json, 'errors', ['error', 'data']), [],
 );
@@ -115,7 +121,7 @@ class ApiRequest {
 
       handlePending({ dispatch, getState });
 
-      const fullUrl = interpolate(url, /:(\w+)/g, params);
+      const fullUrl = buildUrl(url, params);
       const rawResponse = await fetch(
         fullUrl,
         buildRequest({

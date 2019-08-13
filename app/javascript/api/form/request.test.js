@@ -244,7 +244,7 @@ describe('FormRequest', () => {
 
         fetch.mockResolvedValue(response);
 
-        await performRequest({ id })(dispatch, getState);
+        await performRequest({ wildcards: { id } })(dispatch, getState);
 
         expect(fetch).toBeCalledWith(`${requestUrl}/${id}`, opts);
       });
@@ -267,7 +267,7 @@ describe('FormRequest', () => {
 
           fetch.mockResolvedValue(response);
 
-          await performRequest({ id })(dispatch, getState);
+          await performRequest({ wildcards: { id } })(dispatch, getState);
 
           expect(dispatchedActions.length).toBe(2);
           expect(dispatchedActions[0][0]).toEqual(requestPending());
@@ -290,7 +290,7 @@ describe('FormRequest', () => {
 
           fetch.mockResolvedValue(response);
 
-          await performRequest({ id })(dispatch, getState);
+          await performRequest({ wildcards: { id } })(dispatch, getState);
 
           expect(dispatchedActions.length).toBe(2);
           expect(dispatchedActions[0][0]).toEqual(requestPending());

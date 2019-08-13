@@ -352,6 +352,8 @@ describe('ApiRequest', () => {
     } = request;
 
     describe('performRequest', () => {
+      const wildcards = { color: 'red', id: '0' };
+
       it('should be a function', () => {
         expect(typeof performRequest).toEqual('function');
       });
@@ -373,7 +375,7 @@ describe('ApiRequest', () => {
 
         fetch.mockResolvedValue(response);
 
-        await performRequest({ color: 'red', id: '0' })(dispatch, getState);
+        await performRequest({ wildcards })(dispatch, getState);
 
         expect(fetch).toBeCalledWith(expected, opts);
       });
@@ -395,7 +397,7 @@ describe('ApiRequest', () => {
 
           fetch.mockResolvedValue(response);
 
-          await performRequest({ color: 'red', id: '0' })(dispatch, getState);
+          await performRequest({ wildcards })(dispatch, getState);
 
           expect(dispatchedActions.length).toBe(2);
           expect(dispatchedActions[0][0]).toEqual(requestPending());
@@ -417,7 +419,7 @@ describe('ApiRequest', () => {
 
           fetch.mockResolvedValue(response);
 
-          await performRequest({ color: 'red', id: '0' })(dispatch, getState);
+          await performRequest({ wildcards })(dispatch, getState);
 
           expect(dispatchedActions.length).toBe(2);
           expect(dispatchedActions[0][0]).toEqual(requestPending());
@@ -749,6 +751,8 @@ describe('ApiRequest', () => {
     } = request;
 
     describe('performRequest', () => {
+      const wildcards = { color: 'red', id: '0' };
+
       it('should be a function', () => {
         expect(typeof performRequest).toEqual('function');
       });
@@ -769,7 +773,7 @@ describe('ApiRequest', () => {
 
         fetch.mockResolvedValue(response);
 
-        await performRequest({ color: 'red', id: '0' })(dispatch, getState);
+        await performRequest({ wildcards })(dispatch, getState);
 
         expect(fetch).toBeCalledWith(expected, opts);
       });
@@ -791,7 +795,7 @@ describe('ApiRequest', () => {
 
           fetch.mockResolvedValue(response);
 
-          await performRequest({ color: 'red', id: '0' })(dispatch, getState);
+          await performRequest({ wildcards })(dispatch, getState);
 
           expect(dispatchedActions.length).toBe(2);
           expect(dispatchedActions[0][0]).toEqual(requestPending());
@@ -813,7 +817,7 @@ describe('ApiRequest', () => {
 
           fetch.mockResolvedValue(response);
 
-          await performRequest({ color: 'red', id: '0' })(dispatch, getState);
+          await performRequest({ wildcards })(dispatch, getState);
 
           expect(dispatchedActions.length).toBe(2);
           expect(dispatchedActions[0][0]).toEqual(requestPending());
