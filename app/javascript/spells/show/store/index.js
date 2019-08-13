@@ -1,10 +1,10 @@
+import FindOneEndpoint from '../../../api/findOne';
 import alerts from './alerts';
 import redirect from './redirect';
-import findOne from '../../../api/findOne';
 import { buildSpell } from '../../entities';
 
 const REQUEST_URL = '/api/spells/:id';
-const findSpell = findOne({
+const findSpell = new FindOneEndpoint({
   data: { spell: buildSpell() },
   middleware: [
     redirect,

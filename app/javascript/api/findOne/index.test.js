@@ -1,169 +1,74 @@
+import FindOneEndpoint from './index';
+import FindOneRequest from './request';
+import generateActions from '../endpoint/actions';
 import generateInitialState from '../endpoint/initialState';
-import generateFindOneRequest from './index';
 
-describe('Find one request', () => {
-  const requestUrl = '/api/widgets';
-  const defaultOptions = { namespace: 'findWidget', url: requestUrl };
+const isConstant = key => (key === key.toUpperCase());
 
-  describe('generateFindOneRequest', () => {
-    it('should be a function', () => {
-      expect(typeof generateFindOneRequest).toEqual('function');
-    });
-  });
+describe('FindOneEndpoint', () => {
+  const defaultOptions = {
+    namespace: 'api/endpoint',
+    url: '/path/to/endpoint',
+  };
 
   describe('with default options', () => {
-    const initialState = generateInitialState({ data: {} });
+    const options = { ...defaultOptions };
+    const endpoint = new FindOneEndpoint(options);
     const {
+      actions,
       namespace,
       reducer,
       request,
-    } = generateFindOneRequest(defaultOptions);
+    } = endpoint;
+
+    describe('actions', () => {
+      const expected = generateActions({ namespace });
+
+      it('should generate the actions', () => {
+        const properties = Object.entries(actions);
+
+        expect(properties).toHaveLength(6);
+
+        properties.forEach(([key, value]) => {
+          if (isConstant(key)) {
+            expect(value).toEqual(expected[key]);
+          } else {
+            expect(typeof value).toEqual('function');
+          }
+        });
+      });
+    });
 
     describe('namespace', () => {
-      it('should return the namespace', () => {
-        expect(namespace).toEqual('findWidget');
+      it('should set the namespace', () => {
+        expect(namespace).toEqual(options.namespace);
       });
     });
 
     describe('reducer', () => {
-      it('should be a function', () => {
+      it('should generate the reducer', () => {
         expect(typeof reducer).toEqual('function');
       });
 
-      describe('initial state', () => {
-        it('should set the initial state', () => {
-          const action = { type: 'test/unknownAction' };
+      it('should set the initial state', () => {
+        const state = reducer(undefined, { type: 'test/action' });
+        const expected = generateInitialState({});
 
-          expect(reducer(undefined, action)).toEqual(initialState);
-        });
+        expect(state).toEqual(expected);
       });
     });
 
     describe('request', () => {
-      const {
-        performRequest,
-        url,
-      } = request;
-
-      describe('performRequest', () => {
-        it('should be a function', () => {
-          expect(typeof performRequest).toEqual('function');
-        });
+      it('should instantiate the request', () => {
+        expect(request).toBeInstanceOf(FindOneRequest);
       });
 
-      describe('url', () => {
-        it('should be the configured url', () => {
-          expect(url).toEqual(requestUrl);
-        });
-      });
-    });
-  });
-
-  describe('with data: value', () => {
-    const data = {
-      id: '00000000-0000-0000-0000-000000000000',
-      name: 'Westley',
-    };
-    const initialState = generateInitialState({ data });
-    const options = { ...defaultOptions, data };
-    const {
-      reducer,
-    } = generateFindOneRequest(options);
-
-    describe('reducer', () => {
-      describe('initial state', () => {
-        it('should set the initial state', () => {
-          const action = { type: 'test/unknownAction' };
-
-          expect(reducer(undefined, action)).toEqual(initialState);
-        });
-      });
-    });
-  });
-
-  describe('with middleware: array', () => {
-    const calledMiddleware = [];
-    const generateMiddleware = label => ({
-      handleAction: next => (state, action) => {
-        calledMiddleware.push(`action ${label}`);
-
-        next(state, action);
-      },
-      handleFailure: next => ({ dispatch, getState, response }) => {
-        calledMiddleware.push(`failure ${label}`);
-
-        next({ dispatch, getState, response });
-      },
-      handleSuccess: next => ({ dispatch, getState, response }) => {
-        calledMiddleware.push(`success ${label}`);
-
-        next({ dispatch, getState, response });
-      },
-    });
-    const middleware = [
-      generateMiddleware('A'),
-      generateMiddleware('B'),
-      generateMiddleware('C'),
-    ];
-    const options = { ...defaultOptions, middleware };
-    const {
-      reducer,
-      request,
-    } = generateFindOneRequest(options);
-
-    afterEach(() => calledMiddleware.splice(0, calledMiddleware.length));
-
-    describe('reducer', () => {
-      const state = { key: 'value' };
-      const action = { type: 'test/exampleAction' };
-
-      it('should be a function', () => {
-        expect(typeof reducer).toEqual('function');
+      it('should set the request method', () => {
+        expect(request.method).toEqual('GET');
       });
 
-      it('should call the middleware', () => {
-        reducer(state, action);
-
-        expect(calledMiddleware).toEqual(['action A', 'action B', 'action C']);
-      });
-    });
-
-    describe('request', () => {
-      const {
-        handleFailure,
-        handleSuccess,
-      } = request;
-
-      describe('handleFailure()', () => {
-        const dispatch = jest.fn();
-        const getState = jest.fn();
-        const response = { ok: false, json: {} };
-
-        it('should be a function', () => {
-          expect(typeof handleFailure).toEqual('function');
-        });
-
-        it('should call the middleware', () => {
-          handleFailure({ dispatch, getState, response });
-
-          expect(calledMiddleware).toEqual(['failure A', 'failure B', 'failure C']);
-        });
-      });
-
-      describe('handleSuccess()', () => {
-        const dispatch = jest.fn();
-        const getState = jest.fn();
-        const response = { ok: false, json: {} };
-
-        it('should be a function', () => {
-          expect(typeof handleSuccess).toEqual('function');
-        });
-
-        it('should call the middleware', () => {
-          handleSuccess({ dispatch, getState, response });
-
-          expect(calledMiddleware).toEqual(['success A', 'success B', 'success C']);
-        });
+      it('should set the request url', () => {
+        expect(request.url).toEqual(options.url);
       });
     });
   });

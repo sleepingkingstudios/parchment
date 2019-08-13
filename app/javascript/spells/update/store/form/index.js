@@ -1,4 +1,4 @@
-import submitForm from '../../../../api/form';
+import FormEndpoint from '../../../../api/form';
 import { buildSpell } from '../../../entities';
 import alerts from './alerts';
 import redirect from './redirect';
@@ -10,7 +10,7 @@ export const {
   actions,
   reducer,
   request,
-} = submitForm({
+} = new FormEndpoint({
   data: { spell: buildSpell() },
   method: 'PATCH',
   middleware: [

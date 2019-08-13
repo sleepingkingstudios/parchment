@@ -1,48 +1,24 @@
+import ApiEndpoint from '../endpoint/index';
+import FormRequest from './request';
 import generateActions from './actions';
 import generateInitialState from '../endpoint/initialState';
 import generateReducer from './reducer';
-import FormRequest from './request';
 
-import {
-  applyMiddleware,
-  selectMiddleware,
-} from '../middleware/utils';
+class FormEndpoint extends ApiEndpoint {
+  constructor(options) {
+    super(
+      Object.assign(
+        {
+          generateActions,
+          generateInitialState,
+          generateReducer,
+          generateRequest: opts => new FormRequest(opts),
+          method: 'POST',
+        },
+        options,
+      ),
+    );
+  }
+}
 
-const generateFormRequest = ({
-  data,
-  method,
-  middleware,
-  namespace,
-  url,
-}) => {
-  const actions = generateActions({ namespace });
-  const request = new FormRequest({
-    actions,
-    method,
-    namespace,
-    url,
-  });
-  const initialState = generateInitialState({ data, namespace });
-  const reducer = applyMiddleware(
-    generateReducer({ actions, initialState }),
-    selectMiddleware(middleware, 'handleAction'),
-  );
-
-  request.handleFailure = applyMiddleware(
-    request.handleFailure,
-    selectMiddleware(middleware, 'handleFailure'),
-  );
-  request.handleSuccess = applyMiddleware(
-    request.handleSuccess,
-    selectMiddleware(middleware, 'handleSuccess'),
-  );
-
-  return {
-    actions,
-    namespace,
-    reducer,
-    request,
-  };
-};
-
-export default generateFormRequest;
+export default FormEndpoint;
