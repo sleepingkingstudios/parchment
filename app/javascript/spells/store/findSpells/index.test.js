@@ -1,6 +1,6 @@
 import { request } from './index';
 
-describe('Find Spell store', () => {
+describe('Find Spells store', () => {
   describe('request', () => {
     const {
       method,
@@ -14,8 +14,8 @@ describe('Find Spell store', () => {
     });
 
     describe('url', () => {
-      it('should be the spell show URL', () => {
-        expect(url).toEqual('/api/spells/:id');
+      it('should be the spell index URL', () => {
+        expect(url).toEqual('/api/spells');
       });
     });
   });

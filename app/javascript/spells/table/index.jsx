@@ -24,15 +24,15 @@ const message = (status) => {
   }
 };
 
-const SpellsTable = ({ spells, spellsRequestStatus }) => (
-  <Table columns={columns} data={spells} message={message(spellsRequestStatus)} />
+const SpellsTable = ({ spells, status }) => (
+  <Table columns={columns} data={spells} message={message(status)} />
 );
 
 SpellsTable.defaultProps = {};
 
 SpellsTable.propTypes = {
   spells: spellListType.isRequired,
-  spellsRequestStatus: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 export default SpellsTable;

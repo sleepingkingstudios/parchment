@@ -34,13 +34,13 @@ class SpellsPage extends React.Component {
   }
 
   render() {
-    const { spells, spellsRequestStatus } = this.props;
+    const { spells, status } = this.props;
 
     return (
       <Page breadcrumbs={breadcrumbs} className="page-spells">
         <HeadingWithButtons buttons={buttons}>Spells</HeadingWithButtons>
 
-        <SpellsTable {...{ spells, spellsRequestStatus }} />
+        <SpellsTable {...{ spells, status }} />
       </Page>
     );
   }
@@ -51,7 +51,7 @@ SpellsPage.defaultProps = {};
 SpellsPage.propTypes = {
   requestSpells: PropTypes.func.isRequired,
   spells: spellListType.isRequired,
-  spellsRequestStatus: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 export default SpellsPage;

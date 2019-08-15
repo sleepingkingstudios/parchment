@@ -19,7 +19,7 @@ describe('<SpellsPage />', () => {
   ];
   const defaultProps = {
     spells: spellsData,
-    spellsRequestStatus: SUCCESS,
+    status: SUCCESS,
     requestSpells: jest.fn(),
   };
 
@@ -39,7 +39,7 @@ describe('<SpellsPage />', () => {
 
     expect(table).toExist();
     expect(table).toHaveProp('spells', spellsData);
-    expect(table).toHaveProp('spellsRequestStatus', SUCCESS);
+    expect(table).toHaveProp('status', SUCCESS);
   });
 
   it('should call requestSpells()', () => {

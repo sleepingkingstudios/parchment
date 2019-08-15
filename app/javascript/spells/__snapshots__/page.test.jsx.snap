@@ -108,7 +108,7 @@ By casting the spell again on the same patch of earth, you can gain some rough d
         },
       ]
     }
-    spellsRequestStatus="success"
+    status="success"
   />
 </Page>
 `;

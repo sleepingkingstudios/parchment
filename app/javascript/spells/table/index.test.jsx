@@ -12,7 +12,7 @@ import {
 import { spellsData } from '../fixtures';
 
 describe('<SpellsTable />', () => {
-  const props = { spells: [], spellsRequestStatus: INITIALIZED };
+  const props = { spells: [], status: INITIALIZED };
   const rendered = shallow(<SpellsTable {...props} />);
   const loadingMessage = 'Loading spells data from the server...';
 
@@ -31,7 +31,7 @@ describe('<SpellsTable />', () => {
   });
 
   describe('when the request status is PENDING', () => {
-    const pendingProps = Object.assign({}, props, { spellsRequestStatus: PENDING });
+    const pendingProps = Object.assign({}, props, { status: PENDING });
     const renderedPending = shallow(<SpellsTable {...pendingProps} />);
 
     it('should set the empty message', () => {
@@ -43,7 +43,7 @@ describe('<SpellsTable />', () => {
   });
 
   describe('when the request status is FAILURE', () => {
-    const failureProps = Object.assign({}, props, { spellsRequestStatus: FAILURE });
+    const failureProps = Object.assign({}, props, { status: FAILURE });
     const renderedFailure = shallow(<SpellsTable {...failureProps} />);
     const failureMessage = 'Unable to load spells data from the server.';
 
@@ -61,7 +61,7 @@ describe('<SpellsTable />', () => {
       props,
       {
         spells: spellsData,
-        spellsRequestStatus: SUCCESS,
+        status: SUCCESS,
       },
     );
     const renderedSuccess = shallow(<SpellsTable {...successProps} />);
