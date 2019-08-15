@@ -4,7 +4,7 @@ const REQUEST_URL = '/api/spells';
 const findSpells = new FindManyEndpoint({
   data: { spells: [] },
   middleware: [],
-  namespace: 'findSpells',
+  namespace: 'spells/findSpells',
   url: REQUEST_URL,
 });
 

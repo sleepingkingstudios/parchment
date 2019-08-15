@@ -6,7 +6,7 @@ import { request } from './store/findSpells/index';
 const { performRequest } = request;
 
 const mapStateToProps = (state) => {
-  const { findSpells } = state;
+  const { findSpells } = state.spells;
   const { data, status } = findSpells;
   const { spells } = data;
 
