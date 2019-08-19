@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { formErrorsType } from '../form/entities';
 
 class ApiLoader extends Component {
