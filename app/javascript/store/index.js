@@ -8,7 +8,7 @@ import { reducer as createSpell } from '../spells/create/store/index';
 import { reducer as findSpell } from '../spells/show/store/index';
 import { reducer as updateSpellFind } from '../spells/update/store/find/index';
 import { reducer as updateSpellForm } from '../spells/update/store/form/index';
-import spells from '../spells/store/index';
+import { reducer as spells } from '../spells';
 
 export const history = createBrowserHistory();
 

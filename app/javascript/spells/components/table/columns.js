@@ -3,7 +3,7 @@ import SpellsTableActions from './actions';
 import {
   capitalize,
   truncate,
-} from '../../utils/string';
+} from '../../../utils/string';
 
 const spellDescription = (spell) => {
   if (spell.shortDescription) {
