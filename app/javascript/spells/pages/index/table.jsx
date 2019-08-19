@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { LoaderSwitch } from '../../../components/loader';
-import SpellsTable from '../../components/table/index';
+import { SpellsTable } from '../../components/table';
 import { spellListType } from '../../entities';
 
 const renderFailure = () => (

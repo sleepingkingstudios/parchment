@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import SpellsTable from './index';
+import SpellsTable from './table';
 import columns from './columns';
 import { spellsData } from '../../fixtures';
 
