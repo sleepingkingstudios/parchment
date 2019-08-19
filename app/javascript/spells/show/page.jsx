@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import HeadingWithButtons from '../../components/heading-with-buttons';
 import Page from '../../components/page';
-import SpellBlock from './block';
+import { SpellBlock } from '../components/block';
 import { spellType } from '../entities';
 import {
   INITIALIZED,
