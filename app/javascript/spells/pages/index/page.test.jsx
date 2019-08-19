@@ -2,8 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import SpellsPage from './page';
-import { spellsData } from './fixtures';
-import { SUCCESS } from '../store/requestStatus';
 
 describe('<SpellsPage />', () => {
   const breadcrumbs = [
@@ -17,11 +15,7 @@ describe('<SpellsPage />', () => {
       active: true,
     },
   ];
-  const defaultProps = {
-    spells: spellsData,
-    spellsRequestStatus: SUCCESS,
-    requestSpells: jest.fn(),
-  };
+  const defaultProps = {};
 
   it('should wrap the contents in a Page', () => {
     const rendered = shallow(<SpellsPage {...defaultProps} />);
@@ -32,24 +26,12 @@ describe('<SpellsPage />', () => {
     expect(rendered).toHaveProp('breadcrumbs', breadcrumbs);
   });
 
-  it('should render the spells table', () => {
+  it('should render the spells table loader', () => {
     const rendered = shallow(<SpellsPage {...defaultProps} />);
 
-    const table = rendered.find('SpellsTable');
+    const table = rendered.find('IndexSpellsTableLoader');
 
     expect(table).toExist();
-    expect(table).toHaveProp('spells', spellsData);
-    expect(table).toHaveProp('spellsRequestStatus', SUCCESS);
-  });
-
-  it('should call requestSpells()', () => {
-    const requestSpells = jest.fn();
-
-    shallow(
-      <SpellsPage {...defaultProps} requestSpells={requestSpells} />,
-    );
-
-    expect(requestSpells).toHaveBeenCalledTimes(1);
   });
 
   it('should match the snapshot', () => {

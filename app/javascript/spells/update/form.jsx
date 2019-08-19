@@ -12,7 +12,7 @@ const onSubmitAction = () => (dispatch, getState) => {
   const { spell } = data;
   const { id } = spell;
 
-  return performRequest({ id })(dispatch, getState);
+  return performRequest({ wildcards: { id } })(dispatch, getState);
 };
 
 const mapStateToProps = (state) => {

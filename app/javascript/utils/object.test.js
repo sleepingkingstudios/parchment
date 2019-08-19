@@ -2,6 +2,8 @@ import {
   camelizeKeys,
   deepAccessProperty,
   deepAssignProperty,
+  dig,
+  exists,
   underscoreKeys,
   valueOrDefault,
 } from './object';
@@ -98,6 +100,84 @@ describe('Object utils', () => {
 
       it('should convert the keys to camel case', () => {
         expect(camelizeKeys(obj)).toEqual(expected);
+      });
+    });
+  });
+
+  describe('exists', () => {
+    it('should be a function', () => {
+      expect(typeof exists).toEqual('function');
+    });
+
+    describe('with undefined', () => {
+      it('should return false', () => {
+        expect(exists(undefined)).toEqual(false);
+      });
+    });
+
+    describe('with null', () => {
+      it('should return false', () => {
+        expect(exists(null)).toEqual(false);
+      });
+    });
+
+    describe('with false', () => {
+      it('should return true', () => {
+        expect(exists(false)).toEqual(true);
+      });
+    });
+
+    describe('with true', () => {
+      it('should return true', () => {
+        expect(exists(true)).toEqual(true);
+      });
+    });
+
+    describe('with a number', () => {
+      it('should return true', () => {
+        expect(exists(0)).toEqual(true);
+      });
+    });
+
+    describe('with an empty string', () => {
+      it('should return true', () => {
+        expect(exists('')).toEqual(true);
+      });
+    });
+
+    describe('with a non-empty string', () => {
+      it('should return true', () => {
+        expect(exists('Greetings, programs!')).toEqual(true);
+      });
+    });
+
+    describe('with an empty array', () => {
+      it('should return true', () => {
+        expect(exists([])).toEqual(true);
+      });
+    });
+
+    describe('with a non-empty array', () => {
+      it('should return true', () => {
+        expect(exists([1, 2, 3])).toEqual(true);
+      });
+    });
+
+    describe('with an empty object', () => {
+      it('should return true', () => {
+        expect(exists({})).toEqual(true);
+      });
+    });
+
+    describe('with a non-empty object', () => {
+      it('should return true', () => {
+        expect(exists({ a: 1, b: 2, c: 3 })).toEqual(true);
+      });
+    });
+
+    describe('with a function', () => {
+      it('should return true', () => {
+        expect(exists(() => {})).toEqual(true);
       });
     });
   });
@@ -551,6 +631,256 @@ describe('Object utils', () => {
               },
             ],
           });
+        });
+      });
+    });
+  });
+
+  describe('dig', () => {
+    it('should be a function', () => {
+      expect(typeof dig).toEqual('function');
+    });
+
+    describe('with an empty array', () => {
+      const obj = [];
+
+      describe('with an empty path', () => {
+        it('should return the array', () => {
+          expect(dig(obj)).toEqual(obj);
+        });
+      });
+
+      describe('with path: one non-matching item', () => {
+        it('should return null', () => {
+          expect(dig(obj, 3)).toEqual(null);
+        });
+      });
+
+      describe('with path: many non-matching items', () => {
+        it('should return null', () => {
+          expect(dig(obj, 3, 'formerEmployees', 3)).toEqual(null);
+        });
+      });
+    });
+
+    describe('with an array with flat data', () => {
+      const obj = ['Kevin Flynn', 'Ed Dillinger', 'Lora'];
+
+      describe('with an empty path', () => {
+        it('should return the array', () => {
+          expect(dig(obj)).toEqual(obj);
+        });
+      });
+
+      describe('with path: one non-matching item', () => {
+        it('should return null', () => {
+          expect(dig(obj, 3)).toEqual(null);
+        });
+      });
+
+      describe('with path: one matching item', () => {
+        it('should return the value', () => {
+          expect(dig(obj, 1)).toEqual('Ed Dillinger');
+        });
+      });
+
+      describe('with path: many non-matching items', () => {
+        it('should return null', () => {
+          expect(dig(obj, 3, 'formerEmployees', 3)).toEqual(null);
+        });
+      });
+
+      describe('with path: mixed matching and non-matching items', () => {
+        it('should return null', () => {
+          expect(dig(obj, 1, 'formerEmployees', 3)).toEqual(null);
+        });
+      });
+    });
+
+    describe('with an array with nested data', () => {
+      const obj = [
+        {
+          employees: [],
+          name: 'marketing',
+        },
+        {
+          employees: [
+            { name: 'Kevin Flynn', title: 'Programmer' },
+            { name: 'Ed Dillinger', title: 'Technical Lead' },
+            { name: 'Lora', title: 'Technical Lead' },
+          ],
+          name: 'engineering',
+        },
+        {
+          employees: [],
+          name: 'sales',
+        },
+      ];
+
+      describe('with an empty path', () => {
+        it('should return the array', () => {
+          expect(dig(obj)).toEqual(obj);
+        });
+      });
+
+      describe('with path: one non-matching item', () => {
+        it('should return null', () => {
+          expect(dig(obj, 3)).toEqual(null);
+        });
+      });
+
+      describe('with path: one matching item', () => {
+        const expected = {
+          employees: [
+            { name: 'Kevin Flynn', title: 'Programmer' },
+            { name: 'Ed Dillinger', title: 'Technical Lead' },
+            { name: 'Lora', title: 'Technical Lead' },
+          ],
+          name: 'engineering',
+        };
+
+        it('should return the value', () => {
+          expect(dig(obj, 1)).toEqual(expected);
+        });
+      });
+
+      describe('with path: many non-matching items', () => {
+        it('should return null', () => {
+          expect(dig(obj, 3, 'formerEmployees', 3)).toEqual(null);
+        });
+      });
+
+      describe('with path: mixed matching and non-matching items', () => {
+        it('should return null', () => {
+          expect(dig(obj, 1, 'formerEmployees', 3)).toEqual(null);
+        });
+      });
+
+      describe('with path: many matching items', () => {
+        const expected = { name: 'Ed Dillinger', title: 'Technical Lead' };
+
+        it('should return the value', () => {
+          expect(dig(obj, 1, 'employees', 1)).toEqual(expected);
+        });
+      });
+    });
+
+    describe('with an empty object', () => {
+      const obj = {};
+
+      describe('with an empty path', () => {
+        it('should return the array', () => {
+          expect(dig(obj)).toEqual(obj);
+        });
+      });
+
+      describe('with path: one non-matching item', () => {
+        it('should return null', () => {
+          expect(dig(obj, 'salary')).toEqual(null);
+        });
+      });
+
+      describe('with path: many non-matching items', () => {
+        it('should return null', () => {
+          expect(dig(obj, 'formerEmployees', 3, 'salary')).toEqual(null);
+        });
+      });
+    });
+
+    describe('with an object with flat data', () => {
+      const obj = { name: 'Ed Dillinger', title: 'Technical Lead' };
+
+      describe('with an empty path', () => {
+        it('should return the array', () => {
+          expect(dig(obj)).toEqual(obj);
+        });
+      });
+
+      describe('with path: one non-matching item', () => {
+        it('should return null', () => {
+          expect(dig(obj, 'salary')).toEqual(null);
+        });
+      });
+
+      describe('with path: one matching item', () => {
+        it('should return the value', () => {
+          expect(dig(obj, 'name')).toEqual('Ed Dillinger');
+        });
+      });
+
+      describe('with path: many non-matching items', () => {
+        it('should return null', () => {
+          expect(dig(obj, 'formerEmployees', 3, 'salary')).toEqual(null);
+        });
+      });
+
+      describe('with path: mixed matching and non-matching items', () => {
+        it('should return null', () => {
+          expect(dig(obj, 'name', 3, 'salary')).toEqual(null);
+        });
+      });
+    });
+
+    describe('with an object with nested data', () => {
+      const obj = {
+        company: 'Encom',
+        teams: [
+          {
+            employees: [],
+            name: 'marketing',
+          },
+          {
+            employees: [
+              { name: 'Kevin Flynn', title: 'Programmer' },
+              { name: 'Ed Dillinger', title: 'Technical Lead' },
+              { name: 'Lora', title: 'Technical Lead' },
+            ],
+            name: 'engineering',
+          },
+          {
+            employees: [],
+            name: 'sales',
+          },
+        ],
+      };
+
+      describe('with an empty path', () => {
+        it('should return the array', () => {
+          expect(dig(obj)).toEqual(obj);
+        });
+      });
+
+      describe('with path: one non-matching item', () => {
+        it('should return null', () => {
+          expect(dig(obj, 'salary')).toEqual(null);
+        });
+      });
+
+      describe('with path: one matching item', () => {
+        const expected = obj.teams;
+
+        it('should return the value', () => {
+          expect(dig(obj, 'teams')).toEqual(expected);
+        });
+      });
+
+      describe('with path: many non-matching items', () => {
+        it('should return null', () => {
+          expect(dig(obj, 'formerEmployees', 3, 'salary')).toEqual(null);
+        });
+      });
+
+      describe('with path: mixed matching and non-matching items', () => {
+        it('should return null', () => {
+          expect(dig(obj, 'teams', 3, 'formerEmployees')).toEqual(null);
+        });
+      });
+
+      describe('with path: many matching items', () => {
+        const expected = { name: 'Ed Dillinger', title: 'Technical Lead' };
+
+        it('should return the value', () => {
+          expect(dig(obj, 'teams', 1, 'employees', 1)).toEqual(expected);
         });
       });
     });

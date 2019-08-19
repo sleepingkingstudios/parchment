@@ -23,6 +23,19 @@
 - namespace all Spell reducers in the 'spells' namespace
   - support nested namespaces in requests (rename to API objects?)
   - extract FindAll request
+- source layout: |
+
+    /javascript
+      /spells
+        /components
+          /block
+          /form
+        /pages
+          /create
+          /index
+          /show
+          /update
+        /store
 
 ### Serializer
 

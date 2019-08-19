@@ -1,10 +1,3 @@
-import { connect } from 'react-redux';
+export { default as Routes } from './routes';
 
-import SpellsPage from './page';
-import { requestSpells } from './store/apiActions';
-
-const mapStateToProps = state => state.spells;
-
-const mapDispatchToProps = { requestSpells };
-
-export default connect(mapStateToProps, mapDispatchToProps)(SpellsPage);
+export { default as reducer } from './store';
