@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import ShowSpellBlock from './block';
-import { SpellBlock } from '../../components/block';
 import { spellsData } from '../../fixtures';
 import {
   INITIALIZED,
@@ -10,17 +9,24 @@ import {
   FAILURE,
   SUCCESS,
 } from '../../../store/requestStatus';
+import { useSpell } from '../../show/store';
+
+jest.mock('../../show/store');
 
 describe('ShowSpellBlock', () => {
-  const defaultProps = { spell: {}, status: INITIALIZED };
+  const defaultProps = {};
 
   describe('with status: INITIALIZED', () => {
-    const props = { ...defaultProps, status: INITIALIZED };
+    const state = { status: INITIALIZED };
+
+    beforeEach(() => {
+      useSpell.mockImplementationOnce(() => state);
+    });
 
     it('should display the pending message', () => {
-      const wrapper = shallow(<ShowSpellBlock {...props} />);
+      const wrapper = shallow(<ShowSpellBlock {...defaultProps} />);
       const rendered = wrapper.find('LoaderSwitch').renderProp('renderInitialized')();
-      const { status } = props;
+      const { status } = state;
 
       expect(wrapper).toHaveDisplayName('LoaderSwitch');
       expect(wrapper).toHaveProp({ status });
@@ -31,12 +37,16 @@ describe('ShowSpellBlock', () => {
   });
 
   describe('with status: FAILURE', () => {
-    const props = { ...defaultProps, status: FAILURE };
+    const state = { status: FAILURE };
+
+    beforeEach(() => {
+      useSpell.mockImplementationOnce(() => state);
+    });
 
     it('should display the failure message', () => {
-      const wrapper = shallow(<ShowSpellBlock {...props} />);
+      const wrapper = shallow(<ShowSpellBlock {...defaultProps} />);
       const rendered = wrapper.find('LoaderSwitch').renderProp('renderFailure')();
-      const { status } = props;
+      const { status } = state;
 
       expect(wrapper).toHaveDisplayName('LoaderSwitch');
       expect(wrapper).toHaveProp({ status });
@@ -47,12 +57,16 @@ describe('ShowSpellBlock', () => {
   });
 
   describe('with status: PENDING', () => {
-    const props = { ...defaultProps, status: PENDING };
+    const state = { status: PENDING };
+
+    beforeEach(() => {
+      useSpell.mockImplementationOnce(() => state);
+    });
 
     it('should display the pending message', () => {
-      const wrapper = shallow(<ShowSpellBlock {...props} />);
+      const wrapper = shallow(<ShowSpellBlock {...defaultProps} />);
       const rendered = wrapper.find('LoaderSwitch').renderProp('renderPending')();
-      const { status } = props;
+      const { status } = state;
 
       expect(wrapper).toHaveDisplayName('LoaderSwitch');
       expect(wrapper).toHaveProp({ status });
@@ -63,19 +77,24 @@ describe('ShowSpellBlock', () => {
   });
 
   describe('with status: SUCCESS', () => {
-    const props = { ...defaultProps, spell: spellsData[0], status: SUCCESS };
+    const state = { spell: spellsData[0], status: SUCCESS };
+
+    beforeEach(() => {
+      useSpell.mockImplementationOnce(() => state);
+    });
 
     it('should render the Spell block', () => {
-      const { spell, status } = props;
-      const wrapper = shallow(<ShowSpellBlock {...props} />);
+      const { spell, status } = state;
+      const wrapper = shallow(<ShowSpellBlock {...defaultProps} />);
       const rendered = wrapper
         .find('LoaderSwitch')
         .renderProp('renderSuccess')({ spell });
 
       expect(wrapper).toHaveDisplayName('LoaderSwitch');
-      expect(wrapper).toHaveProp({ spell, status });
+      expect(wrapper).toHaveProp({ status });
 
-      expect(rendered).toMatchElement(<SpellBlock spell={spell} />);
+      expect(rendered).toHaveDisplayName('SpellBlock');
+      expect(rendered).toHaveProp({ spell });
     });
   });
 });

@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { LoaderSwitch } from '../../../components/loader';
 import { SpellBlock } from '../../components/block';
-import { spellType } from '../../entities';
+import { useSpell } from '../../show/store';
 
 const renderFailure = () => (
   <p>Unable to load spell from the server.</p>
@@ -12,24 +11,22 @@ const renderPending = () => (
   <p>Loading spell from the server...</p>
 );
 
-const ShowSpellBlock = props => (
-  <LoaderSwitch
-    {...props}
-    renderFailure={renderFailure}
-    renderInitialized={renderPending}
-    renderPending={renderPending}
-    renderSuccess={SpellBlock}
-  />
-);
+const ShowSpellBlock = () => {
+  const { spell, status } = useSpell();
+
+  return (
+    <LoaderSwitch
+      renderFailure={renderFailure}
+      renderInitialized={renderPending}
+      renderPending={renderPending}
+      renderSuccess={() => (<SpellBlock spell={spell} />)}
+      status={status}
+    />
+  );
+};
 
 ShowSpellBlock.defaultProps = {};
 
-ShowSpellBlock.propTypes = {
-  spell: PropTypes.oneOfType([
-    spellType,
-    PropTypes.object,
-  ]).isRequired,
-  status: PropTypes.string.isRequired,
-};
+ShowSpellBlock.propTypes = {};
 
 export default ShowSpellBlock;
