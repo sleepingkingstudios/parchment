@@ -3,9 +3,9 @@ import { shallow } from 'enzyme';
 
 import ShowSpellBreadcrumbs from './breadcrumbs';
 import ShowSpellPage from './page';
-import { findSpell } from '../../show/store';
+import { findSpell } from '../../store/showFindSpell';
 
-jest.mock('../../show/store');
+jest.mock('../../store/showFindSpell');
 
 describe('ShowSpellPage', () => {
   const id = '00000000-0000-0000-0000-000000000000';

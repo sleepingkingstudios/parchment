@@ -2,10 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import ShowSpellBreadcrumbs from './breadcrumbs';
-import { useSpell } from '../../show/store';
+import { useSpell } from '../../store/showFindSpell';
 import { spellsData } from '../../fixtures';
 
-jest.mock('../../show/store');
+jest.mock('../../store/showFindSpell');
 
 describe('ShowSpellBreadcrumbs', () => {
   const defaultProps = {};

@@ -9,10 +9,12 @@ useSelector.mockImplementation(fn => fn);
 
 describe('Spells findSpell useSpell()', () => {
   const state = {
-    findSpell: {
-      data: { spell: spellsData[0] },
-      errors: [],
-      status: 'ok',
+    spells: {
+      showFindSpell: {
+        data: { spell: spellsData[0] },
+        errors: [],
+        status: 'ok',
+      },
     },
   };
 
@@ -23,7 +25,7 @@ describe('Spells findSpell useSpell()', () => {
   describe('with no arguments', () => {
     it('should return the selected state', () => {
       const selector = useSpell();
-      const { data, errors, status } = state.findSpell;
+      const { data, errors, status } = state.spells.showFindSpell;
       const { spell } = data;
       const expected = {
         data,
@@ -40,7 +42,7 @@ describe('Spells findSpell useSpell()', () => {
     it('should call the function with the selected state', () => {
       const fn = jest.fn(({ spell }) => spell);
       const selector = useSpell(fn);
-      const { data, errors, status } = state.findSpell;
+      const { data, errors, status } = state.spells.showFindSpell;
       const { spell } = data;
       const expected = {
         data,

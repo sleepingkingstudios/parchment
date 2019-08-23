@@ -9,9 +9,9 @@ import {
   FAILURE,
   SUCCESS,
 } from '../../../store/requestStatus';
-import { useSpell } from '../../show/store';
+import { useSpell } from '../../store/showFindSpell';
 
-jest.mock('../../show/store');
+jest.mock('../../store/showFindSpell');
 
 describe('ShowSpellBlock', () => {
   const defaultProps = {};

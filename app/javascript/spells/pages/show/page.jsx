@@ -5,7 +5,7 @@ import Page from '../../../components/page';
 import ShowSpellBlock from './block';
 import ShowSpellBreadcrumbs from './breadcrumbs';
 import ShowSpellHeading from './heading';
-import { findSpell } from '../../show/store';
+import { findSpell } from '../../store/showFindSpell';
 
 const getSpellId = ({ match }) => {
   const { params } = match;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Breadcrumbs from '../../../components/breadcrumbs/index';
-import { useSpell } from '../../show/store';
+import { useSpell } from '../../store/showFindSpell';
 
 const generateBreadcrumbs = ({ spell }) => (
   [

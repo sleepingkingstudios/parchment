@@ -1,7 +1,7 @@
 import React from 'react';
 
 import HeadingWithButtons from '../../../components/heading-with-buttons';
-import { useSpell } from '../../show/store';
+import { useSpell } from '../../store/showFindSpell';
 
 const generateButtons = ({ spell }) => {
   if (!(spell && spell.id)) { return []; }

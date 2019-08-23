@@ -2,7 +2,7 @@ import React from 'react';
 
 import { LoaderSwitch } from '../../../components/loader';
 import { SpellBlock } from '../../components/block';
-import { useSpell } from '../../show/store';
+import { useSpell } from '../../store/showFindSpell';
 
 const renderFailure = () => (
   <p>Unable to load spell from the server.</p>
