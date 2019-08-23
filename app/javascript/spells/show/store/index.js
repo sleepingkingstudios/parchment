@@ -2,9 +2,10 @@ import FindOneEndpoint from '../../../api/findOne';
 import alerts from './alerts';
 import redirect from './redirect';
 import { buildSpell } from '../../entities';
+import findSpellRequest from '../../store/findSpell/findSpell';
 
 const REQUEST_URL = '/api/spells/:id';
-const findSpell = new FindOneEndpoint({
+const endpoint = new FindOneEndpoint({
   data: { spell: buildSpell() },
   middleware: [
     redirect,
@@ -14,13 +15,17 @@ const findSpell = new FindOneEndpoint({
   url: REQUEST_URL,
 });
 
-export default findSpell;
+export default endpoint;
 
 export const {
   actions,
   namespace,
   reducer,
   request,
-} = findSpell;
+} = endpoint;
 
-export { default as useSpell } from '../../store/findSpell/selector';
+export { default as useSpell } from '../../store/findSpell/useSpell';
+
+const { performRequest } = request;
+
+export const findSpell = findSpellRequest(performRequest);

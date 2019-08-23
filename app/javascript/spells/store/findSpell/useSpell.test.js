@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import useSpell from './selector';
+import useSpell from './useSpell';
 import { spellsData } from '../../fixtures';
 
 jest.mock('react-redux');

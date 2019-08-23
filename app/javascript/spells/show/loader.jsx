@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ConnectSpellLoader from '../loader/index';
 import SpellPage from './page';
-import findSpell from './store/index';
+import endpoint from './store/index';
 
 const getSpellId = (match) => {
   const { params } = match;
@@ -11,7 +11,7 @@ const getSpellId = (match) => {
   return params.id;
 };
 
-const ConnectedSpellLoader = ConnectSpellLoader(findSpell);
+const ConnectedSpellLoader = ConnectSpellLoader(endpoint);
 
 const SpellPageLoader = (props) => {
   const { match, ...rest } = props;
