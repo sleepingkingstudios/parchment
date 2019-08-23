@@ -1,6 +1,15 @@
-import { request } from './index';
+import {
+  namespace,
+  request,
+} from './index';
 
 describe('Find Spells store', () => {
+  describe('namespace', () => {
+    it('should be spells/showFindSpell', () => {
+      expect(namespace).toEqual('spells/indexFindSpells');
+    });
+  });
+
   describe('request', () => {
     const {
       method,
