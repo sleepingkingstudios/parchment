@@ -22,3 +22,5 @@ export const {
   reducer,
   request,
 } = findSpell;
+
+export { default as useSpell } from '../../store/findSpell/selector';

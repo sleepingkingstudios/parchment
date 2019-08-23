@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import Breadcrumbs from '../breadcrumbs';
 import Page from './index';
 
 describe('<Page />', () => {
@@ -84,6 +85,33 @@ describe('<Page />', () => {
       expect(header).toExist();
       expect(header).toHaveProp({ title });
       expect(header).toHaveProp({ subtitle });
+    });
+  });
+
+  describe('with breadcrumbs: component', () => {
+    const breadcrumbs = [
+      {
+        label: 'Root',
+        url: '/',
+      },
+      {
+        label: 'Directory',
+        url: '/directory',
+      },
+      {
+        label: 'Page',
+        active: true,
+      },
+    ];
+    const CustomBreadcrumbs = (<Breadcrumbs breadcrumbs={breadcrumbs} />);
+    const props = { ...defaultProps, breadcrumbs: CustomBreadcrumbs };
+
+    it('should render the footer', () => {
+      const rendered = shallow(<Page {...props} />);
+      const footer = rendered.find('PageFooter');
+
+      expect(footer).toExist();
+      expect(footer).toHaveProp({ breadcrumbs: CustomBreadcrumbs });
     });
   });
 

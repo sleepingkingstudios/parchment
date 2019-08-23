@@ -3,9 +3,15 @@ import PropTypes from 'prop-types';
 
 import Breadcrumbs from '../../breadcrumbs';
 
+const renderBreadcrumbs = (breadcrumbs) => {
+  if (React.isValidElement(breadcrumbs)) { return breadcrumbs; }
+
+  return (<Breadcrumbs breadcrumbs={breadcrumbs} />);
+};
+
 const PageFooter = ({ breadcrumbs }) => (
   <footer>
-    <Breadcrumbs breadcrumbs={breadcrumbs} />
+    { renderBreadcrumbs(breadcrumbs) }
     <hr />
     <p style={{ textAlign: 'center' }}>
       <small className="text-muted">
@@ -20,7 +26,10 @@ PageFooter.defaultProps = {
 };
 
 PageFooter.propTypes = {
-  breadcrumbs: PropTypes.arrayOf(PropTypes.object),
+  breadcrumbs: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.node,
+  ]),
 };
 
 export default PageFooter;
