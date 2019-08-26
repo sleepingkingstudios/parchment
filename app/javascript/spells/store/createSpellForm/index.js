@@ -3,7 +3,7 @@ import { buildSpell } from '../../entities';
 import alerts from './alerts';
 import redirect from './redirect';
 
-const namespace = 'createSpell';
+const namespace = 'spells/createSpellForm';
 const REQUEST_URL = '/api/spells';
 
 export const {

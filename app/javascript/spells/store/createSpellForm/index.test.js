@@ -5,13 +5,13 @@ import {
 } from './index';
 import { spellDefaultAttributes } from '../../entities';
 
-describe('Create Spell store', () => {
+describe('CreateSpellForm store', () => {
   describe('actions', () => {
     const { UPDATE_FORM_FIELD } = actions;
 
     describe('UPDATE_FORM_FIELD', () => {
       it('should define the namespaced action', () => {
-        expect(UPDATE_FORM_FIELD).toEqual('createSpell/updateFormField');
+        expect(UPDATE_FORM_FIELD).toEqual('spells/createSpellForm/updateFormField');
       });
     });
   });

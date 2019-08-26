@@ -2,7 +2,7 @@ import { push } from 'connected-react-router';
 
 import redirect from './redirect';
 
-describe('Spell create form redirect', () => {
+describe('CreateSpellForm store redirect', () => {
   const { handleSuccess } = redirect;
 
   describe('handleSuccess()', () => {
