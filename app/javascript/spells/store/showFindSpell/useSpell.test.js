@@ -7,7 +7,7 @@ jest.mock('react-redux');
 
 useSelector.mockImplementation(fn => fn);
 
-describe('Spells showFindSpell#useSpell()', () => {
+describe('ShowFindSpell store useSpell()', () => {
   const state = {
     spells: {
       showFindSpell: {

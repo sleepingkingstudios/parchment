@@ -1,7 +1,7 @@
 import FindOneEndpoint from '../../../api/findOne';
 import alerts from './alerts';
 import { buildSpell } from '../../entities';
-import findSpellRequest from './findSpell';
+import findSpellRequest from './requestSpell';
 import redirect from './redirect';
 
 const REQUEST_URL = '/api/spells/:id';
@@ -28,4 +28,4 @@ export { default as useSpell } from './useSpell';
 
 const { performRequest } = request;
 
-export const findSpell = findSpellRequest(performRequest);
+export const requestSpell = findSpellRequest(performRequest);

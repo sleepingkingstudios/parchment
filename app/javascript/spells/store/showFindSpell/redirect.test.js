@@ -2,7 +2,7 @@ import { push } from 'connected-react-router';
 
 import redirect from './redirect';
 
-describe('Spell show redirect', () => {
+describe('ShowFindSpell store redirect', () => {
   const { handleFailure } = redirect;
 
   describe('handleFailure()', () => {

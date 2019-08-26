@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import ShowSpellBreadcrumbs from './breadcrumbs';
 import ShowSpellPage from './page';
-import { findSpell } from '../../store/showFindSpell';
+import { requestSpell } from '../../store/showFindSpell';
 
 jest.mock('../../store/showFindSpell');
 
@@ -35,6 +35,6 @@ describe('ShowSpellPage', () => {
   it('should find the spell by id', () => {
     shallow(<ShowSpellPage {...defaultProps} />);
 
-    expect(findSpell).toHaveBeenCalledWith(id);
+    expect(requestSpell).toHaveBeenCalledWith(id);
   });
 });

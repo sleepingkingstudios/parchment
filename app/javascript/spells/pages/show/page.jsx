@@ -5,7 +5,7 @@ import Page from '../../../components/page';
 import ShowSpellBlock from './block';
 import ShowSpellBreadcrumbs from './breadcrumbs';
 import ShowSpellHeading from './heading';
-import { findSpell } from '../../store/showFindSpell';
+import { requestSpell } from '../../store/showFindSpell';
 
 const getSpellId = ({ match }) => {
   const { params } = match;
@@ -16,7 +16,7 @@ const getSpellId = ({ match }) => {
 const ShowSpellPage = (props) => {
   const id = getSpellId(props);
 
-  findSpell(id);
+  requestSpell(id);
 
   return (
     <Page breadcrumbs={<ShowSpellBreadcrumbs />} className="page-spells">

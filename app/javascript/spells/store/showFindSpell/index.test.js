@@ -1,14 +1,14 @@
 import {
-  findSpell,
   namespace,
   request,
+  requestSpell,
   useSpell,
 } from './index';
 
-describe('Show find Spell store', () => {
-  describe('findSpell()', () => {
+describe('ShowFindSpell store', () => {
+  describe('requestSpell()', () => {
     it('should be a function', () => {
-      expect(typeof findSpell).toEqual('function');
+      expect(typeof requestSpell).toEqual('function');
     });
   });
 
