@@ -5,7 +5,6 @@ import thunk from 'redux-thunk';
 
 import alerts from '../components/alerts/store/reducer';
 import { reducer as createSpell } from '../spells/create/store/index';
-import { reducer as findSpell } from '../spells/show/store/index';
 import { reducer as updateSpellFind } from '../spells/update/store/find/index';
 import { reducer as updateSpellForm } from '../spells/update/store/form/index';
 import { reducer as spells } from '../spells';
@@ -16,7 +15,6 @@ const createReducer = browserHistory => combineReducers({
   router: connectRouter(browserHistory),
   alerts,
   createSpell,
-  findSpell,
   updateSpellFind,
   updateSpellForm,
   spells,

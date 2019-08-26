@@ -32,7 +32,7 @@ describe('IndexSpellsTable', () => {
   describe('with status: FAILURE', () => {
     const props = { ...defaultProps, status: FAILURE };
 
-    it('should display the pending message', () => {
+    it('should display the failure message', () => {
       const wrapper = shallow(<IndexSpellsTable {...props} />);
       const rendered = wrapper.find('LoaderSwitch').renderProp('renderFailure')();
       const { status } = props;

@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SpellBlock /> should be match the snapshot 1`] = `
+<div
+  className="spell-block"
+>
+  <p
+    className="spell-block-name"
+  >
+    Thunderclap
+  </p>
+  <p
+    className="spell-block-level-school"
+  >
+    Illusion cantrip
+  </p>
+  <div
+    className="spell-block-stats"
+  >
+    <p
+      className="spell-block-casting-time"
+    >
+      <strong>
+        Casting Time:
+      </strong>
+       
+      1 reaction, which you take when you speak your own name or hear it spoken
+    </p>
+    <p
+      className="spell-block-range"
+    >
+      <strong>
+        Range:
+      </strong>
+       
+      Self
+    </p>
+    <p
+      className="spell-block-components"
+    >
+      <strong>
+        Components:
+      </strong>
+       
+      None
+    </p>
+    <p
+      className="spell-block-duration"
+    >
+      <strong>
+        Duration:
+      </strong>
+       
+      Instantaneous
+    </p>
+  </div>
+  <PlainText
+    className="spell-block-description"
+    text="Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap."
+  />
+</div>
+`;

@@ -1,36 +1,27 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import ReactDOMServer from 'react-dom/server';
+import { shallow } from 'enzyme';
 
 import SpellBlock from './block';
-import { spellsData } from '../fixtures';
+import { spellsData } from '../../fixtures';
 import {
   formatComponents,
   formatSchoolAndLevel,
-} from '../utils';
+} from '../../utils';
 
 const spell = spellsData[0];
 
 describe('<SpellBlock />', () => {
-  const props = { spell };
-  const rendered = shallow(<SpellBlock {...props} />);
-  const statBlock = rendered.find('.spell-block-stats');
+  const defaultProps = { spell };
 
   it('should wrap the contents in a <div> element', () => {
+    const rendered = shallow(<SpellBlock {...defaultProps} />);
+
     expect(rendered).toHaveDisplayName('div');
     expect(rendered).toHaveClassName('spell-block');
   });
 
-  it('should set the data attribute', () => {
-    const data = {
-      'spell-id': spell.id,
-      'spell-name': spell.name,
-    };
-
-    expect(rendered).toHaveProp('data', data);
-  });
-
   it('should render the spell name', () => {
+    const rendered = shallow(<SpellBlock {...defaultProps} />);
     const nameElement = rendered.find('.spell-block-name');
 
     expect(nameElement).toHaveDisplayName('p');
@@ -38,6 +29,7 @@ describe('<SpellBlock />', () => {
   });
 
   it('should render the spell level and school', () => {
+    const rendered = shallow(<SpellBlock {...defaultProps} />);
     const nameElement = rendered.find('.spell-block-level-school');
     const expected = formatSchoolAndLevel(spell);
 
@@ -46,6 +38,8 @@ describe('<SpellBlock />', () => {
   });
 
   it('should render the spell casting time', () => {
+    const rendered = shallow(<SpellBlock {...defaultProps} />);
+    const statBlock = rendered.find('.spell-block-stats');
     const castingTimeElement = statBlock.find('.spell-block-casting-time');
 
     expect(castingTimeElement).toHaveDisplayName('p');
@@ -53,6 +47,8 @@ describe('<SpellBlock />', () => {
   });
 
   it('should render the spell range', () => {
+    const rendered = shallow(<SpellBlock {...defaultProps} />);
+    const statBlock = rendered.find('.spell-block-stats');
     const rangeElement = statBlock.find('.spell-block-range');
 
     expect(rangeElement).toHaveDisplayName('p');
@@ -60,6 +56,8 @@ describe('<SpellBlock />', () => {
   });
 
   it('should render the spell components', () => {
+    const rendered = shallow(<SpellBlock {...defaultProps} />);
+    const statBlock = rendered.find('.spell-block-stats');
     const componentsElement = statBlock.find('.spell-block-components');
     const expected = formatComponents(spell);
 
@@ -68,6 +66,8 @@ describe('<SpellBlock />', () => {
   });
 
   it('should render the spell duration', () => {
+    const rendered = shallow(<SpellBlock {...defaultProps} />);
+    const statBlock = rendered.find('.spell-block-stats');
     const durationElement = statBlock.find('.spell-block-duration');
 
     expect(durationElement).toHaveDisplayName('p');
@@ -75,6 +75,7 @@ describe('<SpellBlock />', () => {
   });
 
   it('should render the spell description', () => {
+    const rendered = shallow(<SpellBlock {...defaultProps} />);
     const descriptionElement = rendered.find('PlainText');
 
     expect(descriptionElement).toExist();
@@ -82,9 +83,9 @@ describe('<SpellBlock />', () => {
     expect(descriptionElement).toHaveProp('text', spell.description);
   });
 
-  it('should be consistent', () => {
-    const snapshot = ReactDOMServer.renderToStaticMarkup(mount(<SpellBlock {...props} />));
+  it('should be match the snapshot', () => {
+    const rendered = shallow(<SpellBlock {...defaultProps} />);
 
-    expect(snapshot).toMatchSnapshot();
+    expect(rendered).toMatchSnapshot();
   });
 });
