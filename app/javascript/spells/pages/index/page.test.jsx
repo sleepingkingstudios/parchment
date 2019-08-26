@@ -2,9 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import SpellsPage from './page';
-import { requestSpells } from '../../store/indexFindSpells';
+import { hooks } from '../../store/indexFindSpells';
 
 jest.mock('../../store/indexFindSpells');
+
+hooks.usePerformRequest.mockImplementation(() => () => {});
 
 describe('<SpellsPage />', () => {
   const breadcrumbs = [
@@ -37,10 +39,15 @@ describe('<SpellsPage />', () => {
     expect(table).toExist();
   });
 
-  it('should find the spells by id', () => {
+  it('should find the spells', () => {
+    const performRequest = jest.fn();
+
+    hooks.usePerformRequest.mockImplementationOnce(() => performRequest);
+
     shallow(<SpellsPage {...defaultProps} />);
 
-    expect(requestSpells).toHaveBeenCalled();
+    expect(hooks.usePerformRequest).toHaveBeenCalled();
+    expect(performRequest).toHaveBeenCalled();
   });
 
   it('should match the snapshot', () => {

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { LoaderSwitch } from '../../../components/loader';
 import { SpellsTable } from '../../components/table';
-import { useSpells } from '../../store/indexFindSpells';
+import { hooks } from '../../store/indexFindSpells';
 
 const renderFailure = () => (
   <p>Unable to load spells data from the server.</p>
@@ -10,9 +10,11 @@ const renderFailure = () => (
 const renderPending = () => (
   <p>Loading spells data from the server...</p>
 );
+const { useEndpoint } = hooks;
 
 const IndexSpellsTable = () => {
-  const { spells, status } = useSpells();
+  const { data, status } = useEndpoint();
+  const { spells } = data;
 
   return (
     <LoaderSwitch

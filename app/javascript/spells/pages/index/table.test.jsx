@@ -9,7 +9,7 @@ import {
   FAILURE,
   SUCCESS,
 } from '../../../store/requestStatus';
-import { useSpells } from '../../store/indexFindSpells';
+import { hooks } from '../../store/indexFindSpells';
 
 jest.mock('../../store/indexFindSpells');
 
@@ -17,10 +17,10 @@ describe('IndexSpellsTable', () => {
   const defaultProps = {};
 
   describe('with status: INITIALIZED', () => {
-    const state = { status: INITIALIZED };
+    const state = { data: {}, status: INITIALIZED };
 
     beforeEach(() => {
-      useSpells.mockImplementationOnce(() => state);
+      hooks.useEndpoint.mockImplementationOnce(() => state);
     });
 
     it('should display the pending message', () => {
@@ -37,10 +37,10 @@ describe('IndexSpellsTable', () => {
   });
 
   describe('with status: FAILURE', () => {
-    const state = { status: FAILURE };
+    const state = { data: {}, status: FAILURE };
 
     beforeEach(() => {
-      useSpells.mockImplementationOnce(() => state);
+      hooks.useEndpoint.mockImplementationOnce(() => state);
     });
 
     it('should display the failure message', () => {
@@ -57,10 +57,10 @@ describe('IndexSpellsTable', () => {
   });
 
   describe('with status: PENDING', () => {
-    const state = { status: PENDING };
+    const state = { data: {}, status: PENDING };
 
     beforeEach(() => {
-      useSpells.mockImplementationOnce(() => state);
+      hooks.useEndpoint.mockImplementationOnce(() => state);
     });
 
     it('should display the pending message', () => {
@@ -77,14 +77,15 @@ describe('IndexSpellsTable', () => {
   });
 
   describe('with status: SUCCESS', () => {
-    const state = { spells: spellsData, status: SUCCESS };
+    const state = { data: { spells: spellsData }, status: SUCCESS };
 
     beforeEach(() => {
-      useSpells.mockImplementationOnce(() => state);
+      hooks.useEndpoint.mockImplementationOnce(() => state);
     });
 
     it('should render the Spells table', () => {
-      const { spells, status } = state;
+      const { data, status } = state;
+      const { spells } = data;
       const wrapper = shallow(<IndexSpellsTable {...defaultProps} />);
       const rendered = wrapper
         .find('LoaderSwitch')
