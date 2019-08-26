@@ -16,6 +16,7 @@ describe('FindOneEndpoint', () => {
     const endpoint = new FindOneEndpoint(options);
     const {
       actions,
+      hooks,
       namespace,
       reducer,
       request,
@@ -36,6 +37,25 @@ describe('FindOneEndpoint', () => {
           } else {
             expect(typeof value).toEqual('function');
           }
+        });
+      });
+    });
+
+    describe('hooks', () => {
+      const {
+        useEndpoint,
+        usePerformRequest,
+      } = hooks;
+
+      describe('useEndpoint()', () => {
+        it('should be a function', () => {
+          expect(typeof useEndpoint).toEqual('function');
+        });
+      });
+
+      describe('usePerformRequest()', () => {
+        it('should be a function', () => {
+          expect(typeof usePerformRequest).toEqual('function');
         });
       });
     });
