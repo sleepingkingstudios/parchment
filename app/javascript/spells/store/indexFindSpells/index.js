@@ -1,4 +1,5 @@
 import FindManyEndpoint from '../../../api/findMany';
+import findSpellsRequest from './requestSpells';
 
 const REQUEST_URL = '/api/spells';
 const findSpells = new FindManyEndpoint({
@@ -18,3 +19,7 @@ export const {
 } = findSpells;
 
 export { default as useSpells } from './useSpells';
+
+const { performRequest } = request;
+
+export const requestSpells = findSpellsRequest(performRequest);

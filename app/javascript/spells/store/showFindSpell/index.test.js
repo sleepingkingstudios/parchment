@@ -6,12 +6,6 @@ import {
 } from './index';
 
 describe('ShowFindSpell store', () => {
-  describe('requestSpell()', () => {
-    it('should be a function', () => {
-      expect(typeof requestSpell).toEqual('function');
-    });
-  });
-
   describe('namespace', () => {
     it('should be spells/showFindSpell', () => {
       expect(namespace).toEqual('spells/showFindSpell');
@@ -34,6 +28,12 @@ describe('ShowFindSpell store', () => {
       it('should be the spell show URL', () => {
         expect(url).toEqual('/api/spells/:id');
       });
+    });
+  });
+
+  describe('requestSpell()', () => {
+    it('should be a function', () => {
+      expect(typeof requestSpell).toEqual('function');
     });
   });
 
