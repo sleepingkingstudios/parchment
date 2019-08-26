@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import findSpellRequest from './findSpell';
+import findSpellRequest from './requestSpell';
 
 jest.mock('react');
 jest.mock('react-redux');
@@ -11,7 +11,7 @@ const dispatch = jest.fn();
 useDispatch.mockImplementation(() => dispatch);
 useEffect.mockImplementation(fn => fn());
 
-describe('Spells findSpell findSpellRequest()', () => {
+describe('ShowFindSpell store requestSpell()', () => {
   const id = '00000000-0000-0000-0000-000000000000';
 
   it('should be a function', () => {
@@ -19,15 +19,15 @@ describe('Spells findSpell findSpellRequest()', () => {
   });
 
   it('should return a function', () => {
-    const findSpell = findSpellRequest(() => jest.fn());
+    const requestSpell = findSpellRequest(() => jest.fn());
 
-    expect(typeof findSpell).toEqual('function');
+    expect(typeof requestSpell).toEqual('function');
   });
 
   it('should call useEffect()', () => {
-    const findSpell = findSpellRequest(() => jest.fn());
+    const requestSpell = findSpellRequest(() => jest.fn());
 
-    findSpell(id);
+    requestSpell(id);
 
     expect(useEffect).toHaveBeenCalled();
   });
@@ -35,9 +35,9 @@ describe('Spells findSpell findSpellRequest()', () => {
   it('should call performRequest with the id and dispatch', () => {
     const innerRequest = jest.fn();
     const outerRequest = jest.fn(() => innerRequest);
-    const findSpell = findSpellRequest(outerRequest);
+    const requestSpell = findSpellRequest(outerRequest);
 
-    findSpell(id);
+    requestSpell(id);
 
     expect(outerRequest).toHaveBeenCalledWith({ wildcards: { id } });
     expect(innerRequest).toHaveBeenCalledWith(dispatch);

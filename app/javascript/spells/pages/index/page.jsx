@@ -2,7 +2,8 @@ import React from 'react';
 
 import HeadingWithButtons from '../../../components/heading-with-buttons';
 import Page from '../../../components/page';
-import IndexSpellsTableLoader from './loader';
+import IndexSpellsTable from './table';
+import { requestSpells } from '../../store/indexFindSpells';
 
 const breadcrumbs = [
   {
@@ -24,13 +25,17 @@ const buttons = [
   },
 ];
 
-const SpellsPage = () => (
-  <Page breadcrumbs={breadcrumbs} className="page-spells">
-    <HeadingWithButtons buttons={buttons}>Spells</HeadingWithButtons>
+const SpellsPage = () => {
+  requestSpells();
 
-    <IndexSpellsTableLoader />
-  </Page>
-);
+  return (
+    <Page breadcrumbs={breadcrumbs} className="page-spells">
+      <HeadingWithButtons buttons={buttons}>Spells</HeadingWithButtons>
+
+      <IndexSpellsTable />
+    </Page>
+  );
+};
 
 SpellsPage.defaultProps = {};
 

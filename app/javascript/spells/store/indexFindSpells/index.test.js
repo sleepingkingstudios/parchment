@@ -1,14 +1,14 @@
 import {
   namespace,
   request,
-  requestSpell,
-  useSpell,
+  requestSpells,
+  useSpells,
 } from './index';
 
-describe('ShowFindSpell store', () => {
+describe('Find Spells store', () => {
   describe('namespace', () => {
     it('should be spells/showFindSpell', () => {
-      expect(namespace).toEqual('spells/showFindSpell');
+      expect(namespace).toEqual('spells/indexFindSpells');
     });
   });
 
@@ -25,21 +25,21 @@ describe('ShowFindSpell store', () => {
     });
 
     describe('url', () => {
-      it('should be the spell show URL', () => {
-        expect(url).toEqual('/api/spells/:id');
+      it('should be the spell index URL', () => {
+        expect(url).toEqual('/api/spells');
       });
     });
   });
 
-  describe('requestSpell()', () => {
+  describe('requestSpells()', () => {
     it('should be a function', () => {
-      expect(typeof requestSpell).toEqual('function');
+      expect(typeof requestSpells).toEqual('function');
     });
   });
 
-  describe('useSpell()', () => {
+  describe('useSpells()', () => {
     it('should be a function', () => {
-      expect(typeof useSpell).toEqual('function');
+      expect(typeof useSpells).toEqual('function');
     });
   });
 });

@@ -33,6 +33,6 @@ exports[`<SpellsPage /> should match the snapshot 1`] = `
   >
     Spells
   </HeadingWithButtons>
-  <IndexSpellsTableLoader />
+  <IndexSpellsTable />
 </Page>
 `;

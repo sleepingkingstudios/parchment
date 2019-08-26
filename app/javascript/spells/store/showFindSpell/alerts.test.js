@@ -2,7 +2,7 @@ import alerts from './alerts';
 import { addAlert } from '../../../components/alerts/store/actions';
 import { generateFingerprintUuid } from '../../../utils/uuid';
 
-describe('Spell show alerts', () => {
+describe('ShowFindSpell store alerts', () => {
   const { handleFailure } = alerts;
 
   describe('handleFailure()', () => {

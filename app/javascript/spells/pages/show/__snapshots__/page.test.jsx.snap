@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShowSpellPage should match the snapshot 1`] = `
+<Page
+  breadcrumbs={<ShowSpellBreadcrumbs />}
+  className="page-spells"
+  layout={null}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <ShowSpellHeading />
+  <ShowSpellBlock />
+</Page>
+`;
