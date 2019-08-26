@@ -37,4 +37,10 @@ describe('ShowSpellPage', () => {
 
     expect(requestSpell).toHaveBeenCalledWith(id);
   });
+
+  it('should match the snapshot', () => {
+    const rendered = shallow(<ShowSpellPage {...defaultProps} />);
+
+    expect(rendered).toMatchSnapshot();
+  });
 });

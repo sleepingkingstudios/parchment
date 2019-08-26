@@ -2,6 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import SpellsPage from './page';
+import { requestSpells } from '../../store/indexFindSpells';
+
+jest.mock('../../store/indexFindSpells');
 
 describe('<SpellsPage />', () => {
   const breadcrumbs = [
@@ -26,12 +29,18 @@ describe('<SpellsPage />', () => {
     expect(rendered).toHaveProp('breadcrumbs', breadcrumbs);
   });
 
-  it('should render the spells table loader', () => {
+  it('should render the spells table', () => {
     const rendered = shallow(<SpellsPage {...defaultProps} />);
 
-    const table = rendered.find('IndexSpellsTableLoader');
+    const table = rendered.find('IndexSpellsTable');
 
     expect(table).toExist();
+  });
+
+  it('should find the spells by id', () => {
+    shallow(<SpellsPage {...defaultProps} />);
+
+    expect(requestSpells).toHaveBeenCalled();
   });
 
   it('should match the snapshot', () => {

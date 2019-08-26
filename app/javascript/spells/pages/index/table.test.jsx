@@ -9,17 +9,24 @@ import {
   FAILURE,
   SUCCESS,
 } from '../../../store/requestStatus';
+import { useSpells } from '../../store/indexFindSpells';
+
+jest.mock('../../store/indexFindSpells');
 
 describe('IndexSpellsTable', () => {
-  const defaultProps = { spells: [], status: INITIALIZED };
+  const defaultProps = {};
 
   describe('with status: INITIALIZED', () => {
-    const props = { ...defaultProps, status: INITIALIZED };
+    const state = { status: INITIALIZED };
+
+    beforeEach(() => {
+      useSpells.mockImplementationOnce(() => state);
+    });
 
     it('should display the pending message', () => {
-      const wrapper = shallow(<IndexSpellsTable {...props} />);
+      const wrapper = shallow(<IndexSpellsTable {...defaultProps} />);
       const rendered = wrapper.find('LoaderSwitch').renderProp('renderInitialized')();
-      const { status } = props;
+      const { status } = state;
 
       expect(wrapper).toHaveDisplayName('LoaderSwitch');
       expect(wrapper).toHaveProp({ status });
@@ -30,12 +37,16 @@ describe('IndexSpellsTable', () => {
   });
 
   describe('with status: FAILURE', () => {
-    const props = { ...defaultProps, status: FAILURE };
+    const state = { status: FAILURE };
+
+    beforeEach(() => {
+      useSpells.mockImplementationOnce(() => state);
+    });
 
     it('should display the failure message', () => {
-      const wrapper = shallow(<IndexSpellsTable {...props} />);
+      const wrapper = shallow(<IndexSpellsTable {...defaultProps} />);
       const rendered = wrapper.find('LoaderSwitch').renderProp('renderFailure')();
-      const { status } = props;
+      const { status } = state;
 
       expect(wrapper).toHaveDisplayName('LoaderSwitch');
       expect(wrapper).toHaveProp({ status });
@@ -46,12 +57,16 @@ describe('IndexSpellsTable', () => {
   });
 
   describe('with status: PENDING', () => {
-    const props = { ...defaultProps, status: PENDING };
+    const state = { status: PENDING };
+
+    beforeEach(() => {
+      useSpells.mockImplementationOnce(() => state);
+    });
 
     it('should display the pending message', () => {
-      const wrapper = shallow(<IndexSpellsTable {...props} />);
+      const wrapper = shallow(<IndexSpellsTable {...defaultProps} />);
       const rendered = wrapper.find('LoaderSwitch').renderProp('renderPending')();
-      const { status } = props;
+      const { status } = state;
 
       expect(wrapper).toHaveDisplayName('LoaderSwitch');
       expect(wrapper).toHaveProp({ status });
@@ -62,20 +77,24 @@ describe('IndexSpellsTable', () => {
   });
 
   describe('with status: SUCCESS', () => {
-    const props = { ...defaultProps, spells: spellsData, status: SUCCESS };
+    const state = { spells: spellsData, status: SUCCESS };
+
+    beforeEach(() => {
+      useSpells.mockImplementationOnce(() => state);
+    });
 
     it('should render the Spells table', () => {
-      const { spells, status } = props;
-      const wrapper = shallow(<IndexSpellsTable {...props} />);
+      const { spells, status } = state;
+      const wrapper = shallow(<IndexSpellsTable {...defaultProps} />);
       const rendered = wrapper
         .find('LoaderSwitch')
         .renderProp('renderSuccess')({ spells });
 
       expect(wrapper).toHaveDisplayName('LoaderSwitch');
-      expect(wrapper).toHaveProp({ spells, status });
+      expect(wrapper).toHaveProp({ status });
 
-      expect(rendered).toHaveDisplayName('Table');
-      expect(rendered).toHaveProp({ data: spells });
+      expect(rendered).toHaveDisplayName('SpellsTable');
+      expect(rendered).toHaveProp({ spells });
     });
   });
 });

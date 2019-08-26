@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { LoaderSwitch } from '../../../components/loader';
 import { SpellsTable } from '../../components/table';
-import { spellListType } from '../../entities';
+import { useSpells } from '../../store/indexFindSpells';
 
 const renderFailure = () => (
   <p>Unable to load spells data from the server.</p>
@@ -12,21 +11,22 @@ const renderPending = () => (
   <p>Loading spells data from the server...</p>
 );
 
-const IndexSpellsTable = props => (
-  <LoaderSwitch
-    {...props}
-    renderFailure={renderFailure}
-    renderInitialized={renderPending}
-    renderPending={renderPending}
-    renderSuccess={SpellsTable}
-  />
-);
+const IndexSpellsTable = () => {
+  const { spells, status } = useSpells();
+
+  return (
+    <LoaderSwitch
+      renderFailure={renderFailure}
+      renderInitialized={renderPending}
+      renderPending={renderPending}
+      renderSuccess={() => (<SpellsTable spells={spells} />)}
+      status={status}
+    />
+  );
+};
 
 IndexSpellsTable.defaultProps = {};
 
-IndexSpellsTable.propTypes = {
-  spells: spellListType.isRequired,
-  status: PropTypes.string.isRequired,
-};
+IndexSpellsTable.propTypes = {};
 
 export default IndexSpellsTable;
