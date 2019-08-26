@@ -1,6 +1,7 @@
 import {
   namespace,
   request,
+  useSpells,
 } from './index';
 
 describe('Find Spells store', () => {
@@ -26,6 +27,12 @@ describe('Find Spells store', () => {
       it('should be the spell index URL', () => {
         expect(url).toEqual('/api/spells');
       });
+    });
+  });
+
+  describe('useSpells()', () => {
+    it('should be a function', () => {
+      expect(typeof useSpells).toEqual('function');
     });
   });
 });

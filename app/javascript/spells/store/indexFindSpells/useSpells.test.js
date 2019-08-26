@@ -1,17 +1,17 @@
 import { useSelector } from 'react-redux';
 
-import useSpell from './useSpell';
+import useSpells from './useSpells';
 import { spellsData } from '../../fixtures';
 
 jest.mock('react-redux');
 
 useSelector.mockImplementation(fn => fn);
 
-describe('Spells showFindSpell#useSpell()', () => {
+describe('Spells indexFindSpells#useSpells()', () => {
   const state = {
     spells: {
-      showFindSpell: {
-        data: { spell: spellsData[0] },
+      indexFindSpells: {
+        data: { spells: spellsData },
         errors: [],
         status: 'ok',
       },
@@ -19,18 +19,18 @@ describe('Spells showFindSpell#useSpell()', () => {
   };
 
   it('should be a function', () => {
-    expect(typeof useSpell === 'function').toBe(true);
+    expect(typeof useSpells === 'function').toBe(true);
   });
 
   describe('with no arguments', () => {
     it('should return the selected state', () => {
-      const selector = useSpell();
-      const { data, errors, status } = state.spells.showFindSpell;
-      const { spell } = data;
+      const selector = useSpells();
+      const { data, errors, status } = state.spells.indexFindSpells;
+      const { spells } = data;
       const expected = {
         data,
         errors,
-        spell,
+        spells,
         status,
       };
 
@@ -40,18 +40,18 @@ describe('Spells showFindSpell#useSpell()', () => {
 
   describe('with a function', () => {
     it('should call the function with the selected state', () => {
-      const fn = jest.fn(({ spell }) => spell);
-      const selector = useSpell(fn);
-      const { data, errors, status } = state.spells.showFindSpell;
-      const { spell } = data;
+      const fn = jest.fn(({ spells }) => spells);
+      const selector = useSpells(fn);
+      const { data, errors, status } = state.spells.indexFindSpells;
+      const { spells } = data;
       const expected = {
         data,
         errors,
-        spell,
+        spells,
         status,
       };
 
-      expect(selector(state)).toEqual(spell);
+      expect(selector(state)).toEqual(spells);
 
       expect(fn).toHaveBeenCalledWith(expected);
     });
