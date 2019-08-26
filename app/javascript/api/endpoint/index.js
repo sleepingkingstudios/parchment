@@ -1,3 +1,4 @@
+import defaultGenerateSelector from './selector';
 import {
   applyMiddleware,
   selectMiddleware,
@@ -24,6 +25,7 @@ class ApiEndpoint {
       generateInitialState,
       generateReducer,
       generateRequest,
+      generateSelector,
       method,
       middleware,
       namespace,
@@ -39,6 +41,7 @@ class ApiEndpoint {
       namespace,
       url,
     });
+    const selector = valueOrDefault(generateSelector, defaultGenerateSelector)({ namespace });
 
     this.actions = actions;
     this.namespace = namespace;
@@ -47,6 +50,7 @@ class ApiEndpoint {
       selectMiddleware(middleware, 'handleAction'),
     );
     this.request = applyMiddlewareToRequest(request, middleware);
+    this.selector = selector;
   }
 }
 

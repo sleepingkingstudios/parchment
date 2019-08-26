@@ -27,6 +27,7 @@ describe('ApiEndpoint', () => {
       namespace,
       reducer,
       request,
+      selector,
     } = endpoint;
 
     describe('actions', () => {
@@ -102,6 +103,19 @@ describe('ApiEndpoint', () => {
 
       it('should set the request url', () => {
         expect(request.url).toEqual(options.url);
+      });
+    });
+
+    describe('selector', () => {
+      const inner = { key: 'value' };
+      const state = { api: { endpoint: inner } };
+
+      it('should be a function', () => {
+        expect(typeof selector).toEqual('function');
+      });
+
+      it('should select the data by namespace', () => {
+        expect(selector(state)).toEqual(inner);
       });
     });
   });
@@ -254,6 +268,31 @@ describe('ApiEndpoint', () => {
 
           expect(calledMiddleware).toEqual(['success A', 'success B', 'success C']);
         });
+      });
+    });
+  });
+
+  describe('with selector: function', () => {
+    const generatedSelector = state => state;
+    const options = { ...defaultOptions, generateSelector: () => generatedSelector };
+    const endpoint = new ApiEndpoint(options);
+    const {
+      namespace,
+      selector,
+    } = endpoint;
+
+    describe('selector', () => {
+      it('should call generateActions() with the namespace', () => {
+        const generateSelector = jest.fn(() => generatedSelector);
+
+        /* eslint-disable-next-line no-new */
+        new ApiEndpoint({ ...options, generateSelector });
+
+        expect(generateSelector).toHaveBeenCalledWith({ namespace });
+      });
+
+      it('should generate the selector', () => {
+        expect(selector).toEqual(generatedSelector);
       });
     });
   });

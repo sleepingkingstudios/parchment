@@ -19,6 +19,7 @@ describe('FindManyEndpoint', () => {
       namespace,
       reducer,
       request,
+      selector,
     } = endpoint;
 
     describe('actions', () => {
@@ -69,6 +70,19 @@ describe('FindManyEndpoint', () => {
 
       it('should set the request url', () => {
         expect(request.url).toEqual(options.url);
+      });
+    });
+
+    describe('selector', () => {
+      const inner = { key: 'value' };
+      const state = { api: { endpoint: inner } };
+
+      it('should be a function', () => {
+        expect(typeof selector).toEqual('function');
+      });
+
+      it('should select the data by namespace', () => {
+        expect(selector(state)).toEqual(inner);
       });
     });
   });
