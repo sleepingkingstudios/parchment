@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Form from '../../components/form';
-import FormRow from '../../components/form/row';
+import Form from '../../../components/form';
+import FormRow from '../../../components/form/row';
 import SpellFormComponentsField from './components-field';
 import {
   CancelButton,
@@ -17,8 +17,8 @@ import {
   SubmitButton,
 } from './fields';
 
-import { formErrorsType } from '../../components/form/entities';
-import { spellFormType } from '../entities';
+import { formErrorsType } from '../../../components/form/entities';
+import { spellFormType } from '../../entities';
 
 const SpellForm = ({
   data,
@@ -26,7 +26,7 @@ const SpellForm = ({
   isUpdate,
   onChangeAction,
   onSubmitAction,
-  requestStatus,
+  status,
 }) => {
   const form = {
     data,
@@ -68,7 +68,7 @@ const SpellForm = ({
           colWidth="3"
           form={form}
           isUpdate={isUpdate}
-          requestStatus={requestStatus}
+          status={status}
         />
       </FormRow>
     </Form>
@@ -85,7 +85,7 @@ SpellForm.propTypes = {
   isUpdate: PropTypes.bool,
   onChangeAction: PropTypes.func.isRequired,
   onSubmitAction: PropTypes.func.isRequired,
-  requestStatus: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 export default SpellForm;

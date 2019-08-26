@@ -3,9 +3,9 @@ import { shallow } from 'enzyme';
 
 import SpellForm from './index';
 
-import { spellsData } from '../fixtures';
+import { spellsData } from '../../fixtures';
 import selectSchoolOptions from './selectSchoolOptions';
-import { INITIALIZED } from '../../store/requestStatus';
+import { INITIALIZED } from '../../../store/requestStatus';
 
 describe('<SpellForm />', () => {
   const onChangeAction = jest.fn(
@@ -18,7 +18,7 @@ describe('<SpellForm />', () => {
     data,
     onChangeAction,
     onSubmitAction,
-    requestStatus: INITIALIZED,
+    status: INITIALIZED,
     errors,
   };
   const form = {

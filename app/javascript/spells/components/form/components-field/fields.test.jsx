@@ -7,7 +7,7 @@ import {
   VerbalInput,
 } from './fields';
 
-import { spellsData } from '../../fixtures';
+import { spellsData } from '../../../fixtures';
 
 describe('<SpellFormComponentsField /> fields', () => {
   const onChangeAction = jest.fn(

@@ -411,7 +411,7 @@ exports[`<SpellForm /> should match the snapshot 1`] = `
         }
       }
       isUpdate={false}
-      requestStatus="initialized"
+      status="initialized"
     />
   </FormRow>
 </Form>

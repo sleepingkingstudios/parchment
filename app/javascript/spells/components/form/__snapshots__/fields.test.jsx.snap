@@ -1074,7 +1074,7 @@ exports[`<SpellForm /> fields <SubmitButton /> should match the snapshot 1`] = `
       ],
     }
   }
-  requestStatus="initialized"
+  status="initialized"
 >
   <FormGroup
     className=""
@@ -1112,7 +1112,7 @@ exports[`<SpellForm /> fields <SubmitButton /> should match the snapshot 1`] = `
           }
         }
         isUpdate={false}
-        requestStatus="initialized"
+        status="initialized"
       >
         <FormSubmitWrapper
           block={true}

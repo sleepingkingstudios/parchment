@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormSubmitButton from '../../../components/form/submit-button';
-import Spinner from '../../../components/spinner';
+import FormSubmitButton from '../../../../components/form/submit-button';
+import Spinner from '../../../../components/spinner';
 
-import { formType } from '../../../components/form/entities';
+import { formType } from '../../../../components/form/entities';
 import {
   FAILURE,
   INITIALIZED,
   PENDING,
   SUCCESS,
-} from '../../../store/requestStatus';
+} from '../../../../store/requestStatus';
 
-const isButtonDisabled = (requestStatus) => {
-  switch (requestStatus) {
+const isButtonDisabled = (status) => {
+  switch (status) {
     case INITIALIZED:
     case FAILURE:
     case SUCCESS:
@@ -24,8 +24,8 @@ const isButtonDisabled = (requestStatus) => {
   }
 };
 
-const submitLabel = ({ isUpdate, requestStatus }) => {
-  if (requestStatus === PENDING) {
+const submitLabel = ({ isUpdate, status }) => {
+  if (status === PENDING) {
     return (
       <div className="d-flex justify-content-center align-items-center">
         <Spinner className="mr-1" size="small" />
@@ -37,9 +37,9 @@ const submitLabel = ({ isUpdate, requestStatus }) => {
   return isUpdate ? 'Update Spell' : 'Create Spell';
 };
 
-const SpellFormSubmitButton = ({ form, isUpdate, requestStatus }) => (
-  <FormSubmitButton block outline form={form} disabled={isButtonDisabled(requestStatus)}>
-    { submitLabel({ isUpdate, requestStatus }) }
+const SpellFormSubmitButton = ({ form, isUpdate, status }) => (
+  <FormSubmitButton block outline form={form} disabled={isButtonDisabled(status)}>
+    { submitLabel({ isUpdate, status }) }
   </FormSubmitButton>
 );
 
@@ -50,7 +50,7 @@ SpellFormSubmitButton.defaultProps = {
 SpellFormSubmitButton.propTypes = {
   form: formType.isRequired,
   isUpdate: PropTypes.bool,
-  requestStatus: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 export default SpellFormSubmitButton;

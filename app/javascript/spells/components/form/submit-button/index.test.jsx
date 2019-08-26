@@ -3,13 +3,13 @@ import { shallow, mount } from 'enzyme';
 
 import SpellFormSubmitButton from './index';
 
-import { spellsData } from '../../fixtures';
+import { spellsData } from '../../../fixtures';
 import {
   FAILURE,
   INITIALIZED,
   PENDING,
   SUCCESS,
-} from '../../../store/requestStatus';
+} from '../../../../store/requestStatus';
 
 describe('<SpellFormSubmitButton />', () => {
   const onSubmitAction = jest.fn(() => ({ payload: { ok: true } }));
@@ -22,7 +22,7 @@ describe('<SpellFormSubmitButton />', () => {
   const defaultProps = {
     form,
     isUpdate: false,
-    requestStatus: INITIALIZED,
+    status: INITIALIZED,
   };
 
   it('should render the button', () => {
@@ -82,8 +82,8 @@ describe('<SpellFormSubmitButton />', () => {
       expect(rendered).toMatchSnapshot();
     });
 
-    describe('with requestStatus: FAILURE', () => {
-      const props = { ...updateProps, requestStatus: FAILURE };
+    describe('with status: FAILURE', () => {
+      const props = { ...updateProps, status: FAILURE };
 
       it('should set the button text', () => {
         const rendered = mount(<SpellFormSubmitButton {...props} />);
@@ -98,8 +98,8 @@ describe('<SpellFormSubmitButton />', () => {
       });
     });
 
-    describe('with requestStatus: PENDING', () => {
-      const props = { ...updateProps, requestStatus: PENDING };
+    describe('with status: PENDING', () => {
+      const props = { ...updateProps, status: PENDING };
 
       it('should set the button text', () => {
         const rendered = mount(<SpellFormSubmitButton {...props} />);
@@ -114,8 +114,8 @@ describe('<SpellFormSubmitButton />', () => {
       });
     });
 
-    describe('with requestStatus: SUCCESS', () => {
-      const props = { ...updateProps, requestStatus: SUCCESS };
+    describe('with status: SUCCESS', () => {
+      const props = { ...updateProps, status: SUCCESS };
 
       it('should set the button text', () => {
         const rendered = mount(<SpellFormSubmitButton {...props} />);
@@ -131,8 +131,8 @@ describe('<SpellFormSubmitButton />', () => {
     });
   });
 
-  describe('with requestStatus: FAILURE', () => {
-    const props = { ...defaultProps, requestStatus: FAILURE };
+  describe('with status: FAILURE', () => {
+    const props = { ...defaultProps, status: FAILURE };
 
     it('should render the button', () => {
       const rendered = shallow(<SpellFormSubmitButton {...props} />);
@@ -156,8 +156,8 @@ describe('<SpellFormSubmitButton />', () => {
     });
   });
 
-  describe('with requestStatus: PENDING', () => {
-    const props = { ...defaultProps, requestStatus: PENDING };
+  describe('with status: PENDING', () => {
+    const props = { ...defaultProps, status: PENDING };
 
     it('should render the button', () => {
       const rendered = shallow(<SpellFormSubmitButton {...props} />);
@@ -181,8 +181,8 @@ describe('<SpellFormSubmitButton />', () => {
     });
   });
 
-  describe('with requestStatus: SUCCESS', () => {
-    const props = { ...defaultProps, requestStatus: SUCCESS };
+  describe('with status: SUCCESS', () => {
+    const props = { ...defaultProps, status: SUCCESS };
 
     it('should render the button', () => {
       const rendered = shallow(<SpellFormSubmitButton {...props} />);

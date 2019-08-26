@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LinkButton from '../../../components/link-button';
-import { formType } from '../../../components/form/entities';
+import LinkButton from '../../../../components/link-button';
+import { formType } from '../../../../components/form/entities';
 
 const cancelUrl = ({ form, isUpdate }) => {
   if (!isUpdate) { return '/spells'; }

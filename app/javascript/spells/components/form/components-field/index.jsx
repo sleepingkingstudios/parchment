@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormRow from '../../../components/form/row';
-import FormGroup from '../../../components/form/group';
+import FormRow from '../../../../components/form/row';
+import FormGroup from '../../../../components/form/group';
 import {
   MaterialInput,
   SomaticInput,
   VerbalInput,
 } from './fields';
 
-import { formType } from '../../../components/form/entities';
+import { formType } from '../../../../components/form/entities';
 
 const SpellFormComponentsField = ({ colWidth, form }) => (
   <FormGroup className="mb-0" colWidth={colWidth}>

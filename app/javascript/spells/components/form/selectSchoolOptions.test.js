@@ -1,6 +1,6 @@
 import selectSchoolsOptions from './selectSchoolOptions';
 
-import { titleize } from '../../utils/string';
+import { titleize } from '../../../utils/string';
 
 describe('SpellFormSelectSchoolInput options', () => {
   const schools = [

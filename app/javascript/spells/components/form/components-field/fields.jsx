@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 
-import FormCheckboxInput from '../../../components/form/checkbox-input';
-import FormInput from '../../../components/form/input';
+import FormCheckboxInput from '../../../../components/form/checkbox-input';
+import FormInput from '../../../../components/form/input';
 
 import {
   formGroup,
   formInput,
-} from '../../../components/form/wrappers';
-import { formType } from '../../../components/form/entities';
+} from '../../../../components/form/wrappers';
+import { formType } from '../../../../components/form/entities';
 
 const MaterialInput = formGroup(
   formInput(FormInput, 'materialComponent'),

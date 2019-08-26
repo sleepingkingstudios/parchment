@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import SpellFormComponentsField from './index';
 
-import { spellsData } from '../../fixtures';
+import { spellsData } from '../../../fixtures';
 
 describe('<SpellFormComponentsField />', () => {
   const onChangeAction = jest.fn(

@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import SpellFormCancelButton from './index';
 
-import { spellsData } from '../../fixtures';
+import { spellsData } from '../../../fixtures';
 
 describe('<SpellFormCancelButton />', () => {
   const spell = spellsData[0];

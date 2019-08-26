@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types';
 
-import FormCheckboxInput from '../../components/form/checkbox-input';
-import FormInput from '../../components/form/input';
-import FormNumericInput from '../../components/form/numeric-input';
-import FormSelectInput from '../../components/form/select-input';
-import FormTextAreaInput from '../../components/form/text-area-input';
+import FormCheckboxInput from '../../../components/form/checkbox-input';
+import FormInput from '../../../components/form/input';
+import FormNumericInput from '../../../components/form/numeric-input';
+import FormSelectInput from '../../../components/form/select-input';
+import FormTextAreaInput from '../../../components/form/text-area-input';
 import SpellFormCancelButton from './cancel-button';
 import SpellFormSubmitButton from './submit-button';
 
 import {
   formField,
   formGroup,
-} from '../../components/form/wrappers';
-import { formType } from '../../components/form/entities';
+} from '../../../components/form/wrappers';
+import { formType } from '../../../components/form/entities';
 import selectSchoolOptions from './selectSchoolOptions';
 
 const CastingTimeField = formField(FormInput, 'castingTime');
@@ -105,7 +105,7 @@ SubmitButton.defaultProps = {
 SubmitButton.propTypes = {
   disabled: PropTypes.bool,
   form: formType.isRequired,
-  requestStatus: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 export {

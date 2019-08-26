@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import SpellForm from '../form';
+import SpellForm from '../components/form';
 import { actions, request } from '../store/createSpellForm';
 
 const { updateFormField } = actions;
@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
   return {
     data,
     errors,
-    requestStatus: status,
+    status,
   };
 };
 
