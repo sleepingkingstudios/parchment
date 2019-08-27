@@ -166,13 +166,15 @@ describe('ApiEndpoint', () => {
     const generatedHooks = { useSomething: () => {} };
     const options = { ...defaultOptions, generateHooks: () => generatedHooks };
     const endpoint = new ApiEndpoint(options);
-    const { hooks } = endpoint;
+    const { actions, hooks } = endpoint;
 
     describe('hooks', () => {
-      it('should call generateHooks() with performRequest and the selector', () => {
+      it('should call generateHooks()', () => {
         expect.hasAssertions();
 
         const generateHooks = jest.fn((opts) => {
+          expect(opts.actions).toEqual(actions);
+
           expect(typeof opts.performRequest).toEqual('function');
           expect(opts.performRequest.name).toEqual('bound performRequest');
 

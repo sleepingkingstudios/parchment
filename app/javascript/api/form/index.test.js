@@ -44,11 +44,25 @@ describe('FormEndpoint', () => {
     describe('hooks', () => {
       const {
         useEndpoint,
+        useSubmitForm,
+        useUpdateForm,
       } = hooks;
 
       describe('useEndpoint()', () => {
         it('should be a function', () => {
           expect(typeof useEndpoint).toEqual('function');
+        });
+      });
+
+      describe('useSubmitForm()', () => {
+        it('should be a function', () => {
+          expect(typeof useSubmitForm).toEqual('function');
+        });
+      });
+
+      describe('useUpdateForm()', () => {
+        it('should be a function', () => {
+          expect(typeof useUpdateForm).toEqual('function');
         });
       });
     });

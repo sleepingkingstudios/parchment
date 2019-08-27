@@ -45,7 +45,11 @@ class ApiEndpoint {
     });
     const { performRequest } = request;
     const selector = valueOrDefault(generateSelector, defaultGenerateSelector)({ namespace });
-    const hooks = valueOrDefault(generateHooks, defaultGenerateHooks)({ performRequest, selector });
+    const hooks = valueOrDefault(generateHooks, defaultGenerateHooks)({
+      actions,
+      performRequest,
+      selector,
+    });
 
     this.actions = actions;
     this.hooks = hooks;

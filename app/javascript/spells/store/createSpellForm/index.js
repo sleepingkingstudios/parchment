@@ -5,12 +5,7 @@ import redirect from './redirect';
 
 const namespace = 'spells/createSpellForm';
 const REQUEST_URL = '/api/spells';
-
-export const {
-  actions,
-  reducer,
-  request,
-} = new FormEndpoint({
+const endpoint = new FormEndpoint({
   data: { spell: buildSpell() },
   middleware: [
     redirect,
@@ -19,3 +14,12 @@ export const {
   namespace,
   url: REQUEST_URL,
 });
+
+export default endpoint;
+
+export const {
+  actions,
+  hooks,
+  reducer,
+  request,
+} = endpoint;

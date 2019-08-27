@@ -2,6 +2,7 @@ import ApiEndpoint from '../endpoint/index';
 import FormRequest from './request';
 import generateActions from './actions';
 import generateInitialState from '../endpoint/initialState';
+import generateHooks from './hooks';
 import generateReducer from './reducer';
 
 class FormEndpoint extends ApiEndpoint {
@@ -10,6 +11,7 @@ class FormEndpoint extends ApiEndpoint {
       Object.assign(
         {
           generateActions,
+          generateHooks,
           generateInitialState,
           generateReducer,
           generateRequest: opts => new FormRequest(opts),
