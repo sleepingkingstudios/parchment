@@ -9,7 +9,7 @@ import {
   FAILURE,
   SUCCESS,
 } from '../../../store/requestStatus';
-import { useSpell } from '../../store/showFindSpell';
+import { hooks } from '../../store/showFindSpell';
 
 jest.mock('../../store/showFindSpell');
 
@@ -17,10 +17,10 @@ describe('ShowSpellBlock', () => {
   const defaultProps = {};
 
   describe('with status: INITIALIZED', () => {
-    const state = { status: INITIALIZED };
+    const state = { data: {}, status: INITIALIZED };
 
     beforeEach(() => {
-      useSpell.mockImplementationOnce(() => state);
+      hooks.useEndpoint.mockImplementationOnce(() => state);
     });
 
     it('should display the pending message', () => {
@@ -37,10 +37,10 @@ describe('ShowSpellBlock', () => {
   });
 
   describe('with status: FAILURE', () => {
-    const state = { status: FAILURE };
+    const state = { data: {}, status: FAILURE };
 
     beforeEach(() => {
-      useSpell.mockImplementationOnce(() => state);
+      hooks.useEndpoint.mockImplementationOnce(() => state);
     });
 
     it('should display the failure message', () => {
@@ -57,10 +57,10 @@ describe('ShowSpellBlock', () => {
   });
 
   describe('with status: PENDING', () => {
-    const state = { status: PENDING };
+    const state = { data: {}, status: PENDING };
 
     beforeEach(() => {
-      useSpell.mockImplementationOnce(() => state);
+      hooks.useEndpoint.mockImplementationOnce(() => state);
     });
 
     it('should display the pending message', () => {
@@ -77,14 +77,15 @@ describe('ShowSpellBlock', () => {
   });
 
   describe('with status: SUCCESS', () => {
-    const state = { spell: spellsData[0], status: SUCCESS };
+    const state = { data: { spell: spellsData[0] }, status: SUCCESS };
 
     beforeEach(() => {
-      useSpell.mockImplementationOnce(() => state);
+      hooks.useEndpoint.mockImplementationOnce(() => state);
     });
 
     it('should render the Spell block', () => {
-      const { spell, status } = state;
+      const { data, status } = state;
+      const { spell } = data;
       const wrapper = shallow(<ShowSpellBlock {...defaultProps} />);
       const rendered = wrapper
         .find('LoaderSwitch')

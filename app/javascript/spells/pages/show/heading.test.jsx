@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import ShowSpellHeading from './heading';
-import { useSpell } from '../../store/showFindSpell';
+import { hooks } from '../../store/showFindSpell';
 import { spellsData } from '../../fixtures';
 
 jest.mock('../../store/showFindSpell');
@@ -12,7 +12,7 @@ describe('ShowSpellHeading', () => {
 
   describe('when the selector does not return a spell', () => {
     beforeEach(() => {
-      useSpell.mockImplementationOnce(fn => fn({ spell: {} }));
+      hooks.useEndpoint.mockImplementationOnce(fn => fn({ data: { spell: {} } }));
     });
 
     it('should render the heading with no buttons', () => {
@@ -36,7 +36,7 @@ describe('ShowSpellHeading', () => {
     ];
 
     beforeEach(() => {
-      useSpell.mockImplementationOnce(fn => fn({ spell }));
+      hooks.useEndpoint.mockImplementationOnce(fn => fn({ data: { spell } }));
     });
 
     it('should render the heading with an update button', () => {

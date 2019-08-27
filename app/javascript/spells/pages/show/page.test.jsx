@@ -3,9 +3,11 @@ import { shallow } from 'enzyme';
 
 import ShowSpellBreadcrumbs from './breadcrumbs';
 import ShowSpellPage from './page';
-import { requestSpell } from '../../store/showFindSpell';
+import { hooks } from '../../store/showFindSpell';
 
 jest.mock('../../store/showFindSpell');
+
+hooks.usePerformRequest.mockImplementation(() => () => {});
 
 describe('ShowSpellPage', () => {
   const id = '00000000-0000-0000-0000-000000000000';
@@ -33,9 +35,14 @@ describe('ShowSpellPage', () => {
   });
 
   it('should find the spell by id', () => {
+    const performRequest = jest.fn();
+
+    hooks.usePerformRequest.mockImplementationOnce(() => performRequest);
+
     shallow(<ShowSpellPage {...defaultProps} />);
 
-    expect(requestSpell).toHaveBeenCalledWith(id);
+    expect(hooks.usePerformRequest).toHaveBeenCalled();
+    expect(performRequest).toHaveBeenCalled();
   });
 
   it('should match the snapshot', () => {
