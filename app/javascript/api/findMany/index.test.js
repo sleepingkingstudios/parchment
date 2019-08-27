@@ -44,7 +44,7 @@ describe('FindManyEndpoint', () => {
     describe('hooks', () => {
       const {
         useEndpoint,
-        usePerformRequest,
+        useRequestData,
       } = hooks;
 
       describe('useEndpoint()', () => {
@@ -53,9 +53,9 @@ describe('FindManyEndpoint', () => {
         });
       });
 
-      describe('usePerformRequest()', () => {
+      describe('useRequestData()', () => {
         it('should be a function', () => {
-          expect(typeof usePerformRequest).toEqual('function');
+          expect(typeof useRequestData).toEqual('function');
         });
       });
     });

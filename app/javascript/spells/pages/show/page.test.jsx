@@ -7,7 +7,7 @@ import { hooks } from '../../store/showFindSpell';
 
 jest.mock('../../store/showFindSpell');
 
-hooks.usePerformRequest.mockImplementation(() => () => {});
+hooks.useRequestData.mockImplementation(() => () => {});
 
 describe('ShowSpellPage', () => {
   const id = '00000000-0000-0000-0000-000000000000';
@@ -37,11 +37,11 @@ describe('ShowSpellPage', () => {
   it('should find the spell by id', () => {
     const performRequest = jest.fn();
 
-    hooks.usePerformRequest.mockImplementationOnce(() => performRequest);
+    hooks.useRequestData.mockImplementationOnce(() => performRequest);
 
     shallow(<ShowSpellPage {...defaultProps} />);
 
-    expect(hooks.usePerformRequest).toHaveBeenCalled();
+    expect(hooks.useRequestData).toHaveBeenCalled();
     expect(performRequest).toHaveBeenCalled();
   });
 

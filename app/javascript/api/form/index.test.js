@@ -44,18 +44,11 @@ describe('FormEndpoint', () => {
     describe('hooks', () => {
       const {
         useEndpoint,
-        usePerformRequest,
       } = hooks;
 
       describe('useEndpoint()', () => {
         it('should be a function', () => {
           expect(typeof useEndpoint).toEqual('function');
-        });
-      });
-
-      describe('usePerformRequest()', () => {
-        it('should be a function', () => {
-          expect(typeof usePerformRequest).toEqual('function');
         });
       });
     });

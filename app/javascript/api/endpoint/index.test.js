@@ -47,20 +47,11 @@ describe('ApiEndpoint', () => {
     });
 
     describe('hooks', () => {
-      const {
-        useEndpoint,
-        usePerformRequest,
-      } = hooks;
+      const { useEndpoint } = hooks;
 
       describe('useEndpoint()', () => {
         it('should be a function', () => {
           expect(typeof useEndpoint).toEqual('function');
-        });
-      });
-
-      describe('usePerformRequest()', () => {
-        it('should be a function', () => {
-          expect(typeof usePerformRequest).toEqual('function');
         });
       });
     });

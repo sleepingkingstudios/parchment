@@ -24,10 +24,12 @@ const buttons = [
     url: '/spells/create',
   },
 ];
-const { usePerformRequest } = hooks;
+const { useRequestData } = hooks;
 
 const SpellsPage = () => {
-  usePerformRequest()();
+  const requestData = useRequestData();
+
+  requestData();
 
   return (
     <Page breadcrumbs={breadcrumbs} className="page-spells">

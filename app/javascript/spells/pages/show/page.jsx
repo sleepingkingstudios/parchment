@@ -13,12 +13,13 @@ const getSpellId = ({ match }) => {
   return params.id;
 };
 
-const { usePerformRequest } = hooks;
+const { useRequestData } = hooks;
 
 const ShowSpellPage = (props) => {
   const id = getSpellId(props);
+  const requestData = useRequestData({ wildcards: { id } });
 
-  usePerformRequest({ wildcards: { id } })();
+  requestData();
 
   return (
     <Page breadcrumbs={<ShowSpellBreadcrumbs />} className="page-spells">

@@ -6,7 +6,7 @@ import { hooks } from '../../store/indexFindSpells';
 
 jest.mock('../../store/indexFindSpells');
 
-hooks.usePerformRequest.mockImplementation(() => () => {});
+hooks.useRequestData.mockImplementation(() => () => {});
 
 describe('<SpellsPage />', () => {
   const breadcrumbs = [
@@ -42,11 +42,11 @@ describe('<SpellsPage />', () => {
   it('should find the spells', () => {
     const performRequest = jest.fn();
 
-    hooks.usePerformRequest.mockImplementationOnce(() => performRequest);
+    hooks.useRequestData.mockImplementationOnce(() => performRequest);
 
     shallow(<SpellsPage {...defaultProps} />);
 
-    expect(hooks.usePerformRequest).toHaveBeenCalled();
+    expect(hooks.useRequestData).toHaveBeenCalled();
     expect(performRequest).toHaveBeenCalled();
   });
 
