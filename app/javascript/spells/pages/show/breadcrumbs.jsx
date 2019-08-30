@@ -1,10 +1,12 @@
 import React from 'react';
 
 import Breadcrumbs from '../../../components/breadcrumbs/index';
-import { useSpell } from '../../store/showFindSpell';
+import { hooks } from '../../store/showFindSpell';
 
-const generateBreadcrumbs = ({ spell }) => (
-  [
+const generateBreadcrumbs = ({ data }) => {
+  const { spell } = data;
+
+  return [
     {
       label: 'Home',
       url: '/',
@@ -17,11 +19,12 @@ const generateBreadcrumbs = ({ spell }) => (
       label: ((spell && spell.name) || 'Loading...'),
       active: true,
     },
-  ]
-);
+  ];
+};
+const { useEndpoint } = hooks;
 
 const ShowSpellBreadcrumbs = () => {
-  const breadcrumbs = useSpell(generateBreadcrumbs);
+  const breadcrumbs = useEndpoint(generateBreadcrumbs);
 
   return (
     <Breadcrumbs breadcrumbs={breadcrumbs} />

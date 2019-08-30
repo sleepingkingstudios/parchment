@@ -2,6 +2,7 @@ import ApiEndpoint from '../endpoint/index';
 import FindOneRequest from './request';
 import generateActions from '../endpoint/actions';
 import generateInitialState from '../endpoint/initialState';
+import generateHooks from './hooks';
 import generateReducer from './reducer';
 
 class FindManyEndpoint extends ApiEndpoint {
@@ -10,6 +11,7 @@ class FindManyEndpoint extends ApiEndpoint {
       Object.assign(
         {
           generateActions,
+          generateHooks,
           generateInitialState,
           generateReducer,
           generateRequest: opts => new FindOneRequest(opts),

@@ -24,9 +24,11 @@ describe('ApiEndpoint', () => {
     const endpoint = new ApiEndpoint(options);
     const {
       actions,
+      hooks,
       namespace,
       reducer,
       request,
+      selector,
     } = endpoint;
 
     describe('actions', () => {
@@ -41,6 +43,16 @@ describe('ApiEndpoint', () => {
 
       it('should generate the actions', () => {
         expect(actions).toEqual(generatedActions);
+      });
+    });
+
+    describe('hooks', () => {
+      const { useEndpoint } = hooks;
+
+      describe('useEndpoint()', () => {
+        it('should be a function', () => {
+          expect(typeof useEndpoint).toEqual('function');
+        });
       });
     });
 
@@ -104,6 +116,19 @@ describe('ApiEndpoint', () => {
         expect(request.url).toEqual(options.url);
       });
     });
+
+    describe('selector', () => {
+      const inner = { key: 'value' };
+      const state = { api: { endpoint: inner } };
+
+      it('should be a function', () => {
+        expect(typeof selector).toEqual('function');
+      });
+
+      it('should select the data by namespace', () => {
+        expect(selector(state)).toEqual(inner);
+      });
+    });
   });
 
   describe('with data: value', () => {
@@ -133,6 +158,63 @@ describe('ApiEndpoint', () => {
           actions: generatedActions,
           initialState: generatedInitialState,
         });
+      });
+    });
+  });
+
+  describe('with generateHooks: function', () => {
+    const generatedHooks = { useSomething: () => {} };
+    const options = { ...defaultOptions, generateHooks: () => generatedHooks };
+    const endpoint = new ApiEndpoint(options);
+    const { actions, hooks } = endpoint;
+
+    describe('hooks', () => {
+      it('should call generateHooks()', () => {
+        expect.hasAssertions();
+
+        const generateHooks = jest.fn((opts) => {
+          expect(opts.actions).toEqual(actions);
+
+          expect(typeof opts.performRequest).toEqual('function');
+          expect(opts.performRequest.name).toEqual('bound performRequest');
+
+          expect(typeof opts.selector).toEqual('function');
+          expect(opts.selector.name).toEqual('selector');
+
+          return generatedHooks;
+        });
+
+        /* eslint-disable-next-line no-new */
+        new ApiEndpoint({ ...options, generateHooks });
+      });
+
+      it('should generate the hooks', () => {
+        expect(hooks).toEqual(generatedHooks);
+      });
+    });
+  });
+
+  describe('with generateSelector: function', () => {
+    const generatedSelector = state => state;
+    const options = { ...defaultOptions, generateSelector: () => generatedSelector };
+    const endpoint = new ApiEndpoint(options);
+    const {
+      namespace,
+      selector,
+    } = endpoint;
+
+    describe('selector', () => {
+      it('should call generateSelector() with the namespace', () => {
+        const generateSelector = jest.fn(() => generatedSelector);
+
+        /* eslint-disable-next-line no-new */
+        new ApiEndpoint({ ...options, generateSelector });
+
+        expect(generateSelector).toHaveBeenCalledWith({ namespace });
+      });
+
+      it('should generate the selector', () => {
+        expect(selector).toEqual(generatedSelector);
       });
     });
   });

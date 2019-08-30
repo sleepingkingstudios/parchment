@@ -16,9 +16,11 @@ describe('FormEndpoint', () => {
     const endpoint = new FormEndpoint(options);
     const {
       actions,
+      hooks,
       namespace,
       reducer,
       request,
+      selector,
     } = endpoint;
 
     describe('actions', () => {
@@ -35,6 +37,32 @@ describe('FormEndpoint', () => {
           } else {
             expect(typeof value).toEqual('function');
           }
+        });
+      });
+    });
+
+    describe('hooks', () => {
+      const {
+        useEndpoint,
+        useSubmitForm,
+        useUpdateForm,
+      } = hooks;
+
+      describe('useEndpoint()', () => {
+        it('should be a function', () => {
+          expect(typeof useEndpoint).toEqual('function');
+        });
+      });
+
+      describe('useSubmitForm()', () => {
+        it('should be a function', () => {
+          expect(typeof useSubmitForm).toEqual('function');
+        });
+      });
+
+      describe('useUpdateForm()', () => {
+        it('should be a function', () => {
+          expect(typeof useUpdateForm).toEqual('function');
         });
       });
     });
@@ -69,6 +97,19 @@ describe('FormEndpoint', () => {
 
       it('should set the request url', () => {
         expect(request.url).toEqual(options.url);
+      });
+    });
+
+    describe('selector', () => {
+      const inner = { key: 'value' };
+      const state = { api: { endpoint: inner } };
+
+      it('should be a function', () => {
+        expect(typeof selector).toEqual('function');
+      });
+
+      it('should select the data by namespace', () => {
+        expect(selector(state)).toEqual(inner);
       });
     });
   });

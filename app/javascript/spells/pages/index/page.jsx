@@ -3,7 +3,7 @@ import React from 'react';
 import HeadingWithButtons from '../../../components/heading-with-buttons';
 import Page from '../../../components/page';
 import IndexSpellsTable from './table';
-import { requestSpells } from '../../store/indexFindSpells';
+import { hooks } from '../../store/indexFindSpells';
 
 const breadcrumbs = [
   {
@@ -24,9 +24,12 @@ const buttons = [
     url: '/spells/create',
   },
 ];
+const { useRequestData } = hooks;
 
 const SpellsPage = () => {
-  requestSpells();
+  const requestData = useRequestData();
+
+  requestData();
 
   return (
     <Page breadcrumbs={breadcrumbs} className="page-spells">

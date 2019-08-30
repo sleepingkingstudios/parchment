@@ -1,3 +1,5 @@
+import defaultGenerateHooks from './hooks';
+import defaultGenerateSelector from './selector';
 import {
   applyMiddleware,
   selectMiddleware,
@@ -21,9 +23,11 @@ class ApiEndpoint {
   constructor(options) {
     const {
       generateActions,
+      generateHooks,
       generateInitialState,
       generateReducer,
       generateRequest,
+      generateSelector,
       method,
       middleware,
       namespace,
@@ -39,14 +43,23 @@ class ApiEndpoint {
       namespace,
       url,
     });
+    const { performRequest } = request;
+    const selector = valueOrDefault(generateSelector, defaultGenerateSelector)({ namespace });
+    const hooks = valueOrDefault(generateHooks, defaultGenerateHooks)({
+      actions,
+      performRequest,
+      selector,
+    });
 
     this.actions = actions;
+    this.hooks = hooks;
     this.namespace = namespace;
     this.reducer = applyMiddleware(
       reducer,
       selectMiddleware(middleware, 'handleAction'),
     );
     this.request = applyMiddlewareToRequest(request, middleware);
+    this.selector = selector;
   }
 }
 

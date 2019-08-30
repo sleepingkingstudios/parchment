@@ -2,7 +2,7 @@ import React from 'react';
 
 import { LoaderSwitch } from '../../../components/loader';
 import { SpellBlock } from '../../components/block';
-import { useSpell } from '../../store/showFindSpell';
+import { hooks } from '../../store/showFindSpell';
 
 const renderFailure = () => (
   <p>Unable to load spell from the server.</p>
@@ -10,9 +10,11 @@ const renderFailure = () => (
 const renderPending = () => (
   <p>Loading spell from the server...</p>
 );
+const { useEndpoint } = hooks;
 
 const ShowSpellBlock = () => {
-  const { spell, status } = useSpell();
+  const { data, status } = useEndpoint();
+  const { spell } = data;
 
   return (
     <LoaderSwitch

@@ -1,9 +1,11 @@
 import React from 'react';
 
 import HeadingWithButtons from '../../../components/heading-with-buttons';
-import { useSpell } from '../../store/showFindSpell';
+import { hooks } from '../../store/showFindSpell';
 
-const generateButtons = ({ spell }) => {
+const generateButtons = ({ data }) => {
+  const { spell } = data;
+
   if (!(spell && spell.id)) { return []; }
 
   return [
@@ -14,9 +16,10 @@ const generateButtons = ({ spell }) => {
     },
   ];
 };
+const { useEndpoint } = hooks;
 
 const ShowSpellHeading = () => {
-  const buttons = useSpell(generateButtons);
+  const buttons = useEndpoint(generateButtons);
 
   return (
     <HeadingWithButtons buttons={buttons}>

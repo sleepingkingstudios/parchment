@@ -1,8 +1,6 @@
 import {
   namespace,
   request,
-  requestSpell,
-  useSpell,
 } from './index';
 
 describe('ShowFindSpell store', () => {
@@ -28,18 +26,6 @@ describe('ShowFindSpell store', () => {
       it('should be the spell show URL', () => {
         expect(url).toEqual('/api/spells/:id');
       });
-    });
-  });
-
-  describe('requestSpell()', () => {
-    it('should be a function', () => {
-      expect(typeof requestSpell).toEqual('function');
-    });
-  });
-
-  describe('useSpell()', () => {
-    it('should be a function', () => {
-      expect(typeof useSpell).toEqual('function');
     });
   });
 });

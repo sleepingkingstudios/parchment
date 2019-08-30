@@ -5,7 +5,7 @@ import Page from '../../../components/page';
 import ShowSpellBlock from './block';
 import ShowSpellBreadcrumbs from './breadcrumbs';
 import ShowSpellHeading from './heading';
-import { requestSpell } from '../../store/showFindSpell';
+import { hooks } from '../../store/showFindSpell';
 
 const getSpellId = ({ match }) => {
   const { params } = match;
@@ -13,10 +13,13 @@ const getSpellId = ({ match }) => {
   return params.id;
 };
 
+const { useRequestData } = hooks;
+
 const ShowSpellPage = (props) => {
   const id = getSpellId(props);
+  const requestData = useRequestData({ wildcards: { id } });
 
-  requestSpell(id);
+  requestData();
 
   return (
     <Page breadcrumbs={<ShowSpellBreadcrumbs />} className="page-spells">

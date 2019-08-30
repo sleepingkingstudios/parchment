@@ -16,9 +16,11 @@ describe('FindManyEndpoint', () => {
     const endpoint = new FindManyEndpoint(options);
     const {
       actions,
+      hooks,
       namespace,
       reducer,
       request,
+      selector,
     } = endpoint;
 
     describe('actions', () => {
@@ -35,6 +37,25 @@ describe('FindManyEndpoint', () => {
           } else {
             expect(typeof value).toEqual('function');
           }
+        });
+      });
+    });
+
+    describe('hooks', () => {
+      const {
+        useEndpoint,
+        useRequestData,
+      } = hooks;
+
+      describe('useEndpoint()', () => {
+        it('should be a function', () => {
+          expect(typeof useEndpoint).toEqual('function');
+        });
+      });
+
+      describe('useRequestData()', () => {
+        it('should be a function', () => {
+          expect(typeof useRequestData).toEqual('function');
         });
       });
     });
@@ -69,6 +90,19 @@ describe('FindManyEndpoint', () => {
 
       it('should set the request url', () => {
         expect(request.url).toEqual(options.url);
+      });
+    });
+
+    describe('selector', () => {
+      const inner = { key: 'value' };
+      const state = { api: { endpoint: inner } };
+
+      it('should be a function', () => {
+        expect(typeof selector).toEqual('function');
+      });
+
+      it('should select the data by namespace', () => {
+        expect(selector(state)).toEqual(inner);
       });
     });
   });

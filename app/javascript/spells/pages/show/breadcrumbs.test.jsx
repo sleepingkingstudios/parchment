@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import ShowSpellBreadcrumbs from './breadcrumbs';
-import { useSpell } from '../../store/showFindSpell';
+import { hooks } from '../../store/showFindSpell';
 import { spellsData } from '../../fixtures';
 
 jest.mock('../../store/showFindSpell');
@@ -27,7 +27,7 @@ describe('ShowSpellBreadcrumbs', () => {
     ];
 
     beforeEach(() => {
-      useSpell.mockImplementationOnce(fn => fn({ spell: {} }));
+      hooks.useEndpoint.mockImplementationOnce(fn => fn({ data: { spell: {} } }));
     });
 
     it('should render the loading breadcrumbs', () => {
@@ -57,7 +57,7 @@ describe('ShowSpellBreadcrumbs', () => {
     ];
 
     beforeEach(() => {
-      useSpell.mockImplementationOnce(fn => fn({ spell }));
+      hooks.useEndpoint.mockImplementationOnce(fn => fn({ data: { spell } }));
     });
 
     it('should render the breadcrumbs for the spell', () => {
