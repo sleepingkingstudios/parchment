@@ -1,13 +1,14 @@
 import { connect } from 'react-redux';
 
 import SpellForm from '../components/form';
-import { actions, request } from './store/form/index';
+import { actions, request } from '../store/updateSpellForm';
 
 const { updateFormField } = actions;
 const { performRequest } = request;
 
 const onSubmitAction = () => (dispatch, getState) => {
-  const { updateSpellForm } = getState();
+  const { spells } = getState();
+  const { updateSpellForm } = spells;
   const { data } = updateSpellForm;
   const { spell } = data;
   const { id } = spell;
@@ -16,7 +17,8 @@ const onSubmitAction = () => (dispatch, getState) => {
 };
 
 const mapStateToProps = (state) => {
-  const { updateSpellForm } = state;
+  const { spells } = state;
+  const { updateSpellForm } = spells;
   const { data, errors, status } = updateSpellForm;
 
   return {

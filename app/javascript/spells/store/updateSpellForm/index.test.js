@@ -4,7 +4,7 @@ import {
   reducer,
   request,
 } from './index';
-import { spellDefaultAttributes } from '../../../entities';
+import { spellDefaultAttributes } from '../../entities';
 
 describe('Update Spell store', () => {
   describe('actions', () => {
@@ -15,13 +15,13 @@ describe('Update Spell store', () => {
 
     describe('SET_DATA', () => {
       it('should define the namespaced action', () => {
-        expect(SET_DATA).toEqual('updateSpellForm/setData');
+        expect(SET_DATA).toEqual('spells/updateSpellForm/setData');
       });
     });
 
     describe('UPDATE_FORM_FIELD', () => {
       it('should define the namespaced action', () => {
-        expect(UPDATE_FORM_FIELD).toEqual('updateSpellForm/updateFormField');
+        expect(UPDATE_FORM_FIELD).toEqual('spells/updateSpellForm/updateFormField');
       });
     });
   });

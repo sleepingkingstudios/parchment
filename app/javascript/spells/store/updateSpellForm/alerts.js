@@ -1,5 +1,5 @@
-import { addAlert } from '../../../../components/alerts/store/actions';
-import { generateFingerprintUuid } from '../../../../utils/uuid';
+import { addAlert } from '../../../components/alerts/store/actions';
+import { generateFingerprintUuid } from '../../../utils/uuid';
 
 const failureAlert = {
   id: generateFingerprintUuid('spells/update'),

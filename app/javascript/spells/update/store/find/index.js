@@ -2,7 +2,7 @@ import FindOneEndpoint from '../../../../api/findOne';
 import alerts from './alerts';
 import redirect from './redirect';
 import { buildSpell } from '../../../entities';
-import { actions as formActions } from '../form/index';
+import { actions as formActions } from '../../../store/updateSpellForm';
 
 const REQUEST_URL = '/api/spells/:id';
 const findSpell = new FindOneEndpoint({
