@@ -1,5 +1,6 @@
 import {
   actions,
+  hooks,
   reducer,
   request,
 } from './index';
@@ -21,6 +22,32 @@ describe('Update Spell store', () => {
     describe('UPDATE_FORM_FIELD', () => {
       it('should define the namespaced action', () => {
         expect(UPDATE_FORM_FIELD).toEqual('updateSpellForm/updateFormField');
+      });
+    });
+  });
+
+  describe('hooks', () => {
+    const {
+      useEndpoint,
+      useSubmitForm,
+      useUpdateForm,
+    } = hooks;
+
+    describe('useEndpoint()', () => {
+      it('should be a function', () => {
+        expect(typeof useEndpoint).toEqual('function');
+      });
+    });
+
+    describe('useSubmitForm()', () => {
+      it('should be a function', () => {
+        expect(typeof useSubmitForm).toEqual('function');
+      });
+    });
+
+    describe('useUpdateForm()', () => {
+      it('should be a function', () => {
+        expect(typeof useUpdateForm).toEqual('function');
       });
     });
   });

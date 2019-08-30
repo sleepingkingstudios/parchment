@@ -8,6 +8,7 @@ const REQUEST_URL = '/api/spells/:id';
 
 export const {
   actions,
+  hooks,
   reducer,
   request,
 } = new FormEndpoint({

@@ -43,4 +43,10 @@ describe('CreateSpellPage', () => {
 
     expect(form).toExist();
   });
+
+  it('should match the snapshot', () => {
+    const rendered = shallow(<CreateSpellPage {...defaultProps} />);
+
+    expect(rendered).toMatchSnapshot();
+  });
 });
