@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 
 import generateHooks from './hooks';
 
@@ -7,10 +7,13 @@ jest.mock('react');
 jest.mock('react-redux');
 
 const dispatch = jest.fn();
+const getState = jest.fn();
+const store = { getState };
 
 useSelector.mockImplementation(fn => fn);
 useDispatch.mockImplementation(() => dispatch);
 useEffect.mockImplementation(fn => fn());
+useStore.mockImplementation(() => store);
 
 describe('API endpoint hooks', () => {
   const requestHandler = jest.fn();
@@ -68,11 +71,11 @@ describe('API endpoint hooks', () => {
         expect(useEffect).toHaveBeenCalled();
       });
 
-      it('should call performRequest with the dispatch', () => {
+      it('should call performRequest with dispatch and getState', () => {
         requestHook();
 
         expect(performRequest).toHaveBeenCalled();
-        expect(requestHandler).toHaveBeenCalledWith(dispatch);
+        expect(requestHandler).toHaveBeenCalledWith(dispatch, getState);
       });
     });
 
@@ -87,11 +90,11 @@ describe('API endpoint hooks', () => {
         expect(useEffect).toHaveBeenCalled();
       });
 
-      it('should call performRequest with the dispatch', () => {
+      it('should call performRequest with dispatch and getState', () => {
         requestHook();
 
         expect(performRequest).toHaveBeenCalledWith(params);
-        expect(requestHandler).toHaveBeenCalledWith(dispatch);
+        expect(requestHandler).toHaveBeenCalledWith(dispatch, getState);
       });
     });
   });

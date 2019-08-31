@@ -2,7 +2,8 @@ import React from 'react';
 
 import { LoaderSwitch } from '../../../components/loader';
 import SpellForm from '../../components/form';
-import { hooks } from '../../store/updateSpellForm';
+import { hooks as findHooks } from '../../store/updateFindSpell';
+import { hooks as formHooks } from '../../store/updateSpellForm';
 import { dig } from '../../../utils/object';
 
 const renderFailure = () => (
@@ -11,10 +12,12 @@ const renderFailure = () => (
 const renderPending = () => (
   <p>Loading spell from the server...</p>
 );
-const { useEndpoint, useSubmitForm, useUpdateForm } = hooks;
+const useFindEndpoint = findHooks.useEndpoint;
+const { useEndpoint, useSubmitForm, useUpdateForm } = formHooks;
 
 const UpdateSpellForm = () => {
   const { data, errors, status } = useEndpoint();
+  const findStatus = useFindEndpoint().status;
   const id = dig(data, 'spell', 'id');
   const onChangeAction = useUpdateForm();
   const onSubmitAction = useSubmitForm({ wildcards: { id } });
@@ -34,7 +37,7 @@ const UpdateSpellForm = () => {
           isUpdate
         />
       )}
-      status={status}
+      status={findStatus}
     />
   );
 };

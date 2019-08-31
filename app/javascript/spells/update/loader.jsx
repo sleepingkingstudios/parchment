@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ConnectSpellLoader from '../loader/index';
 import UpdateSpellPage from './page';
-import findSpell from './store/find/index';
+import findSpell from '../store/updateFindSpell';
 
 const getSpellId = (match) => {
   const { params } = match;
