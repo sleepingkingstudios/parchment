@@ -32,7 +32,7 @@ const renderMethod = (props) => {
   }
 };
 
-const LoaderSwitch = (props) => {
+const StatusSwitch = (props) => {
   const {
     renderFailure,
     renderInitialized,
@@ -46,14 +46,14 @@ const LoaderSwitch = (props) => {
   return render({ status, ...rest });
 };
 
-LoaderSwitch.defaultProps = {
+StatusSwitch.defaultProps = {
   renderFailure: defaultRender,
   renderInitialized: defaultRender,
   renderPending: defaultRender,
   renderSuccess: defaultRender,
 };
 
-LoaderSwitch.propTypes = {
+StatusSwitch.propTypes = {
   renderFailure: PropTypes.func,
   renderInitialized: PropTypes.func,
   renderPending: PropTypes.func,
@@ -61,4 +61,4 @@ LoaderSwitch.propTypes = {
   status: PropTypes.string.isRequired,
 };
 
-export default LoaderSwitch;
+export default StatusSwitch;

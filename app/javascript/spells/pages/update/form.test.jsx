@@ -34,9 +34,9 @@ describe('UpdateSpellForm', () => {
 
     it('should display the pending message', () => {
       const wrapper = shallow(<UpdateSpellForm {...defaultProps} />);
-      const rendered = wrapper.find('LoaderSwitch').renderProp('renderInitialized')();
+      const rendered = wrapper.find('StatusSwitch').renderProp('renderInitialized')();
 
-      expect(wrapper).toHaveDisplayName('LoaderSwitch');
+      expect(wrapper).toHaveDisplayName('StatusSwitch');
       expect(wrapper).toHaveProp({ status: INITIALIZED });
 
       expect(rendered).toHaveDisplayName('p');
@@ -51,9 +51,9 @@ describe('UpdateSpellForm', () => {
 
     it('should display the failure message', () => {
       const wrapper = shallow(<UpdateSpellForm {...defaultProps} />);
-      const rendered = wrapper.find('LoaderSwitch').renderProp('renderFailure')();
+      const rendered = wrapper.find('StatusSwitch').renderProp('renderFailure')();
 
-      expect(wrapper).toHaveDisplayName('LoaderSwitch');
+      expect(wrapper).toHaveDisplayName('StatusSwitch');
       expect(wrapper).toHaveProp({ status: FAILURE });
 
       expect(rendered).toHaveDisplayName('p');
@@ -68,9 +68,9 @@ describe('UpdateSpellForm', () => {
 
     it('should display the pending message', () => {
       const wrapper = shallow(<UpdateSpellForm {...defaultProps} />);
-      const rendered = wrapper.find('LoaderSwitch').renderProp('renderInitialized')();
+      const rendered = wrapper.find('StatusSwitch').renderProp('renderInitialized')();
 
-      expect(wrapper).toHaveDisplayName('LoaderSwitch');
+      expect(wrapper).toHaveDisplayName('StatusSwitch');
       expect(wrapper).toHaveProp({ status: PENDING });
 
       expect(rendered).toHaveDisplayName('p');
@@ -93,7 +93,7 @@ describe('UpdateSpellForm', () => {
       const { data, errors, status } = formState;
       const wrapper = shallow(<UpdateSpellForm {...defaultProps} />);
       const rendered = wrapper
-        .find('LoaderSwitch')
+        .find('StatusSwitch')
         .renderProp('renderSuccess')({ data, errors, status });
 
       expect(rendered).toHaveDisplayName('SpellForm');
