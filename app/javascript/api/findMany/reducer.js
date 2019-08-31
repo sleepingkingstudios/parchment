@@ -2,7 +2,7 @@ import {
   FAILURE,
   PENDING,
   SUCCESS,
-} from '../../store/requestStatus';
+} from '../status';
 
 const generateReducer = ({ actions, initialState }) => {
   const {

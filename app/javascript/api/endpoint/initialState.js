@@ -1,4 +1,4 @@
-import { INITIALIZED } from '../../store/requestStatus';
+import { INITIALIZED } from '../status';
 
 const extractData = (options) => {
   if (typeof options === 'undefined' || options === null) { return {}; }

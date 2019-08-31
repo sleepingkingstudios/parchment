@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import CreateSpellForm from './form';
 import { spellsData } from '../../fixtures';
-import { INITIALIZED } from '../../../store/requestStatus';
+import { INITIALIZED } from '../../../api/status';
 import { hooks } from '../../store/createSpellForm';
 
 jest.mock('../../store/createSpellForm');

@@ -5,7 +5,7 @@ import {
   FAILURE,
   PENDING,
   SUCCESS,
-} from '../../store/requestStatus';
+} from '../../api/status';
 
 const defaultRender = () => null;
 

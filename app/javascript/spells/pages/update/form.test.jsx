@@ -8,7 +8,7 @@ import {
   PENDING,
   FAILURE,
   SUCCESS,
-} from '../../../store/requestStatus';
+} from '../../../api/status';
 import { hooks as findHooks } from '../../store/updateFindSpell';
 import { hooks as formHooks } from '../../store/updateSpellForm';
 

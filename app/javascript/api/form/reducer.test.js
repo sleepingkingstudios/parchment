@@ -5,7 +5,7 @@ import {
   FAILURE,
   PENDING,
   SUCCESS,
-} from '../../store/requestStatus';
+} from '../status';
 import { deepAssignProperty } from '../../utils/object';
 
 describe('Form request reducer', () => {

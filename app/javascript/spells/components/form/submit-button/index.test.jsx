@@ -9,7 +9,7 @@ import {
   INITIALIZED,
   PENDING,
   SUCCESS,
-} from '../../../../store/requestStatus';
+} from '../../../../api/status';
 
 describe('<SpellFormSubmitButton />', () => {
   const onSubmitAction = jest.fn(() => ({ payload: { ok: true } }));

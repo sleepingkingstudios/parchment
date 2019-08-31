@@ -3,9 +3,9 @@ import {
   INITIALIZED,
   PENDING,
   SUCCESS,
-} from './requestStatus';
+} from './status';
 
-describe('request status', () => {
+describe('API request status', () => {
   describe('FAILURE', () => {
     it('should equal "failure"', () => {
       expect(FAILURE).toEqual('failure');

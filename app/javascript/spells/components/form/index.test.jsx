@@ -5,7 +5,7 @@ import SpellForm from './index';
 
 import { spellsData } from '../../fixtures';
 import selectSchoolOptions from './selectSchoolOptions';
-import { INITIALIZED } from '../../../store/requestStatus';
+import { INITIALIZED } from '../../../api/status';
 
 describe('<SpellForm />', () => {
   const onChangeAction = jest.fn(

@@ -8,7 +8,7 @@ import {
   PENDING,
   FAILURE,
   SUCCESS,
-} from '../../../store/requestStatus';
+} from '../../../api/status';
 import { hooks } from '../../store/showFindSpell';
 
 jest.mock('../../store/showFindSpell');

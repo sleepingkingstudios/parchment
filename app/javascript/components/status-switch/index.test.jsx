@@ -7,7 +7,7 @@ import {
   FAILURE,
   PENDING,
   SUCCESS,
-} from '../../store/requestStatus';
+} from '../../api/status';
 
 const ExampleComponent = () => (<p>Example component.</p>);
 

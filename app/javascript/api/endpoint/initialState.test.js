@@ -1,5 +1,5 @@
 import generateInitialState from './initialState';
-import { INITIALIZED } from '../../store/requestStatus';
+import { INITIALIZED } from '../status';
 
 describe('API endpoint initial state', () => {
   it('should be a function', () => {
