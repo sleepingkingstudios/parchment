@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Page as CreateSpell } from '../pages/create';
 import { Page as ShowSpell } from '../pages/show';
 import { Page as SpellsIndex } from '../pages/index';
-import UpdateSpell from '../update';
+import { Page as UpdateSpell } from '../pages/update';
 
 const Routes = () => (
   <Switch>
