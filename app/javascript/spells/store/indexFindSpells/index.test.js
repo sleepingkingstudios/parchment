@@ -1,9 +1,29 @@
 import {
+  hooks,
   namespace,
   request,
 } from './index';
 
 describe('Find Spells store', () => {
+  describe('hooks', () => {
+    const {
+      useEndpoint,
+      useRequestData,
+    } = hooks;
+
+    describe('useEndpoint()', () => {
+      it('should be a function', () => {
+        expect(typeof useEndpoint).toEqual('function');
+      });
+    });
+
+    describe('useRequestData()', () => {
+      it('should be a function', () => {
+        expect(typeof useRequestData).toEqual('function');
+      });
+    });
+  });
+
   describe('namespace', () => {
     it('should be spells/showFindSpell', () => {
       expect(namespace).toEqual('spells/indexFindSpells');

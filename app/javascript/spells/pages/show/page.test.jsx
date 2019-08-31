@@ -18,7 +18,7 @@ describe('ShowSpellPage', () => {
     const rendered = shallow(<ShowSpellPage {...defaultProps} />);
 
     expect(rendered).toHaveDisplayName('Page');
-    expect(rendered).toHaveClassName('page-spells');
+    expect(rendered).toHaveClassName('page-show-spell');
     expect(rendered).toHaveProp('breadcrumbs', (<ShowSpellBreadcrumbs />));
   });
 
@@ -41,7 +41,7 @@ describe('ShowSpellPage', () => {
 
     shallow(<ShowSpellPage {...defaultProps} />);
 
-    expect(hooks.useRequestData).toHaveBeenCalled();
+    expect(hooks.useRequestData).toHaveBeenCalledWith({ wildcards: { id } });
     expect(performRequest).toHaveBeenCalled();
   });
 

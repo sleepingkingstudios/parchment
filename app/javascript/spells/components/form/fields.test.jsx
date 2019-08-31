@@ -14,7 +14,7 @@ import {
 } from './fields';
 
 import { spellsData } from '../../fixtures';
-import { INITIALIZED } from '../../../store/requestStatus';
+import { INITIALIZED } from '../../../api/status';
 
 describe('<SpellForm /> fields', () => {
   const onChangeAction = jest.fn(

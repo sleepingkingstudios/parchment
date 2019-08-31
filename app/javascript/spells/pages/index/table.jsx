@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LoaderSwitch } from '../../../components/loader';
+import StatusSwitch from '../../../components/status-switch';
 import { SpellsTable } from '../../components/table';
 import { hooks } from '../../store/indexFindSpells';
 
@@ -17,7 +17,7 @@ const IndexSpellsTable = () => {
   const { spells } = data;
 
   return (
-    <LoaderSwitch
+    <StatusSwitch
       renderFailure={renderFailure}
       renderInitialized={renderPending}
       renderPending={renderPending}

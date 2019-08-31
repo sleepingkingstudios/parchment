@@ -1,11 +1,12 @@
 import {
   actions,
+  hooks,
   reducer,
   request,
 } from './index';
-import { spellDefaultAttributes } from '../../../entities';
+import { spellDefaultAttributes } from '../../entities';
 
-describe('Update Spell store', () => {
+describe('Update Spell form store', () => {
   describe('actions', () => {
     const {
       SET_DATA,
@@ -14,13 +15,39 @@ describe('Update Spell store', () => {
 
     describe('SET_DATA', () => {
       it('should define the namespaced action', () => {
-        expect(SET_DATA).toEqual('updateSpellForm/setData');
+        expect(SET_DATA).toEqual('spells/updateSpellForm/setData');
       });
     });
 
     describe('UPDATE_FORM_FIELD', () => {
       it('should define the namespaced action', () => {
-        expect(UPDATE_FORM_FIELD).toEqual('updateSpellForm/updateFormField');
+        expect(UPDATE_FORM_FIELD).toEqual('spells/updateSpellForm/updateFormField');
+      });
+    });
+  });
+
+  describe('hooks', () => {
+    const {
+      useEndpoint,
+      useSubmitForm,
+      useUpdateForm,
+    } = hooks;
+
+    describe('useEndpoint()', () => {
+      it('should be a function', () => {
+        expect(typeof useEndpoint).toEqual('function');
+      });
+    });
+
+    describe('useSubmitForm()', () => {
+      it('should be a function', () => {
+        expect(typeof useSubmitForm).toEqual('function');
+      });
+    });
+
+    describe('useUpdateForm()', () => {
+      it('should be a function', () => {
+        expect(typeof useUpdateForm).toEqual('function');
       });
     });
   });

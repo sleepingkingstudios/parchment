@@ -2,7 +2,7 @@ import {
   FAILURE,
   PENDING,
   SUCCESS,
-} from '../../store/requestStatus';
+} from '../status';
 import { deepAssignProperty } from '../../utils/object';
 
 const updateData = (state, { path, propName, value }) => {

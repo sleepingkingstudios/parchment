@@ -3,7 +3,7 @@
 exports[`ShowSpellPage should match the snapshot 1`] = `
 <Page
   breadcrumbs={<ShowSpellBreadcrumbs />}
-  className="page-spells"
+  className="page-show-spell"
   layout={null}
   subtitle="5e Campaign Companion"
   title="Parchment"

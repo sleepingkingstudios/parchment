@@ -1,24 +1,24 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import LoaderSwitch from './switch';
+import StatusSwitch from './index';
 import {
   INITIALIZED,
   FAILURE,
   PENDING,
   SUCCESS,
-} from '../../store/requestStatus';
+} from '../../api/status';
 
 const ExampleComponent = () => (<p>Example component.</p>);
 
-describe('LoaderSwitch', () => {
+describe('StatusSwitch', () => {
   const defaultProps = { status: INITIALIZED };
 
   describe('with default props', () => {
     describe('with status: INITIALIZED', () => {
       it('should render an empty component', () => {
         const rendered = shallow(
-          <LoaderSwitch {...defaultProps} status={INITIALIZED} />,
+          <StatusSwitch {...defaultProps} status={INITIALIZED} />,
         );
 
         expect(rendered).toBeEmptyRender();
@@ -28,7 +28,7 @@ describe('LoaderSwitch', () => {
     describe('with status: FAILURE', () => {
       it('should render an empty component', () => {
         const rendered = shallow(
-          <LoaderSwitch {...defaultProps} status={FAILURE} />,
+          <StatusSwitch {...defaultProps} status={FAILURE} />,
         );
 
         expect(rendered).toBeEmptyRender();
@@ -38,7 +38,7 @@ describe('LoaderSwitch', () => {
     describe('with status: PENDING', () => {
       it('should render an empty component', () => {
         const rendered = shallow(
-          <LoaderSwitch {...defaultProps} status={PENDING} />,
+          <StatusSwitch {...defaultProps} status={PENDING} />,
         );
 
         expect(rendered).toBeEmptyRender();
@@ -48,7 +48,7 @@ describe('LoaderSwitch', () => {
     describe('with status: SUCCESS', () => {
       it('should render an empty component', () => {
         const rendered = shallow(
-          <LoaderSwitch {...defaultProps} status={SUCCESS} />,
+          <StatusSwitch {...defaultProps} status={SUCCESS} />,
         );
 
         expect(rendered).toBeEmptyRender();
@@ -66,7 +66,7 @@ describe('LoaderSwitch', () => {
         const customProps = { foo: 'bar' };
 
         const rendered = shallow(
-          <LoaderSwitch
+          <StatusSwitch
             {...props}
             {...customProps}
             renderFailure={renderFailure}
@@ -91,7 +91,7 @@ describe('LoaderSwitch', () => {
         const customProps = { foo: 'bar' };
 
         const rendered = shallow(
-          <LoaderSwitch
+          <StatusSwitch
             {...props}
             {...customProps}
             renderInitialized={renderInitialized}
@@ -116,7 +116,7 @@ describe('LoaderSwitch', () => {
         const customProps = { foo: 'bar' };
 
         const rendered = shallow(
-          <LoaderSwitch
+          <StatusSwitch
             {...props}
             {...customProps}
             renderPending={renderPending}
@@ -141,7 +141,7 @@ describe('LoaderSwitch', () => {
         const customProps = { foo: 'bar' };
 
         const rendered = shallow(
-          <LoaderSwitch
+          <StatusSwitch
             {...props}
             {...customProps}
             renderSuccess={renderSuccess}

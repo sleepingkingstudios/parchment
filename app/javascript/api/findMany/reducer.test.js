@@ -5,7 +5,7 @@ import {
   FAILURE,
   PENDING,
   SUCCESS,
-} from '../../store/requestStatus';
+} from '../status';
 
 describe('Find many request reducer', () => {
   const namespace = 'findWidgets';

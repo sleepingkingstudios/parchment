@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LoaderSwitch } from '../../../components/loader';
+import StatusSwitch from '../../../components/status-switch';
 import { SpellBlock } from '../../components/block';
 import { hooks } from '../../store/showFindSpell';
 
@@ -17,7 +17,7 @@ const ShowSpellBlock = () => {
   const { spell } = data;
 
   return (
-    <LoaderSwitch
+    <StatusSwitch
       renderFailure={renderFailure}
       renderInitialized={renderPending}
       renderPending={renderPending}

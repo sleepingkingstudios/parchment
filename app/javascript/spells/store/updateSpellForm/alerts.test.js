@@ -1,6 +1,6 @@
 import alerts from './alerts';
-import { addAlert } from '../../../../components/alerts/store/actions';
-import { generateFingerprintUuid } from '../../../../utils/uuid';
+import { addAlert } from '../../../components/alerts/store/actions';
+import { generateFingerprintUuid } from '../../../utils/uuid';
 
 describe('Spell update form alerts', () => {
   const {

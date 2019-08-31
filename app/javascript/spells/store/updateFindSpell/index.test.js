@@ -4,7 +4,7 @@ import {
   request,
 } from './index';
 
-describe('ShowFindSpell store', () => {
+describe('Update find Spell store', () => {
   describe('hooks', () => {
     const {
       useEndpoint,
@@ -25,22 +25,13 @@ describe('ShowFindSpell store', () => {
   });
 
   describe('namespace', () => {
-    it('should be spells/showFindSpell', () => {
-      expect(namespace).toEqual('spells/showFindSpell');
+    it('should equal spells/updateFindSpell', () => {
+      expect(namespace).toEqual('spells/updateFindSpell');
     });
   });
 
   describe('request', () => {
-    const {
-      method,
-      url,
-    } = request;
-
-    describe('method', () => {
-      it('should be GET', () => {
-        expect(method).toEqual('GET');
-      });
-    });
+    const { url } = request;
 
     describe('url', () => {
       it('should be the spell show URL', () => {

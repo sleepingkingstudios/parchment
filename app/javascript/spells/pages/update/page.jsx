@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Page from '../../../components/page';
-import ShowSpellBlock from './block';
-import ShowSpellBreadcrumbs from './breadcrumbs';
-import ShowSpellHeading from './heading';
-import { hooks } from '../../store/showFindSpell';
+import UpdateSpellBreadcrumbs from './breadcrumbs';
+import UpdateSpellForm from './form';
+import { hooks } from '../../store/updateFindSpell';
 
 const getSpellId = ({ match }) => {
   const { params } = match;
@@ -15,24 +14,24 @@ const getSpellId = ({ match }) => {
 
 const { useRequestData } = hooks;
 
-const ShowSpellPage = (props) => {
+const UpdateSpellPage = (props) => {
   const id = getSpellId(props);
   const requestData = useRequestData({ wildcards: { id } });
 
   requestData();
 
   return (
-    <Page breadcrumbs={<ShowSpellBreadcrumbs />} className="page-show-spell">
-      <ShowSpellHeading />
+    <Page breadcrumbs={<UpdateSpellBreadcrumbs />} className="page-update-spell">
+      <h1>Update Spell</h1>
 
-      <ShowSpellBlock />
+      <UpdateSpellForm />
     </Page>
   );
 };
 
-ShowSpellPage.defaultProps = {};
+UpdateSpellPage.defaultProps = {};
 
-ShowSpellPage.propTypes = {
+UpdateSpellPage.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -40,4 +39,4 @@ ShowSpellPage.propTypes = {
   }).isRequired,
 };
 
-export default ShowSpellPage;
+export default UpdateSpellPage;

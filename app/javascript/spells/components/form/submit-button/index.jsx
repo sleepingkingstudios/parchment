@@ -10,7 +10,7 @@ import {
   INITIALIZED,
   PENDING,
   SUCCESS,
-} from '../../../../store/requestStatus';
+} from '../../../../api/status';
 
 const isButtonDisabled = (status) => {
   switch (status) {
