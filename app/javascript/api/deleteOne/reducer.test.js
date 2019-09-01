@@ -7,8 +7,8 @@ import {
   SUCCESS,
 } from '../status';
 
-describe('Find one request reducer', () => {
-  const namespace = 'findWidget';
+describe('Delete one request reducer', () => {
+  const namespace = 'deleteWidget';
   const actions = generateActions({ namespace });
   const initialState = generateInitialState({ data: {}, namespace });
   const reducer = generateReducer({ actions, initialState });
@@ -17,10 +17,6 @@ describe('Find one request reducer', () => {
     requestPending,
     requestSuccess,
   } = actions;
-  const previousData = {
-    id: '00000000-0000-0000-0000-000000000000',
-    name: 'Westley',
-  };
   const previousErrors = { name: ["can't be blank"] };
 
   describe('generateReducer', () => {
@@ -86,13 +82,10 @@ describe('Find one request reducer', () => {
   });
 
   describe('when REQUEST_SUCCESS is dispatched', () => {
-    const data = { name: 'Inigo Montoya' };
-
-    it('should mark the request as passing, set the data, and clear the errors', () => {
+    it('should mark the request as passing and clear the errors', () => {
       const state = { ...initialState };
-      const action = requestSuccess(data);
+      const action = requestSuccess({});
       const expected = Object.assign({}, state, {
-        data,
         errors: {},
         status: SUCCESS,
       });
@@ -100,26 +93,11 @@ describe('Find one request reducer', () => {
       expect(reducer(state, action)).toEqual(expected);
     });
 
-    describe('when the state has data', () => {
-      it('should mark the request as passing, set the data, and clear the errors', () => {
-        const state = { ...initialState, data: previousData };
-        const action = requestSuccess(data);
-        const expected = Object.assign({}, state, {
-          data,
-          errors: {},
-          status: SUCCESS,
-        });
-
-        expect(reducer(state, action)).toEqual(expected);
-      });
-    });
-
     describe('when the state has errors', () => {
       it('should mark the request as passing, set the data, and clear the errors', () => {
         const state = { ...initialState, errors: previousErrors };
-        const action = requestSuccess(data);
+        const action = requestSuccess({});
         const expected = Object.assign({}, state, {
-          data,
           errors: {},
           status: SUCCESS,
         });
