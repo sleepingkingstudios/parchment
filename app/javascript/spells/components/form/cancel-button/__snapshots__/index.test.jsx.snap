@@ -3,8 +3,10 @@
 exports[`<SpellFormCancelButton /> should match the snapshot 1`] = `
 <LinkButton
   block={true}
+  buttonSize={null}
   buttonStyle="secondary"
   className={null}
+  link={false}
   outline={true}
   url="/spells"
 >

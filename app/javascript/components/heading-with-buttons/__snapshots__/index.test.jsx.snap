@@ -9,9 +9,11 @@ exports[`<HeadingWithButtons /> should match the snapshot 1`] = `
   </h1>
   <LinkButton
     block={false}
+    buttonSize={null}
     buttonStyle="primary"
     className="btn-sm float-right"
     key="button-0"
+    link={false}
     outline={false}
     url="path/to/url"
   >
@@ -29,9 +31,11 @@ exports[`<HeadingWithButtons /> with many buttons should match the snapshot 1`] 
   </h1>
   <LinkButton
     block={false}
+    buttonSize={null}
     buttonStyle="primary"
     className="btn-sm float-right"
     key="button-0"
+    link={false}
     outline={false}
     url="button/three"
   >
@@ -39,9 +43,11 @@ exports[`<HeadingWithButtons /> with many buttons should match the snapshot 1`] 
   </LinkButton>
   <LinkButton
     block={false}
+    buttonSize={null}
     buttonStyle="primary"
     className="btn-sm float-right"
     key="button-1"
+    link={false}
     outline={false}
     url="button/two"
   >
@@ -49,9 +55,11 @@ exports[`<HeadingWithButtons /> with many buttons should match the snapshot 1`] 
   </LinkButton>
   <LinkButton
     block={false}
+    buttonSize={null}
     buttonStyle="primary"
     className="btn-sm float-right"
     key="button-2"
+    link={false}
     outline={false}
     url="button/one"
   >
