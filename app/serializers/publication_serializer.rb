@@ -5,12 +5,17 @@ class PublicationSerializer < RecordSerializer
   attributes \
     :abbreviation,
     :name,
+    :official,
     :playtest,
     :publication_date,
     :publisher_name,
     :slug
 
   alias_method :publication, :object
+
+  def official
+    publication.official?
+  end
 
   def publication_date
     super.iso8601

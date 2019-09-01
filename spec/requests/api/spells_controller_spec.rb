@@ -352,8 +352,8 @@ RSpec.describe Api::SpellsController do
   describe 'GET /api/spells/:id.json' do
     include_context 'when there are many spells'
 
-    let(:spell)         { spells.first }
-    let(:spell_id)      { spell.id }
+    let(:spell)    { spells.first }
+    let(:spell_id) { spell.id }
     let(:expected_json) do
       serializer = SpellSerializer.new
 
@@ -377,7 +377,7 @@ RSpec.describe Api::SpellsController do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'should serialize the spells' do
+    it 'should serialize the spell' do
       call_action
 
       expect(json).to deep_match expected_json
@@ -548,7 +548,7 @@ RSpec.describe Api::SpellsController do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'should serialize the spells' do
+    it 'should serialize the response' do
       call_action
 
       expect(json).to deep_match expected_json

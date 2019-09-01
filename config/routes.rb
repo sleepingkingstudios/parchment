@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+    api_resources :publications
     api_resources :spells
   end
 

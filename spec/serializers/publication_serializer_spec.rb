@@ -27,6 +27,7 @@ RSpec.describe PublicationSerializer do
       :playtest,
       :publisher_name,
       :slug,
+      official:         -> { publication.official? },
       publication_date: -> { publication.publication_date.iso8601 }
   end
 end

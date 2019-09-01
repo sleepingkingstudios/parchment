@@ -8,7 +8,7 @@ class Publication < ApplicationRecord
   attribute :playtest, :boolean, default: false
 
   validates :abbreviation,
-    presence:   true,
+    presence:   { unless: ->(publication) { publication.name.blank? } },
     uniqueness: { scope: :publisher_name }
   validates :name,
     presence:   true,
@@ -16,7 +16,7 @@ class Publication < ApplicationRecord
   validates :publication_date, presence: true
   validates :publisher_name,   presence: true
   validates :slug,
-    presence:   true,
+    presence:   { unless: ->(publication) { publication.name.blank? } },
     uniqueness: { scope: :publisher_name }
 
   def official?
