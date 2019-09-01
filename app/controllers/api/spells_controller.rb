@@ -1,15 +1,10 @@
 # frozen_string_literal: true
 
-require 'errors/invalid_parameters'
-require 'errors/failed_validation'
-require 'errors/not_found'
 require 'operations/records/create_operation'
 require 'operations/records/destroy_operation'
 require 'operations/records/find_one_operation'
 require 'operations/records/update_operation'
 require 'operations/spells/find_matching_operation'
-
-# rubocop:disable Metrics/ClassLength
 
 # Controller for performing CRUD actions on Spells via a JSON API.
 class Api::SpellsController < Api::BaseController
@@ -46,20 +41,6 @@ class Api::SpellsController < Api::BaseController
 
   private
 
-  def build_error_response(error)
-    {
-      error: serialize_error(error),
-      ok:    false
-    }
-  end
-
-  def build_json_response(data)
-    {
-      data: data,
-      ok:   true
-    }
-  end
-
   def create_operation
     @create_operation ||= Operations::Records::CreateOperation.new(Spell)
   end
@@ -74,22 +55,6 @@ class Api::SpellsController < Api::BaseController
 
   def index_operation
     @index_operation ||= Operations::Spells::FindMatchingOperation.new
-  end
-
-  def render_error(error, status: :unprocessable_entity)
-    render json: build_error_response(error), status: status
-  end
-
-  def render_json(data, status: :ok)
-    render json: build_json_response(data), status: status
-  end
-
-  def render_operation(operation, status: :ok)
-    if operation.success?
-      render_json(wrap_value(operation.value), status: status)
-    else
-      render_error(operation.error, status: :unprocessable_entity)
-    end
   end
 
   def require_spell
@@ -112,17 +77,6 @@ class Api::SpellsController < Api::BaseController
 
   def resource_name
     'spells'
-  end
-
-  def serialize_error(error)
-    case error
-    when Errors::FailedValidation, Errors::NotFound
-      error.as_json
-    else
-      # :nocov:
-      { 'message' => 'Something went wrong when processing the request.' }
-      # :nocov:
-    end
   end
 
   def spell_id
@@ -150,13 +104,4 @@ class Api::SpellsController < Api::BaseController
   def update_operation
     @update_operation ||= Operations::Records::UpdateOperation.new(Spell)
   end
-
-  def wrap_value(value)
-    if value.is_a?(Array)
-      { resource_name => value.map { |item| serialize(item) } }
-    else
-      { resource_name.singularize => serialize(value) }
-    end
-  end
 end
-# rubocop:enable Metrics/ClassLength

@@ -8,7 +8,7 @@ module Errors
   # Cuprum error for unknown record attributes.
   class UnknownAttributes < Cuprum::Error
     # Format for generating error message.
-    MESSAGE = 'unknown attributes for '
+    MESSAGE = 'Unknown attributes for '
 
     # Short string used to identify the type of error.
     TYPE = 'unknown_attributes'

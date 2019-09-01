@@ -41,14 +41,14 @@ RSpec.describe Errors::InvalidParameters do
   describe '#message' do
     context 'when the errors are empty' do
       let(:errors)   { [] }
-      let(:expected) { 'invalid request parameters' }
+      let(:expected) { 'Invalid request parameters' }
 
       it { expect(error.message).to be == expected }
     end
 
     context 'when the errors have one item' do
       let(:errors)   { [['attributes', 'must be a Hash']] }
-      let(:expected) { 'invalid request parameters: attributes must be a Hash' }
+      let(:expected) { 'Invalid request parameters: attributes must be a Hash' }
 
       it { expect(error.message).to be == expected }
     end
@@ -62,7 +62,7 @@ RSpec.describe Errors::InvalidParameters do
         ]
       end
       let(:expected) do
-        "invalid request parameters: attributes must be a Hash, id can't be" \
+        "Invalid request parameters: attributes must be a Hash, id can't be" \
         ' blank, stars must be aligned'
       end
 

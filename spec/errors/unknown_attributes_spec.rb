@@ -50,7 +50,7 @@ RSpec.describe Errors::UnknownAttributes do
   end
 
   describe '#message' do
-    let(:expected) { "unknown attributes for #{record_class.name}" }
+    let(:expected) { "Unknown attributes for #{record_class.name}" }
 
     context 'when the attributes are empty' do
       let(:attributes) { [] }

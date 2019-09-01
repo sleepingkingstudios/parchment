@@ -41,7 +41,7 @@ RSpec.describe Errors::InvalidRecord do
   describe '#message' do
     include_examples 'should have reader',
       :message,
-      -> { "record should be a #{record_class.name}" }
+      -> { "Record should be a #{record_class.name}" }
   end
 
   describe '#record_class' do
