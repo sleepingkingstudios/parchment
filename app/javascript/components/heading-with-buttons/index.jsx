@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Button from '../button';
 import LinkButton from '../link-button';
 import './styles.css';
 
@@ -15,10 +16,19 @@ const generateClassName = ({ className }) => {
 const renderButton = ({
   className,
   label,
+  onClick,
   url,
   ...props
 }) => {
   const generatedClassName = generateClassName({ className });
+
+  if (onClick) {
+    return (
+      <Button className={generatedClassName} onClick={onClick} {...props}>
+        { label }
+      </Button>
+    );
+  }
 
   return (
     <LinkButton className={generatedClassName} url={url} {...props}>

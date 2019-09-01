@@ -2,10 +2,12 @@ import React from 'react';
 
 import HeadingWithButtons from '../../../components/heading-with-buttons';
 import { hooks } from '../../store/showFindSpell';
+import { hooks as deleteHooks } from '../../store/deleteSpell';
+import { valueOrDefault } from '../../../utils/object';
 
-const generateButtons = ({ data }) => {
-  const { spell } = data;
+const { useDeleteData } = deleteHooks;
 
+const generateButtons = ({ deleteData, spell }) => {
   if (!(spell && spell.id)) { return []; }
 
   return [
@@ -14,15 +16,24 @@ const generateButtons = ({ data }) => {
       outline: true,
       url: `/spells/${spell.id}/update`,
     },
+    {
+      buttonStyle: 'danger',
+      label: 'Delete Spell',
+      onClick: deleteData,
+      outline: true,
+    },
   ];
 };
 const { useEndpoint } = hooks;
 
 const ShowSpellHeading = () => {
-  const buttons = useEndpoint(generateButtons);
+  const { data } = useEndpoint();
+  const { spell } = data;
+  const { id } = valueOrDefault(spell, {});
+  const deleteData = useDeleteData({ wildcards: { id } });
 
   return (
-    <HeadingWithButtons buttons={buttons}>
+    <HeadingWithButtons buttons={generateButtons({ deleteData, spell })}>
       Show Spell
     </HeadingWithButtons>
   );

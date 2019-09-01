@@ -45,7 +45,7 @@ LinkButton.propTypes = {
   buttonStyle: PropTypes.string,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  link: false,
+  link: PropTypes.bool,
   outline: PropTypes.bool,
   url: PropTypes.string.isRequired,
 };
