@@ -14,7 +14,7 @@ module Errors
     def initialize(record_class:)
       @record_class = record_class
 
-      super(message: "record should be a #{record_class.name}")
+      super(message: "Record should be a #{record_class.name}")
     end
 
     # @return [Class] the class of the expected record.

@@ -109,12 +109,29 @@ RSpec.describe Api::SpellsController do
 
   shared_examples 'should require valid spell params' do
     describe 'with missing spell params' do
+      let(:expected_error) do
+        Errors::InvalidParameters.new(
+          errors: [['spell', "can't be blank"]]
+        ).as_json
+      end
+      let(:expected_json) do
+        {
+          'ok'    => false,
+          'error' => expected_error
+        }
+      end
       let(:params) { super().tap { |hsh| hsh.delete :spell } }
 
       it 'should respond with 422 Unprocessable Entity' do
         call_action
 
         expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'should serialize the error' do
+        call_action
+
+        expect(json).to deep_match expected_json
       end
 
       include_examples 'should respond with JSON content'
@@ -286,7 +303,6 @@ RSpec.describe Api::SpellsController do
           DESCRIPTION
         }
       end
-      let(:params)        { super().merge(spell: spell_params) }
       let(:created_spell) { Spell.where(name: 'Glowing Gaze').first }
       let(:expected_json) do
         serializer = SpellSerializer.new
@@ -336,8 +352,8 @@ RSpec.describe Api::SpellsController do
   describe 'GET /api/spells/:id.json' do
     include_context 'when there are many spells'
 
-    let(:spell)         { spells.first }
-    let(:spell_id)      { spell.id }
+    let(:spell)    { spells.first }
+    let(:spell_id) { spell.id }
     let(:expected_json) do
       serializer = SpellSerializer.new
 
@@ -361,7 +377,7 @@ RSpec.describe Api::SpellsController do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'should serialize the spells' do
+    it 'should serialize the spell' do
       call_action
 
       expect(json).to deep_match expected_json
@@ -532,7 +548,7 @@ RSpec.describe Api::SpellsController do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'should serialize the spells' do
+    it 'should serialize the response' do
       call_action
 
       expect(json).to deep_match expected_json

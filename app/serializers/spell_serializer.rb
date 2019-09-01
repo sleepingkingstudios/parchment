@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Serializes a spell as a JSON-compatible hash.
+# Serializes a Spell as a JSON-compatible hash.
 class SpellSerializer < RecordSerializer
   attributes \
     :casting_time,

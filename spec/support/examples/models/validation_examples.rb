@@ -186,5 +186,62 @@ module Spec::Support::Examples::Models
         end
       end
     end
+
+    shared_examples 'should validate the scoped uniqueness of' \
+    do |attr_name, attributes: {}, scope:|
+      context "when a #{described_class} exists with the same #{attr_name}" do
+        let(:value)   { subject.send(attr_name) }
+        let(:message) { 'has already been taken' }
+
+        scoped_contexts =
+          scope.reduce([{}]) do |ary, (attribute, values)|
+            values
+              .map do |value|
+                ary.dup.map { |hsh| hsh.merge(attribute => value) }
+              end
+              .flatten
+          end
+        tools = SleepingKingStudios::Tools::Toolbelt.instance
+
+        scoped_contexts.each do |scope_attributes|
+          attributes_list =
+            scope_attributes
+            .map do |scope_attribute, scope_value|
+              "#{scope_attribute}: #{scope_value.inspect}"
+            end
+
+          context "with #{tools.array.humanize_list(attributes_list)}" do
+            before do
+              described_class.create!(
+                attributes
+                  .merge(attr_name => value)
+                  .merge(scope_attributes)
+              )
+            end
+
+            # rubocop:disable RSpec/ExampleLength
+            # rubocop:disable RSpec/MultipleExpectations
+            it 'should check the scope' do
+              scopes_match =
+                scope_attributes
+                .reduce(true) do |memo, (scope_attribute, scope_value)|
+                  memo && subject.send(scope_attribute) == scope_value
+                end
+
+              if scopes_match
+                expect(subject)
+                  .to have_errors
+                  .on(attr_name)
+                  .with_message(message)
+              else
+                expect(subject).not_to have_errors.on(attr_name)
+              end
+            end
+            # rubocop:enable RSpec/ExampleLength
+            # rubocop:enable RSpec/MultipleExpectations
+          end
+        end
+      end
+    end
   end
 end

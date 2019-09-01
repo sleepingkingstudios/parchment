@@ -8,7 +8,7 @@ module Errors
   # Cuprum error for invalid controller parameters.
   class InvalidParameters < Cuprum::Error
     # Format for generating error message.
-    MESSAGE = 'invalid request parameters'
+    MESSAGE = 'Invalid request parameters'
 
     # Short string used to identify the type of error.
     TYPE = 'invalid_parameters'
