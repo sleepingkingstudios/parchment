@@ -6,7 +6,7 @@ import {
 } from './index';
 import { spellDefaultAttributes } from '../../entities';
 
-describe('Update Spell form store', () => {
+describe('UpdateSpellForm store', () => {
   describe('actions', () => {
     const {
       SET_DATA,
