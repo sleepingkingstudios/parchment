@@ -1,6 +1,5 @@
 import {
   buttonClass,
-  buttonStyleClass,
   disabledOnClick,
 } from './utils';
 
@@ -36,11 +35,92 @@ describe('buttonClass', () => {
     });
   });
 
-  describe('with buttonStyle: value', () => {
+  describe('with buttonSize: large', () => {
     it('should generate the button class', () => {
-      const buttonStyle = 'dark';
+      const buttonSize = 'large';
+      const props = { buttonSize };
+      const expected = 'btn btn-primary btn-lg';
+
+      expect(buttonClass(props)).toEqual(expected);
+    });
+  });
+
+  describe('with buttonSize: lg', () => {
+    it('should generate the button class', () => {
+      const buttonSize = 'lg';
+      const props = { buttonSize };
+      const expected = 'btn btn-primary btn-lg';
+
+      expect(buttonClass(props)).toEqual(expected);
+    });
+  });
+
+  describe('with buttonSize: md', () => {
+    it('should generate the button class', () => {
+      const buttonSize = 'md';
+      const props = { buttonSize };
+      const expected = 'btn btn-primary';
+
+      expect(buttonClass(props)).toEqual(expected);
+    });
+  });
+
+  describe('with buttonSize: medium', () => {
+    it('should generate the button class', () => {
+      const buttonSize = 'md';
+      const props = { buttonSize };
+      const expected = 'btn btn-primary';
+
+      expect(buttonClass(props)).toEqual(expected);
+    });
+  });
+
+  describe('with buttonSize: sm', () => {
+    it('should generate the button class', () => {
+      const buttonSize = 'sm';
+      const props = { buttonSize };
+      const expected = 'btn btn-primary btn-sm';
+
+      expect(buttonClass(props)).toEqual(expected);
+    });
+  });
+
+  describe('with buttonSize: small', () => {
+    it('should generate the button class', () => {
+      const buttonSize = 'small';
+      const props = { buttonSize };
+      const expected = 'btn btn-primary btn-sm';
+
+      expect(buttonClass(props)).toEqual(expected);
+    });
+  });
+
+  describe('with buttonSize: unknown value', () => {
+    it('should generate the button class', () => {
+      const buttonSize = 'lilliputian';
+      const props = { buttonSize };
+      const expected = 'btn btn-primary';
+
+      expect(buttonClass(props)).toEqual(expected);
+    });
+  });
+
+  buttonStyles.forEach((buttonStyle) => {
+    describe(`with buttonStyle: ${buttonStyle}`, () => {
+      it('should generate the button class', () => {
+        const props = { buttonStyle };
+        const expected = `btn btn-${buttonStyle}`;
+
+        expect(buttonClass(props)).toEqual(expected);
+      });
+    });
+  });
+
+  describe('with buttonStyle: unknown value', () => {
+    it('should generate the button class', () => {
+      const buttonStyle = 'mysterious';
       const props = { buttonStyle };
-      const expected = 'btn btn-dark';
+      const expected = 'btn btn-primary';
 
       expect(buttonClass(props)).toEqual(expected);
     });
@@ -56,6 +136,36 @@ describe('buttonClass', () => {
     });
   });
 
+  describe('with link: true', () => {
+    it('should generate the button class', () => {
+      const props = { link: true };
+      const expected = 'btn btn-link';
+
+      expect(buttonClass(props)).toEqual(expected);
+    });
+
+    buttonStyles.forEach((buttonStyle) => {
+      describe(`with buttonStyle: ${buttonStyle}`, () => {
+        it('should generate the button class', () => {
+          const props = { buttonStyle, link: true };
+          const expected = `btn btn-link text-${buttonStyle}`;
+
+          expect(buttonClass(props)).toEqual(expected);
+        });
+      });
+    });
+
+    describe('with buttonStyle: unknown value', () => {
+      it('should generate the button class', () => {
+        const buttonStyle = 'mysterious';
+        const props = { buttonStyle, link: true };
+        const expected = 'btn btn-link';
+
+        expect(buttonClass(props)).toEqual(expected);
+      });
+    });
+  });
+
   describe('with outline: true', () => {
     it('should generate the button class', () => {
       const props = { outline: true };
@@ -64,83 +174,24 @@ describe('buttonClass', () => {
       expect(buttonClass(props)).toEqual(expected);
     });
 
-    describe('with buttonStyle: value', () => {
-      it('should generate the button class', () => {
-        const buttonStyle = 'dark';
-        const props = { buttonStyle, outline: true };
-        const expected = 'btn btn-outline-dark';
-
-        expect(buttonClass(props)).toEqual(expected);
-      });
-    });
-  });
-});
-
-describe('buttonStyleClass()', () => {
-  it('should be a function', () => {
-    expect(typeof buttonStyleClass).toEqual('function');
-  });
-
-  buttonStyles.forEach((buttonStyle) => {
-    describe(`with buttonStyle: ${buttonStyle}`, () => {
-      it('should return the style class', () => {
-        const props = { buttonStyle };
-        const expected = `btn-${buttonStyle}`;
-
-        expect(buttonStyleClass(props)).toEqual(expected);
-      });
-    });
-  });
-
-  describe('with buttonStyle: link', () => {
-    it('should return the style class', () => {
-      const buttonStyle = 'link';
-      const props = { buttonStyle };
-      const expected = 'btn-link';
-
-      expect(buttonStyleClass(props)).toEqual(expected);
-    });
-  });
-
-  describe('with buttonStyle: unknown value', () => {
-    it('should return the style class', () => {
-      const buttonStyle = 'enigmatic';
-      const props = { buttonStyle };
-      const expected = 'btn-primary';
-
-      expect(buttonStyleClass(props)).toEqual(expected);
-    });
-  });
-
-  describe('with outline: true', () => {
     buttonStyles.forEach((buttonStyle) => {
       describe(`with buttonStyle: ${buttonStyle}`, () => {
-        it('should return the style class', () => {
+        it('should generate the button class', () => {
           const props = { buttonStyle, outline: true };
-          const expected = `btn-outline-${buttonStyle}`;
+          const expected = `btn btn-outline-${buttonStyle}`;
 
-          expect(buttonStyleClass(props)).toEqual(expected);
+          expect(buttonClass(props)).toEqual(expected);
         });
       });
     });
 
-    describe('with buttonStyle: link', () => {
-      it('should return the style class', () => {
-        const buttonStyle = 'link';
-        const props = { buttonStyle, outline: true };
-        const expected = 'btn-link';
-
-        expect(buttonStyleClass(props)).toEqual(expected);
-      });
-    });
-
     describe('with buttonStyle: unknown value', () => {
-      it('should return the style class', () => {
-        const buttonStyle = 'enigmatic';
+      it('should generate the button class', () => {
+        const buttonStyle = 'mysterious';
         const props = { buttonStyle, outline: true };
-        const expected = 'btn-outline-primary';
+        const expected = 'btn btn-outline-primary';
 
-        expect(buttonStyleClass(props)).toEqual(expected);
+        expect(buttonClass(props)).toEqual(expected);
       });
     });
   });

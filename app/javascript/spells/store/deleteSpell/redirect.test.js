@@ -2,13 +2,12 @@ import { push } from 'connected-react-router';
 
 import redirect from './redirect';
 
-describe('UpdateSpellForm store redirect', () => {
+describe('DeleteSpell store redirect', () => {
   const { handleSuccess } = redirect;
 
   describe('handleSuccess()', () => {
     const getState = jest.fn();
-    const spell = { id: '00000000-0000-0000-0000-000000000000' };
-    const response = { ok: true, json: { data: { spell } } };
+    const response = { ok: true };
 
     it('should be a function', () => {
       expect(typeof handleSuccess).toEqual('function');
@@ -32,7 +31,7 @@ describe('UpdateSpellForm store redirect', () => {
     it('should dispatch a push action', () => {
       const next = jest.fn();
       const dispatch = jest.fn();
-      const url = `/spells/${spell.id}`;
+      const url = '/spells';
       const expected = push(url);
 
       handleSuccess(next)({ dispatch, getState, response });

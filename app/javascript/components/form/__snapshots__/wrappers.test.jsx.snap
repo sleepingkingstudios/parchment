@@ -178,9 +178,11 @@ exports[`Form component wrappers formInput() with default properties should matc
 exports[`Form component wrappers formSubmit() should match the snapshot 1`] = `
 <Button
   block={false}
+  buttonSize="md"
   buttonStyle="primary"
   className={null}
   disabled={false}
+  link={false}
   onClick={[Function]}
   outline={false}
 >
@@ -191,9 +193,11 @@ exports[`Form component wrappers formSubmit() should match the snapshot 1`] = `
 exports[`Form component wrappers formSubmit() with custom properties should match the snapshot 1`] = `
 <Button
   block={false}
+  buttonSize="md"
   buttonStyle="dark"
   className={null}
   disabled={false}
+  link={false}
   onClick={[Function]}
   outline={false}
 >

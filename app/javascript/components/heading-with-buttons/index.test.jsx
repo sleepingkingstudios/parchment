@@ -42,6 +42,25 @@ describe('<HeadingWithButtons />', () => {
     expect(rendered).toMatchSnapshot();
   });
 
+  describe('with a button with an onClick property', () => {
+    const onClick = jest.fn();
+    const buttonWithOnClickData = {
+      label: 'Button Label',
+      onClick,
+    };
+    const props = { ...defaultProps, buttons: [buttonWithOnClickData] };
+
+    it('should render the button', () => {
+      const rendered = shallow(<HeadingWithButtons {...props} />);
+      const button = rendered.find('Button');
+      const { label } = buttonWithOnClickData;
+
+      expect(button).toExist();
+      expect(button).toHaveProp('children', label);
+      expect(button).toHaveProp({ onClick });
+    });
+  });
+
   describe('with a fancy button', () => {
     const fancyButtonData = {
       buttonStyle: 'danger',

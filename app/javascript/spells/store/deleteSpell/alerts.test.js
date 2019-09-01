@@ -2,7 +2,7 @@ import alerts from './alerts';
 import { addAlert } from '../../../components/alerts/store/actions';
 import { generateFingerprintUuid } from '../../../utils/uuid';
 
-describe('UpdateSpellForm store alerts', () => {
+describe('DeleteSpell store alerts', () => {
   const {
     handleFailure,
     handleSuccess,
@@ -35,10 +35,10 @@ describe('UpdateSpellForm store alerts', () => {
       const next = jest.fn();
       const dispatch = jest.fn();
       const alert = {
-        id: generateFingerprintUuid('spells/update'),
+        id: generateFingerprintUuid('spells/delete'),
         alertStyle: 'warning',
         dismissible: true,
-        message: 'Unable to update spell.',
+        message: 'Unable to delete spell.',
       };
       const expected = addAlert(alert);
 
@@ -75,10 +75,10 @@ describe('UpdateSpellForm store alerts', () => {
       const next = jest.fn();
       const dispatch = jest.fn();
       const alert = {
-        id: generateFingerprintUuid('spells/update'),
-        alertStyle: 'success',
+        id: generateFingerprintUuid('spells/delete'),
+        alertStyle: 'danger',
         dismissible: true,
-        message: 'Successfully updated spell.',
+        message: 'Successfully deleted spell.',
       };
       const expected = addAlert(alert);
 
