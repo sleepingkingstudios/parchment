@@ -5,6 +5,8 @@ class Publication < ApplicationRecord
   before_validation :generate_abbreviation
   before_validation :generate_slug
 
+  attribute :playtest, :boolean, default: false
+
   validates :abbreviation,
     presence:   true,
     uniqueness: { scope: :publisher_name }
@@ -30,33 +32,25 @@ class Publication < ApplicationRecord
   def generate_abbreviation
     return unless abbreviation.blank?
 
-    letters = /[a-z]/
-
-    self.abbreviation =
-      words_in_name
-      .map { |word| word.match(letters)[0] }
-      .reject(&:blank?)
-      .join
+    self.abbreviation = words_in_name.map { |word| word[0] }.join
   end
 
   def generate_slug
     return unless slug.blank?
 
-    non_letters = /[^a-z]/
-
-    self.slug =
-      words_in_name
-      .map { |word| word.gsub(non_letters, '') }
-      .reject(&:blank?)
-      .join('-')
+    self.slug = words_in_name.join('-')
   end
 
   def words_in_name
     return [] if name.blank?
 
+    non_letters = /[^a-z]/
+
     name
       .downcase
       .split(/\s+/)
       .reject { |word| articles.include?(word) }
+      .map { |word| word.gsub(non_letters, '') }
+      .reject(&:blank?)
   end
 end

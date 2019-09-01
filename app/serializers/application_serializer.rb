@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
+require 'forwardable'
+
 # Abstract base class for serializing an object to a JSON-compatible hash.
 class ApplicationSerializer
   class << self
     def attribute(attr_name)
       guard_abstract_class!
 
-      attribute_definitions[attr_name.to_s] = -> { object.send(attr_name) }
+      self::Attributes.send :def_delegator, :object, attr_name
+
+      attribute_definitions[attr_name.to_s] = -> { send(attr_name) }
     end
 
     def attributes(*attr_names)
@@ -37,6 +41,13 @@ class ApplicationSerializer
         ' attributes.'
 
       raise RuntimeError, message, caller[1..-1]
+    end
+
+    def inherited(subclass)
+      super
+
+      subclass.const_set(:Attributes, Module.new { extend Forwardable })
+      subclass.include(subclass::Attributes)
     end
   end
 
