@@ -8,9 +8,9 @@ export const formatCrewCapacity = (item) => {
   return `${count} Kerbals`;
 };
 
-export const formatExperiments = (item) => {
-  humanizeList(item.experiments, { default: 'None' });
-};
+export const formatExperiments = item => (
+  humanizeList(item.experiments, { default: 'None' })
+);
 
 export const columns = [
   {
@@ -25,6 +25,11 @@ export const columns = [
   {
     label: 'Experiments',
     prop: 'experiments',
+    value: formatExperiments,
+  },
+  {
+    label: 'Retired',
+    prop: 'retired',
   },
 ];
 
@@ -39,6 +44,7 @@ export const rocketsData = [
       'Temperature Scan',
       'Pressure Scan',
     ],
+    retired: true,
   },
   {
     id: '4bd7454c-3b15-4047-8d57-dfa831dac58e',
@@ -51,6 +57,7 @@ export const rocketsData = [
       'Temperature Scan',
       'Pressure Scan',
     ],
+    retired: false,
   },
   {
     id: '2fead083-d9ea-4f04-949e-d8c00e800cbb',
@@ -64,5 +71,6 @@ export const rocketsData = [
       'Pressure Scan',
       'Gravity Scan',
     ],
+    retired: false,
   },
 ];

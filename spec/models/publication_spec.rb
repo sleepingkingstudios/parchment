@@ -11,7 +11,7 @@ RSpec.describe Publication, type: :model do
 
   let(:attributes) do
     {
-      name:             "The Flumph Fancier's Handbook",
+      name:             "Flumph Fancier's Handbook",
       playtest:         false,
       publication_date: Date.new(1982, 7, 9),
       publisher_name:   'Wizards of the Coast'
@@ -37,6 +37,30 @@ RSpec.describe Publication, type: :model do
         let(:publication) { super().tap(&:valid?) }
 
         it { expect(publication.abbreviation).to be == expected }
+      end
+    end
+
+    describe 'with a name with "of"' do
+      let(:attributes) { super().merge(name: 'Secrets of the Flumph') }
+
+      it { expect(publication.abbreviation).to be nil }
+
+      describe 'when the publication is validated' do
+        let(:publication) { super().tap(&:valid?) }
+
+        it { expect(publication.abbreviation).to be == 'sf' }
+      end
+    end
+
+    describe 'with a name with "the"' do
+      let(:attributes) { super().merge(name: "The Flumph Fancier's Handbook") }
+
+      it { expect(publication.abbreviation).to be nil }
+
+      describe 'when the publication is validated' do
+        let(:publication) { super().tap(&:valid?) }
+
+        it { expect(publication.abbreviation).to be == 'ffh' }
       end
     end
   end
@@ -122,6 +146,30 @@ RSpec.describe Publication, type: :model do
         let(:publication) { super().tap(&:valid?) }
 
         it { expect(publication.slug).to be == expected }
+      end
+    end
+
+    describe 'with a name with "of"' do
+      let(:attributes) { super().merge(name: 'Secrets of the Flumph') }
+
+      it { expect(publication.slug).to be nil }
+
+      describe 'when the publication is validated' do
+        let(:publication) { super().tap(&:valid?) }
+
+        it { expect(publication.slug).to be == 'secrets-flumph' }
+      end
+    end
+
+    describe 'with a name with "the"' do
+      let(:attributes) { super().merge(name: "The Flumph Fancier's Handbook") }
+
+      it { expect(publication.slug).to be nil }
+
+      describe 'when the publication is validated' do
+        let(:publication) { super().tap(&:valid?) }
+
+        it { expect(publication.slug).to be == 'flumph-fanciers-handbook' }
       end
     end
   end

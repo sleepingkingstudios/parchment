@@ -3,43 +3,43 @@
 require 'rails_helper'
 
 RSpec.describe 'routes' do
-  let(:controller) { 'client' }
-  let(:spell_id)   { '00000000-0000-0000-0000-000000000000' }
+  let(:controller)     { 'client' }
+  let(:publication_id) { '00000000-0000-0000-0000-000000000000' }
 
-  describe 'GET /spells' do
+  describe 'GET /publications' do
     it 'should route to ClientController#index' do
-      expect(get: '/spells').to route_to(
+      expect(get: '/publications').to route_to(
         controller: controller,
         action:     'index'
       )
     end
   end
 
-  describe 'GET /spells/create' do
+  describe 'GET /publications/create' do
     it 'should route to ClientController#index' do
-      expect(get: '/spells/create').to route_to(
+      expect(get: '/publications/create').to route_to(
         controller: controller,
         action:     'index'
       )
     end
   end
 
-  describe 'GET /spells/:id' do
+  describe 'GET /publications/:id' do
     it 'should route to ClientController#index' do
-      expect(get: "/spells/#{spell_id}").to route_to(
+      expect(get: "/publications/#{publication_id}").to route_to(
         controller: controller,
         action:     'index',
-        id:         spell_id
+        id:         publication_id
       )
     end
   end
 
-  describe 'GET /spells/:id/update' do
+  describe 'GET /publications/:id/update' do
     it 'should route to ClientController#index' do
-      expect(get: "/spells/#{spell_id}/update").to route_to(
+      expect(get: "/publications/#{publication_id}/update").to route_to(
         controller: controller,
         action:     'index',
-        id:         spell_id
+        id:         publication_id
       )
     end
   end

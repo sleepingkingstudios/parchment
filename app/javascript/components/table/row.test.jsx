@@ -9,34 +9,36 @@ import {
 
 const numColumns = columns.length;
 const rocket = rocketsData[0];
-
-const expectedValue = (column, item) => {
-  if (typeof column.value === 'function') { return column.value(item); }
-
-  return item[column.prop];
+const expectedValues = {
+  name: 'Apprentice',
+  crewCapacity: '1 Kerbal',
+  experiments: 'Crew Report, Mystery Goo, Temperature Scan, and Pressure Scan',
+  retired: 'true',
 };
 
 describe('<TableRow />', () => {
-  const props = { columns, item: rocket };
-  const rendered = shallow(<TableRow {...props} />);
+  const defaultProps = { columns, item: rocket };
 
   it('should wrap the contents in a <tr> element', () => {
+    const rendered = shallow(<TableRow {...defaultProps} />);
+
     expect(rendered).toHaveDisplayName('tr');
   });
 
   it('should include one <td> element for each column', () => {
+    const rendered = shallow(<TableRow {...defaultProps} />);
+
     expect(rendered).toContainMatchingElements(numColumns, 'td');
   });
 
   it('should render the item properties', () => {
-    let key;
-    let value;
-    let expected;
+    const rendered = shallow(<TableRow {...defaultProps} />);
 
     columns.forEach((column) => {
-      key = `${rocket.id}-${column.prop}`;
-      value = expectedValue(column, rocket);
-      expected = (
+      const { prop } = column;
+      const key = `${rocket.id}-${column.prop}`;
+      const value = expectedValues[prop];
+      const expected = (
         <td key={key}>
           { value }
         </td>

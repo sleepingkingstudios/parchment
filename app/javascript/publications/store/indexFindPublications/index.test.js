@@ -4,7 +4,7 @@ import {
   request,
 } from './index';
 
-describe('IndexFindSpells store', () => {
+describe('IndexFindPublications store', () => {
   describe('hooks', () => {
     const {
       useEndpoint,
@@ -25,8 +25,8 @@ describe('IndexFindSpells store', () => {
   });
 
   describe('namespace', () => {
-    it('should be spells/indexFindSpells', () => {
-      expect(namespace).toEqual('spells/indexFindSpells');
+    it('should be publications/indexFindPublications', () => {
+      expect(namespace).toEqual('publications/indexFindPublications');
     });
   });
 
@@ -43,8 +43,8 @@ describe('IndexFindSpells store', () => {
     });
 
     describe('url', () => {
-      it('should be the spell index URL', () => {
-        expect(url).toEqual('/api/spells');
+      it('should be the publication index URL', () => {
+        expect(url).toEqual('/api/publications');
       });
     });
   });
