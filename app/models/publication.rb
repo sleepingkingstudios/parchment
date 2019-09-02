@@ -26,7 +26,7 @@ class Publication < ApplicationRecord
   private
 
   def articles
-    %w[the]
+    %w[of the]
   end
 
   def generate_abbreviation

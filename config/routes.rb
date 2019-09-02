@@ -13,13 +13,19 @@ Rails.application.routes.draw do
     )
   end
 
+  def self.client_resources(resource_name)
+    get "#{resource_name}/create", to: 'client#index'
+    get "#{resource_name}/:id/update", to: 'client#index'
+    get "#{resource_name}/:id", to: 'client#index'
+    get "#{resource_name}", to: 'client#index'
+  end
+
   namespace :api do
     api_resources :publications
     api_resources :spells
   end
 
-  get 'spells/*path', to: 'client#index'
-  get 'spells', to: 'client#index'
+  client_resources :spells
 
   root to: 'client#index'
 end
