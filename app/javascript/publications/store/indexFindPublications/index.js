@@ -1,10 +1,10 @@
 import FindManyEndpoint from '../../../api/findMany';
 
-const REQUEST_URL = '/api/spells';
+const REQUEST_URL = '/api/publications';
 const endpoint = new FindManyEndpoint({
-  data: { spells: [] },
+  data: { publications: [] },
   middleware: [],
-  namespace: 'spells/indexFindSpells',
+  namespace: 'publications/indexFindPublications',
   url: REQUEST_URL,
 });
 
