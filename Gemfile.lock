@@ -8,17 +8,6 @@ GIT
       rspec (~> 3.4)
       sleeping_king_studios-tools (~> 0.7)
 
-GIT
-  remote: https://github.com/sleepingkingstudios/sleeping_king_studios-tasks
-  revision: 0ca90b8fff86d4ea6ebc8623d5b819982d1db20e
-  branch: feature/eslint-task
-  specs:
-    sleeping_king_studios-tasks (0.1.0)
-      erubi (~> 1.6)
-      rake (~> 12.0)
-      sleeping_king_studios-tools (~> 0.7, >= 0.7.1)
-      thor (~> 0.19, >= 0.19.4)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -203,6 +192,11 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    sleeping_king_studios-tasks (0.2.0.rc.0)
+      erubi (~> 1.6)
+      rake (~> 12.0)
+      sleeping_king_studios-tools (~> 0.7, >= 0.7.1)
+      thor (~> 0.19, >= 0.19.4)
     sleeping_king_studios-tools (0.7.1)
     spring (2.0.2)
       activesupport (>= 4.2)
@@ -254,7 +248,7 @@ DEPENDENCIES
   rubocop (~> 0.66.0)
   rubocop-rspec (~> 1.32.0)
   simplecov (~> 0.16, >= 0.16.1)
-  sleeping_king_studios-tasks!
+  sleeping_king_studios-tasks (~> 0.2.0.rc.0)
   spring
   spring-watcher-listen (~> 2.0.0)
   thor (~> 0.20, >= 0.20.3)

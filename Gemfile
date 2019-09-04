@@ -43,9 +43,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   # Run commands to aggregate CI steps, generate templated files, etc.
-  gem 'sleeping_king_studios-tasks',
-    git:    'https://github.com/sleepingkingstudios/sleeping_king_studios-tasks',
-    branch: 'feature/eslint-task'
+  gem 'sleeping_king_studios-tasks', '~> 0.2.0.rc.0'
   gem 'thor', '~> 0.20', '>= 0.20.3'
 
   # Access an interactive console on exception pages or by calling 'console'
