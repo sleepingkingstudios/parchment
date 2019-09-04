@@ -1,0 +1,773 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PublicationForm /> fields <AbbreviationField /> should match the snapshot 1`] = `
+<AbbreviationField
+  form={
+    Object {
+      "data": Object {
+        "publication": Object {
+          "abbreviation": "ffh",
+          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+          "name": "The Flumph Fancier's Handbook",
+          "official": true,
+          "playtest": false,
+          "publicationDate": "1977-05-25",
+          "publisherName": "Wizards of the Coast",
+          "slug": "flumph-fanciers-handbook",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "publication",
+      ],
+    }
+  }
+>
+  <FormField
+    colWidth={null}
+    inputId={null}
+    label={null}
+    path={
+      Array [
+        "publication",
+      ]
+    }
+    prop="abbreviation"
+  >
+    <FormGroup
+      className="form-field"
+      colWidth={null}
+    >
+      <div
+        className="form-group col form-field"
+      >
+        <label
+          htmlFor="publication-abbreviation-input"
+        >
+          Abbreviation
+        </label>
+        <AbbreviationInput
+          form={
+            Object {
+              "data": Object {
+                "publication": Object {
+                  "abbreviation": "ffh",
+                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+                  "name": "The Flumph Fancier's Handbook",
+                  "official": true,
+                  "playtest": false,
+                  "publicationDate": "1977-05-25",
+                  "publisherName": "Wizards of the Coast",
+                  "slug": "flumph-fanciers-handbook",
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "publication",
+              ],
+            }
+          }
+        >
+          <FormInput
+            className={null}
+            id="publication-abbreviation-input"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+            validStatus={null}
+            value="ffh"
+          >
+            <input
+              className="form-control"
+              id="publication-abbreviation-input"
+              onChange={[Function]}
+              placeholder=""
+              type="text"
+              value="ffh"
+            />
+          </FormInput>
+        </AbbreviationInput>
+      </div>
+    </FormGroup>
+  </FormField>
+</AbbreviationField>
+`;
+
+exports[`<PublicationForm /> fields <CancelButton /> should match the snapshot 1`] = `
+<CancelButton
+  form={
+    Object {
+      "data": Object {
+        "publication": Object {
+          "abbreviation": "ffh",
+          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+          "name": "The Flumph Fancier's Handbook",
+          "official": true,
+          "playtest": false,
+          "publicationDate": "1977-05-25",
+          "publisherName": "Wizards of the Coast",
+          "slug": "flumph-fanciers-handbook",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "publication",
+      ],
+    }
+  }
+  isUpdate={false}
+>
+  <FormGroup
+    className=""
+    colWidth={null}
+  >
+    <div
+      className="form-group col"
+    >
+      <PublicationFormCancelButton
+        form={
+          Object {
+            "data": Object {
+              "publication": Object {
+                "abbreviation": "ffh",
+                "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+                "name": "The Flumph Fancier's Handbook",
+                "official": true,
+                "playtest": false,
+                "publicationDate": "1977-05-25",
+                "publisherName": "Wizards of the Coast",
+                "slug": "flumph-fanciers-handbook",
+              },
+            },
+            "onChangeAction": [MockFunction],
+            "onSubmitAction": [MockFunction],
+            "path": Array [
+              "publication",
+            ],
+          }
+        }
+        isUpdate={false}
+      >
+        <LinkButton
+          block={true}
+          buttonSize={null}
+          buttonStyle="secondary"
+          className={null}
+          link={false}
+          outline={true}
+          url="/publications"
+        >
+          <Link
+            className="btn btn-outline-secondary btn-block"
+            to="/publications"
+          >
+            <a
+              className="btn btn-outline-secondary btn-block"
+              href="/publications"
+              onClick={[Function]}
+            >
+              Cancel
+            </a>
+          </Link>
+        </LinkButton>
+      </PublicationFormCancelButton>
+    </div>
+  </FormGroup>
+</CancelButton>
+`;
+
+exports[`<PublicationForm /> fields <NameField /> should match the snapshot 1`] = `
+<NameField
+  form={
+    Object {
+      "data": Object {
+        "publication": Object {
+          "abbreviation": "ffh",
+          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+          "name": "The Flumph Fancier's Handbook",
+          "official": true,
+          "playtest": false,
+          "publicationDate": "1977-05-25",
+          "publisherName": "Wizards of the Coast",
+          "slug": "flumph-fanciers-handbook",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "publication",
+      ],
+    }
+  }
+>
+  <FormField
+    colWidth={null}
+    inputId={null}
+    label={null}
+    path={
+      Array [
+        "publication",
+      ]
+    }
+    prop="name"
+  >
+    <FormGroup
+      className="form-field"
+      colWidth={null}
+    >
+      <div
+        className="form-group col form-field"
+      >
+        <label
+          htmlFor="publication-name-input"
+        >
+          Name
+        </label>
+        <NameInput
+          form={
+            Object {
+              "data": Object {
+                "publication": Object {
+                  "abbreviation": "ffh",
+                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+                  "name": "The Flumph Fancier's Handbook",
+                  "official": true,
+                  "playtest": false,
+                  "publicationDate": "1977-05-25",
+                  "publisherName": "Wizards of the Coast",
+                  "slug": "flumph-fanciers-handbook",
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "publication",
+              ],
+            }
+          }
+        >
+          <FormInput
+            className={null}
+            id="publication-name-input"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+            validStatus={null}
+            value="The Flumph Fancier's Handbook"
+          >
+            <input
+              className="form-control"
+              id="publication-name-input"
+              onChange={[Function]}
+              placeholder=""
+              type="text"
+              value="The Flumph Fancier's Handbook"
+            />
+          </FormInput>
+        </NameInput>
+      </div>
+    </FormGroup>
+  </FormField>
+</NameField>
+`;
+
+exports[`<PublicationForm /> fields <PlaytestField /> should match the snapshot 1`] = `
+<PlaytestField
+  form={
+    Object {
+      "data": Object {
+        "publication": Object {
+          "abbreviation": "ffh",
+          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+          "name": "The Flumph Fancier's Handbook",
+          "official": true,
+          "playtest": false,
+          "publicationDate": "1977-05-25",
+          "publisherName": "Wizards of the Coast",
+          "slug": "flumph-fanciers-handbook",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "publication",
+      ],
+    }
+  }
+>
+  <FormField
+    colWidth={null}
+    inputId={null}
+    label={null}
+    path={
+      Array [
+        "publication",
+      ]
+    }
+    prop="playtest"
+  >
+    <FormGroup
+      className="form-field"
+      colWidth={null}
+    >
+      <div
+        className="form-group col form-field"
+      >
+        <label
+          htmlFor="publication-playtest-input"
+        >
+          Playtest
+        </label>
+        <PlaytestInput
+          form={
+            Object {
+              "data": Object {
+                "publication": Object {
+                  "abbreviation": "ffh",
+                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+                  "name": "The Flumph Fancier's Handbook",
+                  "official": true,
+                  "playtest": false,
+                  "publicationDate": "1977-05-25",
+                  "publisherName": "Wizards of the Coast",
+                  "slug": "flumph-fanciers-handbook",
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "publication",
+              ],
+            }
+          }
+        >
+          <FormCheckboxInput
+            className={null}
+            id="publication-playtest-input"
+            label={null}
+            onChange={[Function]}
+            validStatus={null}
+            value={false}
+          >
+            <div
+              className="custom-control custom-checkbox"
+            >
+              <input
+                checked={false}
+                className="custom-control-input"
+                id="publication-playtest-input"
+                onChange={[Function]}
+                type="checkbox"
+              />
+              <label
+                className="custom-control-label"
+                htmlFor="publication-playtest-input"
+              />
+            </div>
+          </FormCheckboxInput>
+        </PlaytestInput>
+      </div>
+    </FormGroup>
+  </FormField>
+</PlaytestField>
+`;
+
+exports[`<PublicationForm /> fields <PublicationDateField /> should match the snapshot 1`] = `
+<PublicationDateField
+  form={
+    Object {
+      "data": Object {
+        "publication": Object {
+          "abbreviation": "ffh",
+          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+          "name": "The Flumph Fancier's Handbook",
+          "official": true,
+          "playtest": false,
+          "publicationDate": "1977-05-25",
+          "publisherName": "Wizards of the Coast",
+          "slug": "flumph-fanciers-handbook",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "publication",
+      ],
+    }
+  }
+>
+  <FormField
+    colWidth={null}
+    inputId={null}
+    label={null}
+    path={
+      Array [
+        "publication",
+      ]
+    }
+    prop="publicationDate"
+  >
+    <FormGroup
+      className="form-field"
+      colWidth={null}
+    >
+      <div
+        className="form-group col form-field"
+      >
+        <label
+          htmlFor="publication-publication-date-input"
+        >
+          Publication Date
+        </label>
+        <PublicationDateInput
+          form={
+            Object {
+              "data": Object {
+                "publication": Object {
+                  "abbreviation": "ffh",
+                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+                  "name": "The Flumph Fancier's Handbook",
+                  "official": true,
+                  "playtest": false,
+                  "publicationDate": "1977-05-25",
+                  "publisherName": "Wizards of the Coast",
+                  "slug": "flumph-fanciers-handbook",
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "publication",
+              ],
+            }
+          }
+        >
+          <FormInput
+            className={null}
+            id="publication-publication-date-input"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+            validStatus={null}
+            value="1977-05-25"
+          >
+            <input
+              className="form-control"
+              id="publication-publication-date-input"
+              onChange={[Function]}
+              placeholder=""
+              type="text"
+              value="1977-05-25"
+            />
+          </FormInput>
+        </PublicationDateInput>
+      </div>
+    </FormGroup>
+  </FormField>
+</PublicationDateField>
+`;
+
+exports[`<PublicationForm /> fields <PublisherNameField /> should match the snapshot 1`] = `
+<PublisherNameField
+  form={
+    Object {
+      "data": Object {
+        "publication": Object {
+          "abbreviation": "ffh",
+          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+          "name": "The Flumph Fancier's Handbook",
+          "official": true,
+          "playtest": false,
+          "publicationDate": "1977-05-25",
+          "publisherName": "Wizards of the Coast",
+          "slug": "flumph-fanciers-handbook",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "publication",
+      ],
+    }
+  }
+>
+  <FormField
+    colWidth={null}
+    inputId={null}
+    label={null}
+    path={
+      Array [
+        "publication",
+      ]
+    }
+    prop="publisherName"
+  >
+    <FormGroup
+      className="form-field"
+      colWidth={null}
+    >
+      <div
+        className="form-group col form-field"
+      >
+        <label
+          htmlFor="publication-publisher-name-input"
+        >
+          Publisher Name
+        </label>
+        <PublisherNameInput
+          form={
+            Object {
+              "data": Object {
+                "publication": Object {
+                  "abbreviation": "ffh",
+                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+                  "name": "The Flumph Fancier's Handbook",
+                  "official": true,
+                  "playtest": false,
+                  "publicationDate": "1977-05-25",
+                  "publisherName": "Wizards of the Coast",
+                  "slug": "flumph-fanciers-handbook",
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "publication",
+              ],
+            }
+          }
+        >
+          <FormInput
+            className={null}
+            id="publication-publisher-name-input"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+            validStatus={null}
+            value="Wizards of the Coast"
+          >
+            <input
+              className="form-control"
+              id="publication-publisher-name-input"
+              onChange={[Function]}
+              placeholder=""
+              type="text"
+              value="Wizards of the Coast"
+            />
+          </FormInput>
+        </PublisherNameInput>
+      </div>
+    </FormGroup>
+  </FormField>
+</PublisherNameField>
+`;
+
+exports[`<PublicationForm /> fields <SlugField /> should match the snapshot 1`] = `
+<SlugField
+  form={
+    Object {
+      "data": Object {
+        "publication": Object {
+          "abbreviation": "ffh",
+          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+          "name": "The Flumph Fancier's Handbook",
+          "official": true,
+          "playtest": false,
+          "publicationDate": "1977-05-25",
+          "publisherName": "Wizards of the Coast",
+          "slug": "flumph-fanciers-handbook",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "publication",
+      ],
+    }
+  }
+>
+  <FormField
+    colWidth={null}
+    inputId={null}
+    label={null}
+    path={
+      Array [
+        "publication",
+      ]
+    }
+    prop="slug"
+  >
+    <FormGroup
+      className="form-field"
+      colWidth={null}
+    >
+      <div
+        className="form-group col form-field"
+      >
+        <label
+          htmlFor="publication-slug-input"
+        >
+          Slug
+        </label>
+        <SlugInput
+          form={
+            Object {
+              "data": Object {
+                "publication": Object {
+                  "abbreviation": "ffh",
+                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+                  "name": "The Flumph Fancier's Handbook",
+                  "official": true,
+                  "playtest": false,
+                  "publicationDate": "1977-05-25",
+                  "publisherName": "Wizards of the Coast",
+                  "slug": "flumph-fanciers-handbook",
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "publication",
+              ],
+            }
+          }
+        >
+          <FormInput
+            className={null}
+            id="publication-slug-input"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+            validStatus={null}
+            value="flumph-fanciers-handbook"
+          >
+            <input
+              className="form-control"
+              id="publication-slug-input"
+              onChange={[Function]}
+              placeholder=""
+              type="text"
+              value="flumph-fanciers-handbook"
+            />
+          </FormInput>
+        </SlugInput>
+      </div>
+    </FormGroup>
+  </FormField>
+</SlugField>
+`;
+
+exports[`<PublicationForm /> fields <SubmitButton /> should match the snapshot 1`] = `
+<SubmitButton
+  disabled={false}
+  form={
+    Object {
+      "data": Object {
+        "publication": Object {
+          "abbreviation": "ffh",
+          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+          "name": "The Flumph Fancier's Handbook",
+          "official": true,
+          "playtest": false,
+          "publicationDate": "1977-05-25",
+          "publisherName": "Wizards of the Coast",
+          "slug": "flumph-fanciers-handbook",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "publication",
+      ],
+    }
+  }
+  isUpdate={false}
+  status="initialized"
+>
+  <FormGroup
+    className=""
+    colWidth={null}
+  >
+    <div
+      className="form-group col"
+    >
+      <PublicationFormSubmitButton
+        disabled={false}
+        form={
+          Object {
+            "data": Object {
+              "publication": Object {
+                "abbreviation": "ffh",
+                "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+                "name": "The Flumph Fancier's Handbook",
+                "official": true,
+                "playtest": false,
+                "publicationDate": "1977-05-25",
+                "publisherName": "Wizards of the Coast",
+                "slug": "flumph-fanciers-handbook",
+              },
+            },
+            "onChangeAction": [MockFunction],
+            "onSubmitAction": [MockFunction],
+            "path": Array [
+              "publication",
+            ],
+          }
+        }
+        isUpdate={false}
+        status="initialized"
+      >
+        <FormSubmitWrapper
+          block={true}
+          disabled={false}
+          form={
+            Object {
+              "data": Object {
+                "publication": Object {
+                  "abbreviation": "ffh",
+                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+                  "name": "The Flumph Fancier's Handbook",
+                  "official": true,
+                  "playtest": false,
+                  "publicationDate": "1977-05-25",
+                  "publisherName": "Wizards of the Coast",
+                  "slug": "flumph-fanciers-handbook",
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "publication",
+              ],
+            }
+          }
+          outline={true}
+        >
+          <Button
+            block={true}
+            buttonSize="md"
+            buttonStyle="primary"
+            className={null}
+            disabled={false}
+            link={false}
+            onClick={[Function]}
+            outline={true}
+          >
+            <button
+              className="btn btn-outline-primary btn-block"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              Create Publication
+            </button>
+          </Button>
+        </FormSubmitWrapper>
+      </PublicationFormSubmitButton>
+    </div>
+  </FormGroup>
+</SubmitButton>
+`;

@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PublicationFormSubmitButton /> should match the snapshot 1`] = `
+<FormSubmitWrapper
+  block={true}
+  disabled={false}
+  form={
+    Object {
+      "data": Object {
+        "publication": Object {
+          "abbreviation": "ffh",
+          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+          "name": "The Flumph Fancier's Handbook",
+          "official": true,
+          "playtest": false,
+          "publicationDate": "1977-05-25",
+          "publisherName": "Wizards of the Coast",
+          "slug": "flumph-fanciers-handbook",
+        },
+      },
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "publication",
+      ],
+    }
+  }
+  outline={true}
+>
+  Create Publication
+</FormSubmitWrapper>
+`;
+
+exports[`<PublicationFormSubmitButton /> with isUpdate: true should match the snapshot 1`] = `
+<FormSubmitWrapper
+  block={true}
+  disabled={false}
+  form={
+    Object {
+      "data": Object {
+        "publication": Object {
+          "abbreviation": "ffh",
+          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+          "name": "The Flumph Fancier's Handbook",
+          "official": true,
+          "playtest": false,
+          "publicationDate": "1977-05-25",
+          "publisherName": "Wizards of the Coast",
+          "slug": "flumph-fanciers-handbook",
+        },
+      },
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "publication",
+      ],
+    }
+  }
+  outline={true}
+>
+  Update Publication
+</FormSubmitWrapper>
+`;

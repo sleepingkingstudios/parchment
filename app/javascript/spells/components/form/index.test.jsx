@@ -110,6 +110,14 @@ describe('<SpellForm />', () => {
     expect(input).toHaveProp({ form });
   });
 
+  it('should render the cancel button', () => {
+    const rendered = shallow(<SpellForm {...defaultProps} />);
+    const input = rendered.find('CancelButton');
+
+    expect(input).toExist();
+    expect(input).toHaveProp({ form });
+  });
+
   it('should render the submit button', () => {
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('SubmitButton');

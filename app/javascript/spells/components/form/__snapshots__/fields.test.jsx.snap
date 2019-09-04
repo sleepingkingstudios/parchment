@@ -1,5 +1,99 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<SpellForm /> fields <CancelButton /> should match the snapshot 1`] = `
+<CancelButton
+  form={
+    Object {
+      "data": Object {
+        "spell": Object {
+          "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+          "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+          "duration": "Instantaneous",
+          "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+          "level": 0,
+          "materialComponent": "",
+          "name": "Thunderclap",
+          "range": "Self",
+          "ritual": false,
+          "school": "illusion",
+          "shortDescription": "Create an ominous thunderclap when your name is spoken",
+          "somaticComponent": false,
+          "verbalComponent": false,
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "spell",
+      ],
+    }
+  }
+  isUpdate={false}
+>
+  <FormGroup
+    className=""
+    colWidth={null}
+  >
+    <div
+      className="form-group col"
+    >
+      <SpellFormCancelButton
+        form={
+          Object {
+            "data": Object {
+              "spell": Object {
+                "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+                "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+                "duration": "Instantaneous",
+                "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+                "level": 0,
+                "materialComponent": "",
+                "name": "Thunderclap",
+                "range": "Self",
+                "ritual": false,
+                "school": "illusion",
+                "shortDescription": "Create an ominous thunderclap when your name is spoken",
+                "somaticComponent": false,
+                "verbalComponent": false,
+              },
+            },
+            "onChangeAction": [MockFunction],
+            "onSubmitAction": [MockFunction],
+            "path": Array [
+              "spell",
+            ],
+          }
+        }
+        isUpdate={false}
+      >
+        <LinkButton
+          block={true}
+          buttonSize={null}
+          buttonStyle="secondary"
+          className={null}
+          link={false}
+          outline={true}
+          url="/spells"
+        >
+          <Link
+            className="btn btn-outline-secondary btn-block"
+            to="/spells"
+          >
+            <a
+              className="btn btn-outline-secondary btn-block"
+              href="/spells"
+              onClick={[Function]}
+            >
+              Cancel
+            </a>
+          </Link>
+        </LinkButton>
+      </SpellFormCancelButton>
+    </div>
+  </FormGroup>
+</CancelButton>
+`;
+
 exports[`<SpellForm /> fields <CastingTimeField /> should match the snapshot 1`] = `
 <CastingTimeField
   form={
