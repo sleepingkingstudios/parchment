@@ -81,5 +81,3 @@ test:
 production:
   <<: *default
   database: parchment_production
-  username: parchment
-  password: <%= ENV['PARCHMENT_DATABASE_PASSWORD'] %>

@@ -11,10 +11,25 @@ export const publicationType = PropTypes.shape({
   slug: PropTypes.string,
 });
 
-export const spellFormType = PropTypes.shape(
+export const publicationFormType = PropTypes.shape(
   {
     publication: publicationType,
   },
 );
 
 export const publicationListType = PropTypes.arrayOf(publicationType);
+
+export const publicationDefaultAttributes = {
+  id: '',
+  abbreviation: '',
+  name: '',
+  official: false,
+  playtest: false,
+  publicationDate: '',
+  publisherName: '',
+  slug: '',
+};
+
+export const buildPublication = (attributes = {}) => (
+  Object.assign({}, attributes, publicationDefaultAttributes)
+);

@@ -1,16 +1,16 @@
 import FormEndpoint from '../../../api/form';
-import { buildSpell } from '../../entities';
+import { buildPublication } from '../../entities';
 import alerts from './alerts';
 import redirect from './redirect';
 
-const REQUEST_URL = '/api/spells';
+const REQUEST_URL = '/api/publications';
 const endpoint = new FormEndpoint({
-  data: { spell: buildSpell() },
+  data: { publication: buildPublication() },
   middleware: [
     redirect,
     alerts,
   ],
-  namespace: 'spells/createSpellForm',
+  namespace: 'publications/createPublicationForm',
   url: REQUEST_URL,
 });
 

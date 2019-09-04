@@ -24,6 +24,27 @@ To start up the app, run the following command:
 OVERMIND_PROCFILE=Procfile.dev overmind start
 ```
 
+#### Production Mode
+
+Running the app in Production mode requres additional steps. First, start up a local PostgreSQL process:
+
+```bash
+postgres
+```
+
+Clear out any pre-compiled assets, then re-generate them.
+
+```bash
+bundle exec rake assets:clobber assets:precompile    # Sprockets
+bundle exec rake webpacker:clobber webpacker:compile # Webpack
+```
+
+Finally, start up the Rails server with some additional configuration.
+
+```bash
+RAILS_SERVE_STATIC_FILES=true RAILS_ENV=production bundle exec rails s
+```
+
 ### Attaching A Debugger
 
 To connect to a process, use the `overmind connect` command. For example, to connect to a debugger in a Rails process, run the following command:

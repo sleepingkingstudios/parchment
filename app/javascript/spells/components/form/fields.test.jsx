@@ -1,7 +1,9 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import { MemoryRouter as Router } from 'react-router-dom';
 
 import {
+  CancelButton,
   CastingTimeField,
   DescriptionField,
   DurationField,
@@ -28,6 +30,31 @@ describe('<SpellForm /> fields', () => {
     onChangeAction,
     onSubmitAction,
   };
+
+  describe('<CancelButton />', () => {
+    const children = 'Do Nothing';
+    const defaultProps = {
+      children,
+      form,
+      isUpdate: false,
+    };
+
+    it('should set the display name', () => {
+      expect(CancelButton.displayName).toEqual('CancelButton');
+    });
+
+    it('should render a form group', () => {
+      const rendered = shallow(<CancelButton {...defaultProps} />);
+
+      expect(rendered).toHaveDisplayName('FormGroup');
+    });
+
+    it('should match the snapshot', () => {
+      const rendered = mount(<CancelButton {...defaultProps} />, { wrappingComponent: Router });
+
+      expect(rendered).toMatchSnapshot();
+    });
+  });
 
   describe('<CastingTimeField />', () => {
     const defaultProps = { form };

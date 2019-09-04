@@ -4,8 +4,7 @@ require 'sleeping_king_studios/tasks'
 
 SleepingKingStudios::Tasks.configure do |config|
   config.ci do |ci|
-    # Handle Travis-CI log length limit.
-    ci.rspec.update format: 'progress' if ENV['TRAVIS']
+    ci.rspec.update format: 'progress'
 
     ci.eslint.update default_files: '"app/javascript/**/*"'
 

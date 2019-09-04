@@ -1,0 +1,246 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PublicationForm /> should match the snapshot 1`] = `
+<Form
+  className="publication-form"
+  form={
+    Object {
+      "data": Object {
+        "publication": Object {
+          "abbreviation": "ffh",
+          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+          "name": "The Flumph Fancier's Handbook",
+          "official": true,
+          "playtest": false,
+          "publicationDate": "1977-05-25",
+          "publisherName": "Wizards of the Coast",
+          "slug": "flumph-fanciers-handbook",
+        },
+      },
+      "errors": Object {},
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "publication",
+      ],
+    }
+  }
+>
+  <FormRow
+    align="left"
+    className=""
+    verticalAlign="top"
+  >
+    <NameField
+      colWidth="12"
+      form={
+        Object {
+          "data": Object {
+            "publication": Object {
+              "abbreviation": "ffh",
+              "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+              "name": "The Flumph Fancier's Handbook",
+              "official": true,
+              "playtest": false,
+              "publicationDate": "1977-05-25",
+              "publisherName": "Wizards of the Coast",
+              "slug": "flumph-fanciers-handbook",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "publication",
+          ],
+        }
+      }
+    />
+    <PublisherNameField
+      colWidth="8"
+      form={
+        Object {
+          "data": Object {
+            "publication": Object {
+              "abbreviation": "ffh",
+              "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+              "name": "The Flumph Fancier's Handbook",
+              "official": true,
+              "playtest": false,
+              "publicationDate": "1977-05-25",
+              "publisherName": "Wizards of the Coast",
+              "slug": "flumph-fanciers-handbook",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "publication",
+          ],
+        }
+      }
+    />
+    <PublicationDateField
+      colWidth="4"
+      form={
+        Object {
+          "data": Object {
+            "publication": Object {
+              "abbreviation": "ffh",
+              "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+              "name": "The Flumph Fancier's Handbook",
+              "official": true,
+              "playtest": false,
+              "publicationDate": "1977-05-25",
+              "publisherName": "Wizards of the Coast",
+              "slug": "flumph-fanciers-handbook",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "publication",
+          ],
+        }
+      }
+    />
+    <SlugField
+      colWidth="8"
+      form={
+        Object {
+          "data": Object {
+            "publication": Object {
+              "abbreviation": "ffh",
+              "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+              "name": "The Flumph Fancier's Handbook",
+              "official": true,
+              "playtest": false,
+              "publicationDate": "1977-05-25",
+              "publisherName": "Wizards of the Coast",
+              "slug": "flumph-fanciers-handbook",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "publication",
+          ],
+        }
+      }
+    />
+    <AbbreviationField
+      colWidth="2"
+      form={
+        Object {
+          "data": Object {
+            "publication": Object {
+              "abbreviation": "ffh",
+              "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+              "name": "The Flumph Fancier's Handbook",
+              "official": true,
+              "playtest": false,
+              "publicationDate": "1977-05-25",
+              "publisherName": "Wizards of the Coast",
+              "slug": "flumph-fanciers-handbook",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "publication",
+          ],
+        }
+      }
+    />
+    <PlaytestField
+      colWidth="2"
+      form={
+        Object {
+          "data": Object {
+            "publication": Object {
+              "abbreviation": "ffh",
+              "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+              "name": "The Flumph Fancier's Handbook",
+              "official": true,
+              "playtest": false,
+              "publicationDate": "1977-05-25",
+              "publisherName": "Wizards of the Coast",
+              "slug": "flumph-fanciers-handbook",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "publication",
+          ],
+        }
+      }
+    />
+  </FormRow>
+  <FormRow
+    align="right"
+    className=""
+    verticalAlign="top"
+  >
+    <CancelButton
+      colWidth="3"
+      form={
+        Object {
+          "data": Object {
+            "publication": Object {
+              "abbreviation": "ffh",
+              "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+              "name": "The Flumph Fancier's Handbook",
+              "official": true,
+              "playtest": false,
+              "publicationDate": "1977-05-25",
+              "publisherName": "Wizards of the Coast",
+              "slug": "flumph-fanciers-handbook",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "publication",
+          ],
+        }
+      }
+      isUpdate={false}
+    />
+    <SubmitButton
+      colWidth="3"
+      disabled={false}
+      form={
+        Object {
+          "data": Object {
+            "publication": Object {
+              "abbreviation": "ffh",
+              "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+              "name": "The Flumph Fancier's Handbook",
+              "official": true,
+              "playtest": false,
+              "publicationDate": "1977-05-25",
+              "publisherName": "Wizards of the Coast",
+              "slug": "flumph-fanciers-handbook",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "publication",
+          ],
+        }
+      }
+      isUpdate={false}
+      status="initialized"
+    />
+  </FormRow>
+</Form>
+`;

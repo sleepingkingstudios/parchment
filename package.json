@@ -48,6 +48,6 @@
     "ci": "yarn test && yarn lint && yarn lint:css",
     "lint": "eslint --ext .js,.jsx app/javascript/",
     "lint:css": "stylelint app/javascript/**/*.css",
-    "test": "jest app/javascript --verbose"
+    "test": "jest app/javascript --verbose=false"
   }
 }
