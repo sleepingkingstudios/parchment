@@ -16,8 +16,13 @@ const breadcrumbs = [
     active: true,
   },
 ];
-
-const buttons = [];
+const buttons = [
+  {
+    label: 'Create Publication',
+    outline: true,
+    url: '/publications/create',
+  },
+];
 const { useRequestData } = hooks;
 
 const PublicationsPage = () => {

@@ -16,7 +16,6 @@ const breadcrumbs = [
     active: true,
   },
 ];
-
 const buttons = [
   {
     label: 'Create Spell',

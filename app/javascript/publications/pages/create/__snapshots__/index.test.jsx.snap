@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CreatePublicationPage /> should match the snapshot 1`] = `
+<Page
+  breadcrumbs={
+    Array [
+      Object {
+        "label": "Home",
+        "url": "/",
+      },
+      Object {
+        "label": "Publications",
+        "url": "/publications",
+      },
+      Object {
+        "active": true,
+        "label": "Create",
+        "url": "/publications/create",
+      },
+    ]
+  }
+  className="page-create-publication"
+  layout={null}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <h1>
+    Create Publication
+  </h1>
+  <CreatePublicationForm />
+</Page>
+`;
