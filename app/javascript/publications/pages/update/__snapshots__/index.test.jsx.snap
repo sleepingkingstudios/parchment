@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpdatePublicationPage should match the snapshot 1`] = `
+<Page
+  breadcrumbs={<UpdatePublicationBreadcrumbs />}
+  className="page-update-publication"
+  layout={null}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <h1>
+    Update Publication
+  </h1>
+  <UpdatePublicationForm />
+</Page>
+`;

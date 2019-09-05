@@ -13,6 +13,14 @@ const PublicationsTableActions = ({ id }) => (
     >
       Show
     </LinkButton>
+    <LinkButton
+      url={`/publications/${id}/update`}
+      link
+      buttonSize="sm"
+      buttonStyle="link"
+    >
+      Update
+    </LinkButton>
   </div>
 );
 
