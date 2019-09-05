@@ -4,7 +4,7 @@ import {
   request,
 } from './index';
 
-describe('UpdateFindSpell store', () => {
+describe('ShowFindPublication store', () => {
   describe('hooks', () => {
     const {
       useEndpoint,
@@ -25,17 +25,26 @@ describe('UpdateFindSpell store', () => {
   });
 
   describe('namespace', () => {
-    it('should equal spells/updateFindSpell', () => {
-      expect(namespace).toEqual('spells/updateFindSpell');
+    it('should be publications/showFindPublication', () => {
+      expect(namespace).toEqual('publications/showFindPublication');
     });
   });
 
   describe('request', () => {
-    const { url } = request;
+    const {
+      method,
+      url,
+    } = request;
+
+    describe('method', () => {
+      it('should be GET', () => {
+        expect(method).toEqual('GET');
+      });
+    });
 
     describe('url', () => {
-      it('should be the spell show URL', () => {
-        expect(url).toEqual('/api/spells/:id');
+      it('should be the publication show URL', () => {
+        expect(url).toEqual('/api/publications/:id');
       });
     });
   });

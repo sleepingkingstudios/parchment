@@ -1,13 +1,13 @@
-import { push } from 'connected-react-router';
+import alerts from './alerts';
+import { addAlert } from '../../../components/alerts/store/actions';
+import { generateFingerprintUuid } from '../../../utils/uuid';
 
-import redirect from './redirect';
-
-describe('UpdateFindSpell store redirect', () => {
-  const { handleFailure } = redirect;
+describe('UpdateFindPublication store alerts', () => {
+  const { handleFailure } = alerts;
 
   describe('handleFailure()', () => {
     const getState = jest.fn();
-    const response = { ok: false };
+    const response = { ok: false, json: {} };
 
     it('should be a function', () => {
       expect(typeof handleFailure).toEqual('function');
@@ -28,11 +28,16 @@ describe('UpdateFindSpell store redirect', () => {
       expect(next).toHaveBeenCalledWith({ dispatch, getState, response });
     });
 
-    it('should dispatch a push action', () => {
+    it('should dispatch an addAlert action', () => {
       const next = jest.fn();
       const dispatch = jest.fn();
-      const url = '/spells';
-      const expected = push(url);
+      const alert = {
+        id: generateFingerprintUuid('publications/update'),
+        alertStyle: 'warning',
+        dismissible: true,
+        message: 'Unable to find publication.',
+      };
+      const expected = addAlert(alert);
 
       handleFailure(next)({ dispatch, getState, response });
 
