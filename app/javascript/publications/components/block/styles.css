@@ -1,0 +1,16 @@
+.publication-block .publication-block-name {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.publication-block .publication-block-additional-details,
+.publication-block .publication-block-details {
+  margin-bottom: 1rem;
+}
+
+.publication-block .publication-block-additional-details p,
+.publication-block .publication-block-details p {
+  margin-bottom: 0;
+}

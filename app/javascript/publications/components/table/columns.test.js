@@ -1,4 +1,5 @@
 import columns from './columns';
+import PublicationsTableActions from './actions';
 
 describe('Publications table columns', () => {
   it('should have the expected props', () => {
@@ -19,7 +20,7 @@ describe('Publications table columns', () => {
       const matching = columns.find(column => (column.prop === 'actions'));
 
       expect(matching.label).toEqual(' ');
-      expect(matching.value).toEqual('');
+      expect(matching.value).toEqual(PublicationsTableActions);
     });
   });
 

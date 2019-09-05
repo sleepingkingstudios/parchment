@@ -1,3 +1,5 @@
+import PublicationsTableActions from './actions';
+
 const columns = [
   {
     label: 'Name',
@@ -18,7 +20,7 @@ const columns = [
   {
     label: ' ',
     prop: 'actions',
-    value: '',
+    value: PublicationsTableActions,
   },
 ];
 
