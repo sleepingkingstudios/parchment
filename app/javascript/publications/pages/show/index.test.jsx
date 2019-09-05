@@ -24,9 +24,8 @@ describe('ShowPublicationPage', () => {
 
   it('should render the heading', () => {
     const rendered = shallow(<ShowPublicationPage {...defaultProps} />);
-    const heading = rendered.find('h1');
 
-    expect(heading).toIncludeText('Show Publication');
+    expect(rendered).toContainMatchingElement('ShowPublicationHeading');
   });
 
   it('should render the publication block', () => {

@@ -2,28 +2,29 @@ import { push } from 'connected-react-router';
 
 import redirect from './redirect';
 
-describe('UpdateFindSpell store redirect', () => {
-  const { handleFailure } = redirect;
+describe('UpdatePublicationForm store redirect', () => {
+  const { handleSuccess } = redirect;
 
-  describe('handleFailure()', () => {
+  describe('handleSuccess()', () => {
     const getState = jest.fn();
-    const response = { ok: false };
+    const publication = { id: '00000000-0000-0000-0000-000000000000' };
+    const response = { ok: true, json: { data: { publication } } };
 
     it('should be a function', () => {
-      expect(typeof handleFailure).toEqual('function');
+      expect(typeof handleSuccess).toEqual('function');
     });
 
     it('should return a function', () => {
       const next = jest.fn();
 
-      expect(typeof handleFailure(next)).toEqual('function');
+      expect(typeof handleSuccess(next)).toEqual('function');
     });
 
     it('should call the next function', () => {
       const next = jest.fn();
       const dispatch = jest.fn();
 
-      handleFailure(next)({ dispatch, getState, response });
+      handleSuccess(next)({ dispatch, getState, response });
 
       expect(next).toHaveBeenCalledWith({ dispatch, getState, response });
     });
@@ -31,10 +32,10 @@ describe('UpdateFindSpell store redirect', () => {
     it('should dispatch a push action', () => {
       const next = jest.fn();
       const dispatch = jest.fn();
-      const url = '/spells';
+      const url = `/publications/${publication.id}`;
       const expected = push(url);
 
-      handleFailure(next)({ dispatch, getState, response });
+      handleSuccess(next)({ dispatch, getState, response });
 
       expect(dispatch).toHaveBeenCalledWith(expected);
     });

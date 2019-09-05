@@ -21,4 +21,13 @@ describe('<SpellsTableActions />', () => {
     expect(link).toHaveProp('url', `/publications/${id}`);
     expect(link).toHaveProp('children', 'Show');
   });
+
+  it('should render the update link', () => {
+    const rendered = shallow(<PublicationsTableActions {...defaultProps} />);
+    const link = rendered.find('LinkButton').at(1);
+
+    expect(link).toExist();
+    expect(link).toHaveProp('url', `/publications/${id}/update`);
+    expect(link).toHaveProp('children', 'Update');
+  });
 });

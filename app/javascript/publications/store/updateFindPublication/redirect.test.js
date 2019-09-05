@@ -2,7 +2,7 @@ import { push } from 'connected-react-router';
 
 import redirect from './redirect';
 
-describe('UpdateFindSpell store redirect', () => {
+describe('UpdateFindPublication store redirect', () => {
   const { handleFailure } = redirect;
 
   describe('handleFailure()', () => {
@@ -31,7 +31,7 @@ describe('UpdateFindSpell store redirect', () => {
     it('should dispatch a push action', () => {
       const next = jest.fn();
       const dispatch = jest.fn();
-      const url = '/spells';
+      const url = '/publications';
       const expected = push(url);
 
       handleFailure(next)({ dispatch, getState, response });

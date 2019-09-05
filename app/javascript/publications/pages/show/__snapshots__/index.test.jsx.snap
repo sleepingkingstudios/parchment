@@ -8,9 +8,7 @@ exports[`ShowPublicationPage should match the snapshot 1`] = `
   subtitle="5e Campaign Companion"
   title="Parchment"
 >
-  <h1>
-    Show Publication
-  </h1>
+  <ShowPublicationHeading />
   <ShowPublicationBlock />
 </Page>
 `;

@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Page from '../../../components/page';
-import ShowPublicationBlock from './block';
-import ShowPublicationBreadcrumbs from './breadcrumbs';
-import ShowPublicationHeading from './heading';
-import { hooks } from '../../store/showFindPublication';
+import UpdatePublicationBreadcrumbs from './breadcrumbs';
+import UpdatePublicationForm from './form';
+import { hooks } from '../../store/updateFindPublication';
 
 const getPublicationId = ({ match }) => {
   const { params } = match;
@@ -15,24 +14,27 @@ const getPublicationId = ({ match }) => {
 
 const { useRequestData } = hooks;
 
-const ShowPublicationPage = (props) => {
+const UpdatePublicationPage = (props) => {
   const id = getPublicationId(props);
   const requestData = useRequestData({ wildcards: { id } });
 
   requestData();
 
   return (
-    <Page breadcrumbs={<ShowPublicationBreadcrumbs />} className="page-show-publication">
-      <ShowPublicationHeading />
+    <Page
+      breadcrumbs={<UpdatePublicationBreadcrumbs />}
+      className="page-update-publication"
+    >
+      <h1>Update Publication</h1>
 
-      <ShowPublicationBlock />
+      <UpdatePublicationForm />
     </Page>
   );
 };
 
-ShowPublicationPage.defaultProps = {};
+UpdatePublicationPage.defaultProps = {};
 
-ShowPublicationPage.propTypes = {
+UpdatePublicationPage.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -40,4 +42,4 @@ ShowPublicationPage.propTypes = {
   }).isRequired,
 };
 
-export default ShowPublicationPage;
+export default UpdatePublicationPage;
