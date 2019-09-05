@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PublicationBlock /> should match the snapshot 1`] = `
+<div
+  className="publication-block"
+>
+  <p
+    className="publication-block-name"
+  >
+    The Flumph Fancier's Handbook
+  </p>
+  <div
+    className="publication-block-details"
+  >
+    <p
+      className="publication-block-publisher-name"
+    >
+      <strong>
+        Publisher:
+      </strong>
+       
+      Wizards of the Coast
+    </p>
+    <p
+      className="publication-block-publication-date"
+    >
+      <strong>
+        Publication Date:
+      </strong>
+       
+      1977-05-25
+    </p>
+    <p
+      className="publication-block-playtest"
+    >
+      <strong>
+        Playtest:
+      </strong>
+       
+      false
+    </p>
+    <p
+      className="publication-block-official"
+    >
+      <strong>
+        Official:
+      </strong>
+       
+      true
+    </p>
+  </div>
+</div>
+`;
+
+exports[`<PublicationBlock /> with showAdditionalDetails: true should match the snapshot 1`] = `
+<div
+  className="publication-block"
+>
+  <p
+    className="publication-block-name"
+  >
+    The Flumph Fancier's Handbook
+  </p>
+  <div
+    className="publication-block-details"
+  >
+    <p
+      className="publication-block-publisher-name"
+    >
+      <strong>
+        Publisher:
+      </strong>
+       
+      Wizards of the Coast
+    </p>
+    <p
+      className="publication-block-publication-date"
+    >
+      <strong>
+        Publication Date:
+      </strong>
+       
+      1977-05-25
+    </p>
+    <p
+      className="publication-block-playtest"
+    >
+      <strong>
+        Playtest:
+      </strong>
+       
+      false
+    </p>
+    <p
+      className="publication-block-official"
+    >
+      <strong>
+        Official:
+      </strong>
+       
+      true
+    </p>
+  </div>
+</div>
+`;
