@@ -16,24 +16,31 @@ module Spec::Support::Examples
     end
 
     shared_examples 'should have attribute' \
-      do |attr_name, default: nil|
+      do |attr_name, default: nil, value: nil|
         attr_name = attr_name.intern
 
-        include_examples 'should have property',
-          attr_name,
-          -> { be == attributes.fetch(attr_name, default) }
+        include_examples 'should have property', attr_name
 
-        unless default.nil?
-          context "when the #{attr_name} is not given" do
-            let(:attributes) do
-              super().tap do |hsh|
-                hsh.delete(attr_name.intern)
-                hsh.delete(attr_name.to_s)
-              end
+        context "when the attributes do not include #{attr_name}" do
+          let(:attributes) do
+            super().tap do |hsh|
+              hsh.delete(attr_name.intern)
+              hsh.delete(attr_name.to_s)
             end
-
-            it { expect(subject.send(attr_name)).to be == default }
           end
+
+          it { expect(subject.send(attr_name)).to be == default }
+        end
+
+        context "when the attributes include #{attr_name}" do
+          if value.nil?
+            let(:expected) { attributes.fetch(attr_name.intern) }
+          else
+            let(:attributes) { super().merge(attr_name => value) }
+            let(:expected)   { value }
+          end
+
+          it { expect(subject.public_send(attr_name)).to be == expected }
         end
       end
   end

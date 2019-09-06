@@ -230,7 +230,9 @@ RSpec.describe Spell, type: :model do
   end
 
   describe '#id' do
-    include_examples 'should have attribute', :id
+    include_examples 'should have attribute',
+      :id,
+      value: '00000000-0000-0000-0000-000000000000'
 
     context 'when the spell is persisted' do
       before(:example) { spell.save! }
@@ -246,7 +248,8 @@ RSpec.describe Spell, type: :model do
   describe '#material_component' do
     include_examples 'should have attribute',
       :material_component,
-      default: ''
+      default: '',
+      value:   'a little bit of pixie dust'
   end
 
   describe '#name' do
@@ -258,7 +261,10 @@ RSpec.describe Spell, type: :model do
   end
 
   describe '#ritual' do
-    include_examples 'should have attribute', :ritual, default: false
+    include_examples 'should have attribute',
+      :ritual,
+      default: false,
+      value:   true
   end
 
   describe '#ritual?' do
@@ -276,7 +282,10 @@ RSpec.describe Spell, type: :model do
   end
 
   describe '#somatic_component' do
-    include_examples 'should have attribute', :somatic_component, default: false
+    include_examples 'should have attribute',
+      :somatic_component,
+      default: false,
+      value:   true
   end
 
   describe '#valid?' do
