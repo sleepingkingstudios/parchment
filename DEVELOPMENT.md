@@ -1,13 +1,5 @@
 # Development Notes
 
-## Sources
-
-- published books, web articles, original content
-- name:String
-- abbreviation:String - e.g. Player's Handbook -> PHB
-- publisher
-- official content
-
 ## Spells
 
 - belongs_to :source
@@ -17,29 +9,6 @@
     e.g. Spontaneous Combustion -> spontaneous-combustion
 - attribute short_description:string
 - attribute slug (source abbrev + short_name) - e.g. phb-spontaneous-combustion
-
-### Client
-
-- namespace all Spell reducers in the 'spells' namespace
-  - support nested namespaces in requests (rename to API objects?)
-  - extract FindAll request
-- source layout: |
-
-    /javascript
-      /spells
-        /components
-          /block
-          /form
-        /pages
-          /create
-          /index
-          /show
-          /update
-        /store
-
-### Serializer
-
-- create Spell serializer
 
 ### Tags
 
