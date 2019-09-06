@@ -46,6 +46,7 @@ RSpec.describe Operations::Records::CreateOperation do
       let(:attributes) do
         {
           name:         'Glowing Gaze',
+          slug:         'glowing-gaze',
           casting_time: '1 reaction, which you take when a creature within ' \
                         'range takes fire damage',
           duration:     'Instantaneous',

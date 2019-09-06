@@ -6,6 +6,7 @@ require 'models/naming'
 class Publication < ApplicationRecord
   extend Models::Naming::Hooks
 
+  ### Attributes
   attribute :abbreviation, :string,  default: ''
   attribute :playtest,     :boolean, default: false
   attribute :slug,         :string,  default: ''
@@ -13,6 +14,10 @@ class Publication < ApplicationRecord
   generate_abbreviation :name
   generate_slug :name
 
+  ### Associations
+  has_many :spells, as: :source
+
+  ### Validations
   validates :abbreviation,
     presence:   { unless: ->(publication) { publication.name.blank? } },
     uniqueness: { scope: :publisher_name }

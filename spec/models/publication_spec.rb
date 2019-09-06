@@ -135,6 +135,24 @@ RSpec.describe Publication, type: :model do
     end
   end
 
+  describe '#spells' do
+    include_examples 'should have reader', :spells, []
+
+    context 'when the publication has many spells' do
+      let(:spells) do
+        Array.new(3) { FactoryBot.build(:spell, source: publication) }
+      end
+
+      before(:example) do
+        publication.save!
+
+        spells.each(&:save!)
+      end
+
+      it { expect(publication.spells).to contain_exactly(*spells) }
+    end
+  end
+
   describe '#updated_at' do
     include_examples 'should have reader', :updated_at
   end
