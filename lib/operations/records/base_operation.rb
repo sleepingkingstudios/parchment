@@ -4,10 +4,13 @@ require 'errors/invalid_parameters'
 require 'errors/invalid_record'
 require 'errors/unknown_attributes'
 require 'operations/records'
+require 'operations/steps'
 
 module Operations::Records
   # Abstract base class for record operations.
   class BaseOperation < Cuprum::Operation
+    include Operations::Steps
+
     # @param record_class [Class] The class of record that the operation's
     #   business logic operates on.
     def initialize(record_class)

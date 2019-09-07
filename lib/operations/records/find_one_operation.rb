@@ -30,12 +30,6 @@ module Operations::Records
       failure(error)
     end
 
-    def handle_invalid_id(id)
-      handle_nil_id(id) ||
-        handle_id_type_invalid(id) ||
-        handle_id_not_empty(id)
-    end
-
     def handle_nil_id(id)
       return unless id.nil?
 
@@ -58,7 +52,11 @@ module Operations::Records
     end
 
     def process(id)
-      handle_invalid_id(id) || find_record(id)
+      step :handle_nil_id,          id
+      step :handle_id_type_invalid, id
+      step :handle_id_not_empty,    id
+
+      find_record(id)
     end
   end
 end

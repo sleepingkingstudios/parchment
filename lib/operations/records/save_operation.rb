@@ -9,7 +9,9 @@ module Operations::Records
     private
 
     def process(record)
-      handle_invalid_record(record) || persist_record(record)
+      step :handle_invalid_record, record
+
+      persist_record(record)
     end
 
     def persist_record(record)
