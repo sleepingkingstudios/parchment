@@ -3,8 +3,8 @@
 require 'operations/records/create_operation'
 require 'operations/records/destroy_operation'
 require 'operations/records/find_one_operation'
+require 'operations/records/spells/find_matching_operation'
 require 'operations/records/update_operation'
-require 'operations/spells/find_matching_operation'
 
 # Controller for performing CRUD actions on Spells via a JSON API.
 class Api::SpellsController < Api::BaseController
@@ -54,7 +54,7 @@ class Api::SpellsController < Api::BaseController
   end
 
   def index_operation
-    @index_operation ||= Operations::Spells::FindMatchingOperation.new
+    @index_operation ||= Operations::Records::Spells::FindMatchingOperation.new
   end
 
   def require_spell

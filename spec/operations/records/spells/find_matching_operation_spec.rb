@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-require 'operations/spells/find_matching_operation'
+require 'operations/records/spells/find_matching_operation'
 
-RSpec.describe Operations::Spells::FindMatchingOperation do
+RSpec.describe Operations::Records::Spells::FindMatchingOperation do
   subject(:operation) { described_class.new }
 
   let(:record_class) { Spell }

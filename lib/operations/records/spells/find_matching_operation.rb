@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'operations/records/find_matching_operation'
-require 'operations/spells'
+require 'operations/records/spells'
 
-module Operations::Spells
+module Operations::Records::Spells
   # Queries the database for Spells matching the specified criteria.
   class FindMatchingOperation < Operations::Records::FindMatchingOperation
     def initialize

@@ -11,6 +11,32 @@ module Operations::Records
   class BaseOperation < Cuprum::Operation
     include Operations::Steps
 
+    class << self
+      # Returns a new subclass of the operation that curries the
+      #
+      # @param record_class [Class] The class of record that the operation's
+      #   business logic operates on.
+      def subclass(record_class)
+        Class.new(self).tap do |klass|
+          klass.define_method(:initialize) { super(record_class) }
+
+          name = subclass_name(record_class)
+          klass.define_singleton_method(:name) { name }
+        end
+      end
+
+      private
+
+      def subclass_name(record_class)
+        *segments, final = name.split('::')
+
+        segments <<
+          "#{final.sub(/Operation\z/, '')}#{record_class.name}Operation"
+
+        segments.join('::')
+      end
+    end
+
     # @param record_class [Class] The class of record that the operation's
     #   business logic operates on.
     def initialize(record_class)
