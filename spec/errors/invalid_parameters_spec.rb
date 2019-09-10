@@ -53,6 +53,15 @@ RSpec.describe Errors::InvalidParameters do
       it { expect(error.message).to be == expected }
     end
 
+    context 'when the errors have one item with a nested key' do
+      let(:errors)   { [['records.0.attributes', 'must be a Hash']] }
+      let(:expected) do
+        'Invalid request parameters: records 0 attributes must be a Hash'
+      end
+
+      it { expect(error.message).to be == expected }
+    end
+
     context 'when the errors have many items' do
       let(:errors) do
         [
