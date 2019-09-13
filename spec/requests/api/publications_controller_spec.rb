@@ -138,7 +138,7 @@ RSpec.describe Api::PublicationsController do
 
     wrap_context 'when there are many publications' do
       let(:expected_data) do
-        serializer = PublicationSerializer.new
+        serializer = Serializers::PublicationSerializer.new
 
         publications
           .map { |publication| serializer.serialize(publication) }
@@ -239,7 +239,7 @@ RSpec.describe Api::PublicationsController do
         Publication.where(name: 'The Complete Flumph').first
       end
       let(:expected_json) do
-        serializer = PublicationSerializer.new
+        serializer = Serializers::PublicationSerializer.new
 
         {
           'ok'   => true,
@@ -293,7 +293,7 @@ RSpec.describe Api::PublicationsController do
     let(:publication)    { publications.first }
     let(:publication_id) { publication.id }
     let(:expected_json) do
-      serializer = PublicationSerializer.new
+      serializer = Serializers::PublicationSerializer.new
 
       {
         'ok'   => true,
@@ -423,7 +423,7 @@ RSpec.describe Api::PublicationsController do
         Publication.where(name: 'The Complete Flumph').first
       end
       let(:expected_json) do
-        serializer = PublicationSerializer.new
+        serializer = Serializers::PublicationSerializer.new
 
         {
           'ok'   => true,

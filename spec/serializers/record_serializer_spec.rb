@@ -2,9 +2,11 @@
 
 require 'rails_helper'
 
+require 'serializers/record_serializer'
+
 require 'support/examples/serializer_examples'
 
-RSpec.describe RecordSerializer do
+RSpec.describe Serializers::RecordSerializer do
   include Spec::Support::Examples::SerializerExamples
 
   subject(:serializer) { described_class.new }

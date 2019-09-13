@@ -3,11 +3,10 @@
 require 'errors/failed_validation'
 require 'errors/invalid_parameters'
 require 'errors/not_found'
+require 'serializers'
 
 # Abstract base class for API controllers.
 class Api::BaseController < ApplicationController
-  include SerializationHelper
-
   protect_from_forgery with: :null_session
 
   private
@@ -55,9 +54,9 @@ class Api::BaseController < ApplicationController
 
   def wrap_value(value)
     if value.is_a?(Array)
-      { resource_name => value.map { |item| serialize(item) } }
+      { resource_name => value.map { |item| Serializers.serialize(item) } }
     else
-      { resource_name.singularize => serialize(value) }
+      { resource_name.singularize => Serializers.serialize(value) }
     end
   end
 end

@@ -183,7 +183,7 @@ RSpec.describe Api::SpellsController do
       include_context 'when there are many spells'
 
       let(:expected_data) do
-        serializer = SpellSerializer.new
+        serializer = Serializers::SpellSerializer.new
 
         spells
           .sort_by(&:name)
@@ -305,7 +305,7 @@ RSpec.describe Api::SpellsController do
       end
       let(:created_spell) { Spell.where(name: 'Glowing Gaze').first }
       let(:expected_json) do
-        serializer = SpellSerializer.new
+        serializer = Serializers::SpellSerializer.new
 
         {
           'ok'   => true,
@@ -355,7 +355,7 @@ RSpec.describe Api::SpellsController do
     let(:spell)    { spells.first }
     let(:spell_id) { spell.id }
     let(:expected_json) do
-      serializer = SpellSerializer.new
+      serializer = Serializers::SpellSerializer.new
 
       {
         'ok'   => true,
@@ -488,7 +488,7 @@ RSpec.describe Api::SpellsController do
       let(:params)        { super().merge(spell: spell_params) }
       let(:updated_spell) { Spell.where(name: 'Glowing Gaze').first }
       let(:expected_json) do
-        serializer = SpellSerializer.new
+        serializer = Serializers::SpellSerializer.new
 
         {
           'ok'   => true,

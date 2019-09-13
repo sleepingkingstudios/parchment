@@ -2,9 +2,11 @@
 
 require 'rails_helper'
 
+require 'serializers/spell_serializer'
+
 require 'support/examples/serializer_examples'
 
-RSpec.describe SpellSerializer do
+RSpec.describe Serializers::SpellSerializer do
   include Spec::Support::Examples::SerializerExamples
 
   subject(:serializer) { described_class.new }

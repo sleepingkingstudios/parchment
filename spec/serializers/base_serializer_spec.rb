@@ -2,9 +2,11 @@
 
 require 'rails_helper'
 
+require 'serializers/base_serializer'
+
 require 'support/examples/serializer_examples'
 
-RSpec.describe ApplicationSerializer do
+RSpec.describe Serializers::BaseSerializer do
   include Spec::Support::Examples::SerializerExamples
 
   shared_context 'with a serializer subclass' do
@@ -14,7 +16,7 @@ RSpec.describe ApplicationSerializer do
     example_class 'Spec::Widget', Struct.new(:name, :size, :complexity)
 
     # rubocop:disable RSpec/DescribedClass
-    example_class 'Spec::WidgetSerializer', ApplicationSerializer
+    example_class 'Spec::WidgetSerializer', Serializers::BaseSerializer
     # rubocop:enable RSpec/DescribedClass
   end
 
@@ -26,7 +28,7 @@ RSpec.describe ApplicationSerializer do
 
   describe '::attribute' do
     let(:error_message) do
-      'ApplicationSerializer is an abstract class and cannot define attributes.'
+      'BaseSerializer is an abstract class and cannot define attributes.'
     end
 
     it { expect(described_class).to respond_to(:attribute).with(1).argument }
@@ -51,7 +53,7 @@ RSpec.describe ApplicationSerializer do
 
   describe '::attributes' do
     let(:error_message) do
-      'ApplicationSerializer is an abstract class and cannot define attributes.'
+      'BaseSerializer is an abstract class and cannot define attributes.'
     end
 
     it 'should define the method' do
@@ -101,7 +103,8 @@ RSpec.describe ApplicationSerializer do
       example_class 'Spec::Person', Struct.new(:first_name, :last_name, :title)
 
       # rubocop:disable RSpec/DescribedClass
-      example_class 'Spec::PersonSerializer', ApplicationSerializer do |klass|
+      example_class 'Spec::PersonSerializer', Serializers::BaseSerializer \
+      do |klass|
         klass.attributes :first_name, :last_name, :title
       end
       # rubocop:enable RSpec/DescribedClass
