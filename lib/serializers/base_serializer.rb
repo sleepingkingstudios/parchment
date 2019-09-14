@@ -53,7 +53,9 @@ module Serializers
       end
     end
 
-    def serialize(object)
+    def call(object)
+      ensure_can_serialize!(object)
+
       @object    = object
       attributes = self.class.send(:defined_attributes)
 
@@ -61,9 +63,24 @@ module Serializers
         hsh[attr_name] = instance_exec(&block)
       end
     end
+    alias_method :serialize, :call
 
     private
 
     attr_reader :object
+
+    def can_serialize?(_object)
+      true
+    end
+
+    def ensure_can_serialize!(object)
+      return if can_serialize?(object)
+
+      raise Serializers::InvalidObjectError,
+        Serializers::InvalidObjectError.message(
+          object:     object,
+          serializer: self
+        )
+    end
   end
 end

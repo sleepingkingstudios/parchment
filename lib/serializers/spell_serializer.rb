@@ -19,5 +19,11 @@ module Serializers
       :verbal_component
 
     alias_method :spell, :object
+
+    private
+
+    def can_serialize?(object)
+      object.is_a?(Spell)
+    end
   end
 end

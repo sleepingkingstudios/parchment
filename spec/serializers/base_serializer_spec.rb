@@ -92,10 +92,60 @@ RSpec.describe Serializers::BaseSerializer do
     end
   end
 
-  describe '#serialize' do
-    it { expect(serializer).to respond_to(:serialize).with(1).argument }
+  describe '#call' do
+    it { expect(serializer).to respond_to(:call).with(1).argument }
 
-    it { expect(serializer.serialize Object.new).to be == {} }
+    it { expect(serializer).to alias_method(:call).as(:serialize) }
+
+    it { expect(serializer.call Object.new).to be == {} }
+
+    context 'when the class defines can_serialize?' do
+      let(:described_class) { Spec::WidgetSerializer }
+
+      example_class 'Spec::Widget'
+
+      # rubocop:disable RSpec/DescribedClass
+      example_class 'Spec::WidgetSerializer', Serializers::BaseSerializer \
+      do |klass|
+        klass.define_method(:can_serialize?) do |object|
+          object.is_a?(Spec::Widget)
+        end
+      end
+      # rubocop:enable RSpec/DescribedClass
+
+      describe 'with nil' do
+        let(:error_class) { Serializers::InvalidObjectError }
+        let(:error_message) do
+          'Unable to serialize nil with Spec::WidgetSerializer'
+        end
+
+        it 'should raise an error' do
+          expect { serializer.call(nil) }
+            .to raise_error error_class, error_message
+        end
+      end
+
+      describe 'with an object' do
+        let(:object)      { Object.new.freeze }
+        let(:error_class) { Serializers::InvalidObjectError }
+        let(:error_message) do
+          "Unable to serialize #{object.inspect} with Spec::WidgetSerializer"
+        end
+
+        it 'should raise an error' do
+          expect { serializer.call(object) }
+            .to raise_error error_class, error_message
+        end
+      end
+
+      describe 'with a valid object' do
+        let(:widget) { Spec::Widget.new }
+
+        it 'should not raise an error' do
+          expect { serializer.call(widget) }.not_to raise_error
+        end
+      end
+    end
 
     context 'when there are many attributes' do
       let(:described_class) { Spec::PersonSerializer }

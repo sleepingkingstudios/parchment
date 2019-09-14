@@ -41,7 +41,7 @@ module Spec::Support::Examples
       end
 
       it 'should serialize the attributes' do
-        expect(subject.serialize object).to deep_match expected
+        expect(subject.call object).to deep_match expected
       end
     end
   end

@@ -23,5 +23,11 @@ module Serializers
     def publication_date
       super.iso8601
     end
+
+    private
+
+    def can_serialize?(object)
+      object.is_a?(Publication)
+    end
   end
 end
