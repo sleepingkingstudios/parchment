@@ -108,13 +108,11 @@ RSpec.describe Api::PublicationsController do
   let(:json)    { JSON.parse(response.body) }
 
   describe 'GET /api/publications.json' do
-    let(:expected_data) { [] }
+    let(:expected_data) { { 'publications' => [] } }
     let(:expected_json) do
       {
         'ok'   => true,
-        'data' => {
-          'publications' => expected_data
-        }
+        'data' => expected_data
       }
     end
 
@@ -139,9 +137,12 @@ RSpec.describe Api::PublicationsController do
     wrap_context 'when there are many publications' do
       let(:expected_data) do
         serializer = Serializers::PublicationSerializer.new
-
-        publications
+        serialized =
+          publications
+          .sort_by(&:name)
           .map { |publication| serializer.serialize(publication) }
+
+        { 'publications' => serialized }
       end
 
       it 'should serialize the publications' do

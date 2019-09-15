@@ -3,11 +3,20 @@
 require 'operations/steps'
 require 'responders/json_responder'
 
+# rubocop:disable Metrics/ClassLength
 module Api
   # Abstract base class for API resource controllers that delegate their actions
   # to pre-defined operations.
   class ResourcesController < Api::BaseController
     include Operations::Steps::Mixin
+
+    SORT_DIRECTIONS = {
+      'asc'        => 'asc',
+      'ascending'  => 'asc',
+      'desc'       => 'desc',
+      'descending' => 'desc'
+    }.freeze
+    private_constant :SORT_DIRECTIONS
 
     def create
       responder.call(create_resource, action: :create, status: :created)
@@ -42,6 +51,10 @@ module Api
       end
     end
 
+    def default_order
+      {}
+    end
+
     def destroy_resource
       find_operation    = operation_factory.find_one
       destroy_operation = operation_factory.destroy
@@ -55,13 +68,49 @@ module Api
       end
     end
 
+    def index_params
+      @index_params ||=
+        params
+        .permit(:order)
+        .to_hash
+    end
+
+    def index_order
+      index_params.fetch('order', default_order)
+    end
+
     def index_resources
       find_operation = operation_factory.find_matching
 
       steps do
-        resources = step find_operation.call
+        order     = step :normalize_sort, index_order
+        resources = step find_operation.call(order: order)
 
         { plural_resource_name => resources }
+      end
+    end
+
+    def invalid_order_result
+      error = Errors::InvalidParameters.new(errors: [['order', 'is invalid']])
+
+      Cuprum::Result.new(error: error)
+    end
+
+    def normalize_sort(order)
+      return {} if order.nil?
+
+      return order if order.is_a?(Hash)
+
+      return invalid_order_result unless order.is_a?(String)
+
+      order.split('::').each.with_object({}) do |str, hsh|
+        key, dir = str.split(':')
+
+        dir = SORT_DIRECTIONS.fetch(dir, nil)
+
+        return invalid_order_result if key.blank? || dir.blank?
+
+        hsh[key] = dir
       end
     end
 
@@ -140,3 +189,4 @@ module Api
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

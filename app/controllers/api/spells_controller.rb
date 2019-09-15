@@ -22,6 +22,10 @@ class Api::SpellsController < Api::ResourcesController
 
   private
 
+  def default_order
+    { name: :asc }
+  end
+
   def find_polymorphic_association(association, resource)
     Operations::Associations::FindOnePolymorphicQuery
       .new(

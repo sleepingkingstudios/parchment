@@ -141,6 +141,16 @@ RSpec.describe Api::ResourcesController do
     end
   end
 
+  describe '#default_order' do
+    it 'should define the private method' do
+      expect(controller)
+        .to respond_to(:default_order, true)
+        .with(0).arguments
+    end
+
+    it { expect(controller.send :default_order).to be == {} }
+  end
+
   describe '#destroy' do
     let(:responder) { controller.send(:responder) }
     let(:result)    { Cuprum::Result.new }
@@ -303,7 +313,55 @@ RSpec.describe Api::ResourcesController do
     end
   end
 
+  describe '#index_params' do
+    include_context 'with a params hash'
+
+    it 'should define the private method' do
+      expect(controller)
+        .to respond_to(:resource_params, true)
+        .with(0).arguments
+    end
+
+    it { expect(controller.send :index_params).to be == {} }
+
+    context 'when params[:order] is set' do
+      let(:order)  { 'name:asc' }
+      let(:params) { super().merge(order: order) }
+
+      it { expect(controller.send :index_params).to be == { 'order' => order } }
+    end
+  end
+
+  describe '#index_order' do
+    include_context 'with a params hash'
+
+    let(:default_order) { 'created_at:asc' }
+
+    before(:example) do
+      allow(controller) # rubocop:disable RSpec/SubjectStub
+        .to receive(:default_order)
+        .and_return(default_order)
+    end
+
+    it 'should define the private method' do
+      expect(controller)
+        .to respond_to(:index_order, true)
+        .with(0).arguments
+    end
+
+    it { expect(controller.send :index_order).to be default_order }
+
+    context 'when params[:order] is set' do
+      let(:order)  { 'name:asc' }
+      let(:params) { super().merge(order: order) }
+
+      it { expect(controller.send :index_order).to be == order }
+    end
+  end
+
   describe '#index_resources' do
+    include_context 'with a params hash'
+
     it 'should define the private method' do
       expect(controller)
         .to respond_to(:index_resources, true)
@@ -312,11 +370,35 @@ RSpec.describe Api::ResourcesController do
 
     wrap_context 'with a controller subclass' do
       let(:find_operation) { instance_double(Cuprum::Operation) }
+      let(:default_order)  { controller.send :default_order }
 
       before(:example) do
         allow(Spec::Widget::Factory)
           .to receive(:find_matching)
           .and_return(find_operation)
+      end
+
+      context 'when the sort params are invalid' do
+        let(:error)  { Cuprum::Error.new(message: 'Something went wrong.') }
+        let(:result) { Cuprum::Result.new(error: error) }
+
+        before(:example) do
+          allow(find_operation).to receive(:call)
+
+          allow(controller) # rubocop:disable RSpec/SubjectStub
+            .to receive(:normalize_sort)
+            .and_return(result)
+        end
+
+        it 'should not call the find operation' do
+          controller.send :index_resources
+
+          expect(find_operation).not_to have_received(:call)
+        end
+
+        it 'should return the failing result' do
+          expect(controller.send :index_resources).to be result
+        end
       end
 
       context 'when the find operation returns a failing result' do
@@ -330,7 +412,9 @@ RSpec.describe Api::ResourcesController do
         it 'should call the find operation' do
           controller.send :index_resources
 
-          expect(find_operation).to have_received(:call).with(no_args)
+          expect(find_operation)
+            .to have_received(:call)
+            .with(order: default_order)
         end
 
         it 'should return the failing result' do
@@ -348,7 +432,9 @@ RSpec.describe Api::ResourcesController do
         it 'should call the find operation' do
           controller.send :index_resources
 
-          expect(find_operation).to have_received(:call).with(no_args)
+          expect(find_operation)
+            .to have_received(:call)
+            .with(order: default_order)
         end
 
         it 'should return a passing result' do
@@ -375,7 +461,9 @@ RSpec.describe Api::ResourcesController do
         it 'should call the find operation' do
           controller.send :index_resources
 
-          expect(find_operation).to have_received(:call).with(no_args)
+          expect(find_operation)
+            .to have_received(:call)
+            .with(order: default_order)
         end
 
         it 'should return a passing result' do
@@ -383,6 +471,83 @@ RSpec.describe Api::ResourcesController do
             .to be_a_passing_result
             .with_value('widgets' => widgets)
         end
+
+        context 'when params[:order] is set' do
+          let(:order)  { 'level:asc::name:asc' }
+          let(:params) { super().merge(order: order) }
+
+          it 'should call the find operation' do
+            controller.send :index_resources
+
+            expect(find_operation)
+              .to have_received(:call)
+              .with(order: { 'level' => 'asc', 'name' => 'asc' })
+          end
+
+          it 'should return a passing result' do
+            expect(controller.send :index_resources)
+              .to be_a_passing_result
+              .with_value('widgets' => widgets)
+          end
+        end
+      end
+    end
+  end
+
+  describe '#normalize_sort' do
+    def normalize(value)
+      controller.send :normalize_sort, value
+    end
+
+    it 'should define the private method' do
+      expect(controller)
+        .to respond_to(:normalize_sort, true)
+        .with(1).argument
+    end
+
+    describe 'with nil' do
+      it { expect(normalize nil).to be == {} }
+    end
+
+    describe 'with an object' do
+      let(:object) { Object.new.freeze }
+      let(:expected_error) do
+        Errors::InvalidParameters.new(errors: [['order', 'is invalid']])
+      end
+
+      it 'should return a failing result' do
+        expect(normalize object)
+          .to be_a_failing_result
+          .with_error(expected_error)
+      end
+    end
+
+    describe 'with an empty Hash' do
+      it { expect(normalize({})).to be == {} }
+    end
+
+    describe 'with a Hash with values' do
+      let(:hash) { { level: :asc, name: :asc } }
+
+      it { expect(normalize hash).to be == hash }
+    end
+
+    describe 'with an empty String' do
+      it { expect(normalize '').to be == {} }
+    end
+
+    describe 'with a String with a value of :asc' do
+      it { expect(normalize 'name:asc').to be == { 'name' => 'asc' } }
+    end
+
+    describe 'with a String with a value of :ascending' do
+      it { expect(normalize 'name:ascending').to be == { 'name' => 'asc' } }
+    end
+
+    describe 'with a String with multiple tuples' do
+      it 'should convert the string to a hash' do
+        expect(normalize 'level:desc::name:asc')
+          .to be == { 'level' => 'desc', 'name' => 'asc' }
       end
     end
   end

@@ -14,6 +14,10 @@ class Api::PublicationsController < Api::ResourcesController
 
   private
 
+  def default_order
+    { name: :asc }
+  end
+
   def permitted_attributes
     PERMITTED_ATTRIBUTES
   end
