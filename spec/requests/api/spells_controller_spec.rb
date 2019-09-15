@@ -122,10 +122,10 @@ RSpec.describe Api::SpellsController do
       end
       let(:params) { super().tap { |hsh| hsh.delete :spell } }
 
-      it 'should respond with 422 Unprocessable Entity' do
+      it 'should respond with 400 Bad Request' do
         call_action
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:bad_request)
       end
 
       it 'should serialize the error' do
@@ -151,13 +151,11 @@ RSpec.describe Api::SpellsController do
   let(:json)    { JSON.parse(response.body) }
 
   describe 'GET /api/spells.json' do
-    let(:expected_data) { [] }
+    let(:expected_data) { { 'spells' => [] } }
     let(:expected_json) do
       {
         'ok'   => true,
-        'data' => {
-          'spells' => expected_data
-        }
+        'data' => expected_data
       }
     end
 
@@ -183,17 +181,45 @@ RSpec.describe Api::SpellsController do
       include_context 'when there are many spells'
 
       let(:expected_data) do
-        serializer = SpellSerializer.new
-
-        spells
+        serializer = Serializers::SpellSerializer.new
+        serialized =
+          spells
           .sort_by(&:name)
           .map { |spell| serializer.serialize(spell) }
+
+        { 'spells' => serialized }
       end
 
       it 'should serialize the spells' do
         call_action
 
         expect(json).to deep_match expected_json
+      end
+
+      context 'when the spells have sources' do
+        let(:publications) do
+          Array.new(spells.length) { FactoryBot.create(:publication) }
+        end
+        let(:expected_data) do
+          serializer = Serializers::PublicationSerializer.new
+          serialized = publications.map { |obj| serializer.call(obj) }
+
+          super().merge('publications' => serialized)
+        end
+
+        before(:example) do
+          spells.each.with_index do |spell, index|
+            spell.source = publications[index]
+
+            spell.save!
+          end
+        end
+
+        it 'should serialize the spells' do
+          call_action
+
+          expect(json).to deep_match expected_json
+        end
       end
     end
   end
@@ -305,7 +331,7 @@ RSpec.describe Api::SpellsController do
       end
       let(:created_spell) { Spell.where(name: 'Glowing Gaze').first }
       let(:expected_json) do
-        serializer = SpellSerializer.new
+        serializer = Serializers::SpellSerializer.new
 
         {
           'ok'   => true,
@@ -355,12 +381,10 @@ RSpec.describe Api::SpellsController do
     let(:spell)    { spells.first }
     let(:spell_id) { spell.id }
     let(:expected_json) do
-      serializer = SpellSerializer.new
-
       {
         'ok'   => true,
         'data' => {
-          'spell' => serializer.serialize(spell)
+          'spell' => Serializers.serialize(spell)
         }
       }
     end
@@ -384,6 +408,31 @@ RSpec.describe Api::SpellsController do
     end
 
     include_examples 'should respond with JSON content'
+
+    context 'when the spell has a source' do
+      let(:publication) { FactoryBot.create(:publication) }
+      let(:expected_json) do
+        {
+          'ok'   => true,
+          'data' => {
+            'publication' => Serializers.serialize(publication),
+            'spell'       => Serializers.serialize(spell)
+          }
+        }
+      end
+
+      before(:example) do
+        spell.source = publication
+
+        spell.save!
+      end
+
+      it 'should serialize the spell and source' do
+        call_action
+
+        expect(json).to deep_match expected_json
+      end
+    end
   end
 
   describe 'PATCH /api/spells/:id.json' do
@@ -392,7 +441,7 @@ RSpec.describe Api::SpellsController do
     let(:params)       { super().merge(spell: spell_params) }
     let(:spell)        { spells.first }
     let(:spell_id)     { spell.id }
-    let(:spell_params) { {} }
+    let(:spell_params) { { name: 'Invoked Apocalypse' } }
 
     def call_action
       patch "/api/spells/#{spell_id}.json", headers: headers, params: params
@@ -488,7 +537,7 @@ RSpec.describe Api::SpellsController do
       let(:params)        { super().merge(spell: spell_params) }
       let(:updated_spell) { Spell.where(name: 'Glowing Gaze').first }
       let(:expected_json) do
-        serializer = SpellSerializer.new
+        serializer = Serializers::SpellSerializer.new
 
         {
           'ok'   => true,
@@ -531,7 +580,7 @@ RSpec.describe Api::SpellsController do
     let(:spell_id) { spell.id }
     let(:expected_json) do
       {
-        'data' => nil,
+        'data' => {},
         'ok'   => true
       }
     end

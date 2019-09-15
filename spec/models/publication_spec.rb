@@ -18,8 +18,19 @@ RSpec.describe Publication, type: :model do
     }
   end
 
+  describe '::Factory' do
+    include_examples 'should define constant',
+      :Factory,
+      -> { be_a Operations::Records::Factory }
+
+    it { expect(described_class::Factory.record_class).to be described_class }
+  end
+
   describe '#abbreviation' do
-    include_examples 'should have property', :abbreviation, nil
+    include_examples 'should have attribute',
+      :abbreviation,
+      default: '',
+      value:   'ff'
 
     describe 'when the publication is validated' do
       let(:publication) { super().tap(&:valid?) }
@@ -39,30 +50,6 @@ RSpec.describe Publication, type: :model do
         it { expect(publication.abbreviation).to be == expected }
       end
     end
-
-    describe 'with a name with "of"' do
-      let(:attributes) { super().merge(name: 'Secrets of the Flumph') }
-
-      it { expect(publication.abbreviation).to be nil }
-
-      describe 'when the publication is validated' do
-        let(:publication) { super().tap(&:valid?) }
-
-        it { expect(publication.abbreviation).to be == 'sf' }
-      end
-    end
-
-    describe 'with a name with "the"' do
-      let(:attributes) { super().merge(name: "The Flumph Fancier's Handbook") }
-
-      it { expect(publication.abbreviation).to be nil }
-
-      describe 'when the publication is validated' do
-        let(:publication) { super().tap(&:valid?) }
-
-        it { expect(publication.abbreviation).to be == 'ffh' }
-      end
-    end
   end
 
   describe '#created_at' do
@@ -70,7 +57,9 @@ RSpec.describe Publication, type: :model do
   end
 
   describe '#id' do
-    include_examples 'should have attribute', :id
+    include_examples 'should have attribute',
+      :id,
+      value: '00000000-0000-0000-0000-000000000000'
 
     context 'when the publication is persisted' do
       before(:example) { publication.save! }
@@ -96,13 +85,16 @@ RSpec.describe Publication, type: :model do
   end
 
   describe '#name' do
-    include_examples 'should have property', :name, -> { attributes[:name] }
+    include_examples 'should have attribute',
+      :name,
+      default: ''
   end
 
   describe '#playtest' do
-    include_examples 'should have property',
+    include_examples 'should have attribute',
       :playtest,
-      -> { attributes[:playtest] }
+      default: false,
+      value:   true
   end
 
   describe '#playtest?' do
@@ -116,19 +108,20 @@ RSpec.describe Publication, type: :model do
   end
 
   describe '#publication_date' do
-    include_examples 'should have property',
-      :publication_date,
-      -> { attributes[:publication_date] }
+    include_examples 'should have attribute', :publication_date
   end
 
   describe '#publisher_name' do
-    include_examples 'should have property',
+    include_examples 'should have attribute',
       :publisher_name,
-      -> { attributes[:publisher_name] }
+      default: ''
   end
 
   describe '#slug' do
-    include_examples 'should have property', :slug, nil
+    include_examples 'should have attribute',
+      :slug,
+      default: '',
+      value:   'flumph-fanciers-handbook'
 
     describe 'when the publication is validated' do
       let(:publication) { super().tap(&:valid?) }
@@ -148,29 +141,23 @@ RSpec.describe Publication, type: :model do
         it { expect(publication.slug).to be == expected }
       end
     end
+  end
 
-    describe 'with a name with "of"' do
-      let(:attributes) { super().merge(name: 'Secrets of the Flumph') }
+  describe '#spells' do
+    include_examples 'should have reader', :spells, []
 
-      it { expect(publication.slug).to be nil }
-
-      describe 'when the publication is validated' do
-        let(:publication) { super().tap(&:valid?) }
-
-        it { expect(publication.slug).to be == 'secrets-flumph' }
+    context 'when the publication has many spells' do
+      let(:spells) do
+        Array.new(3) { FactoryBot.build(:spell, source: publication) }
       end
-    end
 
-    describe 'with a name with "the"' do
-      let(:attributes) { super().merge(name: "The Flumph Fancier's Handbook") }
+      before(:example) do
+        publication.save!
 
-      it { expect(publication.slug).to be nil }
-
-      describe 'when the publication is validated' do
-        let(:publication) { super().tap(&:valid?) }
-
-        it { expect(publication.slug).to be == 'flumph-fanciers-handbook' }
+        spells.each(&:save!)
       end
+
+      it { expect(publication.spells).to contain_exactly(*spells) }
     end
   end
 

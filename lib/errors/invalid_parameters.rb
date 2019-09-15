@@ -42,7 +42,11 @@ module Errors
     def generate_message
       return MESSAGE if errors.empty?
 
-      "#{MESSAGE}: #{errors.map { |ary| ary.join(' ') }.join(', ')}"
+      formatted_errors = errors.map do |key, message|
+        "#{key.to_s.tr('.', ' ')} #{message}"
+      end
+
+      "#{MESSAGE}: #{formatted_errors.join(', ')}"
     end
   end
 end

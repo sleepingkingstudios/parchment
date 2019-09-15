@@ -79,10 +79,10 @@ RSpec.describe Api::PublicationsController do
       end
       let(:params) { super().tap { |hsh| hsh.delete :publication } }
 
-      it 'should respond with 422 Unprocessable Entity' do
+      it 'should respond with 400 Bad Request' do
         call_action
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:bad_request)
       end
 
       it 'should serialize the error' do
@@ -108,13 +108,11 @@ RSpec.describe Api::PublicationsController do
   let(:json)    { JSON.parse(response.body) }
 
   describe 'GET /api/publications.json' do
-    let(:expected_data) { [] }
+    let(:expected_data) { { 'publications' => [] } }
     let(:expected_json) do
       {
         'ok'   => true,
-        'data' => {
-          'publications' => expected_data
-        }
+        'data' => expected_data
       }
     end
 
@@ -138,10 +136,13 @@ RSpec.describe Api::PublicationsController do
 
     wrap_context 'when there are many publications' do
       let(:expected_data) do
-        serializer = PublicationSerializer.new
-
-        publications
+        serializer = Serializers::PublicationSerializer.new
+        serialized =
+          publications
+          .sort_by(&:name)
           .map { |publication| serializer.serialize(publication) }
+
+        { 'publications' => serialized }
       end
 
       it 'should serialize the publications' do
@@ -239,7 +240,7 @@ RSpec.describe Api::PublicationsController do
         Publication.where(name: 'The Complete Flumph').first
       end
       let(:expected_json) do
-        serializer = PublicationSerializer.new
+        serializer = Serializers::PublicationSerializer.new
 
         {
           'ok'   => true,
@@ -293,7 +294,7 @@ RSpec.describe Api::PublicationsController do
     let(:publication)    { publications.first }
     let(:publication_id) { publication.id }
     let(:expected_json) do
-      serializer = PublicationSerializer.new
+      serializer = Serializers::PublicationSerializer.new
 
       {
         'ok'   => true,
@@ -332,7 +333,7 @@ RSpec.describe Api::PublicationsController do
     let(:params)             { super().merge(publication: publication_params) }
     let(:publication)        { publications.first }
     let(:publication_id)     { publication.id }
-    let(:publication_params) { {} }
+    let(:publication_params) { { name: 'Legacy of the Flumph' } }
 
     def call_action
       patch "/api/publications/#{publication_id}.json",
@@ -423,7 +424,7 @@ RSpec.describe Api::PublicationsController do
         Publication.where(name: 'The Complete Flumph').first
       end
       let(:expected_json) do
-        serializer = PublicationSerializer.new
+        serializer = Serializers::PublicationSerializer.new
 
         {
           'ok'   => true,
@@ -466,7 +467,7 @@ RSpec.describe Api::PublicationsController do
     let(:publication_id) { publication.id }
     let(:expected_json) do
       {
-        'data' => nil,
+        'data' => {},
         'ok'   => true
       }
     end

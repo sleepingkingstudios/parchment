@@ -1,45 +1,35 @@
 # Development Notes
 
-## Sources
+## Client
 
-- published books, web articles, original content
-- name:String
-- abbreviation:String - e.g. Player's Handbook -> PHB
-- publisher
-- official content
+- generic 404 page for non-matching route
+
+### Alerts
+
+- clear (some?) alerts when the URL (not query!) changes
+
+## Controllers
+
+- ResourcesController
+  - #index action
+    - `:only` parameter - restrict fields queried/returned
+    - also update FindMatchingOperation, BaseSerializer ?
 
 ## Spells
 
-- belongs_to :source
-- uniqueness by source+name
-- hash attribute (source + name) for short reference
-- attribute short_name:string -
-    e.g. Spontaneous Combustion -> spontaneous-combustion
-- attribute short_description:string
-- attribute slug (source abbrev + short_name) - e.g. phb-spontaneous-combustion
+- sort by source_name?
+  - requires outer join? against each possible source class
+  - detect association classes: |
 
-### Client
+    ```ruby
+    ApplicationRecord
+      .descendants
+      .select do |record_class|
+        association = record_class.reflections['spells']
 
-- namespace all Spell reducers in the 'spells' namespace
-  - support nested namespaces in requests (rename to API objects?)
-  - extract FindAll request
-- source layout: |
-
-    /javascript
-      /spells
-        /components
-          /block
-          /form
-        /pages
-          /create
-          /index
-          /show
-          /update
-        /store
-
-### Serializer
-
-- create Spell serializer
+        association && association.options[:as] == :source
+      end
+    ```
 
 ### Tags
 

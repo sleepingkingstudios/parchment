@@ -28,7 +28,7 @@ RSpec.describe Operations::Records::FindOneOperation do
 
     include_examples 'should validate the primary key'
 
-    describe 'with an invalid id' do
+    describe 'with an invalid primary key' do
       let(:id) { '00000000-0000-0000-0000-000000000000' }
       let(:expected_errors) do
         Errors::NotFound.new(
@@ -48,7 +48,7 @@ RSpec.describe Operations::Records::FindOneOperation do
         Array.new(3) { FactoryBot.create(:spell) }
       end
 
-      describe 'with an invalid id' do
+      describe 'with an invalid primary key' do
         let(:id)              { '00000000-0000-0000-0000-000000000000' }
         let(:expected_errors) do
           Errors::NotFound.new(
@@ -63,7 +63,7 @@ RSpec.describe Operations::Records::FindOneOperation do
         end
       end
 
-      describe 'with a valid id' do
+      describe 'with a valid primary key' do
         let(:record) { records.first }
         let(:id)     { record.id }
 

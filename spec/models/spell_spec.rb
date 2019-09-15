@@ -5,21 +5,45 @@ require 'rails_helper'
 require 'support/examples/model_examples'
 
 RSpec.describe Spell, type: :model do
+  shared_context 'when the spell source is a Publication' do
+    let(:publication_attributes) do
+      {
+        name:             "Flumph Fancier's Handbook",
+        playtest:         false,
+        publication_date: Date.new(1982, 7, 9),
+        publisher_name:   'Wizards of the Coast'
+      }
+    end
+    let(:publication) do
+      FactoryBot.create(:publication, publication_attributes)
+    end
+    let(:attributes) { super().merge(source: publication) }
+  end
+
   include Spec::Support::Examples::ModelExamples
 
   subject(:spell) { described_class.new(attributes) }
 
   let(:attributes) do
     {
-      name:             'The Blessing of Yevon',
-      casting_time:     '1 action',
-      description:      'It must be the blessing of Yevon!',
-      duration:         'Instantaneous',
-      level:            9,
-      range:            'Self (10-foot radius)',
-      school:           'abjuration',
-      verbal_component: true
+      name:              'The Blessing of Yevon',
+      casting_time:      '1 action',
+      description:       'It must be the blessing of Yevon!',
+      duration:          'Instantaneous',
+      level:             9,
+      range:             'Self (10-foot radius)',
+      school:            'abjuration',
+      short_description: 'The blessing of Yevon',
+      verbal_component:  true
     }
+  end
+
+  describe '::Factory' do
+    include_examples 'should define constant',
+      :Factory,
+      -> { be_a Operations::Records::Factory }
+
+    it { expect(described_class::Factory.record_class).to be described_class }
   end
 
   describe '::Schools' do
@@ -230,7 +254,9 @@ RSpec.describe Spell, type: :model do
   end
 
   describe '#id' do
-    include_examples 'should have attribute', :id
+    include_examples 'should have attribute',
+      :id,
+      value: '00000000-0000-0000-0000-000000000000'
 
     context 'when the spell is persisted' do
       before(:example) { spell.save! }
@@ -246,7 +272,8 @@ RSpec.describe Spell, type: :model do
   describe '#material_component' do
     include_examples 'should have attribute',
       :material_component,
-      default: ''
+      default: '',
+      value:   'a little bit of pixie dust'
   end
 
   describe '#name' do
@@ -258,7 +285,10 @@ RSpec.describe Spell, type: :model do
   end
 
   describe '#ritual' do
-    include_examples 'should have attribute', :ritual, default: false
+    include_examples 'should have attribute',
+      :ritual,
+      default: false,
+      value:   true
   end
 
   describe '#ritual?' do
@@ -275,8 +305,69 @@ RSpec.describe Spell, type: :model do
     include_examples 'should have attribute', :school, default: ''
   end
 
+  describe '#short_description' do
+    include_examples 'should have attribute', :short_description, default: ''
+  end
+
+  describe '#slug' do
+    include_examples 'should have attribute',
+      :slug,
+      default: '',
+      value:   'blessing-yevon'
+
+    describe 'when the spell is validated' do
+      let(:spell) { super().tap(&:valid?) }
+
+      it { expect(spell.slug).to be == 'blessing-yevon' }
+    end
+
+    describe 'with a slug' do
+      let(:attributes) { super().merge(slug: 'yevons-blessing') }
+      let(:expected)   { attributes[:slug] }
+
+      it { expect(spell.slug).to be == expected }
+
+      describe 'when the spell is validated' do
+        let(:spell) { super().tap(&:valid?) }
+
+        it { expect(spell.slug).to be == expected }
+      end
+    end
+  end
+
   describe '#somatic_component' do
-    include_examples 'should have attribute', :somatic_component, default: false
+    include_examples 'should have attribute',
+      :somatic_component,
+      default: false,
+      value:   true
+  end
+
+  describe '#source' do
+    include_examples 'should have reader', :source, nil
+
+    wrap_context 'when the spell source is a Publication' do
+      it { expect(spell.source).to be == publication }
+    end
+  end
+
+  describe '#source_id' do
+    include_examples 'should have attribute',
+      :source_id,
+      value: '00000000-0000-0000-0000-000000000000'
+
+    wrap_context 'when the spell source is a Publication' do
+      it { expect(spell.source_id).to be == publication.id }
+    end
+  end
+
+  describe '#source_type' do
+    include_examples 'should have attribute',
+      :source_type,
+      value: 'Publication'
+
+    wrap_context 'when the spell source is a Publication' do
+      it { expect(spell.source_type).to be == 'Publication' }
+    end
   end
 
   describe '#valid?' do
