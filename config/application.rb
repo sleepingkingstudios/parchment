@@ -29,6 +29,9 @@ module Parchment
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    # Ignore unexpected :format parameter.
+    config.always_permitted_parameters = %w[controller action format]
+
     # Don't generate system test files.
     config.generators.system_tests = nil
   end
