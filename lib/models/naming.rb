@@ -48,6 +48,12 @@ module Models
 
     ARTICLES = %w[of on the].freeze
 
+    DIGITS = '0123456789'
+    private_constant :DIGITS
+
+    DIGITS_PATTERN = /\A\d+/.freeze
+    private_constant :DIGITS_PATTERN
+
     EXCLUDED_CHARACTERS_PATTERN = /[^a-z0-9]/.freeze
     private_constant :EXCLUDED_CHARACTERS_PATTERN
 
@@ -70,7 +76,15 @@ module Models
     attr_reader :articles
 
     def generate_abbreviation(value)
-      convert_to_words(value).map { |word| word[0] }.join
+      convert_to_words(value)
+        .map do |word|
+          char = word[0]
+
+          next char unless DIGITS.include?(char)
+
+          DIGITS_PATTERN.match(word)[0]
+        end
+        .join
     end
 
     def generate_slug(value)

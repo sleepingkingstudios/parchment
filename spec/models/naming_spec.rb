@@ -142,6 +142,12 @@ RSpec.describe Models::Naming do
       it { expect(naming.generate_abbreviation string).to be == 'cfm1e' }
     end
 
+    describe 'with a string with multiple numbers' do
+      let(:string) { 'Complete Flumph Manual 11th Edition' }
+
+      it { expect(naming.generate_abbreviation string).to be == 'cfm11e' }
+    end
+
     describe 'with a string with non-letter characters' do
       let(:string) { "Flumph Master's Guide" }
 
@@ -204,6 +210,13 @@ RSpec.describe Models::Naming do
     describe 'with a string with numbers' do
       let(:string)   { 'Complete Flumph Manual 1st Edition' }
       let(:expected) { 'complete-flumph-manual-1st-edition' }
+
+      it { expect(naming.generate_slug string).to be == expected }
+    end
+
+    describe 'with a string with multiple numbers' do
+      let(:string)   { 'Complete Flumph Manual 11th Edition' }
+      let(:expected) { 'complete-flumph-manual-11th-edition' }
 
       it { expect(naming.generate_slug string).to be == expected }
     end

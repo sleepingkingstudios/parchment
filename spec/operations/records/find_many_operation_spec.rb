@@ -263,7 +263,7 @@ RSpec.describe Operations::Records::FindManyOperation do
         describe 'with allow_partial: true' do
           it 'should have a passing result with the found records' do
             expect(call_operation allow_partial: true)
-              .to have_passing_result.with_value(records)
+              .to have_passing_result.with_value(contain_exactly(*records))
           end
         end
         # rubocop:enable RSpec/NestedGroups
@@ -275,7 +275,7 @@ RSpec.describe Operations::Records::FindManyOperation do
         it 'should have a passing result' do
           expect(call_operation)
             .to have_passing_result
-            .with_value(records)
+            .with_value(contain_exactly(*records))
         end
       end
     end
