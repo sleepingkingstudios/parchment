@@ -751,7 +751,7 @@ RSpec.describe Api::ResourcesController do
     let(:responder) { controller.send :responder }
 
     it 'should define the private method' do
-      expect(controller).to respond_to(:resource_id, true).with(0).arguments
+      expect(controller).to respond_to(:responder, true).with(0).arguments
     end
 
     it { expect(responder).to be_a Responders::JsonResponder }

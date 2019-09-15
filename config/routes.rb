@@ -3,13 +3,14 @@
 Rails.application.routes.draw do
   # See https://guides.rubyonrails.org/routing.html
 
-  def self.api_resources(resource_name, **options)
+  def self.api_resources(resource_name, **options, &block)
     resources(
       resource_name,
       options.reverse_merge(
         format: :json,
         only:   %i[index create show update destroy]
-      )
+      ),
+      &block
     )
   end
 
@@ -22,7 +23,14 @@ Rails.application.routes.draw do
 
   namespace :api do
     api_resources :publications
-    api_resources :spells
+    api_resources :spells do
+      collection do
+        api_resources :sources,
+          as:         'spell_sources',
+          controller: 'spells/sources',
+          only:       :index
+      end
+    end
   end
 
   client_resources :publications

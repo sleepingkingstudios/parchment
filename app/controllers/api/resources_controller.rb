@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'operations/steps'
 require 'responders/json_responder'
 
 # rubocop:disable Metrics/ClassLength
@@ -8,8 +7,6 @@ module Api
   # Abstract base class for API resource controllers that delegate their actions
   # to pre-defined operations.
   class ResourcesController < Api::BaseController
-    include Operations::Steps::Mixin
-
     SORT_DIRECTIONS = {
       'asc'        => 'asc',
       'ascending'  => 'asc',
@@ -155,10 +152,6 @@ module Api
         .fetch(singular_resource_name, {})
         .permit(*permitted_attributes)
         .to_hash
-    end
-
-    def responder
-      @responder ||= Responders::JsonResponder.new(self)
     end
 
     def show_resource
