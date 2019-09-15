@@ -122,10 +122,10 @@ RSpec.describe Api::SpellsController do
       end
       let(:params) { super().tap { |hsh| hsh.delete :spell } }
 
-      it 'should respond with 422 Unprocessable Entity' do
+      it 'should respond with 400 Bad Request' do
         call_action
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:bad_request)
       end
 
       it 'should serialize the error' do
@@ -392,7 +392,7 @@ RSpec.describe Api::SpellsController do
     let(:params)       { super().merge(spell: spell_params) }
     let(:spell)        { spells.first }
     let(:spell_id)     { spell.id }
-    let(:spell_params) { {} }
+    let(:spell_params) { { name: 'Invoked Apocalypse' } }
 
     def call_action
       patch "/api/spells/#{spell_id}.json", headers: headers, params: params
@@ -531,7 +531,7 @@ RSpec.describe Api::SpellsController do
     let(:spell_id) { spell.id }
     let(:expected_json) do
       {
-        'data' => nil,
+        'data' => {},
         'ok'   => true
       }
     end

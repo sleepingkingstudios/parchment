@@ -18,6 +18,14 @@ RSpec.describe Publication, type: :model do
     }
   end
 
+  describe '::Factory' do
+    include_examples 'should define constant',
+      :Factory,
+      -> { be_a Operations::Records::Factory }
+
+    it { expect(described_class::Factory.record_class).to be described_class }
+  end
+
   describe '#abbreviation' do
     include_examples 'should have attribute',
       :abbreviation,

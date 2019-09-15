@@ -79,10 +79,10 @@ RSpec.describe Api::PublicationsController do
       end
       let(:params) { super().tap { |hsh| hsh.delete :publication } }
 
-      it 'should respond with 422 Unprocessable Entity' do
+      it 'should respond with 400 Bad Request' do
         call_action
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:bad_request)
       end
 
       it 'should serialize the error' do
@@ -332,7 +332,7 @@ RSpec.describe Api::PublicationsController do
     let(:params)             { super().merge(publication: publication_params) }
     let(:publication)        { publications.first }
     let(:publication_id)     { publication.id }
-    let(:publication_params) { {} }
+    let(:publication_params) { { name: 'Legacy of the Flumph' } }
 
     def call_action
       patch "/api/publications/#{publication_id}.json",
@@ -466,7 +466,7 @@ RSpec.describe Api::PublicationsController do
     let(:publication_id) { publication.id }
     let(:expected_json) do
       {
-        'data' => nil,
+        'data' => {},
         'ok'   => true
       }
     end

@@ -38,6 +38,12 @@ RSpec.describe Spell, type: :model do
     }
   end
 
+  describe '::Factory' do
+    include_examples 'should define constant',
+      :Factory,
+      -> { be_a Operations::Records::Spells::Factory }
+  end
+
   describe '::Schools' do
     let(:expected_schools) do
       {

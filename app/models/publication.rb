@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 require 'models/naming'
+require 'operations/records/factory'
 
 # Definition of a publication, which serves as a source for game objects.
 class Publication < ApplicationRecord
   extend Models::Naming::Hooks
+
+  Factory = Operations::Records::Factory.new(self)
 
   ### Attributes
   attribute :abbreviation, :string,  default: ''

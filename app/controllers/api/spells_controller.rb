@@ -1,107 +1,29 @@
 # frozen_string_literal: true
 
-require 'operations/records/create_operation'
-require 'operations/records/destroy_operation'
-require 'operations/records/find_one_operation'
-require 'operations/records/spells/find_matching_operation'
-require 'operations/records/update_operation'
-
 # Controller for performing CRUD actions on Spells via a JSON API.
-class Api::SpellsController < Api::BaseController
-  before_action :require_spell, only: %i[destroy show update]
-  before_action :require_spell_params, only: %i[create update]
-
-  def create
-    create_operation.call(spell_params)
-
-    render_operation(create_operation, status: :created)
-  end
-
-  def destroy
-    destroy_operation.call(find_operation.value)
-
-    render_json(nil)
-  end
-
-  def index
-    index_operation.call
-
-    render_operation(index_operation)
-  end
-
-  def show
-    render_operation(find_operation)
-  end
-
-  def update
-    update_operation.call(find_operation.value, spell_params)
-
-    render_operation(update_operation)
-  end
+class Api::SpellsController < Api::ResourcesController
+  PERMITTED_ATTRIBUTES = %i[
+    casting_time
+    description
+    duration
+    level
+    material_component
+    name
+    range
+    ritual
+    school
+    somatic_component
+    verbal_component
+  ].freeze
+  private_constant :PERMITTED_ATTRIBUTES
 
   private
 
-  def create_operation
-    @create_operation ||= Operations::Records::CreateOperation.new(Spell)
+  def permitted_attributes
+    PERMITTED_ATTRIBUTES
   end
 
-  def destroy_operation
-    @destroy_operation ||= Operations::Records::DestroyOperation.new(Spell)
-  end
-
-  def find_operation
-    @find_operation ||= Operations::Records::FindOneOperation.new(Spell)
-  end
-
-  def index_operation
-    @index_operation ||= Operations::Records::Spells::FindMatchingOperation.new
-  end
-
-  def require_spell
-    find_operation.call(spell_id)
-
-    return if find_operation.success?
-
-    render_error(find_operation.error, status: :not_found)
-  end
-
-  def require_spell_params
-    return unless spell_params.empty?
-
-    error = Errors::InvalidParameters.new(
-      errors: [['spell', "can't be blank"]]
-    )
-
-    render_error(error, status: :unprocessable_entity)
-  end
-
-  def resource_name
-    'spells'
-  end
-
-  def spell_id
-    params[:id]
-  end
-
-  # rubocop:disable Metrics/MethodLength
-  def spell_params
-    @spell_params ||= params.fetch(:spell, {}).permit(
-      :casting_time,
-      :description,
-      :duration,
-      :level,
-      :material_component,
-      :name,
-      :range,
-      :ritual,
-      :school,
-      :somatic_component,
-      :verbal_component
-    ).to_hash
-  end
-  # rubocop:enable Metrics/MethodLength
-
-  def update_operation
-    @update_operation ||= Operations::Records::UpdateOperation.new(Spell)
+  def resource_class
+    Spell
   end
 end

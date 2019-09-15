@@ -316,6 +316,63 @@ RSpec.describe Responders::JsonResponder do
       end
     end
 
+    describe 'with a passing result with a nil value' do
+      let(:result) { Cuprum::Result.new(value: nil) }
+      let(:json) do
+        {
+          'ok'   => true,
+          'data' => {}
+        }
+      end
+      let(:expected) { { json: json, status: :ok } }
+
+      it 'should render 200 OK' do
+        responder.call(result)
+
+        expect(controller).to have_received(:render).with(expected)
+      end
+
+      describe 'with status: value' do
+        let(:options)  { { status: :created } }
+        let(:expected) { { json: json, status: :created } }
+
+        it 'should render 201 Created' do
+          responder.call(result, options)
+
+          expect(controller).to have_received(:render).with(expected)
+        end
+      end
+    end
+
+    describe 'with a passing result with an empty Hash value' do
+      let(:data)   { {} }
+      let(:result) { Cuprum::Result.new(value: data) }
+      let(:json) do
+        {
+          'ok'   => true,
+          'data' => data
+        }
+      end
+      let(:expected) { { json: json, status: :ok } }
+
+      it 'should render 200 OK' do
+        responder.call(result)
+
+        expect(controller).to have_received(:render).with(expected)
+      end
+
+      describe 'with status: value' do
+        let(:options)  { { status: :created } }
+        let(:expected) { { json: json, status: :created } }
+
+        it 'should render 201 Created' do
+          responder.call(result, options)
+
+          expect(controller).to have_received(:render).with(expected)
+        end
+      end
+    end
+
     describe 'with a passing result with one singular resource' do
       let(:spell)  { FactoryBot.build(:spell) }
       let(:result) { Cuprum::Result.new(value: { spell: spell }) }
@@ -325,6 +382,34 @@ RSpec.describe Responders::JsonResponder do
           'data' => {
             'spell' => Serializers.serialize(spell)
           }
+        }
+      end
+      let(:expected) { { json: json, status: :ok } }
+
+      it 'should render 200 OK and serialize the resource' do
+        responder.call(result)
+
+        expect(controller).to have_received(:render).with(expected)
+      end
+
+      describe 'with status: value' do
+        let(:options)  { { status: :created } }
+        let(:expected) { { json: json, status: :created } }
+
+        it 'should render 201 Created and serialize the resource' do
+          responder.call(result, options)
+
+          expect(controller).to have_received(:render).with(expected)
+        end
+      end
+    end
+
+    describe 'with a passing result with an empty plural resource' do
+      let(:result) { Cuprum::Result.new(value: { spells: [] }) }
+      let(:json) do
+        {
+          'ok'   => true,
+          'data' => { 'spells' => [] }
         }
       end
       let(:expected) { { json: json, status: :ok } }

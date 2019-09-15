@@ -55,6 +55,8 @@ module Responders
     end
 
     def serialize_data(data)
+      return {} if data.nil?
+
       data.each.with_object({}) do |(key, value), hsh|
         hsh[key.to_s] = serialize_value(value)
       end
@@ -65,14 +67,14 @@ module Responders
       when Errors::FailedValidation, Errors::InvalidParameters, Errors::NotFound
         error.as_json
       else
-        # :nocov:
         { 'message' => 'Something went wrong when processing the request.' }
-        # :nocov:
       end
     end
 
     def serialize_value(value)
       return Serializers.serialize(value) unless value.is_a?(Array)
+
+      return [] if value.empty?
 
       serializer = Serializers.serializer_for!(value.first)
 
