@@ -15,6 +15,10 @@ module Serializers
       :range,
       :ritual,
       :school,
+      :short_description,
+      :slug,
+      :source_id,
+      :source_type,
       :somatic_component,
       :verbal_component
 
