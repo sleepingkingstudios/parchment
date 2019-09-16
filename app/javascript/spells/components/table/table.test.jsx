@@ -21,6 +21,12 @@ describe('<SpellsTable />', () => {
       expect(table).toHaveProp('data', []);
       expect(table).toHaveProp('message', emptyMessage);
     });
+
+    it('should match the snapshot', () => {
+      const rendered = shallow(<SpellsTable {...props} />);
+
+      expect(rendered).toMatchSnapshot();
+    });
   });
 
   describe('with spells: Array with many items', () => {
@@ -33,6 +39,12 @@ describe('<SpellsTable />', () => {
       expect(table).toExist();
       expect(table).toHaveProp('columns', columns);
       expect(table).toHaveProp('data', spellsData);
+    });
+
+    it('should match the snapshot', () => {
+      const rendered = shallow(<SpellsTable {...props} />);
+
+      expect(rendered).toMatchSnapshot();
     });
   });
 });

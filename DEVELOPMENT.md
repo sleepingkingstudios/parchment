@@ -17,6 +17,10 @@
 
 ## Spells
 
+- composite_slug field
+  - `"#{source.slug || 'homebrew'}-#{slug}"`
+  - if new? or slug_changed? or source_changed?
+    - handle changes to source.slug?
 - sort by source_name?
   - requires outer join? against each possible source class
   - detect association classes: |

@@ -1,9 +1,17 @@
 import FindManyEndpoint from '../../../api/findMany';
+import collectAssociations from '../../../api/middleware/collectAssociations';
 
 const REQUEST_URL = '/api/spells';
 const endpoint = new FindManyEndpoint({
   data: { spells: [] },
-  middleware: [],
+  middleware: [
+    collectAssociations({
+      associationName: 'source',
+      associationType: 'belongsTo',
+      polymorphic: true,
+      resourceName: 'spells',
+    }),
+  ],
   namespace: 'spells/indexFindSpells',
   url: REQUEST_URL,
 });

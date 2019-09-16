@@ -1,4 +1,5 @@
 import columns from './columns';
+import SpellSourceLink from '../sourceLink';
 import SpellsTableActions from './actions';
 
 describe('Spells table columns', () => {
@@ -6,6 +7,7 @@ describe('Spells table columns', () => {
     const props = columns.map(column => column.prop);
     const expected = [
       'name',
+      'source',
       'school',
       'level',
       'description',
@@ -15,31 +17,12 @@ describe('Spells table columns', () => {
     expect(props).toEqual(expected);
   });
 
-  describe('level', () => {
+  describe('actions', () => {
     it('should have the expected properties', () => {
-      const matching = columns.find(column => (column.prop === 'level'));
+      const matching = columns.find(column => (column.prop === 'actions'));
 
-      expect(matching.label).toEqual('Level');
-      expect(matching.value).toBeUndefined();
-    });
-  });
-
-  describe('name', () => {
-    it('should have the expected properties', () => {
-      const matching = columns.find(column => (column.prop === 'name'));
-
-      expect(matching.label).toEqual('Name');
-      expect(matching.value).toBeUndefined();
-    });
-  });
-
-  describe('school', () => {
-    it('should have the expected properties', () => {
-      const matching = columns.find(column => (column.prop === 'school'));
-
-      expect(matching.label).toEqual('School');
-      expect(typeof matching.value).toEqual('function');
-      expect(matching.value({ school: 'nullamancy' })).toEqual('Nullamancy');
+      expect(matching.label).toEqual(' ');
+      expect(matching.value).toEqual(SpellsTableActions);
     });
   });
 
@@ -74,12 +57,40 @@ describe('Spells table columns', () => {
     });
   });
 
-  describe('Actions', () => {
+  describe('level', () => {
     it('should have the expected properties', () => {
-      const matching = columns.find(column => (column.prop === 'actions'));
+      const matching = columns.find(column => (column.prop === 'level'));
 
-      expect(matching.label).toEqual(' ');
-      expect(matching.value).toEqual(SpellsTableActions);
+      expect(matching.label).toEqual('Level');
+      expect(matching.value).toBeUndefined();
+    });
+  });
+
+  describe('name', () => {
+    it('should have the expected properties', () => {
+      const matching = columns.find(column => (column.prop === 'name'));
+
+      expect(matching.label).toEqual('Name');
+      expect(matching.value).toBeUndefined();
+    });
+  });
+
+  describe('school', () => {
+    it('should have the expected properties', () => {
+      const matching = columns.find(column => (column.prop === 'school'));
+
+      expect(matching.label).toEqual('School');
+      expect(typeof matching.value).toEqual('function');
+      expect(matching.value({ school: 'nullamancy' })).toEqual('Nullamancy');
+    });
+  });
+
+  describe('source', () => {
+    it('should have the expected properties', () => {
+      const matching = columns.find(column => (column.prop === 'source'));
+
+      expect(matching.label).toEqual('Source');
+      expect(matching.value).toEqual(SpellSourceLink);
     });
   });
 });

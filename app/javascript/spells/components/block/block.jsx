@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
+import SpellSourceLink from '../sourceLink';
 import PlainText from '../../../components/plain-text';
 import { spellType } from '../../entities';
 import {
@@ -9,9 +11,32 @@ import {
 
 import './block-styles.css';
 
-const SpellBlock = ({ spell }) => (
+const renderAdditionalDetails = ({ spell, showAdditionalDetails }) => {
+  if (!showAdditionalDetails) { return null; }
+
+  return (
+    <Fragment>
+      <hr />
+
+      <div className="spell-block-additional-details">
+        <p className="spell-block-slug">
+          <em>Slug:</em> { spell.slug }
+        </p>
+        <p className="spell-block-short-description">
+          <em>Short Description:</em> { spell.shortDescription }
+        </p>
+      </div>
+    </Fragment>
+  );
+};
+
+const SpellBlock = ({ showAdditionalDetails, spell }) => (
   <div className="spell-block">
     <p className="spell-block-name">{ spell.name }</p>
+
+    <p className="spell-block-source">
+      <SpellSourceLink source={spell.source} sourceType={spell.sourceType} />
+    </p>
 
     <p className="spell-block-level-school">
       { formatSchoolAndLevel(spell) }
@@ -33,12 +58,17 @@ const SpellBlock = ({ spell }) => (
     </div>
 
     <PlainText className="spell-block-description" text={spell.description} />
+
+    { renderAdditionalDetails({ spell, showAdditionalDetails }) }
   </div>
 );
 
-SpellBlock.defaultProps = {};
+SpellBlock.defaultProps = {
+  showAdditionalDetails: false,
+};
 
 SpellBlock.propTypes = {
+  showAdditionalDetails: PropTypes.bool,
   spell: spellType.isRequired,
 };
 
