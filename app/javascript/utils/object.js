@@ -33,7 +33,11 @@ const maybeInteger = (key, defaultValue) => {
   return (int.toString() === key) ? int : key;
 };
 
+export const exists = obj => !(obj === null || typeof obj === 'undefined');
+
 const recursivelyMapKeys = (obj, fn) => {
+  if (!exists(obj)) { return obj; }
+
   if (isPrimitive(obj)) { return obj; }
 
   if (Array.isArray(obj)) {
@@ -48,8 +52,6 @@ const recursivelyMapKeys = (obj, fn) => {
 
   return mapped;
 };
-
-export const exists = obj => !(obj === null || typeof obj === 'undefined');
 
 export const assign = (obj, value, ...path) => {
   if (path.length === 0) { throw new Error("path can't be blank"); }
