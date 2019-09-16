@@ -1,7 +1,6 @@
 import {
+  assign,
   camelizeKeys,
-  deepAccessProperty,
-  deepAssignProperty,
   dig,
   exists,
   underscoreKeys,
@@ -48,6 +47,580 @@ const dataWithUnderscoredKeys = {
 };
 
 describe('Object utils', () => {
+  describe('assign', () => {
+    const value = '$100,000';
+
+    it('should be a function', () => {
+      expect(typeof assign).toEqual('function');
+    });
+
+    describe('with an empty path', () => {
+      const obj = {};
+
+      it('should throw an error', () => {
+        expect(() => {
+          assign(obj, value);
+        }).toThrow("path can't be blank");
+      });
+    });
+
+    describe('with an empty array', () => {
+      describe('with path: one non-matching number', () => {
+        const obj = [];
+        const expected = [undefined, undefined, undefined, value];
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 3)).toEqual(expected);
+        });
+      });
+
+      describe('with path: one non-matching string', () => {
+        const obj = [];
+
+        it('should throw an error', () => {
+          expect(() => {
+            assign(obj, value, 'formerEmployees');
+          }).toThrow('invalid Array index formerEmployees');
+        });
+      });
+
+      describe('with path: many non-matching items', () => {
+        const obj = [];
+        const expected = [
+          undefined,
+          undefined,
+          undefined,
+          {
+            formerEmployees: [undefined, undefined, undefined, value],
+          },
+        ];
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 3, 'formerEmployees', 3)).toEqual(expected);
+        });
+      });
+    });
+
+    describe('with an array with flat data', () => {
+      describe('with path: one non-matching number', () => {
+        const obj = ['Kevin Flynn', 'Ed Dillinger', 'Lora'];
+        const expected = ['Kevin Flynn', 'Ed Dillinger', 'Lora', value];
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 3)).toEqual(expected);
+        });
+      });
+
+      describe('with path: one non-matching string', () => {
+        const obj = ['Kevin Flynn', 'Ed Dillinger', 'Lora'];
+
+        it('should throw an error', () => {
+          expect(() => {
+            assign(obj, value, 'formerEmployees');
+          }).toThrow('invalid Array index formerEmployees');
+        });
+      });
+
+      describe('with path: many non-matching items', () => {
+        const obj = ['Kevin Flynn', 'Ed Dillinger', 'Lora'];
+        const expected = [
+          'Kevin Flynn',
+          'Ed Dillinger',
+          'Lora',
+          {
+            formerEmployees: [undefined, undefined, undefined, value],
+          },
+        ];
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 3, 'formerEmployees', 3)).toEqual(expected);
+        });
+      });
+
+      describe('with path: one matching number', () => {
+        const obj = ['Kevin Flynn', 'Ed Dillinger', 'Lora'];
+        const expected = ['Kevin Flynn', 'Ed Dillinger', 'Lora', value];
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 3)).toEqual(expected);
+        });
+      });
+    });
+
+    describe('with an array with nested data', () => {
+      describe('with path: one non-matching number', () => {
+        const obj = [
+          {
+            employees: [],
+            name: 'marketing',
+          },
+          {
+            employees: [
+              { name: 'Kevin Flynn', title: 'Programmer' },
+              { name: 'Ed Dillinger', title: 'Technical Lead' },
+              { name: 'Lora', title: 'Technical Lead' },
+            ],
+            name: 'engineering',
+          },
+          {
+            employees: [],
+            name: 'sales',
+          },
+        ];
+        const expected = [
+          {
+            employees: [],
+            name: 'marketing',
+          },
+          {
+            employees: [
+              { name: 'Kevin Flynn', title: 'Programmer' },
+              { name: 'Ed Dillinger', title: 'Technical Lead' },
+              { name: 'Lora', title: 'Technical Lead' },
+            ],
+            name: 'engineering',
+          },
+          {
+            employees: [],
+            name: 'sales',
+          },
+          value,
+        ];
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 3)).toEqual(expected);
+        });
+      });
+
+      describe('with path: one non-matching string', () => {
+        const obj = [
+          {
+            employees: [],
+            name: 'marketing',
+          },
+          {
+            employees: [
+              { name: 'Kevin Flynn', title: 'Programmer' },
+              { name: 'Ed Dillinger', title: 'Technical Lead' },
+              { name: 'Lora', title: 'Technical Lead' },
+            ],
+            name: 'engineering',
+          },
+          {
+            employees: [],
+            name: 'sales',
+          },
+        ];
+
+        it('should throw an error', () => {
+          expect(() => {
+            assign(obj, value, 'formerEmployees');
+          }).toThrow('invalid Array index formerEmployees');
+        });
+      });
+
+      describe('with path: many non-matching items', () => {
+        const obj = [
+          {
+            employees: [],
+            name: 'marketing',
+          },
+          {
+            employees: [
+              { name: 'Kevin Flynn', title: 'Programmer' },
+              { name: 'Ed Dillinger', title: 'Technical Lead' },
+              { name: 'Lora', title: 'Technical Lead' },
+            ],
+            name: 'engineering',
+          },
+          {
+            employees: [],
+            name: 'sales',
+          },
+        ];
+        const expected = [
+          {
+            employees: [],
+            name: 'marketing',
+          },
+          {
+            employees: [
+              { name: 'Kevin Flynn', title: 'Programmer' },
+              { name: 'Ed Dillinger', title: 'Technical Lead' },
+              { name: 'Lora', title: 'Technical Lead' },
+            ],
+            name: 'engineering',
+          },
+          {
+            employees: [],
+            name: 'sales',
+          },
+          {
+            formerEmployees: [undefined, undefined, undefined, value],
+          },
+        ];
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 3, 'formerEmployees', 3)).toEqual(expected);
+        });
+      });
+
+      describe('with path: one matching number', () => {
+        const obj = [
+          {
+            employees: [],
+            name: 'marketing',
+          },
+          {
+            employees: [
+              { name: 'Kevin Flynn', title: 'Programmer' },
+              { name: 'Ed Dillinger', title: 'Technical Lead' },
+              { name: 'Lora', title: 'Technical Lead' },
+            ],
+            name: 'engineering',
+          },
+          {
+            employees: [],
+            name: 'sales',
+          },
+        ];
+        const expected = [
+          {
+            employees: [],
+            name: 'marketing',
+          },
+          value,
+          {
+            employees: [],
+            name: 'sales',
+          },
+        ];
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 1)).toEqual(expected);
+        });
+      });
+
+      describe('with path: many matching items', () => {
+        const obj = [
+          {
+            employees: [],
+            name: 'marketing',
+          },
+          {
+            employees: [
+              { name: 'Kevin Flynn', title: 'Programmer' },
+              { name: 'Ed Dillinger', title: 'Technical Lead' },
+              { name: 'Lora', title: 'Technical Lead' },
+            ],
+            name: 'engineering',
+          },
+          {
+            employees: [],
+            name: 'sales',
+          },
+        ];
+        const expected = [
+          {
+            employees: [],
+            name: 'marketing',
+          },
+          {
+            employees: [
+              { name: 'Kevin Flynn', title: 'Programmer' },
+              { name: 'Ed Dillinger', title: 'Technical Lead', salary: value },
+              { name: 'Lora', title: 'Technical Lead' },
+            ],
+            name: 'engineering',
+          },
+          {
+            employees: [],
+            name: 'sales',
+          },
+        ];
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 1, 'employees', 1, 'salary')).toEqual(expected);
+        });
+      });
+    });
+
+    describe('with an empty object', () => {
+      describe('with path: one non-matching number', () => {
+        const obj = {};
+        const expected = { 3: value };
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 3)).toEqual(expected);
+        });
+      });
+
+      describe('with path: one non-matching string', () => {
+        const obj = {};
+        const expected = { salary: value };
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 'salary')).toEqual(expected);
+        });
+      });
+
+      describe('with path: many non-matching items', () => {
+        const obj = {};
+        const expected = {
+          formerEmployees: [
+            undefined,
+            undefined,
+            undefined,
+            { salary: value },
+          ],
+        };
+
+        it('should insert the value', () => {
+          expect(
+            assign(obj, value, 'formerEmployees', 3, 'salary'),
+          ).toEqual(expected);
+        });
+      });
+    });
+
+    describe('with an object with flat data', () => {
+      describe('with path: one non-matching number', () => {
+        const obj = { name: 'Ed Dillinger', title: 'Technical Lead' };
+        const expected = {
+          name: 'Ed Dillinger',
+          title: 'Technical Lead',
+          3: value,
+        };
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 3)).toEqual(expected);
+        });
+      });
+
+      describe('with path: one non-matching string', () => {
+        const obj = { name: 'Ed Dillinger', title: 'Technical Lead' };
+        const expected = {
+          name: 'Ed Dillinger',
+          title: 'Technical Lead',
+          salary: value,
+        };
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 'salary')).toEqual(expected);
+        });
+      });
+
+      describe('with path: many non-matching items', () => {
+        const obj = { name: 'Ed Dillinger', title: 'Technical Lead' };
+        const expected = {
+          name: 'Ed Dillinger',
+          title: 'Technical Lead',
+          formerEmployees: [
+            undefined,
+            undefined,
+            undefined,
+            { salary: value },
+          ],
+        };
+
+        it('should insert the value', () => {
+          expect(
+            assign(obj, value, 'formerEmployees', 3, 'salary'),
+          ).toEqual(expected);
+        });
+      });
+
+      describe('with path: one matching string', () => {
+        const obj = { name: 'Ed Dillinger', title: 'Technical Lead' };
+        const expected = { name: 'Ed Dillinger', title: value };
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 'title')).toEqual(expected);
+        });
+      });
+    });
+
+    describe('with an object with nested data', () => {
+      describe('with path: one non-matching number', () => {
+        const obj = {
+          company: 'Encom',
+          teams: [
+            {
+              employees: [],
+              name: 'marketing',
+            },
+            {
+              employees: [
+                { name: 'Kevin Flynn', title: 'Programmer' },
+                { name: 'Ed Dillinger', title: 'Technical Lead' },
+                { name: 'Lora', title: 'Technical Lead' },
+              ],
+              name: 'engineering',
+            },
+            {
+              employees: [],
+              name: 'sales',
+            },
+          ],
+        };
+        const expected = Object.assign(obj, { 3: value });
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 3)).toEqual(expected);
+        });
+      });
+
+      describe('with path: one non-matching string', () => {
+        const obj = {
+          company: 'Encom',
+          teams: [
+            {
+              employees: [],
+              name: 'marketing',
+            },
+            {
+              employees: [
+                { name: 'Kevin Flynn', title: 'Programmer' },
+                { name: 'Ed Dillinger', title: 'Technical Lead' },
+                { name: 'Lora', title: 'Technical Lead' },
+              ],
+              name: 'engineering',
+            },
+            {
+              employees: [],
+              name: 'sales',
+            },
+          ],
+        };
+        const expected = Object.assign(obj, { salary: value });
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 'salary')).toEqual(expected);
+        });
+      });
+
+      describe('with path: many non-matching items', () => {
+        const obj = {
+          company: 'Encom',
+          teams: [
+            {
+              employees: [],
+              name: 'marketing',
+            },
+            {
+              employees: [
+                { name: 'Kevin Flynn', title: 'Programmer' },
+                { name: 'Ed Dillinger', title: 'Technical Lead' },
+                { name: 'Lora', title: 'Technical Lead' },
+              ],
+              name: 'engineering',
+            },
+            {
+              employees: [],
+              name: 'sales',
+            },
+          ],
+        };
+        const expected = Object.assign(obj, {
+          formerEmployees: [
+            undefined,
+            undefined,
+            undefined,
+            { salary: value },
+          ],
+        });
+
+        it('should insert the value', () => {
+          expect(
+            assign(obj, value, 'formerEmployees', 3, 'salary'),
+          ).toEqual(expected);
+        });
+      });
+
+      describe('with path: one matching string', () => {
+        const obj = {
+          company: 'Encom',
+          teams: [
+            {
+              employees: [],
+              name: 'marketing',
+            },
+            {
+              employees: [
+                { name: 'Kevin Flynn', title: 'Programmer' },
+                { name: 'Ed Dillinger', title: 'Technical Lead' },
+                { name: 'Lora', title: 'Technical Lead' },
+              ],
+              name: 'engineering',
+            },
+            {
+              employees: [],
+              name: 'sales',
+            },
+          ],
+        };
+        const expected = Object.assign(obj, { company: value });
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 'company')).toEqual(expected);
+        });
+      });
+
+      describe('with path: many matching items', () => {
+        const obj = {
+          company: 'Encom',
+          teams: [
+            {
+              employees: [],
+              name: 'marketing',
+            },
+            {
+              employees: [
+                { name: 'Kevin Flynn', title: 'Programmer' },
+                { name: 'Ed Dillinger', title: 'Technical Lead' },
+                { name: 'Lora', title: 'Technical Lead' },
+              ],
+              name: 'engineering',
+            },
+            {
+              employees: [],
+              name: 'sales',
+            },
+          ],
+        };
+        const expected = {
+          company: 'Encom',
+          teams: [
+            {
+              employees: [],
+              name: 'marketing',
+            },
+            {
+              employees: [
+                { name: 'Kevin Flynn', title: 'Programmer' },
+                {
+                  name: 'Ed Dillinger',
+                  title: 'Technical Lead',
+                  salary: value,
+                },
+                { name: 'Lora', title: 'Technical Lead' },
+              ],
+              name: 'engineering',
+            },
+            {
+              employees: [],
+              name: 'sales',
+            },
+          ],
+        };
+
+        it('should insert the value', () => {
+          expect(assign(obj, value, 'teams', 1, 'employees', 1, 'salary')).toEqual(expected);
+        });
+      });
+    });
+  });
+
   describe('camelizeKeys()', () => {
     it('should be a function', () => {
       expect(typeof camelizeKeys).toEqual('function');
@@ -178,460 +751,6 @@ describe('Object utils', () => {
     describe('with a function', () => {
       it('should return true', () => {
         expect(exists(() => {})).toEqual(true);
-      });
-    });
-  });
-
-  describe('deepAccessProperty()', () => {
-    it('should be a function', () => {
-      expect(typeof deepAccessProperty).toEqual('function');
-    });
-
-    describe('with an empty Array', () => {
-      const propName = 1;
-
-      describe('with path: empty Array', () => {
-        const obj = [];
-
-        it('should return null', () => {
-          expect(deepAccessProperty(obj, propName, [])).toEqual(null);
-        });
-      });
-    });
-
-    describe('with an Array with data', () => {
-      const propName = 1;
-
-      describe('with path: empty Array', () => {
-        const obj = ['Kevin Flynn', 'Ed Dillinger', 'Lora'];
-
-        it('should return the value', () => {
-          expect(deepAccessProperty(obj, propName, [])).toEqual(obj[propName]);
-        });
-      });
-    });
-
-    describe('with an empty Object', () => {
-      const propName = 'name';
-
-      describe('with path: empty Array', () => {
-        const obj = {};
-
-        it('should return null', () => {
-          expect(deepAccessProperty(obj, propName, [])).toEqual(null);
-        });
-      });
-
-      describe('with path: array with a string value', () => {
-        const obj = {};
-        const path = ['manager'];
-
-        it('should return null', () => {
-          expect(deepAccessProperty(obj, propName, path)).toEqual(null);
-        });
-      });
-
-      describe('with path: array with multiple string values', () => {
-        const obj = {};
-        const path = ['teams', 'engineering', 'manager'];
-
-        it('should return null', () => {
-          expect(deepAccessProperty(obj, propName, path)).toEqual(null);
-        });
-      });
-    });
-
-    describe('with an Object with data', () => {
-      const propName = 'name';
-
-      describe('with path: empty array', () => {
-        const obj = { name: 'Ed Dillinger', title: 'Technical Lead' };
-
-        it('should return the value', () => {
-          expect(deepAccessProperty(obj, propName, [])).toEqual(obj[propName]);
-        });
-      });
-
-      describe('with path: array with a string value', () => {
-        const obj = {
-          division: 'Product',
-          manager: { name: 'Ed Dillinger', title: 'Technical Lead' },
-        };
-        const path = ['manager'];
-        const value = obj.manager[propName];
-
-        it('should return the value', () => {
-          expect(deepAccessProperty(obj, propName, path)).toEqual(value);
-        });
-      });
-
-      describe('with path: array with multiple string values', () => {
-        const obj = {
-          company: 'Encom',
-          teams: {
-            engineering: {
-              division: 'Product',
-              manager: { name: 'Ed Dillinger', title: 'Technical Lead' },
-            },
-            marketing: {
-              division: 'Corporate',
-            },
-          },
-        };
-        const path = ['teams', 'engineering', 'manager'];
-        const value = obj.teams.engineering.manager[propName];
-
-        it('should return the value', () => {
-          expect(deepAccessProperty(obj, propName, path)).toEqual(value);
-        });
-      });
-
-      describe('with path: array with mixed string and number values', () => {
-        const obj = {
-          company: 'Encom',
-          teams: [
-            {
-              employees: [],
-              name: 'marketing',
-            },
-            {
-              employees: [
-                { name: 'Kevin Flynn', title: 'Programmer' },
-                { name: 'Ed Dillinger', title: 'Technical Lead' },
-                { name: 'Lora', title: 'Technical Lead' },
-              ],
-              name: 'engineering',
-            },
-            {
-              employees: [],
-              name: 'sales',
-            },
-          ],
-        };
-        const path = ['teams', 1, 'employees', 1];
-        const value = obj.teams[1].employees[1][propName];
-
-        it('should return the value', () => {
-          expect(deepAccessProperty(obj, propName, path)).toEqual(value);
-        });
-      });
-    });
-  });
-
-  describe('deepAssignProperty()', () => {
-    const value = 'Alan Bradley';
-
-    it('should be a function', () => {
-      expect(typeof deepAssignProperty).toEqual('function');
-    });
-
-    describe('with an empty Array', () => {
-      const obj = [];
-      const propName = 1;
-
-      describe('with path: empty array', () => {
-        const path = [];
-
-        it('should assign the property to a copy', () => {
-          const returned = deepAssignProperty(obj, propName, value, path);
-
-          expect(returned).toEqual([undefined, value]);
-        });
-
-        it('should not mutate the original object', () => {
-          deepAssignProperty(obj, propName, value, path);
-
-          expect(obj).toEqual([]);
-        });
-      });
-    });
-
-    describe('with an Array with data', () => {
-      const obj = ['Kevin Flynn', 'Ed Dillinger', 'Lora'];
-      const propName = 1;
-
-      describe('with path: empty array', () => {
-        const path = [];
-
-        it('should assign the property to a copy', () => {
-          const returned = deepAssignProperty(obj, propName, value, path);
-          const expected = ['Kevin Flynn', value, 'Lora'];
-
-          expect(returned).toEqual(expected);
-        });
-
-        it('should not mutate the original object', () => {
-          deepAssignProperty(obj, propName, value, path);
-
-          expect(obj).toEqual(['Kevin Flynn', 'Ed Dillinger', 'Lora']);
-        });
-      });
-    });
-
-    describe('with an empty Object', () => {
-      const propName = 'name';
-
-      describe('with path: empty array', () => {
-        const obj = {};
-        const path = [];
-
-        it('should assign the property to a copy', () => {
-          const returned = deepAssignProperty(obj, propName, value, path);
-
-          expect(returned).toEqual({ name: value });
-        });
-
-        it('should not mutate the original object', () => {
-          deepAssignProperty(obj, propName, value, path);
-
-          expect(obj).toEqual({});
-        });
-      });
-
-      describe('with path: array with a string value', () => {
-        const obj = {};
-        const path = ['manager'];
-
-        it('should assign the property to a copy', () => {
-          const returned = deepAssignProperty(obj, propName, value, path);
-
-          expect(returned).toEqual({ manager: { name: value } });
-        });
-
-        it('should not mutate the original object', () => {
-          deepAssignProperty(obj, propName, value, path);
-
-          expect(obj).toEqual({});
-        });
-      });
-
-      describe('with path: array with multiple string values', () => {
-        const obj = {};
-        const path = ['teams', 'engineering', 'manager'];
-
-        it('should assign the property to a copy', () => {
-          const returned = deepAssignProperty(obj, propName, value, path);
-          const expected = {
-            teams: {
-              engineering: {
-                manager: { name: value },
-              },
-            },
-          };
-
-          expect(returned).toEqual(expected);
-        });
-
-        it('should not mutate the original object', () => {
-          deepAssignProperty(obj, propName, value, path);
-
-          expect(obj).toEqual({});
-        });
-      });
-
-      describe('with path: array with mixed string and number values', () => {
-        const obj = {};
-        const path = ['teams', 1, 'employees', 1];
-
-        it('should assign the property to a copy', () => {
-          const returned = deepAssignProperty(obj, propName, value, path);
-          const expected = {
-            teams: [
-              undefined,
-              {
-                employees: [
-                  undefined,
-                  { name: value },
-                ],
-              },
-            ],
-          };
-
-          expect(returned).toEqual(expected);
-        });
-
-        it('should not mutate the original object', () => {
-          deepAssignProperty(obj, propName, value, path);
-
-          expect(obj).toEqual({});
-        });
-      });
-    });
-
-    describe('with an object with data', () => {
-      const propName = 'name';
-
-      describe('with path: empty array', () => {
-        const obj = { name: 'Ed Dillinger', title: 'Technical Lead' };
-        const path = [];
-
-        it('should assign the property to a copy', () => {
-          const returned = deepAssignProperty(obj, propName, value, path);
-
-          expect(returned).toEqual({ name: value, title: 'Technical Lead' });
-        });
-
-        it('should not mutate the original object', () => {
-          deepAssignProperty(obj, propName, value, path);
-
-          expect(obj).toEqual({ name: 'Ed Dillinger', title: 'Technical Lead' });
-        });
-      });
-
-      describe('with path: array with a string value', () => {
-        const obj = {
-          division: 'Product',
-          manager: { name: 'Ed Dillinger', title: 'Technical Lead' },
-        };
-        const path = ['manager'];
-
-        it('should assign the property to a copy', () => {
-          const returned = deepAssignProperty(obj, propName, value, path);
-          const expected = {
-            division: 'Product',
-            manager: { name: value, title: 'Technical Lead' },
-          };
-
-          expect(returned).toEqual(expected);
-        });
-
-        it('should not mutate the original object', () => {
-          deepAssignProperty(obj, propName, value, path);
-
-          expect(obj).toEqual({
-            division: 'Product',
-            manager: { name: 'Ed Dillinger', title: 'Technical Lead' },
-          });
-        });
-      });
-
-      describe('with path: array with multiple string values', () => {
-        const obj = {
-          company: 'Encom',
-          teams: {
-            engineering: {
-              division: 'Product',
-              manager: { name: 'Ed Dillinger', title: 'Technical Lead' },
-            },
-            marketing: {
-              division: 'Corporate',
-            },
-          },
-        };
-        const path = ['teams', 'engineering', 'manager'];
-
-        it('should assign the property to a copy', () => {
-          const returned = deepAssignProperty(obj, propName, value, path);
-          const expected = {
-            company: 'Encom',
-            teams: {
-              engineering: {
-                division: 'Product',
-                manager: { name: value, title: 'Technical Lead' },
-              },
-              marketing: {
-                division: 'Corporate',
-              },
-            },
-          };
-
-          expect(returned).toEqual(expected);
-        });
-
-        it('should not mutate the original object', () => {
-          deepAssignProperty(obj, propName, value, path);
-
-          expect(obj).toEqual({
-            company: 'Encom',
-            teams: {
-              engineering: {
-                division: 'Product',
-                manager: { name: 'Ed Dillinger', title: 'Technical Lead' },
-              },
-              marketing: {
-                division: 'Corporate',
-              },
-            },
-          });
-        });
-      });
-
-      describe('with path: array with mixed string and number values', () => {
-        const obj = {
-          company: 'Encom',
-          teams: [
-            {
-              employees: [],
-              name: 'marketing',
-            },
-            {
-              employees: [
-                { name: 'Kevin Flynn', title: 'Programmer' },
-                { name: 'Ed Dillinger', title: 'Technical Lead' },
-                { name: 'Lora', title: 'Technical Lead' },
-              ],
-              name: 'engineering',
-            },
-            {
-              employees: [],
-              name: 'sales',
-            },
-          ],
-        };
-        const path = ['teams', 1, 'employees', 1];
-
-        it('should assign the property to a copy', () => {
-          const returned = deepAssignProperty(obj, propName, value, path);
-          const expected = {
-            company: 'Encom',
-            teams: [
-              {
-                employees: [],
-                name: 'marketing',
-              },
-              {
-                employees: [
-                  { name: 'Kevin Flynn', title: 'Programmer' },
-                  { name: value, title: 'Technical Lead' },
-                  { name: 'Lora', title: 'Technical Lead' },
-                ],
-                name: 'engineering',
-              },
-              {
-                employees: [],
-                name: 'sales',
-              },
-            ],
-          };
-
-          expect(returned).toEqual(expected);
-        });
-
-        it('should not mutate the original object', () => {
-          deepAssignProperty(obj, propName, value, path);
-
-          expect(obj).toEqual({
-            company: 'Encom',
-            teams: [
-              {
-                employees: [],
-                name: 'marketing',
-              },
-              {
-                employees: [
-                  { name: 'Kevin Flynn', title: 'Programmer' },
-                  { name: 'Ed Dillinger', title: 'Technical Lead' },
-                  { name: 'Lora', title: 'Technical Lead' },
-                ],
-                name: 'engineering',
-              },
-              {
-                employees: [],
-                name: 'sales',
-              },
-            ],
-          });
-        });
       });
     });
   });

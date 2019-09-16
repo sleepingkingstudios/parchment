@@ -3,13 +3,13 @@ import {
   PENDING,
   SUCCESS,
 } from '../status';
-import { deepAssignProperty } from '../../utils/object';
+import { assign } from '../../utils/object';
 
 const updateData = (state, { path, propName, value }) => {
   const { data } = state;
 
   return Object.assign({}, state, {
-    data: deepAssignProperty(data, propName, value, path),
+    data: assign(data, value, ...path, propName),
   });
 };
 

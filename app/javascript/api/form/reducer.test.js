@@ -6,7 +6,7 @@ import {
   PENDING,
   SUCCESS,
 } from '../status';
-import { deepAssignProperty } from '../../utils/object';
+import { assign } from '../../utils/object';
 
 describe('Form request reducer', () => {
   const namespace = 'createWidget';
@@ -190,7 +190,7 @@ describe('Form request reducer', () => {
 
       it('should update the data', () => {
         const action = updateFormField({ path, propName, value });
-        const data = deepAssignProperty(initialState.data, propName, value, path);
+        const data = assign(initialState.data, value, ...path, propName);
         const expected = Object.assign(
           {},
           initialState,
@@ -231,7 +231,7 @@ describe('Form request reducer', () => {
         it('should update the data', () => {
           const state = { ...initialState, data: previousNestedData };
           const action = updateFormField({ path, propName, value });
-          const data = deepAssignProperty(state.data, propName, value, path);
+          const data = assign(state.data, value, ...path, propName);
           const expected = Object.assign(
             {},
             state,

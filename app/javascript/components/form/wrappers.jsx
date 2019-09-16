@@ -9,7 +9,7 @@ import {
 } from './actions';
 import { generateFieldId } from './utils';
 import { convertToArray } from '../../utils/array';
-import { deepAccessProperty } from '../../utils/object';
+import { dig } from '../../utils/object';
 import { upperCamelize } from '../../utils/string';
 
 const getInputDisplayName = Component => (
@@ -39,7 +39,7 @@ export const formInput = (WrappedInput, prop, opts = {}) => {
     } = form;
     const actualPath = convertToArray(path);
     const id = generateFieldId({ path, prop });
-    const value = deepAccessProperty(data, prop, actualPath);
+    const value = dig(data, ...actualPath, prop);
     const onChange = handleInputChangeWith(onChangeAction)(prop, actualPath);
     const inputProps = Object.assign(
       {
