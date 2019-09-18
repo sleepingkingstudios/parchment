@@ -2,12 +2,18 @@ import endpointActions from '../endpoint/actions';
 import { convertToArray } from '../../utils/array';
 
 const generateActions = ({ namespace }) => {
-  const SET_DATA = `${namespace}/setData`;
+  const SET_FORM_DATA = `${namespace}/setFormData`;
+  const UPDATE_FORM_DATA = `${namespace}/updateFormData`;
   const UPDATE_FORM_FIELD = `${namespace}/updateFormField`;
 
-  const setData = data => ({
-    type: SET_DATA,
+  const setFormData = data => ({
+    type: SET_FORM_DATA,
     payload: { data },
+  });
+
+  const updateFormData = ({ data, path }) => ({
+    type: UPDATE_FORM_DATA,
+    payload: { data, path: convertToArray(path) },
   });
 
   const updateFormField = ({ path, propName, value }) => ({
@@ -18,9 +24,11 @@ const generateActions = ({ namespace }) => {
   return Object.assign(
     endpointActions({ namespace }),
     {
-      SET_DATA,
+      SET_FORM_DATA,
+      UPDATE_FORM_DATA,
       UPDATE_FORM_FIELD,
-      setData,
+      setFormData,
+      updateFormData,
       updateFormField,
     },
   );

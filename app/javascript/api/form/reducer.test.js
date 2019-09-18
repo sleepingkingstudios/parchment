@@ -6,7 +6,10 @@ import {
   PENDING,
   SUCCESS,
 } from '../status';
-import { assign } from '../../utils/object';
+import {
+  assign,
+  dig,
+} from '../../utils/object';
 
 describe('Form request reducer', () => {
   const namespace = 'createWidget';
@@ -17,7 +20,8 @@ describe('Form request reducer', () => {
     requestFailure,
     requestPending,
     requestSuccess,
-    setData,
+    setFormData,
+    updateFormData,
     updateFormField,
   } = actions;
   const previousData = {
@@ -132,12 +136,12 @@ describe('Form request reducer', () => {
     });
   });
 
-  describe('when SET_DATA is dispatched', () => {
+  describe('when SET_FORM_DATA is dispatched', () => {
     const data = { name: 'Inigo Montoya' };
 
     it('should set the data', () => {
       const state = { ...initialState };
-      const action = setData(data);
+      const action = setFormData(data);
       const expected = Object.assign({}, state, { data });
 
       expect(reducer(state, action)).toEqual(expected);
@@ -146,10 +150,103 @@ describe('Form request reducer', () => {
     describe('when the state has data', () => {
       it('should mark the request as passing and clear the data and errors', () => {
         const state = { ...initialState, data: previousData };
-        const action = setData(data);
+        const action = setFormData(data);
         const expected = Object.assign({}, state, { data });
 
         expect(reducer(state, action)).toEqual(expected);
+      });
+    });
+  });
+
+  describe('when UPDATE_FORM_DATA is dispatched', () => {
+    const data = {
+      name: 'Roberts',
+      occupation: 'Dread Pirate',
+    };
+
+    it('should update the data', () => {
+      const action = updateFormData({ data });
+      const merged = Object.assign({}, initialState.data, data);
+      const expected = Object.assign(
+        {},
+        initialState,
+        { data: merged },
+      );
+
+      expect(reducer(initialState, action)).toEqual(expected);
+    });
+
+    describe('when the state has data', () => {
+      it('should update the data', () => {
+        const state = { ...initialState, data: previousData };
+        const action = updateFormData({ data });
+        const merged = Object.assign({}, state.data, data);
+        const expected = Object.assign(
+          {},
+          state,
+          { data: merged },
+        );
+
+        expect(reducer(state, action)).toEqual(expected);
+      });
+    });
+
+    describe('with path: many levels', () => {
+      const path = ['films', 0, 'characters', 0];
+
+      it('should update the data', () => {
+        const action = updateFormData({ data, path });
+        const merged = assign(initialState.data, data, ...path);
+        const expected = Object.assign(
+          {},
+          initialState,
+          { data: merged },
+        );
+
+        expect(reducer(initialState, action)).toEqual(expected);
+      });
+
+      describe('when the state has data', () => {
+        const previousNestedData = {
+          books: [
+            {
+              author: 'J.R.R. Tolkien',
+              title: 'The Fellowship of the Ring',
+            },
+          ],
+          films: [
+            {
+              title: 'The Princess Bride',
+              characters: [
+                {
+                  id: '00000000-0000-0000-0000-000000000000',
+                  name: 'Westley',
+                },
+                {
+                  id: '00000000-0000-0000-0000-000000000001',
+                  name: 'Buttercup',
+                },
+              ],
+            },
+            {
+              title: 'TRON',
+            },
+          ],
+        };
+
+        it('should update the data', () => {
+          const state = { ...initialState, data: previousNestedData };
+          const merged = Object.assign({}, dig(state.data, ...path), data);
+          const nested = assign(state.data, merged, ...path);
+          const action = updateFormData({ data, path });
+          const expected = Object.assign(
+            {},
+            state,
+            { data: nested },
+          );
+
+          expect(reducer(state, action)).toEqual(expected);
+        });
       });
     });
   });

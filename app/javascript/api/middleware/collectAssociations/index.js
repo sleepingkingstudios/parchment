@@ -1,4 +1,4 @@
-import pluralise from 'pluralise';
+import pluralize from 'pluralize';
 
 import { assign, dig, exists } from '../../../utils/object';
 import { underscore } from '../../../utils/string';
@@ -13,7 +13,7 @@ const findAssociation = ({
 
   if (!plural) { return data[underscore(foreignType)]; }
 
-  const key = pluralise(2, underscore(foreignType));
+  const key = pluralize(underscore(foreignType));
 
   const associationData = data[key];
 

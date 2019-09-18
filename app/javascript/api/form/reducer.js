@@ -3,22 +3,30 @@ import {
   PENDING,
   SUCCESS,
 } from '../status';
-import { assign } from '../../utils/object';
+import {
+  assign,
+  dig,
+} from '../../utils/object';
 
-const updateData = (state, { path, propName, value }) => {
-  const { data } = state;
+const updateData = (state, { data, path }) => {
+  const currentData = dig(state.data, ...path);
+  const mergedData = Object.assign({}, currentData, data);
+  const nestedData = assign(state, mergedData, 'data', ...path);
 
-  return Object.assign({}, state, {
-    data: assign(data, value, ...path, propName),
-  });
+  return Object.assign({}, state, nestedData);
 };
+
+const updateField = (state, { path, propName, value }) => Object.assign({}, state, {
+  data: assign(state.data, value, ...path, propName),
+});
 
 const generateReducer = ({ actions, initialState }) => {
   const {
     REQUEST_FAILURE,
     REQUEST_PENDING,
     REQUEST_SUCCESS,
-    SET_DATA,
+    SET_FORM_DATA,
+    UPDATE_FORM_DATA,
     UPDATE_FORM_FIELD,
   } = actions;
 
@@ -40,12 +48,14 @@ const generateReducer = ({ actions, initialState }) => {
             errors: {},
             status: SUCCESS,
           });
-        case SET_DATA:
+        case SET_FORM_DATA:
           return Object.assign({}, state, {
             data: action.payload.data,
           });
-        case UPDATE_FORM_FIELD:
+        case UPDATE_FORM_DATA:
           return updateData(state, action.payload);
+        case UPDATE_FORM_FIELD:
+          return updateField(state, action.payload);
         default:
           return state;
       }

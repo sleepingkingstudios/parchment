@@ -9,8 +9,12 @@ import {
 } from './actions';
 import { generateFieldId } from './utils';
 import { convertToArray } from '../../utils/array';
-import { dig } from '../../utils/object';
+import { assign, dig, valueOrDefault } from '../../utils/object';
 import { upperCamelize } from '../../utils/string';
+
+const defaultMapDataToValue = ({ data, path, prop }) => dig(data, ...path, prop);
+
+const defaultMapValueToData = ({ prop, value }) => assign({}, value, prop);
 
 const getInputDisplayName = Component => (
   Component.inputDisplayName
@@ -30,6 +34,9 @@ const errorFeedback = (propErrors) => {
 };
 
 export const formInput = (WrappedInput, prop, opts = {}) => {
+  const mapDataToValue = valueOrDefault(opts.mapDataToValue, defaultMapDataToValue);
+  const mapValueToData = valueOrDefault(opts.mapValueToData, defaultMapValueToData);
+
   const FormInputWrapper = (props) => {
     const { form, ...injectedProps } = props;
     const {
@@ -39,8 +46,11 @@ export const formInput = (WrappedInput, prop, opts = {}) => {
     } = form;
     const actualPath = convertToArray(path);
     const id = generateFieldId({ path, prop });
-    const value = dig(data, ...actualPath, prop);
-    const onChange = handleInputChangeWith(onChangeAction)(prop, actualPath);
+    const value = mapDataToValue({ data, path: actualPath, prop });
+    const onChange = handleInputChangeWith(onChangeAction, mapValueToData)({
+      path: actualPath,
+      propName: prop,
+    });
     const inputProps = Object.assign(
       {
         id,
@@ -64,7 +74,9 @@ export const formInput = (WrappedInput, prop, opts = {}) => {
 };
 
 export const formField = (WrappedInput, prop, opts = {}) => {
-  const InputClass = formInput(WrappedInput, prop);
+  const { displayName, ...injectedOpts } = opts;
+
+  const InputClass = formInput(WrappedInput, prop, injectedOpts);
   const FormFieldWrapper = (props) => {
     const { colWidth, form, ...injectedProps } = props;
     const { errors, path } = form;
@@ -82,8 +94,6 @@ export const formField = (WrappedInput, prop, opts = {}) => {
       </FormField>
     );
   };
-
-  const { displayName } = opts;
 
   FormFieldWrapper.displayName = displayName || `${upperCamelize(prop)}Field`;
   FormFieldWrapper.inputDisplayName = getInputDisplayName(WrappedInput);

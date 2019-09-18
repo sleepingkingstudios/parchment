@@ -11,7 +11,7 @@ useDispatch.mockImplementation(() => dispatch);
 useSelector.mockImplementation(fn => fn);
 
 describe('API endpoint hooks', () => {
-  const actions = { updateFormField: jest.fn() };
+  const actions = { updateFormData: jest.fn() };
   const requestHandler = jest.fn();
   const performRequest = jest.fn(() => requestHandler);
   const selector = state => state.api.endpoint;
@@ -127,12 +127,12 @@ describe('API endpoint hooks', () => {
   });
 
   describe('useUpdateForm()', () => {
-    const params = { propName: 'propName', value: 'value' };
+    const params = { data: { propName: 'value' } };
     const action = { ...params, type: 'updateForm' };
     const updateHook = useUpdateForm();
 
     beforeEach(() => {
-      actions.updateFormField.mockImplementationOnce(() => action);
+      actions.updateFormData.mockImplementationOnce(() => action);
     });
 
     it('should be a function', () => {
@@ -146,7 +146,7 @@ describe('API endpoint hooks', () => {
     it('should create the action from the arguments', () => {
       updateHook(params);
 
-      expect(actions.updateFormField).toHaveBeenCalledWith(params);
+      expect(actions.updateFormData).toHaveBeenCalledWith(params);
     });
 
     it('should call dispatch with the action', () => {

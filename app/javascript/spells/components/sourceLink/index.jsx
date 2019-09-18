@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import pluralise from 'pluralise';
+import pluralize from 'pluralize';
 
 import { exists } from '../../../utils/object';
 import { underscore } from '../../../utils/string';
@@ -11,7 +11,7 @@ const emptySource = () => (
 );
 
 const sourceLink = ({ id, sourceType }) => {
-  const sourcePath = pluralise(2, underscore(sourceType));
+  const sourcePath = pluralize(underscore(sourceType));
 
   return `/${sourcePath}/${id}`;
 };

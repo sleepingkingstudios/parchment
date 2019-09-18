@@ -15,9 +15,9 @@ const endpoint = new FindOneEndpoint({
         const { publications } = getState();
         const { updateFindPublication } = publications;
         const { data } = updateFindPublication;
-        const { setData } = formActions;
+        const { setFormData } = formActions;
 
-        dispatch(setData(data));
+        dispatch(setFormData(data));
       },
     },
     redirect,

@@ -9,13 +9,13 @@ import { spellDefaultAttributes } from '../../entities';
 describe('UpdateSpellForm store', () => {
   describe('actions', () => {
     const {
-      SET_DATA,
+      SET_FORM_DATA,
       UPDATE_FORM_FIELD,
     } = actions;
 
-    describe('SET_DATA', () => {
+    describe('SET_FORM_DATA', () => {
       it('should define the namespaced action', () => {
-        expect(SET_DATA).toEqual('spells/updateSpellForm/setData');
+        expect(SET_FORM_DATA).toEqual('spells/updateSpellForm/setFormData');
       });
     });
 

@@ -8,7 +8,7 @@ const generateHooks = ({ performRequest, selector }) => {
     const dispatch = useDispatch();
     const { getState } = useStore();
 
-    useEffect(() => { performRequest(params)(dispatch, getState); });
+    useEffect(() => { performRequest(params)(dispatch, getState); }, []);
   };
 
   return Object.assign(

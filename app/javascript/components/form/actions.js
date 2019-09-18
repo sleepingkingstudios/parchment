@@ -1,12 +1,15 @@
 import { getInputValue } from './utils';
+import { valueOrDefault } from '../../utils/object';
 
-export const handleInputChangeWith = actionCreator => (
-  (propName, path = []) => (
+export const handleInputChangeWith = (actionCreator, mapValueToData) => (
+  ({ propName, path }) => (
     (event) => {
+      const actualPath = valueOrDefault(path, []);
       const { target } = event;
       const value = getInputValue(target);
+      const data = mapValueToData({ prop: propName, value });
 
-      return actionCreator({ path, propName, value });
+      return actionCreator({ data, path: actualPath });
     }
   )
 );
