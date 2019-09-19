@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SelectSpellSourceInput /> with many sources should match the snapshot 1`] = `
+<FormSelectInput
+  className={null}
+  defaultOption="Homebrew"
+  id="spell-source"
+  onChange={[MockFunction]}
+  options={
+    Array [
+      Object {
+        "label": "Publications",
+        "value": Array [
+          Object {
+            "label": "The Flumph Fancier's Handbook",
+            "value": "Publication 7edf3a01-da19-475e-8e31-3f40c77acc62",
+          },
+          Object {
+            "label": "Unearthed Arcana - The Flumph Mage",
+            "value": "Publication cdf0f062-8f68-4b66-9f38-ad1d30f75272",
+          },
+          Object {
+            "label": "Secrets of the Flumph",
+            "value": "Publication 0e25f76d-9d8a-41b1-8b6d-7918a1a1b3f5",
+          },
+        ],
+      },
+    ]
+  }
+  validStatus={null}
+  value="Publication 7edf3a01-da19-475e-8e31-3f40c77acc62"
+/>
+`;
+
+exports[`<SelectSpellSourceInput /> with no sources should match the snapshot 1`] = `
+<FormSelectInput
+  className={null}
+  defaultOption="Homebrew"
+  id="spell-source"
+  onChange={[MockFunction]}
+  options={Array []}
+  validStatus={null}
+  value=""
+/>
+`;

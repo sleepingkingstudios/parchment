@@ -27,6 +27,7 @@ export const spellListType = PropTypes.arrayOf(spellType);
 export const spellDefaultAttributes = {
   id: '',
   name: '',
+  slug: '',
   level: 1,
   school: 'abjuration',
   ritual: false,
