@@ -68,6 +68,68 @@ exports[`<SpellForm /> should match the snapshot 1`] = `
         }
       }
     />
+    <SlugField
+      colWidth="8"
+      form={
+        Object {
+          "data": Object {
+            "spell": Object {
+              "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+              "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+              "duration": "Instantaneous",
+              "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+              "level": 0,
+              "materialComponent": "",
+              "name": "Thunderclap",
+              "range": "Self",
+              "ritual": false,
+              "school": "illusion",
+              "shortDescription": "Create an ominous thunderclap when your name is spoken",
+              "slug": "thunderclap",
+              "somaticComponent": false,
+              "verbalComponent": false,
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "spell",
+          ],
+        }
+      }
+    />
+    <SourceField
+      colWidth="4"
+      form={
+        Object {
+          "data": Object {
+            "spell": Object {
+              "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+              "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+              "duration": "Instantaneous",
+              "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+              "level": 0,
+              "materialComponent": "",
+              "name": "Thunderclap",
+              "range": "Self",
+              "ritual": false,
+              "school": "illusion",
+              "shortDescription": "Create an ominous thunderclap when your name is spoken",
+              "slug": "thunderclap",
+              "somaticComponent": false,
+              "verbalComponent": false,
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "spell",
+          ],
+        }
+      }
+    />
     <SchoolField
       colWidth="8"
       form={
@@ -291,6 +353,37 @@ exports[`<SpellForm /> should match the snapshot 1`] = `
       }
     />
     <SpellFormComponentsField
+      colWidth="12"
+      form={
+        Object {
+          "data": Object {
+            "spell": Object {
+              "castingTime": "1 reaction, which you take when you speak your own name or hear it spoken",
+              "description": "Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap.",
+              "duration": "Instantaneous",
+              "id": "e17bca01-24d3-48d3-a308-099dd6dca373",
+              "level": 0,
+              "materialComponent": "",
+              "name": "Thunderclap",
+              "range": "Self",
+              "ritual": false,
+              "school": "illusion",
+              "shortDescription": "Create an ominous thunderclap when your name is spoken",
+              "slug": "thunderclap",
+              "somaticComponent": false,
+              "verbalComponent": false,
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "spell",
+          ],
+        }
+      }
+    />
+    <ShortDescriptionField
       colWidth="12"
       form={
         Object {

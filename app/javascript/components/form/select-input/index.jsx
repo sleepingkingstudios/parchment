@@ -13,7 +13,6 @@ const buildOptions = ({ defaultOption, options }) => {
   }
 
   return modOptions.map(({ label, selected, value }, index) => {
-    // TODO: Actually check this.
     if (Array.isArray(value)) {
       return (
         /* eslint-disable-next-line react/no-array-index-key */
