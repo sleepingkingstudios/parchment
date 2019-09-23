@@ -285,6 +285,21 @@ RSpec.describe Api::ResourcesController do
     end
   end
 
+  describe '#failure' do
+    let(:error) { Cuprum::Error.new(message: 'Something went wrong.') }
+
+    it 'should define the private method' do
+      expect(controller)
+        .to respond_to(:failure, true)
+        .with(1).argument
+    end
+
+    it 'should return a failing result' do
+      expect(controller.send :failure, error)
+        .to be_a_failing_result.with_error(error)
+    end
+  end
+
   describe '#index' do
     let(:responder) { controller.send(:responder) }
     let(:result)    { Cuprum::Result.new }
@@ -656,8 +671,9 @@ RSpec.describe Api::ResourcesController do
               .and_return(permitted_attributes)
           end
 
-          it 'should return the resource params' do
-            expect(controller.send :require_resource_params).to be == expected
+          it 'should return a passing result' do
+            expect(controller.send :require_resource_params)
+              .to be_a_passing_result.with_value(expected)
           end
         end
       end
@@ -847,6 +863,21 @@ RSpec.describe Api::ResourcesController do
             .with_value('widget' => widget)
         end
       end
+    end
+  end
+
+  describe '#success' do
+    let(:value) { 'result value' }
+
+    it 'should define the private method' do
+      expect(controller)
+        .to respond_to(:success, true)
+        .with(1).argument
+    end
+
+    it 'should return a passing result' do
+      expect(controller.send :success, value)
+        .to be_a_passing_result.with_value(value)
     end
   end
 

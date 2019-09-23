@@ -65,6 +65,10 @@ module Api
       end
     end
 
+    def failure(error)
+      Cuprum::Result.new(error: error)
+    end
+
     def index_params
       @index_params ||=
         params
@@ -90,7 +94,7 @@ module Api
     def invalid_order_result
       error = Errors::InvalidParameters.new(errors: [['order', 'is invalid']])
 
-      Cuprum::Result.new(error: error)
+      failure(error)
     end
 
     def normalize_sort(order)
@@ -124,7 +128,7 @@ module Api
     end
 
     def require_resource_params
-      return resource_params unless resource_params.empty?
+      return success(resource_params) unless resource_params.empty?
 
       error =
         if permitted_attributes.empty?
@@ -135,7 +139,7 @@ module Api
             .new(errors: [[resource_name, "can't be blank"]])
         end
 
-      Cuprum::Result.new(error: error)
+      failure(error)
     end
 
     def resource_id
@@ -166,6 +170,10 @@ module Api
 
     def singular_resource_name
       resource_name.singularize
+    end
+
+    def success(value)
+      Cuprum::Result.new(value: value)
     end
 
     def update_resource

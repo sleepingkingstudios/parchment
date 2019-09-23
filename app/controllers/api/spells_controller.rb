@@ -15,6 +15,8 @@ class Api::SpellsController < Api::ResourcesController
     range
     ritual
     school
+    slug
+    short_description
     somatic_component
     verbal_component
   ].freeze
@@ -62,6 +64,16 @@ class Api::SpellsController < Api::ResourcesController
     Spell
   end
 
+  def require_resource_params
+    steps do
+      attributes = step super
+      operation  = operation_factory.find_polymorphic_association(:source)
+      source     = step operation.call(source_params)
+
+      attributes.merge(source: source)
+    end
+  end
+
   def show_resource
     steps do
       data        = step super
@@ -70,5 +82,13 @@ class Api::SpellsController < Api::ResourcesController
 
       data.merge(association)
     end
+  end
+
+  def source_params
+    @source_params ||=
+      params
+      .fetch(singular_resource_name, {})
+      .permit(:source_id, :source_type)
+      .to_hash
   end
 end
