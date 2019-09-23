@@ -12,8 +12,22 @@
 
 - ResourcesController
   - #index action
+    - `:filter` parameter
     - `:only` parameter - restrict fields queried/returned
-    - also update FindMatchingOperation, BaseSerializer ?
+      - also update FindMatchingOperation, BaseSerializer ?
+    - `:order` parameter
+  - #search action
+  - #show action
+    - `:only` parameter - restrict fields queried/returned
+
+## Fixtures
+
+- unify fixtures between Ruby, JavaScript applications
+- /data directory?
+  - subdirectories by environment/context
+  - /development, /test, /production, /fixtures, /srd
+  - sub-subdirectories (or files) by resource type
+    - /fixtures/spells, /fixtures/publications.yml
 
 ## Publications
 

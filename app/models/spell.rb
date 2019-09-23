@@ -94,3 +94,27 @@ class Spell < ApplicationRecord
     }
   end
 end
+
+# == Schema Information
+#
+# Table name: spells
+#
+#  id                 :uuid             not null, primary key
+#  casting_time       :string           default(""), not null
+#  description        :string           default(""), not null
+#  duration           :string           default(""), not null
+#  level              :integer          not null
+#  material_component :string           default(""), not null
+#  name               :string           default(""), not null
+#  range              :string           default(""), not null
+#  ritual             :boolean          default(FALSE), not null
+#  school             :string           default(""), not null
+#  short_description  :string           default(""), not null
+#  slug               :string           default(""), not null
+#  somatic_component  :boolean          default(FALSE), not null
+#  source_type        :string
+#  verbal_component   :boolean          default(FALSE), not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  source_id          :uuid
+#
