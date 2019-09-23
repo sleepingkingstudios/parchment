@@ -2,6 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import SpellBlock from './block';
+import SpellSourceLink from '../sourceLink';
+import { publicationsData } from '../../../publications/fixtures';
 import { spellsData } from '../../fixtures';
 import {
   formatComponents,
@@ -26,6 +28,16 @@ describe('<SpellBlock />', () => {
 
     expect(nameElement).toHaveDisplayName('p');
     expect(nameElement).toHaveText(spell.name);
+  });
+
+  it('should render the spell source', () => {
+    const rendered = shallow(<SpellBlock {...defaultProps} />);
+    const sourceElement = rendered.find('.spell-block-source');
+
+    expect(sourceElement).toHaveDisplayName('p');
+    expect(sourceElement).toContainReact(
+      <SpellSourceLink source={undefined} sourceLink={undefined} />,
+    );
   });
 
   it('should render the spell level and school', () => {
@@ -87,5 +99,59 @@ describe('<SpellBlock />', () => {
     const rendered = shallow(<SpellBlock {...defaultProps} />);
 
     expect(rendered).toMatchSnapshot();
+  });
+
+  describe('with a spell with a source', () => {
+    const publication = publicationsData[0];
+    const spellWithSource = Object.assign({}, spell, {
+      source: publication,
+      sourceType: 'Publication',
+    });
+    const props = { ...defaultProps, spell: spellWithSource };
+
+    it('should render the spell source', () => {
+      const rendered = shallow(<SpellBlock {...props} />);
+      const sourceElement = rendered.find('.spell-block-source');
+      const { source, sourceType } = spellWithSource;
+
+      expect(sourceElement).toHaveDisplayName('p');
+      expect(sourceElement).toContainReact(
+        <SpellSourceLink source={source} sourceType={sourceType} />,
+      );
+    });
+
+    it('should be match the snapshot', () => {
+      const rendered = shallow(<SpellBlock {...props} />);
+
+      expect(rendered).toMatchSnapshot();
+    });
+  });
+
+  describe('with showAdditionalDetails: true', () => {
+    const props = { ...defaultProps, showAdditionalDetails: true };
+
+    it('should render the spell slug', () => {
+      const rendered = shallow(<SpellBlock {...props} />);
+      const statBlock = rendered.find('.spell-block-additional-details');
+      const element = statBlock.find('.spell-block-slug');
+
+      expect(element).toHaveDisplayName('p');
+      expect(element).toHaveText(`Slug: ${spell.slug}`);
+    });
+
+    it('should render the spell short description', () => {
+      const rendered = shallow(<SpellBlock {...props} />);
+      const statBlock = rendered.find('.spell-block-additional-details');
+      const element = statBlock.find('.spell-block-short-description');
+
+      expect(element).toHaveDisplayName('p');
+      expect(element).toHaveText(`Short Description: ${spell.shortDescription}`);
+    });
+
+    it('should be match the snapshot', () => {
+      const rendered = shallow(<SpellBlock {...props} />);
+
+      expect(rendered).toMatchSnapshot();
+    });
   });
 });

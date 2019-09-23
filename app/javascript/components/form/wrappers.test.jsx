@@ -3,13 +3,13 @@ import { shallow, mount } from 'enzyme';
 
 import Button from '../button';
 import FormInput from './input';
-
 import {
   formField,
   formGroup,
   formInput,
   formSubmit,
 } from './wrappers';
+import { dig } from '../../utils/object';
 
 describe('Form component wrappers', () => {
   describe('formField()', () => {
@@ -334,7 +334,7 @@ describe('Form component wrappers', () => {
         expect(typeof onChange).toEqual('function');
 
         const action = onChange(event);
-        const payload = { path: [], propName, value: newValue };
+        const payload = { data: { propertyName: newValue }, path: [] };
 
         expect(onChangeAction).toHaveBeenCalledWith(payload);
         expect(action).toEqual({ payload });
@@ -382,6 +382,51 @@ describe('Form component wrappers', () => {
       });
     });
 
+    describe('with mapDataToValue: function', () => {
+      const form = { ...defaultForm };
+      const id = 'property-name-input';
+      const mapDataToValue = jest.fn((props) => {
+        const { path, prop } = props;
+
+        return dig(props.data, ...path, prop).toUpperCase();
+      });
+
+      it('should render the input', () => {
+        const Wrapped = formInput(FormInput, propName, { mapDataToValue });
+        const rendered = shallow(<Wrapped form={form} />);
+
+        expect(rendered).toHaveDisplayName('FormInput');
+        expect(rendered).toHaveProp('id', id);
+        expect(rendered).toHaveProp('value', value.toUpperCase());
+
+        expect(mapDataToValue).toHaveBeenCalledWith({ data, path: [], prop: propName });
+      });
+    });
+
+    describe('with mapValueToData: function', () => {
+      const form = { ...defaultForm };
+      const mapValueToData = jest.fn(props => props);
+
+      it('should set the onChange event handler', () => {
+        const Wrapped = formInput(FormInput, propName, { mapValueToData });
+        const rendered = shallow(<Wrapped form={form} />);
+        const input = rendered.find('FormInput');
+        const { onChange } = input.props();
+        const newValue = 'New Property Value';
+        const event = { target: { type: 'text', value: newValue } };
+
+        expect(typeof onChange).toEqual('function');
+
+        const action = onChange(event);
+        const payload = { data: { prop: propName, value: newValue }, path: [] };
+
+        expect(onChangeAction).toHaveBeenCalledWith(payload);
+        expect(action).toEqual({ payload });
+
+        expect(mapValueToData).toHaveBeenCalledWith({ prop: propName, value: newValue });
+      });
+    });
+
     describe('with path: array', () => {
       const nestedData = {
         weapons: {
@@ -414,7 +459,7 @@ describe('Form component wrappers', () => {
         expect(typeof onChange).toEqual('function');
 
         const action = onChange(event);
-        const payload = { path, propName, value: newValue };
+        const payload = { data: { propertyName: newValue }, path };
 
         expect(onChangeAction).toHaveBeenCalledWith(payload);
         expect(action).toEqual({ payload });
@@ -447,7 +492,7 @@ describe('Form component wrappers', () => {
         expect(typeof onChange).toEqual('function');
 
         const action = onChange(event);
-        const payload = { path: [path], propName, value: newValue };
+        const payload = { data: { propertyName: newValue }, path: [path] };
 
         expect(onChangeAction).toHaveBeenCalledWith(payload);
         expect(action).toEqual({ payload });

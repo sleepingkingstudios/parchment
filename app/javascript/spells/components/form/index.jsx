@@ -14,11 +14,17 @@ import {
   RangeField,
   RitualField,
   SchoolField,
+  ShortDescriptionField,
+  SlugField,
+  SourceField,
   SubmitButton,
 } from './fields';
+import { hooks } from '../../store/formFindSources';
 
 import { formErrorsType } from '../../../components/form/entities';
 import { spellFormType } from '../../entities';
+
+const { useRequestData } = hooks;
 
 const SpellForm = ({
   data,
@@ -35,11 +41,18 @@ const SpellForm = ({
     onChangeAction,
     onSubmitAction,
   };
+  const requestSources = useRequestData();
+
+  requestSources();
 
   return (
     <Form className="spell-form" form={form}>
       <FormRow>
         <NameField form={form} colWidth="12" />
+
+        <SlugField form={form} colWidth="8" />
+
+        <SourceField form={form} colWidth="4" />
 
         <SchoolField form={form} colWidth="8" />
 
@@ -54,6 +67,8 @@ const SpellForm = ({
         <DurationField form={form} colWidth="4" />
 
         <SpellFormComponentsField form={form} />
+
+        <ShortDescriptionField form={form} colWidth="12" />
 
         <DescriptionField form={form} colWidth="12" rows={5} />
       </FormRow>

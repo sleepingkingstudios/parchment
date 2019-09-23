@@ -9,13 +9,13 @@ import { publicationDefaultAttributes } from '../../entities';
 describe('UpdatePublicationForm store', () => {
   describe('actions', () => {
     const {
-      SET_DATA,
+      SET_FORM_DATA,
       UPDATE_FORM_FIELD,
     } = actions;
 
-    describe('SET_DATA', () => {
+    describe('SET_FORM_DATA', () => {
       it('should define the namespaced action', () => {
-        expect(SET_DATA).toEqual('publications/updatePublicationForm/setData');
+        expect(SET_FORM_DATA).toEqual('publications/updatePublicationForm/setFormData');
       });
     });
 

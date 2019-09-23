@@ -1,8 +1,9 @@
 import fetch from 'cross-fetch';
 import { formatErrors } from '../../components/form/utils';
+import { PENDING } from '../status';
 import {
   camelizeKeys,
-  deepAccessProperty,
+  dig,
   underscoreKeys,
   valueOrDefault,
 } from '../../utils/object';
@@ -10,7 +11,7 @@ import { interpolate } from '../../utils/string';
 
 const getData = ({ namespace, state }) => {
   const segments = namespace.split('/');
-  const raw = deepAccessProperty(state, 'data', segments);
+  const raw = dig(state, ...segments, 'data');
 
   return underscoreKeys(raw);
 };
@@ -41,8 +42,18 @@ const buildUrl = (url, options) => {
 };
 
 const extractErrors = json => valueOrDefault(
-  deepAccessProperty(json, 'errors', ['error', 'data']), [],
+  dig(json, 'error', 'data', 'errors'),
+  [],
 );
+
+const getRequestStatus = ({ getState, namespace }) => {
+  const state = getState();
+  const path = namespace.split('/');
+
+  path.push('status');
+
+  return dig(state, ...path);
+};
 
 const processResponse = async (response) => {
   const {
@@ -118,6 +129,10 @@ class ApiRequest {
         namespace,
         url,
       } = request;
+
+      const requestStatus = getRequestStatus({ getState, namespace });
+
+      if (requestStatus === PENDING) { return; }
 
       handlePending({ dispatch, getState });
 

@@ -75,6 +75,16 @@ RSpec.describe Api::SpellsController do
     end
   end
 
+  shared_context 'when the spell has a source' do
+    let(:source) { FactoryBot.create(:publication) }
+
+    before(:example) do
+      spell.source = source
+
+      spell.save!
+    end
+  end
+
   shared_examples 'should require a valid spell id' do
     describe 'with an invalid spell id' do
       let(:spell_id) { '00000000-0000-0000-0000-000000000000' }
@@ -121,6 +131,246 @@ RSpec.describe Api::SpellsController do
         }
       end
       let(:params) { super().tap { |hsh| hsh.delete :spell } }
+
+      it 'should respond with 400 Bad Request' do
+        call_action
+
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'should serialize the error' do
+        call_action
+
+        expect(json).to deep_match expected_json
+      end
+
+      include_examples 'should respond with JSON content'
+    end
+  end
+
+  shared_examples 'should require a valid spell source' do
+    describe 'with foreign key: nil' do
+      let(:spell_params) do
+        super().merge(
+          source_id:   nil,
+          source_type: 'Publication'
+        )
+      end
+      let(:expected_error) do
+        Errors::InvalidParameters.new(
+          errors: [['source_id', "can't be blank"]]
+        ).as_json
+      end
+      let(:expected_json) do
+        {
+          'ok'    => false,
+          'error' => expected_error
+        }
+      end
+
+      it 'should respond with 400 Bad Request' do
+        call_action
+
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'should serialize the error' do
+        call_action
+
+        expect(json).to deep_match expected_json
+      end
+
+      include_examples 'should respond with JSON content'
+    end
+
+    describe 'with foreign key: empty string' do
+      let(:spell_params) do
+        super().merge(
+          source_id:   '',
+          source_type: 'Publication'
+        )
+      end
+      let(:expected_error) do
+        Errors::InvalidParameters.new(
+          errors: [['source_id', "can't be blank"]]
+        ).as_json
+      end
+      let(:expected_json) do
+        {
+          'ok'    => false,
+          'error' => expected_error
+        }
+      end
+
+      it 'should respond with 400 Bad Request' do
+        call_action
+
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'should serialize the error' do
+        call_action
+
+        expect(json).to deep_match expected_json
+      end
+
+      include_examples 'should respond with JSON content'
+    end
+
+    describe 'with foreign type: nil' do
+      let(:spell_params) do
+        super().merge(
+          source_id:   '00000000-0000-0000-0000-000000000000',
+          source_type: nil
+        )
+      end
+      let(:expected_error) do
+        Errors::InvalidParameters.new(
+          errors: [['source_type', "can't be blank"]]
+        ).as_json
+      end
+      let(:expected_json) do
+        {
+          'ok'    => false,
+          'error' => expected_error
+        }
+      end
+
+      it 'should respond with 400 Bad Request' do
+        call_action
+
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'should serialize the error' do
+        call_action
+
+        expect(json).to deep_match expected_json
+      end
+
+      include_examples 'should respond with JSON content'
+    end
+
+    describe 'with foreign type: empty' do
+      let(:spell_params) do
+        super().merge(
+          source_id:   '00000000-0000-0000-0000-000000000000',
+          source_type: ''
+        )
+      end
+      let(:expected_error) do
+        Errors::InvalidParameters.new(
+          errors: [['source_type', "can't be blank"]]
+        ).as_json
+      end
+      let(:expected_json) do
+        {
+          'ok'    => false,
+          'error' => expected_error
+        }
+      end
+
+      it 'should respond with 400 Bad Request' do
+        call_action
+
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'should serialize the error' do
+        call_action
+
+        expect(json).to deep_match expected_json
+      end
+
+      include_examples 'should respond with JSON content'
+    end
+
+    describe 'with foreign type: invalid type' do
+      let(:spell_params) do
+        super().merge(
+          source_id:   '00000000-0000-0000-0000-000000000000',
+          source_type: 'the Moon'
+        )
+      end
+      let(:expected_error) do
+        Errors::InvalidParameters.new(
+          errors: [['source_type', 'is invalid']]
+        ).as_json
+      end
+      let(:expected_json) do
+        {
+          'ok'    => false,
+          'error' => expected_error
+        }
+      end
+
+      it 'should respond with 400 Bad Request' do
+        call_action
+
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'should serialize the error' do
+        call_action
+
+        expect(json).to deep_match expected_json
+      end
+
+      include_examples 'should respond with JSON content'
+    end
+
+    describe 'with foreign type: invalid class name' do
+      let(:spell_params) do
+        super().merge(
+          source_id:   '00000000-0000-0000-0000-000000000000',
+          source_type: 'Object'
+        )
+      end
+      let(:expected_error) do
+        Errors::InvalidParameters.new(
+          errors: [['source_type', 'is invalid']]
+        ).as_json
+      end
+      let(:expected_json) do
+        {
+          'ok'    => false,
+          'error' => expected_error
+        }
+      end
+
+      it 'should respond with 400 Bad Request' do
+        call_action
+
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'should serialize the error' do
+        call_action
+
+        expect(json).to deep_match expected_json
+      end
+
+      include_examples 'should respond with JSON content'
+    end
+
+    describe 'with foreign type: invalid record class name' do
+      let(:spell_params) do
+        super().merge(
+          source_id:   '00000000-0000-0000-0000-000000000000',
+          source_type: 'Spell'
+        )
+      end
+      let(:expected_error) do
+        Errors::InvalidParameters.new(
+          errors: [['source_type', 'is invalid']]
+        ).as_json
+      end
+      let(:expected_json) do
+        {
+          'ok'    => false,
+          'error' => expected_error
+        }
+      end
 
       it 'should respond with 400 Bad Request' do
         call_action
@@ -226,13 +476,15 @@ RSpec.describe Api::SpellsController do
 
   describe 'POST /api/spells.json' do
     let(:params)       { super().merge(spell: spell_params) }
-    let(:spell_params) { {} }
+    let(:spell_params) { { name: 'Invoked Apocalypse' } }
 
     def call_action
       post '/api/spells.json', headers: headers, params: params
     end
 
     include_examples 'should require valid spell params'
+
+    include_examples 'should require a valid spell source'
 
     describe 'with invalid attributes' do
       let(:spell_params) do
@@ -311,14 +563,18 @@ RSpec.describe Api::SpellsController do
     describe 'with valid attributes' do
       let(:spell_params) do
         {
-          name:         'Glowing Gaze',
-          casting_time: '1 reaction, which you take when a creature within ' \
-                        'range takes fire damage',
-          duration:     'Instantaneous',
-          level:        1,
-          range:        '60 feet',
-          school:       Spell::Schools::EVOCATION,
-          description:  <<~DESCRIPTION
+          name:              'Glowing Gaze',
+          slug:              'glwng-gz',
+          casting_time:      '1 reaction, which you take when a creature' \
+                             ' within range takes fire damage',
+          duration:          'Instantaneous',
+          level:             1,
+          range:             '60 feet',
+          school:            Spell::Schools::EVOCATION,
+          short_description: '2d6 fire damage (Dex save half)',
+          source_id:         nil,
+          source_type:       nil,
+          description:       <<~DESCRIPTION
             Your eyes glow with an inner fire. The target creature must make a
             Dexterity saving throw. A target takes 2d6 fire damage on a failed
             save, or half as much damage on a successful one.
@@ -354,8 +610,7 @@ RSpec.describe Api::SpellsController do
       end
 
       # rubocop:disable RSpec/ExampleLength
-      # rubocop:disable RSpec/MultipleExpectations
-      it 'should create the spell' do
+      it 'should create the spell', :aggregate_failures do
         expect { call_action }.to change(Spell, :count).by(1)
 
         query = Spell.where(name: spell_params[:name])
@@ -369,9 +624,42 @@ RSpec.describe Api::SpellsController do
         end
       end
       # rubocop:enable RSpec/ExampleLength
-      # rubocop:enable RSpec/MultipleExpectations
 
       include_examples 'should respond with JSON content'
+
+      describe 'with a valid source' do
+        let(:publication) { FactoryBot.create(:publication) }
+        let(:spell_params) do
+          super().merge(
+            source_id:   publication.id,
+            source_type: 'Publication'
+          )
+        end
+
+        # rubocop:disable RSpec/ExampleLength
+        it 'should create the spell', :aggregate_failures do
+          expect { call_action }.to change(Spell, :count).by(1)
+
+          query = Spell.where(name: spell_params[:name])
+
+          expect(query.exists?).to be true
+
+          spell = query.first
+
+          spell_params.each do |attribute, value|
+            expect(spell.send attribute).to be == value
+          end
+        end
+        # rubocop:enable RSpec/ExampleLength
+
+        it 'should set the source' do
+          call_action
+
+          spell = Spell.where(name: spell_params[:name]).first
+
+          expect(spell.source).to be == publication
+        end
+      end
     end
   end
 
@@ -409,22 +697,15 @@ RSpec.describe Api::SpellsController do
 
     include_examples 'should respond with JSON content'
 
-    context 'when the spell has a source' do
-      let(:publication) { FactoryBot.create(:publication) }
+    wrap_context 'when the spell has a source' do
       let(:expected_json) do
         {
           'ok'   => true,
           'data' => {
-            'publication' => Serializers.serialize(publication),
+            'publication' => Serializers.serialize(source),
             'spell'       => Serializers.serialize(spell)
           }
         }
-      end
-
-      before(:example) do
-        spell.source = publication
-
-        spell.save!
       end
 
       it 'should serialize the spell and source' do
@@ -450,6 +731,8 @@ RSpec.describe Api::SpellsController do
     include_examples 'should require a valid spell id'
 
     include_examples 'should require valid spell params'
+
+    include_examples 'should require a valid spell source'
 
     describe 'with invalid attributes' do
       let(:spell_params) do
@@ -570,6 +853,118 @@ RSpec.describe Api::SpellsController do
       end
 
       include_examples 'should respond with JSON content'
+
+      describe 'with a valid source' do
+        let(:publication) { FactoryBot.create(:publication) }
+        let(:spell_params) do
+          super().merge(
+            source_id:   publication.id,
+            source_type: 'Publication'
+          )
+        end
+
+        it 'should update the spell' do
+          call_action
+
+          spell = Spell.find(spell_id)
+
+          spell_params.each do |attribute, value|
+            expect(spell.send attribute).to be == value
+          end
+        end
+
+        it 'should set the source' do
+          call_action
+
+          spell = Spell.find(spell_id)
+
+          expect(spell.source).to be == publication
+        end
+      end
+    end
+
+    wrap_context 'when the spell has a source' do
+      describe 'with an empty source' do
+        let(:spell_params) do
+          super().merge(
+            source_id:   nil,
+            source_type: nil
+          )
+        end
+
+        it 'should update the spell' do
+          call_action
+
+          spell = Spell.find(spell_id)
+
+          spell_params.each do |attribute, value|
+            expect(spell.send attribute).to be == value
+          end
+        end
+
+        it 'should clear the source' do
+          call_action
+
+          spell = Spell.find(spell_id)
+
+          expect(spell.source).to be nil
+        end
+      end
+
+      describe 'with a different source' do
+        let(:publication) { FactoryBot.create(:publication) }
+        let(:spell_params) do
+          super().merge(
+            source_id:   publication.id,
+            source_type: 'Publication'
+          )
+        end
+
+        it 'should update the spell' do
+          call_action
+
+          spell = Spell.find(spell_id)
+
+          spell_params.each do |attribute, value|
+            expect(spell.send attribute).to be == value
+          end
+        end
+
+        it 'should update the source' do
+          call_action
+
+          spell = Spell.find(spell_id)
+
+          expect(spell.source).to be == publication
+        end
+      end
+
+      describe 'with the same source' do
+        let(:spell_params) do
+          super().merge(
+            source_id:   source.id,
+            source_type: source.class.name
+          )
+        end
+
+        it 'should update the spell' do
+          call_action
+
+          spell = Spell.find(spell_id)
+
+          spell_params.each do |attribute, value|
+            expect(spell.send attribute).to be == value
+          end
+        end
+
+        it 'should not change the source' do
+          call_action
+
+          spell = Spell.find(spell_id)
+
+          expect(spell.source).to be == source
+        end
+      end
     end
   end
 

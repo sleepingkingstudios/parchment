@@ -1,7 +1,4 @@
 import {
-  isNumber,
-} from './number';
-import {
   camelize,
   underscore,
 } from './string';
@@ -12,22 +9,10 @@ const copyObjectOrArray = (obj) => {
   return Object.assign({}, obj);
 };
 
-const findOrCreateChild = (obj, childName, grandchildName) => {
-  const expectArray = isNumber(grandchildName);
+const guardArrayIndex = (ary, index) => {
+  if (!Array.isArray(ary) || Number.isInteger(index)) { return; }
 
-  if (!Object.prototype.hasOwnProperty.call(obj, childName)) {
-    return expectArray ? [] : {};
-  }
-
-  const isArray = Array.isArray(obj[childName]);
-
-  if (expectArray && !isArray) {
-    throw new Error('expected Array but child is Object');
-  } else if (!expectArray && isArray) {
-    throw new Error('expected Object but child is Array');
-  }
-
-  return obj[childName];
+  throw new Error(`invalid Array index ${index}`);
 };
 
 const isPrimitive = (obj) => {
@@ -40,7 +25,19 @@ const isPrimitive = (obj) => {
   return false;
 };
 
+const maybeInteger = (key, defaultValue) => {
+  if (typeof key === 'undefined' || key === null) { return defaultValue; }
+
+  const int = parseInt(key, 10);
+
+  return (int.toString() === key) ? int : key;
+};
+
+export const exists = obj => !(obj === null || typeof obj === 'undefined');
+
 const recursivelyMapKeys = (obj, fn) => {
+  if (!exists(obj)) { return obj; }
+
   if (isPrimitive(obj)) { return obj; }
 
   if (Array.isArray(obj)) {
@@ -56,7 +53,36 @@ const recursivelyMapKeys = (obj, fn) => {
   return mapped;
 };
 
-export const exists = obj => !(obj === null || typeof obj === 'undefined');
+export const assign = (obj, value, ...path) => {
+  if (path.length === 0) { throw new Error("path can't be blank"); }
+
+  const last = path.pop();
+  const root = copyObjectOrArray(obj);
+  let current = root;
+
+  path.forEach((segment, index) => {
+    const key = maybeInteger(segment);
+    const next = maybeInteger(path[index + 1], last);
+
+    if (Object.prototype.hasOwnProperty.call(current, key)) {
+      guardArrayIndex(current, key);
+
+      current[key] = copyObjectOrArray(current[key]);
+    } else {
+      current[key] = Number.isInteger(next) ? [] : {};
+    }
+
+    current = current[key];
+  });
+
+  const key = maybeInteger(last);
+
+  guardArrayIndex(current, key);
+
+  current[key] = value;
+
+  return root;
+};
 
 export const camelizeKeys = obj => (
   exists(obj) ? recursivelyMapKeys(obj, camelize) : {}
@@ -78,35 +104,4 @@ export const dig = (obj, ...path) => {
   if (!Object.prototype.hasOwnProperty.call(obj, childName)) { return null; }
 
   return dig(obj[childName], ...path.slice(1));
-};
-
-export const deepAccessProperty = (obj, propName, maybePath) => {
-  const path = valueOrDefault(maybePath, []).slice();
-
-  if (path.length === 0) { return valueOrDefault(obj[propName]); }
-
-  const childName = path.shift();
-
-  if (!Object.prototype.hasOwnProperty.call(obj, childName)) { return null; }
-
-  return deepAccessProperty(obj[childName], propName, path);
-};
-
-export const deepAssignProperty = (obj, propName, value, maybePath) => {
-  const path = valueOrDefault(maybePath, []).slice();
-  const copy = copyObjectOrArray(obj);
-
-  if (path.length === 0) {
-    copy[propName] = value;
-
-    return copy;
-  }
-
-  const childName = path.shift();
-  const grandchildName = valueOrDefault(path[0], propName);
-  const child = findOrCreateChild(copy, childName, grandchildName);
-
-  copy[childName] = deepAssignProperty(child, propName, value, path);
-
-  return copy;
 };

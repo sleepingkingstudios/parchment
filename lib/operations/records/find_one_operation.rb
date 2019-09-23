@@ -5,7 +5,7 @@ require 'errors/not_found'
 require 'operations/records/base_operation'
 
 module Operations::Records
-  # Queries the database for the records in the given table with the given
+  # Queries the database for the record in the given table with the given
   # primary key.
   class FindOneOperation < Operations::Records::BaseOperation
     private

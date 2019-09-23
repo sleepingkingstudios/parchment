@@ -2,8 +2,9 @@ import fetch from 'cross-fetch';
 
 import ApiRequest from './request';
 import generateActions from './actions';
+import { PENDING } from '../status';
 import {
-  deepAssignProperty,
+  assign,
   underscoreKeys,
 } from '../../utils/object';
 
@@ -26,12 +27,9 @@ describe('ApiRequest', () => {
     ['name', 'you kill my father'],
     ['name', 'prepare to die'],
   ];
-  const buildState = (namespace, state) => {
-    const obj = {};
-    const segments = namespace.split('/');
-
-    return deepAssignProperty(obj, segments[0], state, segments.slice(1));
-  };
+  const buildState = (namespace, state) => (
+    assign({}, state, ...namespace.split('/'))
+  );
 
   describe('with method: DELETE', () => {
     const namespace = 'endpoint';
@@ -125,6 +123,33 @@ describe('ApiRequest', () => {
           expect(dispatchedActions.length).toBe(2);
           expect(dispatchedActions[0][0]).toEqual(requestPending());
           expect(dispatchedActions[1][0]).toEqual(requestSuccess(data));
+        });
+      });
+
+      describe('when the request is pending', () => {
+        beforeEach(() => { fetch.mockClear(); });
+
+        it('should not perform the request', async () => {
+          const status = PENDING;
+          const state = buildState(namespace, { data, status });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+
+          await performRequest()(dispatch, getState);
+
+          expect(fetch).not.toBeCalled();
+        });
+
+        it('should not dispatch any actions', async () => {
+          const status = PENDING;
+          const state = buildState(namespace, { data, status });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+          const dispatchedActions = dispatch.mock.calls;
+
+          await performRequest()(dispatch, getState);
+
+          expect(dispatchedActions.length).toBe(0);
         });
       });
     });
@@ -228,6 +253,33 @@ describe('ApiRequest', () => {
           expect(dispatchedActions.length).toBe(2);
           expect(dispatchedActions[0][0]).toEqual(requestPending());
           expect(dispatchedActions[1][0]).toEqual(requestSuccess(data));
+        });
+      });
+
+      describe('when the request is pending', () => {
+        beforeEach(() => { fetch.mockClear(); });
+
+        it('should not perform the request', async () => {
+          const status = PENDING;
+          const state = buildState(namespace, { data, status });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+
+          await performRequest()(dispatch, getState);
+
+          expect(fetch).not.toBeCalled();
+        });
+
+        it('should not dispatch any actions', async () => {
+          const status = PENDING;
+          const state = buildState(namespace, { data, status });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+          const dispatchedActions = dispatch.mock.calls;
+
+          await performRequest()(dispatch, getState);
+
+          expect(dispatchedActions.length).toBe(0);
         });
       });
     });
@@ -528,6 +580,33 @@ describe('ApiRequest', () => {
           expect(dispatchedActions[1][0]).toEqual(requestSuccess(data));
         });
       });
+
+      describe('when the request is pending', () => {
+        beforeEach(() => { fetch.mockClear(); });
+
+        it('should not perform the request', async () => {
+          const status = PENDING;
+          const state = buildState(namespace, { data, status });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+
+          await performRequest()(dispatch, getState);
+
+          expect(fetch).not.toBeCalled();
+        });
+
+        it('should not dispatch any actions', async () => {
+          const status = PENDING;
+          const state = buildState(namespace, { data, status });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+          const dispatchedActions = dispatch.mock.calls;
+
+          await performRequest()(dispatch, getState);
+
+          expect(dispatchedActions.length).toBe(0);
+        });
+      });
     });
 
     describe('url', () => {
@@ -630,6 +709,33 @@ describe('ApiRequest', () => {
           expect(dispatchedActions[1][0]).toEqual(requestSuccess(data));
         });
       });
+
+      describe('when the request is pending', () => {
+        beforeEach(() => { fetch.mockClear(); });
+
+        it('should not perform the request', async () => {
+          const status = PENDING;
+          const state = buildState(namespace, { data, status });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+
+          await performRequest()(dispatch, getState);
+
+          expect(fetch).not.toBeCalled();
+        });
+
+        it('should not dispatch any actions', async () => {
+          const status = PENDING;
+          const state = buildState(namespace, { data, status });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+          const dispatchedActions = dispatch.mock.calls;
+
+          await performRequest()(dispatch, getState);
+
+          expect(dispatchedActions.length).toBe(0);
+        });
+      });
     });
 
     describe('url', () => {
@@ -647,7 +753,12 @@ describe('ApiRequest', () => {
       requestPending,
       requestSuccess,
     } = actions;
-    const options = { ...defaultOptions, actions, method: 'POST' };
+    const options = {
+      ...defaultOptions,
+      actions,
+      method: 'POST',
+      namespace,
+    };
     const request = new ApiRequest(options);
     const {
       method,

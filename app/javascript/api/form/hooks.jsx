@@ -14,9 +14,9 @@ const generateHooks = ({ actions, performRequest, selector }) => {
 
   const useUpdateForm = () => {
     const dispatch = useDispatch();
-    const { updateFormField } = actions;
+    const { updateFormData } = actions;
 
-    return (obj) => { dispatch(updateFormField(obj)); };
+    return (obj) => { dispatch(updateFormData(obj)); };
   };
 
   return Object.assign(

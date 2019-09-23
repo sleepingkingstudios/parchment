@@ -15,9 +15,9 @@ const endpoint = new FindOneEndpoint({
         const { spells } = getState();
         const { updateFindSpell } = spells;
         const { data } = updateFindSpell;
-        const { setData } = formActions;
+        const { setFormData } = formActions;
 
-        dispatch(setData(data));
+        dispatch(setFormData(data));
       },
     },
     redirect,

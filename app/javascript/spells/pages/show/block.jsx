@@ -21,7 +21,7 @@ const ShowSpellBlock = () => {
       renderFailure={renderFailure}
       renderInitialized={renderPending}
       renderPending={renderPending}
-      renderSuccess={() => (<SpellBlock spell={spell} />)}
+      renderSuccess={() => (<SpellBlock spell={spell} showAdditionalDetails />)}
       status={status}
     />
   );

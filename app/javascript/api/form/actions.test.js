@@ -6,12 +6,14 @@ describe('Form request actions', () => {
     REQUEST_FAILURE,
     REQUEST_PENDING,
     REQUEST_SUCCESS,
-    SET_DATA,
+    SET_FORM_DATA,
+    UPDATE_FORM_DATA,
     UPDATE_FORM_FIELD,
     requestFailure,
     requestPending,
     requestSuccess,
-    setData,
+    setFormData,
+    updateFormData,
     updateFormField,
   } = generateActions({ namespace });
 
@@ -39,9 +41,15 @@ describe('Form request actions', () => {
     });
   });
 
-  describe('SET_DATA', () => {
+  describe('SET_FORM_DATA', () => {
     it('should define the namespaced action', () => {
-      expect(SET_DATA).toEqual(`${namespace}/setData`);
+      expect(SET_FORM_DATA).toEqual(`${namespace}/setFormData`);
+    });
+  });
+
+  describe('UPDATE_FORM_DATA', () => {
+    it('should define the namespaced action', () => {
+      expect(UPDATE_FORM_DATA).toEqual(`${namespace}/updateFormData`);
     });
   });
 
@@ -100,9 +108,9 @@ describe('Form request actions', () => {
     });
   });
 
-  describe('setData', () => {
+  describe('setFormData', () => {
     it('should be a function', () => {
-      expect(typeof setData).toEqual('function');
+      expect(typeof setFormData).toEqual('function');
     });
 
     it('should create the action', () => {
@@ -110,11 +118,71 @@ describe('Form request actions', () => {
         id: '00000000-0000-0000-0000-000000000000',
         name: 'Inigo Montoya',
       };
-      const action = setData(data);
+      const action = setFormData(data);
 
       expect(action).toEqual({
-        type: SET_DATA,
+        type: SET_FORM_DATA,
         payload: { data },
+      });
+    });
+  });
+
+  describe('updateFormData', () => {
+    it('should be a function', () => {
+      expect(typeof updateFormData).toEqual('function');
+    });
+
+    it('should create the action', () => {
+      const data = {
+        name: 'Roberts',
+        occupation: 'Dread Pirate',
+      };
+      const action = updateFormData({ data });
+
+      expect(action).toEqual({
+        type: UPDATE_FORM_DATA,
+        payload: {
+          path: [],
+          data,
+        },
+      });
+    });
+
+    describe('with path: array', () => {
+      it('should create the action', () => {
+        const path = ['films', 'romance', 'characters'];
+        const data = {
+          name: 'Roberts',
+          occupation: 'Dread Pirate',
+        };
+        const action = updateFormData({ data, path });
+
+        expect(action).toEqual({
+          type: UPDATE_FORM_DATA,
+          payload: {
+            path,
+            data,
+          },
+        });
+      });
+    });
+
+    describe('with path: value', () => {
+      it('should create the action', () => {
+        const path = 'characters';
+        const data = {
+          name: 'Roberts',
+          occupation: 'Dread Pirate',
+        };
+        const action = updateFormData({ data, path });
+
+        expect(action).toEqual({
+          type: UPDATE_FORM_DATA,
+          payload: {
+            path: [path],
+            data,
+          },
+        });
       });
     });
   });

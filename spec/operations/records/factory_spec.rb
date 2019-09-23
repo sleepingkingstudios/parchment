@@ -21,6 +21,49 @@ RSpec.describe Operations::Records::Factory do
     include_examples 'should have reader', :record_class, -> { record_class }
   end
 
+  describe '::FindPolymorphicAssociation' do
+    let(:association_name) { :source }
+    let(:operation_class)  { factory::FindPolymorphicAssociation }
+    let(:operation)        { operation_class.new(association_name) }
+    let(:parent_class) do
+      Operations::Records::FindPolymorphicAssociationOperation
+    end
+
+    it { expect(factory).to define_constant(:FindPolymorphicAssociation) }
+
+    it { expect(operation_class).to be_a Class }
+
+    it { expect(operation_class).to be <= parent_class }
+
+    it { expect(operation_class).to be_constructible.with(1).argument }
+
+    it { expect(operation.association_name).to be association_name }
+
+    it { expect(operation.record_class).to be record_class }
+  end
+
+  describe 'find_polymorphic_association' do
+    let(:association_name) { :source }
+    let(:operation) do
+      factory.find_polymorphic_association(association_name)
+    end
+    let(:parent_class) do
+      Operations::Records::FindPolymorphicAssociationOperation
+    end
+
+    it 'should define the method' do
+      expect(factory)
+        .to respond_to(:find_polymorphic_association)
+        .with(1).argument
+    end
+
+    it { expect(operation).to be_a parent_class }
+
+    it { expect(operation.association_name).to be association_name }
+
+    it { expect(operation.record_class).to be record_class }
+  end
+
   include_examples 'should define operation',
     :assign,
     Operations::Records::AssignOperation

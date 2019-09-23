@@ -1,21 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import FormSelectGroup from './group';
 import FormSelectOption from './option';
 import { addClassName } from '../../../utils/react';
 
 const buildOptions = ({ defaultOption, options }) => {
   const modOptions = options.map(item => item);
 
-  // TODO: Handle default option here.
   if (defaultOption) {
     modOptions.unshift({ label: defaultOption, value: '' });
   }
 
-  return modOptions.map(({ label, selected, value }, index) => (
-    /* eslint-disable-next-line react/no-array-index-key */
-    <FormSelectOption key={`option-${index}`} label={label} selected={selected} value={value} />
-  ));
+  return modOptions.map(({ label, selected, value }, index) => {
+    if (Array.isArray(value)) {
+      return (
+        /* eslint-disable-next-line react/no-array-index-key */
+        <FormSelectGroup key={`group-${index}`} label={label} options={value} />
+      );
+    }
+
+    return (
+      /* eslint-disable-next-line react/no-array-index-key */
+      <FormSelectOption key={`option-${index}`} label={label} selected={selected} value={value} />
+    );
+  });
 };
 
 const validClassName = (validStatus) => {

@@ -1,3 +1,4 @@
+import SpellSourceLink from '../sourceLink';
 import SpellsTableActions from './actions';
 
 import {
@@ -17,6 +18,11 @@ const columns = [
   {
     label: 'Name',
     prop: 'name',
+  },
+  {
+    label: 'Source',
+    prop: 'source',
+    value: SpellSourceLink,
   },
   {
     label: 'School',

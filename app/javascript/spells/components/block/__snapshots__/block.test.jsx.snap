@@ -10,6 +10,14 @@ exports[`<SpellBlock /> should be match the snapshot 1`] = `
     Thunderclap
   </p>
   <p
+    className="spell-block-source"
+  >
+    <SpellSourceLink
+      source={null}
+      sourceType={null}
+    />
+  </p>
+  <p
     className="spell-block-level-school"
   >
     Illusion cantrip
@@ -58,5 +66,177 @@ exports[`<SpellBlock /> should be match the snapshot 1`] = `
     className="spell-block-description"
     text="Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap."
   />
+</div>
+`;
+
+exports[`<SpellBlock /> with a spell with a source should be match the snapshot 1`] = `
+<div
+  className="spell-block"
+>
+  <p
+    className="spell-block-name"
+  >
+    Thunderclap
+  </p>
+  <p
+    className="spell-block-source"
+  >
+    <SpellSourceLink
+      source={
+        Object {
+          "abbreviation": "ffh",
+          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
+          "name": "The Flumph Fancier's Handbook",
+          "official": true,
+          "playtest": false,
+          "publicationDate": "1977-05-25",
+          "publisherName": "Wizards of the Coast",
+          "slug": "flumph-fanciers-handbook",
+        }
+      }
+      sourceType="Publication"
+    />
+  </p>
+  <p
+    className="spell-block-level-school"
+  >
+    Illusion cantrip
+  </p>
+  <div
+    className="spell-block-stats"
+  >
+    <p
+      className="spell-block-casting-time"
+    >
+      <strong>
+        Casting Time:
+      </strong>
+       
+      1 reaction, which you take when you speak your own name or hear it spoken
+    </p>
+    <p
+      className="spell-block-range"
+    >
+      <strong>
+        Range:
+      </strong>
+       
+      Self
+    </p>
+    <p
+      className="spell-block-components"
+    >
+      <strong>
+        Components:
+      </strong>
+       
+      None
+    </p>
+    <p
+      className="spell-block-duration"
+    >
+      <strong>
+        Duration:
+      </strong>
+       
+      Instantaneous
+    </p>
+  </div>
+  <PlainText
+    className="spell-block-description"
+    text="Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap."
+  />
+</div>
+`;
+
+exports[`<SpellBlock /> with showAdditionalDetails: true should be match the snapshot 1`] = `
+<div
+  className="spell-block"
+>
+  <p
+    className="spell-block-name"
+  >
+    Thunderclap
+  </p>
+  <p
+    className="spell-block-source"
+  >
+    <SpellSourceLink
+      source={null}
+      sourceType={null}
+    />
+  </p>
+  <p
+    className="spell-block-level-school"
+  >
+    Illusion cantrip
+  </p>
+  <div
+    className="spell-block-stats"
+  >
+    <p
+      className="spell-block-casting-time"
+    >
+      <strong>
+        Casting Time:
+      </strong>
+       
+      1 reaction, which you take when you speak your own name or hear it spoken
+    </p>
+    <p
+      className="spell-block-range"
+    >
+      <strong>
+        Range:
+      </strong>
+       
+      Self
+    </p>
+    <p
+      className="spell-block-components"
+    >
+      <strong>
+        Components:
+      </strong>
+       
+      None
+    </p>
+    <p
+      className="spell-block-duration"
+    >
+      <strong>
+        Duration:
+      </strong>
+       
+      Instantaneous
+    </p>
+  </div>
+  <PlainText
+    className="spell-block-description"
+    text="Immediately after speaking or hearing your name, you create the illusory sound of an ominous, distant thunderclap."
+  />
+  <hr />
+  <div
+    className="spell-block-additional-details"
+  >
+    <p
+      className="spell-block-slug"
+    >
+      <em>
+        Slug:
+      </em>
+       
+      thunderclap
+    </p>
+    <p
+      className="spell-block-short-description"
+    >
+      <em>
+        Short Description:
+      </em>
+       
+      Create an ominous thunderclap when your name is spoken
+    </p>
+  </div>
 </div>
 `;

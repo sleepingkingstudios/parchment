@@ -6,6 +6,11 @@ import SpellForm from './index';
 import { spellsData } from '../../fixtures';
 import selectSchoolOptions from './selectSchoolOptions';
 import { INITIALIZED } from '../../../api/status';
+import { hooks } from '../../store/formFindSources';
+
+jest.mock('../../store/formFindSources');
+
+hooks.useRequestData.mockImplementation(() => () => {});
 
 describe('<SpellForm />', () => {
   const onChangeAction = jest.fn(
@@ -28,6 +33,11 @@ describe('<SpellForm />', () => {
     onChangeAction,
     onSubmitAction,
   };
+  const state = { data: {} };
+
+  beforeEach(() => {
+    hooks.useEndpoint.mockImplementationOnce(() => state);
+  });
 
   it('should render a form', () => {
     const rendered = shallow(<SpellForm {...defaultProps} />);
@@ -39,6 +49,22 @@ describe('<SpellForm />', () => {
   it('should render the name input field', () => {
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('NameField');
+
+    expect(input).toExist();
+    expect(input).toHaveProp({ form });
+  });
+
+  it('should render the slug field', () => {
+    const rendered = shallow(<SpellForm {...defaultProps} />);
+    const input = rendered.find('SlugField');
+
+    expect(input).toExist();
+    expect(input).toHaveProp({ form });
+  });
+
+  it('should render the source select field', () => {
+    const rendered = shallow(<SpellForm {...defaultProps} />);
+    const input = rendered.find('SourceField');
 
     expect(input).toExist();
     expect(input).toHaveProp({ form });
@@ -102,6 +128,14 @@ describe('<SpellForm />', () => {
     expect(input).toHaveProp({ form });
   });
 
+  it('should render the short description field', () => {
+    const rendered = shallow(<SpellForm {...defaultProps} />);
+    const input = rendered.find('ShortDescriptionField');
+
+    expect(input).toExist();
+    expect(input).toHaveProp({ form });
+  });
+
   it('should render the description textarea field', () => {
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('DescriptionField');
@@ -124,6 +158,17 @@ describe('<SpellForm />', () => {
 
     expect(input).toExist();
     expect(input).toHaveProp({ form });
+  });
+
+  it('should find the sources', () => {
+    const performRequest = jest.fn();
+
+    hooks.useRequestData.mockImplementationOnce(() => performRequest);
+
+    shallow(<SpellForm {...defaultProps} />);
+
+    expect(hooks.useRequestData).toHaveBeenCalled();
+    expect(performRequest).toHaveBeenCalled();
   });
 
   it('should match the snapshot', () => {

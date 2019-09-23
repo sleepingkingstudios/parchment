@@ -12,11 +12,16 @@ import {
   RangeField,
   RitualField,
   SchoolField,
+  ShortDescriptionField,
+  SlugField,
+  SourceField,
   SubmitButton,
 } from './fields';
-
 import { spellsData } from '../../fixtures';
 import { INITIALIZED } from '../../../api/status';
+import { hooks } from '../../store/formFindSources';
+
+jest.mock('../../store/formFindSources');
 
 describe('<SpellForm /> fields', () => {
   const onChangeAction = jest.fn(
@@ -211,6 +216,71 @@ describe('<SpellForm /> fields', () => {
 
     it('should match the snapshot', () => {
       const rendered = mount(<SchoolField {...defaultProps} />);
+
+      expect(rendered).toMatchSnapshot();
+    });
+  });
+
+  describe('<ShortDescriptionField />', () => {
+    const defaultProps = { form };
+
+    it('should set the display name', () => {
+      expect(ShortDescriptionField.displayName).toEqual('ShortDescriptionField');
+    });
+
+    it('should render a form field', () => {
+      const rendered = shallow(<ShortDescriptionField {...defaultProps} />);
+
+      expect(rendered).toHaveDisplayName('FormField');
+    });
+
+    it('should match the snapshot', () => {
+      const rendered = mount(<ShortDescriptionField {...defaultProps} />);
+
+      expect(rendered).toMatchSnapshot();
+    });
+  });
+
+  describe('<SlugField />', () => {
+    const defaultProps = { form };
+
+    it('should set the display name', () => {
+      expect(SlugField.displayName).toEqual('SlugField');
+    });
+
+    it('should render a form field', () => {
+      const rendered = shallow(<SlugField {...defaultProps} />);
+
+      expect(rendered).toHaveDisplayName('FormField');
+    });
+
+    it('should match the snapshot', () => {
+      const rendered = mount(<SlugField {...defaultProps} />);
+
+      expect(rendered).toMatchSnapshot();
+    });
+  });
+
+  describe('<SourceField />', () => {
+    const defaultProps = { form };
+    const state = { data: {} };
+
+    beforeEach(() => {
+      hooks.useEndpoint.mockImplementationOnce(() => state);
+    });
+
+    it('should set the display name', () => {
+      expect(SourceField.displayName).toEqual('SourceField');
+    });
+
+    it('should render a form field', () => {
+      const rendered = shallow(<SourceField {...defaultProps} />);
+
+      expect(rendered).toHaveDisplayName('FormField');
+    });
+
+    it('should match the snapshot', () => {
+      const rendered = mount(<SourceField {...defaultProps} />);
 
       expect(rendered).toMatchSnapshot();
     });

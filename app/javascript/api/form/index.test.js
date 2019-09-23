@@ -29,7 +29,7 @@ describe('FormEndpoint', () => {
       it('should generate the actions', () => {
         const properties = Object.entries(actions);
 
-        expect(properties).toHaveLength(10);
+        expect(properties).toHaveLength(12);
 
         properties.forEach(([key, value]) => {
           if (isConstant(key)) {

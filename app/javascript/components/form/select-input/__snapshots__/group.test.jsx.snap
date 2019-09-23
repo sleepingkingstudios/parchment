@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FormSelectOptionGroup /> should match the snapshot 1`] = `
+<optgroup
+  label="Option Group"
+>
+  <FormSelectOption
+    key="option-0"
+    label="Option 1"
+    value="one"
+  />
+  <FormSelectOption
+    key="option-1"
+    label="Option 2"
+    value="two"
+  />
+  <FormSelectOption
+    key="option-2"
+    label="Option 3"
+    value="three"
+  />
+</optgroup>
+`;
