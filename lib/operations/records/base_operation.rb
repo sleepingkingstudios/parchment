@@ -18,7 +18,9 @@ module Operations::Records
       #   business logic operates on.
       def subclass(record_class)
         Class.new(self).tap do |klass|
-          klass.define_method(:initialize) { super(record_class) }
+          klass.define_method(:initialize) do |*args|
+            super(record_class, *args)
+          end
 
           name = subclass_name(record_class)
           klass.define_singleton_method(:name) { name }
