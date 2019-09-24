@@ -6,6 +6,11 @@ module Fixtures
   # Class to load data, or instantiate or persist records from stored fixture
   # files.
   class Builder
+    class Error < StandardError; end
+
+    class FixturesNotDefinedError   < Fixtures::Builder::Error; end
+    class InsufficientFixturesError < Fixtures::Builder::Error; end
+
     # @param record_class [Class] The class of record that the operation's
     #   business logic operates on.
     # @param environment [String] The data directory to load from.
@@ -21,23 +26,23 @@ module Fixtures
     #   operates on.
     attr_reader :record_class
 
-    def build
-      read.map { |attributes| build_record(attributes) }
+    def build(count: nil)
+      read(count: count).map { |attributes| build_record(attributes) }
     end
 
-    def create
-      read.map { |attributes| find_or_create_record(attributes) }
+    def create(count: nil)
+      read(count: count).map { |attributes| find_or_create_record(attributes) }
     end
 
-    def read
-      return read_data_file if data_file_exists?
+    def read(count: nil)
+      return validate_count(read_data_file, count: count) if data_file_exists?
 
-      return read_data_dir if data_dir_exists?
+      return validate_count(read_data_dir, count: count)  if data_dir_exists?
 
       message =
         "Unable to load fixtures from /data/#{environment}/#{resource_name}"
 
-      raise message
+      raise FixturesNotDefinedError, message
     end
 
     private
@@ -80,6 +85,19 @@ module Fixtures
       record_class.where(id: attributes.fetch('id')).first
     end
 
+    def invalid_count_message(expected, actual)
+      message =
+        "Requested #{expected} #{resource_name.singularize.pluralize(expected)}"
+
+      if actual.zero?
+        message + ', but the data is empty'
+      else
+        message +
+          ", but there are only #{actual} " +
+          resource_name.singularize.pluralize(actual)
+      end
+    end
+
     def read_data_dir
       Dir.entries(data_dir).map do |file_name|
         YAML.safe_load(File.read(file_name))
@@ -98,6 +116,16 @@ module Fixtures
       record.assign_attributes(attributes)
 
       record.tap(&:save!)
+    end
+
+    def validate_count(data, count:)
+      return data if count.nil?
+
+      return data[0...count] if count <= data.size
+
+      message = invalid_count_message(count, data.size)
+
+      raise InsufficientFixturesError, message
     end
   end
 end

@@ -43,6 +43,30 @@ RSpec.describe Fixtures::Builder do
   let(:record_class) { Publication }
   let(:environment)  { 'fixtures' }
 
+  describe '::Error' do
+    it { expect(described_class::Error).to be_a Class }
+
+    it { expect(described_class::Error).to be < StandardError }
+  end
+
+  describe '::FixturesNotDefinedError' do
+    it { expect(described_class::FixturesNotDefinedError).to be_a Class }
+
+    it 'should subclass Fixtures::Builder::Error' do
+      expect(described_class::FixturesNotDefinedError)
+        .to be < described_class::Error
+    end
+  end
+
+  describe '::InsufficientFixturesError' do
+    it { expect(described_class::InsufficientFixturesError).to be_a Class }
+
+    it 'should subclass Fixtures::Builder::Error' do
+      expect(described_class::InsufficientFixturesError)
+        .to be < described_class::Error
+    end
+  end
+
   describe '::new' do
     it 'should define the constructor' do
       expect(described_class)
@@ -69,12 +93,25 @@ RSpec.describe Fixtures::Builder do
       # rubocop:enable RSpec/SubjectStub
     end
 
-    it { expect(builder).to respond_to(:build).with(0).arguments }
+    it 'should define the method' do
+      expect(builder)
+        .to respond_to(:build)
+        .with(0).arguments
+        .and_keywords(:count)
+    end
 
     it 'should delegate to read' do
       builder.build
 
-      expect(builder).to have_received(:read).with(no_args)
+      expect(builder).to have_received(:read).with(count: nil)
+    end
+
+    describe 'with count: value' do
+      it 'should delegate to read' do
+        builder.build(count: 3)
+
+        expect(builder).to have_received(:read).with(count: 3)
+      end
     end
 
     context 'when the data has no items' do
@@ -129,12 +166,25 @@ RSpec.describe Fixtures::Builder do
       expected == actual
     end
 
-    it { expect(builder).to respond_to(:create).with(0).arguments }
+    it 'should define the method' do
+      expect(builder)
+        .to respond_to(:create)
+        .with(0).arguments
+        .and_keywords(:count)
+    end
 
     it 'should delegate to read' do
       builder.create
 
-      expect(builder).to have_received(:read).with(no_args)
+      expect(builder).to have_received(:read).with(count: nil)
+    end
+
+    describe 'with count: value' do
+      it 'should delegate to read' do
+        builder.create(count: 3)
+
+        expect(builder).to have_received(:read).with(count: 3)
+      end
     end
 
     context 'when the data has no items' do
@@ -257,7 +307,16 @@ RSpec.describe Fixtures::Builder do
     let(:dir_name)      { File.join environment, resource_name }
     let(:dir_path)      { Rails.root.join 'data', dir_name }
 
-    it { expect(builder).to respond_to(:read).with(0).arguments }
+    before(:example) do
+      allow(File).to receive(:exist?).and_call_original
+    end
+
+    it 'should define the method' do
+      expect(builder)
+        .to respond_to(:read)
+        .with(0).arguments
+        .and_keywords(:count)
+    end
 
     context 'when the data does not exist' do
       let(:error_message) { "Unable to load fixtures from /data/#{dir_name}" }
@@ -268,7 +327,10 @@ RSpec.describe Fixtures::Builder do
       end
 
       it 'should raise an error' do
-        expect { builder.read }.to raise_error RuntimeError, error_message
+        expect { builder.read }.to raise_error(
+          described_class::FixturesNotDefinedError,
+          error_message
+        )
       end
     end
 
@@ -297,12 +359,56 @@ RSpec.describe Fixtures::Builder do
         expect(builder.read).to be == data
       end
 
+      describe 'with count: 0' do
+        it { expect(builder.read count: 0).to be == [] }
+      end
+
+      describe 'with count: too many' do
+        let(:error_message) { 'Requested 1 publication, but the data is empty' }
+
+        it 'should raise an error' do
+          expect { builder.read count: 1 }
+            .to raise_error(
+              described_class::InsufficientFixturesError,
+              error_message
+            )
+        end
+      end
+
       context 'when the file has data' do
         include_context 'when the fixtures are defined for the resource'
 
         it 'should return the data' do
           expect(builder.read).to be == data
         end
+
+        # rubocop:disable RSpec/NestedGroups
+        describe 'with count: 0' do
+          it { expect(builder.read count: 0).to be == [] }
+        end
+
+        describe 'with count: 1' do
+          it { expect(builder.read count: 1).to be == data[0...1] }
+        end
+
+        describe 'with count: 3' do
+          it { expect(builder.read count: 3).to be == data[0...3] }
+        end
+
+        describe 'with count: too many' do
+          let(:error_message) do
+            'Requested 6 publications, but there are only 3 publications'
+          end
+
+          it 'should raise an error' do
+            expect { builder.read count: 6 }
+              .to raise_error(
+                described_class::InsufficientFixturesError,
+                error_message
+              )
+          end
+        end
+        # rubocop:enable RSpec/NestedGroups
       end
     end
 
@@ -348,6 +454,22 @@ RSpec.describe Fixtures::Builder do
         expect(builder.read).to be == data
       end
 
+      describe 'with count: 0' do
+        it { expect(builder.read count: 0).to be == [] }
+      end
+
+      describe 'with count: too many' do
+        let(:error_message) { 'Requested 1 publication, but the data is empty' }
+
+        it 'should raise an error' do
+          expect { builder.read count: 1 }
+            .to raise_error(
+              described_class::InsufficientFixturesError,
+              error_message
+            )
+        end
+      end
+
       context 'when there are data files' do
         include_context 'when the fixtures are defined for the resource'
 
@@ -371,6 +493,34 @@ RSpec.describe Fixtures::Builder do
         it 'should return the data' do
           expect(builder.read).to be == data
         end
+
+        # rubocop:disable RSpec/NestedGroups
+        describe 'with count: 0' do
+          it { expect(builder.read count: 0).to be == [] }
+        end
+
+        describe 'with count: 1' do
+          it { expect(builder.read count: 1).to be == data[0...1] }
+        end
+
+        describe 'with count: 3' do
+          it { expect(builder.read count: 3).to be == data[0...3] }
+        end
+
+        describe 'with count: too many' do
+          let(:error_message) do
+            'Requested 6 publications, but there are only 3 publications'
+          end
+
+          it 'should raise an error' do
+            expect { builder.read count: 6 }
+              .to raise_error(
+                described_class::InsufficientFixturesError,
+                error_message
+              )
+          end
+        end
+        # rubocop:enable RSpec/NestedGroups
       end
     end
   end

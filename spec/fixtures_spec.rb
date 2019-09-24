@@ -22,7 +22,7 @@ RSpec.describe Fixtures do
       expect(described_class)
         .to respond_to(:build)
         .with(1).argument
-        .and_keywords(:environment)
+        .and_keywords(:count, :environment)
     end
 
     it 'should instantiate a builder' do
@@ -36,10 +36,18 @@ RSpec.describe Fixtures do
     it 'should call Builder#build' do
       described_class.build(record_class)
 
-      expect(builder).to have_received(:build)
+      expect(builder).to have_received(:build).with(count: nil)
     end
 
     it { expect(described_class.build(record_class)).to be data }
+
+    describe 'with count: value' do
+      it 'should call Builder#build' do
+        described_class.build(record_class, count: 3)
+
+        expect(builder).to have_received(:build).with(count: 3)
+      end
+    end
 
     describe 'with environment: value' do
       let(:environment) { 'secrets' }
@@ -71,7 +79,7 @@ RSpec.describe Fixtures do
       expect(described_class)
         .to respond_to(:create)
         .with(1).argument
-        .and_keywords(:environment)
+        .and_keywords(:count, :environment)
     end
 
     it 'should instantiate a builder' do
@@ -85,10 +93,18 @@ RSpec.describe Fixtures do
     it 'should call Builder#create' do
       described_class.create(record_class)
 
-      expect(builder).to have_received(:create)
+      expect(builder).to have_received(:create).with(count: nil)
     end
 
     it { expect(described_class.create(record_class)).to be data }
+
+    describe 'with count: value' do
+      it 'should call Builder#create' do
+        described_class.create(record_class, count: 3)
+
+        expect(builder).to have_received(:create).with(count: 3)
+      end
+    end
 
     describe 'with environment: value' do
       let(:environment) { 'secrets' }
@@ -120,7 +136,7 @@ RSpec.describe Fixtures do
       expect(described_class)
         .to respond_to(:read)
         .with(1).argument
-        .and_keywords(:environment)
+        .and_keywords(:count, :environment)
     end
 
     it 'should instantiate a builder' do
@@ -134,10 +150,18 @@ RSpec.describe Fixtures do
     it 'should call Builder#read' do
       described_class.read(record_class)
 
-      expect(builder).to have_received(:read)
+      expect(builder).to have_received(:read).with(count: nil)
     end
 
     it { expect(described_class.read(record_class)).to be data }
+
+    describe 'with count: value' do
+      it 'should call Builder#read' do
+        described_class.read(record_class, count: 3)
+
+        expect(builder).to have_received(:read).with(count: 3)
+      end
+    end
 
     describe 'with environment: value' do
       let(:environment) { 'secrets' }
