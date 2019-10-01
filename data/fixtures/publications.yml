@@ -1,31 +1,31 @@
 ---
-- id:               38a6666f-d3eb-4853-bd0a-add4d8ec369a
-  name:             Spectres of Flumph Fortress
+- name:             Spectres of Flumph Fortress
+  id:               38a6666f-d3eb-4853-bd0a-add4d8ec369a
   publisher_name:   Spelljammer Publishing
   publication_date: '2013-08-15'
   playtest:         true
-- id:               e34f5897-e225-47f5-a4fb-13fa6099edc5
-  name:             Crime in Flumphtownville
+- name:             Crime in Flumphtownville
+  id:               e34f5897-e225-47f5-a4fb-13fa6099edc5
   publisher_name:   Spelljammer Publishing
   publication_date: '2013-08-20'
   playtest:         false
-- id:               4a0db3d6-0477-4ef0-9584-7723ffe2efd3
-  name:             Secrets of the Flumph
+- name:             Secrets of the Flumph
+  id:               4a0db3d6-0477-4ef0-9584-7723ffe2efd3
   publisher_name:   Spelljammer Publishing
   publication_date: '2013-11-19'
   playtest:         false
-- id:               da08708e-0505-4819-bc69-00b6589a4e4f
-  name:             The Flumph Fancier's Handbook
+- name:             The Flumph Fancier's Handbook
+  id:               da08708e-0505-4819-bc69-00b6589a4e4f
   publisher_name:   Wizards of the Coast
   publication_date: '2014-08-19'
   playtest:         false
-- id:               ac056f66-9dc8-435d-b251-67f46914e93c
-  name:             Treasure of the Flumph Prime Minister
+- name:             Treasure of the Flumph Prime Minister
+  id:               ac056f66-9dc8-435d-b251-67f46914e93c
   publisher_name:   Wizards of the Coast
   publication_date: '2014-08-19'
   playtest:         false
-- id:               a8aab239-365d-4f57-b79b-9ed7053080ba
-  name:             "Unearthed Arcana: Flumph Magic"
+- name:             "Unearthed Arcana: Flumph Magic"
+  id:               a8aab239-365d-4f57-b79b-9ed7053080ba
   publisher_name:   Wizards of the Coast
   publication_date: '2014-08-20'
   playtest:         true

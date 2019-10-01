@@ -2,77 +2,15 @@
 
 require 'rails_helper'
 
+require 'fixtures/builder'
+
 RSpec.describe Api::SpellsController do
   shared_context 'when there are many spells' do
-    let(:spells_data) do
-      [
-        {
-          id:           'e17bca01-24d3-48d3-a308-099dd6dca373',
-          name:         'Embers',
-          casting_time: '1 action',
-          duration:     'Instantaneous',
-          level:        0,
-          range:        '30 feet',
-          school:       Spell::Schools::EVOCATION,
-          description:  <<~DESCRIPTION
-            You spit a handful of burning embers at a foe. Make a ranged spell
-            attack against the target. On a hit, the target takes 1d4 fire
-            damage, or 2d4 fire damage if the target is prone. On a miss, the
-            target takes 1 fire damage.
-          DESCRIPTION
-        },
-        {
-          id:           'e3641970-fc98-4674-b873-5532d89d9f26',
-          name:         "Dragon's Breath",
-          casting_time: '1 action',
-          duration:     'Instantaneous',
-          level:        3,
-          range:        'Self (60-foot line)',
-          school:       Spell::Schools::EVOCATION,
-          description:  <<~DESCRIPTION
-            A burst of elemental flame erupts from your maw with a primal
-            scream. Each creature in a line 60 feet long and 10 feet wide must
-            make a Dexterity saving throw. A target takes 8d6 fire damage on a
-            failed save, or half as much damage on a successful one.
-
-            The fire ignites flammable objects in the area that aren't being
-            worn or carried.
-
-            **At Higher Levels:** When you cast this spell using a spell slot of
-            4th level or higher, the damage increases by 1d6 for each slot level
-            above 3rd.
-          DESCRIPTION
-        },
-        {
-          id:                 'a74d8c21-607d-4a3f-8cfd-2bbb48ec196a',
-          name:               'Wrath of the Titans',
-          casting_time:       '1 minute',
-          duration:           'Concentration, up to 1 minute',
-          level:              9,
-          material_component: 'a vial of primordial fire',
-          range:              '1 mile (60-foot circle)',
-          school:             Spell::Schools::EVOCATION,
-          somatic_component:  true,
-          verbal_component:   true,
-          description:        <<~DESCRIPTION
-            "I call upon the primordial flames from which all was born and to
-            which all will return! For Surtr! For Muspelheimr! From the ashes
-            off Yggdrasil, a new world shall rise!"
-
-            Invoking the ancient and primordial powers of flame, you conjure
-            forth the very fires of creation itself. Each creature that starts
-            its turn in a 60-foot-radius sphere centered on the point you choose
-            must make a Dexterity saving throw. A target takes 10d6 fire damage
-            and 10d6 radiant damage on a failed save, or half as much damage on
-            a successful save. The sphere spreads around corners and ignites
-            flammable objects in the area that aren't being worn or carried.
-          DESCRIPTION
-        }
-      ]
+    let(:spells) do
+      Fixtures.build(Spell, count: 3, except: %w[source_id source_type])
     end
-    let!(:spells) do
-      spells_data.map { |data| Spell.create!(data) }
-    end
+
+    before(:each) { spells.each(&:save!) }
   end
 
   shared_context 'when the spell has a source' do

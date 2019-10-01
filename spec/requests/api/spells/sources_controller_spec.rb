@@ -4,32 +4,9 @@ require 'rails_helper'
 
 RSpec.describe Api::Spells::SourcesController do
   shared_context 'when there are many publications' do
-    let(:publications_data) do
-      [
-        {
-          id:               '7edf3a01-da19-475e-8e31-3f40c77acc62',
-          name:             "The Flumph Fancier's Handbook",
-          publisher_name:   'Wizards of the Coast',
-          publication_date: Date.new(1977, 5, 25)
-        },
-        {
-          id:               'cdf0f062-8f68-4b66-9f38-ad1d30f75272',
-          name:             'Unearthed Arcana - The Flumph Mage',
-          playtest:         true,
-          publisher_name:   'Wizards of the Coast',
-          publication_date: Date.new(1980, 6, 20)
-        },
-        {
-          id:               '0e25f76d-9d8a-41b1-8b6d-7918a1a1b3f5',
-          name:             'Secrets of the Flumph',
-          publisher_name:   'Paizo',
-          publication_date: Date.new(1983, 5, 25)
-        }
-      ]
-    end
-    let!(:publications) do
-      publications_data.map { |data| Publication.create!(data) }
-    end
+    let(:publications) { Fixtures.build(Publication, count: 3) }
+
+    before(:each) { publications.each(&:save!) }
   end
 
   shared_examples 'should respond with JSON content' do
