@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 require 'fixtures/builder'
+require 'fixtures/mappings/property_mapping'
 
 RSpec.describe Fixtures::Builder do
   shared_context 'with a custom environment' do
@@ -13,29 +14,50 @@ RSpec.describe Fixtures::Builder do
     let(:environment) { 'secrets' }
   end
 
-  shared_context 'when the fixtures are defined for the resource' do
+  shared_context 'when data is defined for the resource' do
     let(:data) do
       [
         {
-          id:               '00000000-0000-0000-0000-000000000000',
-          name:             'Star Wars',
-          publication_date: '1977-05-25',
-          publisher_name:   'Lucasfilm'
+          'id'               => '00000000-0000-0000-0000-000000000000',
+          'name'             => 'Star Wars',
+          'publication_date' => '1977-05-25',
+          'publisher_name'   => 'Lucasfilm'
         },
         {
-          id:               '00000000-0000-0000-0000-000000000001',
-          name:             'The Empire Strikes Back',
-          publication_date: '1980-06-20',
-          publisher_name:   'Lucasfilm'
+          'id'               => '00000000-0000-0000-0000-000000000001',
+          'name'             => 'The Empire Strikes Back',
+          'publication_date' => '1980-06-20',
+          'publisher_name'   => 'Lucasfilm'
         },
         {
-          id:               '00000000-0000-0000-0000-000000000002',
-          name:             'Return of the Jedi',
-          publication_date: '1983-05-25',
-          publisher_name:   'Lucasfilm'
+          'id'               => '00000000-0000-0000-0000-000000000002',
+          'name'             => 'Return of the Jedi',
+          'publication_date' => '1983-05-25',
+          'publisher_name'   => 'Lucasfilm'
         }
-      ].map(&:stringify_keys)
+      ]
     end
+  end
+
+  shared_context 'when options are defined for the resource' do
+    let(:options) do
+      {
+        'mappings' => [
+          {
+            'options' => { 'property' => 'name' },
+            'type'    => 'upcase'
+          }
+        ]
+      }
+    end
+
+    example_class 'Fixtures::Mappings::Upcase',
+      Fixtures::Mappings::PropertyMapping \
+      do |klass|
+        klass.define_method(:map_property) do |value:, **_kwargs|
+          value.upcase
+        end
+      end
   end
 
   subject(:builder) { described_class.new(record_class) }
@@ -43,44 +65,12 @@ RSpec.describe Fixtures::Builder do
   let(:record_class) { Publication }
   let(:environment)  { 'fixtures' }
 
-  describe '::Error' do
-    it { expect(described_class::Error).to be_a Class }
-
-    it { expect(described_class::Error).to be < StandardError }
-  end
-
-  describe '::FixturesNotDefinedError' do
-    it { expect(described_class::FixturesNotDefinedError).to be_a Class }
-
-    it 'should subclass Fixtures::Builder::Error' do
-      expect(described_class::FixturesNotDefinedError)
-        .to be < described_class::Error
-    end
-  end
-
-  describe '::InsufficientFixturesError' do
-    it { expect(described_class::InsufficientFixturesError).to be_a Class }
-
-    it 'should subclass Fixtures::Builder::Error' do
-      expect(described_class::InsufficientFixturesError)
-        .to be < described_class::Error
-    end
-  end
-
   describe '::new' do
     it 'should define the constructor' do
       expect(described_class)
         .to be_constructible
         .with(1).argument
         .and_keywords(:environment)
-    end
-  end
-
-  describe '#environment' do
-    include_examples 'should have reader', :environment, 'fixtures'
-
-    wrap_context 'with a custom environment' do
-      it { expect(builder.environment).to be environment }
     end
   end
 
@@ -97,13 +87,13 @@ RSpec.describe Fixtures::Builder do
       expect(builder)
         .to respond_to(:build)
         .with(0).arguments
-        .and_keywords(:count)
+        .and_any_keywords
     end
 
     it 'should delegate to read' do
       builder.build
 
-      expect(builder).to have_received(:read).with(count: nil)
+      expect(builder).to have_received(:read).with({})
     end
 
     describe 'with count: value' do
@@ -114,6 +104,16 @@ RSpec.describe Fixtures::Builder do
       end
     end
 
+    describe 'with except: array' do
+      it 'should delegate to read' do
+        builder.build(except: %w[publication_date])
+
+        expect(builder)
+          .to have_received(:read)
+          .with(except: %w[publication_date])
+      end
+    end
+
     context 'when the data has no items' do
       it { expect(builder.build).to be == [] }
 
@@ -121,7 +121,7 @@ RSpec.describe Fixtures::Builder do
     end
 
     context 'when the data has one item' do
-      include_context 'when the fixtures are defined for the resource'
+      include_context 'when data is defined for the resource'
 
       let(:read_data) { data[0..0] }
       let(:expected)  { read_data.map { |hsh| record_class.new(hsh) } }
@@ -132,7 +132,7 @@ RSpec.describe Fixtures::Builder do
     end
 
     context 'when the data has many items' do
-      include_context 'when the fixtures are defined for the resource'
+      include_context 'when data is defined for the resource'
 
       let(:read_data) { data }
       let(:expected)  { read_data.map { |hsh| record_class.new(hsh) } }
@@ -170,13 +170,13 @@ RSpec.describe Fixtures::Builder do
       expect(builder)
         .to respond_to(:create)
         .with(0).arguments
-        .and_keywords(:count)
+        .and_any_keywords
     end
 
     it 'should delegate to read' do
       builder.create
 
-      expect(builder).to have_received(:read).with(count: nil)
+      expect(builder).to have_received(:read).with({})
     end
 
     describe 'with count: value' do
@@ -187,12 +187,22 @@ RSpec.describe Fixtures::Builder do
       end
     end
 
+    describe 'with except: array' do
+      it 'should delegate to read' do
+        builder.create(except: %w[publication_date])
+
+        expect(builder)
+          .to have_received(:read)
+          .with(except: %w[publication_date])
+      end
+    end
+
     context 'when the data has no items' do
       it { expect(builder.create).to be == [] }
     end
 
     context 'when the data has one item' do
-      include_context 'when the fixtures are defined for the resource'
+      include_context 'when data is defined for the resource'
 
       let(:read_data) { data[0..0] }
       let(:expected)  { read_data.map { |hsh| record_class.new(hsh) } }
@@ -230,7 +240,7 @@ RSpec.describe Fixtures::Builder do
     end
 
     context 'when the data has many items' do
-      include_context 'when the fixtures are defined for the resource'
+      include_context 'when data is defined for the resource'
 
       let(:read_data) { data }
       let(:expected)  { read_data.map { |hsh| record_class.new(hsh) } }
@@ -300,227 +310,162 @@ RSpec.describe Fixtures::Builder do
     end
   end
 
+  describe '#environment' do
+    include_examples 'should have reader', :environment, 'fixtures'
+
+    wrap_context 'with a custom environment' do
+      it { expect(builder.environment).to be environment }
+    end
+  end
+
   describe '#read' do
+    let(:data)    { [] }
+    let(:options) { {} }
+    let(:loader) do
+      instance_double(Fixtures::Loader, call: nil, data: data, options: options)
+    end
     let(:resource_name) { record_class.name.underscore.pluralize }
-    let(:file_name)     { File.join environment, "#{resource_name}.yml" }
-    let(:file_path)     { Rails.root.join 'data', file_name }
-    let(:dir_name)      { File.join environment, resource_name }
-    let(:dir_path)      { Rails.root.join 'data', dir_name }
 
     before(:example) do
-      allow(File).to receive(:exist?).and_call_original
+      allow(Fixtures::Loader).to receive(:new).and_return(loader)
+
+      allow(loader).to receive(:call).and_return(loader)
     end
 
     it 'should define the method' do
       expect(builder)
         .to respond_to(:read)
         .with(0).arguments
-        .and_keywords(:count)
+        .and_keywords(:count, :except)
     end
 
-    context 'when the data does not exist' do
-      let(:error_message) { "Unable to load fixtures from /data/#{dir_name}" }
+    it 'should delegate to a loader' do
+      builder.read
 
-      before(:example) do
-        allow(File).to receive(:exist?).with(file_path).and_return(false)
-        allow(File).to receive(:exist?).with(dir_path).and_return(false)
+      expect(Fixtures::Loader).to have_received(:new).with(
+        environment:   environment,
+        resource_name: resource_name
+      )
+    end
+
+    it 'should call the loader' do
+      builder.read
+
+      expect(loader).to have_received(:call).with(no_args)
+    end
+
+    it 'should return the data' do
+      expect(builder.read).to be == data
+    end
+
+    describe 'with count: 0' do
+      it 'should return an empty array' do
+        expect(builder.read count: 0).to be == []
+      end
+    end
+
+    describe 'with count: 1' do
+      let(:error_message) do
+        'Requested 1 publication, but the data is empty'
       end
 
       it 'should raise an error' do
-        expect { builder.read }.to raise_error(
-          described_class::FixturesNotDefinedError,
-          error_message
-        )
+        expect { builder.read count: 1 }
+          .to raise_error Fixtures::NotEnoughFixturesError, error_message
       end
     end
 
-    context 'when the data file exists' do
-      let(:data) { [] }
-      let(:raw)  { YAML.dump(data) }
-
-      before(:example) do
-        allow(File).to receive(:exist?).with(file_path).and_return(true)
-        allow(File).to receive(:read).with(file_path).and_return(raw)
+    describe 'with count: 3' do
+      let(:error_message) do
+        'Requested 3 publications, but the data is empty'
       end
 
-      it 'should check that the file exists' do
-        builder.read
-
-        expect(File).to have_received(:exist?).with(file_path)
+      it 'should raise an error' do
+        expect { builder.read count: 3 }
+          .to raise_error Fixtures::NotEnoughFixturesError, error_message
       end
+    end
 
-      it 'should read the file' do
-        builder.read
-
-        expect(File).to have_received(:read).with(file_path)
+    describe 'with except: array' do
+      it 'should return the data' do
+        expect(builder.read except: %w[id publication_date]).to be == data
       end
+    end
 
+    describe 'with except: value' do
+      it 'should return the data' do
+        expect(builder.read except: 'publication_date').to be == data
+      end
+    end
+
+    wrap_context 'when data is defined for the resource' do
       it 'should return the data' do
         expect(builder.read).to be == data
       end
 
       describe 'with count: 0' do
-        it { expect(builder.read count: 0).to be == [] }
+        it 'should return an empty array' do
+          expect(builder.read count: 0).to be == []
+        end
       end
 
-      describe 'with count: too many' do
-        let(:error_message) { 'Requested 1 publication, but the data is empty' }
+      describe 'with count: 1' do
+        it 'should return the first item' do
+          expect(builder.read count: 1).to be == data[0...1]
+        end
+      end
+
+      describe 'with count: 3' do
+        it 'should return the first 3 items' do
+          expect(builder.read count: 3).to be == data[0...3]
+        end
+      end
+
+      describe 'with count: 6' do
+        let(:error_message) do
+          'Requested 6 publications, but there are only 3 publications'
+        end
 
         it 'should raise an error' do
-          expect { builder.read count: 1 }
-            .to raise_error(
-              described_class::InsufficientFixturesError,
-              error_message
-            )
+          expect { builder.read count: 6 }
+            .to raise_error Fixtures::NotEnoughFixturesError, error_message
         end
       end
 
-      context 'when the file has data' do
-        include_context 'when the fixtures are defined for the resource'
-
-        it 'should return the data' do
-          expect(builder.read).to be == data
+      describe 'with except: array' do
+        let(:expected) do
+          data.map { |item| item.except('id', 'publication_date') }
         end
 
-        # rubocop:disable RSpec/NestedGroups
-        describe 'with count: 0' do
-          it { expect(builder.read count: 0).to be == [] }
+        it 'should filter the data' do
+          expect(builder.read except: %w[id publication_date]).to be == expected
+        end
+      end
+
+      describe 'with except: value' do
+        let(:expected) do
+          data.map { |item| item.except('publication_date') }
         end
 
-        describe 'with count: 1' do
-          it { expect(builder.read count: 1).to be == data[0...1] }
+        it 'should filter the data' do
+          expect(builder.read except: 'publication_date').to be == expected
+        end
+      end
+
+      wrap_context 'when options are defined for the resource' do
+        let(:expected) do
+          data.map { |item| item.merge('name' => item['name'].upcase) }
         end
 
-        describe 'with count: 3' do
-          it { expect(builder.read count: 3).to be == data[0...3] }
+        it 'should map the data' do
+          expect(builder.read).to be == expected
         end
-
-        describe 'with count: too many' do
-          let(:error_message) do
-            'Requested 6 publications, but there are only 3 publications'
-          end
-
-          it 'should raise an error' do
-            expect { builder.read count: 6 }
-              .to raise_error(
-                described_class::InsufficientFixturesError,
-                error_message
-              )
-          end
-        end
-        # rubocop:enable RSpec/NestedGroups
       end
     end
 
-    context 'when the data directory exists' do
-      let(:data) { [] }
-      let(:file_names) do
-        data.map { |hsh| "#{hsh['name'].underscore.tr(' ', '_')}.yml" }
-      end
-
-      before(:example) do
-        allow(File).to receive(:exist?).with(file_path).and_return(false)
-        allow(File).to receive(:exist?).with(dir_path).and_return(true)
-        allow(File).to receive(:directory?).with(dir_path).and_return(true)
-        allow(Dir).to receive(:entries).with(dir_path).and_return(file_names)
-        allow(File).to receive(:read)
-      end
-
-      it 'should check that the directory exists' do
-        builder.read
-
-        expect(File).to have_received(:exist?).with(dir_path)
-      end
-
-      it 'should check that the directory is a directory' do
-        builder.read
-
-        expect(File).to have_received(:directory?).with(dir_path)
-      end
-
-      it 'should enumerate the files' do
-        builder.read
-
-        expect(Dir).to have_received(:entries).with(dir_path)
-      end
-
-      it 'should not read any files' do
-        builder.read
-
-        expect(File).not_to have_received(:read)
-      end
-
+    wrap_context 'when options are defined for the resource' do
       it 'should return the data' do
         expect(builder.read).to be == data
-      end
-
-      describe 'with count: 0' do
-        it { expect(builder.read count: 0).to be == [] }
-      end
-
-      describe 'with count: too many' do
-        let(:error_message) { 'Requested 1 publication, but the data is empty' }
-
-        it 'should raise an error' do
-          expect { builder.read count: 1 }
-            .to raise_error(
-              described_class::InsufficientFixturesError,
-              error_message
-            )
-        end
-      end
-
-      context 'when there are data files' do
-        include_context 'when the fixtures are defined for the resource'
-
-        before(:example) do
-          data.each do |hsh|
-            file_name = "#{hsh['name'].underscore.tr(' ', '_')}.yml"
-            raw       = YAML.dump(hsh)
-
-            allow(File).to receive(:read).with(file_name).and_return(raw)
-          end
-        end
-
-        it 'should read each file' do
-          builder.read
-
-          file_names.each do |file_name|
-            expect(File).to have_received(:read).with(file_name)
-          end
-        end
-
-        it 'should return the data' do
-          expect(builder.read).to be == data
-        end
-
-        # rubocop:disable RSpec/NestedGroups
-        describe 'with count: 0' do
-          it { expect(builder.read count: 0).to be == [] }
-        end
-
-        describe 'with count: 1' do
-          it { expect(builder.read count: 1).to be == data[0...1] }
-        end
-
-        describe 'with count: 3' do
-          it { expect(builder.read count: 3).to be == data[0...3] }
-        end
-
-        describe 'with count: too many' do
-          let(:error_message) do
-            'Requested 6 publications, but there are only 3 publications'
-          end
-
-          it 'should raise an error' do
-            expect { builder.read count: 6 }
-              .to raise_error(
-                described_class::InsufficientFixturesError,
-                error_message
-              )
-          end
-        end
-        # rubocop:enable RSpec/NestedGroups
       end
     end
   end

@@ -5,6 +5,30 @@ require 'rails_helper'
 require 'fixtures'
 
 RSpec.describe Fixtures do
+  describe '::Error' do
+    it { expect(described_class::Error).to be_a Class }
+
+    it { expect(described_class::Error).to be < StandardError }
+  end
+
+  describe '::FixturesNotDefinedError' do
+    it { expect(described_class::FixturesNotDefinedError).to be_a Class }
+
+    it 'should subclass Fixtures::Error' do
+      expect(described_class::FixturesNotDefinedError)
+        .to be < described_class::Error
+    end
+  end
+
+  describe '::NotEnoughFixturesError' do
+    it { expect(described_class::NotEnoughFixturesError).to be_a Class }
+
+    it 'should subclass Fixtures::Error' do
+      expect(described_class::NotEnoughFixturesError)
+        .to be < described_class::Error
+    end
+  end
+
   describe '::build' do
     let(:record_class) { Publication }
     let(:data) do
@@ -22,7 +46,8 @@ RSpec.describe Fixtures do
       expect(described_class)
         .to respond_to(:build)
         .with(1).argument
-        .and_keywords(:count, :environment)
+        .and_keywords(:environment)
+        .and_any_keywords
     end
 
     it 'should instantiate a builder' do
@@ -36,7 +61,7 @@ RSpec.describe Fixtures do
     it 'should call Builder#build' do
       described_class.build(record_class)
 
-      expect(builder).to have_received(:build).with(count: nil)
+      expect(builder).to have_received(:build).with({})
     end
 
     it { expect(described_class.build(record_class)).to be data }
@@ -58,6 +83,16 @@ RSpec.describe Fixtures do
         expect(described_class::Builder)
           .to have_received(:new)
           .with(record_class, environment: environment)
+      end
+    end
+
+    describe 'with except: array' do
+      it 'should call Builder#build' do
+        described_class.build(record_class, except: %w[publication_date])
+
+        expect(builder)
+          .to have_received(:build)
+          .with(except: %w[publication_date])
       end
     end
   end

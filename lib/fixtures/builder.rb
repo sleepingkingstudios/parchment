@@ -6,11 +6,6 @@ module Fixtures
   # Class to load data, or instantiate or persist records from stored fixture
   # files.
   class Builder
-    class Error < StandardError; end
-
-    class FixturesNotDefinedError   < Fixtures::Builder::Error; end
-    class InsufficientFixturesError < Fixtures::Builder::Error; end
-
     # @param record_class [Class] The class of record that the operation's
     #   business logic operates on.
     # @param environment [String] The data directory to load from.
@@ -26,26 +21,54 @@ module Fixtures
     #   operates on.
     attr_reader :record_class
 
-    def build(count: nil)
-      read(count: count).map { |attributes| build_record(attributes) }
+    def build(**options)
+      read(options).map { |attributes| build_record(attributes) }
     end
 
-    def create(count: nil)
-      read(count: count).map { |attributes| find_or_create_record(attributes) }
+    def create(**options)
+      read(options).map { |attributes| find_or_create_record(attributes) }
     end
 
-    def read(count: nil)
-      return validate_count(read_data_file, count: count) if data_file_exists?
+    def read(count: nil, except: nil)
+      loader = Fixtures::Loader.new(
+        environment:   environment,
+        resource_name: resource_name
+      ).call
 
-      return validate_count(read_data_dir, count: count)  if data_dir_exists?
+      data     = loader.data
+      options  = loader.options
+      mappings = options.fetch('mappings', {})
 
-      message =
-        "Unable to load fixtures from /data/#{environment}/#{resource_name}"
-
-      raise FixturesNotDefinedError, message
+      process_data(data, count: count, except: except, mappings: mappings)
     end
 
     private
+
+    def apply_count(data, count:)
+      return data if count.nil?
+
+      return data[0...count] if count <= data.size
+
+      message = invalid_count_message(count, data.size)
+
+      raise Fixtures::NotEnoughFixturesError, message
+    end
+
+    def apply_filters(data, except:)
+      return data if except.blank?
+
+      data.map { |hsh| hsh.except(*except) }
+    end
+
+    def apply_mappings(data, mappings:)
+      return data if mappings.blank?
+
+      mappings = generate_mappings(mappings)
+
+      data.map do |raw|
+        mappings.reduce(raw) { |item, directive| directive.call(item) }
+      end
+    end
 
     def build_record(attributes)
       record_class.new(attributes)
@@ -53,22 +76,6 @@ module Fixtures
 
     def create_record(attributes)
       build_record(attributes).tap(&:save!)
-    end
-
-    def data_dir
-      @data_dir ||= Rails.root.join 'data', environment, resource_name
-    end
-
-    def data_dir_exists?
-      File.exist?(data_dir) && File.directory?(data_dir)
-    end
-
-    def data_file
-      @data_file ||= Rails.root.join 'data', environment, "#{resource_name}.yml"
-    end
-
-    def data_file_exists?
-      File.exist?(data_file)
     end
 
     def find_or_create_record(attributes)
@@ -85,6 +92,15 @@ module Fixtures
       record_class.where(id: attributes.fetch('id')).first
     end
 
+    def generate_mappings(mappings)
+      mappings.map do |mapping|
+        type  = mapping.fetch('type').to_s.camelize
+        opts  = mapping.fetch('options', {})
+        klass = "Fixtures::Mappings::#{type}".constantize
+        klass.new(opts.symbolize_keys)
+      end
+    end
+
     def invalid_count_message(expected, actual)
       message =
         "Requested #{expected} #{resource_name.singularize.pluralize(expected)}"
@@ -98,14 +114,12 @@ module Fixtures
       end
     end
 
-    def read_data_dir
-      Dir.entries(data_dir).map do |file_name|
-        YAML.safe_load(File.read(file_name))
-      end
-    end
+    def process_data(data, count:, except:, mappings:)
+      data = apply_count(data, count: count)
+      data = apply_filters(data, except: Array(except).map(&:to_s))
+      data = apply_mappings(data, mappings: mappings)
 
-    def read_data_file
-      YAML.safe_load(File.read(data_file))
+      data
     end
 
     def resource_name
@@ -116,16 +130,6 @@ module Fixtures
       record.assign_attributes(attributes)
 
       record.tap(&:save!)
-    end
-
-    def validate_count(data, count:)
-      return data if count.nil?
-
-      return data[0...count] if count <= data.size
-
-      message = invalid_count_message(count, data.size)
-
-      raise InsufficientFixturesError, message
     end
   end
 end
