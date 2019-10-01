@@ -85,3 +85,9 @@
   - school
   - level
   - ritual
+
+# Bugs
+
+1.  On an Index page, when the [Delete] button is clicked, the item is not
+    removed from the table.
+1.  Unable to load spells with an invalid (deleted?) source.
