@@ -6,14 +6,14 @@ exports[`<PublicationForm /> fields <AbbreviationField /> should match the snaps
     Object {
       "data": Object {
         "publication": Object {
-          "abbreviation": "ffh",
-          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-          "name": "The Flumph Fancier's Handbook",
-          "official": true,
-          "playtest": false,
-          "publicationDate": "1977-05-25",
-          "publisherName": "Wizards of the Coast",
-          "slug": "flumph-fanciers-handbook",
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "name": "Spectres of Flumph Fortress",
+          "official": false,
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
         },
       },
       "onChangeAction": [MockFunction],
@@ -52,14 +52,14 @@ exports[`<PublicationForm /> fields <AbbreviationField /> should match the snaps
             Object {
               "data": Object {
                 "publication": Object {
-                  "abbreviation": "ffh",
-                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-                  "name": "The Flumph Fancier's Handbook",
-                  "official": true,
-                  "playtest": false,
-                  "publicationDate": "1977-05-25",
-                  "publisherName": "Wizards of the Coast",
-                  "slug": "flumph-fanciers-handbook",
+                  "abbreviation": "sff",
+                  "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                  "name": "Spectres of Flumph Fortress",
+                  "official": false,
+                  "playtest": true,
+                  "publicationDate": "2013-08-15",
+                  "publisherName": "Spelljammer Publishing",
+                  "slug": "spectres-flumph-fortress",
                 },
               },
               "onChangeAction": [MockFunction],
@@ -77,7 +77,7 @@ exports[`<PublicationForm /> fields <AbbreviationField /> should match the snaps
             placeholder=""
             type="text"
             validStatus={null}
-            value="ffh"
+            value="sff"
           >
             <input
               className="form-control"
@@ -85,7 +85,7 @@ exports[`<PublicationForm /> fields <AbbreviationField /> should match the snaps
               onChange={[Function]}
               placeholder=""
               type="text"
-              value="ffh"
+              value="sff"
             />
           </FormInput>
         </AbbreviationInput>
@@ -101,14 +101,14 @@ exports[`<PublicationForm /> fields <CancelButton /> should match the snapshot 1
     Object {
       "data": Object {
         "publication": Object {
-          "abbreviation": "ffh",
-          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-          "name": "The Flumph Fancier's Handbook",
-          "official": true,
-          "playtest": false,
-          "publicationDate": "1977-05-25",
-          "publisherName": "Wizards of the Coast",
-          "slug": "flumph-fanciers-handbook",
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "name": "Spectres of Flumph Fortress",
+          "official": false,
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
         },
       },
       "onChangeAction": [MockFunction],
@@ -132,14 +132,14 @@ exports[`<PublicationForm /> fields <CancelButton /> should match the snapshot 1
           Object {
             "data": Object {
               "publication": Object {
-                "abbreviation": "ffh",
-                "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-                "name": "The Flumph Fancier's Handbook",
-                "official": true,
-                "playtest": false,
-                "publicationDate": "1977-05-25",
-                "publisherName": "Wizards of the Coast",
-                "slug": "flumph-fanciers-handbook",
+                "abbreviation": "sff",
+                "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                "name": "Spectres of Flumph Fortress",
+                "official": false,
+                "playtest": true,
+                "publicationDate": "2013-08-15",
+                "publisherName": "Spelljammer Publishing",
+                "slug": "spectres-flumph-fortress",
               },
             },
             "onChangeAction": [MockFunction],
@@ -185,14 +185,14 @@ exports[`<PublicationForm /> fields <NameField /> should match the snapshot 1`] 
     Object {
       "data": Object {
         "publication": Object {
-          "abbreviation": "ffh",
-          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-          "name": "The Flumph Fancier's Handbook",
-          "official": true,
-          "playtest": false,
-          "publicationDate": "1977-05-25",
-          "publisherName": "Wizards of the Coast",
-          "slug": "flumph-fanciers-handbook",
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "name": "Spectres of Flumph Fortress",
+          "official": false,
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
         },
       },
       "onChangeAction": [MockFunction],
@@ -231,14 +231,14 @@ exports[`<PublicationForm /> fields <NameField /> should match the snapshot 1`] 
             Object {
               "data": Object {
                 "publication": Object {
-                  "abbreviation": "ffh",
-                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-                  "name": "The Flumph Fancier's Handbook",
-                  "official": true,
-                  "playtest": false,
-                  "publicationDate": "1977-05-25",
-                  "publisherName": "Wizards of the Coast",
-                  "slug": "flumph-fanciers-handbook",
+                  "abbreviation": "sff",
+                  "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                  "name": "Spectres of Flumph Fortress",
+                  "official": false,
+                  "playtest": true,
+                  "publicationDate": "2013-08-15",
+                  "publisherName": "Spelljammer Publishing",
+                  "slug": "spectres-flumph-fortress",
                 },
               },
               "onChangeAction": [MockFunction],
@@ -256,7 +256,7 @@ exports[`<PublicationForm /> fields <NameField /> should match the snapshot 1`] 
             placeholder=""
             type="text"
             validStatus={null}
-            value="The Flumph Fancier's Handbook"
+            value="Spectres of Flumph Fortress"
           >
             <input
               className="form-control"
@@ -264,7 +264,7 @@ exports[`<PublicationForm /> fields <NameField /> should match the snapshot 1`] 
               onChange={[Function]}
               placeholder=""
               type="text"
-              value="The Flumph Fancier's Handbook"
+              value="Spectres of Flumph Fortress"
             />
           </FormInput>
         </NameInput>
@@ -280,14 +280,14 @@ exports[`<PublicationForm /> fields <PlaytestField /> should match the snapshot 
     Object {
       "data": Object {
         "publication": Object {
-          "abbreviation": "ffh",
-          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-          "name": "The Flumph Fancier's Handbook",
-          "official": true,
-          "playtest": false,
-          "publicationDate": "1977-05-25",
-          "publisherName": "Wizards of the Coast",
-          "slug": "flumph-fanciers-handbook",
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "name": "Spectres of Flumph Fortress",
+          "official": false,
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
         },
       },
       "onChangeAction": [MockFunction],
@@ -326,14 +326,14 @@ exports[`<PublicationForm /> fields <PlaytestField /> should match the snapshot 
             Object {
               "data": Object {
                 "publication": Object {
-                  "abbreviation": "ffh",
-                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-                  "name": "The Flumph Fancier's Handbook",
-                  "official": true,
-                  "playtest": false,
-                  "publicationDate": "1977-05-25",
-                  "publisherName": "Wizards of the Coast",
-                  "slug": "flumph-fanciers-handbook",
+                  "abbreviation": "sff",
+                  "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                  "name": "Spectres of Flumph Fortress",
+                  "official": false,
+                  "playtest": true,
+                  "publicationDate": "2013-08-15",
+                  "publisherName": "Spelljammer Publishing",
+                  "slug": "spectres-flumph-fortress",
                 },
               },
               "onChangeAction": [MockFunction],
@@ -350,13 +350,13 @@ exports[`<PublicationForm /> fields <PlaytestField /> should match the snapshot 
             label={null}
             onChange={[Function]}
             validStatus={null}
-            value={false}
+            value={true}
           >
             <div
               className="custom-control custom-checkbox"
             >
               <input
-                checked={false}
+                checked={true}
                 className="custom-control-input"
                 id="publication-playtest-input"
                 onChange={[Function]}
@@ -381,14 +381,14 @@ exports[`<PublicationForm /> fields <PublicationDateField /> should match the sn
     Object {
       "data": Object {
         "publication": Object {
-          "abbreviation": "ffh",
-          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-          "name": "The Flumph Fancier's Handbook",
-          "official": true,
-          "playtest": false,
-          "publicationDate": "1977-05-25",
-          "publisherName": "Wizards of the Coast",
-          "slug": "flumph-fanciers-handbook",
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "name": "Spectres of Flumph Fortress",
+          "official": false,
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
         },
       },
       "onChangeAction": [MockFunction],
@@ -427,14 +427,14 @@ exports[`<PublicationForm /> fields <PublicationDateField /> should match the sn
             Object {
               "data": Object {
                 "publication": Object {
-                  "abbreviation": "ffh",
-                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-                  "name": "The Flumph Fancier's Handbook",
-                  "official": true,
-                  "playtest": false,
-                  "publicationDate": "1977-05-25",
-                  "publisherName": "Wizards of the Coast",
-                  "slug": "flumph-fanciers-handbook",
+                  "abbreviation": "sff",
+                  "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                  "name": "Spectres of Flumph Fortress",
+                  "official": false,
+                  "playtest": true,
+                  "publicationDate": "2013-08-15",
+                  "publisherName": "Spelljammer Publishing",
+                  "slug": "spectres-flumph-fortress",
                 },
               },
               "onChangeAction": [MockFunction],
@@ -452,7 +452,7 @@ exports[`<PublicationForm /> fields <PublicationDateField /> should match the sn
             placeholder=""
             type="text"
             validStatus={null}
-            value="1977-05-25"
+            value="2013-08-15"
           >
             <input
               className="form-control"
@@ -460,7 +460,7 @@ exports[`<PublicationForm /> fields <PublicationDateField /> should match the sn
               onChange={[Function]}
               placeholder=""
               type="text"
-              value="1977-05-25"
+              value="2013-08-15"
             />
           </FormInput>
         </PublicationDateInput>
@@ -476,14 +476,14 @@ exports[`<PublicationForm /> fields <PublisherNameField /> should match the snap
     Object {
       "data": Object {
         "publication": Object {
-          "abbreviation": "ffh",
-          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-          "name": "The Flumph Fancier's Handbook",
-          "official": true,
-          "playtest": false,
-          "publicationDate": "1977-05-25",
-          "publisherName": "Wizards of the Coast",
-          "slug": "flumph-fanciers-handbook",
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "name": "Spectres of Flumph Fortress",
+          "official": false,
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
         },
       },
       "onChangeAction": [MockFunction],
@@ -522,14 +522,14 @@ exports[`<PublicationForm /> fields <PublisherNameField /> should match the snap
             Object {
               "data": Object {
                 "publication": Object {
-                  "abbreviation": "ffh",
-                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-                  "name": "The Flumph Fancier's Handbook",
-                  "official": true,
-                  "playtest": false,
-                  "publicationDate": "1977-05-25",
-                  "publisherName": "Wizards of the Coast",
-                  "slug": "flumph-fanciers-handbook",
+                  "abbreviation": "sff",
+                  "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                  "name": "Spectres of Flumph Fortress",
+                  "official": false,
+                  "playtest": true,
+                  "publicationDate": "2013-08-15",
+                  "publisherName": "Spelljammer Publishing",
+                  "slug": "spectres-flumph-fortress",
                 },
               },
               "onChangeAction": [MockFunction],
@@ -547,7 +547,7 @@ exports[`<PublicationForm /> fields <PublisherNameField /> should match the snap
             placeholder=""
             type="text"
             validStatus={null}
-            value="Wizards of the Coast"
+            value="Spelljammer Publishing"
           >
             <input
               className="form-control"
@@ -555,7 +555,7 @@ exports[`<PublicationForm /> fields <PublisherNameField /> should match the snap
               onChange={[Function]}
               placeholder=""
               type="text"
-              value="Wizards of the Coast"
+              value="Spelljammer Publishing"
             />
           </FormInput>
         </PublisherNameInput>
@@ -571,14 +571,14 @@ exports[`<PublicationForm /> fields <SlugField /> should match the snapshot 1`] 
     Object {
       "data": Object {
         "publication": Object {
-          "abbreviation": "ffh",
-          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-          "name": "The Flumph Fancier's Handbook",
-          "official": true,
-          "playtest": false,
-          "publicationDate": "1977-05-25",
-          "publisherName": "Wizards of the Coast",
-          "slug": "flumph-fanciers-handbook",
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "name": "Spectres of Flumph Fortress",
+          "official": false,
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
         },
       },
       "onChangeAction": [MockFunction],
@@ -617,14 +617,14 @@ exports[`<PublicationForm /> fields <SlugField /> should match the snapshot 1`] 
             Object {
               "data": Object {
                 "publication": Object {
-                  "abbreviation": "ffh",
-                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-                  "name": "The Flumph Fancier's Handbook",
-                  "official": true,
-                  "playtest": false,
-                  "publicationDate": "1977-05-25",
-                  "publisherName": "Wizards of the Coast",
-                  "slug": "flumph-fanciers-handbook",
+                  "abbreviation": "sff",
+                  "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                  "name": "Spectres of Flumph Fortress",
+                  "official": false,
+                  "playtest": true,
+                  "publicationDate": "2013-08-15",
+                  "publisherName": "Spelljammer Publishing",
+                  "slug": "spectres-flumph-fortress",
                 },
               },
               "onChangeAction": [MockFunction],
@@ -642,7 +642,7 @@ exports[`<PublicationForm /> fields <SlugField /> should match the snapshot 1`] 
             placeholder=""
             type="text"
             validStatus={null}
-            value="flumph-fanciers-handbook"
+            value="spectres-flumph-fortress"
           >
             <input
               className="form-control"
@@ -650,7 +650,7 @@ exports[`<PublicationForm /> fields <SlugField /> should match the snapshot 1`] 
               onChange={[Function]}
               placeholder=""
               type="text"
-              value="flumph-fanciers-handbook"
+              value="spectres-flumph-fortress"
             />
           </FormInput>
         </SlugInput>
@@ -667,14 +667,14 @@ exports[`<PublicationForm /> fields <SubmitButton /> should match the snapshot 1
     Object {
       "data": Object {
         "publication": Object {
-          "abbreviation": "ffh",
-          "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-          "name": "The Flumph Fancier's Handbook",
-          "official": true,
-          "playtest": false,
-          "publicationDate": "1977-05-25",
-          "publisherName": "Wizards of the Coast",
-          "slug": "flumph-fanciers-handbook",
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "name": "Spectres of Flumph Fortress",
+          "official": false,
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
         },
       },
       "onChangeAction": [MockFunction],
@@ -700,14 +700,14 @@ exports[`<PublicationForm /> fields <SubmitButton /> should match the snapshot 1
           Object {
             "data": Object {
               "publication": Object {
-                "abbreviation": "ffh",
-                "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-                "name": "The Flumph Fancier's Handbook",
-                "official": true,
-                "playtest": false,
-                "publicationDate": "1977-05-25",
-                "publisherName": "Wizards of the Coast",
-                "slug": "flumph-fanciers-handbook",
+                "abbreviation": "sff",
+                "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                "name": "Spectres of Flumph Fortress",
+                "official": false,
+                "playtest": true,
+                "publicationDate": "2013-08-15",
+                "publisherName": "Spelljammer Publishing",
+                "slug": "spectres-flumph-fortress",
               },
             },
             "onChangeAction": [MockFunction],
@@ -727,14 +727,14 @@ exports[`<PublicationForm /> fields <SubmitButton /> should match the snapshot 1
             Object {
               "data": Object {
                 "publication": Object {
-                  "abbreviation": "ffh",
-                  "id": "7edf3a01-da19-475e-8e31-3f40c77acc62",
-                  "name": "The Flumph Fancier's Handbook",
-                  "official": true,
-                  "playtest": false,
-                  "publicationDate": "1977-05-25",
-                  "publisherName": "Wizards of the Coast",
-                  "slug": "flumph-fanciers-handbook",
+                  "abbreviation": "sff",
+                  "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                  "name": "Spectres of Flumph Fortress",
+                  "official": false,
+                  "playtest": true,
+                  "publicationDate": "2013-08-15",
+                  "publisherName": "Spelljammer Publishing",
+                  "slug": "spectres-flumph-fortress",
                 },
               },
               "onChangeAction": [MockFunction],

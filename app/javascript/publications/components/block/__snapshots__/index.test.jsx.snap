@@ -7,7 +7,7 @@ exports[`<PublicationBlock /> should match the snapshot 1`] = `
   <p
     className="publication-block-name"
   >
-    The Flumph Fancier's Handbook
+    Spectres of Flumph Fortress
   </p>
   <div
     className="publication-block-details"
@@ -19,7 +19,7 @@ exports[`<PublicationBlock /> should match the snapshot 1`] = `
         Publisher:
       </strong>
        
-      Wizards of the Coast
+      Spelljammer Publishing
     </p>
     <p
       className="publication-block-publication-date"
@@ -28,7 +28,7 @@ exports[`<PublicationBlock /> should match the snapshot 1`] = `
         Publication Date:
       </strong>
        
-      1977-05-25
+      2013-08-15
     </p>
     <p
       className="publication-block-playtest"
@@ -37,7 +37,7 @@ exports[`<PublicationBlock /> should match the snapshot 1`] = `
         Playtest:
       </strong>
        
-      false
+      true
     </p>
     <p
       className="publication-block-official"
@@ -46,7 +46,7 @@ exports[`<PublicationBlock /> should match the snapshot 1`] = `
         Official:
       </strong>
        
-      true
+      false
     </p>
   </div>
 </div>
@@ -59,7 +59,7 @@ exports[`<PublicationBlock /> with showAdditionalDetails: true should match the 
   <p
     className="publication-block-name"
   >
-    The Flumph Fancier's Handbook
+    Spectres of Flumph Fortress
   </p>
   <div
     className="publication-block-details"
@@ -71,7 +71,7 @@ exports[`<PublicationBlock /> with showAdditionalDetails: true should match the 
         Publisher:
       </strong>
        
-      Wizards of the Coast
+      Spelljammer Publishing
     </p>
     <p
       className="publication-block-publication-date"
@@ -80,7 +80,7 @@ exports[`<PublicationBlock /> with showAdditionalDetails: true should match the 
         Publication Date:
       </strong>
        
-      1977-05-25
+      2013-08-15
     </p>
     <p
       className="publication-block-playtest"
@@ -89,7 +89,7 @@ exports[`<PublicationBlock /> with showAdditionalDetails: true should match the 
         Playtest:
       </strong>
        
-      false
+      true
     </p>
     <p
       className="publication-block-official"
@@ -98,7 +98,7 @@ exports[`<PublicationBlock /> with showAdditionalDetails: true should match the 
         Official:
       </strong>
        
-      true
+      false
     </p>
   </div>
 </div>

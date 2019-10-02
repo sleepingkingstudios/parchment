@@ -10,7 +10,7 @@ import {
   formatSchoolAndLevel,
 } from '../../utils';
 
-const spell = spellsData[0];
+const spell = Object.assign({}, spellsData[0], { sourceId: null, sourceType: null });
 
 describe('<SpellBlock />', () => {
   const defaultProps = { spell };
@@ -28,16 +28,6 @@ describe('<SpellBlock />', () => {
 
     expect(nameElement).toHaveDisplayName('p');
     expect(nameElement).toHaveText(spell.name);
-  });
-
-  it('should render the spell source', () => {
-    const rendered = shallow(<SpellBlock {...defaultProps} />);
-    const sourceElement = rendered.find('.spell-block-source');
-
-    expect(sourceElement).toHaveDisplayName('p');
-    expect(sourceElement).toContainReact(
-      <SpellSourceLink source={undefined} sourceLink={undefined} />,
-    );
   });
 
   it('should render the spell level and school', () => {
@@ -71,7 +61,7 @@ describe('<SpellBlock />', () => {
     const rendered = shallow(<SpellBlock {...defaultProps} />);
     const statBlock = rendered.find('.spell-block-stats');
     const componentsElement = statBlock.find('.spell-block-components');
-    const expected = formatComponents(spell);
+    const expected = formatComponents(spell, true);
 
     expect(componentsElement).toHaveDisplayName('p');
     expect(componentsElement).toHaveText(`Components: ${expected}`);
@@ -99,6 +89,30 @@ describe('<SpellBlock />', () => {
     const rendered = shallow(<SpellBlock {...defaultProps} />);
 
     expect(rendered).toMatchSnapshot();
+  });
+
+  describe('with a spell with no source', () => {
+    const spellWithoutSource = Object.assign({}, spell, {
+      source: null,
+      sourceType: null,
+    });
+    const props = { ...defaultProps, spell: spellWithoutSource };
+
+    it('should render the spell source', () => {
+      const rendered = shallow(<SpellBlock {...props} />);
+      const sourceElement = rendered.find('.spell-block-source');
+
+      expect(sourceElement).toHaveDisplayName('p');
+      expect(sourceElement).toContainReact(
+        <SpellSourceLink source={undefined} sourceLink={undefined} />,
+      );
+    });
+
+    it('should be match the snapshot', () => {
+      const rendered = shallow(<SpellBlock {...props} />);
+
+      expect(rendered).toMatchSnapshot();
+    });
   });
 
   describe('with a spell with a source', () => {
