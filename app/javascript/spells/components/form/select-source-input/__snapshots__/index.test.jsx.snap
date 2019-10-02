@@ -12,23 +12,35 @@ exports[`<SelectSpellSourceInput /> with many sources should match the snapshot 
         "label": "Publications",
         "value": Array [
           Object {
-            "label": "The Flumph Fancier's Handbook",
-            "value": "Publication 7edf3a01-da19-475e-8e31-3f40c77acc62",
+            "label": "Spectres of Flumph Fortress",
+            "value": "Publication 38a6666f-d3eb-4853-bd0a-add4d8ec369a",
           },
           Object {
-            "label": "Unearthed Arcana - The Flumph Mage",
-            "value": "Publication cdf0f062-8f68-4b66-9f38-ad1d30f75272",
+            "label": "Crime in Flumphtownville",
+            "value": "Publication e34f5897-e225-47f5-a4fb-13fa6099edc5",
           },
           Object {
             "label": "Secrets of the Flumph",
-            "value": "Publication 0e25f76d-9d8a-41b1-8b6d-7918a1a1b3f5",
+            "value": "Publication 4a0db3d6-0477-4ef0-9584-7723ffe2efd3",
+          },
+          Object {
+            "label": "The Flumph Fancier's Handbook",
+            "value": "Publication da08708e-0505-4819-bc69-00b6589a4e4f",
+          },
+          Object {
+            "label": "Treasure of the Flumph Prime Minister",
+            "value": "Publication ac056f66-9dc8-435d-b251-67f46914e93c",
+          },
+          Object {
+            "label": "Unearthed Arcana: Flumph Magic",
+            "value": "Publication a8aab239-365d-4f57-b79b-9ed7053080ba",
           },
         ],
       },
     ]
   }
   validStatus={null}
-  value="Publication 7edf3a01-da19-475e-8e31-3f40c77acc62"
+  value="Publication 38a6666f-d3eb-4853-bd0a-add4d8ec369a"
 />
 `;
 

@@ -129,7 +129,7 @@ RSpec.describe Operations::Associations::FindManyPolymorphicQuery do
 
         it 'should return a passing result' do
           expect(operation.call spells)
-            .to be_a_passing_result.with_value(expected)
+            .to be_a_passing_result.with_value(contain_exactly(*expected))
         end
 
         # rubocop:disable RSpec/NestedGroups

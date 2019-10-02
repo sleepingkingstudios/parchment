@@ -37,3 +37,18 @@ class Publication < ApplicationRecord
     !playtest && publisher_name == 'Wizards of the Coast'
   end
 end
+
+# == Schema Information
+#
+# Table name: publications
+#
+#  id               :uuid             not null, primary key
+#  abbreviation     :string           not null
+#  name             :string           default(""), not null
+#  playtest         :boolean          not null
+#  publication_date :date             not null
+#  publisher_name   :string           default(""), not null
+#  slug             :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#

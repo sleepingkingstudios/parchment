@@ -1,0 +1,43 @@
+---
+- name:             Spectres of Flumph Fortress
+  id:               38a6666f-d3eb-4853-bd0a-add4d8ec369a
+  abbreviation:     sff
+  slug:             spectres-flumph-fortress
+  publisher_name:   Spelljammer Publishing
+  publication_date: '2013-08-15'
+  playtest:         true
+- name:             Crime in Flumphtownville
+  id:               e34f5897-e225-47f5-a4fb-13fa6099edc5
+  abbreviation:     cif
+  slug:             crime-in-flumphtownville
+  publisher_name:   Spelljammer Publishing
+  publication_date: '2013-08-20'
+  playtest:         false
+- name:             Secrets of the Flumph
+  id:               4a0db3d6-0477-4ef0-9584-7723ffe2efd3
+  abbreviation:     sf
+  slug:             secrets-flumph
+  publisher_name:   Spelljammer Publishing
+  publication_date: '2013-11-19'
+  playtest:         false
+- name:             The Flumph Fancier's Handbook
+  id:               da08708e-0505-4819-bc69-00b6589a4e4f
+  abbreviation:     ffh
+  slug:             flumph-fanciers-handbook
+  publisher_name:   Wizards of the Coast
+  publication_date: '2014-08-19'
+  playtest:         false
+- name:             Treasure of the Flumph Prime Minister
+  id:               ac056f66-9dc8-435d-b251-67f46914e93c
+  abbreviation:     tfpm
+  slug:             treasure-flumph-prime-minister
+  publisher_name:   Wizards of the Coast
+  publication_date: '2014-08-19'
+  playtest:         false
+- name:             "Unearthed Arcana: Flumph Magic"
+  id:               a8aab239-365d-4f57-b79b-9ed7053080ba
+  abbreviation:     uafm
+  slug:             unearthed-arcana-flumph-magic
+  publisher_name:   Wizards of the Coast
+  publication_date: '2014-08-20'
+  playtest:         true

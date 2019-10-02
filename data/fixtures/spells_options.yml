@@ -1,0 +1,4 @@
+---
+mappings:
+  - type: trim_paragraphs
+    options: { property: description }
