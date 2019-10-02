@@ -19,6 +19,15 @@ module Fixtures
     Builder.new(record_class, environment: environment).create(count: count)
   end
 
+  def self.exist?(record_class, environment: 'fixtures')
+    resource_name = record_class.name.underscore.pluralize
+
+    Fixtures::Loader.new(
+      environment:   environment,
+      resource_name: resource_name
+    ).exist?
+  end
+
   def self.read(record_class, count: nil, environment: 'fixtures')
     Builder.new(record_class, environment: environment).read(count: count)
   end

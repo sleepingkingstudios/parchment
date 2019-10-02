@@ -26,6 +26,10 @@ module Fixtures
       self
     end
 
+    def exist?
+      data_dir_exists? || data_file_exists?
+    end
+
     private
 
     def data_dir_exists?

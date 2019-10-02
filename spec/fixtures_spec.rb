@@ -154,6 +154,55 @@ RSpec.describe Fixtures do
     end
   end
 
+  describe '::exist?' do
+    let(:record_class)  { Publication }
+    let(:resource_name) { record_class.name.underscore.pluralize }
+    let(:loader) do
+      instance_double(described_class::Loader, exist?: nil)
+    end
+
+    before(:example) do
+      allow(described_class::Loader).to receive(:new).and_return(loader)
+    end
+
+    it 'should define the class method' do
+      expect(described_class)
+        .to respond_to(:exist?)
+        .with(1).argument
+        .and_keywords(:environment)
+    end
+
+    it 'should instantiate a loader' do
+      described_class.exist?(record_class)
+
+      expect(described_class::Loader)
+        .to have_received(:new)
+        .with(environment: 'fixtures', resource_name: resource_name)
+    end
+
+    it 'should call Loader#exist?' do
+      described_class.exist?(record_class)
+
+      expect(loader).to have_received(:exist?).with(no_args)
+    end
+
+    context 'when the fixtures do not exist' do
+      before(:example) do
+        allow(loader).to receive(:exist?).and_return(false)
+      end
+
+      it { expect(described_class.exist?(record_class)).to be false }
+    end
+
+    context 'when the fixtures exist' do
+      before(:example) do
+        allow(loader).to receive(:exist?).and_return(true)
+      end
+
+      it { expect(described_class.exist?(record_class)).to be true }
+    end
+  end
+
   describe '::read' do
     let(:record_class) { Publication }
     let(:data) do

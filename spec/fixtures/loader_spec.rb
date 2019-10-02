@@ -264,6 +264,39 @@ RSpec.describe Fixtures::Loader do
     end
   end
 
+  # rubocop:disable RSpec/SubjectStub
+  describe '#exist?' do
+    it { expect(loader).to respond_to(:exist?).with(0).arguments }
+
+    context 'when the data does not exist' do
+      before(:example) do
+        allow(loader).to receive(:data_dir_exists?).and_return(false)
+        allow(loader).to receive(:data_file_exists?).and_return(false)
+      end
+
+      it { expect(loader.exist?).to be false }
+    end
+
+    context 'when the data directory exists' do
+      before(:example) do
+        allow(loader).to receive(:data_dir_exists?).and_return(true)
+        allow(loader).to receive(:data_file_exists?).and_return(false)
+      end
+
+      it { expect(loader.exist?).to be true }
+    end
+
+    context 'when the data file exists' do
+      before(:example) do
+        allow(loader).to receive(:data_dir_exists?).and_return(false)
+        allow(loader).to receive(:data_file_exists?).and_return(true)
+      end
+
+      it { expect(loader.exist?).to be true }
+    end
+  end
+  # rubocop:enable RSpec/SubjectStub
+
   describe '#environment' do
     include_examples 'should define reader', :environment, -> { environment }
   end
