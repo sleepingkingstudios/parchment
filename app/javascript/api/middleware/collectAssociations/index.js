@@ -17,6 +17,8 @@ const findAssociation = ({
 
   const associationData = data[key];
 
+  if (!exists(associationData)) { return undefined; }
+
   return associationData.find(item => (item.id === foreignKey));
 };
 
