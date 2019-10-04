@@ -148,9 +148,21 @@ class ApiRequest {
       const response = await processResponse(rawResponse);
 
       if (response.ok) {
-        handleSuccess({ dispatch, getState, response });
+        const { onSuccess } = params;
+
+        if (onSuccess) {
+          onSuccess(handleSuccess)({ dispatch, getState, response });
+        } else {
+          handleSuccess({ dispatch, getState, response });
+        }
       } else {
-        handleFailure({ dispatch, getState, response });
+        const { onFailure } = params;
+
+        if (onFailure) {
+          onFailure(handleFailure)({ dispatch, getState, response });
+        } else {
+          handleFailure({ dispatch, getState, response });
+        }
       }
     };
   }
