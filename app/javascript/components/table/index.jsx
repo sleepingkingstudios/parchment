@@ -5,31 +5,54 @@ import TableHeader from './header';
 import TableMessage from './message';
 import TableRow from './row';
 
-const buildBody = ({ columns, data, message }) => {
+const buildBody = (props) => {
+  const { columns, data, message } = props;
+
   if (data.length === 0) {
     return (
       <TableMessage {...{ columns, message }} />
     );
   }
 
+  const { cellProps } = props;
+
   return data.map(item => (
-    <TableRow key={item.id} {...{ columns, item }} />
+    <TableRow key={item.id} {...{ columns, item, cellProps }} />
   ));
 };
 
-const Table = ({ columns, data, message }) => (
-  <table className="table">
-    <TableHeader columns={columns} />
+const Table = (props) => {
+  const {
+    cellProps,
+    columns,
+    data,
+    message,
+  } = props;
 
-    <tbody>
-      { buildBody({ columns, data, message }) }
-    </tbody>
-  </table>
-);
+  return (
+    <table className="table">
+      <TableHeader columns={columns} />
 
-Table.defaultProps = {};
+      <tbody>
+        {
+          buildBody({
+            cellProps,
+            columns,
+            data,
+            message,
+          })
+        }
+      </tbody>
+    </table>
+  );
+};
+
+Table.defaultProps = {
+  cellProps: {},
+};
 
 Table.propTypes = {
+  cellProps: PropTypes.object, /* eslint-disable-line react/forbid-prop-types */
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   message: PropTypes.string.isRequired,

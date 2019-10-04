@@ -9,7 +9,7 @@ import {
   FAILURE,
   SUCCESS,
 } from '../../../api/status';
-import { hooks } from '../../store/indexFindSpells';
+import { hooks, request } from '../../store/indexFindSpells';
 
 jest.mock('../../store/indexFindSpells');
 
@@ -96,6 +96,27 @@ describe('IndexSpellsTable', () => {
 
       expect(rendered).toHaveDisplayName('SpellsTable');
       expect(rendered).toHaveProp({ spells });
+    });
+
+    it('should pass the onDelete handler to the Spells table', () => {
+      const inner = jest.fn();
+      const { data } = state;
+      const { spells } = data;
+      const wrapper = shallow(<IndexSpellsTable {...defaultProps} />);
+      const rendered = wrapper
+        .find('StatusSwitch')
+        .renderProp('renderSuccess')({ spells });
+      const handler = rendered.prop('onDelete');
+      const dispatch = jest.fn();
+      const getState = jest.fn();
+
+      expect(typeof handler).toEqual('function');
+
+      request.performRequest.mockImplementationOnce(() => inner);
+
+      handler({ dispatch, getState });
+
+      expect(inner).toHaveBeenCalledWith(dispatch, getState);
     });
   });
 });

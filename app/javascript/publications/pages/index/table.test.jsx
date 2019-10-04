@@ -9,7 +9,7 @@ import {
   FAILURE,
   SUCCESS,
 } from '../../../api/status';
-import { hooks } from '../../store/indexFindPublications';
+import { hooks, request } from '../../store/indexFindPublications';
 
 jest.mock('../../store/indexFindPublications');
 
@@ -96,6 +96,27 @@ describe('IndexPublicationsTable', () => {
 
       expect(rendered).toHaveDisplayName('PublicationsTable');
       expect(rendered).toHaveProp({ publications });
+    });
+
+    it('should pass the onDelete handler to the Publications table', () => {
+      const inner = jest.fn();
+      const { data } = state;
+      const { spells } = data;
+      const wrapper = shallow(<IndexPublicationsTable {...defaultProps} />);
+      const rendered = wrapper
+        .find('StatusSwitch')
+        .renderProp('renderSuccess')({ spells });
+      const handler = rendered.prop('onDelete');
+      const dispatch = jest.fn();
+      const getState = jest.fn();
+
+      expect(typeof handler).toEqual('function');
+
+      request.performRequest.mockImplementationOnce(() => inner);
+
+      handler({ dispatch, getState });
+
+      expect(inner).toHaveBeenCalledWith(dispatch, getState);
     });
   });
 });

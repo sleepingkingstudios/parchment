@@ -34,9 +34,9 @@ describe('<TableRow />', () => {
   it('should render the item properties', () => {
     const rendered = shallow(<TableRow {...defaultProps} />);
 
-    columns.forEach((column) => {
+    columns.slice(0, -1).forEach((column) => {
       const { prop } = column;
-      const key = `${rocket.id}-${column.prop}`;
+      const key = `${rocket.id}-${prop}`;
       const value = expectedValues[prop];
       const expected = (
         <td key={key}>
@@ -45,6 +45,29 @@ describe('<TableRow />', () => {
       );
 
       expect(rendered).toContainReact(expected);
+    });
+  });
+
+  it('should render the item component', () => {
+    const rendered = shallow(<TableRow {...defaultProps} />);
+    const cell = rendered.find('td').at(columns.length - 1);
+    const button = cell.find('button');
+
+    expect(button).toExist();
+    expect(button).toHaveText('Launch');
+  });
+
+  describe('with cellProps: object', () => {
+    const cellProps = { message: 'Abort' };
+    const props = { ...defaultProps, cellProps };
+
+    it('should render the item component', () => {
+      const rendered = shallow(<TableRow {...props} />);
+      const cell = rendered.find('td').at(columns.length - 1);
+      const button = cell.find('button');
+
+      expect(button).toExist();
+      expect(button).toHaveText('Abort');
     });
   });
 });

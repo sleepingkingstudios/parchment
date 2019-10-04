@@ -47,5 +47,48 @@ describe('<SpellsTableActions />', () => {
     expect(link).toExist();
     expect(link).toHaveProp('onClick', performRequest);
     expect(link).toHaveProp('children', 'Delete');
+
+    expect(hooks.useDeleteData).toHaveBeenCalledWith({
+      onSuccess: expect.any(Function),
+      wildcards: { id },
+    });
+  });
+
+  describe('with onDelete: function', () => {
+    const onDelete = jest.fn();
+    const props = { ...defaultProps, onDelete };
+
+    beforeEach(() => { onDelete.mockClear(); });
+
+    it('should render the delete link', () => {
+      const rendered = shallow(<SpellsTableActions {...props} />);
+      const link = rendered.find('Button');
+
+      expect(link).toExist();
+      expect(link).toHaveProp('onClick', performRequest);
+      expect(link).toHaveProp('children', 'Delete');
+
+      expect(hooks.useDeleteData).toHaveBeenCalledWith({
+        onSuccess: expect.any(Function),
+        wildcards: { id },
+      });
+    });
+
+    it('should wrap onDelete as middleware', () => {
+      hooks.useDeleteData.mockImplementation(({ onSuccess }) => onSuccess);
+
+      const rendered = shallow(<SpellsTableActions {...props} />);
+      const link = rendered.find('Button');
+      const handler = link.prop('onClick');
+      const next = jest.fn();
+      const args = { dispatch: jest.fn(), getState: jest.fn(), response: {} };
+
+      expect(typeof handler).toEqual('function');
+
+      handler(next)(args);
+
+      expect(next).toHaveBeenCalledWith(args);
+      expect(onDelete).toHaveBeenCalledWith(args);
+    });
   });
 });

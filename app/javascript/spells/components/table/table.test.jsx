@@ -6,7 +6,8 @@ import columns from './columns';
 import { spellsData } from '../../fixtures';
 
 describe('<SpellsTable />', () => {
-  const defaultProps = {};
+  const onDelete = jest.fn();
+  const defaultProps = { onDelete };
   const emptyMessage = 'There are no spells matching the criteria.';
 
   describe('with spells: empty Array', () => {
@@ -20,6 +21,7 @@ describe('<SpellsTable />', () => {
       expect(table).toHaveProp('columns', columns);
       expect(table).toHaveProp('data', []);
       expect(table).toHaveProp('message', emptyMessage);
+      expect(table).toHaveProp('cellProps', { onDelete });
     });
 
     it('should match the snapshot', () => {
@@ -39,6 +41,7 @@ describe('<SpellsTable />', () => {
       expect(table).toExist();
       expect(table).toHaveProp('columns', columns);
       expect(table).toHaveProp('data', spellsData);
+      expect(table).toHaveProp('cellProps', { onDelete });
     });
 
     it('should match the snapshot', () => {

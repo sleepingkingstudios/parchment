@@ -2,7 +2,7 @@ import React from 'react';
 
 import StatusSwitch from '../../../components/status-switch';
 import { SpellsTable } from '../../components/table';
-import { hooks } from '../../store/indexFindSpells';
+import { hooks, request } from '../../store/indexFindSpells';
 
 const renderFailure = () => (
   <p>Unable to load spells data from the server.</p>
@@ -11,6 +11,10 @@ const renderPending = () => (
   <p>Loading spells data from the server...</p>
 );
 const { useEndpoint } = hooks;
+const { performRequest } = request;
+const onDelete = ({ dispatch, getState }) => {
+  performRequest()(dispatch, getState);
+};
 
 const IndexSpellsTable = () => {
   const { data, status } = useEndpoint();
@@ -21,7 +25,7 @@ const IndexSpellsTable = () => {
       renderFailure={renderFailure}
       renderInitialized={renderPending}
       renderPending={renderPending}
-      renderSuccess={() => (<SpellsTable spells={spells} />)}
+      renderSuccess={() => (<SpellsTable spells={spells} onDelete={onDelete} />)}
       status={status}
     />
   );
