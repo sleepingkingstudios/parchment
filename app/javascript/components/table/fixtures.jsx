@@ -1,4 +1,11 @@
+import React from 'react';
+
 import { humanizeList } from '../../utils/array';
+import { valueOrDefault } from '../../utils/object';
+
+export const LaunchButton = ({ message }) => (
+  <button type="button">{ valueOrDefault(message, 'Launch')}</button>
+);
 
 export const formatCrewCapacity = (item) => {
   const count = item.crewCapacity;
@@ -30,6 +37,11 @@ export const columns = [
   {
     label: 'Retired',
     prop: 'retired',
+  },
+  {
+    label: '',
+    prop: 'launch',
+    value: LaunchButton,
   },
 ];
 

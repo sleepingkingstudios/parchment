@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const cellValue = (column, item) => {
-  if (typeof column.value === 'function') { return column.value(item); }
+const cellValue = (column, item, cellProps) => {
+  if (typeof column.value === 'function') {
+    const props = Object.assign({}, item, cellProps);
+
+    return column.value(props);
+  }
 
   const value = item[column.prop];
 
@@ -11,23 +15,26 @@ const cellValue = (column, item) => {
   return value;
 };
 
-const buildTableCells = (columns, item) => (
+const buildTableCells = (columns, item, cellProps) => (
   columns.map(column => (
     <td key={`${item.id}-${column.prop}`}>
-      { cellValue(column, item) }
+      { cellValue(column, item, cellProps) }
     </td>
   ))
 );
 
-const TableRow = ({ columns, item }) => (
+const TableRow = ({ cellProps, columns, item }) => (
   <tr>
-    { buildTableCells(columns, item) }
+    { buildTableCells(columns, item, cellProps) }
   </tr>
 );
 
-TableRow.defaultProps = {};
+TableRow.defaultProps = {
+  cellProps: {},
+};
 
 TableRow.propTypes = {
+  cellProps: PropTypes.object, /* eslint-disable-line react/forbid-prop-types */
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   item: PropTypes.object.isRequired, /* eslint-disable-line react/forbid-prop-types */
 };

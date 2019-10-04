@@ -2,6 +2,7 @@
 
 exports[`<SpellsTable /> with spells: Array with many items should match the snapshot 1`] = `
 <Table
+  cellProps={Object {}}
   columns={
     Array [
       Object {
@@ -126,6 +127,7 @@ When you cast this spell, you can elect to cause its magic to operate in the rev
 
 exports[`<SpellsTable /> with spells: empty Array should match the snapshot 1`] = `
 <Table
+  cellProps={Object {}}
   columns={
     Array [
       Object {
