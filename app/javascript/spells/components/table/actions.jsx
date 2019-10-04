@@ -7,8 +7,16 @@ import { hooks } from '../../store/deleteSpell';
 
 const { useDeleteData } = hooks;
 
-const SpellsTableActions = ({ id }) => {
-  const performRequest = useDeleteData({ wildcards: { id } });
+const SpellsTableActions = ({ id, onDelete }) => {
+  const onSuccess = next => (props) => {
+    next(props);
+
+    onDelete(props);
+  };
+  const deleteSpell = useDeleteData({
+    onSuccess,
+    wildcards: { id },
+  });
 
   return (
     <div className="spell-actions">
@@ -29,7 +37,7 @@ const SpellsTableActions = ({ id }) => {
         Update
       </LinkButton>
       <Button
-        onClick={performRequest}
+        onClick={deleteSpell}
         link
         buttonSize="sm"
         buttonStyle="danger"
@@ -40,10 +48,13 @@ const SpellsTableActions = ({ id }) => {
   );
 };
 
-SpellsTableActions.defaultProps = {};
+SpellsTableActions.defaultProps = {
+  onDelete: () => {},
+};
 
 SpellsTableActions.propTypes = {
   id: PropTypes.string.isRequired,
+  onDelete: PropTypes.func,
 };
 
 export default SpellsTableActions;
