@@ -5,8 +5,9 @@ import PublicationsTable from './index';
 import columns from './columns';
 import { publicationsData } from '../../fixtures';
 
-describe('<SpellsTable />', () => {
-  const defaultProps = {};
+describe('<PublicationsTable />', () => {
+  const onDelete = jest.fn();
+  const defaultProps = { onDelete };
   const emptyMessage = 'There are no publications matching the criteria.';
 
   describe('with publications: empty Array', () => {
@@ -20,6 +21,7 @@ describe('<SpellsTable />', () => {
       expect(table).toHaveProp('columns', columns);
       expect(table).toHaveProp('data', []);
       expect(table).toHaveProp('message', emptyMessage);
+      expect(table).toHaveProp('cellProps', { onDelete });
     });
   });
 
@@ -33,6 +35,7 @@ describe('<SpellsTable />', () => {
       expect(table).toExist();
       expect(table).toHaveProp('columns', columns);
       expect(table).toHaveProp('data', publicationsData);
+      expect(table).toHaveProp('cellProps', { onDelete });
     });
   });
 });

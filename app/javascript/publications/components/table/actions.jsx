@@ -7,8 +7,16 @@ import { hooks } from '../../store/deletePublication';
 
 const { useDeleteData } = hooks;
 
-const PublicationsTableActions = ({ id }) => {
-  const performRequest = useDeleteData({ wildcards: { id } });
+const PublicationsTableActions = ({ id, onDelete }) => {
+  const onSuccess = next => (props) => {
+    next(props);
+
+    onDelete(props);
+  };
+  const deletePublication = useDeleteData({
+    onSuccess,
+    wildcards: { id },
+  });
 
   return (
     <div className="publication-actions">
@@ -29,7 +37,7 @@ const PublicationsTableActions = ({ id }) => {
         Update
       </LinkButton>
       <Button
-        onClick={performRequest}
+        onClick={deletePublication}
         link
         buttonSize="sm"
         buttonStyle="danger"
@@ -40,10 +48,13 @@ const PublicationsTableActions = ({ id }) => {
   );
 };
 
-PublicationsTableActions.defaultProps = {};
+PublicationsTableActions.defaultProps = {
+  onDelete: () => {},
+};
 
 PublicationsTableActions.propTypes = {
   id: PropTypes.string.isRequired,
+  onDelete: PropTypes.func,
 };
 
 export default PublicationsTableActions;
