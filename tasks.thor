@@ -8,7 +8,7 @@ SleepingKingStudios::Tasks.configure do |config|
 
     ci.eslint.update default_files: '"app/javascript/**/*"'
 
-    ci.steps = %i[rspec rubocop simplecov jest eslint]
+    ci.steps = %i[rspec rubocop simplecov jest eslint cucumber]
   end
 
   config.file do |file|
