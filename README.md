@@ -45,6 +45,16 @@ Finally, start up the Rails server with some additional configuration.
 RAILS_SERVE_STATIC_FILES=true RAILS_ENV=production bundle exec rails s
 ```
 
+### Running the Cucumber Features
+
+The cucumber features require an app server running on port 5101 with the Rails environment set to "test". This can be automated via Overmind by running the following command:
+
+```bash
+OVERMIND_PROCFILE=Procfile.test overmind start
+```
+
+Once the test server is active, the features can be run via `bundle exec cucumber`, or the entire CI suite including Cucumber features run via `CI=true bundle exec thor ci:steps`.
+
 ### Attaching A Debugger
 
 To connect to a process, use the `overmind connect` command. For example, to connect to a debugger in a Rails process, run the following command:

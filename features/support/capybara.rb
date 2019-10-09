@@ -19,6 +19,6 @@ Capybara.register_driver :site_prism do |app|
 end
 
 Capybara.configure do |config|
-  config.app_host       = 'http://localhost:5100'
+  config.app_host       = 'http://localhost:5101'
   config.default_driver = :site_prism
 end
