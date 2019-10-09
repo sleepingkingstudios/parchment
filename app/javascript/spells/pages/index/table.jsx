@@ -5,10 +5,14 @@ import { SpellsTable } from '../../components/table';
 import { hooks, request } from '../../store/indexFindSpells';
 
 const renderFailure = () => (
-  <p>Unable to load spells data from the server.</p>
+  <p className="loading-message loading-message-failure">
+    Unable to load spells data from the server.
+  </p>
 );
 const renderPending = () => (
-  <p>Loading spells data from the server...</p>
+  <p className="loading-message loading-message-pending">
+    Loading spells data from the server...
+  </p>
 );
 const { useEndpoint } = hooks;
 const { performRequest } = request;
