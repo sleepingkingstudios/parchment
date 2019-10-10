@@ -13,9 +13,9 @@ module Fixtures::Mappings
 
     def trim_newlines(paragraph)
       # Unordered list.
-      return paragraph if paragraph.start_with?('- ')
+      return paragraph.strip if paragraph.start_with?('- ')
 
-      paragraph.gsub(/\s+/, ' ')
+      paragraph.gsub(/\s+/, ' ').strip
     end
 
     def trim_paragraphs(value)
