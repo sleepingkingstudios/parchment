@@ -82,13 +82,14 @@ export const formField = (WrappedInput, prop, opts = {}) => {
     const { errors, path } = form;
     const propErrors = errors ? errors[prop] : [];
     const actualPath = convertToArray(path);
+    const className = `${generateFieldId({ path, prop, suffix: 'field' })}`;
 
     if (propErrors && propErrors.length > 0) {
       injectedProps.validStatus = 'invalid';
     }
 
     return (
-      <FormField colWidth={colWidth} path={actualPath} prop={prop}>
+      <FormField className={className} colWidth={colWidth} path={actualPath} prop={prop}>
         <InputClass form={form} {...injectedProps} />
         { errorFeedback(propErrors) }
       </FormField>

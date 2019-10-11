@@ -1,6 +1,5 @@
-import {
-  convertToArray,
-} from '../../utils/array';
+import { convertToArray } from '../../utils/array';
+import { valueOrDefault } from '../../utils/object';
 import {
   camelize,
   underscore,
@@ -24,14 +23,17 @@ export const formatErrors = (errors) => {
   return formatted;
 };
 
-export const generateFieldId = ({ inputId, path, prop }) => {
+export const generateFieldId = (opts) => {
+  const { inputId, path, prop } = opts;
+  const suffix = valueOrDefault(opts.suffix, 'input');
+
   if (inputId) { return inputId; }
 
   const segments = convertToArray(path).slice();
 
   segments.push(prop);
 
-  segments.push('input');
+  segments.push(suffix);
 
   return segments
     .map(str => underscore(str).replace(/_/g, '-'))

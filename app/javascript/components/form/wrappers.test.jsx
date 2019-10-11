@@ -54,6 +54,7 @@ describe('Form component wrappers', () => {
         expect(rendered).toHaveDisplayName('FormField');
         expect(rendered).toHaveProp('path', []);
         expect(rendered).toHaveProp('prop', propName);
+        expect(rendered).toHaveClassName('property-name-field');
       });
 
       it('should render the input', () => {
@@ -87,6 +88,7 @@ describe('Form component wrappers', () => {
         expect(rendered).toHaveDisplayName('FormField');
         expect(rendered).toHaveProp('colWidth', colWidth);
         expect(rendered).toHaveProp('prop', propName);
+        expect(rendered).toHaveClassName('property-name-field');
       });
 
       it('should render the input', () => {
@@ -155,10 +157,12 @@ describe('Form component wrappers', () => {
       it('should wrap the component in a FormField', () => {
         const Wrapped = formField(FormInput, propName);
         const rendered = shallow(<Wrapped form={form} />);
+        const className = 'weapons-swords-japanese-property-name-field';
 
         expect(rendered).toHaveDisplayName('FormField');
         expect(rendered).toHaveProp('path', path);
         expect(rendered).toHaveProp('prop', propName);
+        expect(rendered).toHaveClassName(className);
       });
     });
 
@@ -169,10 +173,12 @@ describe('Form component wrappers', () => {
       it('should wrap the component in a FormField', () => {
         const Wrapped = formField(FormInput, propName);
         const rendered = shallow(<Wrapped form={form} />);
+        const className = 'sword-property-name-field';
 
         expect(rendered).toHaveDisplayName('FormField');
         expect(rendered).toHaveProp('path', [path]);
         expect(rendered).toHaveProp('prop', propName);
+        expect(rendered).toHaveClassName(className);
       });
     });
   });

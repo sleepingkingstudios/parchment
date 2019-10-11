@@ -139,6 +139,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
   }
 >
   <FormField
+    className="spell-casting-time-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -150,11 +151,11 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
     prop="castingTime"
   >
     <FormGroup
-      className="form-field"
+      className="form-field spell-casting-time-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field spell-casting-time-field"
       >
         <label
           htmlFor="spell-casting-time-input"
@@ -254,6 +255,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
   }
 >
   <FormField
+    className="spell-description-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -265,11 +267,11 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
     prop="description"
   >
     <FormGroup
-      className="form-field"
+      className="form-field spell-description-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field spell-description-field"
       >
         <label
           htmlFor="spell-description-input"
@@ -371,6 +373,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
   }
 >
   <FormField
+    className="spell-duration-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -382,11 +385,11 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
     prop="duration"
   >
     <FormGroup
-      className="form-field"
+      className="form-field spell-duration-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field spell-duration-field"
       >
         <label
           htmlFor="spell-duration-input"
@@ -486,6 +489,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
   }
 >
   <FormField
+    className="spell-level-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -497,11 +501,11 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
     prop="level"
   >
     <FormGroup
-      className="form-field"
+      className="form-field spell-level-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field spell-level-field"
       >
         <label
           htmlFor="spell-level-input"
@@ -608,6 +612,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
   }
 >
   <FormField
+    className="spell-name-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -619,11 +624,11 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
     prop="name"
   >
     <FormGroup
-      className="form-field"
+      className="form-field spell-name-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field spell-name-field"
       >
         <label
           htmlFor="spell-name-input"
@@ -723,6 +728,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
   }
 >
   <FormField
+    className="spell-range-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -734,11 +740,11 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
     prop="range"
   >
     <FormGroup
-      className="form-field"
+      className="form-field spell-range-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field spell-range-field"
       >
         <label
           htmlFor="spell-range-input"
@@ -838,6 +844,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
   }
 >
   <FormField
+    className="spell-ritual-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -849,11 +856,11 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
     prop="ritual"
   >
     <FormGroup
-      className="form-field"
+      className="form-field spell-ritual-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field spell-ritual-field"
       >
         <label
           htmlFor="spell-ritual-input"
@@ -995,6 +1002,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
   }
 >
   <FormField
+    className="spell-school-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -1006,11 +1014,11 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
     prop="school"
   >
     <FormGroup
-      className="form-field"
+      className="form-field spell-school-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field spell-school-field"
       >
         <label
           htmlFor="spell-school-input"
@@ -1268,6 +1276,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
   }
 >
   <FormField
+    className="spell-short-description-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -1279,11 +1288,11 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
     prop="shortDescription"
   >
     <FormGroup
-      className="form-field"
+      className="form-field spell-short-description-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field spell-short-description-field"
       >
         <label
           htmlFor="spell-short-description-input"
@@ -1383,6 +1392,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
   }
 >
   <FormField
+    className="spell-slug-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -1394,11 +1404,11 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
     prop="slug"
   >
     <FormGroup
-      className="form-field"
+      className="form-field spell-slug-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field spell-slug-field"
       >
         <label
           htmlFor="spell-slug-input"
@@ -1498,6 +1508,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
   }
 >
   <FormField
+    className="spell-source-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -1509,11 +1520,11 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
     prop="source"
   >
     <FormGroup
-      className="form-field"
+      className="form-field spell-source-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field spell-source-field"
       >
         <label
           htmlFor="spell-source-input"
