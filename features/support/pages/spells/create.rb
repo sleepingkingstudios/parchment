@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../pages'
-require_relative './form'
+require 'support/pages/spells'
 
 module Features::Pages::Spells
   class Create < SitePrism::Page

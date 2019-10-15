@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require_relative '../pages'
+require 'support/pages'
 
 module Features::Pages
   module FormHelper
-    def fill_attributes(attributes) # rubocop:disable Metrics/AbcSize
+    def fill_attributes(attributes)
       text_inputs.each do |attr_name|
         find_input(attr_name).fill_in(with: attributes[attr_name])
       end
 
       checkbox_inputs.each do |attr_name|
-        find_checkbox_input(attr_name).click if attributes[attr_name]
+        set_checkbox_value(attr_name, attributes[attr_name])
       end
 
       select_inputs.each do |attr_name|
@@ -50,6 +50,13 @@ module Features::Pages
       end
 
       find_input(attr_name).value
+    end
+
+    def set_checkbox_value(attr_name, value)
+      input = find_input(attr_name, visible: false)
+      label = find_checkbox_input(attr_name)
+
+      label.click if input.checked? != value
     end
 
     private

@@ -756,14 +756,14 @@ exports[`<PublicationForm /> fields <SubmitButton /> should match the snapshot 1
             block={true}
             buttonSize="md"
             buttonStyle="primary"
-            className={null}
+            className="form-submit publication-form-submit"
             disabled={false}
             link={false}
             onClick={[Function]}
             outline={true}
           >
             <button
-              className="btn btn-outline-primary btn-block"
+              className="btn btn-outline-primary btn-block form-submit publication-form-submit"
               disabled={false}
               onClick={[Function]}
               type="button"

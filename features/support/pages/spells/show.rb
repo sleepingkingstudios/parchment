@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../pages'
+require 'support/pages/spells'
 
 module Features::Pages::Spells
   class Show < SitePrism::Page

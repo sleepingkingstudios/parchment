@@ -182,7 +182,7 @@ exports[`Form component wrappers formSubmit() should match the snapshot 1`] = `
   block={false}
   buttonSize="md"
   buttonStyle="primary"
-  className={null}
+  className="form-submit"
   disabled={false}
   link={false}
   onClick={[Function]}
@@ -197,7 +197,7 @@ exports[`Form component wrappers formSubmit() with custom properties should matc
   block={false}
   buttonSize="md"
   buttonStyle="dark"
-  className={null}
+  className="form-submit"
   disabled={false}
   link={false}
   onClick={[Function]}

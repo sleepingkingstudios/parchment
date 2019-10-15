@@ -66,4 +66,5 @@ Style/Documentation:
 
 Style/NestedParenthesizedCalls:
   Exclude:
+    - 'features/**/*'
     - 'spec/**/*'

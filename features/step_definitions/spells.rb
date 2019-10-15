@@ -55,7 +55,7 @@ When('I visit the {string} page for spell {string}') do |action, spell_name|
 
   @current_page.load(spell_id: spell_id)
 
-  @current_page.wait_until_loading_message_invisible(wait: 15)
+  @current_page.wait_until_loading_message_invisible
 end
 
 When('I submit the Spell form with invalid attributes') do
@@ -65,7 +65,7 @@ When('I submit the Spell form with invalid attributes') do
 
   @current_page.spell_form.fill_attributes(@spell_attributes)
 
-  @current_page.find_button('Create Spell').click
+  @current_page.spell_form.submit_button.click
 
   sleep 1 # TODO: Remove this once a pending overlay is defined.
 end
@@ -77,7 +77,7 @@ When('I submit the Spell form with valid attributes') do
 
   @current_page.spell_form.fill_attributes(@spell_attributes)
 
-  @current_page.find_button('Create Spell').click
+  @current_page.spell_form.submit_button.click
 
   sleep 1 # TODO: Remove this once a pending overlay is defined.
 end

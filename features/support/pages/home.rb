@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../pages'
+require 'support/pages'
 
 module Features::Pages
   class Home < SitePrism::Page

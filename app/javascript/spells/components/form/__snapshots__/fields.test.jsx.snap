@@ -1724,14 +1724,14 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             block={true}
             buttonSize="md"
             buttonStyle="primary"
-            className={null}
+            className="form-submit spell-form-submit"
             disabled={false}
             link={false}
             onClick={[Function]}
             outline={true}
           >
             <button
-              className="btn btn-outline-primary btn-block"
+              className="btn btn-outline-primary btn-block form-submit spell-form-submit"
               disabled={false}
               onClick={[Function]}
               type="button"

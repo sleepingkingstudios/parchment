@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../../pages'
-require_relative '../form_helper'
+require 'support/pages/form_helper'
+require 'support/pages/spells'
 
 module Features::Pages::Spells
   class Form < SitePrism::Section
@@ -35,6 +35,8 @@ module Features::Pages::Spells
     ].freeze
 
     elements :form_groups, '.form-group'
+
+    element :submit_button, '.spell-form-submit'
 
     private
 
