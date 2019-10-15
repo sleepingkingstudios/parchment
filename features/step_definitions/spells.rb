@@ -36,6 +36,28 @@ def ordinal(int)
   end
 end
 
+When('I visit the {string} page for spell {string}') do |action, spell_name|
+  @current_page = "Features::Pages::Spells::#{action.classify}".constantize.new
+  @spell        = Spell.where(name: spell_name).first
+  spell_id      = @spell&.id || '00000000-0000-0000-0000-000000000000'
+
+  @current_page.load(spell_id: spell_id)
+
+  @current_page.wait_until_loading_message_invisible
+end
+
+When('I click the {string} button for spell {string}') do |button, spell_name|
+  @current_page.wait_until_loading_message_invisible
+
+  @spell = Spell.where(name: spell_name).first
+  rows   = @current_page.table_rows
+  row    = rows.find { |item| item.text.start_with?(spell_name) }
+
+  expect(row).not_to be nil
+
+  row.find_button(button).click
+end
+
 When('I click the {string} link for spell {string}') do |link, spell_name|
   @current_page.wait_until_loading_message_invisible
 
@@ -46,16 +68,6 @@ When('I click the {string} link for spell {string}') do |link, spell_name|
   expect(row).not_to be nil
 
   row.find_link(link).click
-end
-
-When('I visit the {string} page for spell {string}') do |action, spell_name|
-  @current_page = "Features::Pages::Spells::#{action.classify}".constantize.new
-  @spell        = Spell.where(name: spell_name).first
-  spell_id      = @spell&.id || '00000000-0000-0000-0000-000000000000'
-
-  @current_page.load(spell_id: spell_id)
-
-  @current_page.wait_until_loading_message_invisible
 end
 
 When('I submit the Spell form with invalid attributes') do
@@ -108,7 +120,7 @@ Then('the Spells table should be empty') do
   expect(rows.first.text).to be == 'There are no spells matching the criteria.'
 end
 
-Then('the Spells table should display the spell data') do
+Then('the Spells table should display the spells data') do
   @current_page.wait_until_loading_message_invisible
 
   rows = @current_page.table_rows
@@ -120,6 +132,16 @@ Then('the Spells table should display the spell data') do
       satisfy { |row| row.text.start_with?(spell.name) }
     )
   end
+end
+
+Then('the Spells table should not display the data for the spell') do
+  @current_page.wait_until_loading_message_invisible
+
+  rows = @current_page.table_rows
+
+  expect(rows).not_to include(
+    satisfy { |row| row.text.start_with?(@spell.name) }
+  )
 end
 
 Then('the Spell block should display the spell data') do
