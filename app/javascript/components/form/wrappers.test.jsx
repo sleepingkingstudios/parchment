@@ -54,6 +54,7 @@ describe('Form component wrappers', () => {
         expect(rendered).toHaveDisplayName('FormField');
         expect(rendered).toHaveProp('path', []);
         expect(rendered).toHaveProp('prop', propName);
+        expect(rendered).toHaveClassName('property-name-field');
       });
 
       it('should render the input', () => {
@@ -87,6 +88,7 @@ describe('Form component wrappers', () => {
         expect(rendered).toHaveDisplayName('FormField');
         expect(rendered).toHaveProp('colWidth', colWidth);
         expect(rendered).toHaveProp('prop', propName);
+        expect(rendered).toHaveClassName('property-name-field');
       });
 
       it('should render the input', () => {
@@ -155,10 +157,12 @@ describe('Form component wrappers', () => {
       it('should wrap the component in a FormField', () => {
         const Wrapped = formField(FormInput, propName);
         const rendered = shallow(<Wrapped form={form} />);
+        const className = 'weapons-swords-japanese-property-name-field';
 
         expect(rendered).toHaveDisplayName('FormField');
         expect(rendered).toHaveProp('path', path);
         expect(rendered).toHaveProp('prop', propName);
+        expect(rendered).toHaveClassName(className);
       });
     });
 
@@ -169,10 +173,12 @@ describe('Form component wrappers', () => {
       it('should wrap the component in a FormField', () => {
         const Wrapped = formField(FormInput, propName);
         const rendered = shallow(<Wrapped form={form} />);
+        const className = 'sword-property-name-field';
 
         expect(rendered).toHaveDisplayName('FormField');
         expect(rendered).toHaveProp('path', [path]);
         expect(rendered).toHaveProp('prop', propName);
+        expect(rendered).toHaveClassName(className);
       });
     });
   });
@@ -504,7 +510,7 @@ describe('Form component wrappers', () => {
     const value = 'Property Value';
     const data = { propertyName: value };
     const onSubmitAction = jest.fn(() => ({ payload: { ok: true } }));
-    const form = {
+    const defaultForm = {
       data,
       errors: {},
       onSubmitAction,
@@ -536,15 +542,16 @@ describe('Form component wrappers', () => {
 
     it('should render the button', () => {
       const Wrapped = formSubmit(Button);
-      const rendered = shallow(<Wrapped form={form} {...defaultProps} />);
+      const rendered = shallow(<Wrapped form={defaultForm} {...defaultProps} />);
 
       expect(rendered).toHaveDisplayName('Button');
+      expect(rendered).toHaveClassName('form-submit');
       expect(rendered).toHaveProp({ children });
     });
 
     it('should set the onClick event handler', () => {
       const Wrapped = formSubmit(Button);
-      const rendered = shallow(<Wrapped form={form} {...defaultProps} />);
+      const rendered = shallow(<Wrapped form={defaultForm} {...defaultProps} />);
       const { onClick } = rendered.props();
       const preventDefault = jest.fn();
       const event = { preventDefault };
@@ -560,7 +567,7 @@ describe('Form component wrappers', () => {
 
     it('should match the snapshot', () => {
       const Wrapped = formSubmit(Button);
-      const rendered = shallow(<Wrapped form={form} {...defaultProps} />);
+      const rendered = shallow(<Wrapped form={defaultForm} {...defaultProps} />);
 
       expect(rendered).toMatchSnapshot();
     });
@@ -570,7 +577,7 @@ describe('Form component wrappers', () => {
 
       it('should render the button', () => {
         const Wrapped = formSubmit(Button);
-        const rendered = shallow(<Wrapped form={form} {...props} />);
+        const rendered = shallow(<Wrapped form={defaultForm} {...props} />);
         const { buttonStyle } = props;
 
         expect(rendered).toHaveDisplayName('Button');
@@ -580,7 +587,7 @@ describe('Form component wrappers', () => {
 
       it('should match the snapshot', () => {
         const Wrapped = formSubmit(Button);
-        const rendered = shallow(<Wrapped form={form} {...props} />);
+        const rendered = shallow(<Wrapped form={defaultForm} {...props} />);
 
         expect(rendered).toMatchSnapshot();
       });
@@ -593,6 +600,38 @@ describe('Form component wrappers', () => {
         const Wrapped = formSubmit(Button, { displayName });
 
         expect(Wrapped.displayName).toEqual(displayName);
+      });
+    });
+
+    describe('with path: array', () => {
+      const path = ['weapons', 'swords', 'japanese'];
+      const form = { ...defaultForm, path };
+      const className = 'weapons-swords-japanese-form-submit';
+
+      it('should render the button', () => {
+        const Wrapped = formSubmit(Button);
+        const rendered = shallow(<Wrapped form={form} {...defaultProps} />);
+
+        expect(rendered).toHaveDisplayName('Button');
+        expect(rendered).toHaveClassName('form-submit');
+        expect(rendered).toHaveClassName(className);
+        expect(rendered).toHaveProp({ children });
+      });
+    });
+
+    describe('with path: value', () => {
+      const path = 'sword';
+      const form = { ...defaultForm, path };
+      const className = 'sword-form-submit';
+
+      it('should render the button', () => {
+        const Wrapped = formSubmit(Button);
+        const rendered = shallow(<Wrapped form={form} {...defaultProps} />);
+
+        expect(rendered).toHaveDisplayName('Button');
+        expect(rendered).toHaveClassName('form-submit');
+        expect(rendered).toHaveClassName(className);
+        expect(rendered).toHaveProp({ children });
       });
     });
   });

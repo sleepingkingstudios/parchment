@@ -8,7 +8,10 @@ AllCops:
     - 'bin/**/*'
     - 'config/**/*'
     - 'db/schema.rb'
+    - 'features/support/env.rb'
+    - 'lib/tasks/cucumber.rake'
     - 'node_modules/**/*'
+    - 'script/cucumber'
     - 'tmp/**/*'
     - 'vendor/**/*'
 
@@ -58,8 +61,10 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Exclude:
     - 'db/migrate/*'
+    - 'features/**/*'
     - 'spec/**/*'
 
 Style/NestedParenthesizedCalls:
   Exclude:
+    - 'features/**/*'
     - 'spec/**/*'

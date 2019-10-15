@@ -10,7 +10,7 @@ const HomePage = props => (
 
     <ul>
       <li>
-        <Link to="/spells">Spells</Link>
+        <Link className="spells-link" to="/spells">Spells</Link>
       </li>
     </ul>
 
@@ -18,7 +18,9 @@ const HomePage = props => (
 
     <ul>
       <li>
-        <Link to="/publications">Publications</Link>
+        <Link className="publications-link" to="/publications">
+          Publications
+        </Link>
       </li>
     </ul>
   </Page>

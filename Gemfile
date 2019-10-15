@@ -52,6 +52,13 @@ group :development do
 end
 
 group :test do
+  gem 'cucumber', '>= 4.0.0.rc.1'
+  gem 'cucumber-rails', '~> 1.8', require: false
+  gem 'database_cleaner', '~> 1.7'
+  gem 'selenium-webdriver', '~> 3.142'
+  gem 'site_prism', '~> 3.4'
+  gem 'webdrivers'
+
   gem 'rspec', '~> 3.8'
   gem 'rspec-rails', '~> 3.8.2'
   gem 'rspec-sleeping_king_studios',

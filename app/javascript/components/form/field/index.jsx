@@ -22,14 +22,17 @@ const renderLabel = ({ id, label, prop }) => {
   );
 };
 
-const groupClassName = ({ label }) => {
-  if (label === false) { return 'form-field form-field-no-label'; }
+const generateClassName = ({ className, label }) => {
+  if (label === false) {
+    return `form-field form-field-no-label ${className}`.trim();
+  }
 
-  return 'form-field';
+  return `form-field ${className}`.trim();
 };
 
 const FormField = ({
   children,
+  className,
   colWidth,
   inputId,
   label,
@@ -39,7 +42,7 @@ const FormField = ({
   const id = generateFieldId({ inputId, path, prop });
 
   return (
-    <FormGroup className={groupClassName({ label })} colWidth={colWidth}>
+    <FormGroup className={generateClassName({ className, label })} colWidth={colWidth}>
       { renderLabel({ id, label, prop }) }
       { children }
     </FormGroup>
@@ -47,6 +50,7 @@ const FormField = ({
 };
 
 FormField.defaultProps = {
+  className: '',
   colWidth: null,
   inputId: null,
   label: null,
@@ -55,6 +59,7 @@ FormField.defaultProps = {
 
 FormField.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   colWidth: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,

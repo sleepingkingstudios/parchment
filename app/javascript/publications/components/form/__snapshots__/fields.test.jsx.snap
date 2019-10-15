@@ -25,6 +25,7 @@ exports[`<PublicationForm /> fields <AbbreviationField /> should match the snaps
   }
 >
   <FormField
+    className="publication-abbreviation-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -36,11 +37,11 @@ exports[`<PublicationForm /> fields <AbbreviationField /> should match the snaps
     prop="abbreviation"
   >
     <FormGroup
-      className="form-field"
+      className="form-field publication-abbreviation-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field publication-abbreviation-field"
       >
         <label
           htmlFor="publication-abbreviation-input"
@@ -204,6 +205,7 @@ exports[`<PublicationForm /> fields <NameField /> should match the snapshot 1`] 
   }
 >
   <FormField
+    className="publication-name-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -215,11 +217,11 @@ exports[`<PublicationForm /> fields <NameField /> should match the snapshot 1`] 
     prop="name"
   >
     <FormGroup
-      className="form-field"
+      className="form-field publication-name-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field publication-name-field"
       >
         <label
           htmlFor="publication-name-input"
@@ -299,6 +301,7 @@ exports[`<PublicationForm /> fields <PlaytestField /> should match the snapshot 
   }
 >
   <FormField
+    className="publication-playtest-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -310,11 +313,11 @@ exports[`<PublicationForm /> fields <PlaytestField /> should match the snapshot 
     prop="playtest"
   >
     <FormGroup
-      className="form-field"
+      className="form-field publication-playtest-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field publication-playtest-field"
       >
         <label
           htmlFor="publication-playtest-input"
@@ -400,6 +403,7 @@ exports[`<PublicationForm /> fields <PublicationDateField /> should match the sn
   }
 >
   <FormField
+    className="publication-publication-date-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -411,11 +415,11 @@ exports[`<PublicationForm /> fields <PublicationDateField /> should match the sn
     prop="publicationDate"
   >
     <FormGroup
-      className="form-field"
+      className="form-field publication-publication-date-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field publication-publication-date-field"
       >
         <label
           htmlFor="publication-publication-date-input"
@@ -495,6 +499,7 @@ exports[`<PublicationForm /> fields <PublisherNameField /> should match the snap
   }
 >
   <FormField
+    className="publication-publisher-name-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -506,11 +511,11 @@ exports[`<PublicationForm /> fields <PublisherNameField /> should match the snap
     prop="publisherName"
   >
     <FormGroup
-      className="form-field"
+      className="form-field publication-publisher-name-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field publication-publisher-name-field"
       >
         <label
           htmlFor="publication-publisher-name-input"
@@ -590,6 +595,7 @@ exports[`<PublicationForm /> fields <SlugField /> should match the snapshot 1`] 
   }
 >
   <FormField
+    className="publication-slug-field"
     colWidth={null}
     inputId={null}
     label={null}
@@ -601,11 +607,11 @@ exports[`<PublicationForm /> fields <SlugField /> should match the snapshot 1`] 
     prop="slug"
   >
     <FormGroup
-      className="form-field"
+      className="form-field publication-slug-field"
       colWidth={null}
     >
       <div
-        className="form-group col form-field"
+        className="form-group col form-field publication-slug-field"
       >
         <label
           htmlFor="publication-slug-input"
@@ -750,14 +756,14 @@ exports[`<PublicationForm /> fields <SubmitButton /> should match the snapshot 1
             block={true}
             buttonSize="md"
             buttonStyle="primary"
-            className={null}
+            className="form-submit publication-form-submit"
             disabled={false}
             link={false}
             onClick={[Function]}
             outline={true}
           >
             <button
-              className="btn btn-outline-primary btn-block"
+              className="btn btn-outline-primary btn-block form-submit publication-form-submit"
               disabled={false}
               onClick={[Function]}
               type="button"

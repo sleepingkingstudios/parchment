@@ -90,9 +90,10 @@ describe('Form utils', () => {
 
   describe('generateFieldId()', () => {
     const prop = 'propertyName';
-    const expected = 'property-name-input';
 
     it('should generate the field id', () => {
+      const expected = 'property-name-input';
+
       expect(generateFieldId({ prop })).toEqual(expected);
     });
 
@@ -106,9 +107,19 @@ describe('Form utils', () => {
 
     describe('with a path', () => {
       const path = ['weapons', 'swords', 'japanese'];
+      const expected = 'weapons-swords-japanese-property-name-input';
 
       it('should generate the field id', () => {
-        expect(generateFieldId({ path, prop })).toEqual(`${path.join('-')}-${expected}`);
+        expect(generateFieldId({ path, prop })).toEqual(expected);
+      });
+    });
+
+    describe('with a suffix', () => {
+      const suffix = 'field';
+      const expected = 'property-name-field';
+
+      it('should generate the field id', () => {
+        expect(generateFieldId({ prop, suffix })).toEqual(expected);
       });
     });
   });

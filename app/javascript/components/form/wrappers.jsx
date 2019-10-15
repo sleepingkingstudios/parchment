@@ -12,6 +12,14 @@ import { convertToArray } from '../../utils/array';
 import { assign, dig, valueOrDefault } from '../../utils/object';
 import { upperCamelize } from '../../utils/string';
 
+const classNameForSubmit = ({ path }) => {
+  if (path.length === 0) { return 'form-submit'; }
+
+  return `form-submit ${
+    generateFieldId({ path, prop: 'form', suffix: 'submit' })
+  }`;
+};
+
 const defaultMapDataToValue = ({ data, path, prop }) => dig(data, ...path, prop);
 
 const defaultMapValueToData = ({ prop, value }) => assign({}, value, prop);
@@ -82,13 +90,16 @@ export const formField = (WrappedInput, prop, opts = {}) => {
     const { errors, path } = form;
     const propErrors = errors ? errors[prop] : [];
     const actualPath = convertToArray(path);
+    const className = `${generateFieldId(
+      { path: actualPath, prop, suffix: 'field' },
+    )}`;
 
     if (propErrors && propErrors.length > 0) {
       injectedProps.validStatus = 'invalid';
     }
 
     return (
-      <FormField colWidth={colWidth} path={actualPath} prop={prop}>
+      <FormField className={className} colWidth={colWidth} path={actualPath} prop={prop}>
         <InputClass form={form} {...injectedProps} />
         { errorFeedback(propErrors) }
       </FormField>
@@ -133,10 +144,15 @@ export const formSubmit = (WrappedButton, opts = {}) => {
   const FormSubmitWrapper = (props) => {
     const { form, ...injectedProps } = props;
 
-    const { onSubmitAction } = form;
+    const { path, onSubmitAction } = form;
+    const actualPath = convertToArray(path);
+    const className = classNameForSubmit({ path: actualPath });
     const onClick = handleSubmitWith(onSubmitAction);
     const buttonProps = Object.assign(
-      { onClick },
+      {
+        className,
+        onClick,
+      },
       injectedProps,
     );
 

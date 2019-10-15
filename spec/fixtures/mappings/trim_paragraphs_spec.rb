@@ -76,6 +76,21 @@ RSpec.describe Fixtures::Mappings::TrimParagraphs do
       it { expect { mapping.call(data) }.not_to change(data, :dup) }
     end
 
+    describe 'with a Hash with property: string with trailing newline' do
+      let(:description) { "A simple widget.\n" }
+      let(:data) do
+        {
+          'name'        => 'Widget',
+          'description' => description
+        }
+      end
+      let(:expected) { data.merge('description' => description.strip) }
+
+      it { expect(mapping.call(data)).to be == expected }
+
+      it { expect { mapping.call(data) }.not_to change(data, :dup) }
+    end
+
     describe 'with a Hash with property: multi-line string' do
       let(:description) do
         "A simple widget.\nReally, really simple.\nReally."

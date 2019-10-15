@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter as Router, Link } from 'react-router-dom';
+import { MemoryRouter as Router } from 'react-router-dom';
 import { shallow } from 'enzyme';
 
 import HomePage from './index';
@@ -29,13 +29,21 @@ describe('<HomePage />', () => {
 
   it('should render the publications link', () => {
     const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
+    const link = rendered.find('.publications-link');
 
-    expect(rendered).toContainReact(<Link to="/publications">Publications</Link>);
+    expect(link).toExist();
+    expect(link).toHaveDisplayName('Link');
+    expect(link).toHaveProp('to', '/publications');
+    expect(link).toHaveProp('children', 'Publications');
   });
 
   it('should render the spells link', () => {
     const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
+    const link = rendered.find('.spells-link');
 
-    expect(rendered).toContainReact(<Link to="/spells">Spells</Link>);
+    expect(link).toExist();
+    expect(link).toHaveDisplayName('Link');
+    expect(link).toHaveProp('to', '/spells');
+    expect(link).toHaveProp('children', 'Spells');
   });
 });

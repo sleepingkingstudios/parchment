@@ -5,10 +5,14 @@ import { SpellBlock } from '../../components/block';
 import { hooks } from '../../store/showFindSpell';
 
 const renderFailure = () => (
-  <p>Unable to load spell from the server.</p>
+  <p className="loading-message loading-message-failure">
+    Unable to load spell from the server.
+  </p>
 );
 const renderPending = () => (
-  <p>Loading spell from the server...</p>
+  <p className="loading-message loading-message-pending">
+    Loading spell from the server...
+  </p>
 );
 const { useEndpoint } = hooks;
 

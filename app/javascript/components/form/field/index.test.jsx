@@ -39,6 +39,20 @@ describe('<FormField />', () => {
     expect(rendered).toMatchSnapshot();
   });
 
+  describe('with className: value', () => {
+    const props = { ...defaultProps, className: 'custom-class' };
+
+    it('should wrap the contents in a FormGroup', () => {
+      const rendered = shallow(<FormField {...props} />);
+      const { className } = props;
+
+      expect(rendered).toHaveDisplayName('FormGroup');
+      expect(rendered).toHaveClassName('form-field');
+      expect(rendered).toHaveClassName(className);
+      expect(rendered).not.toHaveClassName('form-field-no-label');
+    });
+  });
+
   describe('with colWidth: value', () => {
     const props = { ...defaultProps, colWidth: '6' };
 

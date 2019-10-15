@@ -14,8 +14,12 @@ before_script:
   - cp .rubocop.example .rubocop
   - bundle exec rake db:setup
   - bundle exec rake db:test:prepare
+  - bundle exec rake assets:precompile webpacker:compile
+  - bundle exec rails server --port=5101 --daemon
 script:
   - bundle exec thor ci:steps
+after_script:
+  - kill -9 $(cat tmp/pids/server.pid)
 
 # Travis-CI Configuration
 sudo: false # Enable containerized builds.
@@ -25,4 +29,5 @@ cache:
   directories:
     - node_modules
 addons:
+  chrome: stable
   postgresql: 9.6
