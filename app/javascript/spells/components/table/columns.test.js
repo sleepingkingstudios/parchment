@@ -1,5 +1,4 @@
 import columns from './columns';
-import SpellSourceLink from '../sourceLink';
 import SpellsTableActions from './actions';
 
 describe('Spells table columns', () => {
@@ -7,7 +6,6 @@ describe('Spells table columns', () => {
     const props = columns.map(column => column.prop);
     const expected = [
       'name',
-      'source',
       'school',
       'level',
       'description',
@@ -82,15 +80,6 @@ describe('Spells table columns', () => {
       expect(matching.label).toEqual('School');
       expect(typeof matching.value).toEqual('function');
       expect(matching.value({ school: 'nullamancy' })).toEqual('Nullamancy');
-    });
-  });
-
-  describe('source', () => {
-    it('should have the expected properties', () => {
-      const matching = columns.find(column => (column.prop === 'source'));
-
-      expect(matching.label).toEqual('Source');
-      expect(matching.value).toEqual(SpellSourceLink);
     });
   });
 });
