@@ -27,16 +27,6 @@ describe('<HomePage />', () => {
     expect(rendered.find('Page')).toHaveProp('subtitle', subtitle);
   });
 
-  it('should render the publications link', () => {
-    const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
-    const link = rendered.find('.publications-link');
-
-    expect(link).toExist();
-    expect(link).toHaveDisplayName('Link');
-    expect(link).toHaveProp('to', '/publications');
-    expect(link).toHaveProp('children', 'Publications');
-  });
-
   it('should render the spells link', () => {
     const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
     const link = rendered.find('.spells-link');
