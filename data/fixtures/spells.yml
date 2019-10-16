@@ -1,8 +1,6 @@
 ---
 - name:               Flumph Lantern
   id:                 823dbe98-ef01-4984-b8b2-34c2946091ce
-  source_id:          da08708e-0505-4819-bc69-00b6589a4e4f
-  source_type:        Publication
   slug:               flumph-lantern
   school:             evocation
   level:              0
@@ -27,8 +25,6 @@
     location, the spell immediately ends.
 - name:               Detect Flumph
   id:                 a1ab75a4-83c8-47d2-ada2-8a9bd70341ae
-  source_id:          da08708e-0505-4819-bc69-00b6589a4e4f
-  source_type:        Publication
   slug:               detect-flumph
   school:             divination
   level:              1
@@ -46,8 +42,6 @@
     1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt.
 - name:               Spectral Tentacle
   id:                 161c7a6a-54e0-4082-9e9e-a54950b31318
-  source_id:          a8aab239-365d-4f57-b79b-9ed7053080ba
-  source_type:        Publication
   slug:               spectral-tentacle
   school:             evocation
   level:              2
@@ -71,8 +65,6 @@
     2nd.
 - name:               Magic Circle Against Flumphs
   id:                 07e1e012-7f86-4534-8b02-cf79d2824a9d
-  source_id:          ''
-  source_type:        ''
   slug:               magic-circle-against-flumphs
   school:             abjuration
   level:              3
