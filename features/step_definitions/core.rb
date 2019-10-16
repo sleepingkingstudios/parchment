@@ -9,7 +9,7 @@ def create_page(page)
 end
 
 When('the fixtures are loaded') do
-  [Publication, Spell].each { |klass| Fixtures.create(klass) }
+  [Spell].each { |klass| Fixtures.create(klass) }
 end
 
 When('I open the application') do

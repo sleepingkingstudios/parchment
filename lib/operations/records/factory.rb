@@ -10,7 +10,6 @@ require 'operations/records/destroy_operation'
 require 'operations/records/find_many_operation'
 require 'operations/records/find_matching_operation'
 require 'operations/records/find_one_operation'
-require 'operations/records/find_polymorphic_association_operation'
 require 'operations/records/save_operation'
 require 'operations/records/update_operation'
 
@@ -49,11 +48,6 @@ module Operations::Records
 
     command_class(:find_one) do
       Operations::Records::FindOneOperation.subclass(record_class)
-    end
-
-    command_class(:find_polymorphic_association) do
-      Operations::Records::FindPolymorphicAssociationOperation
-        .subclass(record_class)
     end
 
     command_class(:save) do

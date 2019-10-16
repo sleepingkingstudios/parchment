@@ -18,22 +18,46 @@ RSpec.describe Fixtures::Builder do
     let(:data) do
       [
         {
-          'id'               => '00000000-0000-0000-0000-000000000000',
-          'name'             => 'Star Wars',
-          'publication_date' => '1977-05-25',
-          'publisher_name'   => 'Lucasfilm'
+          'id'                 => '00000000-0000-0000-0000-000000000000',
+          'name'               => 'Fireball',
+          'casting_time'       => '1 action',
+          'description'        => 'A big ball of fire.',
+          'duration'           => 'Instantaneous',
+          'level'              => 3,
+          'range'              => '100 feet',
+          'school'             => 'evocation',
+          'short_description'  => '',
+          'material_component' => '',
+          'somatic_component'  => false,
+          'verbal_component'   => false
         },
         {
-          'id'               => '00000000-0000-0000-0000-000000000001',
-          'name'             => 'The Empire Strikes Back',
-          'publication_date' => '1980-06-20',
-          'publisher_name'   => 'Lucasfilm'
+          'id'                 => '00000000-0000-0000-0000-000000000001',
+          'name'               => 'Lightning Bolt',
+          'casting_time'       => '1 action',
+          'description'        => 'A forking bolt of lightning.',
+          'duration'           => 'Instantaneous',
+          'level'              => 3,
+          'range'              => '100 feet',
+          'school'             => 'evocation',
+          'short_description'  => '',
+          'material_component' => '',
+          'somatic_component'  => false,
+          'verbal_component'   => false
         },
         {
-          'id'               => '00000000-0000-0000-0000-000000000002',
-          'name'             => 'Return of the Jedi',
-          'publication_date' => '1983-05-25',
-          'publisher_name'   => 'Lucasfilm'
+          'id'                 => '00000000-0000-0000-0000-000000000002',
+          'name'               => 'Magic Missile',
+          'casting_time'       => '1 action',
+          'description'        => 'A scintillating bolt of magic.',
+          'duration'           => 'Instantaneous',
+          'level'              => 1,
+          'range'              => '30 feet',
+          'school'             => 'evocation',
+          'short_description'  => '',
+          'material_component' => '',
+          'somatic_component'  => false,
+          'verbal_component'   => false
         }
       ]
     end
@@ -62,7 +86,7 @@ RSpec.describe Fixtures::Builder do
 
   subject(:builder) { described_class.new(record_class) }
 
-  let(:record_class) { Publication }
+  let(:record_class) { Spell }
   let(:environment)  { 'fixtures' }
 
   describe '::new' do
@@ -106,11 +130,11 @@ RSpec.describe Fixtures::Builder do
 
     describe 'with except: array' do
       it 'should delegate to read' do
-        builder.build(except: %w[publication_date])
+        builder.build(except: %w[description])
 
         expect(builder)
           .to have_received(:read)
-          .with(except: %w[publication_date])
+          .with(except: %w[description])
       end
     end
 
@@ -189,11 +213,11 @@ RSpec.describe Fixtures::Builder do
 
     describe 'with except: array' do
       it 'should delegate to read' do
-        builder.create(except: %w[publication_date])
+        builder.create(except: %w[description])
 
         expect(builder)
           .to have_received(:read)
-          .with(except: %w[publication_date])
+          .with(except: %w[description])
       end
     end
 
@@ -366,7 +390,7 @@ RSpec.describe Fixtures::Builder do
 
     describe 'with count: 1' do
       let(:error_message) do
-        'Requested 1 publication, but the data is empty'
+        'Requested 1 spell, but the data is empty'
       end
 
       it 'should raise an error' do
@@ -377,7 +401,7 @@ RSpec.describe Fixtures::Builder do
 
     describe 'with count: 3' do
       let(:error_message) do
-        'Requested 3 publications, but the data is empty'
+        'Requested 3 spells, but the data is empty'
       end
 
       it 'should raise an error' do
@@ -388,13 +412,13 @@ RSpec.describe Fixtures::Builder do
 
     describe 'with except: array' do
       it 'should return the data' do
-        expect(builder.read except: %w[id publication_date]).to be == data
+        expect(builder.read except: %w[id description]).to be == data
       end
     end
 
     describe 'with except: value' do
       it 'should return the data' do
-        expect(builder.read except: 'publication_date').to be == data
+        expect(builder.read except: 'description').to be == data
       end
     end
 
@@ -423,7 +447,7 @@ RSpec.describe Fixtures::Builder do
 
       describe 'with count: 6' do
         let(:error_message) do
-          'Requested 6 publications, but there are only 3 publications'
+          'Requested 6 spells, but there are only 3 spells'
         end
 
         it 'should raise an error' do
@@ -434,21 +458,21 @@ RSpec.describe Fixtures::Builder do
 
       describe 'with except: array' do
         let(:expected) do
-          data.map { |item| item.except('id', 'publication_date') }
+          data.map { |item| item.except('id', 'description') }
         end
 
         it 'should filter the data' do
-          expect(builder.read except: %w[id publication_date]).to be == expected
+          expect(builder.read except: %w[id description]).to be == expected
         end
       end
 
       describe 'with except: value' do
         let(:expected) do
-          data.map { |item| item.except('publication_date') }
+          data.map { |item| item.except('description') }
         end
 
         it 'should filter the data' do
-          expect(builder.read except: 'publication_date').to be == expected
+          expect(builder.read except: 'description').to be == expected
         end
       end
 

@@ -44,13 +44,13 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
     end
 
     context 'when some of the data exists' do
-      let(:record_classes) { [Publication] }
+      let(:record_classes) { [Spell] }
 
       before(:example) do
         allow(Fixtures).to receive(:exist?).and_return(false)
         allow(Fixtures)
           .to receive(:exist?)
-          .with(Publication, environment: directory)
+          .with(Spell, environment: directory)
           .and_return(true)
       end
 
@@ -69,12 +69,7 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
     end
 
     context 'when all of the data exists' do
-      let(:record_classes) do
-        [
-          Publication,
-          Spell
-        ]
-      end
+      let(:record_classes) { [Spell] }
 
       before(:example) do
         allow(Fixtures).to receive(:exist?).and_return(true)
@@ -117,11 +112,11 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
     end
 
     context 'when some of the data exists' do
-      let(:record_classes) { [Publication] }
+      let(:record_classes) { [Spell] }
 
       before(:example) do
         allow(Fixtures).to receive(:exist?).and_return(false)
-        allow(Fixtures).to receive(:exist?).with(Publication).and_return(true)
+        allow(Fixtures).to receive(:exist?).with(Spell).and_return(true)
       end
 
       it 'should load the existing data from /data/fixtures' do
@@ -134,12 +129,7 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
     end
 
     context 'when all of the data exists' do
-      let(:record_classes) do
-        [
-          Publication,
-          Spell
-        ]
-      end
+      let(:record_classes) { [Spell] }
 
       before(:example) do
         allow(Fixtures).to receive(:exist?).and_return(true)

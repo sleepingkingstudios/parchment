@@ -20,13 +20,6 @@
   - #show action
     - `:only` parameter - restrict fields queried/returned
 
-## Publications
-
-- locking slugs
-  - slug_lock field
-  - if false, automatically update slug when name is changed
-    - live update on client (locked checkbox, disables field)
-
 ## Spells
 
 - locking slugs
