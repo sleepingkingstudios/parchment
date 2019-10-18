@@ -377,9 +377,27 @@ RSpec.describe Spell, type: :model do
 
     include_examples 'should validate the presence of', :school, type: String
 
+    include_examples 'should validate the uniqueness of',
+      :slug,
+      attributes: {
+        casting_time: '1 minute',
+        description:  'Example description',
+        duration:     '1 hour',
+        level:        1,
+        name:         'Blessing of Yevon',
+        range:        'Self',
+        school:       'abjuration'
+      }
+
     include_examples 'should validate the presence of', :somatic_component
 
     include_examples 'should validate the presence of', :verbal_component
+
+    context 'when the name is empty' do
+      let(:attributes) { super().merge(name: nil) }
+
+      include_examples 'should validate the presence of', :slug, type: String
+    end
   end
 
   describe '#updated_at' do

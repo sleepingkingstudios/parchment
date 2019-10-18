@@ -8,7 +8,7 @@ RSpec.describe Errors::FailedValidation do
   subject(:error) { described_class.new(record: record) }
 
   let(:attributes) do
-    FactoryBot.attributes_for(:spell, name: nil)
+    FactoryBot.attributes_for(:spell, name: nil, slug: 'anonymous-spell')
   end
   let(:record_class) { Spell }
   let(:record)       { record_class.new(attributes).tap(&:valid?) }
@@ -53,7 +53,9 @@ RSpec.describe Errors::FailedValidation do
     end
 
     context 'when the record has one error' do
-      let(:attributes) { FactoryBot.attributes_for(:spell, name: nil) }
+      let(:attributes) do
+        FactoryBot.attributes_for(:spell, name: nil, slug: 'anonymous-spell')
+      end
 
       it { expect(error.errors).to be == [['name', "can't be blank"]] }
     end
@@ -64,7 +66,8 @@ RSpec.describe Errors::FailedValidation do
           :spell,
           description: nil,
           level:       10,
-          name:        ''
+          name:        '',
+          slug:        'anonymous-spell'
         )
       end
       let(:expected) do
@@ -91,8 +94,10 @@ RSpec.describe Errors::FailedValidation do
     end
 
     context 'when the record has one error' do
-      let(:attributes) { FactoryBot.attributes_for(:spell, name: nil) }
-      let(:expected)   { "#{super()}: name can't be blank" }
+      let(:attributes) do
+        FactoryBot.attributes_for(:spell, name: nil, slug: 'anonymous-spell')
+      end
+      let(:expected) { "#{super()}: name can't be blank" }
 
       it { expect(error.message).to be == expected }
     end
@@ -103,7 +108,8 @@ RSpec.describe Errors::FailedValidation do
           :spell,
           description: nil,
           level:       10,
-          name:        ''
+          name:        '',
+          slug:        'anonymous-spell'
         )
       end
       let(:expected) do
