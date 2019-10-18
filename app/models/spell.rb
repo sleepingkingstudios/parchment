@@ -32,11 +32,6 @@ class Spell < ApplicationRecord
 
   generate_slug :name
 
-  ### Associations
-  belongs_to :source,
-    optional:    true,
-    polymorphic: true
-
   ### Validations
   validates :casting_time, presence: true
   validates :description, presence: true
@@ -112,9 +107,7 @@ end
 #  short_description  :string           default(""), not null
 #  slug               :string           default(""), not null
 #  somatic_component  :boolean          default(FALSE), not null
-#  source_type        :string
 #  verbal_component   :boolean          default(FALSE), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  source_id          :uuid
 #

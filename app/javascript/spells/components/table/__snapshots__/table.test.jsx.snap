@@ -14,11 +14,6 @@ exports[`<SpellsTable /> with spells: Array with many items should match the sna
         "prop": "name",
       },
       Object {
-        "label": "Source",
-        "prop": "source",
-        "value": [Function],
-      },
-      Object {
         "label": "School",
         "prop": "school",
         "value": [Function],
@@ -57,8 +52,6 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
         "shortDescription": "Floating light illuminates 20 feet + 20 feet dim light",
         "slug": "flumph-lantern",
         "somaticComponent": false,
-        "sourceId": "da08708e-0505-4819-bc69-00b6589a4e4f",
-        "sourceType": "Publication",
         "verbalComponent": true,
       },
       Object {
@@ -75,8 +68,6 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
         "shortDescription": "Sense Flumphs within 30 feet",
         "slug": "detect-flumph",
         "somaticComponent": true,
-        "sourceId": "da08708e-0505-4819-bc69-00b6589a4e4f",
-        "sourceType": "Publication",
         "verbalComponent": true,
       },
       Object {
@@ -95,8 +86,6 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
         "shortDescription": "Next weapon attack deals +2d6 radiant damage",
         "slug": "spectral-tentacle",
         "somaticComponent": false,
-        "sourceId": "a8aab239-365d-4f57-b79b-9ed7053080ba",
-        "sourceType": "Publication",
         "verbalComponent": true,
       },
       Object {
@@ -119,8 +108,6 @@ When you cast this spell, you can elect to cause its magic to operate in the rev
         "shortDescription": "Protect 10 ft circle from Flumphs.",
         "slug": "magic-circle-against-flumphs",
         "somaticComponent": true,
-        "sourceId": "",
-        "sourceType": "",
         "verbalComponent": true,
       },
     ]
@@ -141,11 +128,6 @@ exports[`<SpellsTable /> with spells: empty Array should match the snapshot 1`] 
       Object {
         "label": "Name",
         "prop": "name",
-      },
-      Object {
-        "label": "Source",
-        "prop": "source",
-        "value": [Function],
       },
       Object {
         "label": "School",

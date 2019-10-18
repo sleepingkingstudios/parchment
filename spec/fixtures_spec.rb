@@ -30,9 +30,9 @@ RSpec.describe Fixtures do
   end
 
   describe '::build' do
-    let(:record_class) { Publication }
+    let(:record_class) { Spell }
     let(:data) do
-      Array.new(3) { FactoryBot.build(:publication) }
+      Array.new(3) { FactoryBot.build(:spell) }
     end
     let(:builder) do
       instance_double(described_class::Builder, build: data)
@@ -88,19 +88,19 @@ RSpec.describe Fixtures do
 
     describe 'with except: array' do
       it 'should call Builder#build' do
-        described_class.build(record_class, except: %w[publication_date])
+        described_class.build(record_class, except: %w[description])
 
         expect(builder)
           .to have_received(:build)
-          .with(except: %w[publication_date])
+          .with(except: %w[description])
       end
     end
   end
 
   describe '::create' do
-    let(:record_class) { Publication }
+    let(:record_class) { Spell }
     let(:data) do
-      Array.new(3) { FactoryBot.create(:publication) }
+      Array.new(3) { FactoryBot.create(:spell) }
     end
     let(:builder) do
       instance_double(described_class::Builder, create: data)
@@ -155,7 +155,7 @@ RSpec.describe Fixtures do
   end
 
   describe '::exist?' do
-    let(:record_class)  { Publication }
+    let(:record_class)  { Spell }
     let(:resource_name) { record_class.name.underscore.pluralize }
     let(:loader) do
       instance_double(described_class::Loader, exist?: nil)
@@ -204,9 +204,9 @@ RSpec.describe Fixtures do
   end
 
   describe '::read' do
-    let(:record_class) { Publication }
+    let(:record_class) { Spell }
     let(:data) do
-      Array.new(3) { FactoryBot.attributes_for(:publication) }
+      Array.new(3) { FactoryBot.attributes_for(:spell) }
     end
     let(:builder) do
       instance_double(described_class::Builder, read: data)

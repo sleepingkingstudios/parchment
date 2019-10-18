@@ -22,18 +22,9 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    api_resources :publications
-    api_resources :spells do
-      collection do
-        api_resources :sources,
-          as:         'spell_sources',
-          controller: 'spells/sources',
-          only:       :index
-      end
-    end
+    api_resources :spells
   end
 
-  client_resources :publications
   client_resources :spells
 
   root to: 'client#index'

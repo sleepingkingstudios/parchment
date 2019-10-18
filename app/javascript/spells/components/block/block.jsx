@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import SpellSourceLink from '../sourceLink';
 import PlainText from '../../../components/plain-text';
 import { spellType } from '../../entities';
 import {
@@ -33,10 +32,6 @@ const renderAdditionalDetails = ({ spell, showAdditionalDetails }) => {
 const SpellBlock = ({ showAdditionalDetails, spell }) => (
   <div className="spell-block">
     <p className="spell-block-name">{ spell.name }</p>
-
-    <p className="spell-block-source">
-      <SpellSourceLink source={spell.source} sourceType={spell.sourceType} />
-    </p>
 
     <p className="spell-block-level-school">
       { formatSchoolAndLevel(spell) }

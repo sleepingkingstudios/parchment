@@ -253,7 +253,7 @@ RSpec.describe Responders::JsonResponder do
       end
     end
 
-    describe 'with a passing result with a mixed plural resource' do
+    xdescribe 'with a passing result with a mixed plural resource' do
       let(:publication) { FactoryBot.build(:publication) }
       let(:spells) do
         [
@@ -463,7 +463,7 @@ RSpec.describe Responders::JsonResponder do
       end
     end
 
-    describe 'with a passing result with multiple resources' do
+    xdescribe 'with a passing result with multiple resources' do
       let(:publication) { FactoryBot.build(:publication) }
       let(:spells)      { Array.new(3) { FactoryBot.build(:spell) } }
       let(:result) do

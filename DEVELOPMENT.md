@@ -20,26 +20,6 @@
   - #show action
     - `:only` parameter - restrict fields queried/returned
 
-## Fixtures
-
-- unify fixtures between Ruby, JavaScript applications
-- `/data` directory?
-  - subdirectories by environment/context
-  - `/development`, `/test`, `/production`, `/fixtures`, `/srd`
-  - sub-subdirectories (or files) by resource type
-    - `/fixtures/spells`, `/fixtures/publications.yml`
-- directives (optional)
-  - "options" ?
-  - if in subdirectory, `/data/fixtures/spells/_directives.yml`
-  - if in top level, `/data/fixtures/publications_directives.yml`
-
-## Publications
-
-- locking slugs
-  - slug_lock field
-  - if false, automatically update slug when name is changed
-    - live update on client (locked checkbox, disables field)
-
 ## Spells
 
 - locking slugs

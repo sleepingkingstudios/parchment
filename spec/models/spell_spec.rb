@@ -5,21 +5,6 @@ require 'rails_helper'
 require 'support/examples/model_examples'
 
 RSpec.describe Spell, type: :model do
-  shared_context 'when the spell source is a Publication' do
-    let(:publication_attributes) do
-      {
-        name:             "Flumph Fancier's Handbook",
-        playtest:         false,
-        publication_date: Date.new(1982, 7, 9),
-        publisher_name:   'Wizards of the Coast'
-      }
-    end
-    let(:publication) do
-      FactoryBot.create(:publication, publication_attributes)
-    end
-    let(:attributes) { super().merge(source: publication) }
-  end
-
   include Spec::Support::Examples::ModelExamples
 
   subject(:spell) { described_class.new(attributes) }
@@ -340,34 +325,6 @@ RSpec.describe Spell, type: :model do
       :somatic_component,
       default: false,
       value:   true
-  end
-
-  describe '#source' do
-    include_examples 'should have reader', :source, nil
-
-    wrap_context 'when the spell source is a Publication' do
-      it { expect(spell.source).to be == publication }
-    end
-  end
-
-  describe '#source_id' do
-    include_examples 'should have attribute',
-      :source_id,
-      value: '00000000-0000-0000-0000-000000000000'
-
-    wrap_context 'when the spell source is a Publication' do
-      it { expect(spell.source_id).to be == publication.id }
-    end
-  end
-
-  describe '#source_type' do
-    include_examples 'should have attribute',
-      :source_type,
-      value: 'Publication'
-
-    wrap_context 'when the spell source is a Publication' do
-      it { expect(spell.source_type).to be == 'Publication' }
-    end
   end
 
   describe '#valid?' do

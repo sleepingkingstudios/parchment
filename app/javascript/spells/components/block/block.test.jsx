@@ -2,15 +2,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import SpellBlock from './block';
-import SpellSourceLink from '../sourceLink';
-import { publicationsData } from '../../../publications/fixtures';
 import { spellsData } from '../../fixtures';
 import {
   formatComponents,
   formatSchoolAndLevel,
 } from '../../utils';
 
-const spell = Object.assign({}, spellsData[0], { sourceId: null, sourceType: null });
+const spell = spellsData[0];
 
 describe('<SpellBlock />', () => {
   const defaultProps = { spell };
@@ -89,56 +87,6 @@ describe('<SpellBlock />', () => {
     const rendered = shallow(<SpellBlock {...defaultProps} />);
 
     expect(rendered).toMatchSnapshot();
-  });
-
-  describe('with a spell with no source', () => {
-    const spellWithoutSource = Object.assign({}, spell, {
-      source: null,
-      sourceType: null,
-    });
-    const props = { ...defaultProps, spell: spellWithoutSource };
-
-    it('should render the spell source', () => {
-      const rendered = shallow(<SpellBlock {...props} />);
-      const sourceElement = rendered.find('.spell-block-source');
-
-      expect(sourceElement).toHaveDisplayName('p');
-      expect(sourceElement).toContainReact(
-        <SpellSourceLink source={undefined} sourceLink={undefined} />,
-      );
-    });
-
-    it('should be match the snapshot', () => {
-      const rendered = shallow(<SpellBlock {...props} />);
-
-      expect(rendered).toMatchSnapshot();
-    });
-  });
-
-  describe('with a spell with a source', () => {
-    const publication = publicationsData[0];
-    const spellWithSource = Object.assign({}, spell, {
-      source: publication,
-      sourceType: 'Publication',
-    });
-    const props = { ...defaultProps, spell: spellWithSource };
-
-    it('should render the spell source', () => {
-      const rendered = shallow(<SpellBlock {...props} />);
-      const sourceElement = rendered.find('.spell-block-source');
-      const { source, sourceType } = spellWithSource;
-
-      expect(sourceElement).toHaveDisplayName('p');
-      expect(sourceElement).toContainReact(
-        <SpellSourceLink source={source} sourceType={sourceType} />,
-      );
-    });
-
-    it('should be match the snapshot', () => {
-      const rendered = shallow(<SpellBlock {...props} />);
-
-      expect(rendered).toMatchSnapshot();
-    });
   });
 
   describe('with showAdditionalDetails: true', () => {

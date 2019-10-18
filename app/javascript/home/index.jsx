@@ -13,16 +13,6 @@ const HomePage = props => (
         <Link className="spells-link" to="/spells">Spells</Link>
       </li>
     </ul>
-
-    <h2>Additional Resources</h2>
-
-    <ul>
-      <li>
-        <Link className="publications-link" to="/publications">
-          Publications
-        </Link>
-      </li>
-    </ul>
   </Page>
 );
 
