@@ -66,6 +66,9 @@ class Spell < ApplicationRecord
                  'evocation, illusion, necromancy, or transmutation'
     },
     presence:  true
+  validates :slug,
+    presence:   true,
+    uniqueness: true
   validates :somatic_component,
     exclusion: {
       in:      [nil],

@@ -9,6 +9,7 @@ module Spec::Support::Examples
     extend RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
 
     shared_examples 'should handle an invalid association name' do
+      # :nocov:
       describe 'with a nil association name' do
         let(:association_name) { nil }
         let(:expected_error) do
@@ -68,6 +69,7 @@ module Spec::Support::Examples
             .to have_failing_result.with_error(expected_error)
         end
       end
+      # :nocov:
     end
 
     shared_examples 'should handle invalid attributes' do |proc|

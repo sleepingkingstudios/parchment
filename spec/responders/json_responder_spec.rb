@@ -253,12 +253,12 @@ RSpec.describe Responders::JsonResponder do
       end
     end
 
-    xdescribe 'with a passing result with a mixed plural resource' do
-      let(:publication) { FactoryBot.build(:publication) }
+    describe 'with a passing result with a mixed plural resource' do
+      let(:book) { FactoryBot.build(:book) }
       let(:spells) do
         [
           FactoryBot.build(:spell),
-          publication,
+          book,
           FactoryBot.build(:spell)
         ]
       end
@@ -277,7 +277,7 @@ RSpec.describe Responders::JsonResponder do
       end
       let(:log_message) do
         "Internal Server Error in #{controller_class.name}: Unable to" \
-        " serialize #{publication.inspect} with Serializers::SpellSerializer" \
+        " serialize #{book.inspect} with Serializers::SpellSerializer" \
         ' (Serializers::InvalidObjectError)'
       end
 
@@ -302,7 +302,7 @@ RSpec.describe Responders::JsonResponder do
       describe 'with options[:action] => value' do
         let(:log_message) do
           "Internal Server Error in #{controller_class.name}##{action}:" \
-          " Unable to serialize #{publication.inspect} with" \
+          " Unable to serialize #{book.inspect} with" \
           ' Serializers::SpellSerializer (Serializers::InvalidObjectError)'
         end
         let(:action) { :create }
@@ -463,14 +463,14 @@ RSpec.describe Responders::JsonResponder do
       end
     end
 
-    xdescribe 'with a passing result with multiple resources' do
-      let(:publication) { FactoryBot.build(:publication) }
-      let(:spells)      { Array.new(3) { FactoryBot.build(:spell) } }
+    describe 'with a passing result with multiple resources' do
+      let(:book)   { FactoryBot.build(:book) }
+      let(:spells) { Array.new(3) { FactoryBot.build(:spell) } }
       let(:result) do
         Cuprum::Result.new(
           value: {
-            publication: publication,
-            spells:      spells
+            book:   book,
+            spells: spells
           }
         )
       end
@@ -478,8 +478,8 @@ RSpec.describe Responders::JsonResponder do
         {
           'ok'   => true,
           'data' => {
-            'publication' => Serializers.serialize(publication),
-            'spells'      => spells.map { |spell| Serializers.serialize(spell) }
+            'book'   => Serializers.serialize(book),
+            'spells' => spells.map { |spell| Serializers.serialize(spell) }
           }
         }
       end
