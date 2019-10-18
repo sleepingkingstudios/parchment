@@ -187,6 +187,7 @@ module Spec::Support::Examples::Models
       end
     end
 
+    # :nocov:
     shared_examples 'should validate the scoped uniqueness of' \
     do |attr_name, attributes: {}, scope:|
       context "when a #{described_class} exists with the same #{attr_name}" do
@@ -243,5 +244,6 @@ module Spec::Support::Examples::Models
         end
       end
     end
+    # :nocov:
   end
 end

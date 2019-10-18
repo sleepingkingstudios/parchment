@@ -21,6 +21,7 @@ module Spec::Support::Examples
           return generate_expected_hash_from_object(attr_names)
         end
 
+        # :nocov:
         values = generate_expected_hash_from_object(attr_names[0...-1])
 
         attr_names.last.each.with_object(values) do |(attr_name, expected), hsh|
@@ -28,11 +29,10 @@ module Spec::Support::Examples
             if expected.is_a?(Proc)
               instance_exec(&expected)
             else
-              # :nocov:
               expected
-              # :nocov:
             end
         end
+        # :nocov:
       end
       # rubocop:enable Metrics/MethodLength
 
