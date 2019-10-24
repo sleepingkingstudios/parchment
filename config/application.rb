@@ -29,6 +29,9 @@ module Parchment
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    # Store database schema as SQL.
+    config.active_record.schema_format = :sql
+
     # Ignore unexpected :format parameter.
     config.always_permitted_parameters = %w[controller action format]
 
