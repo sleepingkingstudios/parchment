@@ -46,11 +46,12 @@ CREATE TABLE public.books (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    name character varying DEFAULT ''::character varying NOT NULL,
+    title character varying DEFAULT ''::character varying NOT NULL,
     publisher_name character varying DEFAULT ''::character varying NOT NULL,
     publication_date date NOT NULL,
     abbreviation character varying DEFAULT ''::character varying NOT NULL,
-    slug character varying DEFAULT ''::character varying NOT NULL
+    slug character varying DEFAULT ''::character varying NOT NULL,
+    playtest boolean DEFAULT false NOT NULL
 );
 
 
@@ -127,6 +128,7 @@ SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
 ('20191016215407'),
-('20191018185840');
+('20191018185840'),
+('20191025190234');
 
 

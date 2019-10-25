@@ -7,10 +7,10 @@ module Serializers
   class BookSerializer < Serializers::RecordSerializer
     attributes \
       :abbreviation,
-      :name,
       :publication_date,
       :publisher_name,
-      :slug
+      :slug,
+      :title
 
     alias_method :book, :object
 
