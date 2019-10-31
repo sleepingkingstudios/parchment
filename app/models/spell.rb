@@ -32,6 +32,9 @@ class Spell < ApplicationRecord
 
   generate_slug :name
 
+  ### Associations
+  has_one :source, as: :reference, dependent: :destroy
+
   ### Validations
   validates :casting_time, presence: true
   validates :description, presence: true

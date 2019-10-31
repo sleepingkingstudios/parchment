@@ -14,6 +14,9 @@ class Book < ApplicationRecord
   generate_abbreviation :title
   generate_slug         :title
 
+  ### Associations
+  has_many :sources, as: :origin, dependent: :destroy
+
   ### Validations
   validates :abbreviation,
     presence:   true,

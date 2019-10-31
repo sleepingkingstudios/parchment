@@ -65,6 +65,22 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: sources; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sources (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    metadata jsonb,
+    origin_type character varying,
+    origin_id uuid,
+    reference_type character varying,
+    reference_id uuid
+);
+
+
+--
 -- Name: spells; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -113,11 +129,33 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: sources sources_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sources
+    ADD CONSTRAINT sources_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: spells spells_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.spells
     ADD CONSTRAINT spells_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_sources_on_origin_type_and_origin_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_sources_on_origin_type_and_origin_id ON public.sources USING btree (origin_type, origin_id);
+
+
+--
+-- Name: index_sources_on_reference_type_and_reference_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_sources_on_reference_type_and_reference_id ON public.sources USING btree (reference_type, reference_id);
 
 
 --
@@ -129,6 +167,7 @@ SET search_path TO "$user", public;
 INSERT INTO "schema_migrations" (version) VALUES
 ('20191016215407'),
 ('20191018185840'),
-('20191025190234');
+('20191025190234'),
+('20191031151514');
 
 

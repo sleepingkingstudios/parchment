@@ -3,9 +3,15 @@
 require 'rails_helper'
 
 require 'support/examples/model_examples'
+require 'support/examples/models/source_examples'
 
 RSpec.describe Spell, type: :model do
   include Spec::Support::Examples::ModelExamples
+  include Spec::Support::Examples::Models::SourceExamples
+
+  shared_context 'when the spell has a source' do
+    include_context 'when the reference has a source'
+  end
 
   subject(:spell) { described_class.new(attributes) }
 
@@ -99,6 +105,8 @@ RSpec.describe Spell, type: :model do
       end
     end
   end
+
+  include_examples 'should define a has_one :source association'
 
   describe '#cantrip?' do
     it { expect(spell).to have_predicate(:cantrip?).with_value(false) }
@@ -230,10 +238,6 @@ RSpec.describe Spell, type: :model do
     include_examples 'should have attribute', :description, default: ''
   end
 
-  describe '#description' do
-    include_examples 'should have attribute', :description, default: ''
-  end
-
   describe '#duration' do
     include_examples 'should have attribute', :duration, default: ''
   end
@@ -327,6 +331,10 @@ RSpec.describe Spell, type: :model do
       value:   true
   end
 
+  describe '#updated_at' do
+    include_examples 'should have reader', :updated_at
+  end
+
   describe '#valid?' do
     it { expect(spell).not_to have_errors }
 
@@ -398,10 +406,6 @@ RSpec.describe Spell, type: :model do
 
       include_examples 'should validate the presence of', :slug, type: String
     end
-  end
-
-  describe '#updated_at' do
-    include_examples 'should have reader', :updated_at
   end
 
   describe '#verbal_component' do

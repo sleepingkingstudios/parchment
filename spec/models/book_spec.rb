@@ -3,9 +3,11 @@
 require 'rails_helper'
 
 require 'support/examples/model_examples'
+require 'support/examples/models/source_examples'
 
 RSpec.describe Book, type: :model do
   include Spec::Support::Examples::ModelExamples
+  include Spec::Support::Examples::Models::SourceExamples
 
   subject(:book) { described_class.new(attributes) }
 
@@ -24,6 +26,8 @@ RSpec.describe Book, type: :model do
 
     it { expect(described_class::Factory.record_class).to be described_class }
   end
+
+  include_examples 'should define a has_many :sources association'
 
   describe '#abbreviation' do
     include_examples 'should have attribute',
