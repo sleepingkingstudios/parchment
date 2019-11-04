@@ -77,6 +77,16 @@ module Operations::Records
     module One
       include Operations::Steps
 
+      def handle_empty_foreign_type(type, as: :id)
+        return unless type.empty?
+
+        error = Errors::InvalidParameters.new(
+          errors: [[as.to_s, "can't be blank"]]
+        )
+
+        failure(error)
+      end
+
       def handle_empty_id(id, as: :id)
         return unless id.empty?
 
@@ -85,6 +95,43 @@ module Operations::Records
         )
 
         failure(error)
+      end
+
+      def handle_foreign_type_type_invalid(type, as: :id)
+        return if type.is_a?(String)
+
+        error = Errors::InvalidParameters.new(
+          errors: [[as.to_s, 'must be a String']]
+        )
+
+        failure(error)
+      end
+
+      # rubocop:disable Metrics/MethodLength
+      def handle_foreign_type_not_class_name(type, as: :id)
+        foreign_class = type.constantize
+
+        return if foreign_class < ApplicationRecord
+
+        error = Errors::InvalidParameters.new(
+          errors: [[as.to_s, 'is not a record class name']]
+        )
+
+        failure(error)
+      rescue NameError
+        error = Errors::InvalidParameters.new(
+          errors: [[as.to_s, 'is not a record class name']]
+        )
+
+        failure(error)
+      end
+      # rubocop:enable Metrics/MethodLength
+
+      def handle_invalid_foreign_type(type, as:)
+        step :handle_nil_foreign_type,            type, as: as
+        step :handle_foreign_type_type_invalid,   type, as: as
+        step :handle_empty_foreign_type,          type, as: as
+        step :handle_foreign_type_not_class_name, type, as: as
       end
 
       def handle_id_type_invalid(id, as: :id)
@@ -103,6 +150,16 @@ module Operations::Records
           step :handle_id_type_invalid, id, as: as
           step :handle_empty_id,        id, as: as
         end
+      end
+
+      def handle_nil_foreign_type(type, as:)
+        return unless type.nil?
+
+        error = Errors::InvalidParameters.new(
+          errors: [[as.to_s, "can't be blank"]]
+        )
+
+        failure(error)
       end
 
       def handle_nil_id(id, as: :id)

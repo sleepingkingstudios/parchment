@@ -13,21 +13,21 @@ module Operations::Records
 
     private
 
-    def find_record(id)
+    def find_record(id, as:)
       record_class.find(id)
     rescue ActiveRecord::RecordNotFound
       error = Errors::NotFound.new(
-        attributes:   { id: id },
+        attributes:   { as => id },
         record_class: record_class
       )
 
       failure(error)
     end
 
-    def process(id)
+    def process(id, as: :id)
       step :handle_invalid_id, id
 
-      find_record(id)
+      find_record(id, as: as)
     end
   end
 end
