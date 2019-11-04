@@ -6,6 +6,14 @@ require 'operations/records/factory'
 # (the #reference) to where the domain object is defined, such as an Article in
 # a periodical, a Book, or a Website (the #origin).
 class Source < ApplicationRecord
+  ORIGIN_TYPES = %w[
+    Book
+  ].freeze
+
+  REFERENCE_TYPES = %w[
+    Spell
+  ].freeze
+
   SOURCE_NOT_UNIQUE_MESSAGE = 'already has a source'
   private_constant :SOURCE_NOT_UNIQUE_MESSAGE
 

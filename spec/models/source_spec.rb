@@ -74,6 +74,18 @@ RSpec.describe Source, type: :model do
     }
   end
 
+  describe '::ORIGIN_TYPES' do
+    include_examples 'should define immutable constant',
+      :ORIGIN_TYPES,
+      -> { contain_exactly('Book') }
+  end
+
+  describe '::REFERENCE_TYPES' do
+    include_examples 'should define immutable constant',
+      :REFERENCE_TYPES,
+      -> { contain_exactly('Spell') }
+  end
+
   describe '::Factory' do
     include_examples 'should define constant',
       :Factory,
