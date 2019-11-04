@@ -43,6 +43,11 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - 'as'
+    - 'id'
+
 RSpec/DescribeClass:
   Exclude:
     - 'spec/routing/**/*'
