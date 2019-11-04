@@ -17,6 +17,53 @@ RSpec.describe Operations::Records::Factory do
     it { expect(described_class).to be_constructible.with(1).argument }
   end
 
+  describe '::for' do
+    it { expect(described_class).to respond_to(:for).with(1).argument }
+
+    describe 'with the name of a record class that does not define a factory' do
+      let(:record_class) { ApplicationRecord }
+
+      it 'should return an instance of the base factory class' do
+        expect(described_class.for record_class.name).to be_a described_class
+      end
+
+      it 'should set the record class' do
+        expect(described_class.for(record_class.name).record_class)
+          .to be record_class
+      end
+    end
+
+    describe 'with the name of a record class that defines a factory' do
+      let(:record_class) { Spell }
+
+      it 'should return the factory class for the record class' do
+        expect(described_class.for record_class.name)
+          .to be record_class::Factory
+      end
+    end
+
+    describe 'with a record class that does not define a factory' do
+      let(:record_class) { ApplicationRecord }
+
+      it 'should return an instance of the base factory class' do
+        expect(described_class.for record_class).to be_a described_class
+      end
+
+      it 'should set the record class' do
+        expect(described_class.for(record_class).record_class)
+          .to be record_class
+      end
+    end
+
+    describe 'with a record class that defines a factory' do
+      let(:record_class) { Spell }
+
+      it 'should return the factory class for the record class' do
+        expect(described_class.for record_class).to be record_class::Factory
+      end
+    end
+  end
+
   describe '#record_class' do
     include_examples 'should have reader', :record_class, -> { record_class }
   end
