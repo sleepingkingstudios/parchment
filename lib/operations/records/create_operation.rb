@@ -7,18 +7,25 @@ module Operations::Records
   # Initializes a new record for the given table from the given attributes,
   # validates the record, and persists it to the database.
   class CreateOperation < Operations::Records::BuildOperation
-    def build_operation
-      Operations::Records::BuildOperation.new(record_class)
+    def initialize(record_class, build_operation: nil, save_operation: nil)
+      super(record_class)
+
+      @build_operation =
+        build_operation || Operations::Records::BuildOperation.new(record_class)
+      @save_operation =
+        save_operation  || Operations::Records::SaveOperation.new(record_class)
     end
+
+    private
+
+    attr_reader :build_operation
+
+    attr_reader :save_operation
 
     def process(attributes = {})
       record = step build_operation.call(attributes)
 
       save_operation.call(record)
-    end
-
-    def save_operation
-      Operations::Records::SaveOperation.new(record_class)
     end
   end
 end
