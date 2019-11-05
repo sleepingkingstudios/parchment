@@ -2,22 +2,24 @@
 
 require 'operations/records/factory'
 require 'operations/records/parameter_validations'
+require 'operations/records/find_one_polymorphic_operation'
 require 'operations/sources'
 require 'operations/steps'
 
 module Operations::Sources
   # Finds the origin of a Source by the origin type and id.
-  class FindOneOriginOperation < Cuprum::Operation
-    include Operations::Records::ParameterValidations::One
-    include Operations::Steps
+  class FindOneOriginOperation < \
+        Operations::Records::FindOnePolymorphicOperation
+    def initialize
+      super(association_name: :origin)
+    end
 
     private
 
-    def find_record(origin_type, origin_id)
-      factory   = Operations::Records::Factory.for(origin_type)
-      operation = factory.find_one
+    def handle_invalid_foreign_type(origin_type, **opts)
+      super(origin_type, **opts)
 
-      operation.call(origin_id, as: :origin_id)
+      step :handle_invalid_origin_type, origin_type
     end
 
     def handle_invalid_origin_type(type)
@@ -36,10 +38,7 @@ module Operations::Sources
     end
 
     def process(origin_id:, origin_type:)
-      step :handle_invalid_id,           origin_id,   as: :origin_id
-      step :handle_invalid_foreign_type, origin_type, as: :origin_type
-      step :handle_invalid_origin_type,  origin_type
-      step :find_record,                 origin_type, origin_id
+      super(id: origin_id, type: origin_type)
     end
   end
 end

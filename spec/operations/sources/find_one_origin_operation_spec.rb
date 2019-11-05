@@ -5,9 +5,11 @@ require 'rails_helper'
 require 'operations/sources/find_one_origin_operation'
 
 require 'support/examples/operation_examples'
+require 'support/examples/operations/source_examples'
 
 RSpec.describe Operations::Sources::FindOneOriginOperation do
   include Spec::Support::Examples::OperationExamples
+  include Spec::Support::Examples::Operations::SourceExamples
 
   subject(:operation) { described_class.new }
 
@@ -26,23 +28,9 @@ RSpec.describe Operations::Sources::FindOneOriginOperation do
 
     it { expect(operation).to respond_to(:call).with(1).argument }
 
-    include_examples 'should validate the foreign key', :origin_id
+    include_examples 'should validate the origin id'
 
-    include_examples 'should validate the foreign type', :origin_type
-
-    describe 'with a foreign type that is not a valid origin type' do
-      let(:origin_type) { 'Spell' }
-
-      let(:expected_error) do
-        Errors::InvalidParameters
-          .new(errors: [['origin_type', 'is not a valid origin type']])
-      end
-
-      it 'should have a failing result' do
-        expect(call_operation)
-          .to have_failing_result.with_error(expected_error)
-      end
-    end
+    include_examples 'should validate the origin type'
 
     describe 'with an invalid foreign key' do
       let(:origin_id) { '00000000-0000-0000-0000-000000000000' }
