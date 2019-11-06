@@ -4,9 +4,11 @@ require 'sleeping_king_studios/tasks'
 
 SleepingKingStudios::Tasks.configure do |config|
   config.ci do |ci|
-    ci.rspec.update format: 'progress'
+    ci.cucumber.update retry: 3
 
     ci.eslint.update default_files: '"app/javascript/**/*"'
+
+    ci.rspec.update format: 'progress'
 
     ci.steps =
       if ENV['CI']

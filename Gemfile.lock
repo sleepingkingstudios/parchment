@@ -8,6 +8,17 @@ GIT
       rspec (~> 3.4)
       sleeping_king_studios-tools (~> 0.7)
 
+GIT
+  remote: https://github.com/sleepingkingstudios/sleeping_king_studios-tasks
+  revision: 4e61194a08961321dced6910ce9be8bd4eedd79e
+  branch: feature/cucumber-retry
+  specs:
+    sleeping_king_studios-tasks (0.2.0)
+      erubi (~> 1.6)
+      rake (~> 12.0)
+      sleeping_king_studios-tools (~> 0.7, >= 0.7.1)
+      thor (~> 0.19, >= 0.19.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -260,11 +271,6 @@ GEM
       capybara (~> 3.3)
       site_prism-all_there (~> 0.3)
     site_prism-all_there (0.3)
-    sleeping_king_studios-tasks (0.2.0.rc.0)
-      erubi (~> 1.6)
-      rake (~> 12.0)
-      sleeping_king_studios-tools (~> 0.7, >= 0.7.1)
-      thor (~> 0.19, >= 0.19.4)
     sleeping_king_studios-tools (0.7.1)
     spring (2.0.2)
       activesupport (>= 4.2)
@@ -328,7 +334,7 @@ DEPENDENCIES
   selenium-webdriver (~> 3.142)
   simplecov (~> 0.16, >= 0.16.1)
   site_prism (~> 3.4)
-  sleeping_king_studios-tasks (~> 0.2.0.rc.0)
+  sleeping_king_studios-tasks!
   spring
   spring-watcher-listen (~> 2.0.0)
   thor (~> 0.20, >= 0.20.3)
