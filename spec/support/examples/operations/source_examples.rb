@@ -38,28 +38,6 @@ module Spec::Support::Examples::Operations
       end
     end
 
-    shared_examples 'should validate the origin id' do
-      include_examples 'should validate the foreign key', :origin_id
-    end
-
-    shared_examples 'should validate the origin type' do
-      include_examples 'should validate the foreign type', :origin_type
-
-      describe 'with a foreign type that is not a valid origin type' do
-        let(:origin_type) { 'Spell' }
-
-        let(:expected_error) do
-          Errors::InvalidParameters
-            .new(errors: [['origin_type', 'is not a valid origin type']])
-        end
-
-        it 'should have a failing result' do
-          expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
-        end
-      end
-    end
-
     shared_examples 'should update the source metadata' do
       describe 'when the origin is a Book' do
         let(:book_attributes) do
