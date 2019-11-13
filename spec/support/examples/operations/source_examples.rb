@@ -10,34 +10,6 @@ module Spec::Support::Examples::Operations
     extend  RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
     include Spec::Support::Examples::OperationExamples
 
-    shared_examples 'should validate the origin' do |allow_nil: false|
-      unless allow_nil
-        describe 'with a nil origin' do
-          let(:origin) { nil }
-          let(:expected_error) do
-            Errors::Sources::InvalidOrigin.new
-          end
-
-          it 'should have a failing result' do
-            expect(call_operation)
-              .to have_failing_result.with_error(expected_error)
-          end
-        end
-      end
-
-      describe 'with a non-origin record' do
-        let(:origin) { FactoryBot.build(:spell) }
-        let(:expected_error) do
-          Errors::Sources::InvalidOrigin.new
-        end
-
-        it 'should have a failing result' do
-          expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
-        end
-      end
-    end
-
     shared_examples 'should update the source metadata' do
       describe 'when the origin is a Book' do
         let(:book_attributes) do
@@ -142,6 +114,66 @@ module Spec::Support::Examples::Operations
 
             expect(source.playtest?).to be == book.playtest
           end
+        end
+      end
+    end
+
+    shared_examples 'should validate the origin' do |allow_nil: false|
+      unless allow_nil
+        describe 'with a nil origin' do
+          let(:origin) { nil }
+          let(:expected_error) do
+            Errors::Sources::InvalidOrigin.new
+          end
+
+          it 'should have a failing result' do
+            expect(call_operation)
+              .to have_failing_result
+              .with_error(expected_error)
+          end
+        end
+      end
+
+      describe 'with a non-origin record' do
+        let(:origin) { FactoryBot.build(:spell) }
+        let(:expected_error) do
+          Errors::Sources::InvalidOrigin.new
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result
+            .with_error(expected_error)
+        end
+      end
+    end
+
+    shared_examples 'should validate the reference' do |allow_nil: false|
+      unless allow_nil
+        describe 'with a nil reference' do
+          let(:reference) { nil }
+          let(:expected_error) do
+            Errors::Sources::InvalidReference.new
+          end
+
+          it 'should have a failing result' do
+            expect(call_operation)
+              .to have_failing_result
+              .with_error(expected_error)
+          end
+        end
+      end
+
+      describe 'with a non-reference record' do
+        let(:reference) { FactoryBot.build(:book) }
+        let(:expected_error) do
+          Errors::Sources::InvalidReference.new
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
     end

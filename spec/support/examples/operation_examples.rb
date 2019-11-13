@@ -2,6 +2,7 @@
 
 require 'rspec/sleeping_king_studios/concerns/shared_example_group'
 
+require 'errors/invalid_parameters'
 require 'errors/invalid_record'
 
 require 'support/examples'
