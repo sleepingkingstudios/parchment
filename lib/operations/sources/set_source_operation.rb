@@ -28,8 +28,16 @@ module Operations::Sources
       failure(error)
     end
 
+    # rubocop:disable Metrics/MethodLength
     def process(origin: nil, origin_id: nil, origin_type: nil, reference:)
       step :handle_invalid_reference, reference
+
+      return reference if same_origin?(
+        origin:      origin,
+        origin_id:   origin_id,
+        origin_type: origin_type,
+        reference:   reference
+      )
 
       remove_source(reference)
 
@@ -42,6 +50,7 @@ module Operations::Sources
         reference:   reference
       )
     end
+    # rubocop:enable Metrics/MethodLength
 
     def reference_types
       Source::REFERENCE_TYPES.map(&:constantize)
@@ -49,6 +58,12 @@ module Operations::Sources
 
     def remove_source(reference)
       reference.tap { reference.source = nil }
+    end
+
+    def same_origin?(origin:, origin_id:, origin_type:, reference:)
+      reference.source &&
+        reference.source.origin_id == (origin_id || origin&.id) &&
+        reference.source.origin_type == (origin_type || origin&.class&.name)
     end
 
     def set_source(reference:, **attributes)

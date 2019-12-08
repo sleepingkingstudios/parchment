@@ -155,6 +155,33 @@ RSpec.describe Operations::Sources::SetSourceOperation do
           expect(reference.reload.source).to be_a Source
         end
       end
+
+      describe 'with the same origin id and type' do
+        include_context 'when the reference already has a source'
+
+        let(:origin) { old_origin }
+
+        it { expect { call_operation }.not_to change(Source, :count) }
+
+        it { expect(call_operation.value).to be == reference }
+
+        it 'should not delete the old source' do
+          call_operation
+
+          expect(Source.where(id: old_source.id).exists?).to be true
+        end
+
+        it 'should not remove the old reference' do
+          call_operation
+
+          expect(old_origin.reload.sources.map(&:reference))
+            .to include reference
+        end
+
+        it 'should not change the source' do
+          expect { call_operation }.not_to(change { reference.reload.source })
+        end
+      end
     end
 
     describe 'with a valid origin' do
@@ -222,6 +249,33 @@ RSpec.describe Operations::Sources::SetSourceOperation do
           call_operation
 
           expect(reference.reload.source).to be_a Source
+        end
+      end
+
+      describe 'with the same origin' do
+        include_context 'when the reference already has a source'
+
+        let(:origin) { old_origin }
+
+        it { expect { call_operation }.not_to change(Source, :count) }
+
+        it { expect(call_operation.value).to be == reference }
+
+        it 'should not delete the old source' do
+          call_operation
+
+          expect(Source.where(id: old_source.id).exists?).to be true
+        end
+
+        it 'should not remove the old reference' do
+          call_operation
+
+          expect(old_origin.reload.sources.map(&:reference))
+            .to include reference
+        end
+
+        it 'should not change the source' do
+          expect { call_operation }.not_to(change { reference.reload.source })
         end
       end
     end
