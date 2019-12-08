@@ -47,5 +47,19 @@ module Operations::Records
     # @return [Class] the class of record that the operation's business logic
     #   operates on.
     attr_reader :record_class
+
+    private
+
+    def transaction
+      result = nil
+
+      record_class.transaction do
+        result = steps { yield }
+
+        raise ActiveRecord::Rollback unless result.success?
+      end
+
+      result
+    end
   end
 end
