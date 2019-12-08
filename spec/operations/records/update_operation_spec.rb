@@ -20,7 +20,7 @@ RSpec.describe Operations::Records::UpdateOperation do
   describe '#call' do
     let(:attributes) { {} }
     let(:expected)   { record_class.new.attributes }
-    let(:record)     { record_class.new }
+    let(:record)     { FactoryBot.build(:spell) }
 
     def call_operation
       operation.call(record, attributes)
@@ -74,6 +74,8 @@ RSpec.describe Operations::Records::UpdateOperation do
         }
       end
 
+      before(:example) { record.save! }
+
       it { expect(call_operation).to have_passing_result.with_value(record) }
 
       it 'should update the attributes' do
@@ -81,8 +83,6 @@ RSpec.describe Operations::Records::UpdateOperation do
           .to change(record, :attributes)
           .to be >= attributes
       end
-
-      it { expect { call_operation }.to change(record, :persisted?).to be true }
     end
   end
 
