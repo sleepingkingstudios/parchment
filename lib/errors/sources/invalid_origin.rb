@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
 require 'errors/sources'
 
 module Errors::Sources

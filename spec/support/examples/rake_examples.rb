@@ -3,7 +3,6 @@
 require 'rspec/sleeping_king_studios/concerns/shared_example_group'
 
 require 'support/examples'
-require 'support/examples/models/validation_examples'
 
 module Spec::Support::Examples
   module RakeExamples

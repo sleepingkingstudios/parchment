@@ -3,6 +3,8 @@
 ## Client
 
 - generic 404 page for non-matching route
+- add Loading overlay for resource tables
+  - wait for Loading overlay to appear/disappear in features
 
 ### Alerts
 

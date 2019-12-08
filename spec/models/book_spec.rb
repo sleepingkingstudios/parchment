@@ -59,6 +59,18 @@ RSpec.describe Book, type: :model do
     include_examples 'should have reader', :created_at
   end
 
+  describe '#id' do
+    include_examples 'should have attribute',
+      :id,
+      value: '00000000-0000-0000-0000-000000000000'
+
+    context 'when the book is persisted' do
+      before(:example) { book.save! }
+
+      it { expect(book.id).to be_a_uuid }
+    end
+  end
+
   describe '#playtest' do
     include_examples 'should have attribute',
       :playtest,

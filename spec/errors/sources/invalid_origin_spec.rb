@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 require 'errors/sources/invalid_origin'
 
 RSpec.describe Errors::Sources::InvalidOrigin do
