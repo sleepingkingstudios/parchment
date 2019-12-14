@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require 'errors/invalid_parameters'
-require 'operations/associations'
-require 'operations/records/find_one_polymorphic_operation'
+require 'operations/associations/find_one_polymorphic_operation'
 require 'operations/steps'
 
 module Operations::Associations
@@ -20,7 +19,7 @@ module Operations::Associations
 
       @find_one_polymorphic_operation =
         find_one_polymorphic_operation ||
-        Operations::Records::FindOnePolymorphicOperation.new(
+        Operations::Associations::FindOnePolymorphicOperation.new(
           as:              association_name,
           permitted_types: permitted_types
         )

@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
+require 'operations/associations'
 require 'operations/records/factory'
 require 'operations/records/parameter_validations'
 require 'operations/steps'
 
-module Operations::Records
+module Operations::Associations
   # Finds a record by the record type and id.
   class FindOnePolymorphicOperation < Cuprum::Operation
     include Operations::Records::ParameterValidations::One

@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-require 'operations/records/find_one_polymorphic_operation'
+require 'operations/associations/find_one_polymorphic_operation'
 
 require 'support/examples/operation_examples'
 
-RSpec.describe Operations::Records::FindOnePolymorphicOperation do
+RSpec.describe Operations::Associations::FindOnePolymorphicOperation do
   include Spec::Support::Examples::OperationExamples
 
   shared_context 'when initialized with a prefix' do
