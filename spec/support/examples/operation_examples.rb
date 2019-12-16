@@ -2,6 +2,7 @@
 
 require 'rspec/sleeping_king_studios/concerns/shared_example_group'
 
+require 'errors/invalid_association'
 require 'errors/invalid_parameters'
 require 'errors/invalid_record'
 
@@ -24,7 +25,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -39,7 +41,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -307,28 +310,32 @@ module Spec::Support::Examples
       end
     end
 
-    shared_examples 'should validate the record' do
+    shared_examples 'should validate the record' do |expected_class|
       describe 'with a nil record' do
-        let(:record) { nil }
+        let(:record_class) { expected_class || super() }
+        let(:record)       { nil }
         let(:expected_error) do
           Errors::InvalidRecord.new(record_class: record_class)
         end
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
       describe 'with a record Object' do
-        let(:record) { Object.new }
+        let(:record_class) { expected_class || super() }
+        let(:record)       { Object.new }
         let(:expected_error) do
           Errors::InvalidRecord.new(record_class: record_class)
         end
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
     end
