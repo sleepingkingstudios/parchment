@@ -23,7 +23,7 @@ module Operations::Records
       order = default_order if order.blank?
       query = build_query(order: order, where: where)
 
-      query.to_a
+      success(query.to_a)
     end
   end
 end
