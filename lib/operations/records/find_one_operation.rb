@@ -14,7 +14,7 @@ module Operations::Records
     private
 
     def find_record(id, as:)
-      record_class.find(id)
+      success(record_class.find(id))
     rescue ActiveRecord::RecordNotFound
       error = Errors::NotFound.new(
         attributes:   { as => id },
