@@ -32,7 +32,7 @@ RSpec.describe Spell, type: :model do
   describe '::Factory' do
     include_examples 'should define constant',
       :Factory,
-      -> { be_a Operations::Records::Factory }
+      -> { be_a Operations::References::Factory }
 
     it { expect(described_class::Factory.record_class).to be described_class }
   end
