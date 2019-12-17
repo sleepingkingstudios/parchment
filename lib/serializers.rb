@@ -91,5 +91,7 @@ module Serializers
     end
   end
 
-  autoload :SpellSerializer, 'serializers/spell_serializer'
+  autoload :BookSerializer,   'serializers/book_serializer'
+  autoload :SourceSerializer, 'serializers/source_serializer'
+  autoload :SpellSerializer,  'serializers/spell_serializer'
 end
