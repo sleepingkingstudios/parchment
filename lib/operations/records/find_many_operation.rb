@@ -15,7 +15,7 @@ module Operations::Records
       records   = record_class.where(id: ids).to_a
       not_found = ids - records.map(&:id)
 
-      return records if allow_partial || not_found.empty?
+      return success(records) if allow_partial || not_found.empty?
 
       failure(not_found_error(not_found))
     end
