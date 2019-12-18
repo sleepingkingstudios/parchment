@@ -129,7 +129,11 @@ Then('the Spells table should display the spells data') do
 
   Spell.all.each do |spell|
     expect(rows).to include(
-      satisfy { |row| row.text.start_with?(spell.name) }
+      satisfy do |row|
+        row.text.start_with?(spell.name)
+
+        row.text.include?(spell.source&.name || 'Homebrew')
+      end
     )
   end
 end

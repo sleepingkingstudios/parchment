@@ -25,6 +25,24 @@ class Api::SpellsController < Api::ResourcesController
     { name: :asc }
   end
 
+  def extract_sources
+    data    = yield
+    spells  = Array(data.fetch('spells'))
+    sources =
+      spells
+      .reduce([]) do |ary, spell|
+        next ary if spell.source.blank?
+
+        ary << spell.source
+      end
+
+    success(data.merge('sources' => sources))
+  end
+
+  def index_resources
+    extract_sources { step super }
+  end
+
   def permitted_attributes
     PERMITTED_ATTRIBUTES
   end

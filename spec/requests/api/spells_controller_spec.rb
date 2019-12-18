@@ -7,8 +7,16 @@ require 'fixtures/builder'
 RSpec.describe Api::SpellsController do
   shared_context 'when there are many spells' do
     let(:spells) { Fixtures.build(Spell, count: 3) }
+    let(:sources) do
+      spells.sort_by(&:name)[0...-1].map do |spell|
+        FactoryBot.build(:source, :with_book, reference: spell)
+      end
+    end
 
-    before(:each) { spells.each(&:save!) }
+    before(:each) do
+      spells.each(&:save!)
+      sources.each(&:save!)
+    end
   end
 
   shared_examples 'should require a valid spell id' do
@@ -87,7 +95,12 @@ RSpec.describe Api::SpellsController do
   let(:json)    { JSON.parse(response.body) }
 
   describe 'GET /api/spells.json' do
-    let(:expected_data) { { 'spells' => [] } }
+    let(:expected_data) do
+      {
+        'sources' => [],
+        'spells'  => []
+      }
+    end
     let(:expected_json) do
       {
         'ok'   => true,
@@ -116,14 +129,21 @@ RSpec.describe Api::SpellsController do
     context 'when there are many spells' do
       include_context 'when there are many spells'
 
-      let(:expected_data) do
-        serializer = Serializers::SpellSerializer.new
-        serialized =
-          spells
+      let(:spell_serializer)  { Serializers::SpellSerializer.new }
+      let(:source_serializer) { Serializers::SourceSerializer.new }
+      let(:serialized_spells) do
+        spells
           .sort_by(&:name)
-          .map { |spell| serializer.serialize(spell) }
-
-        { 'spells' => serialized }
+          .map { |spell| spell_serializer.serialize(spell) }
+      end
+      let(:serialized_sources) do
+        sources.map { |source| source_serializer.serialize(source) }
+      end
+      let(:expected_data) do
+        {
+          'sources' => serialized_sources,
+          'spells'  => serialized_spells
+        }
       end
 
       it 'should serialize the spells' do

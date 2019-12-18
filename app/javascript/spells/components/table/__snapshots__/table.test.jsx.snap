@@ -14,6 +14,11 @@ exports[`<SpellsTable /> with spells: Array with many items should match the sna
         "prop": "name",
       },
       Object {
+        "label": "Source",
+        "prop": "source",
+        "value": [Function],
+      },
+      Object {
         "label": "School",
         "prop": "school",
         "value": [Function],
@@ -128,6 +133,11 @@ exports[`<SpellsTable /> with spells: empty Array should match the snapshot 1`] 
       Object {
         "label": "Name",
         "prop": "name",
+      },
+      Object {
+        "label": "Source",
+        "prop": "source",
+        "value": [Function],
       },
       Object {
         "label": "School",
