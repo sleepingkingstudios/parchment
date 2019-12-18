@@ -6,6 +6,7 @@ namespace :data do
   data_classes = %w[
     Book
     Spell
+    Source
   ]
 
   namespace :load do
