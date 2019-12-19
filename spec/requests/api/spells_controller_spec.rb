@@ -314,7 +314,8 @@ RSpec.describe Api::SpellsController do
       {
         'ok'   => true,
         'data' => {
-          'spell' => Serializers.serialize(spell)
+          'source' => Serializers.serialize(spell.source),
+          'spell'  => Serializers.serialize(spell)
         }
       }
     end

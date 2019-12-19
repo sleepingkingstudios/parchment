@@ -23,6 +23,10 @@ def expected_level(spell)
   spell.ritual? ? "#{str} (ritual)" : str
 end
 
+def expected_source(spell)
+  spell.source&.name || 'Homebrew'
+end
+
 def ordinal(int)
   case int
   when 1
@@ -156,6 +160,9 @@ Then('the Spell block should display the spell data') do
 
     expect(text).to include @spell.send(attr_name)
   end
+
+  text = @current_page.find_text('source')
+  expect(text).to be == expected_source(@spell)
 
   text = @current_page.find_text('level-school')
   expect(text).to be == expected_level(@spell)

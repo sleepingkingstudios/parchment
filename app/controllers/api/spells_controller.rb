@@ -25,6 +25,16 @@ class Api::SpellsController < Api::ResourcesController
     { name: :asc }
   end
 
+  def extract_source
+    data   = yield
+    spell  = data.fetch('spell')
+    source = spell.source
+
+    return success(data) if spell.source.nil?
+
+    success(data.merge('source' => source))
+  end
+
   def extract_sources
     data    = yield
     spells  = Array(data.fetch('spells'))
@@ -40,7 +50,9 @@ class Api::SpellsController < Api::ResourcesController
   end
 
   def index_resources
-    extract_sources { step super }
+    steps do
+      extract_sources { step super }
+    end
   end
 
   def permitted_attributes
@@ -49,5 +61,11 @@ class Api::SpellsController < Api::ResourcesController
 
   def resource_class
     Spell
+  end
+
+  def show_resource
+    steps do
+      extract_source { step super }
+    end
   end
 end
