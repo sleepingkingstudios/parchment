@@ -19,5 +19,9 @@ module Serializers
     def can_serialize?(object)
       object.is_a?(Book)
     end
+
+    def publication_date
+      book.publication_date&.iso8601
+    end
   end
 end

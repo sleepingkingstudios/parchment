@@ -25,9 +25,9 @@ RSpec.describe Serializers::BookSerializer do
     include_examples 'should serialize attributes',
       :id,
       :abbreviation,
-      :publication_date,
       :publisher_name,
       :slug,
-      :title
+      :title,
+      publication_date: -> { book.publication_date.iso8601 }
   end
 end
