@@ -285,7 +285,6 @@ RSpec.describe Api::SpellsController do
         expect(json).to deep_match expected_json
       end
 
-      # rubocop:disable RSpec/ExampleLength
       it 'should create the spell', :aggregate_failures do
         expect { call_action }.to change(Spell, :count).by(1)
 
@@ -299,9 +298,43 @@ RSpec.describe Api::SpellsController do
           expect(spell.send attribute).to be == value
         end
       end
-      # rubocop:enable RSpec/ExampleLength
+
+      it 'should not create a source', :aggregate_failures do
+        expect { call_action }.not_to change(Source, :count)
+
+        spell = Spell.where(name: spell_params[:name]).first
+        query = Source.where(reference: spell)
+
+        expect(query.exists?).to be false
+      end
 
       include_examples 'should respond with JSON content'
+
+      context 'with params for a source' do
+        let(:origin)        { FactoryBot.create(:book) }
+        let(:source_params) { { origin_id: origin.id, origin_type: 'Book' } }
+        let(:spell_params)  { super().merge(source: source_params) }
+
+        it 'should respond with 201 Created' do
+          call_action
+
+          expect(response).to have_http_status(:created)
+        end
+
+        it 'should create a source', :aggregate_failures do
+          expect { call_action }.to change(Source, :count).by(1)
+
+          spell = Spell.where(name: spell_params[:name]).first
+          query = Source.where(reference: spell)
+
+          expect(query.exists?).to be true
+
+          source = query.first
+
+          expect(source.origin).to be == origin
+          expect(source.reference).to be == spell
+        end
+      end
     end
   end
 
@@ -345,7 +378,7 @@ RSpec.describe Api::SpellsController do
     include_context 'when there are many spells'
 
     let(:params)       { super().merge(spell: spell_params) }
-    let(:spell)        { spells.first }
+    let(:spell)        { spells.find { |spell| spell.source.nil? } }
     let(:spell_id)     { spell.id }
     let(:spell_params) { { name: 'Invoked Apocalypse' } }
 
@@ -475,7 +508,129 @@ RSpec.describe Api::SpellsController do
         end
       end
 
+      it 'should not create a source', :aggregate_failures do
+        expect { call_action }.not_to change(Source, :count)
+
+        query = Source.where(reference: spell)
+
+        expect(query.exists?).to be false
+      end
+
       include_examples 'should respond with JSON content'
+
+      context 'with params for a source' do
+        let(:origin)        { FactoryBot.create(:book) }
+        let(:source_params) { { origin_id: origin.id, origin_type: 'Book' } }
+        let(:spell_params)  { super().merge(source: source_params) }
+
+        it 'should respond with 200 OK' do
+          call_action
+
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'should create a source', :aggregate_failures do
+          expect { call_action }.to change(Source, :count).by(1)
+
+          query = Source.where(reference: spell)
+
+          expect(query.exists?).to be true
+
+          source = query.first
+
+          expect(source.origin).to be == origin
+          expect(source.reference).to be == spell
+        end
+      end
+    end
+
+    context 'when the spell has a source' do
+      let(:spell) { spells.find { |spell| !spell.source.nil? } }
+
+      describe 'with valid attributes' do
+        let(:spell_params) do
+          {
+            name:         'Glowing Gaze',
+            casting_time: '1 reaction, which you take when a creature within ' \
+                          'range takes fire damage',
+            duration:     'Instantaneous',
+            level:        1,
+            range:        '60 feet',
+            school:       Spell::Schools::EVOCATION
+          }
+        end
+        let(:params)        { super().merge(spell: spell_params) }
+        let(:updated_spell) { Spell.where(name: 'Glowing Gaze').first }
+        let(:expected_json) do
+          serializer = Serializers::SpellSerializer.new
+
+          {
+            'ok'   => true,
+            'data' => {
+              'spell' => serializer.serialize(updated_spell)
+            }
+          }
+        end
+
+        it 'should respond with 200 OK' do
+          call_action
+
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'should serialize the spell' do
+          call_action
+
+          expect(json).to deep_match expected_json
+        end
+
+        it 'should update the spell' do
+          call_action
+
+          spell = Spell.find(spell_id)
+
+          spell_params.each do |attribute, value|
+            expect(spell.send attribute).to be == value
+          end
+        end
+
+        it 'should delete the source', :aggregate_failures do
+          expect { call_action }.to change(Source, :count).by(-1)
+
+          query = Source.where(reference: spell)
+
+          expect(query.exists?).to be false
+        end
+
+        include_examples 'should respond with JSON content'
+
+        # rubocop:disable RSpec/NestedGroups
+        context 'with params for a source' do
+          let(:origin)        { FactoryBot.create(:book) }
+          let(:source_params) { { origin_id: origin.id, origin_type: 'Book' } }
+          let(:spell_params)  { super().merge(source: source_params) }
+
+          it 'should respond with 200 OK' do
+            call_action
+
+            expect(response).to have_http_status(:ok)
+          end
+
+          it 'should create a new source', :aggregate_failures do
+            expect { call_action }.not_to change(Source, :count)
+
+            query = Source.where(reference: spell)
+
+            expect(query.exists?).to be true
+
+            source = query.first
+
+            expect(source.origin).to be == origin
+            expect(source.reference).to be == spell
+          end
+        end
+        # rubocop:enable RSpec/NestedGroups
+      end
     end
   end
 

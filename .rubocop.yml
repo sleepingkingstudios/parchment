@@ -52,6 +52,9 @@ RSpec/DescribeClass:
   Exclude:
     - 'spec/routing/**/*'
 
+RSpec/ExampleLength:
+  Max: 10
+
 RSpec/ExampleWording:
   Enabled: false
 

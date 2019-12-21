@@ -19,3 +19,12 @@ Feature: Creating A Spell
       And   I submit the Spell form with valid attributes
       Then  I should be on the "Show" page for spell "Magic Noodle"
       And   the Spell block should display the spell data
+
+    Example: With Valid Attributes And A Source
+      Given the fixtures are loaded
+      When  I visit the "Spells create" page
+      And   I select the source "Book" "Secrets of the Flumph"
+      And   I submit the Spell form with valid attributes
+      Then  I should be on the "Show" page for spell "Magic Noodle"
+      And   the Spell block should display the spell data
+      And   the Spell block should show source "Secrets of the Flumph"

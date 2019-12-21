@@ -19,6 +19,12 @@ class Api::SpellsController < Api::ResourcesController
   ].freeze
   private_constant :PERMITTED_ATTRIBUTES
 
+  PERMITTED_SOURCE_ATTRIBUTES = %i[
+    origin_id
+    origin_type
+  ].freeze
+  private_constant :PERMITTED_SOURCE_ATTRIBUTES
+
   private
 
   def default_order
@@ -59,6 +65,12 @@ class Api::SpellsController < Api::ResourcesController
     PERMITTED_ATTRIBUTES
   end
 
+  def require_resource_params
+    spell_params = step super
+
+    spell_params.merge(source_params)
+  end
+
   def resource_class
     Spell
   end
@@ -67,5 +79,12 @@ class Api::SpellsController < Api::ResourcesController
     steps do
       extract_source { step super }
     end
+  end
+
+  def source_params
+    params
+      .fetch(singular_resource_name, {})
+      .fetch('source', {})
+      .permit(*PERMITTED_SOURCE_ATTRIBUTES)
   end
 end

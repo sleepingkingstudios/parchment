@@ -26,3 +26,19 @@ Feature: Updating A Spell
       Then  I should be on the "Update" page for the spell
       And   the Spell form should display the spell data
       And   the Spell form should display the errors
+
+    Example: With Valid Attributes
+      Given the fixtures are loaded
+      When  I visit the "Update" page for spell "Flumph Lantern"
+      And   I submit the Spell form with valid attributes
+      Then  I should be on the "Show" page for spell "Magic Noodle"
+      And   the Spell block should display the spell data
+
+    Example: With Valid Attributes And A Source
+      Given the fixtures are loaded
+      When  I visit the "Update" page for spell "Flumph Lantern"
+      And   I select the source "Book" "Secrets of the Flumph"
+      And   I submit the Spell form with valid attributes
+      Then  I should be on the "Show" page for spell "Magic Noodle"
+      And   the Spell block should display the spell data
+      And   the Spell block should show source "Secrets of the Flumph"

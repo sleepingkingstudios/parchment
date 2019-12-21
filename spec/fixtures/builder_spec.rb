@@ -318,7 +318,7 @@ RSpec.describe Fixtures::Builder do
 
         it { expect { builder.create }.not_to change(record_class, :count) }
 
-        it 'should update the records' do # rubocop:disable RSpec/ExampleLength
+        it 'should update the records' do
           builder.create
 
           expect(existing_records.map(&:reload))

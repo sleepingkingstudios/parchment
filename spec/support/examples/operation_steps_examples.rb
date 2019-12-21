@@ -140,9 +140,7 @@ module Spec::Support::Examples
           expect(result).to be_a_passing_result.with_value(be == expected)
         end
 
-        # rubocop:disable RSpec/ExampleLength
-        # rubocop:disable RSpec/MultipleExpectations
-        it 'should perform each step in sequence' do
+        it 'should perform each step in sequence', :aggregate_failures do
           run_steps
 
           expect(subject).to have_received(:validate_parameters).ordered
@@ -152,8 +150,6 @@ module Spec::Support::Examples
             .with(expected[:data])
             .ordered
         end
-        # rubocop:enable RSpec/ExampleLength
-        # rubocop:enable RSpec/MultipleExpectations
       end
     end
 

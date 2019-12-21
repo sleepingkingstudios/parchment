@@ -6,7 +6,6 @@ RSpec.describe 'routes' do
   let(:controller) { 'api/spells' }
   let(:spell_id)   { '00000000-0000-0000-0000-000000000000' }
 
-  # rubocop:disable RSpec/ExampleLength
   describe 'GET /api/spells.json' do
     it 'should route to Api::SpellsController#index' do
       expect(get: '/api/spells.json').to route_to(
@@ -59,5 +58,4 @@ RSpec.describe 'routes' do
       )
     end
   end
-  # rubocop:enable RSpec/ExampleLength
 end
