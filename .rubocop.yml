@@ -27,6 +27,10 @@ Metrics/AbcSize:
   Exclude:
     - 'db/migrate/*'
 
+Metrics/LineLength:
+  IgnoredPatterns:
+    - '\A\s*#'
+
 Metrics/MethodLength:
   Exclude:
     - 'db/migrate/*'
@@ -39,9 +43,17 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - 'as'
+    - 'id'
+
 RSpec/DescribeClass:
   Exclude:
     - 'spec/routing/**/*'
+
+RSpec/ExampleLength:
+  Max: 10
 
 RSpec/ExampleWording:
   Enabled: false

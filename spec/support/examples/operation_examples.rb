@@ -2,6 +2,10 @@
 
 require 'rspec/sleeping_king_studios/concerns/shared_example_group'
 
+require 'errors/invalid_association'
+require 'errors/invalid_parameters'
+require 'errors/invalid_record'
+
 require 'support/examples'
 
 module Spec::Support::Examples
@@ -21,7 +25,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -36,7 +41,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -155,6 +161,114 @@ module Spec::Support::Examples
       end
     end
 
+    shared_examples 'should validate the foreign key' do |foreign_key|
+      describe 'with a nil foreign key' do
+        let(foreign_key) { nil }
+        let(:expected_error) do
+          Errors::InvalidParameters
+            .new(errors: [[foreign_key.to_s, "can't be blank"]])
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_error)
+        end
+      end
+
+      describe 'with a foreign key Object' do
+        let(foreign_key) { Object.new }
+        let(:expected_error) do
+          Errors::InvalidParameters
+            .new(errors: [[foreign_key.to_s, 'must be a String']])
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_error)
+        end
+      end
+
+      describe 'with an empty foreign key' do
+        let(foreign_key) { '' }
+        let(:expected_error) do
+          Errors::InvalidParameters
+            .new(errors: [[foreign_key.to_s, "can't be blank"]])
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_error)
+        end
+      end
+    end
+
+    shared_examples 'should validate the foreign type' do |foreign_type|
+      describe 'with a nil foreign type' do
+        let(foreign_type) { nil }
+        let(:expected_error) do
+          Errors::InvalidParameters
+            .new(errors: [[foreign_type.to_s, "can't be blank"]])
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_error)
+        end
+      end
+
+      describe 'with a foreign type Object' do
+        let(foreign_type) { Object.new }
+        let(:expected_error) do
+          Errors::InvalidParameters
+            .new(errors: [[foreign_type.to_s, 'must be a String']])
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_error)
+        end
+      end
+
+      describe 'with an empty foreign type' do
+        let(foreign_type) { '' }
+        let(:expected_error) do
+          Errors::InvalidParameters
+            .new(errors: [[foreign_type.to_s, "can't be blank"]])
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_error)
+        end
+      end
+
+      describe 'with a foreign type that is not the name of a class' do
+        let(foreign_type) { 'InvalidClassName' }
+        let(:expected_error) do
+          Errors::InvalidParameters
+            .new(errors: [[foreign_type.to_s, 'is not a record class name']])
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_error)
+        end
+      end
+
+      describe 'with a foreign type that is not the name of a record class' do
+        let(foreign_type) { 'Object' }
+        let(:expected_error) do
+          Errors::InvalidParameters
+            .new(errors: [[foreign_type.to_s, 'is not a record class name']])
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_error)
+        end
+      end
+    end
+
     shared_examples 'should validate the primary key' do
       describe 'with a nil primary key' do
         let(:id) { nil }
@@ -196,28 +310,32 @@ module Spec::Support::Examples
       end
     end
 
-    shared_examples 'should validate the record' do
+    shared_examples 'should validate the record' do |expected_class|
       describe 'with a nil record' do
-        let(:record) { nil }
+        let(:record_class) { expected_class || super() }
+        let(:record)       { nil }
         let(:expected_error) do
           Errors::InvalidRecord.new(record_class: record_class)
         end
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
       describe 'with a record Object' do
-        let(:record) { Object.new }
+        let(:record_class) { expected_class || super() }
+        let(:record)       { Object.new }
         let(:expected_error) do
           Errors::InvalidRecord.new(record_class: record_class)
         end
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
     end

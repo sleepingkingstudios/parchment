@@ -7,10 +7,10 @@ module Serializers
   class BookSerializer < Serializers::RecordSerializer
     attributes \
       :abbreviation,
-      :name,
       :publication_date,
       :publisher_name,
-      :slug
+      :slug,
+      :title
 
     alias_method :book, :object
 
@@ -18,6 +18,10 @@ module Serializers
 
     def can_serialize?(object)
       object.is_a?(Book)
+    end
+
+    def publication_date
+      book.publication_date&.iso8601
     end
   end
 end

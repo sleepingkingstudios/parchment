@@ -11,7 +11,6 @@ module Models
     # ActiveRecord hooks to automatically generate values based on record
     # attributes.
     module Hooks
-      # rubocop:disable Naming/UncommunicativeMethodParamName
       def generate_abbreviation(attribute_name, as: :abbreviation)
         reader_method = as.intern
         writer_method = :"#{as}="
@@ -43,7 +42,6 @@ module Models
           public_send(writer_method, output_value)
         end
       end
-      # rubocop:enable Naming/UncommunicativeMethodParamName
     end
 
     ARTICLES = %w[of on the].freeze

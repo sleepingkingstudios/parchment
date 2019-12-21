@@ -3,15 +3,17 @@
 require 'rails_helper'
 
 require 'support/examples/model_examples'
+require 'support/examples/models/source_examples'
 
 RSpec.describe Book, type: :model do
   include Spec::Support::Examples::ModelExamples
+  include Spec::Support::Examples::Models::SourceExamples
 
   subject(:book) { described_class.new(attributes) }
 
   let(:attributes) do
     {
-      name:             'Spectres of Flumph Fortress',
+      title:            'Spectres of Flumph Fortress',
       publication_date: Date.new(2013, 8, 15),
       publisher_name:   'Spelljammer Publishing'
     }
@@ -24,6 +26,8 @@ RSpec.describe Book, type: :model do
 
     it { expect(described_class::Factory.record_class).to be described_class }
   end
+
+  include_examples 'should define a has_many :sources association'
 
   describe '#abbreviation' do
     include_examples 'should have attribute',
@@ -55,8 +59,23 @@ RSpec.describe Book, type: :model do
     include_examples 'should have reader', :created_at
   end
 
-  describe '#name' do
-    include_examples 'should have attribute', :name, default: ''
+  describe '#id' do
+    include_examples 'should have attribute',
+      :id,
+      value: '00000000-0000-0000-0000-000000000000'
+
+    context 'when the book is persisted' do
+      before(:example) { book.save! }
+
+      it { expect(book.id).to be_a_uuid }
+    end
+  end
+
+  describe '#playtest' do
+    include_examples 'should have attribute',
+      :playtest,
+      default: false,
+      value:   false
   end
 
   describe '#publication_date' do
@@ -93,22 +112,17 @@ RSpec.describe Book, type: :model do
     end
   end
 
+  describe '#title' do
+    include_examples 'should have attribute', :title, default: ''
+  end
+
   describe '#valid?' do
     it { expect(book).not_to have_errors }
 
     include_examples 'should validate the uniqueness of',
       :abbreviation,
       attributes: {
-        name:             'Spectres Flumph Fortress',
-        publication_date: Date.new(2014, 8, 19),
-        publisher_name:   'Spelljammer Publishing'
-      }
-
-    include_examples 'should validate the presence of', :name, type: String
-
-    include_examples 'should validate the uniqueness of',
-      :name,
-      attributes: {
+        title:            'Spectres Flumph Fortress',
         publication_date: Date.new(2014, 8, 19),
         publisher_name:   'Spelljammer Publishing'
       }
@@ -122,13 +136,22 @@ RSpec.describe Book, type: :model do
     include_examples 'should validate the uniqueness of',
       :slug,
       attributes: {
-        name:             'Spectres Flumph Fortress',
+        title:            'Spectres Flumph Fortress',
         publication_date: Date.new(2014, 8, 19),
         publisher_name:   'Spelljammer Publishing'
       }
 
-    context 'when the name is empty' do
-      let(:attributes) { super().merge(name: nil) }
+    include_examples 'should validate the presence of', :title, type: String
+
+    include_examples 'should validate the uniqueness of',
+      :title,
+      attributes: {
+        publication_date: Date.new(2014, 8, 19),
+        publisher_name:   'Spelljammer Publishing'
+      }
+
+    context 'when the title is empty' do
+      let(:attributes) { super().merge(title: nil) }
 
       include_examples 'should validate the presence of',
         :abbreviation,

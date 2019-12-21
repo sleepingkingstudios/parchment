@@ -54,7 +54,6 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
           .and_return(true)
       end
 
-      # rubocop:disable RSpec/ExampleLength
       it 'should load the existing data from /data/secrets' do
         task.invoke(directory)
 
@@ -65,17 +64,15 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
             .ordered
         end
       end
-      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'when all of the data exists' do
-      let(:record_classes) { [Book, Spell] }
+      let(:record_classes) { [Book, Spell, Source] }
 
       before(:example) do
         allow(Fixtures).to receive(:exist?).and_return(true)
       end
 
-      # rubocop:disable RSpec/ExampleLength
       it 'should load the existing data from /data/secrets' do
         task.invoke(directory)
 
@@ -86,7 +83,6 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
             .ordered
         end
       end
-      # rubocop:enable RSpec/ExampleLength
     end
   end
 
@@ -129,7 +125,7 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
     end
 
     context 'when all of the data exists' do
-      let(:record_classes) { [Book, Spell] }
+      let(:record_classes) { [Book, Spell, Source] }
 
       before(:example) do
         allow(Fixtures).to receive(:exist?).and_return(true)

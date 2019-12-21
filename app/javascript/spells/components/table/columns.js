@@ -1,9 +1,16 @@
 import SpellsTableActions from './actions';
 
+import { exists } from '../../../utils/object';
 import {
   capitalize,
   truncate,
 } from '../../../utils/string';
+
+const sourceLink = (spell) => {
+  const { source } = spell;
+
+  return exists(source) ? source.name : 'Homebrew';
+};
 
 const spellDescription = (spell) => {
   if (spell.shortDescription) {
@@ -17,6 +24,11 @@ const columns = [
   {
     label: 'Name',
     prop: 'name',
+  },
+  {
+    label: 'Source',
+    prop: 'source',
+    value: sourceLink,
   },
   {
     label: 'School',

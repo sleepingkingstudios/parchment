@@ -25,9 +25,21 @@ RSpec.describe Operations::Records::FindMatchingOperation do
     context 'when there are many records' do
       let(:record_attributes) do
         [
-          { name: 'Cunning Plot', created_at: 1.day.ago },
-          { name: 'Blast Off',    created_at: 3.days.ago },
-          { name: 'Arcane Eye',   created_at: 2.days.ago }
+          {
+            name:       'Cunning Plot',
+            school:     Spell::Schools::DIVINATION,
+            created_at: 1.day.ago
+          },
+          {
+            name:       'Blast Off',
+            school:     Spell::Schools::EVOCATION,
+            created_at: 3.days.ago
+          },
+          {
+            name:       'Arcane Eye',
+            school:     Spell::Schools::DIVINATION,
+            created_at: 2.days.ago
+          }
         ]
       end
       let!(:records) do
@@ -58,6 +70,47 @@ RSpec.describe Operations::Records::FindMatchingOperation do
         let(:options) { { order: order } }
         let(:expected) do
           records.sort_by(&:name)
+        end
+
+        it 'should find the matching records and apply the ordering' do
+          expect(call_operation options)
+            .to have_passing_result
+            .with_value(expected)
+        end
+      end
+
+      describe 'with where: empty Hash' do
+        let(:options) { { where: {} } }
+
+        it 'should find the matching records and sort by created_at' do
+          expect(call_operation options)
+            .to have_passing_result
+            .with_value(expected)
+        end
+      end
+
+      describe 'with where: Hash' do
+        let(:query)   { { school: Spell::Schools::DIVINATION } }
+        let(:options) { { where: query } }
+        let(:expected) do
+          super().select { |spell| spell.school == Spell::Schools::DIVINATION }
+        end
+
+        it 'should find the matching records and sort by created_at' do
+          expect(call_operation options)
+            .to have_passing_result
+            .with_value(expected)
+        end
+      end
+
+      describe 'with multiple options' do
+        let(:query)   { { school: Spell::Schools::DIVINATION } }
+        let(:order)   { { name: :asc } }
+        let(:options) { { order: order, where: query } }
+        let(:expected) do
+          records
+            .select { |spell| spell.school == Spell::Schools::DIVINATION }
+            .sort_by(&:name)
         end
 
         it 'should find the matching records and apply the ordering' do

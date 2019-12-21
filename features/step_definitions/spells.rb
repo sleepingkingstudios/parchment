@@ -23,6 +23,17 @@ def expected_level(spell)
   spell.ritual? ? "#{str} (ritual)" : str
 end
 
+def expected_source(spell)
+  spell.source&.name || 'Homebrew'
+end
+
+def find_source(source_name:, source_type:)
+  case source_type
+  when 'Book'
+    Book.where(title: source_name).first
+  end
+end
+
 def ordinal(int)
   case int
   when 1
@@ -94,6 +105,17 @@ When('I submit the Spell form with valid attributes') do
   sleep 1 # TODO: Remove this once a pending overlay is defined.
 end
 
+When('I select the source {string} {string}') do |source_type, source_name|
+  expect(@current_page.has_spell_form?).to be true
+
+  source = find_source(source_name: source_name, source_type: source_type)
+
+  @current_page
+    .spell_form
+    .find_select_option('source', "#{source_type}:#{source.id}")
+    .select_option
+end
+
 Then('I should be on the {string} page for the spell') do |action|
   expected_page = "Features::Pages::Spells::#{action.classify}".constantize.new
   @current_page = expected_page
@@ -129,7 +151,11 @@ Then('the Spells table should display the spells data') do
 
   Spell.all.each do |spell|
     expect(rows).to include(
-      satisfy { |row| row.text.start_with?(spell.name) }
+      satisfy do |row|
+        row.text.start_with?(spell.name)
+
+        row.text.include?(spell.source&.name || 'Homebrew')
+      end
     )
   end
 end
@@ -153,6 +179,9 @@ Then('the Spell block should display the spell data') do
     expect(text).to include @spell.send(attr_name)
   end
 
+  text = @current_page.find_text('source')
+  expect(text).to be == expected_source(@spell)
+
   text = @current_page.find_text('level-school')
   expect(text).to be == expected_level(@spell)
 
@@ -161,6 +190,14 @@ Then('the Spell block should display the spell data') do
 
   text = @current_page.find_text('description')
   expect(text.split(/\n+/)).to be == @spell.description.split(/\n+/)
+end
+
+Then('the Spell block should show source {string}') do |source_name|
+  expect(@current_page.has_spell_block?).to be true
+
+  text = @current_page.find_text('source')
+
+  expect(text).to be == source_name
 end
 
 Then('the Spell form should display the spell data') do

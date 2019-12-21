@@ -7,6 +7,7 @@ import {
   formatComponents,
   formatSchoolAndLevel,
 } from '../../utils';
+import { exists } from '../../../utils/object';
 
 import './block-styles.css';
 
@@ -32,6 +33,10 @@ const renderAdditionalDetails = ({ spell, showAdditionalDetails }) => {
 const SpellBlock = ({ showAdditionalDetails, spell }) => (
   <div className="spell-block">
     <p className="spell-block-name">{ spell.name }</p>
+
+    <p className="spell-block-source">
+      { exists(spell.source) ? spell.source.name : 'Homebrew' }
+    </p>
 
     <p className="spell-block-level-school">
       { formatSchoolAndLevel(spell) }

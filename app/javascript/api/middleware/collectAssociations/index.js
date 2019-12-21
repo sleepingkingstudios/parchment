@@ -1,25 +1,79 @@
 import pluralize from 'pluralize';
 
-import { assign, dig, exists } from '../../../utils/object';
-import { underscore } from '../../../utils/string';
+import {
+  assign,
+  dig,
+  exists,
+  valueOrDefault,
+} from '../../../utils/object';
+import { underscore, upperCamelize } from '../../../utils/string';
 
-const findAssociation = ({
+const findAssociationData = ({
   data,
-  foreignKey,
-  foreignType,
   plural,
+  resourceName,
 }) => {
-  if (!exists(foreignType)) { return undefined; }
+  if (plural) { return data[pluralize(underscore(resourceName))]; }
 
-  if (!plural) { return data[underscore(foreignType)]; }
-
-  const key = pluralize(underscore(foreignType));
-
-  const associationData = data[key];
+  const associationData = data[underscore(resourceName)];
 
   if (!exists(associationData)) { return undefined; }
 
-  return associationData.find(item => (item.id === foreignKey));
+  return [associationData];
+};
+
+const findAssociationById = ({ associationData, foreignKeyName, foreignKeyValue }) => {
+  const actualForeignKeyName = valueOrDefault(foreignKeyName, 'id');
+
+  return associationData.find(item => (item[actualForeignKeyName] === foreignKeyValue));
+};
+
+const findAssociationByIdAndType = ({
+  associationData,
+  foreignKeyName,
+  foreignKeyValue,
+  foreignTypeName,
+  foreignTypeValue,
+}) => {
+  const actualForeignKeyName = valueOrDefault(foreignKeyName, 'id');
+  const actualForeignTypeName = valueOrDefault(foreignTypeName, 'type');
+
+  return associationData.find(item => (
+    item[actualForeignKeyName] === foreignKeyValue
+      && item[actualForeignTypeName] === foreignTypeValue
+  ));
+};
+
+const findAssociation = ({
+  data,
+  foreignKeyName,
+  foreignKeyValue,
+  foreignTypeName,
+  foreignTypeValue,
+  plural,
+  resourceName,
+}) => {
+  if (!exists(resourceName)) { return undefined; }
+
+  const associationData = findAssociationData({
+    data,
+    plural,
+    resourceName,
+  });
+
+  if (!exists(associationData)) { return undefined; }
+
+  if (!exists(foreignTypeName)) {
+    return findAssociationById({ associationData, foreignKeyName, foreignKeyValue });
+  }
+
+  return findAssociationByIdAndType({
+    associationData,
+    foreignKeyName,
+    foreignKeyValue,
+    foreignTypeName,
+    foreignTypeValue,
+  });
 };
 
 const collectBelongsToPolymorphicAssociation = ({
@@ -29,44 +83,73 @@ const collectBelongsToPolymorphicAssociation = ({
   resource,
 }) => {
   const modifiedData = Object.assign({}, resource);
-  const foreignKey = resource[`${associationName}_id`];
-  const foreignType = resource[`${associationName}_type`];
+  const foreignKeyValue = resource[`${associationName}_id`];
+  const resourceName = resource[`${associationName}_type`];
 
   modifiedData[associationName] = findAssociation({
     data,
-    foreignKey,
-    foreignType,
+    foreignKeyValue,
     plural,
+    resourceName,
   });
 
   return modifiedData;
 };
 
-const collectAssociation = ({
+const collectHasOnePolymorphicAssociation = ({
   associationName,
-  associationType,
   data,
+  inverseName,
   plural,
-  polymorphic,
   resource,
+  resourceName,
 }) => {
-  if (associationType === 'belongsTo') {
-    if (polymorphic) {
-      return collectBelongsToPolymorphicAssociation({
-        associationName,
-        data,
-        plural,
-        resource,
-      });
-    }
-  }
+  const modifiedData = Object.assign({}, resource);
+  const foreignKeyName = `${inverseName}_id`;
+  const foreignKeyValue = resource.id;
+  const foreignTypeName = `${inverseName}_type`;
+  const foreignTypeValue = upperCamelize(pluralize(resourceName, 1));
 
-  return resource;
+  modifiedData[associationName] = findAssociation({
+    data,
+    foreignKeyName,
+    foreignKeyValue,
+    foreignTypeName,
+    foreignTypeValue,
+    plural,
+    resourceName: associationName,
+  });
+
+  return modifiedData;
+};
+
+const getQualifiedAssociationType = ({ associationType, polymorphic }) => {
+  if (!polymorphic) { return associationType; }
+
+  return `${associationType}Polymorphic`;
+};
+
+const collectAssociation = (props) => {
+  const { associationType, polymorphic, resource } = props;
+  const qualifiedAssociationType = getQualifiedAssociationType({
+    associationType,
+    polymorphic,
+  });
+
+  switch (qualifiedAssociationType) {
+    case 'belongsToPolymorphic':
+      return collectBelongsToPolymorphicAssociation(props);
+    case 'hasOnePolymorphic':
+      return collectHasOnePolymorphicAssociation(props);
+    default:
+      return resource;
+  }
 };
 
 const collectAssociations = ({
   associationName,
   associationType,
+  inverseName,
   polymorphic,
   resourceName,
 }) => ({
@@ -78,7 +161,9 @@ const collectAssociations = ({
       associationName,
       associationType,
       data,
+      inverseName,
       polymorphic,
+      resourceName,
     };
 
     if (Array.isArray(resource)) {

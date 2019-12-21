@@ -133,6 +133,97 @@ describe('collectAssociations request middleware', () => {
     });
   });
 
+  describe('with a resource with a polymorphic hasOne association', () => {
+    const associationName = 'cover';
+    const associationType = 'hasOne';
+    const inverseName = 'printable';
+    const resourceName = 'book';
+    const middleware = collectAssociations({
+      associationName,
+      associationType,
+      inverseName,
+      polymorphic: true,
+      resourceName,
+    });
+
+    describe('handleSuccess()', () => {
+      const { handleSuccess } = middleware;
+
+      it('should be a function', () => {
+        expect(typeof handleSuccess).toEqual('function');
+      });
+
+      it('should return a function', () => {
+        const next = jest.fn();
+
+        expect(typeof handleSuccess(next)).toEqual('function');
+      });
+
+      describe('when the resource does not have an association', () => {
+        const book = {
+          id: '00000000-0000-0000-0000-000000000000',
+          name: "The Flumph Fancier's Handbook",
+        };
+        const data = { book };
+
+        it('should modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedData = {
+            book: {
+              id: '00000000-0000-0000-0000-000000000000',
+              name: "The Flumph Fancier's Handbook",
+              cover: undefined,
+            },
+          };
+
+          const expectedResponse = { json: { data: expectedData } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
+      });
+
+      describe('when the resource has an association', () => {
+        const book = {
+          id: '00000000-0000-0000-0000-000000000000',
+          name: "The Flumph Fancier's Handbook",
+        };
+        const cover = {
+          id: '10000000-0000-0000-0000-000000000000',
+          image_data: 'd6612304dd5fc3149435db6a4696b69b',
+          printable_id: '00000000-0000-0000-0000-000000000000',
+          printable_type: 'Book',
+        };
+        const data = { book, cover };
+
+        it('should modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedData = {
+            cover,
+            book: {
+              id: '00000000-0000-0000-0000-000000000000',
+              name: "The Flumph Fancier's Handbook",
+              cover,
+            },
+          };
+
+          const expectedResponse = { json: { data: expectedData } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
+      });
+    });
+  });
+
   describe('with a resources array with a polymorphic belongsTo association', () => {
     const associationName = 'source';
     const associationType = 'belongsTo';
@@ -398,6 +489,149 @@ describe('collectAssociations request middleware', () => {
 
             expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
           });
+        });
+      });
+    });
+  });
+
+  describe('with a resources array with a polymorphic hasOne association', () => {
+    const associationName = 'cover';
+    const associationType = 'hasOne';
+    const inverseName = 'printable';
+    const resourceName = 'books';
+    const middleware = collectAssociations({
+      associationName,
+      associationType,
+      inverseName,
+      polymorphic: true,
+      resourceName,
+    });
+
+    describe('handleSuccess()', () => {
+      const { handleSuccess } = middleware;
+
+      it('should be a function', () => {
+        expect(typeof handleSuccess).toEqual('function');
+      });
+
+      it('should return a function', () => {
+        const next = jest.fn();
+
+        expect(typeof handleSuccess(next)).toEqual('function');
+      });
+
+      describe('when the resources do not have associations', () => {
+        const books = [
+          {
+            id: '00000000-0000-0000-0000-000000000000',
+            name: "The Flumph Fancier's Handbook",
+          },
+          {
+            id: '00000000-0000-0000-0000-000000000001',
+            name: 'Flumphville: City Of The Flumphs',
+          },
+          {
+            id: '00000000-0000-0000-0000-000000000002',
+            name: 'Unearthed Arcana: The Flumph',
+          },
+        ];
+        const data = { books };
+
+        it('should modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedData = {
+            books: [
+              {
+                id: '00000000-0000-0000-0000-000000000000',
+                name: "The Flumph Fancier's Handbook",
+                cover: undefined,
+              },
+              {
+                id: '00000000-0000-0000-0000-000000000001',
+                name: 'Flumphville: City Of The Flumphs',
+                cover: undefined,
+              },
+              {
+                id: '00000000-0000-0000-0000-000000000002',
+                name: 'Unearthed Arcana: The Flumph',
+                cover: undefined,
+              },
+            ],
+          };
+
+          const expectedResponse = { json: { data: expectedData } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
+      });
+
+      describe('when the resources have associations', () => {
+        const books = [
+          {
+            id: '00000000-0000-0000-0000-000000000000',
+            name: "The Flumph Fancier's Handbook",
+          },
+          {
+            id: '00000000-0000-0000-0000-000000000001',
+            name: 'Flumphville: City Of The Flumphs',
+          },
+          {
+            id: '00000000-0000-0000-0000-000000000002',
+            name: 'Unearthed Arcana: The Flumph',
+          },
+        ];
+        const covers = [
+          {
+            id: '10000000-0000-0000-0000-000000000000',
+            image_data: 'd6612304dd5fc3149435db6a4696b69b',
+            printable_id: '00000000-0000-0000-0000-000000000000',
+            printable_type: 'Book',
+          },
+          {
+            id: '10000000-0000-0000-0000-000000000001',
+            image_data: '30124bf6b8800440d8ae1f11dddeb1c2',
+            printable_id: '00000000-0000-0000-0000-000000000002',
+            printable_type: 'Book',
+          },
+        ];
+        const data = { books, covers };
+
+        it('should modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedData = {
+            books: [
+              {
+                id: '00000000-0000-0000-0000-000000000000',
+                name: "The Flumph Fancier's Handbook",
+                cover: covers[0],
+              },
+              {
+                id: '00000000-0000-0000-0000-000000000001',
+                name: 'Flumphville: City Of The Flumphs',
+                cover: undefined,
+              },
+              {
+                id: '00000000-0000-0000-0000-000000000002',
+                name: 'Unearthed Arcana: The Flumph',
+                cover: covers[1],
+              },
+            ],
+            covers,
+          };
+
+          const expectedResponse = { json: { data: expectedData } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
         });
       });
     });

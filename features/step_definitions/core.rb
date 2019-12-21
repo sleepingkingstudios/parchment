@@ -18,6 +18,10 @@ When('I open the application') do
   @current_page.load
 end
 
+When('I wait for {int} second') do |duration|
+  sleep duration
+end
+
 When('I visit the {string} page') do |page|
   @current_page = create_page(page)
 

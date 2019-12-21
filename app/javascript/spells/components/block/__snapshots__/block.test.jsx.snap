@@ -10,6 +10,11 @@ exports[`<SpellBlock /> should be match the snapshot 1`] = `
     Flumph Lantern
   </p>
   <p
+    className="spell-block-source"
+  >
+    Homebrew
+  </p>
+  <p
     className="spell-block-level-school"
   >
     Evocation cantrip
@@ -71,6 +76,11 @@ exports[`<SpellBlock /> with showAdditionalDetails: true should be match the sna
     className="spell-block-name"
   >
     Flumph Lantern
+  </p>
+  <p
+    className="spell-block-source"
+  >
+    Homebrew
   </p>
   <p
     className="spell-block-level-school"

@@ -9,6 +9,9 @@ module Spec::Support::Examples
   module ModelExamples
     extend RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
 
+    DEFAULT_VALUE = Object.new.freeze
+    private_constant :DEFAULT_VALUE
+
     def self.included(other)
       super
 
@@ -16,7 +19,7 @@ module Spec::Support::Examples
     end
 
     shared_examples 'should have attribute' \
-      do |attr_name, default: nil, value: nil|
+      do |attr_name, default: nil, value: DEFAULT_VALUE|
         attr_name = attr_name.intern
 
         include_examples 'should have property', attr_name
@@ -33,7 +36,7 @@ module Spec::Support::Examples
         end
 
         context "when the attributes include #{attr_name}" do
-          if value.nil?
+          if value == DEFAULT_VALUE
             let(:expected) { attributes.fetch(attr_name.intern) }
           else
             let(:attributes) { super().merge(attr_name => value) }

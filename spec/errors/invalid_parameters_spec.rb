@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 require 'errors/invalid_parameters'
 
 RSpec.describe Errors::InvalidParameters do

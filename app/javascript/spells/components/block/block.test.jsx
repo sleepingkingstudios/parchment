@@ -28,6 +28,14 @@ describe('<SpellBlock />', () => {
     expect(nameElement).toHaveText(spell.name);
   });
 
+  it('should render the spell source', () => {
+    const rendered = shallow(<SpellBlock {...defaultProps} />);
+    const sourceElement = rendered.find('.spell-block-source');
+
+    expect(sourceElement).toHaveDisplayName('p');
+    expect(sourceElement).toHaveText('Homebrew');
+  });
+
   it('should render the spell level and school', () => {
     const rendered = shallow(<SpellBlock {...defaultProps} />);
     const nameElement = rendered.find('.spell-block-level-school');
@@ -87,6 +95,29 @@ describe('<SpellBlock />', () => {
     const rendered = shallow(<SpellBlock {...defaultProps} />);
 
     expect(rendered).toMatchSnapshot();
+  });
+
+  describe('when the spell has a source', () => {
+    const source = {
+      id: '00000000-0000-0000-0000-000000000000',
+      metadata: {},
+      name: "The Flumph Fancier's Handbook",
+      playtest: true,
+      originId: '10000000-0000-0000-0000-000000000000',
+      originType: 'Book',
+      referenceId: spell.id,
+      referenceType: 'Spell',
+    };
+    const spellWithSource = { ...spell, source };
+    const props = { ...defaultProps, spell: spellWithSource };
+
+    it('should render the spell source', () => {
+      const rendered = shallow(<SpellBlock {...props} />);
+      const sourceElement = rendered.find('.spell-block-source');
+
+      expect(sourceElement).toHaveDisplayName('p');
+      expect(sourceElement).toHaveText(source.name);
+    });
   });
 
   describe('with showAdditionalDetails: true', () => {

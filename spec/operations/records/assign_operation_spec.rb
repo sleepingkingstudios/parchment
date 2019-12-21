@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 
-require 'errors/invalid_parameters'
 require 'operations/records/assign_operation'
 
 require 'support/examples/operation_examples'

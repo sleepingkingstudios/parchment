@@ -7,6 +7,10 @@ import FormSelectInput from '../../../components/form/select-input';
 import FormTextAreaInput from '../../../components/form/text-area-input';
 import SpellFormCancelButton from './cancel-button';
 import SpellFormSubmitButton from './submit-button';
+import SpellFormSelectSourceField, {
+  mapSourceToValue,
+  mapValueToSource,
+} from './select-source-field';
 
 import {
   formField,
@@ -103,6 +107,17 @@ SlugField.propTypes = {
   form: formType.isRequired,
 };
 
+const SourceField = formField(SpellFormSelectSourceField, 'source', {
+  mapDataToValue: mapSourceToValue,
+  mapValueToData: mapValueToSource,
+});
+
+SourceField.defaultProps = {};
+
+SourceField.propTypes = {
+  form: formType.isRequired,
+};
+
 const CancelButton = formGroup(SpellFormCancelButton, { displayName: 'CancelButton' });
 
 CancelButton.defaultProps = {};
@@ -136,5 +151,6 @@ export {
   SchoolField,
   ShortDescriptionField,
   SlugField,
+  SourceField,
   SubmitButton,
 };

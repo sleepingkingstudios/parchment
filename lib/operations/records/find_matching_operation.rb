@@ -8,9 +8,10 @@ module Operations::Records
   class FindMatchingOperation < Operations::Records::BaseOperation
     private
 
-    def build_query(order:)
+    def build_query(order:, where:)
       record_class
         .all
+        .where(where)
         .order(order)
     end
 
@@ -18,11 +19,11 @@ module Operations::Records
       { created_at: :desc }
     end
 
-    def process(order: nil)
+    def process(order: nil, where: nil)
       order = default_order if order.blank?
-      query = build_query(order: order)
+      query = build_query(order: order, where: where)
 
-      query.to_a
+      success(query.to_a)
     end
   end
 end

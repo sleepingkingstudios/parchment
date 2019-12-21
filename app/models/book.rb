@@ -11,14 +11,17 @@ class Book < ApplicationRecord
   Factory = Operations::Records::Factory.new(self)
 
   ### Attributes
-  generate_abbreviation :name
-  generate_slug         :name
+  generate_abbreviation :title
+  generate_slug         :title
+
+  ### Associations
+  has_many :sources, as: :origin, dependent: :destroy
 
   ### Validations
   validates :abbreviation,
     presence:   true,
     uniqueness: true
-  validates :name,
+  validates :title,
     presence:   true,
     uniqueness: true
   validates :publication_date, presence: true
@@ -34,10 +37,11 @@ end
 #
 #  id               :uuid             not null, primary key
 #  abbreviation     :string           default(""), not null
-#  name             :string           default(""), not null
+#  playtest         :boolean          default(FALSE), not null
 #  publication_date :date             not null
 #  publisher_name   :string           default(""), not null
 #  slug             :string           default(""), not null
+#  title            :string           default(""), not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #

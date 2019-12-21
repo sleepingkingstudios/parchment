@@ -24,7 +24,7 @@ RSpec.describe Operations::Records::FindOneOperation do
       operation.call(id)
     end
 
-    it { expect(operation).to respond_to(:call).with(1).argument }
+    it { expect(operation).to respond_to(:call).with(1..2).arguments }
 
     include_examples 'should validate the primary key'
 
@@ -40,6 +40,27 @@ RSpec.describe Operations::Records::FindOneOperation do
       it 'should have a failing result' do
         expect(call_operation)
           .to have_failing_result.with_error(expected_errors)
+      end
+    end
+
+    describe 'with as: :custom_id' do
+      def call_operation
+        operation.call(id, as: :custom_id)
+      end
+
+      describe 'with an invalid primary key' do
+        let(:id) { '00000000-0000-0000-0000-000000000000' }
+        let(:expected_errors) do
+          Errors::NotFound.new(
+            attributes:   { custom_id: id },
+            record_class: record_class
+          )
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_errors)
+        end
       end
     end
 
@@ -71,6 +92,29 @@ RSpec.describe Operations::Records::FindOneOperation do
           expect(call_operation)
             .to have_passing_result.with_value(record)
         end
+      end
+
+      describe 'with as: :custom_id' do
+        def call_operation
+          operation.call(id, as: :custom_id)
+        end
+
+        # rubocop:disable RSpec/NestedGroups
+        describe 'with an invalid primary key' do
+          let(:id) { '00000000-0000-0000-0000-000000000000' }
+          let(:expected_errors) do
+            Errors::NotFound.new(
+              attributes:   { custom_id: id },
+              record_class: record_class
+            )
+          end
+
+          it 'should have a failing result' do
+            expect(call_operation)
+              .to have_failing_result.with_error(expected_errors)
+          end
+        end
+        # rubocop:enable RSpec/NestedGroups
       end
     end
   end

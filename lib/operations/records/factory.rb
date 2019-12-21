@@ -16,6 +16,14 @@ require 'operations/records/update_operation'
 module Operations::Records
   # Command factory for generating record operations.
   class Factory < Cuprum::CommandFactory
+    def self.for(record_class)
+      record_class = record_class.constantize if record_class.is_a?(String)
+
+      return record_class::Factory if record_class.const_defined?(:Factory)
+
+      new(record_class)
+    end
+
     def initialize(record_class)
       @record_class = record_class
     end

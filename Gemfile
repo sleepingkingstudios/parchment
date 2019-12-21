@@ -23,7 +23,7 @@ gem 'webpacker', '~> 4.0.0', '>= 4.0.2'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.1', require: false
 
-gem 'cuprum', '0.9.0.beta.0'
+gem 'cuprum', '~> 0.9.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
@@ -43,7 +43,9 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   # Run commands to aggregate CI steps, generate templated files, etc.
-  gem 'sleeping_king_studios-tasks', '~> 0.2.0.rc.0'
+  gem 'sleeping_king_studios-tasks',
+    git:    'https://github.com/sleepingkingstudios/sleeping_king_studios-tasks',
+    branch: 'feature/cucumber-retry'
   gem 'thor', '~> 0.20', '>= 0.20.3'
 
   # Access an interactive console on exception pages or by calling 'console'
@@ -61,9 +63,7 @@ group :test do
 
   gem 'rspec', '~> 3.8'
   gem 'rspec-rails', '~> 3.8.2'
-  gem 'rspec-sleeping_king_studios',
-    git:    'https://github.com/sleepingkingstudios/rspec-sleeping_king_studios',
-    branch: 'chore/rails-6'
+  gem 'rspec-sleeping_king_studios', '~> 2.5', '>= 2.5.1'
 
   gem 'rubocop', '~> 0.66.0'
   gem 'rubocop-rspec', '~> 1.32.0'

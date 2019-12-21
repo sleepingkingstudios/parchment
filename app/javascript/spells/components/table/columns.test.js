@@ -6,6 +6,7 @@ describe('Spells table columns', () => {
     const props = columns.map(column => column.prop);
     const expected = [
       'name',
+      'source',
       'school',
       'level',
       'description',
@@ -80,6 +81,28 @@ describe('Spells table columns', () => {
       expect(matching.label).toEqual('School');
       expect(typeof matching.value).toEqual('function');
       expect(matching.value({ school: 'nullamancy' })).toEqual('Nullamancy');
+    });
+  });
+
+  describe('source', () => {
+    it('should have the expected properties', () => {
+      const matching = columns.find(column => (column.prop === 'source'));
+
+      expect(matching.label).toEqual('Source');
+      expect(typeof matching.value).toEqual('function');
+      expect(matching.value({})).toEqual('Homebrew');
+    });
+
+    describe('with a spell with a source', () => {
+      const source = { name: "The Flumph Fancier's Handbook" };
+
+      it('should have the expected properties', () => {
+        const matching = columns.find(column => (column.prop === 'source'));
+
+        expect(matching.label).toEqual('Source');
+        expect(typeof matching.value).toEqual('function');
+        expect(matching.value({ source })).toEqual(source.name);
+      });
     });
   });
 });
