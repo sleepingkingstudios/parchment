@@ -98,7 +98,16 @@ describe('<SpellBlock />', () => {
   });
 
   describe('when the spell has a source', () => {
-    const source = { name: "The Flumph Fancier's Handbook" };
+    const source = {
+      id: '00000000-0000-0000-0000-000000000000',
+      metadata: {},
+      name: "The Flumph Fancier's Handbook",
+      playtest: true,
+      originId: '10000000-0000-0000-0000-000000000000',
+      originType: 'Book',
+      referenceId: spell.id,
+      referenceType: 'Spell',
+    };
     const spellWithSource = { ...spell, source };
     const props = { ...defaultProps, spell: spellWithSource };
 

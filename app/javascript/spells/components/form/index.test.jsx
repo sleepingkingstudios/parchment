@@ -6,6 +6,11 @@ import SpellForm from './index';
 import { spellsData } from '../../fixtures';
 import selectSchoolOptions from './selectSchoolOptions';
 import { INITIALIZED } from '../../../api/status';
+import { hooks } from '../../store/formFindOrigins';
+
+jest.mock('../../store/formFindOrigins');
+
+hooks.useRequestData.mockImplementation(() => () => {});
 
 describe('<SpellForm />', () => {
   const onChangeAction = jest.fn(
@@ -78,6 +83,14 @@ describe('<SpellForm />', () => {
     expect(input).toHaveProp({ form });
   });
 
+  it('should render the source select field', () => {
+    const rendered = shallow(<SpellForm {...defaultProps} />);
+    const input = rendered.find('SourceField');
+
+    expect(input).toExist();
+    expect(input).toHaveProp({ form });
+  });
+
   it('should render the casting time input field', () => {
     const rendered = shallow(<SpellForm {...defaultProps} />);
     const input = rendered.find('CastingTimeField');
@@ -140,6 +153,17 @@ describe('<SpellForm />', () => {
 
     expect(input).toExist();
     expect(input).toHaveProp({ form });
+  });
+
+  it('should find the origins', () => {
+    const performRequest = jest.fn();
+
+    hooks.useRequestData.mockImplementationOnce(() => performRequest);
+
+    shallow(<SpellForm {...defaultProps} />);
+
+    expect(hooks.useRequestData).toHaveBeenCalled();
+    expect(performRequest).toHaveBeenCalled();
   });
 
   it('should match the snapshot', () => {

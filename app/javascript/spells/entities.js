@@ -1,5 +1,21 @@
 import PropTypes from 'prop-types';
 
+export const sourceStubType = PropTypes.shape({
+  originId: PropTypes.string.isRequired,
+  originType: PropTypes.string.isRequired,
+});
+
+export const sourceType = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  metadata: PropTypes.object,
+  name: PropTypes.string.isRequired,
+  originId: PropTypes.string.isRequired,
+  originType: PropTypes.string.isRequired,
+  playtest: PropTypes.bool.isRequired,
+  referenceId: PropTypes.string.isRequired,
+  referenceType: PropTypes.string.isRequired,
+});
+
 export const spellType = PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -14,6 +30,10 @@ export const spellType = PropTypes.shape({
   duration: PropTypes.string.isRequired,
   shortDescription: PropTypes.string,
   description: PropTypes.string.isRequired,
+  source: PropTypes.oneOfType([
+    sourceStubType,
+    sourceType,
+  ]),
 });
 
 export const spellFormType = PropTypes.shape(
@@ -39,6 +59,7 @@ export const spellDefaultAttributes = {
   duration: '',
   shortDescription: '',
   description: '',
+  source: undefined,
 };
 
 export const buildSpell = (attributes = {}) => (
