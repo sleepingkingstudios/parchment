@@ -1,5 +1,5 @@
 import ApiEndpoint from '../endpoint/index';
-import FindOneRequest from './request';
+import FindManyRequest from './request';
 import generateActions from '../endpoint/actions';
 import generateInitialState from '../endpoint/initialState';
 import generateHooks from './hooks';
@@ -14,7 +14,7 @@ class FindManyEndpoint extends ApiEndpoint {
           generateHooks,
           generateInitialState,
           generateReducer,
-          generateRequest: opts => new FindOneRequest(opts),
+          generateRequest: opts => new FindManyRequest(opts),
         },
         options,
       ),
