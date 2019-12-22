@@ -42,8 +42,10 @@
     "eslint-plugin-react": "^7.12.4",
     "jest": "^24.7.1",
     "jest-enzyme": "^7.0.2",
+    "serialize-javascript": ">=2.1.1",
     "stylelint": "^10.0.1",
     "stylelint-config-standard": "^18.3.0",
+    "terser-webpack-plugin": "^1.4.2",
     "webpack-dev-server": "^3.2.1"
   },
   "scripts": {
