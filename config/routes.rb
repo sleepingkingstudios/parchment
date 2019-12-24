@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     api_resources :spells
   end
 
+  client_resources :books
+
   client_resources :spells
 
   root to: 'client#index'
