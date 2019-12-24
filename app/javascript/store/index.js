@@ -4,6 +4,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
 import alerts from '../components/alerts/store/reducer';
+import { reducer as books } from '../books';
 import { reducer as spells } from '../spells';
 
 export const history = createBrowserHistory();
@@ -11,6 +12,7 @@ export const history = createBrowserHistory();
 const createReducer = browserHistory => combineReducers({
   router: connectRouter(browserHistory),
   alerts,
+  books,
   spells,
 });
 const store = createStore(
