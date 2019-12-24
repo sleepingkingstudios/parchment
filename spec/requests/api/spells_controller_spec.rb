@@ -41,7 +41,7 @@ RSpec.describe Api::SpellsController do
         expect(response).to have_http_status(:not_found)
       end
 
-      it 'should serialize the spells' do
+      it 'should serialize the error' do
         call_action
 
         expect(json).to deep_match expected_json
@@ -637,7 +637,7 @@ RSpec.describe Api::SpellsController do
   describe 'DELETE /api/spells/:id.json' do
     include_context 'when there are many spells'
 
-    let(:spell)    { spells.first }
+    let(:spell)    { spells.find { |spell| spell.source.nil? } }
     let(:spell_id) { spell.id }
     let(:expected_json) do
       {
@@ -664,16 +664,34 @@ RSpec.describe Api::SpellsController do
       expect(json).to deep_match expected_json
     end
 
-    # rubocop:disable RSpec/MultipleExpectations
-    it 'should destroy the spell' do
+    it 'should destroy the spell', :aggregate_failures do
       expect { call_action }.to change(Spell, :count).by(-1)
 
       query = Spell.where(id: spell_id)
 
       expect(query.exists?).to be false
     end
-    # rubocop:enable RSpec/MultipleExpectations
 
     include_examples 'should respond with JSON content'
+
+    context 'when the spell has a source' do
+      let(:spell) { spells.find { |spell| !spell.source.nil? } }
+
+      it 'should destroy the spell', :aggregate_failures do
+        expect { call_action }.to change(Spell, :count).by(-1)
+
+        query = Spell.where(id: spell_id)
+
+        expect(query.exists?).to be false
+      end
+
+      it 'should delete the source', :aggregate_failures do
+        expect { call_action }.to change(Source, :count).by(-1)
+
+        query = Source.where(reference: spell)
+
+        expect(query.exists?).to be false
+      end
+    end
   end
 end
