@@ -10,3 +10,16 @@ export const bookType = PropTypes.shape({
 });
 
 export const bookListType = PropTypes.arrayOf(bookType);
+
+export const bookDefaultAttributes = {
+  id: '',
+  abbreviation: '',
+  publicationDate: '',
+  publisherName: '',
+  slug: '',
+  title: '',
+};
+
+export const buildBook = (attributes = {}) => (
+  Object.assign({}, attributes, bookDefaultAttributes)
+);
