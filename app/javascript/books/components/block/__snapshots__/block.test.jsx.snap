@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BookBlock /> should be match the snapshot 1`] = `
+<div
+  className="book-block"
+>
+  <p
+    className="book-block-title"
+  >
+    Spectres of Flumph Fortress
+  </p>
+  <p
+    className="book-block-publisher"
+  >
+    <strong>
+      Publisher:
+    </strong>
+     
+    Spelljammer Publishing
+  </p>
+  <p
+    className="book-block-publication-date"
+  >
+    <strong>
+      Publication Date:
+    </strong>
+     
+    2013-08-15
+  </p>
+</div>
+`;

@@ -9,7 +9,7 @@ import {
 } from '../../utils';
 import { exists } from '../../../utils/object';
 
-import './block-styles.css';
+import './spell-block-styles.css';
 
 const renderAdditionalDetails = ({ spell, showAdditionalDetails }) => {
   if (!showAdditionalDetails) { return null; }
