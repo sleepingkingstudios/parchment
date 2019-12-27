@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ShowBookPage /> should match the snapshot 1`] = `
+<Page
+  breadcrumbs={<ShowBookBreadcrumbs />}
+  className="page-show-book"
+  layout={null}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <ShowBookHeading />
+  <ShowBookBlock />
+</Page>
+`;

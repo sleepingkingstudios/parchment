@@ -1,3 +1,4 @@
+import BooksTableActions from './actions';
 import columns from './columns';
 
 describe('Books table columns', () => {
@@ -17,7 +18,7 @@ describe('Books table columns', () => {
       const matching = columns.find(column => (column.prop === 'actions'));
 
       expect(matching.label).toEqual(' ');
-      expect(matching.value).toEqual(' ');
+      expect(matching.value).toEqual(BooksTableActions);
     });
   });
 

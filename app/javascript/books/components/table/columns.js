@@ -1,3 +1,5 @@
+import BooksTableActions from './actions';
+
 const columns = [
   {
     label: 'Title',
@@ -10,7 +12,7 @@ const columns = [
   {
     label: ' ',
     prop: 'actions',
-    value: ' ',
+    value: BooksTableActions,
   },
 ];
 
