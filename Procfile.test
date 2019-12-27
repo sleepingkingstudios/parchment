@@ -1,2 +1,2 @@
 postgres: postgres
-web:      RAILS_ENV=test bundle exec rails server --port=5101
+web_ci:   RAILS_ENV=test bundle exec rails server --port=5101 --pid=tmp/pids/server-ci.pid
