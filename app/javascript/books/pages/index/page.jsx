@@ -16,7 +16,13 @@ const breadcrumbs = [
     active: true,
   },
 ];
-const buttons = [];
+const buttons = [
+  {
+    label: 'Create Book',
+    outline: true,
+    url: '/books/create',
+  },
+];
 const { useRequestData } = hooks;
 
 const BooksPage = () => {

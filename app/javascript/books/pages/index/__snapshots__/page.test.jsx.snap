@@ -21,7 +21,15 @@ exports[`BooksPage should match the snapshot 1`] = `
   title="Parchment"
 >
   <HeadingWithButtons
-    buttons={Array []}
+    buttons={
+      Array [
+        Object {
+          "label": "Create Book",
+          "outline": true,
+          "url": "/books/create",
+        },
+      ]
+    }
   >
     Books
   </HeadingWithButtons>
