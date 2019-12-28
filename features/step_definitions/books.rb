@@ -34,6 +34,32 @@ When('I click the {string} link for book {string}') do |link, book_title|
   row.find_link(link).click
 end
 
+When('I submit the Book form with invalid attributes') do
+  expect(@current_page.has_book_form?).to be true
+
+  @book_attributes =
+    FactoryBot.attributes_for(:book, publication_date: '', publisher_name: '')
+
+  @current_page.book_form.fill_attributes(@book_attributes)
+
+  @current_page.book_form.submit_button.click
+
+  sleep 1 # TODO: Remove this once a pending overlay is defined.
+end
+
+When('I submit the Book form with valid attributes') do
+  expect(@current_page.has_book_form?).to be true
+
+  @book_attributes =
+    FactoryBot.attributes_for(:book, title: 'Blasto the Flumph Spectre')
+
+  @current_page.book_form.fill_attributes(@book_attributes)
+
+  @current_page.book_form.submit_button.click
+
+  sleep 1 # TODO: Remove this once a pending overlay is defined.
+end
+
 Then('I should be on the {string} page for the book') do |action|
   expected_page = "Features::Pages::Books::#{action.classify}".constantize.new
   @current_page = expected_page
@@ -88,5 +114,33 @@ Then('the Books table should display the books data') do
         row.text.include?(book.publisher_name)
       end
     )
+  end
+end
+
+Then('the Book form should display the book data') do
+  expect(@current_page.has_book_form?).to be true
+
+  Features::Pages::Books::Form::ALL_INPUTS.each do |attr_name|
+    value = @current_page.book_form.get_value(attr_name)
+
+    expect(value.to_s).to be == @book_attributes[attr_name].to_s
+  end
+end
+
+Then('the Book form should display the errors') do
+  expect(@current_page.has_book_form?).to be true
+
+  expected_errors = Book.new(@book_attributes).tap(&:valid?).errors.messages
+
+  expected_errors.each do |attribute, errors|
+    form_group = @current_page.book_form.find_field(attribute)
+
+    expect(form_group).not_to be nil
+
+    feedback = form_group.find('.invalid-feedback')
+
+    errors.each do |error|
+      expect(feedback.text).to include error
+    end
   end
 end
