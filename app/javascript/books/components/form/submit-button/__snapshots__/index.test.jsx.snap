@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BookFormSubmitButton /> should match the snapshot 1`] = `
+<FormSubmitWrapper
+  block={true}
+  disabled={false}
+  form={
+    Object {
+      "data": Object {
+        "book": Object {
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
+          "title": "Spectres of Flumph Fortress",
+        },
+      },
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "book",
+      ],
+    }
+  }
+  outline={true}
+>
+  Create Book
+</FormSubmitWrapper>
+`;
+
+exports[`<BookFormSubmitButton /> with isUpdate: true should match the snapshot 1`] = `
+<FormSubmitWrapper
+  block={true}
+  disabled={false}
+  form={
+    Object {
+      "data": Object {
+        "book": Object {
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
+          "title": "Spectres of Flumph Fortress",
+        },
+      },
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "book",
+      ],
+    }
+  }
+  outline={true}
+>
+  Update Book
+</FormSubmitWrapper>
+`;

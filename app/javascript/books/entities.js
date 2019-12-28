@@ -11,6 +11,12 @@ export const bookType = PropTypes.shape({
 
 export const bookListType = PropTypes.arrayOf(bookType);
 
+export const bookFormType = PropTypes.shape(
+  {
+    book: bookType,
+  },
+);
+
 export const bookDefaultAttributes = {
   id: '',
   abbreviation: '',
