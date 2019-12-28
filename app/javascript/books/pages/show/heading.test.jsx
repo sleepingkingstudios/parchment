@@ -27,7 +27,13 @@ describe('<ShowBookHeading />', () => {
 
   describe('when the selector returns a book', () => {
     const book = booksData[0];
-    const expected = [];
+    const expected = [
+      {
+        label: 'Update Book',
+        outline: true,
+        url: `/books/${book.id}/update`,
+      },
+    ];
 
     beforeEach(() => {
       hooks.useEndpoint.mockImplementationOnce(() => ({ data: { book } }));
@@ -41,7 +47,7 @@ describe('<ShowBookHeading />', () => {
       expect(heading).toHaveProp('children', 'Show Book');
     });
 
-    it('should not render buttons', () => {
+    it('should render the update button', () => {
       const rendered = shallow(<ShowBookHeading {...defaultProps} />);
       const heading = rendered.find('HeadingWithButtons');
 

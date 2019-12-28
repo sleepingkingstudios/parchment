@@ -6,7 +6,13 @@ import { hooks } from '../../store/showFindBook';
 const generateButtons = ({ book }) => {
   if (!(book && book.id)) { return []; }
 
-  return [];
+  return [
+    {
+      label: 'Update Book',
+      outline: true,
+      url: `/books/${book.id}/update`,
+    },
+  ];
 };
 const { useEndpoint } = hooks;
 

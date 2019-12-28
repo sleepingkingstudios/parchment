@@ -21,4 +21,13 @@ describe('<BooksTableActions />', () => {
     expect(link).toHaveProp('url', `/books/${id}`);
     expect(link).toHaveProp('children', 'Show');
   });
+
+  it('should render the update link', () => {
+    const rendered = shallow(<BooksTableActions {...defaultProps} />);
+    const link = rendered.find('LinkButton').at(1);
+
+    expect(link).toExist();
+    expect(link).toHaveProp('url', `/books/${id}/update`);
+    expect(link).toHaveProp('children', 'Update');
+  });
 });

@@ -13,6 +13,14 @@ const BooksTableActions = ({ id }) => (
     >
       Show
     </LinkButton>
+    <LinkButton
+      url={`/books/${id}/update`}
+      link
+      buttonSize="sm"
+      buttonStyle="link"
+    >
+      Update
+    </LinkButton>
   </div>
 );
 
