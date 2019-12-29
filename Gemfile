@@ -12,7 +12,7 @@ gem 'annotate', '~> 2.7', '>= 2.7.4' # https://github.com/ctran/annotate_models
 gem 'pg', '>= 0.18', '< 2.0' # Use postgresql as the database for Active Record
 
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.0.0', '>= 4.0.2'
