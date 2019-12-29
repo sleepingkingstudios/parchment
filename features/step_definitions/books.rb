@@ -117,6 +117,16 @@ Then('the Books table should display the books data') do
   end
 end
 
+Then('the Books table should not display the data for the book') do
+  @current_page.wait_until_loading_message_invisible
+
+  rows = @current_page.table_rows
+
+  expect(rows).not_to include(
+    satisfy { |row| row.text.start_with?(@book.title) }
+  )
+end
+
 Then('the Book form should display the book data') do
   expect(@current_page.has_book_form?).to be true
 
