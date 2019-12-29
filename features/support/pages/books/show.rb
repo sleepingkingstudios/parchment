@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+require 'support/pages/books'
+
+module Features::Pages::Books
+  class Show < SitePrism::Page
+    set_url '/books{/book_id}'
+
+    element :book_block, '.book-block'
+
+    element :loading_message, '.loading-message-pending'
+
+    def find_text(attr_name)
+      class_name = ".book-block-#{attr_name.tr('_', '-')}"
+
+      book_block.find(class_name).text
+    end
+  end
+end

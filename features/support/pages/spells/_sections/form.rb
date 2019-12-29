@@ -44,6 +44,10 @@ module Features::Pages::Spells
       CHECKBOX_INPUTS
     end
 
+    def input_prefix
+      'spell'
+    end
+
     def select_inputs
       SELECT_INPUTS
     end

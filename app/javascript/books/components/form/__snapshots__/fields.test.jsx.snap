@@ -1,0 +1,567 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BookForm /> fields <CancelButton /> should match the snapshot 1`] = `
+<CancelButton
+  form={
+    Object {
+      "data": Object {
+        "book": Object {
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
+          "title": "Spectres of Flumph Fortress",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "book",
+      ],
+    }
+  }
+  isUpdate={false}
+>
+  <FormGroup
+    className=""
+    colWidth={null}
+  >
+    <div
+      className="form-group col"
+    >
+      <BookFormCancelButton
+        form={
+          Object {
+            "data": Object {
+              "book": Object {
+                "abbreviation": "sff",
+                "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                "playtest": true,
+                "publicationDate": "2013-08-15",
+                "publisherName": "Spelljammer Publishing",
+                "slug": "spectres-flumph-fortress",
+                "title": "Spectres of Flumph Fortress",
+              },
+            },
+            "onChangeAction": [MockFunction],
+            "onSubmitAction": [MockFunction],
+            "path": Array [
+              "book",
+            ],
+          }
+        }
+        isUpdate={false}
+      >
+        <LinkButton
+          block={true}
+          buttonSize={null}
+          buttonStyle="secondary"
+          className={null}
+          link={false}
+          outline={true}
+          url="/books"
+        >
+          <Link
+            className="btn btn-outline-secondary btn-block"
+            to="/books"
+          >
+            <a
+              className="btn btn-outline-secondary btn-block"
+              href="/books"
+              onClick={[Function]}
+            >
+              Cancel
+            </a>
+          </Link>
+        </LinkButton>
+      </BookFormCancelButton>
+    </div>
+  </FormGroup>
+</CancelButton>
+`;
+
+exports[`<BookForm /> fields <PublicationDateField /> should match the snapshot 1`] = `
+<PublicationDateField
+  form={
+    Object {
+      "data": Object {
+        "book": Object {
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
+          "title": "Spectres of Flumph Fortress",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "book",
+      ],
+    }
+  }
+>
+  <FormField
+    className="book-publication-date-field"
+    colWidth={null}
+    inputId={null}
+    label={null}
+    path={
+      Array [
+        "book",
+      ]
+    }
+    prop="publicationDate"
+  >
+    <FormGroup
+      className="form-field book-publication-date-field"
+      colWidth={null}
+    >
+      <div
+        className="form-group col form-field book-publication-date-field"
+      >
+        <label
+          htmlFor="book-publication-date-input"
+        >
+          Publication Date
+        </label>
+        <PublicationDateInput
+          form={
+            Object {
+              "data": Object {
+                "book": Object {
+                  "abbreviation": "sff",
+                  "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                  "playtest": true,
+                  "publicationDate": "2013-08-15",
+                  "publisherName": "Spelljammer Publishing",
+                  "slug": "spectres-flumph-fortress",
+                  "title": "Spectres of Flumph Fortress",
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "book",
+              ],
+            }
+          }
+        >
+          <FormInput
+            className={null}
+            id="book-publication-date-input"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+            validStatus={null}
+            value="2013-08-15"
+          >
+            <input
+              className="form-control"
+              id="book-publication-date-input"
+              onChange={[Function]}
+              placeholder=""
+              type="text"
+              value="2013-08-15"
+            />
+          </FormInput>
+        </PublicationDateInput>
+      </div>
+    </FormGroup>
+  </FormField>
+</PublicationDateField>
+`;
+
+exports[`<BookForm /> fields <PublisherNameField /> should match the snapshot 1`] = `
+<PublisherNameField
+  form={
+    Object {
+      "data": Object {
+        "book": Object {
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
+          "title": "Spectres of Flumph Fortress",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "book",
+      ],
+    }
+  }
+>
+  <FormField
+    className="book-publisher-name-field"
+    colWidth={null}
+    inputId={null}
+    label={null}
+    path={
+      Array [
+        "book",
+      ]
+    }
+    prop="publisherName"
+  >
+    <FormGroup
+      className="form-field book-publisher-name-field"
+      colWidth={null}
+    >
+      <div
+        className="form-group col form-field book-publisher-name-field"
+      >
+        <label
+          htmlFor="book-publisher-name-input"
+        >
+          Publisher Name
+        </label>
+        <PublisherNameInput
+          form={
+            Object {
+              "data": Object {
+                "book": Object {
+                  "abbreviation": "sff",
+                  "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                  "playtest": true,
+                  "publicationDate": "2013-08-15",
+                  "publisherName": "Spelljammer Publishing",
+                  "slug": "spectres-flumph-fortress",
+                  "title": "Spectres of Flumph Fortress",
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "book",
+              ],
+            }
+          }
+        >
+          <FormInput
+            className={null}
+            id="book-publisher-name-input"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+            validStatus={null}
+            value="Spelljammer Publishing"
+          >
+            <input
+              className="form-control"
+              id="book-publisher-name-input"
+              onChange={[Function]}
+              placeholder=""
+              type="text"
+              value="Spelljammer Publishing"
+            />
+          </FormInput>
+        </PublisherNameInput>
+      </div>
+    </FormGroup>
+  </FormField>
+</PublisherNameField>
+`;
+
+exports[`<BookForm /> fields <SlugField /> should match the snapshot 1`] = `
+<SlugField
+  form={
+    Object {
+      "data": Object {
+        "book": Object {
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
+          "title": "Spectres of Flumph Fortress",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "book",
+      ],
+    }
+  }
+>
+  <FormField
+    className="book-slug-field"
+    colWidth={null}
+    inputId={null}
+    label={null}
+    path={
+      Array [
+        "book",
+      ]
+    }
+    prop="slug"
+  >
+    <FormGroup
+      className="form-field book-slug-field"
+      colWidth={null}
+    >
+      <div
+        className="form-group col form-field book-slug-field"
+      >
+        <label
+          htmlFor="book-slug-input"
+        >
+          Slug
+        </label>
+        <SlugInput
+          form={
+            Object {
+              "data": Object {
+                "book": Object {
+                  "abbreviation": "sff",
+                  "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                  "playtest": true,
+                  "publicationDate": "2013-08-15",
+                  "publisherName": "Spelljammer Publishing",
+                  "slug": "spectres-flumph-fortress",
+                  "title": "Spectres of Flumph Fortress",
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "book",
+              ],
+            }
+          }
+        >
+          <FormInput
+            className={null}
+            id="book-slug-input"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+            validStatus={null}
+            value="spectres-flumph-fortress"
+          >
+            <input
+              className="form-control"
+              id="book-slug-input"
+              onChange={[Function]}
+              placeholder=""
+              type="text"
+              value="spectres-flumph-fortress"
+            />
+          </FormInput>
+        </SlugInput>
+      </div>
+    </FormGroup>
+  </FormField>
+</SlugField>
+`;
+
+exports[`<BookForm /> fields <SubmitButton /> should match the snapshot 1`] = `
+<SubmitButton
+  disabled={false}
+  form={
+    Object {
+      "data": Object {
+        "book": Object {
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
+          "title": "Spectres of Flumph Fortress",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "book",
+      ],
+    }
+  }
+  status="initialized"
+>
+  <FormGroup
+    className=""
+    colWidth={null}
+  >
+    <div
+      className="form-group col"
+    >
+      <BookFormSubmitButton
+        disabled={false}
+        form={
+          Object {
+            "data": Object {
+              "book": Object {
+                "abbreviation": "sff",
+                "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                "playtest": true,
+                "publicationDate": "2013-08-15",
+                "publisherName": "Spelljammer Publishing",
+                "slug": "spectres-flumph-fortress",
+                "title": "Spectres of Flumph Fortress",
+              },
+            },
+            "onChangeAction": [MockFunction],
+            "onSubmitAction": [MockFunction],
+            "path": Array [
+              "book",
+            ],
+          }
+        }
+        isUpdate={false}
+        status="initialized"
+      >
+        <FormSubmitWrapper
+          block={true}
+          disabled={false}
+          form={
+            Object {
+              "data": Object {
+                "book": Object {
+                  "abbreviation": "sff",
+                  "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                  "playtest": true,
+                  "publicationDate": "2013-08-15",
+                  "publisherName": "Spelljammer Publishing",
+                  "slug": "spectres-flumph-fortress",
+                  "title": "Spectres of Flumph Fortress",
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "book",
+              ],
+            }
+          }
+          outline={true}
+        >
+          <Button
+            block={true}
+            buttonSize="md"
+            buttonStyle="primary"
+            className="form-submit book-form-submit"
+            disabled={false}
+            link={false}
+            onClick={[Function]}
+            outline={true}
+          >
+            <button
+              className="btn btn-outline-primary btn-block form-submit book-form-submit"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              Create Book
+            </button>
+          </Button>
+        </FormSubmitWrapper>
+      </BookFormSubmitButton>
+    </div>
+  </FormGroup>
+</SubmitButton>
+`;
+
+exports[`<BookForm /> fields <TitleField /> should match the snapshot 1`] = `
+<TitleField
+  form={
+    Object {
+      "data": Object {
+        "book": Object {
+          "abbreviation": "sff",
+          "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+          "playtest": true,
+          "publicationDate": "2013-08-15",
+          "publisherName": "Spelljammer Publishing",
+          "slug": "spectres-flumph-fortress",
+          "title": "Spectres of Flumph Fortress",
+        },
+      },
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "book",
+      ],
+    }
+  }
+>
+  <FormField
+    className="book-title-field"
+    colWidth={null}
+    inputId={null}
+    label={null}
+    path={
+      Array [
+        "book",
+      ]
+    }
+    prop="title"
+  >
+    <FormGroup
+      className="form-field book-title-field"
+      colWidth={null}
+    >
+      <div
+        className="form-group col form-field book-title-field"
+      >
+        <label
+          htmlFor="book-title-input"
+        >
+          Title
+        </label>
+        <TitleInput
+          form={
+            Object {
+              "data": Object {
+                "book": Object {
+                  "abbreviation": "sff",
+                  "id": "38a6666f-d3eb-4853-bd0a-add4d8ec369a",
+                  "playtest": true,
+                  "publicationDate": "2013-08-15",
+                  "publisherName": "Spelljammer Publishing",
+                  "slug": "spectres-flumph-fortress",
+                  "title": "Spectres of Flumph Fortress",
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "book",
+              ],
+            }
+          }
+        >
+          <FormInput
+            className={null}
+            id="book-title-input"
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+            validStatus={null}
+            value="Spectres of Flumph Fortress"
+          >
+            <input
+              className="form-control"
+              id="book-title-input"
+              onChange={[Function]}
+              placeholder=""
+              type="text"
+              value="Spectres of Flumph Fortress"
+            />
+          </FormInput>
+        </TitleInput>
+      </div>
+    </FormGroup>
+  </FormField>
+</TitleField>
+`;

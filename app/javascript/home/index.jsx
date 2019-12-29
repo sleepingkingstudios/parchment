@@ -6,11 +6,19 @@ import Page from '../components/page';
 
 const HomePage = props => (
   <Page {...props}>
-    <h1>Game Resources</h1>
+    <h1>Game Reference</h1>
 
     <ul>
       <li>
         <Link className="spells-link" to="/spells">Spells</Link>
+      </li>
+    </ul>
+
+    <h2>Sources</h2>
+
+    <ul>
+      <li>
+        <Link className="books-link" to="/books">Books</Link>
       </li>
     </ul>
   </Page>

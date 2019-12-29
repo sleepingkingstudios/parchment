@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CreateBookPage /> should match the snapshot 1`] = `
+<Page
+  breadcrumbs={
+    Array [
+      Object {
+        "label": "Home",
+        "url": "/",
+      },
+      Object {
+        "label": "Books",
+        "url": "/books",
+      },
+      Object {
+        "active": true,
+        "label": "Create",
+        "url": "/books/create",
+      },
+    ]
+  }
+  className="page-create-book"
+  layout={null}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <h1>
+    Create Book
+  </h1>
+  <CreateBookForm />
+</Page>
+`;
