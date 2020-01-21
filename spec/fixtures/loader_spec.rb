@@ -46,7 +46,7 @@ RSpec.describe Fixtures::Loader do
 
   subject(:loader) do
     described_class.new(
-      environment:   environment,
+      data_path:     environment,
       resource_name: resource_name
     )
   end
@@ -59,7 +59,7 @@ RSpec.describe Fixtures::Loader do
       expect(described_class)
         .to be_constructible
         .with(0).arguments
-        .and_keywords(:environment, :resource_name)
+        .and_keywords(:data_path, :resource_name)
     end
   end
 
@@ -297,8 +297,8 @@ RSpec.describe Fixtures::Loader do
   end
   # rubocop:enable RSpec/SubjectStub
 
-  describe '#environment' do
-    include_examples 'should define reader', :environment, -> { environment }
+  describe '#data_path' do
+    include_examples 'should define reader', :data_path, -> { environment }
   end
 
   describe '#options' do

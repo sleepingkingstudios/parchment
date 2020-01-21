@@ -8,14 +8,14 @@ module Fixtures
   class Builder
     # @param record_class [Class] The class of record that the operation's
     #   business logic operates on.
-    # @param environment [String] The data directory to load from.
-    def initialize(record_class, environment: 'fixtures')
+    # @param data_path [String] The data directory to load from.
+    def initialize(record_class, data_path: 'fixtures')
       @record_class = record_class
-      @environment  = environment
+      @data_path    = data_path
     end
 
     # @return [String] the data directory to load from.
-    attr_reader :environment
+    attr_reader :data_path
 
     # @return [Class] the class of record that the operation's business logic
     #   operates on.
@@ -31,7 +31,7 @@ module Fixtures
 
     def read(count: nil, except: nil)
       loader = Fixtures::Loader.new(
-        environment:   environment,
+        data_path:     data_path,
         resource_name: resource_name
       ).call
 

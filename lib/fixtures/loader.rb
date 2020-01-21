@@ -4,16 +4,16 @@ require 'fixtures'
 
 module Fixtures
   # Fixture loader class that finds the data (and options, if any) for a given
-  # environment and resource.
+  # data path and resource.
   class Loader
-    def initialize(environment:, resource_name:)
-      @environment   = environment
+    def initialize(data_path:, resource_name:)
+      @data_path     = data_path
       @resource_name = resource_name
     end
 
     attr_reader :data
 
-    attr_reader :environment
+    attr_reader :data_path
 
     attr_reader :options
 
@@ -37,7 +37,7 @@ module Fixtures
     end
 
     def data_dir_path
-      @data_dir_path ||= Rails.root.join 'data', environment, resource_name
+      @data_dir_path ||= Rails.root.join 'data', data_path, resource_name
     end
 
     def data_file_exists?
@@ -46,7 +46,7 @@ module Fixtures
 
     def data_file_path
       @data_file_path ||=
-        Rails.root.join 'data', environment, "#{resource_name}.yml"
+        Rails.root.join 'data', data_path, "#{resource_name}.yml"
     end
 
     def options_file_exists?
@@ -58,9 +58,9 @@ module Fixtures
 
       @options_file_path =
         if data_dir_exists?
-          Rails.root.join 'data', environment, resource_name, '_options.yml'
+          Rails.root.join 'data', data_path, resource_name, '_options.yml'
         elsif data_file_exists?
-          Rails.root.join 'data', environment, "#{resource_name}_options.yml"
+          Rails.root.join 'data', data_path, "#{resource_name}_options.yml"
         else
           false
         end
@@ -71,7 +71,7 @@ module Fixtures
       return read_data_file if data_file_exists?
 
       message =
-        "Unable to load fixtures from /data/#{environment}/#{resource_name}"
+        "Unable to load fixtures from /data/#{data_path}/#{resource_name}"
 
       raise Fixtures::FixturesNotDefinedError, message
     end

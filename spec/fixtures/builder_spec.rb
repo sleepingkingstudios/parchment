@@ -6,12 +6,12 @@ require 'fixtures/builder'
 require 'fixtures/mappings/property_mapping'
 
 RSpec.describe Fixtures::Builder do
-  shared_context 'with a custom environment' do
+  shared_context 'with a custom data path' do
     subject(:builder) do
-      described_class.new(record_class, environment: environment)
+      described_class.new(record_class, data_path: data_path)
     end
 
-    let(:environment) { 'secrets' }
+    let(:data_path) { 'secrets' }
   end
 
   shared_context 'when data is defined for the resource' do
@@ -87,14 +87,14 @@ RSpec.describe Fixtures::Builder do
   subject(:builder) { described_class.new(record_class) }
 
   let(:record_class) { Spell }
-  let(:environment)  { 'fixtures' }
+  let(:data_path)  { 'fixtures' }
 
   describe '::new' do
     it 'should define the constructor' do
       expect(described_class)
         .to be_constructible
         .with(1).argument
-        .and_keywords(:environment)
+        .and_keywords(:data_path)
     end
   end
 
@@ -334,11 +334,11 @@ RSpec.describe Fixtures::Builder do
     end
   end
 
-  describe '#environment' do
-    include_examples 'should have reader', :environment, 'fixtures'
+  describe '#data_path' do
+    include_examples 'should have reader', :data_path, 'fixtures'
 
-    wrap_context 'with a custom environment' do
-      it { expect(builder.environment).to be environment }
+    wrap_context 'with a custom data path' do
+      it { expect(builder.data_path).to be data_path }
     end
   end
 
@@ -367,7 +367,7 @@ RSpec.describe Fixtures::Builder do
       builder.read
 
       expect(Fixtures::Loader).to have_received(:new).with(
-        environment:   environment,
+        data_path:     data_path,
         resource_name: resource_name
       )
     end
