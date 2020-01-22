@@ -44,14 +44,30 @@ RSpec.describe Fixtures::Loader do
     end
   end
 
+  shared_context 'when the data path is an absolute path' do
+    let(:data_path) { '/secrets' }
+  end
+
+  shared_context 'when the data path is a fixtures path' do
+    let(:data_path) { 'secrets' }
+  end
+
+  shared_context 'when the data path is a relative path' do
+    let(:data_path) { '../secrets' }
+  end
+
+  shared_context 'when the data path is a user directory path' do
+    let(:data_path) { '~/secrets' }
+  end
+
   subject(:loader) do
     described_class.new(
-      data_path:     environment,
+      data_path:     data_path,
       resource_name: resource_name
     )
   end
 
-  let(:environment)   { 'fixtures' }
+  let(:data_path)     { 'fixtures' }
   let(:resource_name) { 'publications' }
 
   describe '::new' do
@@ -71,7 +87,7 @@ RSpec.describe Fixtures::Loader do
 
     context 'when the data does not exist' do
       let(:error_message) do
-        "Unable to load fixtures from /data/#{environment}/#{resource_name}"
+        "Unable to load fixtures from /data/#{data_path}/#{resource_name}"
       end
 
       before(:example) do
@@ -182,7 +198,7 @@ RSpec.describe Fixtures::Loader do
   end
 
   describe '#data_dir_exists?' do
-    let(:dir_name) { File.join environment, resource_name }
+    let(:dir_name) { File.join data_path, resource_name }
     let(:dir_path) { Rails.root.join 'data', dir_name }
 
     before(:example) do
@@ -235,8 +251,44 @@ RSpec.describe Fixtures::Loader do
     end
   end
 
+  describe '#data_dir_path' do
+    let(:expected) { Rails.root.join 'data', data_path, resource_name }
+
+    include_examples 'should define private reader',
+      :data_dir_path,
+      -> { be == expected }
+
+    wrap_context 'when the data path is an absolute path' do
+      let(:expected) do
+        Pathname.new(File.expand_path(data_path)).join(resource_name)
+      end
+
+      it { expect(loader.send :data_dir_path).to be == expected }
+    end
+
+    wrap_context 'when the data path is a fixtures path' do
+      it { expect(loader.send :data_dir_path).to be == expected }
+    end
+
+    wrap_context 'when the data path is a relative path' do
+      let(:expected) do
+        Rails.root.join(data_path, resource_name)
+      end
+
+      it { expect(loader.send :data_dir_path).to be == expected }
+    end
+
+    wrap_context 'when the data path is a user directory path' do
+      let(:expected) do
+        Pathname.new(File.expand_path(data_path)).join(resource_name)
+      end
+
+      it { expect(loader.send :data_dir_path).to be == expected }
+    end
+  end
+
   describe '#data_file_exists?' do
-    let(:file_name) { File.join environment, "#{resource_name}.yml" }
+    let(:file_name) { File.join data_path, "#{resource_name}.yml" }
     let(:file_path) { Rails.root.join 'data', file_name }
 
     before(:example) do
@@ -261,6 +313,42 @@ RSpec.describe Fixtures::Loader do
       end
 
       it { expect(loader.send :data_file_exists?).to be true }
+    end
+  end
+
+  describe '#data_file_path' do
+    let(:expected) { Rails.root.join 'data', data_path, "#{resource_name}.yml" }
+
+    include_examples 'should define private reader',
+      :data_file_path,
+      -> { be == expected }
+
+    wrap_context 'when the data path is an absolute path' do
+      let(:expected) do
+        Pathname.new(File.expand_path(data_path)).join("#{resource_name}.yml")
+      end
+
+      it { expect(loader.send :data_file_path).to be == expected }
+    end
+
+    wrap_context 'when the data path is a fixtures path' do
+      it { expect(loader.send :data_file_path).to be == expected }
+    end
+
+    wrap_context 'when the data path is a relative path' do
+      let(:expected) do
+        Rails.root.join(data_path, "#{resource_name}.yml")
+      end
+
+      it { expect(loader.send :data_file_path).to be == expected }
+    end
+
+    wrap_context 'when the data path is a user directory path' do
+      let(:expected) do
+        Pathname.new(File.expand_path(data_path)).join("#{resource_name}.yml")
+      end
+
+      it { expect(loader.send :data_file_path).to be == expected }
     end
   end
 
@@ -298,7 +386,7 @@ RSpec.describe Fixtures::Loader do
   # rubocop:enable RSpec/SubjectStub
 
   describe '#data_path' do
-    include_examples 'should define reader', :data_path, -> { environment }
+    include_examples 'should define reader', :data_path, -> { data_path }
   end
 
   describe '#options' do
@@ -324,7 +412,7 @@ RSpec.describe Fixtures::Loader do
 
     context 'when the data directory exists' do
       let(:opts_name) do
-        File.join environment, resource_name, '_options.yml'
+        File.join data_path, resource_name, '_options.yml'
       end
       let(:opts_path) { Rails.root.join 'data', opts_name }
 
@@ -348,7 +436,7 @@ RSpec.describe Fixtures::Loader do
 
     context 'when the data file exists' do
       let(:opts_name) do
-        File.join environment, "#{resource_name}_options.yml"
+        File.join data_path, "#{resource_name}_options.yml"
       end
       let(:opts_path) { Rails.root.join 'data', opts_name }
 
@@ -373,7 +461,7 @@ RSpec.describe Fixtures::Loader do
   # rubocop:enable RSpec/SubjectStub
 
   describe '#read_data_dir' do
-    let(:dir_name)  { File.join environment, resource_name }
+    let(:dir_name)  { File.join data_path, resource_name }
     let(:dir_path)  { Rails.root.join 'data', dir_name }
     let(:dir_files) { {} }
 
@@ -454,7 +542,7 @@ RSpec.describe Fixtures::Loader do
   describe '#read_data_file' do
     include_context 'when data is defined for the resource'
 
-    let(:file_name) { File.join environment, "#{resource_name}.yml" }
+    let(:file_name) { File.join data_path, "#{resource_name}.yml" }
     let(:file_path) { Rails.root.join 'data', file_name }
 
     before(:example) do
@@ -478,7 +566,7 @@ RSpec.describe Fixtures::Loader do
 
     context 'when the data directory exists' do
       let(:opts_name) do
-        File.join environment, resource_name, '_options.yml'
+        File.join data_path, resource_name, '_options.yml'
       end
       let(:opts_path) { Rails.root.join 'data', opts_name }
 
@@ -506,7 +594,7 @@ RSpec.describe Fixtures::Loader do
 
     context 'when the data directory exists' do
       let(:opts_name) do
-        File.join environment, "#{resource_name}_options.yml"
+        File.join data_path, "#{resource_name}_options.yml"
       end
       let(:opts_path) { Rails.root.join 'data', opts_name }
 
@@ -535,6 +623,36 @@ RSpec.describe Fixtures::Loader do
     end
   end
   # rubocop:enable RSpec/SubjectStub
+
+  describe '#resolved_data_path' do
+    let(:expected) { Rails.root.join 'data', data_path }
+
+    include_examples 'should have private reader',
+      :resolved_data_path,
+      -> { be == expected }
+
+    wrap_context 'when the data path is an absolute path' do
+      let(:expected) { Pathname.new(File.expand_path(data_path)) }
+
+      it { expect(loader.send :resolved_data_path).to be == expected }
+    end
+
+    wrap_context 'when the data path is a fixtures path' do
+      it { expect(loader.send :resolved_data_path).to be == expected }
+    end
+
+    wrap_context 'when the data path is a relative path' do
+      let(:expected) { Rails.root.join(data_path) }
+
+      it { expect(loader.send :resolved_data_path).to be == expected }
+    end
+
+    wrap_context 'when the data path is a user directory path' do
+      let(:expected) { Pathname.new(File.expand_path(data_path)) }
+
+      it { expect(loader.send :resolved_data_path).to be == expected }
+    end
+  end
 
   describe '#resource_name' do
     include_examples 'should define reader',

@@ -37,7 +37,7 @@ module Fixtures
     end
 
     def data_dir_path
-      @data_dir_path ||= Rails.root.join 'data', data_path, resource_name
+      @data_dir_path ||= resolved_data_path.join(resource_name)
     end
 
     def data_file_exists?
@@ -45,8 +45,7 @@ module Fixtures
     end
 
     def data_file_path
-      @data_file_path ||=
-        Rails.root.join 'data', data_path, "#{resource_name}.yml"
+      @data_file_path ||= resolved_data_path.join("#{resource_name}.yml")
     end
 
     def options_file_exists?
@@ -78,7 +77,7 @@ module Fixtures
 
     def read_data_dir
       Dir.entries(data_dir_path).each.with_object([]) do |file_name, data|
-        next if file_name.start_with?('_')
+        next if file_name.start_with?('_', '.')
 
         file_path = File.join(data_dir_path, file_name)
         file_data = YAML.safe_load(File.read(file_path))
@@ -95,6 +94,20 @@ module Fixtures
       return {} unless options_file_exists?
 
       YAML.safe_load(File.read(options_file_path))
+    end
+
+    def resolve_data_path
+      return Rails.root.join(data_path) if data_path.start_with?('.')
+
+      if data_path.start_with?('/', '~')
+        return Pathname.new(File.expand_path(data_path))
+      end
+
+      Rails.root.join 'data', data_path
+    end
+
+    def resolved_data_path
+      @resolved_data_path ||= resolve_data_path
     end
   end
 end
