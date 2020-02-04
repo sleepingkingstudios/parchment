@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+require 'cuprum/built_in/identity_command'
+
 require 'fixtures'
+require 'fixtures/middleware'
 
 module Fixtures
   # Class to load data, or instantiate or persist records from stored fixture
@@ -22,24 +25,15 @@ module Fixtures
     attr_reader :record_class
 
     def build(**options)
-      read(options).map { |attributes| build_record(attributes) }
+      process(command: :build, **options)
     end
 
     def create(**options)
-      read(options).map { |attributes| find_or_create_record(attributes) }
+      process(command: :create_or_update, **options)
     end
 
-    def read(count: nil, except: nil)
-      loader = Fixtures::Loader.new(
-        data_path:     data_path,
-        resource_name: resource_name
-      ).call
-
-      data     = loader.data
-      options  = loader.options
-      mappings = options.fetch('mappings', {})
-
-      process_data(data, count: count, except: except, mappings: mappings)
+    def read(**options)
+      process(command: :read, **options)
     end
 
     private
@@ -60,45 +54,24 @@ module Fixtures
       data.map { |hsh| hsh.except(*except) }
     end
 
-    def apply_mappings(data, mappings:)
-      return data if mappings.blank?
+    def build_middleware(middleware)
+      builder = Fixtures::Middleware::Builder.new
 
-      mappings = generate_mappings(mappings)
+      middleware.map do |opts|
+        options = opts.fetch('options', {}).symbolize_keys
 
-      data.map do |raw|
-        mappings.reduce(raw) { |item, directive| directive.call(item) }
+        builder.build(opts.fetch('type'), **options)
       end
     end
 
-    def build_record(attributes)
-      record_class.new(attributes)
+    def build_command(**_options)
+      operation_factory.build
     end
 
-    def create_record(attributes)
-      build_record(attributes).tap(&:save!)
-    end
+    def create_or_update_command(**options)
+      find_by = Array(options.fetch(:unique, :id))
 
-    def find_or_create_record(attributes)
-      record = find_record(attributes)
-
-      if record
-        update_record(record, attributes)
-      else
-        create_record(attributes)
-      end
-    end
-
-    def find_record(attributes)
-      record_class.where(id: attributes.fetch('id')).first
-    end
-
-    def generate_mappings(mappings)
-      mappings.map do |mapping|
-        type  = mapping.fetch('type').to_s.camelize
-        opts  = mapping.fetch('options', {})
-        klass = "Fixtures::Mappings::#{type}".constantize
-        klass.new(opts.symbolize_keys)
-      end
+      operation_factory.create_or_update(find_by: find_by)
     end
 
     def invalid_count_message(expected, actual)
@@ -114,22 +87,43 @@ module Fixtures
       end
     end
 
-    def process_data(data, count:, except:, mappings:)
+    def load_data
+      loader = Fixtures::Loader.new(
+        data_path:     data_path,
+        resource_name: resource_name
+      ).call
+
+      [loader.data, loader.options]
+    end
+
+    def operation_factory
+      @operation_factory ||= Operations::Records::Factory.for(record_class)
+    end
+
+    def process(command:, **builder_options)
+      data, options = load_data
+      command       = send(:"#{command}_command", **options.symbolize_keys)
+      data          = process_data(data, **builder_options)
+      middleware    = build_middleware(options.fetch('middleware', []))
+      command       =
+        Fixtures::Middleware.apply(command: command, middleware: middleware)
+
+      data.map { |hsh| command.call(hsh).value }
+    end
+
+    def process_data(data, count: nil, except: nil)
       data = apply_count(data, count: count)
       data = apply_filters(data, except: Array(except).map(&:to_s))
-      data = apply_mappings(data, mappings: mappings)
 
       data
     end
 
-    def resource_name
-      @resource_name ||= record_class.name.underscore.pluralize
+    def read_command(**_options)
+      Cuprum::BuiltIn::IdentityCommand.new
     end
 
-    def update_record(record, attributes)
-      record.assign_attributes(attributes)
-
-      record.tap(&:save!)
+    def resource_name
+      @resource_name ||= record_class.name.underscore.pluralize
     end
   end
 end

@@ -1,4 +1,4 @@
 ---
-mappings:
-  - type: trim_paragraphs
+middleware:
+  - type: format_text
     options: { property: description }
