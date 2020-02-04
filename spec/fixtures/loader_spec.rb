@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 require 'fixtures/loader'
-require 'fixtures/mappings/property_mapping'
 
 RSpec.describe Fixtures::Loader do
   shared_context 'when data is defined for the resource' do

@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 require 'fixtures/builder'
-require 'fixtures/mappings/property_mapping'
 
 RSpec.describe Fixtures::Builder do
   shared_context 'with a custom data path' do
