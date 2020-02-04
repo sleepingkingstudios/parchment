@@ -6,7 +6,7 @@ require 'operations/records/save_operation'
 module Operations::Records
   # Initializes a new record for the given table from the given attributes,
   # validates the record, and persists it to the database.
-  class CreateOperation < Operations::Records::BuildOperation
+  class CreateOperation < Operations::Records::BaseOperation
     def initialize(record_class, build_operation: nil, save_operation: nil)
       super(record_class)
 

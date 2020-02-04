@@ -81,6 +81,10 @@ RSpec.describe Operations::Records::Factory do
     Operations::Records::CreateOperation
 
   include_examples 'should define operation',
+    :create_or_update,
+    Operations::Records::CreateOrUpdateOperation
+
+  include_examples 'should define operation',
     :destroy,
     Operations::Records::DestroyOperation
 
