@@ -11,7 +11,7 @@ module Operations::Records
     include Operations::Steps
 
     class << self
-      # Returns a new subclass of the operation that curries the
+      # Returns a new subclass of the operation that curries the record class.
       #
       # @param record_class [Class] The class of record that the operation's
       #   business logic operates on.

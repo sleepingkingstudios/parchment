@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'errors/not_unique'
 require 'operations/records/create_operation'
 require 'operations/records/find_matching_operation'
 require 'operations/records/parameter_validations'
@@ -27,7 +26,7 @@ module Operations::Records
         .new(record_class)
       @find_operation =
         find_operation || Operations::Records::FindMatchingOperation
-        .new(record_class)
+        .new(record_class, unique: true)
       @update_operation =
         update_operation || Operations::Records::UpdateOperation
         .new(record_class)
@@ -56,17 +55,7 @@ module Operations::Records
     end
 
     def find_record(query)
-      records = step find_operation.call(where: query)
-
-      return records.first unless records.size > 1
-
-      error = Errors::NotUnique.new(
-        attributes:   query,
-        record_class: record_class,
-        records:      records
-      )
-
-      failure(error)
+      step(find_operation.call(where: query)).first
     end
 
     def process(attributes)
