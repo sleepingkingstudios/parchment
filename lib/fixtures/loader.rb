@@ -6,9 +6,13 @@ module Fixtures
   # Fixture loader class that finds the data (and options, if any) for a given
   # data path and resource.
   class Loader
+    UNDEFINED = Object.new.freeze
+    private_constant :UNDEFINED
+
     def initialize(data_path:, resource_name:)
-      @data_path     = data_path
-      @resource_name = resource_name
+      @data_path         = data_path
+      @resource_name     = resource_name
+      @options_file_path = UNDEFINED
     end
 
     attr_reader :data
@@ -49,19 +53,19 @@ module Fixtures
     end
 
     def options_file_exists?
-      options_file_path && File.exist?(options_file_path)
+      # rubocop:disable Style/DoubleNegation
+      !!options_file_path && File.exist?(options_file_path)
+      # rubocop:enable Style/DoubleNegation
     end
 
     def options_file_path
-      return @options_file_path unless @options_file_path.nil?
+      return @options_file_path unless @options_file_path == UNDEFINED
 
       @options_file_path =
         if data_dir_exists?
-          Rails.root.join 'data', data_path, resource_name, '_options.yml'
+          resolved_data_path.join(resource_name, '_options.yml')
         elsif data_file_exists?
-          Rails.root.join 'data', data_path, "#{resource_name}_options.yml"
-        else
-          false
+          resolved_data_path.join("#{resource_name}_options.yml")
         end
     end
 

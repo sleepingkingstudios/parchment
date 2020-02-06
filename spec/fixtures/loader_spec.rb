@@ -459,6 +459,111 @@ RSpec.describe Fixtures::Loader do
   end
   # rubocop:enable RSpec/SubjectStub
 
+  # rubocop:disable RSpec/SubjectStub
+  describe '#options_file_path' do
+    include_examples 'should define private reader', :options_file_path
+
+    context 'when the data does not exist' do
+      before(:example) do
+        allow(loader).to receive(:data_dir_exists?).and_return(false)
+        allow(loader).to receive(:data_file_exists?).and_return(false)
+      end
+
+      it { expect(loader.send :options_file_path).to be nil }
+    end
+
+    context 'when the data directory exists' do
+      let(:expected) do
+        Rails.root.join 'data', data_path, resource_name, '_options.yml'
+      end
+
+      before(:example) do
+        allow(loader).to receive(:data_dir_exists?).and_return(true)
+        allow(loader).to receive(:data_file_exists?).and_return(false)
+      end
+
+      it { expect(loader.send :options_file_path).to be == expected }
+
+      wrap_context 'when the data path is an absolute path' do
+        let(:expected) do
+          Pathname
+            .new(File.expand_path(data_path))
+            .join(resource_name, '_options.yml')
+        end
+
+        it { expect(loader.send :options_file_path).to be == expected }
+      end
+
+      wrap_context 'when the data path is a fixtures path' do
+        it { expect(loader.send :options_file_path).to be == expected }
+      end
+
+      wrap_context 'when the data path is a relative path' do
+        let(:expected) do
+          Rails.root.join(data_path, resource_name, '_options.yml')
+        end
+
+        it { expect(loader.send :options_file_path).to be == expected }
+      end
+
+      wrap_context 'when the data path is a user directory path' do
+        let(:expected) do
+          Pathname
+            .new(File.expand_path(data_path))
+            .join(resource_name, '_options.yml')
+        end
+
+        it { expect(loader.send :options_file_path).to be == expected }
+      end
+    end
+
+    context 'when the data file exists' do
+      let(:expected) do
+        Rails.root.join 'data', data_path, "#{resource_name}_options.yml"
+      end
+
+      before(:example) do
+        allow(loader).to receive(:data_dir_exists?).and_return(false)
+        allow(loader).to receive(:data_file_exists?).and_return(true)
+      end
+
+      it { expect(loader.send :options_file_path).to be == expected }
+
+      wrap_context 'when the data path is an absolute path' do
+        let(:expected) do
+          Pathname
+            .new(File.expand_path(data_path))
+            .join("#{resource_name}_options.yml")
+        end
+
+        it { expect(loader.send :options_file_path).to be == expected }
+      end
+
+      wrap_context 'when the data path is a fixtures path' do
+        it { expect(loader.send :options_file_path).to be == expected }
+      end
+
+      wrap_context 'when the data path is a relative path' do
+        let(:expected) do
+          Rails.root.join(data_path, "#{resource_name}_options.yml")
+        end
+
+        it { expect(loader.send :options_file_path).to be == expected }
+      end
+
+      wrap_context 'when the data path is a user directory path' do
+        let(:expected) do
+          Pathname
+            .new(File.expand_path(data_path))
+            .join("#{resource_name}_options.yml")
+        end
+
+        it { expect(loader.send :options_file_path).to be == expected }
+      end
+    end
+  end
+  # rubocop:enable RSpec/SubjectStub
+
   describe '#read_data_dir' do
     let(:dir_name)  { File.join data_path, resource_name }
     let(:dir_path)  { Rails.root.join 'data', dir_name }
