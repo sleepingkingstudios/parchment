@@ -9,6 +9,7 @@ module Fixtures
     autoload :Base,       'fixtures/middleware/base'
     autoload :Builder,    'fixtures/middleware/builder'
     autoload :FormatText, 'fixtures/middleware/format_text'
+    autoload :SetSource,  'fixtures/middleware/set_source'
 
     def self.apply(command:, middleware:)
       return command if middleware.empty?
