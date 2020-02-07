@@ -6,6 +6,7 @@ require 'operations/records'
 require 'operations/records/assign_operation'
 require 'operations/records/build_operation'
 require 'operations/records/create_operation'
+require 'operations/records/create_or_update_operation'
 require 'operations/records/destroy_operation'
 require 'operations/records/find_many_operation'
 require 'operations/records/find_matching_operation'
@@ -40,6 +41,10 @@ module Operations::Records
 
     command_class(:create) do
       Operations::Records::CreateOperation.subclass(record_class)
+    end
+
+    command_class(:create_or_update) do
+      Operations::Records::CreateOrUpdateOperation.subclass(record_class)
     end
 
     command_class(:destroy) do

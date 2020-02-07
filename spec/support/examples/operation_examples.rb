@@ -94,6 +94,10 @@ module Spec::Support::Examples
           }
         end
         let(:expected_error) do
+          if defined?(expected_validation_error)
+            return expected_validation_error
+          end
+
           Errors::FailedValidation.new(
             record: record_class.new(attributes).tap(&:valid?)
           )

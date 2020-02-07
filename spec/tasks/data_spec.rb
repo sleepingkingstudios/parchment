@@ -50,7 +50,7 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
         allow(Fixtures).to receive(:exist?).and_return(false)
         allow(Fixtures)
           .to receive(:exist?)
-          .with(Spell, environment: directory)
+          .with(Spell, data_path: directory)
           .and_return(true)
       end
 
@@ -60,14 +60,14 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
         record_classes.each do |record_class|
           expect(Fixtures)
             .to have_received(:create)
-            .with(record_class, environment: directory)
+            .with(record_class, data_path: directory)
             .ordered
         end
       end
     end
 
     context 'when all of the data exists' do
-      let(:record_classes) { [Book, Spell, Source] }
+      let(:record_classes) { [Book, Spell] }
 
       before(:example) do
         allow(Fixtures).to receive(:exist?).and_return(true)
@@ -79,7 +79,7 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
         record_classes.each do |record_class|
           expect(Fixtures)
             .to have_received(:create)
-            .with(record_class, environment: directory)
+            .with(record_class, data_path: directory)
             .ordered
         end
       end
@@ -125,7 +125,7 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
     end
 
     context 'when all of the data exists' do
-      let(:record_classes) { [Book, Spell, Source] }
+      let(:record_classes) { [Book, Spell] }
 
       before(:example) do
         allow(Fixtures).to receive(:exist?).and_return(true)

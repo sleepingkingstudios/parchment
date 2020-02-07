@@ -6,7 +6,6 @@ namespace :data do
   data_classes = %w[
     Book
     Spell
-    Source
   ]
 
   namespace :load do
@@ -29,9 +28,9 @@ namespace :data do
     data_classes.each do |class_name|
       record_class = class_name.constantize
 
-      next unless Fixtures.exist?(record_class, environment: args.directory)
+      next unless Fixtures.exist?(record_class, data_path: args.directory)
 
-      Fixtures.create(record_class, environment: args.directory)
+      Fixtures.create(record_class, data_path: args.directory)
     end
   end
 end

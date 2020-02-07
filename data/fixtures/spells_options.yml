@@ -1,4 +1,6 @@
 ---
-mappings:
-  - type: trim_paragraphs
+find_by: name
+middleware:
+  - type: format_text
     options: { property: description }
+  - type: set_source

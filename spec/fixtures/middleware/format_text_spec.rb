@@ -1,94 +1,83 @@
 # frozen_string_literal: true
 
-require 'fixtures/mappings/trim_paragraphs'
+require 'fixtures/middleware/format_text'
 
-RSpec.describe Fixtures::Mappings::TrimParagraphs do
-  subject(:mapping) { described_class.new(property: property) }
+RSpec.describe Fixtures::Middleware::FormatText do
+  subject(:middleware) { described_class.new(property: property) }
 
   let(:property) { 'description' }
 
-  describe '::new' do
+  describe '.new' do
     it 'should define the constructor' do
       expect(described_class)
         .to be_constructible
         .with(0).arguments
         .and_keywords(:property)
+        .and_any_keywords
     end
   end
 
   describe '#call' do
-    it { expect(mapping).to respond_to(:call).with(1).argument }
+    let(:next_result)  { Cuprum::Result.new }
+    let(:next_command) { instance_double(Cuprum::Command, call: next_result) }
+    let(:curried)      { middleware.curry(next_command) }
+    let(:data)         { { 'name' => 'Widget' } }
+    let(:expected)     { { 'description' => '' }.merge(data) }
 
-    describe 'with nil' do
-      it 'should raise an error' do
-        expect { mapping.call nil }
-          .to raise_error ArgumentError, 'data must be a Hash'
-      end
+    it 'should call the next command' do
+      curried.call(data)
+
+      expect(next_command).to have_received(:call).with(expected)
     end
 
-    describe 'with an object' do
-      it 'should raise an error' do
-        expect { mapping.call Object.new }
-          .to raise_error ArgumentError, 'data must be a Hash'
-      end
-    end
+    it 'should return the result of the next command' do
+      result = curried.call(data)
 
-    describe 'with an empty Hash' do
-      it { expect(mapping.call({})).to be == {} }
-    end
-
-    describe 'with a Hash without the property' do
-      let(:data) { { 'name' => 'Widget' } }
-
-      it { expect(mapping.call(data)).to be == data }
+      expect(result).to be == next_result
     end
 
     describe 'with a Hash with property: nil' do
-      let(:data)     { { 'name' => 'Widget', 'description' => nil } }
+      let(:data)     { super().merge('description' => nil) }
       let(:expected) { data.merge('description' => '') }
 
-      it { expect(mapping.call(data)).to be == expected }
+      it 'should call the next command' do
+        curried.call(data)
 
-      it { expect { mapping.call(data) }.not_to change(data, :dup) }
+        expect(next_command).to have_received(:call).with(expected)
+      end
     end
 
     describe 'with a Hash with property: empty string' do
-      let(:data)     { { 'name' => 'Widget', 'description' => '' } }
-      let(:expected) { data }
+      let(:data) { super().merge('description' => '') }
 
-      it { expect(mapping.call(data)).to be == expected }
+      it 'should call the next command' do
+        curried.call(data)
 
-      it { expect { mapping.call(data) }.not_to change(data, :dup) }
+        expect(next_command).to have_received(:call).with(expected)
+      end
     end
 
     describe 'with a Hash with property: single-line string' do
       let(:description) { 'A simple widget.' }
-      let(:data) do
-        {
-          'name'        => 'Widget',
-          'description' => description
-        }
+      let(:data)        { super().merge('description' => description) }
+
+      it 'should call the next command' do
+        curried.call(data)
+
+        expect(next_command).to have_received(:call).with(expected)
       end
-      let(:expected) { data }
-
-      it { expect(mapping.call(data)).to be == expected }
-
-      it { expect { mapping.call(data) }.not_to change(data, :dup) }
     end
 
     describe 'with a Hash with property: string with trailing newline' do
       let(:description) { "A simple widget.\n" }
-      let(:data) do
-        {
-          'name'        => 'Widget',
-          'description' => description
-        }
+      let(:data)        { super().merge('description' => description) }
+      let(:expected)    { super().merge('description' => description.strip) }
+
+      it 'should call the next command' do
+        curried.call(data)
+
+        expect(next_command).to have_received(:call).with(expected)
       end
-      let(:expected) { data.merge('description' => description.strip) }
-
-      it { expect(mapping.call(data)).to be == expected }
-
-      it { expect { mapping.call(data) }.not_to change(data, :dup) }
     end
 
     describe 'with a Hash with property: multi-line string' do
@@ -104,9 +93,11 @@ RSpec.describe Fixtures::Mappings::TrimParagraphs do
       let(:trimmed)  { description.tr("\n", ' ') }
       let(:expected) { data.merge('description' => trimmed) }
 
-      it { expect(mapping.call(data)).to be == expected }
+      it 'should call the next command' do
+        curried.call(data)
 
-      it { expect { mapping.call(data) }.not_to change(data, :dup) }
+        expect(next_command).to have_received(:call).with(expected)
+      end
     end
 
     describe 'with a Hash with property: multiple paragraphs' do
@@ -141,9 +132,11 @@ RSpec.describe Fixtures::Mappings::TrimParagraphs do
       end
       let(:expected) { data.merge('description' => trimmed) }
 
-      it { expect(mapping.call(data)).to be == expected }
+      it 'should call the next command' do
+        curried.call(data)
 
-      it { expect { mapping.call(data) }.not_to change(data, :dup) }
+        expect(next_command).to have_received(:call).with(expected)
+      end
     end
 
     describe 'with a Hash with property: unordered list' do
@@ -161,9 +154,11 @@ RSpec.describe Fixtures::Mappings::TrimParagraphs do
         }
       end
 
-      it { expect(mapping.call(data)).to be == data }
+      it 'should call the next command' do
+        curried.call(data)
 
-      it { expect { mapping.call(data) }.not_to change(data, :dup) }
+        expect(next_command).to have_received(:call).with(expected)
+      end
     end
 
     describe 'with a Hash with property: mixed paragraphs and lists' do
@@ -206,9 +201,11 @@ RSpec.describe Fixtures::Mappings::TrimParagraphs do
       end
       let(:expected) { data.merge('description' => trimmed) }
 
-      it { expect(mapping.call(data)).to be == expected }
+      it 'should call the next command' do
+        curried.call(data)
 
-      it { expect { mapping.call(data) }.not_to change(data, :dup) }
+        expect(next_command).to have_received(:call).with(expected)
+      end
     end
   end
 

@@ -23,7 +23,7 @@ gem 'webpacker', '~> 4.0.0', '>= 4.0.2'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.1', require: false
 
-gem 'cuprum', '~> 0.9.1'
+gem 'cuprum', git: 'https://github.com/sleepingkingstudios/cuprum.git'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger

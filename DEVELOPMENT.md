@@ -1,5 +1,11 @@
 # Development Notes
 
+## Actions
+
+- columns
+  - name (String)
+  - description (String)
+
 ## Client
 
 - generic 404 page for non-matching route
@@ -9,6 +15,54 @@
 ### Alerts
 
 - clear (some?) alerts when the URL (not query!) changes
+
+## Characters
+
+- columns
+  - name (String)
+  - level (Integer, 1...20)
+
+### Abilities
+
+- columns
+  - active (Boolean) [true => active, false => passive]
+  - action (String) [action, bonus action, reaction]
+  - recharge (String) [none, short rest, long rest]
+  - text (String)
+- belongs_to :character
+- the most basic ability is a passive ability with text
+
+#### Abilities::Base
+
+- abstract base class
+
+#### SpellcastingAbility
+
+- belongs_to :character
+- has_many :spells_known
+- has_many :spells_prepared
+- columns
+  - ability score (String) [Intelligence, Wisdom, Charisma]
+  - spells known by level (JSONB) [{ cantrips: 3, 1st: 1 }]
+  - spell slots by level (JSONB) [3, 2, 1]
+  - available slots per level (JSONB) [1, 0, 0]
+  - prepare spells (Boolean)
+  - recharge (String) [none, short rest, long rest]
+- methods
+  - spell save DC
+  - spell attack bonus
+
+##### SpellKnown
+
+- belongs_to :spell
+- belongs_to :spellcasting_ability
+
+##### SpellPrepared
+
+- belongs_to :spell
+- belongs_to :spellcasting_ability
+- columns:
+  - cast (Boolean)
 
 ## Controllers
 
@@ -21,6 +75,21 @@
   - #search action
   - #show action
     - `:only` parameter - restrict fields queried/returned
+
+## Fixtures
+
+### External Data
+
+- load data from external source (private repository?)
+  - treat as directory path if starts with '~' or '.' or '/'
+  - e.g. data:load['../srd']
+
+### Middleware
+
+- replace mappings
+- each middleware is a callable object (command?)
+  - takes next command and a data hash
+  - returns result with record
 
 ## Spells
 

@@ -23,6 +23,9 @@
     you move more than 30 feet away from the orb, it will float directly to your
     location at the beginning of your next turn; if it is unable to reach your
     location, the spell immediately ends.
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
 - name:               Detect Flumph
   id:                 a1ab75a4-83c8-47d2-ada2-8a9bd70341ae
   slug:               detect-flumph
@@ -40,6 +43,9 @@
     For the duration, you sense the presence of Flumphs within 30 feet of you.
     The spell can penetrate most barriers, but it is blocked by 1 foot of stone,
     1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt.
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
 - name:               Spectral Tentacle
   id:                 161c7a6a-54e0-4082-9e9e-a54950b31318
   slug:               spectral-tentacle
@@ -63,6 +69,9 @@
     **At Higher Levels.** When you cast this spell using a spell slot of 3rd
     level or higher, the extra damage increases by 1d6 for each slot level above
     2nd.
+  source:
+    type:  Book
+    title: Crime in Flumphtownville
 - name:               Magic Circle Against Flumphs
   id:                 07e1e012-7f86-4534-8b02-cf79d2824a9d
   slug:               magic-circle-against-flumphs

@@ -46,7 +46,7 @@ RSpec.describe Fixtures do
       expect(described_class)
         .to respond_to(:build)
         .with(1).argument
-        .and_keywords(:environment)
+        .and_keywords(:data_path)
         .and_any_keywords
     end
 
@@ -55,7 +55,7 @@ RSpec.describe Fixtures do
 
       expect(described_class::Builder)
         .to have_received(:new)
-        .with(record_class, environment: 'fixtures')
+        .with(record_class, data_path: 'fixtures')
     end
 
     it 'should call Builder#build' do
@@ -74,15 +74,15 @@ RSpec.describe Fixtures do
       end
     end
 
-    describe 'with environment: value' do
-      let(:environment) { 'secrets' }
+    describe 'with data_path: value' do
+      let(:data_path) { 'secrets' }
 
       it 'should instantiate a builder' do
-        described_class.build(record_class, environment: environment)
+        described_class.build(record_class, data_path: data_path)
 
         expect(described_class::Builder)
           .to have_received(:new)
-          .with(record_class, environment: environment)
+          .with(record_class, data_path: data_path)
       end
     end
 
@@ -114,7 +114,7 @@ RSpec.describe Fixtures do
       expect(described_class)
         .to respond_to(:create)
         .with(1).argument
-        .and_keywords(:count, :environment)
+        .and_keywords(:count, :data_path)
     end
 
     it 'should instantiate a builder' do
@@ -122,7 +122,7 @@ RSpec.describe Fixtures do
 
       expect(described_class::Builder)
         .to have_received(:new)
-        .with(record_class, environment: 'fixtures')
+        .with(record_class, data_path: 'fixtures')
     end
 
     it 'should call Builder#create' do
@@ -141,15 +141,15 @@ RSpec.describe Fixtures do
       end
     end
 
-    describe 'with environment: value' do
-      let(:environment) { 'secrets' }
+    describe 'with data_path: value' do
+      let(:data_path) { 'secrets' }
 
       it 'should instantiate a builder' do
-        described_class.create(record_class, environment: environment)
+        described_class.create(record_class, data_path: data_path)
 
         expect(described_class::Builder)
           .to have_received(:new)
-          .with(record_class, environment: environment)
+          .with(record_class, data_path: data_path)
       end
     end
   end
@@ -169,7 +169,7 @@ RSpec.describe Fixtures do
       expect(described_class)
         .to respond_to(:exist?)
         .with(1).argument
-        .and_keywords(:environment)
+        .and_keywords(:data_path)
     end
 
     it 'should instantiate a loader' do
@@ -177,7 +177,7 @@ RSpec.describe Fixtures do
 
       expect(described_class::Loader)
         .to have_received(:new)
-        .with(environment: 'fixtures', resource_name: resource_name)
+        .with(data_path: 'fixtures', resource_name: resource_name)
     end
 
     it 'should call Loader#exist?' do
@@ -220,7 +220,7 @@ RSpec.describe Fixtures do
       expect(described_class)
         .to respond_to(:read)
         .with(1).argument
-        .and_keywords(:count, :environment)
+        .and_keywords(:count, :data_path)
     end
 
     it 'should instantiate a builder' do
@@ -228,7 +228,7 @@ RSpec.describe Fixtures do
 
       expect(described_class::Builder)
         .to have_received(:new)
-        .with(record_class, environment: 'fixtures')
+        .with(record_class, data_path: 'fixtures')
     end
 
     it 'should call Builder#read' do
@@ -247,15 +247,15 @@ RSpec.describe Fixtures do
       end
     end
 
-    describe 'with environment: value' do
-      let(:environment) { 'secrets' }
+    describe 'with data_path: value' do
+      let(:data_path) { 'secrets' }
 
       it 'should instantiate a builder' do
-        described_class.read(record_class, environment: environment)
+        described_class.read(record_class, data_path: data_path)
 
         expect(described_class::Builder)
           .to have_received(:new)
-          .with(record_class, environment: environment)
+          .with(record_class, data_path: data_path)
       end
     end
   end
