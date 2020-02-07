@@ -62,6 +62,14 @@ RSpec.describe Fixtures::Builder do
     end
   end
 
+  shared_context 'when options[:find_by] is an array of values' do
+    let(:opts) { { 'find_by' => %w[casting_time level school] } }
+  end
+
+  shared_context 'when options[:find_by] is a value' do
+    let(:opts) { { 'find_by' => 'name' } }
+  end
+
   shared_context 'when options[:middleware] is defined for the resource' do
     let(:opts) do
       {
@@ -365,7 +373,41 @@ RSpec.describe Fixtures::Builder do
       expect(loader).to have_received(:call).with(no_args)
     end
 
+    it 'should delegate to the create or update command' do
+      allow(Spell::Factory).to receive(:create_or_update).and_call_original
+
+      builder.create
+
+      expect(Spell::Factory)
+        .to have_received(:create_or_update)
+        .with(find_by: %i[id])
+    end
+
     include_examples 'should filter the data'
+
+    wrap_context 'when options[:find_by] is an array of values' do
+      it 'should delegate to the create or update command' do
+        allow(Spell::Factory).to receive(:create_or_update).and_call_original
+
+        builder.create
+
+        expect(Spell::Factory)
+          .to have_received(:create_or_update)
+          .with(find_by: %w[casting_time level school])
+      end
+    end
+
+    wrap_context 'when options[:find_by] is a value' do
+      it 'should delegate to the create or update command' do
+        allow(Spell::Factory).to receive(:create_or_update).and_call_original
+
+        builder.create
+
+        expect(Spell::Factory)
+          .to have_received(:create_or_update)
+          .with(find_by: %w[name])
+      end
+    end
   end
 
   describe '#data_path' do

@@ -69,7 +69,7 @@ module Fixtures
     end
 
     def create_or_update_command(**options)
-      find_by = Array(options.fetch(:unique, :id))
+      find_by = Array(options.fetch(:find_by, :id))
 
       operation_factory.create_or_update(find_by: find_by)
     end
