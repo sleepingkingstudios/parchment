@@ -30,7 +30,7 @@
     "uuid": "^3.3.2",
     "webpack": "^4.37.0",
     "yaml": "^1.7.0",
-    "yarn": "^1.15.2"
+    "yarn": "^1.22.0"
   },
   "version": "0.1.0",
   "devDependencies": {
