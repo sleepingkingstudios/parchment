@@ -5,6 +5,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -90,7 +91,7 @@ CREATE TABLE public.spells (
     updated_at timestamp(6) without time zone NOT NULL,
     name character varying DEFAULT ''::character varying NOT NULL,
     casting_time character varying DEFAULT ''::character varying NOT NULL,
-    description character varying DEFAULT ''::character varying NOT NULL,
+    description text DEFAULT ''::character varying NOT NULL,
     duration character varying DEFAULT ''::character varying NOT NULL,
     level integer NOT NULL,
     material_component character varying DEFAULT ''::character varying NOT NULL,
@@ -168,6 +169,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191016215407'),
 ('20191018185840'),
 ('20191025190234'),
-('20191031151514');
+('20191031151514'),
+('20200220214104');
 
 

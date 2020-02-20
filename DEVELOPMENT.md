@@ -5,6 +5,8 @@
 - columns
   - name (String)
   - description (String)
+  - short_description (String)
+  - notes (String)
 
 ## Client
 

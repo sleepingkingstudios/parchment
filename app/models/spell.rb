@@ -102,7 +102,7 @@ end
 #
 #  id                 :uuid             not null, primary key
 #  casting_time       :string           default(""), not null
-#  description        :string           default(""), not null
+#  description        :text             default(""), not null
 #  duration           :string           default(""), not null
 #  level              :integer          not null
 #  material_component :string           default(""), not null
