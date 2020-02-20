@@ -328,6 +328,33 @@ module Spec::Support::Examples
             expect(subject.send(:step, result)).to be value
           end
         end
+
+        describe 'with a block that returns a failing result' do
+          let(:error)  { Cuprum::Error.new(message: 'Something went wrong.') }
+          let(:result) { Cuprum::Result.new(error: error) }
+
+          it 'should yield the block' do
+            expect { |block| subject.send(:step, &block) }.to yield_control
+          end
+
+          it 'should throw :cuprum_failed_step and the failing result' do
+            expect { subject.send(:step) { result } }
+              .to throw_symbol(:cuprum_failed_step, result)
+          end
+        end
+
+        describe 'with a block that returns a passing result' do
+          let(:value)  { 'result value' }
+          let(:result) { Cuprum::Result.new(value: value) }
+
+          it 'should yield the block' do
+            expect { |block| subject.send(:step, &block) }.to yield_control
+          end
+
+          it 'should return the result value' do
+            expect(subject.send(:step) { result }).to be value
+          end
+        end
       end
 
       describe '#steps' do

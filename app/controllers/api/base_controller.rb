@@ -5,7 +5,7 @@ require 'operations/steps'
 module Api
   # Abstract base class for API controllers.
   class BaseController < ApplicationController
-    include Operations::Steps::Mixin
+    include Cuprum::Steps
 
     protect_from_forgery with: :null_session
 

@@ -57,7 +57,7 @@ class Api::SpellsController < Api::ResourcesController
 
   def index_resources
     steps do
-      extract_sources { step super }
+      extract_sources { step { super } }
     end
   end
 
@@ -66,7 +66,7 @@ class Api::SpellsController < Api::ResourcesController
   end
 
   def require_resource_params
-    spell_params = step super
+    spell_params = step { super }
 
     spell_params.merge(source_params)
   end
@@ -77,7 +77,7 @@ class Api::SpellsController < Api::ResourcesController
 
   def show_resource
     steps do
-      extract_source { step super }
+      extract_source { step { super } }
     end
   end
 

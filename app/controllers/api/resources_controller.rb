@@ -42,7 +42,7 @@ module Api
 
       steps do
         attributes = step :require_resource_params
-        resource   = step create_operation.call(attributes)
+        resource   = step { create_operation.call(attributes) }
 
         { resource_name => resource }
       end
@@ -57,9 +57,9 @@ module Api
       destroy_operation = operation_factory.destroy
 
       steps do
-        resource = step find_operation.call(resource_id)
+        resource = step { find_operation.call(resource_id) }
 
-        step destroy_operation.call(resource)
+        step { destroy_operation.call(resource) }
 
         {}
       end
@@ -85,7 +85,7 @@ module Api
 
       steps do
         order     = step :normalize_sort, index_order
-        resources = step find_operation.call(order: order)
+        resources = step { find_operation.call(order: order) }
 
         { plural_resource_name => resources }
       end
@@ -97,7 +97,13 @@ module Api
       failure(error)
     end
 
-    def normalize_sort(order)
+    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+
+    # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
+    #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
+    def normalize_sort(order = {}, **keywords)
+      order = keywords.merge(order) if order.is_a?(Hash)
+
       return {} if order.nil?
 
       return order if order.is_a?(Hash)
@@ -114,6 +120,7 @@ module Api
         hsh[key] = dir
       end
     end
+    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
     def operation_factory
       resource_class::Factory
@@ -162,7 +169,7 @@ module Api
       find_operation = operation_factory.find_one
 
       steps do
-        resource = step find_operation.call(resource_id)
+        resource = step { find_operation.call(resource_id) }
 
         { resource_name => resource }
       end
@@ -182,8 +189,8 @@ module Api
 
       steps do
         attributes = step :require_resource_params
-        resource   = step find_operation.call(resource_id)
-        resource   = step update_operation.call(resource, attributes)
+        resource   = step { find_operation.call(resource_id) }
+        resource   = step { update_operation.call(resource, attributes) }
 
         { resource_name => resource }
       end

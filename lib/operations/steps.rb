@@ -10,8 +10,18 @@ module Operations
     module Mixin
       private
 
-      def step(value, *args)
-        result = Operations::Steps.extract_result(self, value, args)
+      def step(value = nil, *args) # rubocop:disable Metrics/MethodLength
+        if block_given?
+          value  = yield
+          result =
+            if value.respond_to?(:to_cuprum_result)
+              value.to_cuprum_result
+            else
+              Cuprum::Result.new(value: value)
+            end
+        else
+          result = Operations::Steps.extract_result(self, value, args)
+        end
 
         return result.value if result.success?
 
