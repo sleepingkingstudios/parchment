@@ -29,7 +29,7 @@ module Operations::Records
     def process(record, attributes = {}, **keywords)
       attributes = keywords.merge(attributes) if attributes.is_a?(Hash)
 
-      step assign_operation.call(record, attributes)
+      step { assign_operation.call(record, attributes) }
 
       save_operation.call(record)
     end

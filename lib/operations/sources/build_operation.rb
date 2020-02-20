@@ -37,7 +37,11 @@ module Operations::Sources
 
     attr_reader :resolve_reference_operation
 
-    def build_record(attributes)
+    # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
+    #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
+    def build_record(attributes = {}, **keywords)
+      attributes = keywords.merge(attributes) if attributes.is_a?(Hash)
+
       handle_unknown_attribute { record_class.new(attributes) }
     end
 
@@ -48,8 +52,8 @@ module Operations::Sources
 
       step :handle_invalid_attributes, attributes
 
-      origin    = step resolve_origin_operation.call(attributes)
-      reference = step resolve_reference_operation.call(attributes)
+      origin    = step { resolve_origin_operation.call(attributes) }
+      reference = step { resolve_reference_operation.call(attributes) }
       record    = step :build_record, strip_attributes(attributes).merge(
         origin:    origin,
         reference: reference

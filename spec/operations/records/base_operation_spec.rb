@@ -132,12 +132,14 @@ RSpec.describe Operations::Records::BaseOperation do
       let(:result) { Cuprum::Result.new(error: error) }
 
       it 'should return the result' do
-        expect(operation.send(:transaction) { operation.send :step, result })
+        expect(
+          operation.send(:transaction) { operation.send(:step) { result } }
+        )
           .to be == result
       end
 
       it 'should roll back the transaction' do
-        operation.send(:transaction) { operation.send :step, result }
+        operation.send(:transaction) { operation.send(:step) { result } }
 
         expect(transaction_status.rollback).to be true
       end
@@ -148,12 +150,14 @@ RSpec.describe Operations::Records::BaseOperation do
       let(:result) { Cuprum::Result.new(value: value) }
 
       it 'should return the result' do
-        expect(operation.send(:transaction) { operation.send :step, result })
+        expect(
+          operation.send(:transaction) { operation.send(:step) { result } }
+        )
           .to be == result
       end
 
       it 'should not roll back the transaction' do
-        operation.send(:transaction) { operation.send :step, result }
+        operation.send(:transaction) { operation.send(:step) { result } }
 
         expect(transaction_status.rollback).to be false
       end

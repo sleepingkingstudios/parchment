@@ -27,7 +27,7 @@ module Operations::Records
     def process(attributes = {}, **keywords)
       attributes = keywords.merge(attributes) if attributes.is_a?(Hash)
 
-      record = step build_operation.call(attributes)
+      record = step { build_operation.call(attributes) }
 
       save_operation.call(record)
     end

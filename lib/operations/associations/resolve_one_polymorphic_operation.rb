@@ -2,14 +2,11 @@
 
 require 'errors/invalid_parameters'
 require 'operations/associations/find_one_polymorphic_operation'
-require 'operations/steps'
 
 module Operations::Associations
   # Operation that resolves a polymorphic association instance from an
   # attributes hash, either from an id/type pair or a record.
   class ResolveOnePolymorphicOperation < Cuprum::Operation
-    include Operations::Steps
-
     def initialize(
       association_name:,
       permitted_types: nil,

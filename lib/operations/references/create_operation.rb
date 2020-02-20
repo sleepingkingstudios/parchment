@@ -35,7 +35,7 @@ module Operations::References
       attributes, origin_attributes = extract_origin_attributes(attributes)
 
       transaction do
-        reference = step super(attributes)
+        reference = step { super(attributes) }
 
         set_source_operation.call(
           reference: reference,

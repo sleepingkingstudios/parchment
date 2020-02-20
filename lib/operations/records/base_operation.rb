@@ -2,13 +2,11 @@
 
 require 'operations/records'
 require 'operations/records/parameter_validations'
-require 'operations/steps'
 
 module Operations::Records
   # Abstract base class for record operations.
   class BaseOperation < Cuprum::Operation
     include Operations::Records::ParameterValidations
-    include Operations::Steps
 
     class << self
       # Returns a new subclass of the operation that curries the record class.

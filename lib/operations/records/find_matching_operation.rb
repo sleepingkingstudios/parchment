@@ -52,12 +52,20 @@ module Operations::Records
       success(records)
     end
 
-    def validate_result(records, where)
+    # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
+    #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
+    def validate_result(records, where = {}, **keywords)
+      where = keywords.merge(where) if where.is_a?(Hash)
+
       step :validate_result_exists, records, where
       step :validate_record_unique, records, where
     end
 
-    def validate_result_exists(records, where)
+    # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
+    #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
+    def validate_result_exists(records, where = {}, **keywords)
+      where = keywords.merge(where) if where.is_a?(Hash)
+
       return if optional? || !records.empty?
 
       error = Errors::NotFound.new(
@@ -68,7 +76,11 @@ module Operations::Records
       failure(error)
     end
 
-    def validate_record_unique(records, where)
+    # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
+    #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
+    def validate_record_unique(records, where = {}, **keywords)
+      where = keywords.merge(where) if where.is_a?(Hash)
+
       return if !unique? || records.size <= 1
 
       error = Errors::NotUnique.new(

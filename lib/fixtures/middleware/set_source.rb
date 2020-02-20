@@ -15,7 +15,7 @@ module Fixtures::Middleware
     def create_source(origin:, reference:, source_data:)
       metadata = source_data.fetch(:metadata, source_data.fetch('metadata', {}))
 
-      step set_source_operation.call(origin: origin, reference: reference)
+      step { set_source_operation.call(origin: origin, reference: reference) }
 
       return reference if !metadata.is_a?(Hash) || metadata.empty?
 
@@ -33,11 +33,12 @@ module Fixtures::Middleware
       step :handle_invalid_foreign_type,    origin_type, as: 'origin_type'
       step :handle_unexpected_foreign_type, origin_type
 
-      factory   = Operations::Records::Factory.for(origin_type)
-      operation = factory.find_matching(optional: false, unique: true)
-      records   = step operation.call(
-        where: source_data.except(:metadata, :type, 'metadata', 'type')
-      )
+      records = step do
+        Operations::Records::Factory
+          .for(origin_type)
+          .find_matching(optional: false, unique: true)
+          .call(where: source_data.except(:metadata, :type, 'metadata', 'type'))
+      end
 
       records.first
     end
@@ -72,7 +73,7 @@ module Fixtures::Middleware
     def process(next_command, attributes) # rubocop:disable Metrics/MethodLength
       source_data = attributes.fetch(:source, attributes.fetch('source', {}))
       reference   =
-        step super(next_command, attributes.except(:source, 'source'))
+        step { super(next_command, attributes.except(:source, 'source')) }
 
       return success(reference) if reference.is_a?(Hash)
       return success(reference) if non_persisted_record?(reference)

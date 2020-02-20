@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'operations/steps'
-
 module Api
   # Abstract base class for API controllers.
   class BaseController < ApplicationController
