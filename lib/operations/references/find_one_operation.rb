@@ -19,7 +19,7 @@ module Operations::References
     end
 
     def process(id, as: :id)
-      record = step super
+      record = step { super }
 
       assign_source_operation.call(record)
     end

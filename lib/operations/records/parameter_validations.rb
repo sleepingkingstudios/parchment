@@ -5,7 +5,6 @@ require 'errors/invalid_record'
 require 'errors/not_found'
 require 'errors/unknown_attributes'
 require 'operations/records'
-require 'operations/steps'
 
 module Operations::Records
   # Shared methods for validating parameters to an operation.
@@ -75,8 +74,6 @@ module Operations::Records
 
     # Shared methods for validating singular primary/foreign key arguments.
     module One
-      include Operations::Steps
-
       def handle_empty_foreign_type(type, as: :id)
         return unless type.empty?
 
@@ -175,7 +172,11 @@ module Operations::Records
 
     private
 
-    def handle_invalid_attributes(attributes)
+    # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
+    #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
+    def handle_invalid_attributes(attributes = {}, **keywords)
+      attributes = keywords.merge(attributes) if attributes.is_a?(Hash)
+
       return if attributes.is_a?(Hash)
 
       error = Errors::InvalidParameters.new(

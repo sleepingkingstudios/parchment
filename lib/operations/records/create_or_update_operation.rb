@@ -55,10 +55,14 @@ module Operations::Records
     end
 
     def find_record(query)
-      step(find_operation.call(where: query)).first
+      step { find_operation.call(where: query) }.first
     end
 
-    def process(attributes)
+    # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
+    #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
+    def process(attributes = {}, **keywords)
+      attributes = keywords.merge(attributes) if attributes.is_a?(Hash)
+
       step :validate_primary_key, attributes
 
       query  = build_query(attributes)
@@ -86,7 +90,11 @@ module Operations::Records
       params.map(&:intern)
     end
 
-    def validate_primary_key(attributes)
+    # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
+    #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
+    def validate_primary_key(attributes = {}, **keywords)
+      attributes = keywords.merge(attributes) if attributes.is_a?(Hash)
+
       return unless query_params.include?(:id) || query_params.include?('id')
 
       value = fetch_attribute(attributes, :id)

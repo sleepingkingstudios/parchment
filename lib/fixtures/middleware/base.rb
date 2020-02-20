@@ -1,13 +1,10 @@
 # frozen_string_literal: true
 
 require 'fixtures/middleware'
-require 'operations/steps'
 
 module Fixtures::Middleware
   # Abstract base class for middleware.
   class Base < Cuprum::Operation
-    include Operations::Steps
-
     def initialize(**options)
       @options = options
     end

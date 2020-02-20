@@ -18,7 +18,7 @@ module Operations::References
     end
 
     def process(ids, allow_partial: false)
-      records = step super
+      records = step { super }
 
       assign_source_operation.call(records)
     end

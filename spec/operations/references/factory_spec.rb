@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 require 'operations/references/factory'
 
 require 'support/examples/operation_factory_examples'

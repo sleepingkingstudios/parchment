@@ -2,14 +2,11 @@
 
 require 'errors/invalid_parameters'
 require 'operations/associations/find_one_polymorphic_operation'
-require 'operations/steps'
 
 module Operations::Associations
   # Operation that resolves a polymorphic association instance from an
   # attributes hash, either from an id/type pair or a record.
   class ResolveOnePolymorphicOperation < Cuprum::Operation
-    include Operations::Steps
-
     def initialize(
       association_name:,
       permitted_types: nil,
@@ -79,7 +76,10 @@ module Operations::Associations
       hsh.fetch(key.to_s) { hsh[key.intern] }
     end
 
-    def process(attributes)
+    # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
+    #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
+    def process(attributes = {}, **keywords)
+      attributes  = keywords.merge(attributes) if attributes.is_a?(Hash)
       association = indifferent_fetch(attributes, association_name)
 
       return validate_association(association, attributes) if association

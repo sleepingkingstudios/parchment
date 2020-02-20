@@ -3,13 +3,10 @@
 require 'errors/sources/invalid_reference'
 require 'operations/sources'
 require 'operations/sources/create_operation'
-require 'operations/steps'
 
 module Operations::Sources
   # Creates and assigns the source relation for a referenced domain object.
   class SetSourceOperation < Cuprum::Operation
-    include Operations::Steps
-
     def initialize(create_source_operation: nil)
       @create_source_operation =
         create_source_operation ||
@@ -67,8 +64,9 @@ module Operations::Sources
     end
 
     def set_source(reference:, **attributes)
-      source =
-        step create_source_operation.call(reference: reference, **attributes)
+      source = step do
+        create_source_operation.call(reference: reference, **attributes)
+      end
 
       reference.tap { reference.source = source }
     end
