@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/sleepingkingstudios/cuprum.git
-  revision: 3bbe41e14acce70a450793ab4076b6753c320a7d
+  revision: 052a610cb38c83af9e59751a6d9e904b536ce205
   specs:
     cuprum (0.10.0.alpha)
       sleeping_king_studios-tools (~> 0.7)

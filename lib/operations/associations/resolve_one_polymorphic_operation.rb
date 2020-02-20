@@ -79,7 +79,10 @@ module Operations::Associations
       hsh.fetch(key.to_s) { hsh[key.intern] }
     end
 
-    def process(attributes)
+    # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
+    #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
+    def process(attributes = {}, **keywords)
+      attributes  = keywords.merge(attributes) if attributes.is_a?(Hash)
       association = indifferent_fetch(attributes, association_name)
 
       return validate_association(association, attributes) if association
