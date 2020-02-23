@@ -84,6 +84,10 @@ RSpec.describe Mechanics::Action, type: :model do
       :name,
       type: String
 
+    include_examples 'should validate the uniqueness of',
+      :name,
+      attributes: FactoryBot.attributes_for(:action)
+
     include_examples 'should validate the presence of',
       :short_description,
       type: String
