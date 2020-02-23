@@ -92,5 +92,52 @@ module Spec::Support::Examples
         end
       end
     end
+
+    shared_examples 'should route to Client resource' do |resource_name|
+      root_route = resource_name
+
+      let(:controller) { 'client' }
+      let(:resource_id) do
+        defined?(super()) ? super() : '00000000-0000-0000-0000-000000000000'
+      end
+
+      describe "GET /#{root_route}" do
+        it 'should route to ClientController#index' do
+          expect(get: "/#{root_route}").to route_to(
+            controller: controller,
+            action:     'index'
+          )
+        end
+      end
+
+      describe "GET /#{root_route}/create" do
+        it 'should route to ClientController#index' do
+          expect(get: "/#{root_route}/create").to route_to(
+            controller: controller,
+            action:     'index'
+          )
+        end
+      end
+
+      describe "GET /#{root_route}/:id" do
+        it 'should route to ClientController#index' do
+          expect(get: "/#{root_route}/#{resource_id}").to route_to(
+            controller: controller,
+            action:     'index',
+            id:         resource_id
+          )
+        end
+      end
+
+      describe "GET /#{root_route}/:id/update" do
+        it 'should route to ClientController#index' do
+          expect(get: "/#{root_route}/#{resource_id}/update").to route_to(
+            controller: controller,
+            action:     'index',
+            id:         resource_id
+          )
+        end
+      end
+    end
   end
 end
