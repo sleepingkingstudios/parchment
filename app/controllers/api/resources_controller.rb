@@ -139,11 +139,9 @@ module Api
 
       error =
         if permitted_attributes.empty?
-          Cuprum::Error
-            .new(message: 'No attributes are permitted for the current action')
+          resource_params_empty_error
         else
-          Errors::InvalidParameters
-            .new(errors: [[resource_name, "can't be blank"]])
+          resource_params_missing_error
         end
 
       failure(error)
@@ -163,6 +161,15 @@ module Api
         .fetch(singular_resource_name, {})
         .permit(*permitted_attributes)
         .to_hash
+    end
+
+    def resource_params_empty_error
+      Cuprum::Error
+        .new(message: 'No attributes are permitted for the current action')
+    end
+
+    def resource_params_missing_error
+      Errors::InvalidParameters.new(errors: [[resource_name, "can't be blank"]])
     end
 
     def show_resource

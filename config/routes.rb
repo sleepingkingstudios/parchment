@@ -24,6 +24,10 @@ Rails.application.routes.draw do
   namespace :api do
     api_resources :books
 
+    namespace :mechanics do
+      api_resources :actions
+    end
+
     api_resources :origins, only: :index
 
     api_resources :spells
