@@ -2,16 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe 'routes' do
-  let(:controller) { 'api/origins' }
+require 'support/examples/routing_examples'
 
-  describe 'GET /api/origins.json' do
-    it 'should route to Api::SpellsController#index' do
-      expect(get: '/api/origins.json').to route_to(
-        controller: controller,
-        action:     'index',
-        format:     'json'
-      )
-    end
-  end
+RSpec.describe 'routes' do
+  include Spec::Support::Examples::RoutingExamples
+
+  include_examples 'should route to API resource', 'origins', only: :index
 end
