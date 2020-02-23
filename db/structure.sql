@@ -57,6 +57,22 @@ CREATE TABLE public.books (
 
 
 --
+-- Name: mechanics; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.mechanics (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    type character varying,
+    name character varying DEFAULT ''::character varying NOT NULL,
+    description text DEFAULT ''::text NOT NULL,
+    short_description character varying DEFAULT ''::character varying NOT NULL,
+    notes text DEFAULT ''::text NOT NULL
+);
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -122,6 +138,14 @@ ALTER TABLE ONLY public.books
 
 
 --
+-- Name: mechanics mechanics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mechanics
+    ADD CONSTRAINT mechanics_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -170,6 +194,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191018185840'),
 ('20191025190234'),
 ('20191031151514'),
-('20200220214104');
+('20200220214104'),
+('20200220214830');
 
 
