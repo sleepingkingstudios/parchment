@@ -1,18 +1,18 @@
 ---
 - name:        Defenestrate
-  description: Throw target creature out the nearest window.
-  short_description: |
+  description: |
     You throw the target creature out the nearest window. Harsh.
+  short_description: Throw target creature out the nearest window.
 - name:        Ponder
-  description: Sit and think for a while.
-  short_description: |
+  description: |
     You sit and think for a while.
 
     You're not entirely sure what this will accomplish. Maybe you should think
     about that instead.
-- name:        Splash.
-  description: Does nothing.
-  short_description: |
+  short_description: Sit and think for a while.
+- name:        Splash
+  description: |
     Bounce around uselessly while others are doing the hard work.
 
     There's something fishy about this one...
+  short_description: Does nothing.

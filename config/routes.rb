@@ -15,10 +15,10 @@ Rails.application.routes.draw do
   end
 
   def self.client_resources(resource_name)
-    get "#{resource_name}/create", to: 'client#index'
+    get "#{resource_name}/create",     to: 'client#index'
     get "#{resource_name}/:id/update", to: 'client#index'
-    get "#{resource_name}/:id", to: 'client#index'
-    get "#{resource_name}", to: 'client#index'
+    get "#{resource_name}/:id",        to: 'client#index'
+    get "#{resource_name}",            to: 'client#index'
   end
 
   namespace :api do
@@ -34,6 +34,12 @@ Rails.application.routes.draw do
   end
 
   client_resources :books
+
+  resources :mechanics, only: [] do
+    collection do
+      client_resources :actions
+    end
+  end
 
   client_resources :spells
 

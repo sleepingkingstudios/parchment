@@ -15,7 +15,7 @@ const buildEndpoint = ({ requestData }) => ({
 });
 
 describe('<IndexPage />', () => {
-  const breadcrumbs = [
+  const expectedBreadcrumbs = [
     {
       label: 'Home',
       url: '/',
@@ -42,7 +42,7 @@ describe('<IndexPage />', () => {
     expect(rendered).toHaveDisplayName('Page');
 
     expect(rendered).toHaveClassName('page-widgets');
-    expect(rendered).toHaveProp('breadcrumbs', breadcrumbs);
+    expect(rendered).toHaveProp('breadcrumbs', expectedBreadcrumbs);
   });
 
   it('should render the index table', () => {
@@ -71,6 +71,43 @@ describe('<IndexPage />', () => {
     const rendered = shallow(<IndexPage {...defaultProps} endpoint={endpoint} />);
 
     expect(rendered).toMatchSnapshot();
+  });
+
+  describe('with breadcrumbs: array', () => {
+    const breadcrumbs = [
+      {
+        label: 'The Void',
+        url: '/dev/null',
+      },
+    ];
+
+    it('should wrap the contents in a Page', () => {
+      const endpoint = buildEndpoint({});
+      const rendered = shallow(
+        <IndexPage {...defaultProps} breadcrumbs={breadcrumbs} endpoint={endpoint} />,
+      );
+
+      expect(rendered).toHaveDisplayName('Page');
+
+      expect(rendered).toHaveClassName('page-widgets');
+      expect(rendered).toHaveProp('breadcrumbs', breadcrumbs);
+    });
+  });
+
+  describe('with breadcrumbs: component', () => {
+    const breadcrumbs = () => (<div />);
+
+    it('should wrap the contents in a Page', () => {
+      const endpoint = buildEndpoint({});
+      const rendered = shallow(
+        <IndexPage {...defaultProps} breadcrumbs={breadcrumbs} endpoint={endpoint} />,
+      );
+
+      expect(rendered).toHaveDisplayName('Page');
+
+      expect(rendered).toHaveClassName('page-widgets');
+      expect(rendered).toHaveProp('breadcrumbs', breadcrumbs);
+    });
   });
 
   describe('with mapData: function', () => {

@@ -5,9 +5,10 @@ import pluralize from 'pluralize';
 import HeadingWithButtons from '../heading-with-buttons';
 import Page from '../page';
 import IndexPageTable from './table';
+import { valueOrDefault } from '../../utils/object';
 import { underscore } from '../../utils/string';
 
-const breadcrumbs = resourceName => (
+const generateBreadcrumbs = ({ resourceName }) => (
   [
     {
       label: 'Home',
@@ -32,6 +33,7 @@ const buttons = resourceName => (
 
 const IndexPage = (props) => {
   const {
+    breadcrumbs,
     columns,
     endpoint,
     mapData,
@@ -46,7 +48,10 @@ const IndexPage = (props) => {
   requestData();
 
   return (
-    <Page breadcrumbs={breadcrumbs(resourceName)} className={`page-${pluralResourceName.replace(/_/g, '-')}`}>
+    <Page
+      breadcrumbs={valueOrDefault(breadcrumbs, generateBreadcrumbs({ resourceName }))}
+      className={`page-${pluralResourceName.replace(/_/g, '-')}`}
+    >
       <HeadingWithButtons buttons={buttons(resourceName)}>
         {pluralize(resourceName)}
       </HeadingWithButtons>
@@ -62,10 +67,12 @@ const IndexPage = (props) => {
 };
 
 IndexPage.defaultProps = {
+  breadcrumbs: null,
   mapData: null,
 };
 
 IndexPage.propTypes = {
+  breadcrumbs: PropTypes.arrayOf(PropTypes.object),
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   endpoint: PropTypes.shape({
     hooks: PropTypes.shape({
