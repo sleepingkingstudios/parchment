@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<IndexPage /> should match the snapshot 1`] = `
+<Page
+  breadcrumbs={
+    Array [
+      Object {
+        "label": "Home",
+        "url": "/",
+      },
+      Object {
+        "active": true,
+        "label": "Widgets",
+        "url": "/widgets",
+      },
+    ]
+  }
+  className="page-widgets"
+  layout={null}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <HeadingWithButtons
+    buttons={
+      Array [
+        Object {
+          "label": "Create Widget",
+          "outline": true,
+          "url": "/widgets/create",
+        },
+      ]
+    }
+  >
+    Widgets
+  </HeadingWithButtons>
+  <IndexPageTable
+    columns={
+      Array [
+        Object {
+          "label": "Name",
+          "prop": "name",
+        },
+      ]
+    }
+    endpoint={
+      Object {
+        "hooks": Object {
+          "useEndpoint": [Function],
+          "useRequestData": [Function],
+        },
+        "request": Object {
+          "performRequest": [Function],
+        },
+      }
+    }
+    mapData={null}
+    resourceName="Widget"
+  />
+</Page>
+`;
