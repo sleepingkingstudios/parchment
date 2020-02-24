@@ -1,2 +1,2 @@
 /* eslint-disable-next-line import/prefer-default-export */
-export { default as BooksTable } from './table';
+export { default as columns } from './columns';
