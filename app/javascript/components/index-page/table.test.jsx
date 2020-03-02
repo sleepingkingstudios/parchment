@@ -88,7 +88,7 @@ describe('<IndexPageTable />', () => {
     ];
     const state = { data: { widgets }, status: SUCCESS };
 
-    it('should render the Spells table', () => {
+    it('should render the table', () => {
       const endpoint = buildEndpoint({ state });
       const { status } = state;
       const wrapper = shallow(<IndexPageTable {...defaultProps} endpoint={endpoint} />);
@@ -106,7 +106,7 @@ describe('<IndexPageTable />', () => {
       expect(rendered).toHaveProp({ message });
     });
 
-    it('should pass the onDelete handler to the Spells table', () => {
+    it('should pass the onDelete handler to the table', () => {
       const inner = jest.fn();
       const performRequest = () => inner;
       const endpoint = buildEndpoint({ performRequest, state });
