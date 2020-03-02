@@ -4,16 +4,16 @@ import { bookType } from '../../entities';
 
 import './book-block-styles.css';
 
-const BookBlock = ({ book }) => (
+const BookBlock = ({ data }) => (
   <div className="book-block">
-    <p className="book-block-title">{ book.title }</p>
+    <p className="book-block-title">{ data.title }</p>
 
     <p className="book-block-publisher">
-      <strong>Publisher:</strong> { book.publisherName }
+      <strong>Publisher:</strong> { data.publisherName }
     </p>
 
     <p className="book-block-publication-date">
-      <strong>Publication Date:</strong> { book.publicationDate }
+      <strong>Publication Date:</strong> { data.publicationDate }
     </p>
   </div>
 );
@@ -21,7 +21,7 @@ const BookBlock = ({ book }) => (
 BookBlock.defaultProps = {};
 
 BookBlock.propTypes = {
-  book: bookType.isRequired,
+  data: bookType.isRequired,
 };
 
 export default BookBlock;

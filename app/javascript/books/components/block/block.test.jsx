@@ -7,7 +7,7 @@ import { booksData } from '../../fixtures';
 const book = booksData[0];
 
 describe('<BookBlock />', () => {
-  const defaultProps = { book };
+  const defaultProps = { data: book };
 
   it('should wrap the contents in a <div> element', () => {
     const rendered = shallow(<BookBlock {...defaultProps} />);

@@ -1,34 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Page from '../../../components/page';
-import ShowBookBlock from './block';
-import ShowBookBreadcrumbs from './breadcrumbs';
-import ShowBookHeading from './heading';
-import { hooks } from '../../store/showFindBook';
+import { ShowPage } from '../../../components/show-page';
 
-const getBookId = ({ match }) => {
-  const { params } = match;
+import { BookBlock } from '../../components/block';
+import endpoint from '../../store/showFindBook';
+import deleteEndpoint from '../../store/deleteBook';
 
-  return params.id;
-};
-
-const { useRequestData } = hooks;
-
-const ShowBookPage = (props) => {
-  const id = getBookId(props);
-  const requestData = useRequestData({ wildcards: { id } });
-
-  requestData();
-
-  return (
-    <Page breadcrumbs={<ShowBookBreadcrumbs />} className="page-show-book">
-      <ShowBookHeading />
-
-      <ShowBookBlock />
-    </Page>
-  );
-};
+const ShowBookPage = ({ match }) => (
+  <ShowPage
+    Block={BookBlock}
+    deleteEndpoint={deleteEndpoint}
+    endpoint={endpoint}
+    match={match}
+    resourceName="Book"
+    resourceNameProp="title"
+  />
+);
 
 ShowBookPage.defaultProps = {};
 
