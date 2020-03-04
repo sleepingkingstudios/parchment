@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IndexPage } from '../../../../components/index-page';
-import { columns } from '../../../components/table';
+import { columns } from '../../components/table';
 import endpoint from '../../store/indexFindActions';
 
 const breadcrumbs = [

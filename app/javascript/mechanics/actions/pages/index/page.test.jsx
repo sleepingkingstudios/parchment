@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import IndexActionsPage from './page';
-import { columns } from '../../../components/table';
+import { columns } from '../../components/table';
 import endpoint from '../../store/indexFindActions';
 
 describe('IndexActionsPage', () => {

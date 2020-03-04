@@ -175,6 +175,31 @@ describe('<ShowPage />', () => {
     });
   });
 
+  describe('with buttons: array', () => {
+    const buttons = [
+      {
+        buttonStyle: 'danger',
+        label: 'Do Not Push',
+        onClick: () => {},
+      },
+    ];
+
+    it('should render the heading', () => {
+      const endpoint = buildEndpoint({ state: { data: {} } });
+      const rendered = shallow(
+        <ShowPage {...defaultProps} buttons={buttons} endpoint={endpoint} />,
+      );
+      const heading = rendered.find('ShowPageHeading');
+
+      expect(heading).toExist();
+      expect(heading).toHaveProp({ buttons });
+      expect(heading).toHaveProp({ deleteEndpoint });
+      expect(heading).toHaveProp({ id });
+      expect(heading).toHaveProp({ resource: null });
+      expect(heading).toHaveProp({ resourceName });
+    });
+  });
+
   describe('with mapData: function', () => {
     const widget = { name: 'Gadget' };
     const state = { data: { resource: widget } };

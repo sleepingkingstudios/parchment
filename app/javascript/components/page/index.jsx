@@ -59,7 +59,8 @@ Page.defaultProps = {
 Page.propTypes = {
   breadcrumbs: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.object),
-    PropTypes.node,
+    PropTypes.element,
+    PropTypes.elementType,
   ]),
   children: PropTypes.node,
   className: PropTypes.string,

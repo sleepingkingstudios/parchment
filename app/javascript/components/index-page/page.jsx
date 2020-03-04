@@ -75,6 +75,7 @@ IndexPage.propTypes = {
   breadcrumbs: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.object),
     PropTypes.element,
+    PropTypes.elementType,
   ]),
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   endpoint: PropTypes.shape({

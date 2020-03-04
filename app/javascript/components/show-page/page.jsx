@@ -43,6 +43,7 @@ const ShowPage = (props) => {
   const {
     Block,
     breadcrumbs,
+    buttons,
     deleteEndpoint,
     endpoint,
     match,
@@ -76,6 +77,7 @@ const ShowPage = (props) => {
   return (
     <Page breadcrumbs={actualBreadcrumbs} className={`page-show-${singularResourceName}`}>
       <ShowPageHeading
+        buttons={buttons}
         deleteEndpoint={deleteEndpoint}
         id={id}
         resource={mappedData}
@@ -94,6 +96,7 @@ const ShowPage = (props) => {
 
 ShowPage.defaultProps = {
   breadcrumbs: null,
+  buttons: null,
   mapData: null,
   resourceNameProp: 'name',
 };
@@ -104,6 +107,7 @@ ShowPage.propTypes = {
     PropTypes.arrayOf(PropTypes.object),
     PropTypes.element,
   ]),
+  buttons: PropTypes.arrayOf(PropTypes.object),
   deleteEndpoint: PropTypes.shape({
     hooks: PropTypes.shape({
       useDeleteData: PropTypes.func.isRequired,
