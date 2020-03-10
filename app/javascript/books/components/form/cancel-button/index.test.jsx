@@ -7,7 +7,7 @@ import { booksData } from '../../../fixtures';
 
 describe('<BookFormCancelButton />', () => {
   const book = booksData[0];
-  const form = { data: { book } };
+  const form = { data: book };
   const defaultProps = {
     form,
     isUpdate: false,

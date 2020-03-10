@@ -1,7 +1,7 @@
 import React from 'react';
 
 import StatusSwitch from '../../../components/status-switch';
-import BookForm from '../../components/form';
+import { BookForm } from '../../components/form';
 import { hooks as findHooks } from '../../store/updateFindBook';
 import { hooks as formHooks } from '../../store/updateBookForm';
 import { dig } from '../../../utils/object';

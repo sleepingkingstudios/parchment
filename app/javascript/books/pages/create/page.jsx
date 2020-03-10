@@ -1,30 +1,16 @@
 import React from 'react';
 
-import Page from '../../../components/page';
-import CreateBookForm from './form';
-
-const breadcrumbs = [
-  {
-    label: 'Home',
-    url: '/',
-  },
-  {
-    label: 'Books',
-    url: '/books',
-  },
-  {
-    label: 'Create',
-    url: '/books/create',
-    active: true,
-  },
-];
+import { BookForm } from '../../components/form';
+import { CreatePage } from '../../../components/create-page';
+import endpoint from '../../store/createBookForm';
 
 const CreateBookPage = () => (
-  <Page breadcrumbs={breadcrumbs} className="page-create-book">
-    <h1>Create Book</h1>
-
-    <CreateBookForm />
-  </Page>
+  <CreatePage
+    Form={BookForm}
+    endpoint={endpoint}
+    mapData={data => data}
+    resourceName="Book"
+  />
 );
 
 CreateBookPage.defaultProps = {};

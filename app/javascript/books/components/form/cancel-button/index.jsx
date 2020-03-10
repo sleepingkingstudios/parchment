@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 
 import LinkButton from '../../../../components/link-button';
 import { formType } from '../../../../components/form/entities';
+import { dig } from '../../../../utils/object';
 
 const cancelUrl = ({ form, isUpdate }) => {
   if (!isUpdate) { return '/books'; }
 
-  const { data } = form;
-  const { book } = data;
-  const { id } = book;
+  const id = dig(form, 'data', 'id');
 
   return `/books/${id}`;
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import BookForm from './index';
+import BookForm from './form';
 
 import { booksData } from '../../fixtures';
 import { INITIALIZED } from '../../../api/status';
