@@ -20,10 +20,18 @@ const breadcrumbs = [
     active: true,
   },
 ];
+const buttons = [
+  {
+    label: 'Create Action',
+    outline: true,
+    url: '/mechanics/actions/create',
+  },
+];
 
 const IndexActionsPage = () => (
   <IndexPage
     breadcrumbs={breadcrumbs}
+    buttons={buttons}
     columns={columns}
     endpoint={endpoint}
     resourceName="Action"

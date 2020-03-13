@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MechanicForm /> should match the snapshot 1`] = `
+<Form
+  className="mechanic-form"
+  form={
+    Object {
+      "data": Object {
+        "mechanic": Object {
+          "description": "Destroy yourself in a giant explosion",
+          "id": "00000000-0000-0000-0000-000000000000",
+          "name": "Self-Destruct",
+          "notes": "",
+          "shortDescription": "Sacrifice yourself to destroy others",
+        },
+      },
+      "errors": Object {},
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "mechanic",
+      ],
+    }
+  }
+>
+  <h2>
+    Mechanic Form
+  </h2>
+  <FormRow
+    align="left"
+    className=""
+    verticalAlign="top"
+  >
+    <NameField
+      colWidth={4}
+      form={
+        Object {
+          "data": Object {
+            "mechanic": Object {
+              "description": "Destroy yourself in a giant explosion",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Self-Destruct",
+              "notes": "",
+              "shortDescription": "Sacrifice yourself to destroy others",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "mechanic",
+          ],
+        }
+      }
+    />
+    <ShortDescriptionField
+      colWidth={8}
+      form={
+        Object {
+          "data": Object {
+            "mechanic": Object {
+              "description": "Destroy yourself in a giant explosion",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Self-Destruct",
+              "notes": "",
+              "shortDescription": "Sacrifice yourself to destroy others",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "mechanic",
+          ],
+        }
+      }
+    />
+    <DescriptionField
+      colWidth={12}
+      form={
+        Object {
+          "data": Object {
+            "mechanic": Object {
+              "description": "Destroy yourself in a giant explosion",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Self-Destruct",
+              "notes": "",
+              "shortDescription": "Sacrifice yourself to destroy others",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "mechanic",
+          ],
+        }
+      }
+    />
+    <NotesField
+      colWidth={12}
+      form={
+        Object {
+          "data": Object {
+            "mechanic": Object {
+              "description": "Destroy yourself in a giant explosion",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Self-Destruct",
+              "notes": "",
+              "shortDescription": "Sacrifice yourself to destroy others",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "mechanic",
+          ],
+        }
+      }
+    />
+  </FormRow>
+  <FormRow
+    align="right"
+    className=""
+    verticalAlign="top"
+  >
+    <CancelButton
+      colWidth="3"
+      form={
+        Object {
+          "data": Object {
+            "mechanic": Object {
+              "description": "Destroy yourself in a giant explosion",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Self-Destruct",
+              "notes": "",
+              "shortDescription": "Sacrifice yourself to destroy others",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "mechanic",
+          ],
+        }
+      }
+      isUpdate={false}
+    />
+    <SubmitButton
+      actionName="Create"
+      colWidth="3"
+      form={
+        Object {
+          "data": Object {
+            "mechanic": Object {
+              "description": "Destroy yourself in a giant explosion",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Self-Destruct",
+              "notes": "",
+              "shortDescription": "Sacrifice yourself to destroy others",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "mechanic",
+          ],
+        }
+      }
+      status="initialized"
+    />
+  </FormRow>
+</Form>
+`;

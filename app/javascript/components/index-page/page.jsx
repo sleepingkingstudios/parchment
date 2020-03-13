@@ -8,6 +8,15 @@ import IndexPageTable from './table';
 import { valueOrDefault } from '../../utils/object';
 import { underscore } from '../../utils/string';
 
+const generateButtons = resourceName => (
+  [
+    {
+      label: `Create ${resourceName}`,
+      outline: true,
+      url: `/${underscore(pluralize(resourceName))}/create`,
+    },
+  ]
+);
 const generateBreadcrumbs = ({ resourceName }) => (
   [
     {
@@ -21,18 +30,10 @@ const generateBreadcrumbs = ({ resourceName }) => (
     },
   ]
 );
-const buttons = resourceName => (
-  [
-    {
-      label: `Create ${resourceName}`,
-      outline: true,
-      url: `/${underscore(pluralize(resourceName))}/create`,
-    },
-  ]
-);
 
 const IndexPage = (props) => {
   const {
+    buttons,
     breadcrumbs,
     columns,
     endpoint,
@@ -52,7 +53,7 @@ const IndexPage = (props) => {
       breadcrumbs={valueOrDefault(breadcrumbs, generateBreadcrumbs({ resourceName }))}
       className={`page-${pluralResourceName.replace(/_/g, '-')}`}
     >
-      <HeadingWithButtons buttons={buttons(resourceName)}>
+      <HeadingWithButtons buttons={valueOrDefault(buttons, generateButtons(resourceName))}>
         {pluralize(resourceName)}
       </HeadingWithButtons>
 
@@ -67,11 +68,13 @@ const IndexPage = (props) => {
 };
 
 IndexPage.defaultProps = {
+  buttons: null,
   breadcrumbs: null,
   mapData: null,
 };
 
 IndexPage.propTypes = {
+  buttons: PropTypes.arrayOf(PropTypes.object),
   breadcrumbs: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.object),
     PropTypes.element,

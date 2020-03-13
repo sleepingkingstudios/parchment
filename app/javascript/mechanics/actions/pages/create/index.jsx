@@ -1,2 +1,2 @@
 /* eslint-disable-next-line import/prefer-default-export */
-export { default as ShowActionPage } from './page';
+export { default as CreateActionPage } from './page';

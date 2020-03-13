@@ -45,6 +45,24 @@ describe('<IndexPage />', () => {
     expect(rendered).toHaveProp('breadcrumbs', expectedBreadcrumbs);
   });
 
+  it('should render the page heading', () => {
+    const buttons = [
+      {
+        label: `Create ${resourceName}`,
+        outline: true,
+        url: '/widgets/create',
+      },
+    ];
+    const endpoint = buildEndpoint({});
+    const rendered = shallow(<IndexPage {...defaultProps} endpoint={endpoint} />);
+
+    const heading = rendered.find('HeadingWithButtons');
+
+    expect(heading).toExist();
+    expect(heading).toHaveProp({ buttons });
+    expect(heading).toHaveProp({ children: 'Widgets' });
+  });
+
   it('should render the index table', () => {
     const endpoint = buildEndpoint({});
     const rendered = shallow(<IndexPage {...defaultProps} endpoint={endpoint} />);
@@ -107,6 +125,29 @@ describe('<IndexPage />', () => {
 
       expect(rendered).toHaveClassName('page-widgets');
       expect(rendered).toHaveProp('breadcrumbs', breadcrumbs);
+    });
+  });
+
+  describe('with buttons: array', () => {
+    const buttons = [
+      {
+        label: 'Do Nothing',
+        outline: true,
+        url: '/dev/null',
+      },
+    ];
+
+    it('should render the page heading', () => {
+      const endpoint = buildEndpoint({});
+      const rendered = shallow(
+        <IndexPage {...defaultProps} endpoint={endpoint} buttons={buttons} />,
+      );
+
+      const heading = rendered.find('HeadingWithButtons');
+
+      expect(heading).toExist();
+      expect(heading).toHaveProp({ buttons });
+      expect(heading).toHaveProp({ children: 'Widgets' });
     });
   });
 

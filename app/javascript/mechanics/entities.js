@@ -10,7 +10,7 @@ export const mechanicType = PropTypes.shape({
 
 export const mechanicListType = PropTypes.arrayOf(mechanicType);
 
-export const bookFormType = PropTypes.shape(
+export const mechanicFormType = PropTypes.shape(
   {
     mechanic: mechanicType,
   },
