@@ -1,7 +1,7 @@
 import React from 'react';
 
 import StatusSwitch from '../../../components/status-switch';
-import SpellForm from '../../components/form';
+import { SpellForm } from '../../components/form';
 import { hooks as findHooks } from '../../store/updateFindSpell';
 import { hooks as formHooks } from '../../store/updateSpellForm';
 import { dig } from '../../../utils/object';

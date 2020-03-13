@@ -1,52 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { SpellForm } from '../../components/form';
 import CreateSpellPage from './page';
+import endpoint from '../../store/createSpellForm';
 
 describe('CreateSpellPage', () => {
   const defaultProps = {};
-  const breadcrumbs = [
-    {
-      label: 'Home',
-      url: '/',
-    },
-    {
-      label: 'Spells',
-      url: '/spells',
-    },
-    {
-      label: 'Create',
-      url: '/spells/create',
-      active: true,
-    },
-  ];
 
-  it('should render a Page', () => {
+  it('should render the create page', () => {
     const rendered = shallow(<CreateSpellPage {...defaultProps} />);
 
-    expect(rendered).toHaveDisplayName('Page');
-    expect(rendered).toHaveClassName('page-create-spell');
-    expect(rendered).toHaveProp({ breadcrumbs });
-  });
-
-  it('should render the heading', () => {
-    const rendered = shallow(<CreateSpellPage {...defaultProps} />);
-    const heading = rendered.find('h1');
-
-    expect(heading).toExist();
-    expect(heading).toHaveText('Create Spell');
-  });
-
-  it('should render the create Spell form', () => {
-    const rendered = shallow(<CreateSpellPage {...defaultProps} />);
-    const form = rendered.find('CreateSpellForm');
-
-    expect(form).toExist();
-  });
-
-  it('should match the snapshot', () => {
-    const rendered = shallow(<CreateSpellPage {...defaultProps} />);
-
-    expect(rendered).toMatchSnapshot();
+    expect(rendered).toHaveDisplayName('CreatePage');
+    expect(rendered).toHaveProp({ Form: SpellForm });
+    expect(rendered).toHaveProp({ endpoint });
+    expect(rendered).toHaveProp({ resourceName: 'Spell' });
   });
 });

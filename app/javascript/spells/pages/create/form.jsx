@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SpellForm from '../../components/form';
+import { SpellForm } from '../../components/form';
 import { hooks } from '../../store/createSpellForm';
 
 const { useEndpoint, useSubmitForm, useUpdateForm } = hooks;

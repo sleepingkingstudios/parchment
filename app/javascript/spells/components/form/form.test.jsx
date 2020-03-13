@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import SpellForm from './index';
+import SpellForm from './form';
 
 import { spellsData } from '../../fixtures';
 import selectSchoolOptions from './selectSchoolOptions';
