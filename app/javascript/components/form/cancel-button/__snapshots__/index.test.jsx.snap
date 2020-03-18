@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<BookFormCancelButton /> should match the snapshot 1`] = `
+exports[`<FormCancelButton /> should match the snapshot 1`] = `
 <LinkButton
   block={true}
   buttonSize={null}
@@ -8,7 +8,7 @@ exports[`<BookFormCancelButton /> should match the snapshot 1`] = `
   className={null}
   link={false}
   outline={true}
-  url="/books"
+  url="/widgets"
 >
   Cancel
 </LinkButton>

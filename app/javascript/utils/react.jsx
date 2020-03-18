@@ -1,3 +1,7 @@
+import React from 'react';
+
+import { exists } from './object';
+
 const isEmpty = (value) => {
   if (typeof value === 'undefined') { return true; }
   if (value === null) { return true; }
@@ -22,4 +26,15 @@ export const addClassNameToProps = (props, ...classNames) => {
   if (className.length === 0) { return props; }
 
   return Object.assign({}, props, { className });
+};
+
+export const injectProps = (Component, defaultProps) => {
+  if (!exists(defaultProps)) { return Component; }
+
+  const { className, ...rest } = defaultProps;
+  const ComponentWithInjectedProps = props => (
+    <Component {...rest} {...addClassNameToProps(props, className)} />
+  );
+
+  return ComponentWithInjectedProps;
 };

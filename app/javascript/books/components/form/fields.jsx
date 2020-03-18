@@ -1,7 +1,8 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
+import FormCancelButton from '../../../components/form/cancel-button';
 import FormInput from '../../../components/form/input';
-import BookFormCancelButton from './cancel-button';
 import BookFormSubmitButton from './submit-button';
 import {
   formField,
@@ -40,6 +41,10 @@ TitleField.defaultProps = {};
 TitleField.propTypes = {
   form: formType.isRequired,
 };
+
+const BookFormCancelButton = ({ form, isUpdate }) => (
+  <FormCancelButton form={form} isUpdate={isUpdate} resourceName="Book" />
+);
 
 const CancelButton = formGroup(BookFormCancelButton, { displayName: 'CancelButton' });
 
