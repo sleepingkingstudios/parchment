@@ -2,15 +2,15 @@
 
 exports[`<FormSubmitButton /> should match the snapshot 1`] = `
 <Button
-  block={false}
+  block={true}
   buttonSize="md"
   buttonStyle="primary"
   className="form-submit"
   disabled={false}
   link={false}
   onClick={[Function]}
-  outline={false}
+  outline={true}
 >
-  Submit
+  Submit Form
 </Button>
 `;

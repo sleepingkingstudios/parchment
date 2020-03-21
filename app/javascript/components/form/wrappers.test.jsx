@@ -1,13 +1,11 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 
-import Button from '../button';
 import FormInput from './input';
 import {
   formField,
   formGroup,
   formInput,
-  formSubmit,
 } from './wrappers';
 import { dig } from '../../utils/object';
 
@@ -502,136 +500,6 @@ describe('Form component wrappers', () => {
 
         expect(onChangeAction).toHaveBeenCalledWith(payload);
         expect(action).toEqual({ payload });
-      });
-    });
-  });
-
-  describe('formSubmit()', () => {
-    const value = 'Property Value';
-    const data = { propertyName: value };
-    const onSubmitAction = jest.fn(() => ({ payload: { ok: true } }));
-    const defaultForm = {
-      data,
-      errors: {},
-      onSubmitAction,
-    };
-    const children = 'Button Text';
-    const defaultProps = { children };
-
-    it('should be a function', () => {
-      expect(typeof formSubmit).toEqual('function');
-    });
-
-    it('should return a component', () => {
-      const Wrapped = formSubmit(Button);
-
-      expect(typeof Wrapped).toEqual('function');
-    });
-
-    it('should set the display name', () => {
-      const Wrapped = formSubmit(Button);
-
-      expect(Wrapped.displayName).toEqual('FormSubmitWrapper');
-    });
-
-    it('should set the input display name', () => {
-      const Wrapped = formSubmit(Button);
-
-      expect(Wrapped.inputDisplayName).toEqual('Button');
-    });
-
-    it('should render the button', () => {
-      const Wrapped = formSubmit(Button);
-      const rendered = shallow(<Wrapped form={defaultForm} {...defaultProps} />);
-
-      expect(rendered).toHaveDisplayName('Button');
-      expect(rendered).toHaveClassName('form-submit');
-      expect(rendered).toHaveProp({ children });
-    });
-
-    it('should set the onClick event handler', () => {
-      const Wrapped = formSubmit(Button);
-      const rendered = shallow(<Wrapped form={defaultForm} {...defaultProps} />);
-      const { onClick } = rendered.props();
-      const preventDefault = jest.fn();
-      const event = { preventDefault };
-
-      expect(typeof onClick).toEqual('function');
-
-      const action = onClick(event);
-
-      expect(preventDefault).toHaveBeenCalled();
-      expect(onSubmitAction).toHaveBeenCalledWith();
-      expect(action).toEqual({ payload: { ok: true } });
-    });
-
-    it('should match the snapshot', () => {
-      const Wrapped = formSubmit(Button);
-      const rendered = shallow(<Wrapped form={defaultForm} {...defaultProps} />);
-
-      expect(rendered).toMatchSnapshot();
-    });
-
-    describe('with custom properties', () => {
-      const props = { ...defaultProps, buttonStyle: 'dark' };
-
-      it('should render the button', () => {
-        const Wrapped = formSubmit(Button);
-        const rendered = shallow(<Wrapped form={defaultForm} {...props} />);
-        const { buttonStyle } = props;
-
-        expect(rendered).toHaveDisplayName('Button');
-        expect(rendered).toHaveProp({ buttonStyle });
-        expect(rendered).toHaveProp({ children });
-      });
-
-      it('should match the snapshot', () => {
-        const Wrapped = formSubmit(Button);
-        const rendered = shallow(<Wrapped form={defaultForm} {...props} />);
-
-        expect(rendered).toMatchSnapshot();
-      });
-    });
-
-    describe('with displayName: value', () => {
-      const displayName = 'CustomSubmit';
-
-      it('should set the display name', () => {
-        const Wrapped = formSubmit(Button, { displayName });
-
-        expect(Wrapped.displayName).toEqual(displayName);
-      });
-    });
-
-    describe('with path: array', () => {
-      const path = ['weapons', 'swords', 'japanese'];
-      const form = { ...defaultForm, path };
-      const className = 'weapons-swords-japanese-form-submit';
-
-      it('should render the button', () => {
-        const Wrapped = formSubmit(Button);
-        const rendered = shallow(<Wrapped form={form} {...defaultProps} />);
-
-        expect(rendered).toHaveDisplayName('Button');
-        expect(rendered).toHaveClassName('form-submit');
-        expect(rendered).toHaveClassName(className);
-        expect(rendered).toHaveProp({ children });
-      });
-    });
-
-    describe('with path: value', () => {
-      const path = 'sword';
-      const form = { ...defaultForm, path };
-      const className = 'sword-form-submit';
-
-      it('should render the button', () => {
-        const Wrapped = formSubmit(Button);
-        const rendered = shallow(<Wrapped form={form} {...defaultProps} />);
-
-        expect(rendered).toHaveDisplayName('Button');
-        expect(rendered).toHaveClassName('form-submit');
-        expect(rendered).toHaveClassName(className);
-        expect(rendered).toHaveProp({ children });
       });
     });
   });

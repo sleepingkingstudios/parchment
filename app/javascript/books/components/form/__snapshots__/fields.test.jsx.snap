@@ -444,12 +444,10 @@ exports[`<BookForm /> fields <SubmitButton /> should match the snapshot 1`] = `
             ],
           }
         }
-        isUpdate={false}
         status="initialized"
       >
-        <FormSubmitWrapper
-          block={true}
-          disabled={false}
+        <FormSubmitButton
+          actionName="Create"
           form={
             Object {
               "data": Object {
@@ -470,7 +468,7 @@ exports[`<BookForm /> fields <SubmitButton /> should match the snapshot 1`] = `
               ],
             }
           }
-          outline={true}
+          resourceName="Book"
         >
           <Button
             block={true}
@@ -491,7 +489,7 @@ exports[`<BookForm /> fields <SubmitButton /> should match the snapshot 1`] = `
               Create Book
             </button>
           </Button>
-        </FormSubmitWrapper>
+        </FormSubmitButton>
       </BookFormSubmitButton>
     </div>
   </FormGroup>

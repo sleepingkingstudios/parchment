@@ -1680,12 +1680,10 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             ],
           }
         }
-        isUpdate={false}
         status="initialized"
       >
-        <FormSubmitWrapper
-          block={true}
-          disabled={false}
+        <FormSubmitButton
+          actionName="Create"
           form={
             Object {
               "data": Object {
@@ -1715,7 +1713,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
               ],
             }
           }
-          outline={true}
+          resourceName="Spell"
         >
           <Button
             block={true}
@@ -1736,7 +1734,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
               Create Spell
             </button>
           </Button>
-        </FormSubmitWrapper>
+        </FormSubmitButton>
       </SpellFormSubmitButton>
     </div>
   </FormGroup>
