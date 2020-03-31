@@ -2,6 +2,7 @@ import {
   camelize,
   capitalize,
   interpolate,
+  safeCapitalize,
   titleize,
   truncate,
   underscore,
@@ -139,6 +140,54 @@ describe('String utils', () => {
         const expected = '/path/to/resource/0/with?option=value';
 
         expect(interpolate(str, rxp, params)).toEqual(expected);
+      });
+    });
+  });
+
+  describe('safeCapitalize', () => {
+    it('should be a function', () => {
+      expect(typeof safeCapitalize).toEqual('function');
+    });
+
+    describe('with undefined', () => {
+      it('should return an empty string', () => {
+        expect(safeCapitalize(undefined)).toEqual('');
+      });
+    });
+
+    describe('with null', () => {
+      it('should return an empty string', () => {
+        expect(safeCapitalize(null)).toEqual('');
+      });
+    });
+
+    describe('with an empty string', () => {
+      it('should return an empty string', () => {
+        expect(safeCapitalize('')).toEqual('');
+      });
+    });
+
+    describe('with a lowercase string', () => {
+      it('should return the capitalized string', () => {
+        expect(safeCapitalize('lowercase')).toEqual('Lowercase');
+      });
+    });
+
+    describe('with an uppercase string', () => {
+      it('should return the uppercase string', () => {
+        expect(safeCapitalize('UPPERCASE')).toEqual('UPPERCASE');
+      });
+    });
+
+    describe('with a capitalized string', () => {
+      it('should return the capitalized string', () => {
+        expect(safeCapitalize('Capitalized')).toEqual('Capitalized');
+      });
+    });
+
+    describe('with a mixed-case string', () => {
+      it('should return the string with the first letter capitalized', () => {
+        expect(safeCapitalize('mIxEdCaSe')).toEqual('MIxEdCaSe');
       });
     });
   });
