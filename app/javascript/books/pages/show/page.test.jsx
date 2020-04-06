@@ -18,5 +18,6 @@ describe('ShowBookPage', () => {
     expect(rendered).toHaveProp({ deleteEndpoint });
     expect(rendered).toHaveProp({ endpoint });
     expect(rendered).toHaveProp({ resourceName: 'Book' });
+    expect(rendered).toHaveProp({ resourceNameProp: 'title' });
   });
 });

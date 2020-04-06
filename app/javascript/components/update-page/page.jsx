@@ -49,6 +49,7 @@ const UpdatePage = (props) => {
     formEndpoint,
     match,
     mapData,
+    mapResource,
     resourceName,
     resourceNameProp,
   } = props;
@@ -61,7 +62,8 @@ const UpdatePage = (props) => {
     mapData,
     defaultMapData(singularResourceName),
   );
-  const mappedData = actualMapData(data);
+  const actualMapResource = valueOrDefault(mapResource, actualMapData);
+  const resource = actualMapResource(data);
   const findHooks = findEndpoint.hooks;
   const { useRequestData } = findHooks;
   const requestData = useRequestData({ wildcards: { id } });
@@ -69,7 +71,7 @@ const UpdatePage = (props) => {
     breadcrumbs,
     generateBreadcrumbs({
       id,
-      resource: mappedData,
+      resource,
       resourceName,
       resourceNameProp,
     }),
@@ -96,6 +98,7 @@ const UpdatePage = (props) => {
 UpdatePage.defaultProps = {
   breadcrumbs: null,
   mapData: null,
+  mapResource: null,
   resourceNameProp: 'name',
 };
 
@@ -119,6 +122,7 @@ UpdatePage.propTypes = {
     }).isRequired,
   }).isRequired,
   mapData: PropTypes.func,
+  mapResource: PropTypes.func,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,

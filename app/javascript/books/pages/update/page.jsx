@@ -1,33 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Page from '../../../components/page';
-import UpdateBookBreadcrumbs from './breadcrumbs';
-import UpdateBookForm from './form';
-import { hooks } from '../../store/updateFindBook';
+import { BookForm } from '../../components/form';
+import { UpdatePage } from '../../../components/update-page';
+import findEndpoint from '../../store/updateFindBook';
+import formEndpoint from '../../store/updateBookForm';
 
-const getBookId = ({ match }) => {
-  const { params } = match;
-
-  return params.id;
-};
-
-const { useRequestData } = hooks;
-
-const UpdateBookPage = (props) => {
-  const id = getBookId(props);
-  const requestData = useRequestData({ wildcards: { id } });
-
-  requestData();
-
-  return (
-    <Page breadcrumbs={<UpdateBookBreadcrumbs />} className="page-update-book">
-      <h1>Update Book</h1>
-
-      <UpdateBookForm />
-    </Page>
-  );
-};
+const UpdateBookPage = ({ match }) => (
+  <UpdatePage
+    Form={BookForm}
+    findEndpoint={findEndpoint}
+    formEndpoint={formEndpoint}
+    mapData={data => data}
+    mapResource={data => data.book}
+    match={match}
+    resourceName="Book"
+    resourceNameProp="title"
+  />
+);
 
 UpdateBookPage.defaultProps = {};
 

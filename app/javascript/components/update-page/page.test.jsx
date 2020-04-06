@@ -186,6 +186,42 @@ describe('<UpdatePage />', () => {
     });
   });
 
+  describe('with mapResource: function', () => {
+    const widget = { name: 'Gadget' };
+    const state = { data: { resource: widget } };
+    const formEndpoint = buildEndpoint({ state });
+    const mapResource = data => data.resource;
+    const breadcrumbs = [
+      {
+        label: 'Home',
+        url: '/',
+      },
+      {
+        label: 'Widgets',
+        url: '/widgets',
+      },
+      {
+        label: 'Gadget',
+        url: `/widgets/${id}`,
+      },
+      {
+        label: 'Update',
+        active: true,
+      },
+    ];
+
+    it('should wrap the contents in a Page', () => {
+      const rendered = shallow(
+        <UpdatePage {...defaultProps} formEndpoint={formEndpoint} mapResource={mapResource} />,
+      );
+
+      expect(rendered).toHaveDisplayName('Page');
+
+      expect(rendered).toHaveClassName('page-update-widget');
+      expect(rendered).toHaveProp({ breadcrumbs });
+    });
+  });
+
   describe('with resourceNameProp: value', () => {
     const resourceNameProp = 'title';
     const widget = { title: 'Gadget' };
