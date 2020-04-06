@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { valueOrDefault } from '../../utils/object';
+import {
+  dig,
+  valueOrDefault,
+} from '../../utils/object';
 import { underscore } from '../../utils/string';
 
-const defaultMapData = resourceName => data => (data[resourceName]);
+const defaultMapData = resourceName => data => dig(data, resourceName);
 
 const CreatePageForm = (props) => {
   const {

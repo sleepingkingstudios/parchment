@@ -85,6 +85,10 @@
 
 - clear (some?) alerts when the URL (not query!) changes
 
+### Submit Button
+
+- status switch to display Loading... message
+
 ## Characters
 
 - columns

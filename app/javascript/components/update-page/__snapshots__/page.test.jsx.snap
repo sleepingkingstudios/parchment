@@ -1,0 +1,268 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UpdatePage /> should match the snapshot 1`] = `
+<Page
+  breadcrumbs={
+    Array [
+      Object {
+        "label": "Home",
+        "url": "/",
+      },
+      Object {
+        "label": "Widgets",
+        "url": "/widgets",
+      },
+      Object {
+        "label": "Loading...",
+        "url": "/widgets/00000000-0000-0000-0000-000000000000",
+      },
+      Object {
+        "active": true,
+        "label": "Update",
+      },
+    ]
+  }
+  className="page-update-widget"
+  layout={null}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <h1>
+    Update 
+    Widget
+  </h1>
+  <UpdatePageForm
+    Form={[Function]}
+    findEndpoint={
+      Object {
+        "hooks": Object {
+          "useEndpoint": [Function],
+          "useRequestData": [MockFunction] {
+            "calls": Array [
+              Array [
+                Object {
+                  "wildcards": Object {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                  },
+                },
+              ],
+              Array [
+                Object {
+                  "wildcards": Object {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                  },
+                },
+              ],
+              Array [
+                Object {
+                  "wildcards": Object {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                  },
+                },
+              ],
+              Array [
+                Object {
+                  "wildcards": Object {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                  },
+                },
+              ],
+              Array [
+                Object {
+                  "wildcards": Object {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                  },
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": [MockFunction] {
+                  "calls": Array [
+                    Array [],
+                    Array [],
+                    Array [],
+                    Array [],
+                    Array [],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+              },
+              Object {
+                "type": "return",
+                "value": [MockFunction] {
+                  "calls": Array [
+                    Array [],
+                    Array [],
+                    Array [],
+                    Array [],
+                    Array [],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+              },
+              Object {
+                "type": "return",
+                "value": [MockFunction] {
+                  "calls": Array [
+                    Array [],
+                    Array [],
+                    Array [],
+                    Array [],
+                    Array [],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+              },
+              Object {
+                "type": "return",
+                "value": [MockFunction] {
+                  "calls": Array [
+                    Array [],
+                    Array [],
+                    Array [],
+                    Array [],
+                    Array [],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+              },
+              Object {
+                "type": "return",
+                "value": [MockFunction] {
+                  "calls": Array [
+                    Array [],
+                    Array [],
+                    Array [],
+                    Array [],
+                    Array [],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      }
+    }
+    formEndpoint={
+      Object {
+        "hooks": Object {
+          "useEndpoint": [Function],
+          "useSubmitForm": [MockFunction],
+          "useUpdateForm": [MockFunction],
+        },
+      }
+    }
+    id="00000000-0000-0000-0000-000000000000"
+    mapData={null}
+    resourceName="Widget"
+  />
+</Page>
+`;
