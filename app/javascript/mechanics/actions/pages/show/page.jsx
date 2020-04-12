@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { ShowPage } from '../../../../components/show-page';
-
 import { MechanicBlock } from '../../../components/block';
 import endpoint, { hooks } from '../../store/showFindAction';
 
@@ -33,7 +32,20 @@ const generateBreadcrumbs = ({
     },
   ]
 );
+const generateButtons = ({
+  id,
+  resource,
+}) => {
+  if (!(resource && resource.id)) { return []; }
 
+  return [
+    {
+      label: 'Update Action',
+      outline: true,
+      url: `/mechanics/actions/${id}/update`,
+    },
+  ];
+};
 const getResourceId = ({ match }) => {
   const { params } = match;
 
@@ -44,13 +56,19 @@ const ShowActionPage = ({ match }) => {
   const id = getResourceId({ match });
   const { useEndpoint } = hooks;
   const { data } = useEndpoint();
-  const breadcrumbs = generateBreadcrumbs({ id, resource: data.action });
+  const resource = data.action;
+  const breadcrumbs = generateBreadcrumbs({ id, resource });
+  const buttons = generateButtons({
+    id,
+    resource,
+    resourceName: 'Action',
+  });
 
   return (
     <ShowPage
       Block={MechanicBlock}
       breadcrumbs={breadcrumbs}
-      buttons={[]}
+      buttons={buttons}
       deleteEndpoint={deleteEndpoint}
       endpoint={endpoint}
       match={match}

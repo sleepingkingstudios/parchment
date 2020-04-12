@@ -75,6 +75,17 @@
 - Log In
 - Log Out
 
+## Authorization
+
+- read authorization
+  - public - any user can view, including anonymous users
+  - protected (default) - only logged in users can view
+  - private - only creator (and authorized users?) can view
+- write authorization
+  - public - any user can edit
+  - protected - only logged in users can edit
+  - private (default) - only creator can edit
+
 ## Client
 
 - generic 404 page for non-matching route

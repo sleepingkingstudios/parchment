@@ -21,4 +21,13 @@ describe('<ActionsTableActions />', () => {
     expect(link).toHaveProp('url', `/mechanics/actions/${id}`);
     expect(link).toHaveProp('children', 'Show');
   });
+
+  it('should render the update link', () => {
+    const rendered = shallow(<ActionsTableActions {...defaultProps} />);
+    const link = rendered.find('LinkButton').at(1);
+
+    expect(link).toExist();
+    expect(link).toHaveProp('url', `/mechanics/actions/${id}/update`);
+    expect(link).toHaveProp('children', 'Update');
+  });
 });

@@ -13,6 +13,14 @@ const ActionsTableActions = ({ id }) => (
     >
       Show
     </LinkButton>
+    <LinkButton
+      url={`/mechanics/actions/${id}/update`}
+      link
+      buttonSize="sm"
+      buttonStyle="link"
+    >
+      Update
+    </LinkButton>
   </div>
 );
 

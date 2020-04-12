@@ -1,29 +1,32 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ShowActionPage from './page';
-import { MechanicBlock } from '../../../components/block';
-import endpoint, { hooks } from '../../store/showFindAction';
+import { MechanicForm } from '../../../components/form';
+import UpdateActionPage from './page';
+import findEndpoint, { hooks } from '../../store/updateFindAction';
+import formEndpoint from '../../store/updateActionForm';
 
-jest.mock('../../store/showFindAction');
+jest.mock('../../store/updateFindAction');
 
 hooks.useEndpoint.mockImplementation(() => () => ({}));
 
-describe('ShowActionPage', () => {
+describe('<UpdateActionPage />', () => {
   const id = '00000000-0000-0000-0000-000000000000';
   const match = { params: { id } };
   const defaultProps = { match };
 
-  it('should render the show page', () => {
+  it('should render the update page', () => {
     const state = { data: {} };
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<ShowActionPage {...defaultProps} />);
+    const rendered = shallow(<UpdateActionPage {...defaultProps} />);
 
-    expect(rendered).toHaveDisplayName('ShowPage');
-    expect(rendered).toHaveProp({ Block: MechanicBlock });
-    expect(rendered).toHaveProp({ endpoint });
+    expect(rendered).toHaveDisplayName('UpdatePage');
+    expect(rendered).toHaveProp({ Form: MechanicForm });
+    expect(rendered).toHaveProp({ findEndpoint });
+    expect(rendered).toHaveProp({ formEndpoint });
+    expect(rendered).toHaveProp({ match });
     expect(rendered).toHaveProp({ resourceName: 'Action' });
   });
 
@@ -44,7 +47,10 @@ describe('ShowActionPage', () => {
       },
       {
         label: 'Loading...',
-        url: `/mechanics/actions}/${id}`,
+        url: `/mechanics/actions/${id}`,
+      },
+      {
+        label: 'Update',
         active: true,
       },
     ];
@@ -52,19 +58,23 @@ describe('ShowActionPage', () => {
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<ShowActionPage {...defaultProps} />);
+    const rendered = shallow(<UpdateActionPage {...defaultProps} />);
 
     expect(rendered).toHaveProp({ breadcrumbs });
   });
 
-  it('should render the buttons', () => {
+  it('should map the data', () => {
     const state = { data: {} };
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<ShowActionPage {...defaultProps} />);
+    const rendered = shallow(<UpdateActionPage {...defaultProps} />);
+    const mapData = rendered.prop('mapData');
+    const action = { id };
+    const data = { action };
 
-    expect(rendered).toHaveProp({ buttons: [] });
+    expect(typeof mapData).toEqual('function');
+    expect(mapData(data)).toEqual(data);
   });
 
   describe('when the resource is loaded', () => {
@@ -85,7 +95,10 @@ describe('ShowActionPage', () => {
         },
         {
           label: 'Self-Destruct',
-          url: `/mechanics/actions}/${id}`,
+          url: `/mechanics/actions/${id}`,
+        },
+        {
+          label: 'Update',
           active: true,
         },
       ];
@@ -94,27 +107,9 @@ describe('ShowActionPage', () => {
 
       hooks.useEndpoint.mockImplementationOnce(() => state);
 
-      const rendered = shallow(<ShowActionPage {...defaultProps} />);
+      const rendered = shallow(<UpdateActionPage {...defaultProps} />);
 
       expect(rendered).toHaveProp({ breadcrumbs });
-    });
-
-    it('should render the buttons', () => {
-      const buttons = [
-        {
-          label: 'Update Action',
-          outline: true,
-          url: `/mechanics/actions/${id}/update`,
-        },
-      ];
-      const action = { id, name: 'Self-Destruct' };
-      const state = { data: { action } };
-
-      hooks.useEndpoint.mockImplementationOnce(() => state);
-
-      const rendered = shallow(<ShowActionPage {...defaultProps} />);
-
-      expect(rendered).toHaveProp({ buttons });
     });
   });
 });
