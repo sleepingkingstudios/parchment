@@ -45,4 +45,22 @@ describe('<BookBlock />', () => {
 
     expect(rendered).toMatchSnapshot();
   });
+
+  describe('with showAdditionalDetails: true', () => {
+    it('should render the book abbreviation', () => {
+      const rendered = shallow(<BookBlock {...defaultProps} showAdditionalDetails />);
+      const titleElement = rendered.find('.book-block-abbreviation');
+
+      expect(titleElement).toHaveDisplayName('p');
+      expect(titleElement).toHaveText(`Abbreviation: ${book.abbreviation}`);
+    });
+
+    it('should render the book slug', () => {
+      const rendered = shallow(<BookBlock {...defaultProps} showAdditionalDetails />);
+      const titleElement = rendered.find('.book-block-slug');
+
+      expect(titleElement).toHaveDisplayName('p');
+      expect(titleElement).toHaveText(`Slug: ${book.slug}`);
+    });
+  });
 });

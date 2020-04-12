@@ -68,4 +68,23 @@ describe('<MechanicBlock />', () => {
       expect(typeElement).toHaveText('(Action)');
     });
   });
+
+  describe('with showAdditionalDetails: true', () => {
+    const mechanicWithNotes = Object.assign(
+      {},
+      mechanic,
+      { notes: "It's a real blast" },
+    );
+
+    it('should render the mechanic notes', () => {
+      const rendered = shallow(
+        <MechanicBlock {...defaultProps} data={mechanicWithNotes} showAdditionalDetails />,
+      );
+      const notesElement = rendered.find('PlainText').at(1);
+
+      expect(notesElement).toExist();
+      expect(notesElement).toHaveClassName('mechanic-block-notes');
+      expect(notesElement).toHaveProp('text', mechanicWithNotes.notes);
+    });
+  });
 });

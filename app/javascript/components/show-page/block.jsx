@@ -48,7 +48,7 @@ const ShowPageBlock = (props) => {
       renderFailure={renderFailure(singularResourceName)}
       renderInitialized={renderPending(singularResourceName)}
       renderPending={renderPending(singularResourceName)}
-      renderSuccess={() => (<Block data={mappedData} />)}
+      renderSuccess={() => (<Block data={mappedData} showAdditionalDetails />)}
       status={status}
     />
   );

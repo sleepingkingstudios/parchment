@@ -79,6 +79,7 @@
 
 - read authorization
   - public - any user can view, including anonymous users
+    - do not show additional details without write permissions
   - protected (default) - only logged in users can view
   - private - only creator (and authorized users?) can view
 - write authorization
