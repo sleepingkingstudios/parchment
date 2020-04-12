@@ -1,55 +1,45 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import UpdateSpellBreadcrumbs from './breadcrumbs';
+import { SpellForm } from '../../components/form';
 import UpdateSpellPage from './page';
-import { hooks } from '../../store/updateFindSpell';
-
-jest.mock('../../store/updateFindSpell');
-
-hooks.useRequestData.mockImplementation(() => () => {});
+import findEndpoint from '../../store/updateFindSpell';
+import formEndpoint from '../../store/updateSpellForm';
+import { spellsData } from '../../fixtures';
 
 describe('UpdateSpellPage', () => {
   const id = '00000000-0000-0000-0000-000000000000';
   const match = { params: { id } };
   const defaultProps = { match };
 
-  it('should render the Page', () => {
+  it('should render the update page', () => {
     const rendered = shallow(<UpdateSpellPage {...defaultProps} />);
 
-    expect(rendered).toHaveDisplayName('Page');
-    expect(rendered).toHaveClassName('page-update-spell');
-    expect(rendered).toHaveProp('breadcrumbs', (<UpdateSpellBreadcrumbs />));
+    expect(rendered).toHaveDisplayName('UpdatePage');
+    expect(rendered).toHaveProp({ Form: SpellForm });
+    expect(rendered).toHaveProp({ findEndpoint });
+    expect(rendered).toHaveProp({ formEndpoint });
+    expect(rendered).toHaveProp({ match });
+    expect(rendered).toHaveProp({ resourceName: 'Spell' });
   });
 
-  it('should render the heading', () => {
+  it('should map the data', () => {
     const rendered = shallow(<UpdateSpellPage {...defaultProps} />);
-    const heading = rendered.find('h1');
+    const mapData = rendered.prop('mapData');
+    const spell = spellsData[0];
+    const data = { spell };
 
-    expect(heading).toExist();
-    expect(heading).toIncludeText('Update Spell');
+    expect(typeof mapData).toEqual('function');
+    expect(mapData(data)).toEqual(data);
   });
 
-  it('should render the spell form', () => {
+  it('should map the resource', () => {
     const rendered = shallow(<UpdateSpellPage {...defaultProps} />);
+    const mapResource = rendered.prop('mapResource');
+    const spell = spellsData[0];
+    const data = { spell };
 
-    expect(rendered).toContainMatchingElement('UpdateSpellForm');
-  });
-
-  it('should find the spell by id', () => {
-    const performRequest = jest.fn();
-
-    hooks.useRequestData.mockImplementationOnce(() => performRequest);
-
-    shallow(<UpdateSpellPage {...defaultProps} />);
-
-    expect(hooks.useRequestData).toHaveBeenCalledWith({ wildcards: { id } });
-    expect(performRequest).toHaveBeenCalled();
-  });
-
-  it('should match the snapshot', () => {
-    const rendered = shallow(<UpdateSpellPage {...defaultProps} />);
-
-    expect(rendered).toMatchSnapshot();
+    expect(typeof mapResource).toEqual('function');
+    expect(mapResource(data)).toEqual(spell);
   });
 });

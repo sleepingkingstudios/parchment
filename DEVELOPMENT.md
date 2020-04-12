@@ -85,7 +85,18 @@
 
 - clear (some?) alerts when the URL (not query!) changes
 
-### Submit Button
+### Components
+
+- refactor CreatePage, IndexPage, ShowPage, UpdatePage
+  - separate between endpoint/hook and layout
+  - ResourcePage takes endpoints, match, resourceName, etc
+    - wraps all hooks
+    - takes a Layout component and renders it with props
+  - CreateLayout, IndexLayout, ShowLayout, UpdateLayout
+    - takes data, errors, status, resourceName props
+    - takes callback props: onChange, onSubmit, onDelete, etc
+
+#### Submit Button
 
 - status switch to display Loading... message
 

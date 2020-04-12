@@ -6,12 +6,7 @@ import redirect from './redirect';
 const namespace = 'spells/updateSpellForm';
 const REQUEST_URL = '/api/spells/:id';
 
-export const {
-  actions,
-  hooks,
-  reducer,
-  request,
-} = new FormEndpoint({
+const endpoint = new FormEndpoint({
   data: { spell: buildSpell() },
   method: 'PATCH',
   middleware: [
@@ -21,3 +16,12 @@ export const {
   namespace,
   url: REQUEST_URL,
 });
+
+export default endpoint;
+
+export const {
+  actions,
+  hooks,
+  reducer,
+  request,
+} = endpoint;
