@@ -9,9 +9,9 @@ Feature: Showing Spells
   Rule: Viewing the Spells
     Example: When There Are No Spells
       When I visit the "Spells index" page
-      Then the Spells table should be empty
+      Then the "Spells" table should be empty
 
     Example: When There Are Many Spells
       Given the fixtures are loaded
       When I visit the "Spells index" page
-      Then the Spells table should display the spells data
+      Then the "Spells" table should display the data

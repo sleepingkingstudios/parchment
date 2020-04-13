@@ -8,7 +8,7 @@ Feature: Destroying A Spell
       And   I click the "Delete" button for spell "Flumph Lantern"
       And   I wait for 1 second
       Then  I should be on the "Spells index" page
-      And   the Spells table should display the spells data
+      And   the "Spells" table should display the data
       And   the Spells table should not display the data for the spell
 
     Example: From the Show Spell Page
@@ -16,5 +16,5 @@ Feature: Destroying A Spell
       When  I visit the "Show" page for spell "Flumph Lantern"
       And   I click the "Delete Spell" button
       Then  I should be on the "Spells index" page
-      And   the Spells table should display the spells data
+      And   the "Spells" table should display the data
       And   the Spells table should not display the data for the spell

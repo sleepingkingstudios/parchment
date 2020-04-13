@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'fixtures'
-
 def create_page(page)
   page = page.split(' ').map(&:camelize).join('::')
 
@@ -9,7 +7,12 @@ def create_page(page)
 end
 
 When('the fixtures are loaded') do
-  [Book, Spell].each { |klass| Fixtures.create(klass) }
+  %i[source resource mechanic].each do |resource_type|
+    Features::Resources
+      .all
+      .select { |defn| defn.type == resource_type }
+      .each(&:load_fixtures!)
+  end
 end
 
 When('I open the application') do

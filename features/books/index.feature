@@ -9,9 +9,9 @@ Feature: Showing Books
   Rule: Viewing the Books
     Example: When There Are No Books
       When I visit the "Books index" page
-      Then the Books table should be empty
+      Then the "Books" table should be empty
 
     Example: When There Are Many Books
       Given the fixtures are loaded
       When I visit the "Books index" page
-      Then the Books table should display the books data
+      Then the "Books" table should display the data

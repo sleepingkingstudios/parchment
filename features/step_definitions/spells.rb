@@ -133,33 +133,6 @@ do |action, spell_name|
   expect(expected_page).to be_displayed(spell_id: @spell.id)
 end
 
-Then('the Spells table should be empty') do
-  @current_page.wait_until_loading_message_invisible
-
-  rows = @current_page.table_rows
-
-  expect(rows.size).to be 1
-  expect(rows.first.text).to be == 'There are no spells matching the criteria.'
-end
-
-Then('the Spells table should display the spells data') do
-  @current_page.wait_until_loading_message_invisible
-
-  rows = @current_page.table_rows
-
-  expect(rows.size).to be Spell.count
-
-  Spell.all.each do |spell|
-    expect(rows).to include(
-      satisfy do |row|
-        row.text.start_with?(spell.name)
-
-        row.text.include?(spell.source&.name || 'Homebrew')
-      end
-    )
-  end
-end
-
 Then('the Spells table should not display the data for the spell') do
   @current_page.wait_until_loading_message_invisible
 
