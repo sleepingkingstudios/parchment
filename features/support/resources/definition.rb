@@ -10,6 +10,10 @@ module Features::Resources
       @instance ||= new
     end
 
+    def block_attributes
+      %w[name]
+    end
+
     def class_name
       name
     end

@@ -1,5 +1,27 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/MethodLength
+def find_table_row(resource, definition, record)
+  primary_value = definition.fetch(record, definition.primary_attribute)
+  current_row   =
+    @current_page.table_rows.find do |row|
+      row.text.include?(primary_value.to_s)
+    end
+
+  expect(current_row).to(
+    be_a(Capybara::Node::Element),
+    "unable to find row for #{resource.singularize} with" \
+    " #{definition.primary_attribute} #{primary_value}"
+  )
+
+  current_row
+end
+# rubocop:enable Metrics/MethodLength
+
+################################################################################
+#                                     DATA                                     #
+################################################################################
+
 Then('the {string} table should be empty') do |resource|
   @current_page.wait_until_loading_message_invisible
 
@@ -16,20 +38,12 @@ Then('the {string} table should display the data') do |resource|
 
   definition     = Features::Resources.find(resource)
   resource_class = definition.resource_class
-  rows           = @current_page.table_rows
   columns        = definition.table_columns
 
-  expect(rows.size).to be resource_class.count
+  expect(@current_page.table_rows.size).to be resource_class.count
 
   resource_class.all.each do |record|
-    primary_value = definition.fetch(record, definition.primary_attribute)
-    current_row   = rows.find { |row| row.text.include?(primary_value.to_s) }
-
-    expect(current_row).to(
-      be_a(Capybara::Node::Element),
-      "unable to find row for #{resource.singularize} with" \
-      " #{definition.primary_attribute} #{primary_value}"
-    )
+    current_row = find_table_row(resource, definition, record)
 
     columns.each do |column|
       value = definition.fetch(record, column)
@@ -37,4 +51,21 @@ Then('the {string} table should display the data') do |resource|
       expect(current_row.text).to include(value.to_s)
     end
   end
+end
+
+################################################################################
+#                               TABLE NAVIGATION                               #
+################################################################################
+
+When('I click the {string} link for {string} {string}') \
+do |action, resource, attribute_value|
+  @current_page.wait_until_loading_message_invisible
+
+  definition        = Features::Resources.find(resource)
+  resource_class    = definition.resource_class
+  @current_resource =
+    resource_class.where(definition.primary_attribute => attribute_value).first
+  current_row       = find_table_row(resource, definition, @current_resource)
+
+  current_row.find_link(action).click
 end
