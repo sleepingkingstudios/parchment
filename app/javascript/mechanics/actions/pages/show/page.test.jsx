@@ -4,8 +4,13 @@ import { shallow } from 'enzyme';
 import ShowActionPage from './page';
 import { MechanicBlock } from '../../../components/block';
 import endpoint, { hooks } from '../../store/showFindAction';
+import deleteEndpoint, { hooks as deleteHooks } from '../../store/deleteAction';
+
+jest.mock('../../store/deleteAction');
 
 jest.mock('../../store/showFindAction');
+
+deleteHooks.useDeleteData.mockImplementation(() => ({}));
 
 hooks.useEndpoint.mockImplementation(() => () => ({}));
 
@@ -23,6 +28,7 @@ describe('ShowActionPage', () => {
 
     expect(rendered).toHaveDisplayName('ShowPage');
     expect(rendered).toHaveProp({ Block: MechanicBlock });
+    expect(rendered).toHaveProp({ deleteEndpoint });
     expect(rendered).toHaveProp({ endpoint });
     expect(rendered).toHaveProp({ resourceName: 'Action' });
   });
@@ -100,21 +106,33 @@ describe('ShowActionPage', () => {
     });
 
     it('should render the buttons', () => {
+      const deleteData = jest.fn();
+      const useDeleteData = jest.fn(() => deleteData);
       const buttons = [
         {
           label: 'Update Action',
           outline: true,
           url: `/mechanics/actions/${id}/update`,
         },
+        {
+          label: 'Delete Action',
+          buttonStyle: 'danger',
+          outline: true,
+          onClick: deleteData,
+        },
       ];
       const action = { id, name: 'Self-Destruct' };
       const state = { data: { action } };
+
+      deleteHooks.useDeleteData.mockImplementationOnce(useDeleteData);
 
       hooks.useEndpoint.mockImplementationOnce(() => state);
 
       const rendered = shallow(<ShowActionPage {...defaultProps} />);
 
       expect(rendered).toHaveProp({ buttons });
+
+      expect(useDeleteData).toHaveBeenCalledWith({ wildcards: { id } });
     });
   });
 });

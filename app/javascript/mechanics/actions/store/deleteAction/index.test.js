@@ -4,7 +4,7 @@ import {
   request,
 } from './index';
 
-describe('DeleteBook store', () => {
+describe('DeleteAction store', () => {
   describe('hooks', () => {
     const { useDeleteData } = hooks;
 
@@ -16,8 +16,8 @@ describe('DeleteBook store', () => {
   });
 
   describe('namespace', () => {
-    it('should be books/deleteBook', () => {
-      expect(namespace).toEqual('books/deleteBook');
+    it('should be mechanics/actions/deleteAction', () => {
+      expect(namespace).toEqual('mechanics/actions/deleteAction');
     });
   });
 
@@ -34,8 +34,8 @@ describe('DeleteBook store', () => {
     });
 
     describe('url', () => {
-      it('should be the book delete URL', () => {
-        expect(url).toEqual('/api/books/:id');
+      it('should be the action delete URL', () => {
+        expect(url).toEqual('/api/mechanics/actions/:id');
       });
     });
   });

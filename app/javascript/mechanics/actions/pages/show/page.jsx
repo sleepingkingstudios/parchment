@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { ShowPage } from '../../../../components/show-page';
 import { MechanicBlock } from '../../../components/block';
 import endpoint, { hooks } from '../../store/showFindAction';
-
-const deleteEndpoint = { hooks: { useDeleteData: () => {} } };
+import deleteEndpoint, { hooks as deleteHooks } from '../../store/deleteAction';
 
 const generateBreadcrumbs = ({
   id,
@@ -33,6 +32,7 @@ const generateBreadcrumbs = ({
   ]
 );
 const generateButtons = ({
+  deleteData,
   id,
   resource,
 }) => {
@@ -43,6 +43,12 @@ const generateButtons = ({
       label: 'Update Action',
       outline: true,
       url: `/mechanics/actions/${id}/update`,
+    },
+    {
+      buttonStyle: 'danger',
+      label: 'Delete Action',
+      onClick: deleteData,
+      outline: true,
     },
   ];
 };
@@ -58,10 +64,12 @@ const ShowActionPage = ({ match }) => {
   const { data } = useEndpoint();
   const resource = data.action;
   const breadcrumbs = generateBreadcrumbs({ id, resource });
+  const { useDeleteData } = deleteHooks;
+  const deleteData = useDeleteData({ wildcards: { id } });
   const buttons = generateButtons({
+    deleteData,
     id,
     resource,
-    resourceName: 'Action',
   });
 
   return (
