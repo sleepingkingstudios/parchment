@@ -53,9 +53,36 @@ Then('the {string} table should display the data') do |resource|
   end
 end
 
+Then('the {string} table should not display the data for the resource') \
+do |resource|
+  @current_page.wait_until_loading_message_invisible
+
+  definition    = Features::Resources.find(resource)
+  rows          = @current_page.table_rows
+  primary_value =
+    definition.fetch(@current_resource, definition.primary_attribute)
+
+  expect(rows).not_to include(
+    satisfy { |row| row.text.include?(primary_value.to_s) }
+  )
+end
+
 ################################################################################
 #                               TABLE NAVIGATION                               #
 ################################################################################
+
+When('I click the {string} button for {string} {string}') \
+do |action, resource, attribute_value|
+  @current_page.wait_until_loading_message_invisible
+
+  definition        = Features::Resources.find(resource)
+  resource_class    = definition.resource_class
+  @current_resource =
+    resource_class.where(definition.primary_attribute => attribute_value).first
+  current_row       = find_table_row(resource, definition, @current_resource)
+
+  current_row.find_button(action).click
+end
 
 When('I click the {string} link for {string} {string}') \
 do |action, resource, attribute_value|
