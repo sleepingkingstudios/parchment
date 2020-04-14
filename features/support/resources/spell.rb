@@ -53,6 +53,10 @@ module Features::Resources
       spell.source&.name || 'Homebrew'
     end
 
+    def invalid_attributes
+      super.merge(range: nil)
+    end
+
     def table_columns
       @table_columns ||= %w[
         name
@@ -61,6 +65,10 @@ module Features::Resources
         level
         short_description
       ]
+    end
+
+    def valid_attributes
+      super.merge(name: 'Magic Noodle')
     end
 
     private

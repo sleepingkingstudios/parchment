@@ -30,3 +30,17 @@ do |action, resource|
     "#{resource.singularize.underscore}_id": @current_resource.id
   )
 end
+
+Then('I should be on the {string} page for {string} {string}') \
+do |action, resource, attribute_value|
+  definition        = Features::Resources.find(resource)
+  resource_class    = definition.resource_class
+  @current_resource =
+    resource_class.where(definition.primary_attribute => attribute_value).first
+  expected_page = action_page(action, resource)
+  @current_page = expected_page
+
+  expect(expected_page).to be_displayed(
+    "#{resource.singularize.underscore}_id": @current_resource.id
+  )
+end

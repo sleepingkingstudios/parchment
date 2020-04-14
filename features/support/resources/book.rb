@@ -20,6 +20,13 @@ module Features::Resources
       book.publisher_name
     end
 
+    def invalid_attributes
+      super.merge(
+        publication_date: '',
+        publisher_name:   ''
+      )
+    end
+
     def primary_attribute
       :title
     end
@@ -29,6 +36,10 @@ module Features::Resources
         title
         publisher_name
       ]
+    end
+
+    def valid_attributes
+      super.merge(title: 'Blasto the Flumph Spectre')
     end
   end
 end

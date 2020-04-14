@@ -9,22 +9,22 @@ Feature: Creating A Spell
   Rule: Creating a Spell
     Example: With Invalid Attributes
       When  I visit the "Spells create" page
-      And   I submit the Spell form with invalid attributes
+      And   I submit the "Spell" form with invalid attributes
       Then  I should be on the "Spells create" page
-      And   the Spell form should display the spell data
-      And   the Spell form should display the errors
+      And   the "Spell" form should display the data
+      And   the "Spell" form should display the errors
 
     Example: With Valid Attributes
       When  I visit the "Spells create" page
-      And   I submit the Spell form with valid attributes
-      Then  I should be on the "Show" page for spell "Magic Noodle"
-      And   the Spell block should display the spell data
+      And   I submit the "Spell" form with valid attributes
+      Then  I should be on the "Show" page for "Spell" "Magic Noodle"
+      And   the "Spell" block should display the data
 
     Example: With Valid Attributes And A Source
       Given the fixtures are loaded
       When  I visit the "Spells create" page
-      And   I select the source "Book" "Secrets of the Flumph"
-      And   I submit the Spell form with valid attributes
-      Then  I should be on the "Show" page for spell "Magic Noodle"
-      And   the Spell block should display the spell data
-      And   the Spell block should show source "Secrets of the Flumph"
+      And   I select the source "Book" "Secrets of the Flumph" for the "Spell"
+      And   I submit the "Spell" form with valid attributes
+      Then  I should be on the "Show" page for "Spell" "Magic Noodle"
+      And   the "Spell" block should display the data
+      And   the "Spell" block should show source "Secrets of the Flumph"

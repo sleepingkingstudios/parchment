@@ -28,6 +28,10 @@ module Features::Resources
       true
     end
 
+    def invalid_attributes
+      valid_attributes.merge(primary_attribute => nil)
+    end
+
     def load_fixtures!
       return unless fixtures?
 
@@ -56,6 +60,10 @@ module Features::Resources
 
     def type
       :resource
+    end
+
+    def valid_attributes
+      FactoryBot.attributes_for(name.underscore.singularize)
     end
   end
 end

@@ -16,5 +16,15 @@ module Features::Resources
     def class_name
       'Mechanics::Action'
     end
+
+    def invalid_attributes
+      super.merge(
+        short_description: nil
+      )
+    end
+
+    def valid_attributes
+      super.merge(name: 'Self-Destruct')
+    end
   end
 end
