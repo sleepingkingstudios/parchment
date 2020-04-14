@@ -5,40 +5,40 @@ Feature: Updating A Spell
     Example: From The Spells Index Page
       Given the fixtures are loaded
       When I visit the "Spells index" page
-      And I click the "Update" link for spell "Flumph Lantern"
-      Then I should be on the "Update" page for the spell
+      And I click the "Update" link for "Spell" "Flumph Lantern"
+      Then I should be on the "Update" page for the "Spell"
 
     Example: From The Show Spell Page
       Given the fixtures are loaded
-      When I visit the "Show" page for spell "Flumph Lantern"
+      When I visit the "Show" page for "Spell" "Flumph Lantern"
       And  I click the "Update Spell" link
-      Then I should be on the "Update" page for the spell
+      Then I should be on the "Update" page for the "Spell"
 
   Rule: Updating the Spell
     Example: When The Spell Does Not Exist
-      When I visit the "Update" page for spell "Flumph Lantern"
+      When I visit the "Update" page for "Spell" "Flumph Lantern"
       Then I should be on the "Spells index" page
 
     Example: With Invalid Attributes
       Given the fixtures are loaded
-      When  I visit the "Update" page for spell "Flumph Lantern"
-      And   I submit the Spell form with invalid attributes
-      Then  I should be on the "Update" page for the spell
-      And   the Spell form should display the spell data
-      And   the Spell form should display the errors
+      When  I visit the "Update" page for "Spell" "Flumph Lantern"
+      And   I submit the "Spell" form with invalid attributes
+      Then  I should be on the "Update" page for the "Spell"
+      And   the "Spell" form should display the data
+      And   the "Spell" form should display the errors
 
     Example: With Valid Attributes
       Given the fixtures are loaded
-      When  I visit the "Update" page for spell "Flumph Lantern"
-      And   I submit the Spell form with valid attributes
-      Then  I should be on the "Show" page for spell "Magic Noodle"
-      And   the Spell block should display the spell data
+      When  I visit the "Update" page for "Spell" "Flumph Lantern"
+      And   I submit the "Spell" form with valid attributes
+      Then  I should be on the "Show" page for "Spell" "Magic Noodle"
+      And   the "Spell" block should display the data
 
     Example: With Valid Attributes And A Source
       Given the fixtures are loaded
-      When  I visit the "Update" page for spell "Flumph Lantern"
-      And   I select the source "Book" "Secrets of the Flumph"
-      And   I submit the Spell form with valid attributes
-      Then  I should be on the "Show" page for spell "Magic Noodle"
-      And   the Spell block should display the spell data
-      And   the Spell block should show source "Secrets of the Flumph"
+      When  I visit the "Update" page for "Spell" "Flumph Lantern"
+      And   I select the source "Book" "Secrets of the Flumph" for the "Spell"
+      And   I submit the "Spell" form with valid attributes
+      Then  I should be on the "Show" page for "Spell" "Magic Noodle"
+      And   the "Spell" block should display the data
+      And   the "Spell" block should show source "Secrets of the Flumph"
