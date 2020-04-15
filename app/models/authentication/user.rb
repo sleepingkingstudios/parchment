@@ -45,6 +45,13 @@ class Authentication::User < ApplicationRecord
     },
     presence:  true
   validates :username,
+    format:     {
+      if:      lambda do |user|
+        user.email_address.is_a?(String) && !user.email_address.empty?
+      end,
+      message: "can't be an email address",
+      without: EMAIL_ADDRESS_FORMAT
+    },
     presence:   true,
     uniqueness: true
 

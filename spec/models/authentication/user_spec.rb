@@ -228,5 +228,22 @@ RSpec.describe Authentication::User, type: :model do
           .with_message('is not included in the list')
       end
     end
+
+    context 'when the username is an email address' do
+      let(:attributes) { super().merge(username: 'alan.bradley@example.com') }
+
+      it 'should have an error' do
+        expect(user)
+          .to have_errors
+          .on(:username)
+          .with_message("can't be an email address")
+      end
+    end
+
+    context 'when the username resembles an email address' do
+      let(:attributes) { super().merge(username: 'seti@home') }
+
+      it { expect(user).to be_valid }
+    end
   end
 end
