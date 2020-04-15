@@ -50,6 +50,12 @@
     "terser-webpack-plugin": "^1.4.2",
     "webpack-dev-server": "^3.2.1"
   },
+  "resolutions": {
+    "acorn": ">=6.4.1",
+    "kind-of": ">=6.0.3",
+    "minimist": ">=0.2.1",
+    "node-sass": ">=4.13.1"
+  },
   "scripts": {
     "ci": "yarn test && yarn lint && yarn lint:css",
     "lint": "eslint --ext .js,.jsx app/javascript/",
