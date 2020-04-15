@@ -2,17 +2,27 @@
 
 require 'fixtures'
 
-namespace :data do
+namespace :data do # rubocop:disable Metrics/BlockLength
+  authentication_classes = %w[
+    Authentication::User
+  ]
+  source_classes = %w[
+    Book
+  ]
   data_classes = %w[
     Mechanics::Action
-    Book
     Spell
+  ]
+  all_classes = [
+    *authentication_classes,
+    *source_classes,
+    *data_classes
   ]
 
   namespace :load do
     desc 'Loads the data from /data/fixtures into the database'
     task fixtures: :environment do
-      data_classes.each do |class_name|
+      all_classes.each do |class_name|
         record_class = class_name.constantize
 
         next unless Fixtures.exist?(record_class)
@@ -26,7 +36,7 @@ namespace :data do
   task :load, %i[directory] => :environment do |_task, args|
     raise ArgumentError, "directory can't be blank" if args.directory.blank?
 
-    data_classes.each do |class_name|
+    all_classes.each do |class_name|
       record_class = class_name.constantize
 
       next unless Fixtures.exist?(record_class, data_path: args.directory)

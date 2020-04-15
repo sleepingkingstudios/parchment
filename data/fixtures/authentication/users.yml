@@ -1,0 +1,10 @@
+---
+- username:      'Ed Dillinger'
+  email_address: 'ed.dillinger@example.com'
+  role:          'admin'
+- username:      'Alan Bradley'
+  email_address: 'alan.bradley@example.com'
+  role:          'user'
+- username:      'Kevin Flynn'
+  email_address: 'kevin.flynn@example.com'
+  role:          'user'
