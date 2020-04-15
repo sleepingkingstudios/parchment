@@ -23,6 +23,7 @@ gem 'webpacker', '~> 5.0.0', '>= 5.0.1'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.1', require: false
 
+gem 'bcrypt', '~> 3.1'
 gem 'cuprum', git: 'https://github.com/sleepingkingstudios/cuprum.git'
 
 group :development, :test do

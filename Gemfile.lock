@@ -81,6 +81,7 @@ GEM
       rake (>= 10.4, < 13.0)
     ast (2.4.0)
     backports (3.15.0)
+    bcrypt (3.1.13)
     bindex (0.5.0)
     bootsnap (1.4.1)
       msgpack (~> 1.0)
@@ -316,6 +317,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate (~> 2.7, >= 2.7.4)
+  bcrypt (~> 3.1)
   bootsnap (>= 1.4.1)
   byebug
   cucumber (>= 4.0.0.rc.1)
