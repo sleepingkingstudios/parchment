@@ -5,13 +5,13 @@ require 'cuprum/error'
 require 'errors/authentication'
 
 module Errors::Authentication
-  # Cuprum error when trying to create a password from a non-String object.
-  class InvalidPassword < Cuprum::Error
+  # Cuprum error when trying to parse an invalid password hash.
+  class InvalidHash < Cuprum::Error
     # Short string used to identify the type of error.
-    TYPE = 'authentication.invalid_password'
+    TYPE = 'authentication.invalid_hash'
 
     def initialize
-      super(message: 'Password must be a non-empty String')
+      super(message: 'Password hash is invalid')
     end
 
     # @return [Hash] a serializable hash representation of the error.
