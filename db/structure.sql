@@ -57,6 +57,22 @@ CREATE TABLE public.books (
 
 
 --
+-- Name: credentials; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.credentials (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    active boolean DEFAULT true NOT NULL,
+    expires_at timestamp without time zone NOT NULL,
+    data jsonb DEFAULT '{}'::jsonb NOT NULL,
+    type character varying,
+    user_id uuid
+);
+
+
+--
 -- Name: mechanics; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -152,6 +168,14 @@ ALTER TABLE ONLY public.books
 
 
 --
+-- Name: credentials credentials_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.credentials
+    ADD CONSTRAINT credentials_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: mechanics mechanics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -189,6 +213,13 @@ ALTER TABLE ONLY public.spells
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_credentials_on_user_id_and_type_and_active; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_credentials_on_user_id_and_type_and_active ON public.credentials USING btree (user_id, type, active);
 
 
 --
@@ -232,6 +263,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191031151514'),
 ('20200220214104'),
 ('20200220214830'),
-('20200415062324');
+('20200415062324'),
+('20200415082014');
 
 

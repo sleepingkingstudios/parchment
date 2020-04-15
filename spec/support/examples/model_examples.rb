@@ -46,5 +46,15 @@ module Spec::Support::Examples
           it { expect(subject.public_send(attr_name)).to be == expected }
         end
       end
+
+    shared_examples 'should have timestamps' do
+      describe '#created_at' do
+        include_examples 'should have reader', :created_at
+      end
+
+      describe '#updated_at' do
+        include_examples 'should have reader', :updated_at
+      end
+    end
   end
 end
