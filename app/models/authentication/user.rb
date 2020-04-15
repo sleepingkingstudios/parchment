@@ -21,6 +21,11 @@ class Authentication::User < ApplicationRecord
     new(role: Roles::ANONYMOUS)
   end
 
+  ### Associations
+  has_many :credentials,
+    class_name: 'Authentication::Credential',
+    dependent:  :destroy
+
   ### Validations
   validates :email_address,
     format:     {

@@ -17,6 +17,8 @@ RSpec.describe Authentication::User, type: :model do
     }
   end
 
+  include_examples 'should have timestamps'
+
   describe '::Factory' do
     include_examples 'should define constant',
       :Factory,
@@ -119,8 +121,20 @@ RSpec.describe Authentication::User, type: :model do
     end
   end
 
-  describe '#created_at' do
-    include_examples 'should have reader', :created_at
+  describe '#credentials' do
+    include_examples 'should have reader', :credentials, []
+
+    context 'when the user has many credentials' do
+      let(:credentials) do
+        Array.new(3) do
+          FactoryBot.build(:password_credential, user: user)
+        end
+      end
+
+      before(:example) { credentials.each(&:save!) }
+
+      it { expect(user.credentials).to contain_exactly(*credentials) }
+    end
   end
 
   describe '#email_address' do
@@ -141,10 +155,6 @@ RSpec.describe Authentication::User, type: :model do
 
   describe '#role' do
     include_examples 'should have attribute', :role, default: ''
-  end
-
-  describe '#updated_at' do
-    include_examples 'should have reader', :updated_at
   end
 
   describe '#username' do
