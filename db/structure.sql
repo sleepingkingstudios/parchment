@@ -122,6 +122,20 @@ CREATE TABLE public.spells (
 
 
 --
+-- Name: users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.users (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    username character varying DEFAULT ''::character varying NOT NULL,
+    email_address character varying DEFAULT ''::character varying NOT NULL,
+    role character varying DEFAULT ''::character varying NOT NULL
+);
+
+
+--
 -- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -170,6 +184,14 @@ ALTER TABLE ONLY public.spells
 
 
 --
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: index_sources_on_origin_type_and_origin_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -184,6 +206,20 @@ CREATE UNIQUE INDEX index_sources_on_reference_type_and_reference_id ON public.s
 
 
 --
+-- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_email_address ON public.users USING btree (email_address);
+
+
+--
+-- Name: index_users_on_username; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_username ON public.users USING btree (username);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -195,6 +231,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191025190234'),
 ('20191031151514'),
 ('20200220214104'),
-('20200220214830');
+('20200220214830'),
+('20200415062324');
 
 

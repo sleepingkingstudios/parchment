@@ -1,13 +1,5 @@
 # Development Notes
 
-## Actions
-
-- columns
-  - name (String)
-  - description (String)
-  - short_description (String)
-  - notes (String)
-
 ## Authentication
 
 - Credential-based
