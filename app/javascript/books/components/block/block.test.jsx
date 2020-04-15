@@ -7,7 +7,7 @@ import { booksData } from '../../fixtures';
 const book = booksData[0];
 
 describe('<BookBlock />', () => {
-  const defaultProps = { book };
+  const defaultProps = { data: book };
 
   it('should wrap the contents in a <div> element', () => {
     const rendered = shallow(<BookBlock {...defaultProps} />);
@@ -44,5 +44,23 @@ describe('<BookBlock />', () => {
     const rendered = shallow(<BookBlock {...defaultProps} />);
 
     expect(rendered).toMatchSnapshot();
+  });
+
+  describe('with showAdditionalDetails: true', () => {
+    it('should render the book abbreviation', () => {
+      const rendered = shallow(<BookBlock {...defaultProps} showAdditionalDetails />);
+      const titleElement = rendered.find('.book-block-abbreviation');
+
+      expect(titleElement).toHaveDisplayName('p');
+      expect(titleElement).toHaveText(`Abbreviation: ${book.abbreviation}`);
+    });
+
+    it('should render the book slug', () => {
+      const rendered = shallow(<BookBlock {...defaultProps} showAdditionalDetails />);
+      const titleElement = rendered.find('.book-block-slug');
+
+      expect(titleElement).toHaveDisplayName('p');
+      expect(titleElement).toHaveText(`Slug: ${book.slug}`);
+    });
   });
 });

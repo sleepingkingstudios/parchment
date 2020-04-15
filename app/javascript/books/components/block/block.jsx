@@ -1,27 +1,52 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 import { bookType } from '../../entities';
 
 import './book-block-styles.css';
 
-const BookBlock = ({ book }) => (
+const renderAdditionalDetails = ({ data, showAdditionalDetails }) => {
+  if (!showAdditionalDetails) { return null; }
+
+  return (
+    <Fragment>
+      <hr />
+
+      <div className="book-block-additional-details">
+        <p className="book-block-abbreviation">
+          <em>Abbreviation:</em> { data.abbreviation }
+        </p>
+        <p className="book-block-slug">
+          <em>Slug:</em> { data.slug }
+        </p>
+      </div>
+    </Fragment>
+  );
+};
+
+const BookBlock = ({ data, showAdditionalDetails }) => (
   <div className="book-block">
-    <p className="book-block-title">{ book.title }</p>
+    <p className="book-block-title">{ data.title }</p>
 
     <p className="book-block-publisher">
-      <strong>Publisher:</strong> { book.publisherName }
+      <strong>Publisher:</strong> { data.publisherName }
     </p>
 
     <p className="book-block-publication-date">
-      <strong>Publication Date:</strong> { book.publicationDate }
+      <strong>Publication Date:</strong> { data.publicationDate }
     </p>
+
+    { renderAdditionalDetails({ data, showAdditionalDetails }) }
   </div>
 );
 
-BookBlock.defaultProps = {};
+BookBlock.defaultProps = {
+  showAdditionalDetails: false,
+};
 
 BookBlock.propTypes = {
-  book: bookType.isRequired,
+  data: bookType.isRequired,
+  showAdditionalDetails: PropTypes.bool,
 };
 
 export default BookBlock;

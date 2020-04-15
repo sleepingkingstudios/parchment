@@ -1,12 +1,13 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
+import FormCancelButton from '../../../components/form/cancel-button';
+import FormSubmitButton from '../../../components/form/submit-button';
 import FormCheckboxInput from '../../../components/form/checkbox-input';
 import FormInput from '../../../components/form/input';
 import FormNumericInput from '../../../components/form/numeric-input';
 import FormSelectInput from '../../../components/form/select-input';
 import FormTextAreaInput from '../../../components/form/text-area-input';
-import SpellFormCancelButton from './cancel-button';
-import SpellFormSubmitButton from './submit-button';
 import SpellFormSelectSourceField, {
   mapSourceToValue,
   mapValueToSource,
@@ -118,6 +119,10 @@ SourceField.propTypes = {
   form: formType.isRequired,
 };
 
+const SpellFormCancelButton = ({ form, isUpdate }) => (
+  <FormCancelButton form={form} isUpdate={isUpdate} resourceName="Spell" />
+);
+
 const CancelButton = formGroup(SpellFormCancelButton, { displayName: 'CancelButton' });
 
 CancelButton.defaultProps = {};
@@ -126,6 +131,10 @@ CancelButton.propTypes = {
   form: formType.isRequired,
   isUpdate: PropTypes.bool.isRequired,
 };
+
+const SpellFormSubmitButton = ({ form, isUpdate }) => (
+  <FormSubmitButton form={form} actionName={isUpdate ? 'Update' : 'Create'} resourceName="Spell" />
+);
 
 const SubmitButton = formGroup(SpellFormSubmitButton, { displayName: 'SubmitButton' });
 

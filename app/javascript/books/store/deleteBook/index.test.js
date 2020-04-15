@@ -4,7 +4,7 @@ import {
   request,
 } from './index';
 
-describe('UpdateBookForm store', () => {
+describe('DeleteBook store', () => {
   describe('hooks', () => {
     const { useDeleteData } = hooks;
 

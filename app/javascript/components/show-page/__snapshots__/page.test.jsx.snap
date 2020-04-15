@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ShowPage /> should match the snapshot 1`] = `
+<Page
+  breadcrumbs={
+    Array [
+      Object {
+        "label": "Home",
+        "url": "/",
+      },
+      Object {
+        "label": "Widgets",
+        "url": "/widgets",
+      },
+      Object {
+        "active": true,
+        "label": "Loading...",
+        "url": "/widgets/00000000-0000-0000-0000-000000000000",
+      },
+    ]
+  }
+  className="page-show-widget"
+  layout={null}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <ShowPageHeading
+    buttons={null}
+    deleteEndpoint={
+      Object {
+        "hooks": Object {
+          "useDeleteData": [Function],
+        },
+      }
+    }
+    id="00000000-0000-0000-0000-000000000000"
+    resource={null}
+    resourceName="Widget"
+  />
+  <ShowPageBlock
+    Block={[Function]}
+    endpoint={
+      Object {
+        "hooks": Object {
+          "useEndpoint": [Function],
+          "useRequestData": [Function],
+        },
+      }
+    }
+    mapData={null}
+    resourceName="Widget"
+  />
+</Page>
+`;
+
+exports[`<ShowPage /> when the resource is loaded should match the snapshot 1`] = `
+<Page
+  breadcrumbs={
+    Array [
+      Object {
+        "label": "Home",
+        "url": "/",
+      },
+      Object {
+        "label": "Widgets",
+        "url": "/widgets",
+      },
+      Object {
+        "active": true,
+        "label": "Gadget",
+        "url": "/widgets/00000000-0000-0000-0000-000000000000",
+      },
+    ]
+  }
+  className="page-show-widget"
+  layout={null}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <ShowPageHeading
+    buttons={null}
+    deleteEndpoint={
+      Object {
+        "hooks": Object {
+          "useDeleteData": [Function],
+        },
+      }
+    }
+    id="00000000-0000-0000-0000-000000000000"
+    resource={
+      Object {
+        "name": "Gadget",
+      }
+    }
+    resourceName="Widget"
+  />
+  <ShowPageBlock
+    Block={[Function]}
+    endpoint={
+      Object {
+        "hooks": Object {
+          "useEndpoint": [Function],
+          "useRequestData": [Function],
+        },
+      }
+    }
+    mapData={null}
+    resourceName="Widget"
+  />
+</Page>
+`;

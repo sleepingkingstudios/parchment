@@ -11,7 +11,7 @@ import { exists } from '../../../utils/object';
 
 import './spell-block-styles.css';
 
-const renderAdditionalDetails = ({ spell, showAdditionalDetails }) => {
+const renderAdditionalDetails = ({ data, showAdditionalDetails }) => {
   if (!showAdditionalDetails) { return null; }
 
   return (
@@ -20,46 +20,46 @@ const renderAdditionalDetails = ({ spell, showAdditionalDetails }) => {
 
       <div className="spell-block-additional-details">
         <p className="spell-block-slug">
-          <em>Slug:</em> { spell.slug }
+          <em>Slug:</em> { data.slug }
         </p>
         <p className="spell-block-short-description">
-          <em>Short Description:</em> { spell.shortDescription }
+          <em>Short Description:</em> { data.shortDescription }
         </p>
       </div>
     </Fragment>
   );
 };
 
-const SpellBlock = ({ showAdditionalDetails, spell }) => (
+const SpellBlock = ({ data, showAdditionalDetails }) => (
   <div className="spell-block">
-    <p className="spell-block-name">{ spell.name }</p>
+    <p className="spell-block-name">{ data.name }</p>
 
     <p className="spell-block-source">
-      { exists(spell.source) ? spell.source.name : 'Homebrew' }
+      { exists(data.source) ? data.source.name : 'Homebrew' }
     </p>
 
     <p className="spell-block-level-school">
-      { formatSchoolAndLevel(spell) }
+      { formatSchoolAndLevel(data) }
     </p>
 
     <div className="spell-block-stats">
       <p className="spell-block-casting-time">
-        <strong>Casting Time:</strong> { spell.castingTime }
+        <strong>Casting Time:</strong> { data.castingTime }
       </p>
       <p className="spell-block-range">
-        <strong>Range:</strong> { spell.range }
+        <strong>Range:</strong> { data.range }
       </p>
       <p className="spell-block-components">
-        <strong>Components:</strong> { formatComponents(spell, true) }
+        <strong>Components:</strong> { formatComponents(data, true) }
       </p>
       <p className="spell-block-duration">
-        <strong>Duration:</strong> { spell.duration }
+        <strong>Duration:</strong> { data.duration }
       </p>
     </div>
 
-    <PlainText className="spell-block-description" text={spell.description} />
+    <PlainText className="spell-block-description" text={data.description} />
 
-    { renderAdditionalDetails({ spell, showAdditionalDetails }) }
+    { renderAdditionalDetails({ data, showAdditionalDetails }) }
   </div>
 );
 
@@ -68,8 +68,8 @@ SpellBlock.defaultProps = {
 };
 
 SpellBlock.propTypes = {
+  data: spellType.isRequired,
   showAdditionalDetails: PropTypes.bool,
-  spell: spellType.isRequired,
 };
 
 export default SpellBlock;

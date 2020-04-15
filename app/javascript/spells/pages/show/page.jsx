@@ -1,34 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Page from '../../../components/page';
-import ShowSpellBlock from './block';
-import ShowSpellBreadcrumbs from './breadcrumbs';
-import ShowSpellHeading from './heading';
-import { hooks } from '../../store/showFindSpell';
+import { ShowPage } from '../../../components/show-page';
 
-const getSpellId = ({ match }) => {
-  const { params } = match;
+import { SpellBlock } from '../../components/block';
+import endpoint from '../../store/showFindSpell';
+import deleteEndpoint from '../../store/deleteSpell';
 
-  return params.id;
-};
-
-const { useRequestData } = hooks;
-
-const ShowSpellPage = (props) => {
-  const id = getSpellId(props);
-  const requestData = useRequestData({ wildcards: { id } });
-
-  requestData();
-
-  return (
-    <Page breadcrumbs={<ShowSpellBreadcrumbs />} className="page-show-spell">
-      <ShowSpellHeading />
-
-      <ShowSpellBlock />
-    </Page>
-  );
-};
+const ShowSpellPage = ({ match }) => (
+  <ShowPage
+    Block={SpellBlock}
+    deleteEndpoint={deleteEndpoint}
+    endpoint={endpoint}
+    match={match}
+    resourceName="Spell"
+  />
+);
 
 ShowSpellPage.defaultProps = {};
 

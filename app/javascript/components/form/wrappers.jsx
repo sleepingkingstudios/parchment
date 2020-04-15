@@ -3,22 +3,11 @@ import React from 'react';
 import FormField from './field';
 import FormGroup from './group';
 
-import {
-  handleInputChangeWith,
-  handleSubmitWith,
-} from './actions';
+import { handleInputChangeWith } from './actions';
 import { generateFieldId } from './utils';
 import { convertToArray } from '../../utils/array';
 import { assign, dig, valueOrDefault } from '../../utils/object';
 import { upperCamelize } from '../../utils/string';
-
-const classNameForSubmit = ({ path }) => {
-  if (path.length === 0) { return 'form-submit'; }
-
-  return `form-submit ${
-    generateFieldId({ path, prop: 'form', suffix: 'submit' })
-  }`;
-};
 
 const defaultMapDataToValue = ({ data, path, prop }) => dig(data, ...path, prop);
 
@@ -138,33 +127,4 @@ export const formGroup = (WrappedInput, opts = {}) => {
   FormGroupWrapper.inputDisplayName = getInputDisplayName(WrappedInput);
 
   return FormGroupWrapper;
-};
-
-export const formSubmit = (WrappedButton, opts = {}) => {
-  const FormSubmitWrapper = (props) => {
-    const { form, ...injectedProps } = props;
-
-    const { path, onSubmitAction } = form;
-    const actualPath = convertToArray(path);
-    const className = classNameForSubmit({ path: actualPath });
-    const onClick = handleSubmitWith(onSubmitAction);
-    const buttonProps = Object.assign(
-      {
-        className,
-        onClick,
-      },
-      injectedProps,
-    );
-
-    return (
-      <WrappedButton {...buttonProps} />
-    );
-  };
-
-  const { displayName } = opts;
-
-  FormSubmitWrapper.displayName = displayName || 'FormSubmitWrapper';
-  FormSubmitWrapper.inputDisplayName = getInputDisplayName(WrappedButton);
-
-  return FormSubmitWrapper;
 };

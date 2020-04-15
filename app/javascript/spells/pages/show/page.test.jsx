@@ -1,53 +1,22 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ShowSpellBreadcrumbs from './breadcrumbs';
 import ShowSpellPage from './page';
-import { hooks } from '../../store/showFindSpell';
-
-jest.mock('../../store/showFindSpell');
-
-hooks.useRequestData.mockImplementation(() => () => {});
+import { SpellBlock } from '../../components/block';
+import endpoint from '../../store/showFindSpell';
+import deleteEndpoint from '../../store/deleteSpell';
 
 describe('ShowSpellPage', () => {
-  const id = '00000000-0000-0000-0000-000000000000';
-  const match = { params: { id } };
+  const match = { params: { id: '00000000-0000-0000-0000-000000000000' } };
   const defaultProps = { match };
 
-  it('should render the Page', () => {
+  it('should render the show page', () => {
     const rendered = shallow(<ShowSpellPage {...defaultProps} />);
 
-    expect(rendered).toHaveDisplayName('Page');
-    expect(rendered).toHaveClassName('page-show-spell');
-    expect(rendered).toHaveProp('breadcrumbs', (<ShowSpellBreadcrumbs />));
-  });
-
-  it('should render the heading', () => {
-    const rendered = shallow(<ShowSpellPage {...defaultProps} />);
-
-    expect(rendered).toContainMatchingElement('ShowSpellHeading');
-  });
-
-  it('should render the spell block', () => {
-    const rendered = shallow(<ShowSpellPage {...defaultProps} />);
-
-    expect(rendered).toContainMatchingElement('ShowSpellBlock');
-  });
-
-  it('should find the spell by id', () => {
-    const performRequest = jest.fn();
-
-    hooks.useRequestData.mockImplementationOnce(() => performRequest);
-
-    shallow(<ShowSpellPage {...defaultProps} />);
-
-    expect(hooks.useRequestData).toHaveBeenCalledWith({ wildcards: { id } });
-    expect(performRequest).toHaveBeenCalled();
-  });
-
-  it('should match the snapshot', () => {
-    const rendered = shallow(<ShowSpellPage {...defaultProps} />);
-
-    expect(rendered).toMatchSnapshot();
+    expect(rendered).toHaveDisplayName('ShowPage');
+    expect(rendered).toHaveProp({ Block: SpellBlock });
+    expect(rendered).toHaveProp({ deleteEndpoint });
+    expect(rendered).toHaveProp({ endpoint });
+    expect(rendered).toHaveProp({ resourceName: 'Spell' });
   });
 });

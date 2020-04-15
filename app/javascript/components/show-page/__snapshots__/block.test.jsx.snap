@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ShowPageBlock /> with status: SUCCESS should match the snapshot 1`] = `
+<StatusSwitch
+  renderFailure={[Function]}
+  renderInitialized={[Function]}
+  renderPending={[Function]}
+  renderSuccess={[Function]}
+  status="success"
+/>
+`;

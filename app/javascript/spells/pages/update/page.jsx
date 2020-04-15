@@ -1,33 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Page from '../../../components/page';
-import UpdateSpellBreadcrumbs from './breadcrumbs';
-import UpdateSpellForm from './form';
-import { hooks } from '../../store/updateFindSpell';
+import { SpellForm } from '../../components/form';
+import { UpdatePage } from '../../../components/update-page';
+import findEndpoint from '../../store/updateFindSpell';
+import formEndpoint from '../../store/updateSpellForm';
 
-const getSpellId = ({ match }) => {
-  const { params } = match;
-
-  return params.id;
-};
-
-const { useRequestData } = hooks;
-
-const UpdateSpellPage = (props) => {
-  const id = getSpellId(props);
-  const requestData = useRequestData({ wildcards: { id } });
-
-  requestData();
-
-  return (
-    <Page breadcrumbs={<UpdateSpellBreadcrumbs />} className="page-update-spell">
-      <h1>Update Spell</h1>
-
-      <UpdateSpellForm />
-    </Page>
-  );
-};
+const UpdateSpellPage = ({ match }) => (
+  <UpdatePage
+    Form={SpellForm}
+    findEndpoint={findEndpoint}
+    formEndpoint={formEndpoint}
+    mapData={data => data}
+    mapResource={data => data.spell}
+    match={match}
+    resourceName="Spell"
+  />
+);
 
 UpdateSpellPage.defaultProps = {};
 

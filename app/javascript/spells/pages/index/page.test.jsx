@@ -1,58 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import SpellsPage from './page';
-import { hooks } from '../../store/indexFindSpells';
+import IndexSpellsPage from './page';
+import { columns } from '../../components/table';
+import endpoint from '../../store/indexFindSpells';
 
-jest.mock('../../store/indexFindSpells');
-
-hooks.useRequestData.mockImplementation(() => () => {});
-
-describe('<SpellsPage />', () => {
-  const breadcrumbs = [
-    {
-      label: 'Home',
-      url: '/',
-    },
-    {
-      label: 'Spells',
-      url: '/spells',
-      active: true,
-    },
-  ];
+describe('IndexSpellsPage', () => {
   const defaultProps = {};
 
-  it('should wrap the contents in a Page', () => {
-    const rendered = shallow(<SpellsPage {...defaultProps} />);
+  it('should render the index page', () => {
+    const rendered = shallow(<IndexSpellsPage {...defaultProps} />);
 
-    expect(rendered).toHaveDisplayName('Page');
-
-    expect(rendered).toHaveClassName('page-spells');
-    expect(rendered).toHaveProp('breadcrumbs', breadcrumbs);
-  });
-
-  it('should render the spells table', () => {
-    const rendered = shallow(<SpellsPage {...defaultProps} />);
-
-    const table = rendered.find('IndexSpellsTable');
-
-    expect(table).toExist();
-  });
-
-  it('should find the spells', () => {
-    const performRequest = jest.fn();
-
-    hooks.useRequestData.mockImplementationOnce(() => performRequest);
-
-    shallow(<SpellsPage {...defaultProps} />);
-
-    expect(hooks.useRequestData).toHaveBeenCalled();
-    expect(performRequest).toHaveBeenCalled();
-  });
-
-  it('should match the snapshot', () => {
-    const rendered = shallow(<SpellsPage {...defaultProps} />);
-
-    expect(rendered).toMatchSnapshot();
+    expect(rendered).toHaveDisplayName('IndexPage');
+    expect(rendered).toHaveProp({ columns });
+    expect(rendered).toHaveProp({ endpoint });
+    expect(rendered).toHaveProp({ resourceName: 'Spell' });
   });
 });

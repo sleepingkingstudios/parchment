@@ -6,21 +6,18 @@ import FormSubmitButton from './index';
 describe('<FormSubmitButton />', () => {
   const value = 'Property Value';
   const data = { propertyName: value };
-  const onChangeAction = jest.fn(obj => ({ payload: obj }));
   const onSubmitAction = jest.fn(() => ({ payload: { ok: true } }));
   const form = {
     data,
-    onChangeAction,
     onSubmitAction,
   };
-  const children = 'Submit';
-  const defaultProps = { children, form };
+  const defaultProps = { form };
 
   it('should render the button', () => {
     const rendered = shallow(<FormSubmitButton {...defaultProps} />);
 
     expect(rendered).toHaveDisplayName('Button');
-    expect(rendered).toHaveProp({ children });
+    expect(rendered).toHaveProp({ children: 'Submit Form' });
   });
 
   it('should set the onClick event handler', () => {
@@ -42,5 +39,38 @@ describe('<FormSubmitButton />', () => {
     const rendered = shallow(<FormSubmitButton {...defaultProps} />);
 
     expect(rendered).toMatchSnapshot();
+  });
+
+  describe('with actionName: value', () => {
+    const actionName = 'Execute';
+
+    it('should render the button', () => {
+      const rendered = shallow(<FormSubmitButton {...defaultProps} actionName={actionName} />);
+
+      expect(rendered).toHaveDisplayName('Button');
+      expect(rendered).toHaveProp({ children: 'Execute Form' });
+    });
+  });
+
+  describe('with children: value', () => {
+    const children = 'Execute Operation';
+
+    it('should render the button', () => {
+      const rendered = shallow(<FormSubmitButton {...defaultProps}>{children}</FormSubmitButton>);
+
+      expect(rendered).toHaveDisplayName('Button');
+      expect(rendered).toHaveProp({ children });
+    });
+  });
+
+  describe('with resourceName: value', () => {
+    const resourceName = 'Operation';
+
+    it('should render the button', () => {
+      const rendered = shallow(<FormSubmitButton {...defaultProps} resourceName={resourceName} />);
+
+      expect(rendered).toHaveDisplayName('Button');
+      expect(rendered).toHaveProp({ children: 'Submit Operation' });
+    });
   });
 });

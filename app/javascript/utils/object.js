@@ -99,6 +99,8 @@ export const valueOrDefault = (obj, defaultValue = null) => (
 export const dig = (obj, ...path) => {
   if (path.length === 0) { return obj; }
 
+  if (!exists(obj)) { return null; }
+
   const childName = path[0];
 
   if (!Object.prototype.hasOwnProperty.call(obj, childName)) { return null; }

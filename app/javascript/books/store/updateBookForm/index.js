@@ -6,12 +6,7 @@ import redirect from './redirect';
 const namespace = 'books/updateBookForm';
 const REQUEST_URL = '/api/books/:id';
 
-export const {
-  actions,
-  hooks,
-  reducer,
-  request,
-} = new FormEndpoint({
+const endpoint = new FormEndpoint({
   data: { book: buildBook() },
   method: 'PATCH',
   middleware: [
@@ -21,3 +16,12 @@ export const {
   namespace,
   url: REQUEST_URL,
 });
+
+export default endpoint;
+
+export const {
+  actions,
+  hooks,
+  reducer,
+  request,
+} = endpoint;

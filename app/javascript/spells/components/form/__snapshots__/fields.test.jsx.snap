@@ -72,28 +72,63 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
         }
         isUpdate={false}
       >
-        <LinkButton
-          block={true}
-          buttonSize={null}
-          buttonStyle="secondary"
-          className={null}
-          link={false}
-          outline={true}
-          url="/spells"
+        <FormCancelButton
+          baseUrl={null}
+          form={
+            Object {
+              "data": Object {
+                "spell": Object {
+                  "castingTime": "1 action",
+                  "description": "You conjure a glowing, spectral orb the size of a closed fist and bearing the likeness of everyone's favorite creature, the Flumph. Until the spell ends, the orb sheds bright light in a 20-foot radius and dim light for an additional 20 feet. The light can be colored as you like. The spell ends if you cast it again or dismiss it as an action.
+
+You can move the orb to anywhere within 30 feet of you as a bonus action. If you move more than 30 feet away from the orb, it will float directly to your location at the beginning of your next turn; if it is unable to reach your location, the spell immediately ends. ",
+                  "duration": "1 hour",
+                  "id": "823dbe98-ef01-4984-b8b2-34c2946091ce",
+                  "level": 0,
+                  "materialComponent": "a pinch of flumph dust",
+                  "name": "Flumph Lantern",
+                  "range": "30 feet",
+                  "ritual": false,
+                  "school": "evocation",
+                  "shortDescription": "Floating light illuminates 20 feet + 20 feet dim light",
+                  "slug": "flumph-lantern",
+                  "somaticComponent": false,
+                  "verbalComponent": true,
+                },
+              },
+              "onChangeAction": [MockFunction],
+              "onSubmitAction": [MockFunction],
+              "path": Array [
+                "spell",
+              ],
+            }
+          }
+          isUpdate={false}
+          resourceName="Spell"
         >
-          <Link
-            className="btn btn-outline-secondary btn-block"
-            to="/spells"
+          <LinkButton
+            block={true}
+            buttonSize={null}
+            buttonStyle="secondary"
+            className={null}
+            link={false}
+            outline={true}
+            url="/spells"
           >
-            <a
+            <Link
               className="btn btn-outline-secondary btn-block"
-              href="/spells"
-              onClick={[Function]}
+              to="/spells"
             >
-              Cancel
-            </a>
-          </Link>
-        </LinkButton>
+              <a
+                className="btn btn-outline-secondary btn-block"
+                href="/spells"
+                onClick={[Function]}
+              >
+                Cancel
+              </a>
+            </Link>
+          </LinkButton>
+        </FormCancelButton>
       </SpellFormCancelButton>
     </div>
   </FormGroup>
@@ -1645,12 +1680,10 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             ],
           }
         }
-        isUpdate={false}
         status="initialized"
       >
-        <FormSubmitWrapper
-          block={true}
-          disabled={false}
+        <FormSubmitButton
+          actionName="Create"
           form={
             Object {
               "data": Object {
@@ -1680,7 +1713,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
               ],
             }
           }
-          outline={true}
+          resourceName="Spell"
         >
           <Button
             block={true}
@@ -1701,7 +1734,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
               Create Spell
             </button>
           </Button>
-        </FormSubmitWrapper>
+        </FormSubmitButton>
       </SpellFormSubmitButton>
     </div>
   </FormGroup>

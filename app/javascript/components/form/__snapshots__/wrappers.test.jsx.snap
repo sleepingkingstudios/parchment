@@ -176,33 +176,3 @@ exports[`Form component wrappers formInput() with default properties should matc
   value="Property Value"
 />
 `;
-
-exports[`Form component wrappers formSubmit() should match the snapshot 1`] = `
-<Button
-  block={false}
-  buttonSize="md"
-  buttonStyle="primary"
-  className="form-submit"
-  disabled={false}
-  link={false}
-  onClick={[Function]}
-  outline={false}
->
-  Button Text
-</Button>
-`;
-
-exports[`Form component wrappers formSubmit() with custom properties should match the snapshot 1`] = `
-<Button
-  block={false}
-  buttonSize="md"
-  buttonStyle="dark"
-  className="form-submit"
-  disabled={false}
-  link={false}
-  onClick={[Function]}
-  outline={false}
->
-  Button Text
-</Button>
-`;

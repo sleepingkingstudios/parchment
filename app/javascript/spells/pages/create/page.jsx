@@ -1,30 +1,16 @@
 import React from 'react';
 
-import Page from '../../../components/page';
-import CreateSpellForm from './form';
-
-const breadcrumbs = [
-  {
-    label: 'Home',
-    url: '/',
-  },
-  {
-    label: 'Spells',
-    url: '/spells',
-  },
-  {
-    label: 'Create',
-    url: '/spells/create',
-    active: true,
-  },
-];
+import { SpellForm } from '../../components/form';
+import { CreatePage } from '../../../components/create-page';
+import endpoint from '../../store/createSpellForm';
 
 const CreateSpellPage = () => (
-  <Page breadcrumbs={breadcrumbs} className="page-create-spell">
-    <h1>Create Spell</h1>
-
-    <CreateSpellForm />
-  </Page>
+  <CreatePage
+    Form={SpellForm}
+    endpoint={endpoint}
+    mapData={data => data}
+    resourceName="Spell"
+  />
 );
 
 CreateSpellPage.defaultProps = {};

@@ -5,6 +5,87 @@
 - columns
   - name (String)
   - description (String)
+  - short_description (String)
+  - notes (String)
+
+## Authentication
+
+- Credential-based
+  - username/password
+  - api credential?
+- Send/Receive as JWT
+- Authorization::Struct
+  - has #user
+
+### Commands
+
+- Authentication::Credentials::FindPassword
+  - takes user or user_id
+  - searches user PasswordCredential for active
+  - fails if no password exists
+- Authentication::Credentials::GeneratePassword
+  - takes user (username?), password
+  - fails if password blank
+  - in transaction:
+    - marks previous password (if any) as active: false
+    - creates new PasswordCredential with encrypted_password
+- Authentication::Jwt
+  - takes JWT
+  - fails if JWT blank, improperly formatted
+  - fails if JWT not signed, signature does not match
+  - fails if JWT does not encode a User
+  - returns Authorization with user: user
+- Authentication::Password
+  - takes username, password
+  - fails if user does not exist
+  - fails if user does not have active password credential
+  - fails if password does not match
+  - returns Authorization with user: user
+- Authentication::Users::CreateUserWithPassword
+  - in transaction
+    - creates user
+    - generates password for usernotes
+
+### Models
+
+#### Authentication::Credential
+
+- Single Table Inheritance
+- belongs_to :user
+- columns:
+  - active: Boolean
+  - data: jsonb (depends on type, e.g. api => key, secret)
+  - expires_at: Datetime
+
+#### Authentication::PasswordCredential
+
+- data: { encrypted_password }
+- #encrypted_password reader
+
+#### Authentication::User
+
+- columns
+  - name (String), not null, unique
+- has_many :credentials
+  - scope :active
+
+#### Workflows
+
+- Sign Up
+- Log In
+- Log Out
+
+## Authorization
+
+- read authorization
+  - public - any user can view, including anonymous users
+    - do not show additional details without write permissions
+  - protected (default) - only logged in users can view
+  - private - only creator (and authorized users?) can view
+- write authorization
+  - public - any user can edit
+  - protected - only logged in users can edit
+  - private (default) - only creator can edit
 
 ## Client
 
@@ -15,6 +96,21 @@
 ### Alerts
 
 - clear (some?) alerts when the URL (not query!) changes
+
+### Components
+
+- refactor CreatePage, IndexPage, ShowPage, UpdatePage
+  - separate between endpoint/hook and layout
+  - ResourcePage takes endpoints, match, resourceName, etc
+    - wraps all hooks
+    - takes a Layout component and renders it with props
+  - CreateLayout, IndexLayout, ShowLayout, UpdateLayout
+    - takes data, errors, status, resourceName props
+    - takes callback props: onChange, onSubmit, onDelete, etc
+
+#### Submit Button
+
+- status switch to display Loading... message
 
 ## Characters
 

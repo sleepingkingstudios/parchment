@@ -24,6 +24,12 @@ export const interpolate = (str, rxp, params) => {
   return str.replace(rxp, (_, key) => params[key]);
 };
 
+export const safeCapitalize = (word) => {
+  if (typeof word === 'undefined' || word == null) { return ''; }
+
+  return word.charAt(0).toUpperCase() + word.slice(1);
+};
+
 export const truncate = (str, len) => {
   if (typeof str === 'undefined' || str == null) { return ''; }
 

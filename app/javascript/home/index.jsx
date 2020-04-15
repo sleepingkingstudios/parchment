@@ -14,6 +14,14 @@ const HomePage = props => (
       </li>
     </ul>
 
+    <h2>Mechanics</h2>
+
+    <ul>
+      <li>
+        <Link className="actions-link" to="/mechanics/actions">Actions</Link>
+      </li>
+    </ul>
+
     <h2>Sources</h2>
 
     <ul>
