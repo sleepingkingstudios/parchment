@@ -2,6 +2,8 @@
 
 ## Authentication
 
+- in Cucumber tests, generate token directly rather than going through login
+
 ### Commands
 
 - Authentication::GenerateToken

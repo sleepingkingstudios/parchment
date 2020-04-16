@@ -25,6 +25,7 @@ gem 'bootsnap', '>= 1.4.1', require: false
 
 gem 'bcrypt', '~> 3.1'
 gem 'cuprum', git: 'https://github.com/sleepingkingstudios/cuprum.git'
+gem 'jwt', '~> 2.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
