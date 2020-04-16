@@ -14,6 +14,14 @@ FactoryBot.define do
       active { true }
     end
 
+    trait :expired do
+      expires_at { 1.day.ago }
+    end
+
+    trait :inactive do
+      active { false }
+    end
+
     trait :with_user do
       association :user, factory: :user
     end
@@ -33,6 +41,8 @@ FactoryBot.define do
     transient do
       password { 'password' }
     end
+
+    expires_at { 1.year.from_now }
 
     encrypted_password do
       operation = Operations::Authentication::Password::Encrypt.new

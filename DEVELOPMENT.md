@@ -2,41 +2,12 @@
 
 ## Authentication
 
-- Credential-based
-  - username/password
-  - api credential?
-- Send/Receive as JWT
-- Authorization::Struct
-  - has #user
-
 ### Commands
 
-- Authentication::Credentials::FindPassword
-  - takes user or user_id
-  - searches user PasswordCredential for active
-  - fails if no password exists
-- Authentication::Credentials::GeneratePassword
-  - takes user (username?), password
-  - fails if password blank
-  - in transaction:
-    - marks previous password (if any) as active: false
-    - creates new PasswordCredential with encrypted_password
-- Authentication::Jwt
-  - takes JWT
-  - fails if JWT blank, improperly formatted
-  - fails if JWT not signed, signature does not match
-  - fails if JWT does not encode a User
-  - returns Authorization with user: user
-- Authentication::Password
-  - takes username, password
-  - fails if user does not exist
-  - fails if user does not have active password credential
-  - fails if password does not match
-  - returns Authorization with user: user
-- Authentication::Users::CreateUserWithPassword
-  - in transaction
-    - creates user
-    - generates password for usernotes
+- Authentication::GenerateToken
+  - https://github.com/jwt/ruby-jwt
+- Authentication::Strategies::Password
+- Authentication::Strategies::Token
 
 ### Models
 

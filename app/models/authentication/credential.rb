@@ -2,6 +2,22 @@
 
 # A Credential is data that allows a User to authenticate to the system.
 class Authentication::Credential < ApplicationRecord
+  def self.active
+    where(active: true)
+  end
+
+  def self.expired
+    where('expires_at <= ?', Time.current)
+  end
+
+  def self.inactive
+    where(active: false)
+  end
+
+  def self.unexpired
+    where('expires_at > ?', Time.current)
+  end
+
   ### Validations
   validates :active,
     exclusion: {
