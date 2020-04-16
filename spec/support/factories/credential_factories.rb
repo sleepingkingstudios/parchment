@@ -19,6 +19,13 @@ FactoryBot.define do
     end
   end
 
+  factory :anonymous_credential,
+    class:  'Authentication::AnonymousCredential',
+    parent: :credential \
+  do
+    user { Authentication::User.anonymous }
+  end
+
   factory :password_credential,
     class:  'Authentication::PasswordCredential',
     parent: :credential \
