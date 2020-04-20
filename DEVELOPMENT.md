@@ -4,41 +4,32 @@
 
 - in Cucumber tests, generate token directly rather than going through login
 
-### Commands
+### Endpoints
 
-- Authentication::GenerateToken
-  - https://github.com/jwt/ruby-jwt
-- Authentication::Strategies::Password
-- Authentication::Strategies::Token
+- Api::Authentication::Session
+  - #create
+    - takes :username, :password
+    - return serialized User, Session token
+    - delegate to a generic Authentication::Strategy ?
+  - #show
+    - takes token (implicit, via header)
+    - return serialized User
+    - if no valid token, respond with 403 Forbidden
+- BaseResponder
+  - handle authentication errors
+    - create a top-level Errors::Authentication::Base ?
 
-### Models
+### Session
 
-#### Authentication::Credential
+- SessionSerializer
+  - returns { token: JWT }
 
-- Single Table Inheritance
-- belongs_to :user
-- columns:
-  - active: Boolean
-  - data: jsonb (depends on type, e.g. api => key, secret)
-  - expires_at: Datetime
-
-#### Authentication::PasswordCredential
-
-- data: { encrypted_password }
-- #encrypted_password reader
-
-#### Authentication::User
-
-- columns
-  - name (String), not null, unique
-- has_many :credentials
-  - scope :active
-
-#### Workflows
+### Workflows
 
 - Sign Up
 - Log In
 - Log Out
+- User Management (Admin)
 
 ## Authorization
 
