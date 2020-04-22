@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'responders/json_responder'
-
 # rubocop:disable Metrics/ClassLength
 module Api
   # Abstract base class for API resource controllers that delegate their actions

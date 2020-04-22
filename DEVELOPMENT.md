@@ -18,6 +18,8 @@
 - BaseResponder
   - handle authentication errors
     - create a top-level Errors::Authentication::Base ?
+    - return 401 Unauthorized ?
+    - response header WWW-Authenticate (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate)
 
 ### Session
 
