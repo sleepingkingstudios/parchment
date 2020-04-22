@@ -11,6 +11,9 @@ module Api
   class BaseController < ApplicationController
     include Cuprum::Steps
 
+    # Exception class when the session key is undefined.
+    class UndefinedSessionKeyError < StandardError; end
+
     protect_from_forgery with: :null_session
 
     before_action :deserialize_session
@@ -39,11 +42,24 @@ module Api
     end
 
     def parse_authorization_token(token)
-      Operations::Authentication::Strategies::Token.new.call(token)
+      Operations::Authentication::Strategies::Token
+        .new(session_key: session_key)
+        .call(token)
     end
 
     def responder
       @responder ||= Responders::JsonResponder.new(self)
+    end
+
+    def session_key
+      key = ENV.fetch(
+        'AUTHENTICATION_SESSION_KEY',
+        Rails.application.credentials.authentication&.fetch(:session_key)
+      )
+
+      return key unless key.blank?
+
+      raise UndefinedSessionKeyError, 'Session key is undefined'
     end
   end
 end

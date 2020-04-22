@@ -18,6 +18,12 @@ pg_ctl stop
 
 Parchment requires configured secret keys to generate and parse session tokens. These can be generated via `rails secret`, but should include at least 256 bits of randomness. The keys should be passed to the application either as an environment variable or via `rails credentials`.
 
+If a session key is not set, you will see exceptions such as the following:
+
+```
+UndefinedSessionKeyError: Session key is undefined
+```
+
 In development and test mode, using `rails credentials` is recommended. For each environment, run `rails credentials:edit --environment development` or `test` and add the following value:
 
 ```yml
@@ -57,7 +63,7 @@ bundle exec rake webpacker:clobber webpacker:compile # Webpack
 Finally, start up the Rails server with some additional configuration.
 
 ```bash
-RAILS_SERVE_STATIC_FILES=true RAILS_ENV=production bundle exec rails s
+AUTHENTICATION_SESSION_KEY=secret RAILS_SERVE_STATIC_FILES=true RAILS_ENV=production bundle exec rails s
 ```
 
 ### Running the Cucumber Features

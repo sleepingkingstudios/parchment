@@ -103,7 +103,10 @@ RSpec.describe Api::BaseController do
           expires_at: 1.hour.ago
         )
 
-        Operations::Authentication::GenerateToken.new.call(session).value
+        Operations::Authentication::GenerateToken
+          .new(session_key: session_key)
+          .call(session)
+          .value
       end
       let(:env) { super().merge('HTTP_AUTHORIZATION' => "Bearer #{token}") }
 
@@ -136,7 +139,10 @@ RSpec.describe Api::BaseController do
           expires_at: 12.hours.from_now
         )
 
-        Operations::Authentication::GenerateToken.new.call(session).value
+        Operations::Authentication::GenerateToken
+          .new(session_key: session_key)
+          .call(session)
+          .value
       end
       let(:env) { super().merge('HTTP_AUTHORIZATION' => "Bearer #{token}") }
 
@@ -170,5 +176,72 @@ RSpec.describe Api::BaseController do
     it { expect(responder).to be_a Responders::JsonResponder }
 
     it { expect(responder.controller).to be controller }
+  end
+
+  describe '#session_key' do
+    include_examples 'should have private reader', :session_key
+
+    context 'when the session key is undefined' do
+      let(:error_message) { 'Session key is undefined' }
+
+      before(:example) do
+        allow(Rails.application.credentials)
+          .to receive(:authentication)
+          .and_return(nil)
+      end
+
+      around(:example) do |example|
+        previous_key = ENV['AUTHENTICATION_SESSION_KEY']
+
+        ENV['AUTHENTICATION_SESSION_KEY'] = nil
+
+        example.call
+      ensure
+        ENV['AUTHENTICATION_SESSION_KEY'] = previous_key
+      end
+
+      it 'should raise an exception' do
+        expect { controller.send :session_key }
+          .to raise_error(
+            described_class::UndefinedSessionKeyError,
+            error_message
+          )
+      end
+    end
+
+    context 'when ENV["AUTHENTICATION_SESSION_KEY"] is set' do
+      let(:session_key) do
+        '48a1b5754895986334ac29a7f3201a6574573a7fc7d10213353be83669aebc544682' \
+        'bd2294e2ac7b00be5d099190ea9822f7ef9cd1a54c2646450d5b580a7444'
+      end
+
+      around(:example) do |example|
+        previous_key = ENV['AUTHENTICATION_SESSION_KEY']
+
+        ENV['AUTHENTICATION_SESSION_KEY'] = session_key
+
+        example.call
+      ensure
+        ENV['AUTHENTICATION_SESSION_KEY'] = previous_key
+      end
+
+      it { expect(controller.send :session_key).to be == session_key }
+    end
+
+    context 'when credentials.authentication[:session_key] is set' do
+      let(:session_key) do
+        '77a9c65e35e1a1041d0cf9f50407a16ccecf3e040743a12b2fc3b65594885d1413f1' \
+        'bbd0578d15aaffabb22c074aabdbb6bc8361f3d5d94149618a715e4d9a89'
+      end
+      let(:token) { JWT.encode(payload, session_key, 'HS256') }
+
+      before(:example) do
+        allow(Rails.application.credentials)
+          .to receive(:authentication)
+          .and_return(session_key: session_key)
+      end
+
+      it { expect(controller.send :session_key).to be == session_key }
+    end
   end
 end

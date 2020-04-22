@@ -3,7 +3,6 @@
 require 'errors/authentication/expired_credential'
 require 'errors/authentication/expired_session'
 require 'errors/authentication/inactive_credential'
-require 'errors/authentication/invalid_session_key'
 require 'errors/authentication/invalid_signature'
 require 'errors/authentication/invalid_token'
 require 'errors/authentication/missing_credential'
@@ -12,7 +11,15 @@ require 'operations/authentication/strategies'
 module Operations::Authentication::Strategies
   # Strategy for authenticating with a JWT-serialized session.
   class Token < Cuprum::Operation
+    def initialize(session_key:)
+      validate_session_key(session_key)
+
+      @session_key = session_key
+    end
+
     private
+
+    attr_reader :session_key
 
     def create_session(payload)
       credential = step :find_credential, payload['sub']
@@ -24,8 +31,6 @@ module Operations::Authentication::Strategies
     end
 
     def decode_token(token)
-      session_key = step :validate_session_key
-
       JWT.decode(token, session_key, true, algorithm: 'HS256')
     rescue JWT::ExpiredSignature
       failure(Errors::Authentication::ExpiredSession.new)
@@ -84,15 +89,14 @@ module Operations::Authentication::Strategies
       failure(Errors::Authentication::ExpiredCredential.new)
     end
 
-    def validate_session_key
-      session_key = ENV.fetch(
-        'AUTHENTICATION_SESSION_KEY',
-        Rails.application.credentials.authentication&.fetch(:session_key, nil)
-      )
+    def validate_session_key(session_key)
+      raise ArgumentError, "Session key can't be blank" if session_key.nil?
 
-      return session_key unless session_key.blank?
+      unless session_key.is_a?(String)
+        raise ArgumentError, 'Session key must be a String'
+      end
 
-      failure(Errors::Authentication::InvalidSessionKey.new)
+      raise ArgumentError, "Session key can't be blank" if session_key.empty?
     end
 
     def validate_token(token)
