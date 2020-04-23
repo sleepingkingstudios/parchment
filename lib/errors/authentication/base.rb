@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require 'cuprum/errors'
+require 'cuprum/error'
 
 require 'errors/authentication'
 
 module Errors::Authentication
-  # Cuprum error when attempting to serialize a session with an invalid secret.
-  class InvalidSessionKey < Cuprum::Error
+  # Base class for Authentication errors.
+  class Base < Cuprum::Error
     # Short string used to identify the type of error.
-    TYPE = 'authentication.invalid_session_key'
+    TYPE = 'authentication.error'
 
-    def initialize
-      super(message: 'Session key is invalid. See README.')
+    def initialize(message: nil)
+      super(message: message || 'Unable to authenticate user or session')
     end
 
     # @return [Hash] a serializable hash representation of the error.
@@ -24,7 +24,7 @@ module Errors::Authentication
 
     # @return [String] short string used to identify the type of error.
     def type
-      TYPE
+      self.class::TYPE
     end
   end
 end

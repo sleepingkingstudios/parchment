@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require 'cuprum/error'
-
-require 'errors/authentication'
+require 'errors/authentication/base'
 
 module Errors::Authentication
   # Cuprum error for when credentials are not found for a username.
-  class UserNotFound < Cuprum::Error
+  class UserNotFound < Errors::Authentication::Base
     # Short string used to identify the type of error.
     TYPE = 'authentication.user_not_found'
 
@@ -20,16 +18,7 @@ module Errors::Authentication
 
     # @return [Hash] a serializable hash representation of the error.
     def as_json
-      {
-        'data'    => { 'username' => username },
-        'message' => message,
-        'type'    => type
-      }
-    end
-
-    # @return [String] short string used to identify the type of error.
-    def type
-      TYPE
+      super.merge('data' => { 'username' => username })
     end
   end
 end

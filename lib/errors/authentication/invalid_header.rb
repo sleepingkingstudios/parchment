@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require 'cuprum/error'
-
-require 'errors/authentication'
+require 'errors/authentication/base'
 
 module Errors::Authentication
   # Cuprum error when an operation is given an invalid authorization header.
-  class InvalidHeader < Cuprum::Error
+  class InvalidHeader < Errors::Authentication::Base
     # Short string used to identify the type of error.
     TYPE = 'authentication.invalid_header'
 
@@ -20,16 +18,7 @@ module Errors::Authentication
 
     # @return [Hash] a serializable hash representation of the error.
     def as_json
-      {
-        'data'    => { 'header' => header },
-        'message' => message,
-        'type'    => type
-      }
-    end
-
-    # @return [String] short string used to identify the type of error.
-    def type
-      TYPE
+      super.merge('data' => { 'header' => header })
     end
   end
 end

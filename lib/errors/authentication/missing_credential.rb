@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require 'errors/authentication'
-
-require 'cuprum/error'
+require 'errors/authentication/base'
 
 module Errors::Authentication
   # Cuprum error when the credential for a session token is missing.
-  class MissingCredential < Cuprum::Error
+  class MissingCredential < Errors::Authentication::Base
     # Short string used to identify the type of error.
     TYPE = 'authentication.missing_credential'
 
@@ -20,16 +18,7 @@ module Errors::Authentication
 
     # @return [Hash] a serializable hash representation of the error.
     def as_json
-      {
-        'data'    => { 'credential_id' => credential_id },
-        'message' => message,
-        'type'    => type
-      }
-    end
-
-    # @return [String] short string used to identify the type of error.
-    def type
-      TYPE
+      super.merge('data' => { 'credential_id' => credential_id })
     end
   end
 end

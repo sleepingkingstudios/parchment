@@ -9,16 +9,32 @@ RSpec.describe Api::BaseController do
 
   subject(:controller) { described_class.new }
 
-  describe '#current_session' do
-    include_examples 'should have private reader', :current_session, nil
-  end
+  describe '#authenticate_user' do
+    let(:session) do
+      controller
+        .tap { controller.send(:authenticate_user) }
+        .send(:current_session)
+    end
 
-  describe '#deserialize_session' do
-    shared_examples 'should set the current session to an anonymous session' do
-      it 'should set the current session' do
-        expect { controller.send :deserialize_session }
+    it 'should define the private method' do
+      expect(controller)
+        .to respond_to(:authenticate_user, true)
+        .with(0).arguments
+    end
+
+    context 'when the deserialized session is anonymous' do
+      let(:error)  { Errors::Authentication::Base.new }
+      let(:result) { Cuprum::Result.new(error: error) }
+
+      before(:example) do
+        allow(controller) # rubocop:disable RSpec/SubjectStub
+          .to receive(:deserialize_session)
+          .and_return(result)
+      end
+
+      it 'should update the current session' do
+        expect { controller.send(:authenticate_user) }
           .to change(controller, :current_session)
-          .to be_a Authorization::Session
       end
 
       it { expect(session.anonymous?).to be true }
@@ -34,63 +50,139 @@ RSpec.describe Api::BaseController do
       end
     end
 
+    context 'when the deserialized session is for a user' do
+      let(:user) { FactoryBot.create(:user) }
+      let(:credential) do
+        FactoryBot.create(:password_credential, :active, user: user)
+      end
+      let(:session) do
+        Authorization::Session.new(
+          credential: credential,
+          expires_at: 1.day.from_now
+        )
+      end
+      let(:result) { Cuprum::Result.new(value: session) }
+
+      before(:example) do
+        allow(controller) # rubocop:disable RSpec/SubjectStub
+          .to receive(:deserialize_session) { result }
+      end
+
+      it 'should update the current session' do
+        expect { controller.send(:authenticate_user) }
+          .to change(controller, :current_session)
+      end
+
+      it { expect(session.anonymous?).to be false }
+
+      it 'should set the deserialized credential' do
+        expect(session.credential).to be == credential
+      end
+
+      it 'should set the session expiration' do
+        freeze_time do
+          expect(session.expires_at).to be == 1.day.from_now
+        end
+      end
+    end
+  end
+
+  describe '#current_session' do
+    let(:session) { controller.send :current_session }
+
+    include_examples 'should have private reader', :current_session
+
+    it { expect(session).to be_a Authorization::Session }
+
+    it { expect(session.anonymous?).to be true }
+
+    it 'should set an anonymous credential' do
+      expect(session.credential).to be_a Authentication::AnonymousCredential
+    end
+
+    it 'should set the session expiration' do
+      freeze_time do
+        expect(session.expires_at).to be == 1.day.from_now
+      end
+    end
+  end
+
+  describe '#deserialize_session' do
     let(:env)     { {} }
     let(:request) { ActionDispatch::Request.new(env) }
-    let(:session) do
-      controller
-        .tap { controller.send(:deserialize_session) }
-        .send(:current_session)
-    end
     let(:session_key) do
       '30c9fce969afa44170e68b559f365f64e40f962a7f268297435a606e50adf245fdfb' \
       '0de659f63090dbcba7603017d5742a071e6c2cb03d1464348a9d0570420c'
     end
+    let(:expected_error) do
+      a_kind_of(Errors::Authentication::Base)
+    end
 
     before(:example) do
-      allow(Rails.application.credentials)
-        .to receive(:authentication)
-        .and_return(session_key: session_key)
-
       allow(controller) # rubocop:disable RSpec/SubjectStub
         .to receive(:request)
         .and_return(request)
+
+      allow(controller) # rubocop:disable RSpec/SubjectStub
+        .to receive(:session_key)
+        .and_return(session_key)
     end
 
-    it 'should define the hook' do
+    it 'should define the private method' do
       expect(controller)
         .to respond_to(:deserialize_session, true)
         .with(0).arguments
     end
 
     context 'when there is no Authorization header' do
-      include_examples 'should set the current session to an anonymous session'
+      it 'should return a failing result' do
+        expect(controller.send(:deserialize_session))
+          .to be_a_failing_result
+          .with_error(expected_error)
+      end
     end
 
     context 'when the Authorization header is malformed' do
       let(:env) { super().merge('HTTP_AUTHORIZATION' => 'xyzzy') }
 
-      include_examples 'should set the current session to an anonymous session'
+      it 'should return a failing result' do
+        expect(controller.send(:deserialize_session))
+          .to be_a_failing_result
+          .with_error(expected_error)
+      end
     end
 
     context 'when the Authorization header has an invalid scheme' do
       let(:token) { 'YWxhbi5icmFkbGV5QGV4YW1wbGUuY29tOnRyb25saXZlcw==' }
       let(:env)   { super().merge('HTTP_AUTHORIZATION' => "Basic #{token}") }
 
-      include_examples 'should set the current session to an anonymous session'
+      it 'should return a failing result' do
+        expect(controller.send(:deserialize_session))
+          .to be_a_failing_result
+          .with_error(expected_error)
+      end
     end
 
     context 'when the Authorization header has an invalid Bearer token' do
       let(:token) { 'a.b.c' }
       let(:env)   { super().merge('HTTP_AUTHORIZATION' => "Bearer #{token}") }
 
-      include_examples 'should set the current session to an anonymous session'
+      it 'should return a failing result' do
+        expect(controller.send(:deserialize_session))
+          .to be_a_failing_result
+          .with_error(expected_error)
+      end
     end
 
     context 'when the Authorization header has an invalid Bearer token' do
       let(:token) { 'a.b.c' }
       let(:env)   { super().merge('HTTP_AUTHORIZATION' => "Bearer #{token}") }
 
-      include_examples 'should set the current session to an anonymous session'
+      it 'should return a failing result' do
+        expect(controller.send(:deserialize_session))
+          .to be_a_failing_result
+          .with_error(expected_error)
+      end
     end
 
     context 'when the Authorization header has an expired Bearer token' do
@@ -110,7 +202,11 @@ RSpec.describe Api::BaseController do
       end
       let(:env) { super().merge('HTTP_AUTHORIZATION' => "Bearer #{token}") }
 
-      include_examples 'should set the current session to an anonymous session'
+      it 'should return a failing result' do
+        expect(controller.send(:deserialize_session))
+          .to be_a_failing_result
+          .with_error(expected_error)
+      end
     end
 
     context 'when the Authorization token has an invalid signature' do
@@ -126,7 +222,11 @@ RSpec.describe Api::BaseController do
       end
       let(:env) { super().merge('HTTP_AUTHORIZATION' => "Bearer #{token}") }
 
-      include_examples 'should set the current session to an anonymous session'
+      it 'should return a failing result' do
+        expect(controller.send(:deserialize_session))
+          .to be_a_failing_result
+          .with_error(expected_error)
+      end
     end
 
     context 'when the Authorization header has a valid Bearer token' do
@@ -145,11 +245,12 @@ RSpec.describe Api::BaseController do
           .value
       end
       let(:env) { super().merge('HTTP_AUTHORIZATION' => "Bearer #{token}") }
+      let(:session) do
+        controller.send(:deserialize_session).value
+      end
 
-      it 'should set the current session' do
-        expect { controller.send :deserialize_session }
-          .to change(controller, :current_session)
-          .to be_a Authorization::Session
+      it 'should return a passing result' do
+        expect(controller.send(:deserialize_session)).to be_a_passing_result
       end
 
       it { expect(session.anonymous?).to be false }
@@ -161,6 +262,85 @@ RSpec.describe Api::BaseController do
       it 'should set the session expiration' do
         freeze_time do
           expect(session.expires_at).to be == 12.hours.from_now
+        end
+      end
+    end
+  end
+
+  describe '#require_authenticated_user' do
+    let(:session) do
+      controller
+        .tap { controller.send(:authenticate_user) }
+        .send(:current_session)
+    end
+
+    it 'should define the private method' do
+      expect(controller)
+        .to respond_to(:require_authenticated_user, true)
+        .with(0).arguments
+    end
+
+    context 'when the deserialized session is anonymous' do
+      let(:error)     { Errors::Authentication::Base.new }
+      let(:result)    { Cuprum::Result.new(error: error) }
+      let(:responder) { controller.send :responder }
+
+      before(:example) do
+        allow(controller) # rubocop:disable RSpec/SubjectStub
+          .to receive(:deserialize_session)
+          .and_return(result)
+      end
+
+      it 'should call the responder with the result' do
+        allow(responder).to receive(:call)
+
+        controller.send :require_authenticated_user
+
+        expect(responder).to have_received(:call).with(result)
+      end
+    end
+
+    context 'when the deserialized session is for a user' do
+      let(:user) { FactoryBot.create(:user) }
+      let(:credential) do
+        FactoryBot.create(:password_credential, :active, user: user)
+      end
+      let(:session) do
+        Authorization::Session.new(
+          credential: credential,
+          expires_at: 1.day.from_now
+        )
+      end
+      let(:result)    { Cuprum::Result.new(value: session) }
+      let(:responder) { controller.send :responder }
+
+      before(:example) do
+        allow(controller) # rubocop:disable RSpec/SubjectStub
+          .to receive(:deserialize_session) { result }
+      end
+
+      it 'should not call the responder' do
+        allow(responder).to receive(:call)
+
+        controller.send :require_authenticated_user
+
+        expect(responder).not_to have_received(:call)
+      end
+
+      it 'should update the current session' do
+        expect { controller.send(:require_authenticated_user) }
+          .to change(controller, :current_session)
+      end
+
+      it { expect(session.anonymous?).to be false }
+
+      it 'should set the deserialized credential' do
+        expect(session.credential).to be == credential
+      end
+
+      it 'should set the session expiration' do
+        freeze_time do
+          expect(session.expires_at).to be == 1.day.from_now
         end
       end
     end

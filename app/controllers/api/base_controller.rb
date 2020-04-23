@@ -16,18 +16,10 @@ module Api
 
     protect_from_forgery with: :null_session
 
-    before_action :deserialize_session
-
     private
 
-    attr_reader :current_session
-
-    def deserialize_session
-      result = steps do
-        token = step :extract_authorization_token
-
-        step :parse_authorization_token, token
-      end
+    def authenticate_user
+      result = deserialize_session
 
       @current_session =
         if result.success?
@@ -35,6 +27,19 @@ module Api
         else
           Authorization::AnonymousSession.new(expires_at: 1.day.from_now)
         end
+    end
+
+    def current_session
+      @current_session ||=
+        Authorization::AnonymousSession.new(expires_at: 1.day.from_now)
+    end
+
+    def deserialize_session
+      steps do
+        token = step :extract_authorization_token
+
+        step :parse_authorization_token, token
+      end
     end
 
     def extract_authorization_token
@@ -45,6 +50,18 @@ module Api
       Operations::Authentication::Strategies::Token
         .new(session_key: session_key)
         .call(token)
+    end
+
+    def require_authenticated_user
+      result = deserialize_session
+
+      if result.success?
+        @current_session = result.value
+
+        return
+      end
+
+      responder.call(result)
     end
 
     def responder
