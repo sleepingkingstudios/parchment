@@ -61,6 +61,8 @@ module Api
         return
       end
 
+      response.headers['WWW-Authenticate'] = 'Bearer'
+
       responder.call(result)
     end
 

@@ -2,6 +2,7 @@
 
 require 'forwardable'
 
+require 'errors/authentication/base'
 require 'errors/failed_validation'
 require 'errors/invalid_parameters'
 require 'errors/not_found'
@@ -12,6 +13,14 @@ module Responders
   # a server response.
   class BaseResponder
     extend Forwardable
+
+    # Maps the type of error to the HTTP status of the response.
+    ERROR_STATUSES = {
+      Errors::Authentication::Base => :unauthorized,
+      Errors::FailedValidation     => :unprocessable_entity,
+      Errors::InvalidParameters    => :bad_request,
+      Errors::NotFound             => :not_found
+    }.freeze
 
     def_delegators :@controller,
       :head,
@@ -43,16 +52,11 @@ module Responders
     end
 
     def error_status(error)
-      case error
-      when Errors::FailedValidation
-        :unprocessable_entity
-      when Errors::InvalidParameters
-        :bad_request
-      when Errors::NotFound
-        :not_found
-      else
-        :internal_server_error
+      ERROR_STATUSES.each do |error_class, status|
+        return status if error.is_a?(error_class)
       end
+
+      :internal_server_error
     end
 
     def respond_to_failure(result)

@@ -91,6 +91,7 @@ module Serializers
     end
   end
 
+  autoload :Authentication,     'serializers/authentication'
   autoload :BookSerializer,     'serializers/book_serializer'
   autoload :MechanicSerializer, 'serializers/mechanic_serializer'
   autoload :SourceSerializer,   'serializers/source_serializer'

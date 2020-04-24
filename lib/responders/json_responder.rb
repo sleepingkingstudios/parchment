@@ -64,6 +64,8 @@ module Responders
 
     def serialize_error(error)
       case error
+      when Errors::Authentication::Base
+        { 'message' => 'Unable to authenticate user.' }
       when Errors::FailedValidation, Errors::InvalidParameters, Errors::NotFound
         error.as_json
       else

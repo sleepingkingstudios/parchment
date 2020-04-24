@@ -268,10 +268,12 @@ RSpec.describe Api::BaseController do
   end
 
   describe '#require_authenticated_user' do
-    let(:session) do
-      controller
-        .tap { controller.send(:authenticate_user) }
-        .send(:current_session)
+    let(:response) { ActionDispatch::Response.new }
+
+    before(:example) do
+      allow(controller) # rubocop:disable RSpec/SubjectStub
+        .to receive(:response)
+        .and_return(response)
     end
 
     it 'should define the private method' do
@@ -286,17 +288,23 @@ RSpec.describe Api::BaseController do
       let(:responder) { controller.send :responder }
 
       before(:example) do
+        allow(responder).to receive(:call)
+
         allow(controller) # rubocop:disable RSpec/SubjectStub
           .to receive(:deserialize_session)
           .and_return(result)
       end
 
       it 'should call the responder with the result' do
-        allow(responder).to receive(:call)
-
         controller.send :require_authenticated_user
 
         expect(responder).to have_received(:call).with(result)
+      end
+
+      it 'should set the WWW-Authenticate header' do
+        controller.send :require_authenticated_user
+
+        expect(response.headers['WWW-Authenticate']).to be == 'Bearer'
       end
     end
 
