@@ -20,8 +20,6 @@ module Serializers
       :somatic_component,
       :verbal_component
 
-    alias_method :spell, :object
-
     private
 
     def can_serialize?(object)

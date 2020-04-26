@@ -11,24 +11,9 @@
     - takes :username, :password
     - return serialized User, Session token
     - delegate to a generic Authentication::Strategy ?
-  - #show
-    - takes token (implicit, via header)
-    - return serialized User
-    - if no valid token, respond with 403 Forbidden
-- BaseResponder
-  - handle authentication errors
-    - create a top-level Errors::Authentication::Base ?
-    - return 401 Unauthorized ?
-    - response header WWW-Authenticate (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate)
-
-### Session
-
-- SessionSerializer
-  - returns { token: JWT }
 
 ### Workflows
 
-- Sign Up
 - Log In
 - Log Out
 - User Management (Admin)
@@ -138,13 +123,6 @@
   - treat as directory path if starts with '~' or '.' or '/'
   - e.g. data:load['../srd']
 
-### Middleware
-
-- replace mappings
-- each middleware is a callable object (command?)
-  - takes next command and a data hash
-  - returns result with record
-
 ## Spells
 
 - locking slugs
@@ -190,3 +168,13 @@
   - school
   - level
   - ritual
+
+## Serializers
+
+- Extract AttributesSerializer as base class to ResourceSerializer
+  - extract .attribute, .attributes, #call from BaseSerializer
+- Implement StringSerializer
+  - defines .instance
+  - returns the string
+- Implement ArraySerializer
+- Implement HashSerializer

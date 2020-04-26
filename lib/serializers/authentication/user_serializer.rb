@@ -11,8 +11,6 @@ module Serializers::Authentication
       :role,
       :username
 
-    alias_method :user, :object
-
     private
 
     def can_serialize?(object)
