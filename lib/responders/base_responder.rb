@@ -3,6 +3,7 @@
 require 'forwardable'
 
 require 'errors/authentication/base'
+require 'errors/authentication/failed_login'
 require 'errors/failed_validation'
 require 'errors/invalid_parameters'
 require 'errors/not_found'
@@ -16,10 +17,11 @@ module Responders
 
     # Maps the type of error to the HTTP status of the response.
     ERROR_STATUSES = {
-      Errors::Authentication::Base => :unauthorized,
-      Errors::FailedValidation     => :unprocessable_entity,
-      Errors::InvalidParameters    => :bad_request,
-      Errors::NotFound             => :not_found
+      Errors::Authentication::FailedLogin => :forbidden,
+      Errors::Authentication::Base        => :unauthorized,
+      Errors::FailedValidation            => :unprocessable_entity,
+      Errors::InvalidParameters           => :bad_request,
+      Errors::NotFound                    => :not_found
     }.freeze
 
     def_delegators :@controller,

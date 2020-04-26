@@ -52,6 +52,39 @@ RSpec.describe Responders::JsonResponder do
       end
     end
 
+    describe 'with a failing result with error: Authentication::FailedLogin' do
+      let(:message) { 'Something went wrong.' }
+      let(:error) do
+        Errors::Authentication::FailedLogin.new(message: message)
+      end
+      let(:result) { Cuprum::Result.new(error: error) }
+      let(:json) do
+        {
+          'ok'    => false,
+          'error' => {
+            'message' => 'Unable to log in with the given credentials'
+          }
+        }
+      end
+      let(:expected) { { json: json, status: :forbidden } }
+
+      it 'should render 403 Forbidden with the error details' do
+        responder.call(result)
+
+        expect(controller).to have_received(:render).with(expected)
+      end
+
+      describe 'with status: value' do
+        let(:options) { { status: :forbidden } }
+
+        it 'should render 403 Forbidden with the error details' do
+          responder.call(result, options)
+
+          expect(controller).to have_received(:render).with(expected)
+        end
+      end
+    end
+
     describe 'with a failing result with error: FailedValidation' do
       let(:record) { Spell.new }
       let(:error)  { Errors::FailedValidation.new(record: record) }

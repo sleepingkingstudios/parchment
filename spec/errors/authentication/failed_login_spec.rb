@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'errors/authentication/base'
+require 'errors/authentication/failed_login'
 
-RSpec.describe Errors::Authentication::Base do
+RSpec.describe Errors::Authentication::FailedLogin do
   subject(:error) { described_class.new }
 
   describe '::TYPE' do
     include_examples 'should define constant',
       :TYPE,
-      'authentication.error'
+      'authentication.failed_login'
   end
 
   describe '::new' do
@@ -36,7 +36,7 @@ RSpec.describe Errors::Authentication::Base do
   describe '#message' do
     include_examples 'should have reader',
       :message,
-      -> { 'Unable to authenticate user or session' }
+      -> { 'Unable to log in with the given credentials' }
 
     context 'when initialized with a message' do
       let(:message) { 'Something went wrong.' }
@@ -49,6 +49,6 @@ RSpec.describe Errors::Authentication::Base do
   describe '#type' do
     include_examples 'should have reader',
       :type,
-      'authentication.error'
+      'authentication.failed_login'
   end
 end

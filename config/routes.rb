@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :authentication do
-      resource :session, format: :json, only: %i[show]
+      resource :session, format: :json, only: %i[create show]
     end
 
     api_resources :books

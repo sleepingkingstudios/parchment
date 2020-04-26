@@ -14,4 +14,14 @@ RSpec.describe 'routes' do
       )
     end
   end
+
+  describe 'POST /api/authentication/session' do
+    it 'should route to Api::Authentication::Sessions#create' do
+      expect(post: '/api/authentication/session.json').to route_to(
+        controller: controller,
+        action:     'create',
+        format:     'json'
+      )
+    end
+  end
 end
