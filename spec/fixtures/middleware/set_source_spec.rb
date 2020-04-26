@@ -13,6 +13,10 @@ RSpec.describe Fixtures::Middleware::SetSource do
 
   subject(:middleware) { described_class.new }
 
+  describe '.new' do
+    it { expect(described_class).to be_constructible.with(0).arguments }
+  end
+
   describe '#call' do
     let(:origin) do
       title = data.fetch('source', {}).fetch('title', 'In The Arms of a Flumph')
