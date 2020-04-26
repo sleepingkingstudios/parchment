@@ -23,9 +23,6 @@ exports[`<MechanicForm /> should match the snapshot 1`] = `
     }
   }
 >
-  <h2>
-    Mechanic Form
-  </h2>
   <FormRow
     align="left"
     className=""

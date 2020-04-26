@@ -55,7 +55,12 @@ RSpec.describe Api::Authentication::SessionsController, type: :request do
       let(:expected_json) do
         error =
           Errors::InvalidParameters
-          .new(errors: [['username', "can't be blank"]])
+          .new(
+            errors: [
+              ['username', "can't be blank"],
+              ['password', "can't be blank"]
+            ]
+          )
           .as_json
 
         {

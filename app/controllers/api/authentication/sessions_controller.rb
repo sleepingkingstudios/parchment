@@ -39,6 +39,10 @@ module Api::Authentication
         .call(session)
     end
 
+    def input_valid?(input)
+      input.is_a?(String) && !input.empty?
+    end
+
     def permitted_params
       params.permit(:password, :username)
     end
@@ -50,7 +54,7 @@ module Api::Authentication
     def validate_password
       password = permitted_params[:password]
 
-      return password if password.is_a?(String) && !password.empty?
+      return password if input_valid?(password)
 
       failure(
         Errors::InvalidParameters.new(errors: [['password', "can't be blank"]])
@@ -60,11 +64,13 @@ module Api::Authentication
     def validate_username
       username = permitted_params[:username]
 
-      return username if username.is_a?(String) && !username.empty?
+      return username if input_valid?(username)
 
-      failure(
-        Errors::InvalidParameters.new(errors: [['username', "can't be blank"]])
-      )
+      errors   = [['username', "can't be blank"]]
+      password = permitted_params[:password]
+      errors << ['password', "can't be blank"] unless input_valid?(password)
+
+      failure(Errors::InvalidParameters.new(errors: errors))
     end
   end
 end
