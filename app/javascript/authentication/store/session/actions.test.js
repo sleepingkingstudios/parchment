@@ -1,50 +1,56 @@
 import {
-  CLEAR_TOKEN,
-  SET_TOKEN,
-  clearToken,
-  setToken,
+  CLEAR_SESSION,
+  SET_SESSION,
+  clearSession,
+  setSession,
 } from './actions';
 
 describe('Session store actions', () => {
-  describe('CLEAR_TOKEN', () => {
+  describe('CLEAR_SESSION', () => {
     it('should define the namespaced action', () => {
-      expect(CLEAR_TOKEN).toEqual('authentication/session/clearToken');
+      expect(CLEAR_SESSION).toEqual('authentication/session/clearSession');
     });
   });
 
-  describe('SET_TOKEN', () => {
+  describe('SET_SESSION', () => {
     it('should define the namespaced action', () => {
-      expect(SET_TOKEN).toEqual('authentication/session/setToken');
+      expect(SET_SESSION).toEqual('authentication/session/setSession');
     });
   });
 
-  describe('clearToken()', () => {
+  describe('clearSession()', () => {
     it('should be a function', () => {
-      expect(typeof clearToken).toEqual('function');
+      expect(typeof clearSession).toEqual('function');
     });
 
     it('should create the action', () => {
-      const action = clearToken();
+      const action = clearSession();
 
       expect(action).toEqual({
-        type: CLEAR_TOKEN,
+        type: CLEAR_SESSION,
         payload: {},
       });
     });
   });
 
-  describe('setToken()', () => {
+  describe('setSession()', () => {
     it('should be a function', () => {
-      expect(typeof setToken).toEqual('function');
+      expect(typeof setSession).toEqual('function');
     });
 
     it('should create the action', () => {
       const token = 'a.b.c';
-      const action = setToken(token);
+      const user = {
+        id: '00000000-0000-0000-0000-000000000000',
+        emailAddress: 'alan.bradley@example.com',
+        role: 'user',
+        username: 'Alan Bradley',
+      };
+      const action = setSession({ token, user });
 
       expect(action).toEqual({
-        type: SET_TOKEN,
-        payload: { token },
+        type: SET_SESSION,
+        payload: { token, user },
       });
     });
   });

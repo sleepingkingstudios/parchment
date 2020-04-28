@@ -1,21 +1,21 @@
-export const CLEAR_TOKEN = 'authentication/session/clearToken';
-export const SET_TOKEN = 'authentication/session/setToken';
+export const CLEAR_SESSION = 'authentication/session/clearSession';
+export const SET_SESSION = 'authentication/session/setSession';
 
-export const clearToken = () => ({
-  type: CLEAR_TOKEN,
+export const clearSession = () => ({
+  type: CLEAR_SESSION,
   payload: {},
 });
 
-export const setToken = token => ({
-  type: SET_TOKEN,
-  payload: { token },
+export const setSession = ({ token, user }) => ({
+  type: SET_SESSION,
+  payload: { token, user },
 });
 
 const actions = {
-  CLEAR_TOKEN,
-  SET_TOKEN,
-  clearToken,
-  setToken,
+  CLEAR_SESSION,
+  SET_SESSION,
+  clearSession,
+  setSession,
 };
 
 export default actions;

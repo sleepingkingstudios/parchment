@@ -1,7 +1,10 @@
 import initialState from './initialState';
+import { buildUser } from '../../entities';
 
 describe('Session store initialState', () => {
   it('should be the initial state', () => {
-    expect(initialState).toEqual({ token: '' });
+    const user = buildUser();
+
+    expect(initialState).toEqual({ token: '', user });
   });
 });
