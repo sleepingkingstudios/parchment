@@ -1,10 +1,12 @@
 import FormEndpoint from '../../../api/form';
 import alerts from './alerts';
+import setToken from './setToken';
 
 const REQUEST_URL = '/api/authentication/session';
 const endpoint = new FormEndpoint({
   data: { username: '', password: '' },
   middleware: [
+    setToken,
     alerts,
   ],
   namespace: 'authentication/loginForm',
