@@ -1,6 +1,17 @@
-import { shallowEqual, useSelector } from 'react-redux';
+import {
+  shallowEqual,
+  useDispatch,
+  useSelector,
+} from 'react-redux';
 
+import { clearSession } from './actions';
 import selector from './selector';
+
+export const useClearSession = () => {
+  const dispatch = useDispatch();
+
+  return () => dispatch(clearSession());
+};
 
 export const useSession = (fn = state => state) => useSelector(
   state => fn(selector(state)),
@@ -8,6 +19,7 @@ export const useSession = (fn = state => state) => useSelector(
 );
 
 const hooks = {
+  useClearSession,
   useSession,
 };
 

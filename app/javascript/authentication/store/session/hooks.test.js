@@ -1,16 +1,55 @@
-import { useSelector } from 'react-redux';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
 
-import { useSession } from './hooks';
+import { clearSession as clearSessionAction } from './actions';
+import {
+  useClearSession,
+  useSession,
+} from './hooks';
 import selector from './selector';
 
 jest.mock('react');
 jest.mock('react-redux');
 
+useDispatch.mockImplementation(jest.fn(() => () => {}));
 useSelector.mockImplementation(fn => fn);
 
 describe('Session store hooks', () => {
   const session = { token: 'a.b.c' };
   const state = { authentication: { session } };
+
+  describe('useClearSession()', () => {
+    const dispatch = jest.fn();
+
+    beforeEach(() => {
+      useDispatch.mockImplementationOnce(() => dispatch);
+    });
+
+    it('should be a function', () => {
+      expect(typeof useClearSession === 'function').toBe(true);
+    });
+
+    it('should return a function', () => {
+      expect(typeof useClearSession() === 'function').toBe(true);
+    });
+
+    it('should call useDispatch()', () => {
+      useClearSession();
+
+      expect(useDispatch).toHaveBeenCalled();
+    });
+
+    it('should dispatch a clearSession action', () => {
+      const action = clearSessionAction();
+      const clearSession = useClearSession();
+
+      clearSession();
+
+      expect(dispatch).toHaveBeenCalledWith(action);
+    });
+  });
 
   describe('useSession()', () => {
     it('should be a function', () => {

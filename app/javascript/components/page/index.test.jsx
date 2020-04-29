@@ -33,6 +33,13 @@ describe('<Page />', () => {
     expect(header).toHaveProp('subtitle', '5e Campaign Companion');
   });
 
+  it('should render the current user', () => {
+    const rendered = shallow(<Page {...defaultProps} />);
+    const connected = rendered.find('ConnectedCurrentUser');
+
+    expect(connected).toExist();
+  });
+
   it('should render the alerts', () => {
     const rendered = shallow(<Page {...defaultProps} />);
     const connected = rendered.find('Connect(Alerts)').at(0);
@@ -150,6 +157,15 @@ describe('<Page />', () => {
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('container-fluid');
       expect(rendered).toHaveClassName('page');
+    });
+  });
+
+  describe('with showUser: false', () => {
+    it('should not render the current user', () => {
+      const rendered = shallow(<Page {...defaultProps} showUser={false} />);
+      const connected = rendered.find('ConnectedCurrentUser');
+
+      expect(connected).not.toExist();
     });
   });
 });

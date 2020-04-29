@@ -1,3 +1,9 @@
+.page .page-current-user .page-current-user-log-out {
+  float: right;
+  position: relative;
+  top: -0.25em;
+}
+
 .page .page-flex-container {
   display: flex;
   flex-direction: column;

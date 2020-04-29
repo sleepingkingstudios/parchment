@@ -11,6 +11,7 @@ exports[`<Page /> should match the snapshot 1`] = `
       subtitle="5e Campaign Companion"
       title="Parchment"
     />
+    <ConnectedCurrentUser />
     <main
       className="page-body"
     >
