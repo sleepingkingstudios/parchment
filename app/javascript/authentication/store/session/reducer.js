@@ -2,8 +2,10 @@ import {
   CLEAR_SESSION,
   SET_SESSION,
 } from './actions';
-import initialState from './initialState';
+import getInitialState from './initialState';
 import { buildUser } from '../../entities';
+
+const initialState = getInitialState({ localStorage });
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {

@@ -35,6 +35,9 @@
 - generic 404 page for non-matching route
 - add Loading overlay for resource tables
   - wait for Loading overlay to appear/disappear in features
+- lazy loading of functional areas
+  - see https://reacttraining.com/react-router/web/guides/code-splitting
+  - load entire authenticated application lazily?
 
 ### Alerts
 

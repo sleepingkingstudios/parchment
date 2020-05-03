@@ -1,2 +1,4 @@
-/* eslint-disable-next-line import/prefer-default-export */
-export { default as reducer } from './store';
+export {
+  default as reducer,
+  observer,
+} from './store';

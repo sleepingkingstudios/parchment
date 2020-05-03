@@ -3,7 +3,7 @@ import {
   clearSession,
   setSession,
 } from './actions';
-import initialState from './initialState';
+import getInitialState from './initialState';
 import { buildUser } from '../../entities';
 
 describe('Session store reducer', () => {
@@ -14,6 +14,9 @@ describe('Session store reducer', () => {
   });
 
   describe('initial state', () => {
+    const localStorage = { getItem: jest.fn() };
+    const initialState = getInitialState({ localStorage });
+
     it('should set the initial state', () => {
       const action = { type: 'test/unknownAction' };
 
@@ -22,6 +25,9 @@ describe('Session store reducer', () => {
   });
 
   describe('when CLEAR_SESSION is dispatched', () => {
+    const localStorage = { getItem: jest.fn() };
+    const initialState = getInitialState({ localStorage });
+
     it('should clear the token', () => {
       const state = { ...initialState };
       const action = clearSession();
@@ -50,6 +56,8 @@ describe('Session store reducer', () => {
   });
 
   describe('when SET_TOKEN is dispatched', () => {
+    const localStorage = { getItem: jest.fn() };
+    const initialState = getInitialState({ localStorage });
     const token = 'a.b.c';
     const user = {
       id: '00000000-0000-0000-0000-000000000000',

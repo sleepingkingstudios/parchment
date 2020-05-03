@@ -4,7 +4,10 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
 import alerts from '../components/alerts/store/reducer';
-import { reducer as authentication } from '../authentication';
+import {
+  reducer as authentication,
+  observer as createAuthTokenObserver,
+} from '../authentication';
 import { reducer as books } from '../books';
 import { reducer as mechanics } from '../mechanics';
 import { reducer as spells } from '../spells';
@@ -26,5 +29,7 @@ const store = createStore(
     routerMiddleware(history),
   ),
 );
+
+createAuthTokenObserver({ localStorage, store });
 
 export default store;
