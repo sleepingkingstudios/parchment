@@ -3,15 +3,23 @@ Feature: Showing Spells
 
   Example: Navigating to the Spells Index Page
     When I open the application
-    And I click the "Spells" link
+    And  I am logged in as a user
+    And  I click the "Spells" link
     Then I should be on the "Spells index" page
 
   Rule: Viewing the Spells
-    Example: When There Are No Spells
+    Example: As An Anonymous User
       When I visit the "Spells index" page
-      Then the "Spells" table should be empty
+      And  I am not logged in
+      Then I should see the Login form
+
+    Example: When There Are No Spells
+      When  I visit the "Spells index" page
+      And   I am logged in as a user
+      Then  the "Spells" table should be empty
 
     Example: When There Are Many Spells
       Given the fixtures are loaded
-      When I visit the "Spells index" page
-      Then the "Spells" table should display the data
+      When  I visit the "Spells index" page
+      And   I am logged in as a user
+      Then  the "Spells" table should display the data

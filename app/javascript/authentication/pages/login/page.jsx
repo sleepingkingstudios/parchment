@@ -4,17 +4,7 @@ import Page from '../../../components/page';
 import ConnectedAuthenticationLoginForm from './form';
 import endpoint from '../../store/loginForm';
 
-const breadcrumbs = [
-  {
-    label: 'Home',
-    url: '/',
-  },
-  {
-    label: 'Log In',
-    url: '/login',
-    active: true,
-  },
-];
+const breadcrumbs = [];
 
 const AuthenticationLoginPage = () => (
   <Page breadcrumbs={breadcrumbs} className="page-login">

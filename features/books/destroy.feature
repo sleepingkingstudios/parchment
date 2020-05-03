@@ -5,6 +5,7 @@ Feature: Destroying A Book
     Example: From The Books Index Page
       Given the fixtures are loaded
       When  I visit the "Books index" page
+      And   I am logged in as a user
       And   I click the "Delete" button for "Book" "Crime in Flumphtownville"
       And   I wait for 1 second
       Then  I should be on the "Books index" page
@@ -14,6 +15,7 @@ Feature: Destroying A Book
     Example: From the Show Book Page
       Given the fixtures are loaded
       When  I visit the "Show" page for "Book" "Crime in Flumphtownville"
+      And   I am logged in as a user
       And   I click the "Delete Book" button
       Then  I should be on the "Books index" page
       And   the "Books" table should display the data

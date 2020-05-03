@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
+require 'support/pages/base'
 require 'support/pages/actions'
 
 module Features::Pages::Actions
-  class Update < SitePrism::Page
+  class Update < Features::Pages::Base
     set_url '/mechanics/actions{/action_id}/update'
 
     element :loading_message, '.loading-message-pending'

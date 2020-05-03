@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
+require 'support/pages/base'
 require 'support/pages/books'
 
 module Features::Pages::Books
-  class Update < SitePrism::Page
+  class Update < Features::Pages::Base
     set_url '/books{/book_id}/update'
 
     element :loading_message, '.loading-message-pending'

@@ -5,7 +5,6 @@ import { generateFingerprintUuid } from '../../../utils/uuid';
 describe('LoginForm store alerts', () => {
   const {
     handleFailure,
-    handleSuccess,
   } = alerts;
 
   describe('handleFailure()', () => {
@@ -43,48 +42,6 @@ describe('LoginForm store alerts', () => {
       const expected = addAlert(alert);
 
       handleFailure(next)({ dispatch, getState, response });
-
-      expect(dispatch).toHaveBeenCalledWith(expected);
-    });
-  });
-
-  describe('handleSuccess()', () => {
-    const getState = jest.fn();
-    const user = { username: 'Alan Bradley' };
-    const response = { ok: false, json: { data: { user } } };
-
-    it('should be a function', () => {
-      expect(typeof handleSuccess).toEqual('function');
-    });
-
-    it('should return a function', () => {
-      const next = jest.fn();
-
-      expect(typeof handleSuccess(next)).toEqual('function');
-    });
-
-    it('should call the next function', () => {
-      const next = jest.fn();
-      const dispatch = jest.fn();
-
-      handleSuccess(next)({ dispatch, getState, response });
-
-      expect(next).toHaveBeenCalledWith({ dispatch, getState, response });
-    });
-
-    it('should dispatch an addAlert action', () => {
-      const next = jest.fn();
-      const dispatch = jest.fn();
-      const { username } = user;
-      const alert = {
-        id: generateFingerprintUuid('authentication/login'),
-        alertStyle: 'success',
-        dismissible: true,
-        message: `Successfully logged in as ${username}`,
-      };
-      const expected = addAlert(alert);
-
-      handleSuccess(next)({ dispatch, getState, response });
 
       expect(dispatch).toHaveBeenCalledWith(expected);
     });

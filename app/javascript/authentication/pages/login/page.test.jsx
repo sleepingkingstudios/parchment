@@ -8,17 +8,7 @@ describe('<AuthenticationLoginPage />', () => {
   const defaultProps = {};
 
   it('should render the page', () => {
-    const breadcrumbs = [
-      {
-        label: 'Home',
-        url: '/',
-      },
-      {
-        label: 'Log In',
-        url: '/login',
-        active: true,
-      },
-    ];
+    const breadcrumbs = [];
     const rendered = shallow(<AuthenticationLoginPage {...defaultProps} />);
 
     expect(rendered).toHaveDisplayName('Page');
@@ -40,5 +30,11 @@ describe('<AuthenticationLoginPage />', () => {
 
     expect(form).toExist();
     expect(form).toHaveProp({ endpoint });
+  });
+
+  it('should match the snapshot', () => {
+    const rendered = shallow(<AuthenticationLoginPage {...defaultProps} />);
+
+    expect(rendered).toMatchSnapshot();
   });
 });

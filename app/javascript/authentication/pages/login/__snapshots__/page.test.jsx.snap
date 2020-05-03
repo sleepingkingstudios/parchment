@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AuthenticationLoginPage /> should match the snapshot 1`] = `
+<Page
+  breadcrumbs={Array []}
+  className="page-login"
+  layout={null}
+  showUser={true}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <div>
+    <h1>
+      Log In
+    </h1>
+    <ConnectedAuthenticationLoginForm
+      endpoint={
+        FormEndpoint {
+          "actions": Object {
+            "REQUEST_FAILURE": "authentication/loginForm/requestFailure",
+            "REQUEST_PENDING": "authentication/loginForm/requestPending",
+            "REQUEST_SUCCESS": "authentication/loginForm/requestSuccess",
+            "SET_FORM_DATA": "authentication/loginForm/setFormData",
+            "UPDATE_FORM_DATA": "authentication/loginForm/updateFormData",
+            "UPDATE_FORM_FIELD": "authentication/loginForm/updateFormField",
+            "requestFailure": [Function],
+            "requestPending": [Function],
+            "requestSuccess": [Function],
+            "setFormData": [Function],
+            "updateFormData": [Function],
+            "updateFormField": [Function],
+          },
+          "hooks": Object {
+            "useEndpoint": [Function],
+            "useSubmitForm": [Function],
+            "useUpdateForm": [Function],
+          },
+          "namespace": "authentication/loginForm",
+          "reducer": [Function],
+          "request": FormRequest {
+            "defineHandlers": [Function],
+            "handleFailure": [Function],
+            "handlePending": [Function],
+            "handleSuccess": [Function],
+            "method": "POST",
+            "namespace": "authentication/loginForm",
+            "performRequest": [Function],
+            "url": "/api/authentication/session",
+          },
+          "selector": [Function],
+        }
+      }
+    />
+  </div>
+</Page>
+`;
