@@ -134,7 +134,13 @@ class ApiRequest {
 
       if (requestStatus === PENDING) { return; }
 
-      handlePending({ dispatch, getState });
+      const { onPending } = params;
+
+      if (onPending) {
+        onPending(handlePending)({ dispatch, getState });
+      } else {
+        handlePending({ dispatch, getState });
+      }
 
       const fullUrl = buildUrl(url, params);
       const rawResponse = await fetch(

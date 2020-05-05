@@ -265,6 +265,11 @@ describe('ApiEndpoint', () => {
 
         next({ dispatch, getState, response });
       },
+      handlePending: next => ({ dispatch, getState }) => {
+        calledMiddleware.push(`pending ${label}`);
+
+        next({ dispatch, getState });
+      },
       handleSuccess: next => ({ dispatch, getState, response }) => {
         calledMiddleware.push(`success ${label}`);
 
@@ -303,6 +308,7 @@ describe('ApiEndpoint', () => {
     describe('request', () => {
       const {
         handleFailure,
+        handlePending,
         handleSuccess,
       } = request;
 
@@ -319,6 +325,21 @@ describe('ApiEndpoint', () => {
           handleFailure({ dispatch, getState, response });
 
           expect(calledMiddleware).toEqual(['failure A', 'failure B', 'failure C']);
+        });
+      });
+
+      describe('handlePending()', () => {
+        const dispatch = jest.fn();
+        const getState = jest.fn();
+
+        it('should be a function', () => {
+          expect(typeof handlePending).toEqual('function');
+        });
+
+        it('should call the middleware', () => {
+          handlePending({ dispatch, getState });
+
+          expect(calledMiddleware).toEqual(['pending A', 'pending B', 'pending C']);
         });
       });
 

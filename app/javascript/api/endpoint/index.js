@@ -11,6 +11,10 @@ const applyMiddlewareToRequest = (request, middleware) => {
     request.handleFailure,
     selectMiddleware(middleware, 'handleFailure'),
   );
+  request.handlePending = applyMiddleware(
+    request.handlePending,
+    selectMiddleware(middleware, 'handlePending'),
+  );
   request.handleSuccess = applyMiddleware(
     request.handleSuccess,
     selectMiddleware(middleware, 'handleSuccess'),
