@@ -282,6 +282,30 @@ RSpec.describe Api::BaseController do
         .with(0).arguments
     end
 
+    context 'when the session key is not set' do
+      let(:error)     { Errors::Server::MissingSessionKey.new }
+      let(:result)    { Cuprum::Result.new(error: error) }
+      let(:responder) { controller.send :responder }
+
+      before(:example) do
+        allow(responder).to receive(:call)
+
+        allow(controller) # rubocop:disable RSpec/SubjectStub
+          .to receive(:extract_authorization_token)
+          .and_return(Cuprum::Result.new(value: 'a.b.c'))
+
+        allow(controller) # rubocop:disable RSpec/SubjectStub
+          .to receive(:session_key)
+          .and_raise(described_class::UndefinedSessionKeyError)
+      end
+
+      it 'should call the responder with the result' do
+        controller.send :require_authenticated_user
+
+        expect(responder).to have_received(:call).with(result)
+      end
+    end
+
     context 'when the deserialized session is anonymous' do
       let(:error)     { Errors::Authentication::Base.new }
       let(:result)    { Cuprum::Result.new(error: error) }

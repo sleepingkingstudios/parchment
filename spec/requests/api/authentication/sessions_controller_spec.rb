@@ -197,6 +197,47 @@ RSpec.describe Api::Authentication::SessionsController, type: :request do
         credential.save!
       end
 
+      context 'when the session key is invalid' do
+        let(:params) do
+          super().merge(
+            password: 'tr0nl1v3s',
+            username: 'alan.bradley@example.com'
+          )
+        end
+        let(:expected_json) do
+          {
+            'error' => {
+              'message' => 'Something went wrong when processing the request.'
+            },
+            'ok'    => false
+          }
+        end
+
+        around(:example) do |example|
+          previous_key = ENV['AUTHENTICATION_SESSION_KEY']
+
+          ENV['AUTHENTICATION_SESSION_KEY'] = ''
+
+          example.call
+        ensure
+          ENV['AUTHENTICATION_SESSION_KEY'] = previous_key
+        end
+
+        it 'should respond with 500 Internal Server Error' do
+          call_action
+
+          expect(response).to have_http_status(:internal_server_error)
+        end
+
+        it 'should serialize the error' do
+          call_action
+
+          expect(json).to deep_match expected_json
+        end
+
+        include_examples 'should respond with JSON content'
+      end
+
       describe 'with an invalid password' do
         let(:message) { Errors::Authentication::FailedLogin.new.message }
         let(:expected_json) do

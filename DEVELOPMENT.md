@@ -1,6 +1,8 @@
 # Development Notes
 
 - UndefinedSessionKeyError should be rescued where it is used.
+  - rescue block => ConfigurationError
+  - in Api::BaseController, rescue_from StandardError => UnhandledExceptionError
 - The JS endpoint request does not catch rejected promises.
 - The JS endpoint request is unable to handle invalid JSON.
   - An empty response (e.g. head :internal_server_error)

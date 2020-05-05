@@ -37,6 +37,8 @@ module Api::Authentication
       Operations::Authentication::GenerateToken
         .new(session_key: session_key)
         .call(session)
+    rescue UndefinedSessionKeyError
+      failure(Errors::Server::MissingSessionKey.new)
     end
 
     def input_valid?(input)

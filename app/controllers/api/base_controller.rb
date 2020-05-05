@@ -2,6 +2,7 @@
 
 require 'cuprum/steps'
 
+require 'errors/server/missing_session_key'
 require 'operations/authentication/extract_header'
 require 'operations/authentication/strategies/token'
 require 'responders/json_responder'
@@ -64,6 +65,8 @@ module Api
       response.headers['WWW-Authenticate'] = 'Bearer'
 
       responder.call(result)
+    rescue UndefinedSessionKeyError
+      responder.call(failure(Errors::Server::MissingSessionKey.new))
     end
 
     def responder

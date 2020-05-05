@@ -174,6 +174,56 @@ RSpec.describe Responders::JsonResponder do
       end
     end
 
+    describe 'with a failing result with error: Server::Base' do
+      let(:error)  { Errors::Server::Base.new }
+      let(:result) { Cuprum::Result.new(error: error) }
+      let(:json) do
+        {
+          'ok'    => false,
+          'error' => {
+            'message' => 'Something went wrong when processing the request.'
+          }
+        }
+      end
+      let(:expected) { { json: json, status: :internal_server_error } }
+
+      it 'should render 500 Internal Server Error with with a generic error' do
+        responder.call(result)
+
+        expect(controller).to have_received(:render).with(expected)
+      end
+
+      describe 'with status: value' do
+        let(:options) { { status: :forbidden } }
+
+        it 'should render 500 Internal Server Error with with a generic error' \
+        do
+          responder.call(result)
+
+          expect(controller).to have_received(:render).with(expected)
+        end
+      end
+
+      context 'when the Rails environment is development' do
+        let(:json) do
+          {
+            'ok'    => false,
+            'error' => error.as_json
+          }
+        end
+
+        before(:example) do
+          allow(Rails.env).to receive(:development?).and_return(true)
+        end
+
+        it 'should render 500 Internal Server Error with the error details' do
+          responder.call(result)
+
+          expect(controller).to have_received(:render).with(expected)
+        end
+      end
+    end
+
     describe 'with a failing result with error: unknown error' do
       let(:error)  { Cuprum::Error.new(message: 'Something went wrong.') }
       let(:result) { Cuprum::Result.new(error: error) }
