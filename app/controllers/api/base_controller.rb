@@ -3,6 +3,7 @@
 require 'cuprum/steps'
 
 require 'errors/server/missing_session_key'
+require 'errors/server/unhandled_exception'
 require 'operations/authentication/extract_header'
 require 'operations/authentication/strategies/token'
 require 'responders/json_responder'
@@ -16,6 +17,8 @@ module Api
     class UndefinedSessionKeyError < StandardError; end
 
     protect_from_forgery with: :null_session
+
+    rescue_from StandardError, with: :handle_exception
 
     private
 
@@ -45,6 +48,12 @@ module Api
 
     def extract_authorization_token
       Operations::Authentication::ExtractHeader.new.call(request.headers.env)
+    end
+
+    def handle_exception(exception)
+      error = Errors::Server::UnhandledException.new(exception: exception)
+
+      responder.call(failure(error))
     end
 
     def parse_authorization_token(token)

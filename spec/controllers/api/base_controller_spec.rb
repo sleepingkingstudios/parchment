@@ -267,6 +267,27 @@ RSpec.describe Api::BaseController do
     end
   end
 
+  describe '#handle_exception' do
+    let(:exception) { StandardError.new('Something went wrong') }
+    let(:error) do
+      Errors::Server::UnhandledException.new(exception: exception)
+    end
+    let(:result)    { Cuprum::Result.new(error: error) }
+    let(:responder) { controller.send :responder }
+
+    before(:example) { allow(responder).to receive(:call) }
+
+    it 'should define the private method' do
+      expect(controller).to respond_to(:handle_exception, true).with(1).argument
+    end
+
+    it 'should call the responder with an error result' do
+      controller.send :handle_exception, exception
+
+      expect(responder).to have_received(:call).with(result)
+    end
+  end
+
   describe '#require_authenticated_user' do
     let(:response) { ActionDispatch::Response.new }
 
