@@ -16,6 +16,11 @@ const getData = ({ namespace, state }) => {
   return underscoreKeys(raw);
 };
 
+const buildEmptyResponse = () => ({
+  ok: false,
+  json: { ok: false },
+});
+
 const buildRequest = ({ getState, method, namespace }) => {
   const request = {
     method,
@@ -143,15 +148,31 @@ class ApiRequest {
       }
 
       const fullUrl = buildUrl(url, params);
-      const rawResponse = await fetch(
-        fullUrl,
-        buildRequest({
-          getState,
-          method,
-          namespace,
-        }),
-      );
-      const response = await processResponse(rawResponse);
+      let response;
+
+      try {
+        const rawResponse = await fetch(
+          fullUrl,
+          buildRequest({
+            getState,
+            method,
+            namespace,
+          }),
+        );
+        response = await processResponse(rawResponse);
+      } catch (error) {
+        const { onFailure } = params;
+
+        response = buildEmptyResponse();
+
+        if (onFailure) {
+          onFailure(handleFailure)({ dispatch, getState, response });
+        } else {
+          handleFailure({ dispatch, getState, response });
+        }
+
+        return;
+      }
 
       if (response.ok) {
         const { onSuccess } = params;

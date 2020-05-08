@@ -71,6 +71,375 @@ describe('ApiRequest', () => {
     } = actions;
     const { performRequest } = request;
 
+    describe('when the API request is rejected', () => {
+      it('should dispatch REQUEST_PENDING and REQUEST_FAILURE', async () => {
+        const state = buildState(namespace, { data });
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const expectedErrors = {};
+        const error = new Error('Something went wrong');
+        const dispatchedActions = dispatch.mock.calls;
+
+        fetch.mockRejectedValue(error);
+
+        await performRequest()(dispatch, getState);
+
+        expect(dispatchedActions.length).toBe(2);
+        expect(dispatchedActions[0][0]).toEqual(requestPending());
+        expect(dispatchedActions[1][0]).toEqual(requestFailure(expectedErrors));
+      });
+
+      it('should call handlePending()', async () => {
+        const originalHandlePending = request.handlePending;
+        const state = buildState(namespace, { data });
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const error = new Error('Something went wrong');
+
+        request.handlePending = jest.fn();
+
+        fetch.mockRejectedValue(error);
+
+        await performRequest()(dispatch, getState);
+
+        expect(request.handlePending)
+          .toHaveBeenCalledWith({ dispatch, getState });
+
+        request.handlePending = originalHandlePending;
+      });
+
+      it('should call handleFailure()', async () => {
+        const originalHandleFailure = request.handleFailure;
+        const state = buildState(namespace, { data });
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const error = new Error('Something went wrong');
+        const expected = {
+          json: { ok: false },
+          ok: false,
+        };
+
+        request.handleFailure = jest.fn();
+
+        fetch.mockRejectedValue(error);
+
+        await performRequest()(dispatch, getState);
+
+        expect(request.handleFailure)
+          .toHaveBeenCalledWith({ dispatch, getState, response: expected });
+
+        request.handleFailure = originalHandleFailure;
+      });
+
+      describe('with onFailure: function', () => {
+        it('should call onFailure and handleFailure()', async () => {
+          const onFailureInner = jest.fn();
+          const onFailure = next => (props) => {
+            next(props);
+
+            onFailureInner(props);
+          };
+          const originalHandleFailure = request.handleFailure;
+          const state = buildState(namespace, { data });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+          const error = new Error('Something went wrong');
+          const expected = {
+            json: { ok: false },
+            ok: false,
+          };
+
+          request.handleFailure = jest.fn();
+
+          fetch.mockRejectedValue(error);
+
+          await performRequest({ onFailure })(dispatch, getState);
+
+          expect(onFailureInner)
+            .toHaveBeenCalledWith({ dispatch, getState, response: expected });
+          expect(request.handleFailure)
+            .toHaveBeenCalledWith({ dispatch, getState, response: expected });
+
+          request.handleFailure = originalHandleFailure;
+        });
+      });
+
+      describe('with onPending: function', () => {
+        it('should call onPending and handlePending()', async () => {
+          const onPendingInner = jest.fn();
+          const onPending = next => (props) => {
+            next(props);
+
+            onPendingInner(props);
+          };
+          const originalHandlePending = request.handlePending;
+          const state = buildState(namespace, { data });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+          const error = new Error('Something went wrong');
+
+          request.handlePending = jest.fn();
+
+          fetch.mockRejectedValue(error);
+
+          await performRequest({ onPending })(dispatch, getState);
+
+          expect(onPendingInner)
+            .toHaveBeenCalledWith({ dispatch, getState });
+          expect(request.handlePending)
+            .toHaveBeenCalledWith({ dispatch, getState });
+
+          request.handlePending = originalHandlePending;
+        });
+      });
+    });
+
+    describe('when the API response is empty', () => {
+      it('should dispatch REQUEST_PENDING and REQUEST_FAILURE', async () => {
+        const state = buildState(namespace, { data });
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const expectedErrors = {};
+        const response = { ok: false, json: () => { JSON.parse(''); } };
+        const dispatchedActions = dispatch.mock.calls;
+
+        fetch.mockResolvedValue(response);
+
+        await performRequest()(dispatch, getState);
+
+        expect(dispatchedActions.length).toBe(2);
+        expect(dispatchedActions[0][0]).toEqual(requestPending());
+        expect(dispatchedActions[1][0]).toEqual(requestFailure(expectedErrors));
+      });
+
+      it('should call handlePending()', async () => {
+        const originalHandlePending = request.handlePending;
+        const state = buildState(namespace, { data });
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const response = { ok: false, json: () => { JSON.parse(''); } };
+
+        request.handlePending = jest.fn();
+
+        fetch.mockResolvedValue(response);
+
+        await performRequest()(dispatch, getState);
+
+        expect(request.handlePending)
+          .toHaveBeenCalledWith({ dispatch, getState });
+
+        request.handlePending = originalHandlePending;
+      });
+
+      it('should call handleFailure()', async () => {
+        const originalHandleFailure = request.handleFailure;
+        const state = buildState(namespace, { data });
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const response = { ok: false, json: () => { JSON.parse(''); } };
+        const expected = {
+          json: { ok: false },
+          ok: false,
+        };
+
+        request.handleFailure = jest.fn();
+
+        fetch.mockResolvedValue(response);
+
+        await performRequest()(dispatch, getState);
+
+        expect(request.handleFailure)
+          .toHaveBeenCalledWith({ dispatch, getState, response: expected });
+
+        request.handleFailure = originalHandleFailure;
+      });
+
+      describe('with onFailure: function', () => {
+        it('should call onFailure and handleFailure()', async () => {
+          const onFailureInner = jest.fn();
+          const onFailure = next => (props) => {
+            next(props);
+
+            onFailureInner(props);
+          };
+          const originalHandleFailure = request.handleFailure;
+          const state = buildState(namespace, { data });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+          const response = { ok: false, json: () => { JSON.parse(''); } };
+          const expected = {
+            json: { ok: false },
+            ok: false,
+          };
+
+          request.handleFailure = jest.fn();
+
+          fetch.mockResolvedValue(response);
+
+          await performRequest({ onFailure })(dispatch, getState);
+
+          expect(onFailureInner)
+            .toHaveBeenCalledWith({ dispatch, getState, response: expected });
+          expect(request.handleFailure)
+            .toHaveBeenCalledWith({ dispatch, getState, response: expected });
+
+          request.handleFailure = originalHandleFailure;
+        });
+      });
+
+      describe('with onPending: function', () => {
+        it('should call onPending and handlePending()', async () => {
+          const onPendingInner = jest.fn();
+          const onPending = next => (props) => {
+            next(props);
+
+            onPendingInner(props);
+          };
+          const originalHandlePending = request.handlePending;
+          const state = buildState(namespace, { data });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+          const response = { ok: false, json: () => { JSON.parse(''); } };
+
+          request.handlePending = jest.fn();
+
+          fetch.mockResolvedValue(response);
+
+          await performRequest({ onPending })(dispatch, getState);
+
+          expect(onPendingInner)
+            .toHaveBeenCalledWith({ dispatch, getState });
+          expect(request.handlePending)
+            .toHaveBeenCalledWith({ dispatch, getState });
+
+          request.handlePending = originalHandlePending;
+        });
+      });
+    });
+
+    describe('when the API response is invalid JSON', () => {
+      it('should dispatch REQUEST_PENDING and REQUEST_FAILURE', async () => {
+        const state = buildState(namespace, { data });
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const expectedErrors = {};
+        const response = { ok: false, json: () => { JSON.parse('<html />'); } };
+        const dispatchedActions = dispatch.mock.calls;
+
+        fetch.mockResolvedValue(response);
+
+        await performRequest()(dispatch, getState);
+
+        expect(dispatchedActions.length).toBe(2);
+        expect(dispatchedActions[0][0]).toEqual(requestPending());
+        expect(dispatchedActions[1][0]).toEqual(requestFailure(expectedErrors));
+      });
+
+      it('should call handlePending()', async () => {
+        const originalHandlePending = request.handlePending;
+        const state = buildState(namespace, { data });
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const response = { ok: false, json: () => { JSON.parse('<html />'); } };
+
+        request.handlePending = jest.fn();
+
+        fetch.mockResolvedValue(response);
+
+        await performRequest()(dispatch, getState);
+
+        expect(request.handlePending)
+          .toHaveBeenCalledWith({ dispatch, getState });
+
+        request.handlePending = originalHandlePending;
+      });
+
+      it('should call handleFailure()', async () => {
+        const originalHandleFailure = request.handleFailure;
+        const state = buildState(namespace, { data });
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const response = { ok: false, json: () => { JSON.parse('<html />'); } };
+        const expected = {
+          json: { ok: false },
+          ok: false,
+        };
+
+        request.handleFailure = jest.fn();
+
+        fetch.mockResolvedValue(response);
+
+        await performRequest()(dispatch, getState);
+
+        expect(request.handleFailure)
+          .toHaveBeenCalledWith({ dispatch, getState, response: expected });
+
+        request.handleFailure = originalHandleFailure;
+      });
+
+      describe('with onFailure: function', () => {
+        it('should call onFailure and handleFailure()', async () => {
+          const onFailureInner = jest.fn();
+          const onFailure = next => (props) => {
+            next(props);
+
+            onFailureInner(props);
+          };
+          const originalHandleFailure = request.handleFailure;
+          const state = buildState(namespace, { data });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+          const response = { ok: false, json: () => { JSON.parse('<html />'); } };
+          const expected = {
+            json: { ok: false },
+            ok: false,
+          };
+
+          request.handleFailure = jest.fn();
+
+          fetch.mockResolvedValue(response);
+
+          await performRequest({ onFailure })(dispatch, getState);
+
+          expect(onFailureInner)
+            .toHaveBeenCalledWith({ dispatch, getState, response: expected });
+          expect(request.handleFailure)
+            .toHaveBeenCalledWith({ dispatch, getState, response: expected });
+
+          request.handleFailure = originalHandleFailure;
+        });
+      });
+
+      describe('with onPending: function', () => {
+        it('should call onPending and handlePending()', async () => {
+          const onPendingInner = jest.fn();
+          const onPending = next => (props) => {
+            next(props);
+
+            onPendingInner(props);
+          };
+          const originalHandlePending = request.handlePending;
+          const state = buildState(namespace, { data });
+          const dispatch = jest.fn();
+          const getState = jest.fn(() => state);
+          const response = { ok: false, json: () => { JSON.parse('<html />'); } };
+
+          request.handlePending = jest.fn();
+
+          fetch.mockResolvedValue(response);
+
+          await performRequest({ onPending })(dispatch, getState);
+
+          expect(onPendingInner)
+            .toHaveBeenCalledWith({ dispatch, getState });
+          expect(request.handlePending)
+            .toHaveBeenCalledWith({ dispatch, getState });
+
+          request.handlePending = originalHandlePending;
+        });
+      });
+    });
+
     describe('when the API request fails', () => {
       it('should dispatch REQUEST_PENDING and REQUEST_FAILURE', async () => {
         const state = buildState(namespace, { data });
