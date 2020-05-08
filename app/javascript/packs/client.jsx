@@ -6,12 +6,12 @@ import { Provider } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-import Routes from '../routes';
-import store, { history } from '../store';
+import Application from '../application';
+import store from '../store';
 
 const Client = () => (
   <Provider store={store}>
-    <Routes history={history} />
+    <Application />
   </Provider>
 );
 

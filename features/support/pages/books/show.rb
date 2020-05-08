@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
+require 'support/pages/base'
 require 'support/pages/books'
 
 module Features::Pages::Books
-  class Show < SitePrism::Page
+  class Show < Features::Pages::Base
     set_url '/books{/book_id}'
 
     element :book_block, '.book-block'

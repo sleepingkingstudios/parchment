@@ -101,12 +101,16 @@ module Fixtures
     end
 
     def process(command:, **builder_options)
-      data, options = load_data
-      command       = send(:"#{command}_command", **options.symbolize_keys)
-      data          = process_data(data, **builder_options)
-      middleware    = build_middleware(options.fetch('middleware', []))
-      command       =
-        Fixtures::Middleware.apply(command: command, middleware: middleware)
+      skip_middleware = builder_options.delete(:skip_middleware)
+      data, options   = load_data
+      command         = send(:"#{command}_command", **options.symbolize_keys)
+      data            = process_data(data, **builder_options)
+      middleware      = build_middleware(options.fetch('middleware', []))
+
+      unless skip_middleware
+        command =
+          Fixtures::Middleware.apply(command: command, middleware: middleware)
+      end
 
       data.map { |hsh| command.call(hsh).value }
     end

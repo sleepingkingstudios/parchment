@@ -14,6 +14,27 @@ bundle exec rake db:reset
 pg_ctl stop
 ```
 
+#### Secrets
+
+Parchment requires configured secret keys to generate and parse session tokens. These can be generated via `rails secret`, but should include at least 256 bits of randomness. The keys should be passed to the application either as an environment variable or via `rails credentials`.
+
+If a session key is not set, you will see exceptions such as the following:
+
+```
+UndefinedSessionKeyError: Session key is undefined
+```
+
+In development and test mode, using `rails credentials` is recommended. For each environment, run `rails credentials:edit --environment development` or `test` and add the following value:
+
+```yml
+authentication:
+  session_key: your value
+```
+
+In production mode, using an environment variable is recommended. Set the value of `ENV['AUTHENTICATION_SESSION_KEY']` to your generated secret.
+
+If the secret key is changed in any environment, it will invalidate any existing session keys. Any users will be immediately logged out from the application.
+
 ### Running The App
 
 Parchment uses a Procfile for local development. The recommended tool for running the local dependencies is [Overmind](https://github.com/DarthSim/overmind).
@@ -42,7 +63,7 @@ bundle exec rake webpacker:clobber webpacker:compile # Webpack
 Finally, start up the Rails server with some additional configuration.
 
 ```bash
-RAILS_SERVE_STATIC_FILES=true RAILS_ENV=production bundle exec rails s
+AUTHENTICATION_SESSION_KEY=secret RAILS_SERVE_STATIC_FILES=true RAILS_ENV=production bundle exec rails s
 ```
 
 ### Running the Cucumber Features

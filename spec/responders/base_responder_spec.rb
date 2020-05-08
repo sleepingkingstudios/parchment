@@ -23,6 +23,28 @@ RSpec.describe Responders::BaseResponder do
         .and_any_keywords
     end
 
+    describe 'with a failing result with error: Authentication::Base' do
+      let(:error)  { Errors::Authentication::Base.new }
+      let(:result) { Cuprum::Result.new(error: error) }
+
+      it 'should respond with Head 401 Unauthorized' do
+        responder.call(result)
+
+        expect(controller).to have_received(:head).with(:unauthorized)
+      end
+    end
+
+    describe 'with a failing result with error: Authentication::FailedLogin' do
+      let(:error)  { Errors::Authentication::FailedLogin.new }
+      let(:result) { Cuprum::Result.new(error: error) }
+
+      it 'should respond with Head 403 Forbidden' do
+        responder.call(result)
+
+        expect(controller).to have_received(:head).with(:forbidden)
+      end
+    end
+
     describe 'with a failing result with error: FailedValidation' do
       let(:record) { Spell.new }
       let(:error)  { Errors::FailedValidation.new(record: record) }

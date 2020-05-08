@@ -14,8 +14,6 @@ module Serializers
       :short_description,
       :type
 
-    alias_method :mechanic, :object
-
     private
 
     def can_serialize?(object)

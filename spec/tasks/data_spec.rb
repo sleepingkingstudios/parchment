@@ -67,7 +67,14 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
     end
 
     context 'when all of the data exists' do
-      let(:record_classes) { [Book, Spell] }
+      let(:record_classes) do
+        [
+          Authentication::User,
+          Book,
+          Mechanics::Action,
+          Spell
+        ]
+      end
 
       before(:example) do
         allow(Fixtures).to receive(:exist?).and_return(true)
@@ -125,7 +132,14 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
     end
 
     context 'when all of the data exists' do
-      let(:record_classes) { [Book, Spell] }
+      let(:record_classes) do
+        [
+          Authentication::User,
+          Book,
+          Mechanics::Action,
+          Spell
+        ]
+      end
 
       before(:example) do
         allow(Fixtures).to receive(:exist?).and_return(true)

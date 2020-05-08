@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'serializers/base_serializer'
+require 'serializers/attributes_serializer'
 
 module Serializers
   # Base class for serializing a record as a JSON-compatible hash.
-  class RecordSerializer < Serializers::BaseSerializer
+  class RecordSerializer < Serializers::AttributesSerializer
     attribute :id
   end
 end

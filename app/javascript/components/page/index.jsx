@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Alerts from '../alerts';
+import ConnectedCurrentUser from './current-user';
 import PageFooter from './footer';
 import PageHeader from './header';
 import './styles.css';
@@ -26,13 +27,17 @@ class Page extends React.Component {
       breadcrumbs,
       children,
       title,
+      showUser,
       subtitle,
     } = this.props;
+    const currentUser = showUser ? (<ConnectedCurrentUser />) : null;
 
     return (
       <div className={this.buildClassName()}>
         <div className="page-flex-container">
           <PageHeader {...{ title, subtitle }} />
+
+          {currentUser}
 
           <main className="page-body">
             <Alerts />
@@ -52,6 +57,7 @@ Page.defaultProps = {
   children: null,
   className: null,
   layout: null,
+  showUser: true,
   subtitle: '5e Campaign Companion',
   title: 'Parchment',
 };
@@ -65,6 +71,7 @@ Page.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   layout: PropTypes.string,
+  showUser: PropTypes.bool,
   subtitle: PropTypes.string,
   title: PropTypes.string,
 };

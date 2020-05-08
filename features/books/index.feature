@@ -3,15 +3,23 @@ Feature: Showing Books
 
   Example: Navigating to the Books Index Page
     When I open the application
-    And I click the "Books" link
+    And  I am logged in as a user
+    And  I click the "Books" link
     Then I should be on the "Books index" page
 
   Rule: Viewing the Books
+    Example: As An Anonymous User
+      When I visit the "Books index" page
+      And  I am not logged in
+      Then I should see the Login form
+
     Example: When There Are No Books
       When I visit the "Books index" page
+      And  I am logged in as a user
       Then the "Books" table should be empty
 
     Example: When There Are Many Books
       Given the fixtures are loaded
-      When I visit the "Books index" page
-      Then the "Books" table should display the data
+      When  I visit the "Books index" page
+      And   I am logged in as a user
+      Then  the "Books" table should display the data

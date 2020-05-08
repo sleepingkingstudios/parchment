@@ -211,6 +211,12 @@ RSpec.describe Fixtures do
     let(:builder) do
       instance_double(described_class::Builder, read: data)
     end
+    let(:options) do
+      {
+        count:           nil,
+        skip_middleware: false
+      }
+    end
 
     before(:example) do
       allow(described_class::Builder).to receive(:new).and_return(builder)
@@ -234,7 +240,7 @@ RSpec.describe Fixtures do
     it 'should call Builder#read' do
       described_class.read(record_class)
 
-      expect(builder).to have_received(:read).with(count: nil)
+      expect(builder).to have_received(:read).with(options)
     end
 
     it { expect(described_class.read(record_class)).to be data }
@@ -243,7 +249,7 @@ RSpec.describe Fixtures do
       it 'should call Builder#read' do
         described_class.read(record_class, count: 3)
 
-        expect(builder).to have_received(:read).with(count: 3)
+        expect(builder).to have_received(:read).with(options.merge(count: 3))
       end
     end
 
@@ -256,6 +262,16 @@ RSpec.describe Fixtures do
         expect(described_class::Builder)
           .to have_received(:new)
           .with(record_class, data_path: data_path)
+      end
+    end
+
+    describe 'with skip_middleware: true' do
+      it 'should call Builder#read' do
+        described_class.read(record_class, skip_middleware: true)
+
+        expect(builder)
+          .to have_received(:read)
+          .with(options.merge(skip_middleware: true))
       end
     end
   end

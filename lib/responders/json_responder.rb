@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'errors/server/base'
 require 'responders/base_responder'
 require 'serializers'
 
@@ -62,10 +63,18 @@ module Responders
       end
     end
 
-    def serialize_error(error)
+    def serialize_error(error) # rubocop:disable Metrics/MethodLength
       case error
+      when Errors::Authentication::FailedLogin
+        { 'message' => 'Unable to log in with the given credentials' }
+      when Errors::Authentication::Base
+        { 'message' => 'Unable to authenticate user.' }
       when Errors::FailedValidation, Errors::InvalidParameters, Errors::NotFound
         error.as_json
+      when Errors::Server::Base
+        return error.as_json if Rails.env.development?
+
+        { 'message' => 'Something went wrong when processing the request.' }
       else
         { 'message' => 'Something went wrong when processing the request.' }
       end

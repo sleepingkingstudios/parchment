@@ -1,0 +1,4 @@
+---
+find_by: username
+middleware:
+  - type: set_password

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
+require 'support/pages/base'
 require 'support/pages/spells'
 
 module Features::Pages::Spells
-  class Show < SitePrism::Page
+  class Show < Features::Pages::Base
     set_url '/spells{/spell_id}'
 
     element :loading_message, '.loading-message-pending'

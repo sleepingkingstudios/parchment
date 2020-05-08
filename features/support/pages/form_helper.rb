@@ -19,13 +19,15 @@ module Features::Pages
     end
 
     def find_checkbox_input(attr_name)
-      input_id = "#{input_prefix}-#{attr_name.to_s.tr('_', '-')}-input"
+      input_id =
+        join_id(attr_name: attr_name, prefix: input_prefix, suffix: 'input')
 
       find(%(label[for="#{input_id}"]))
     end
 
     def find_field(attr_name)
-      class_name = "#{input_prefix}-#{attr_name.to_s.tr('_', '-')}-field"
+      class_name =
+        join_id(attr_name: attr_name, prefix: input_prefix, suffix: 'field')
 
       form_groups.find do |form_group|
         form_group[:class].include?(class_name)
@@ -33,9 +35,10 @@ module Features::Pages
     end
 
     def find_input(attr_name, options = {})
-      input_id = "##{input_prefix}-#{attr_name.to_s.tr('_', '-')}-input"
+      input_id =
+        join_id(attr_name: attr_name, prefix: input_prefix, suffix: 'input')
 
-      find(input_id, options)
+      find("##{input_id}", options)
     end
 
     def find_select_option(attr_name, value)
@@ -67,6 +70,16 @@ module Features::Pages
 
     def checkbox_inputs
       []
+    end
+
+    def join_id(attr_name:, prefix: nil, suffix: nil)
+      [
+        prefix,
+        attr_name.to_s.tr('_', '-'),
+        suffix
+      ]
+        .compact
+        .join('-')
     end
 
     def select_inputs

@@ -14,8 +14,6 @@ module Serializers
       :reference_id,
       :reference_type
 
-    alias_method :source, :object
-
     private
 
     def can_serialize?(object)

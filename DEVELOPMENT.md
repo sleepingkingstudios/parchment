@@ -1,79 +1,22 @@
 # Development Notes
 
-## Actions
-
-- columns
-  - name (String)
-  - description (String)
-  - short_description (String)
-  - notes (String)
-
 ## Authentication
 
-- Credential-based
-  - username/password
-  - api credential?
-- Send/Receive as JWT
-- Authorization::Struct
-  - has #user
+- in Cucumber tests, generate token directly rather than going through login
 
-### Commands
+### Endpoints
 
-- Authentication::Credentials::FindPassword
-  - takes user or user_id
-  - searches user PasswordCredential for active
-  - fails if no password exists
-- Authentication::Credentials::GeneratePassword
-  - takes user (username?), password
-  - fails if password blank
-  - in transaction:
-    - marks previous password (if any) as active: false
-    - creates new PasswordCredential with encrypted_password
-- Authentication::Jwt
-  - takes JWT
-  - fails if JWT blank, improperly formatted
-  - fails if JWT not signed, signature does not match
-  - fails if JWT does not encode a User
-  - returns Authorization with user: user
-- Authentication::Password
-  - takes username, password
-  - fails if user does not exist
-  - fails if user does not have active password credential
-  - fails if password does not match
-  - returns Authorization with user: user
-- Authentication::Users::CreateUserWithPassword
-  - in transaction
-    - creates user
-    - generates password for usernotes
+- Api::Authentication::Session
+  - #create
+    - takes :username, :password
+    - return serialized User, Session token
+    - delegate to a generic Authentication::Strategy ?
 
-### Models
+### Workflows
 
-#### Authentication::Credential
-
-- Single Table Inheritance
-- belongs_to :user
-- columns:
-  - active: Boolean
-  - data: jsonb (depends on type, e.g. api => key, secret)
-  - expires_at: Datetime
-
-#### Authentication::PasswordCredential
-
-- data: { encrypted_password }
-- #encrypted_password reader
-
-#### Authentication::User
-
-- columns
-  - name (String), not null, unique
-- has_many :credentials
-  - scope :active
-
-#### Workflows
-
-- Sign Up
 - Log In
 - Log Out
+- User Management (Admin)
 
 ## Authorization
 
@@ -92,6 +35,9 @@
 - generic 404 page for non-matching route
 - add Loading overlay for resource tables
   - wait for Loading overlay to appear/disappear in features
+- lazy loading of functional areas
+  - see https://reacttraining.com/react-router/web/guides/code-splitting
+  - load entire authenticated application lazily?
 
 ### Alerts
 
@@ -180,13 +126,6 @@
   - treat as directory path if starts with '~' or '.' or '/'
   - e.g. data:load['../srd']
 
-### Middleware
-
-- replace mappings
-- each middleware is a callable object (command?)
-  - takes next command and a data hash
-  - returns result with record
-
 ## Spells
 
 - locking slugs
@@ -232,3 +171,13 @@
   - school
   - level
   - ritual
+
+## Serializers
+
+- Extract AttributesSerializer as base class to ResourceSerializer
+  - extract .attribute, .attributes, #call from BaseSerializer
+- Implement StringSerializer
+  - defines .instance
+  - returns the string
+- Implement ArraySerializer
+- Implement HashSerializer

@@ -7,6 +7,8 @@ def create_page(page)
 end
 
 When('the fixtures are loaded') do
+  Fixtures.create(Authentication::User)
+
   %i[source resource mechanic].each do |resource_type|
     Features::Resources
       .all
@@ -37,6 +39,10 @@ end
 
 When('I click the {string} link') do |link|
   @current_page.find_link(link).click
+end
+
+When('I wait for a debugger') do
+  byebug # rubocop:disable Lint/Debugger
 end
 
 Then('I should be on the {string} page') do |page|

@@ -22,6 +22,10 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+    namespace :authentication do
+      resource :session, format: :json, only: %i[create show]
+    end
+
     api_resources :books
 
     namespace :mechanics do

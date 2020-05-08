@@ -462,6 +462,32 @@ RSpec.describe Fixtures::Builder do
     end
 
     include_examples 'should filter the data'
+
+    describe 'with skip_middleware: true' do
+      it 'should return an empty array' do
+        expect(build_fixtures).to be == []
+      end
+
+      wrap_context 'when options[:middleware] is defined for the resource' do
+        it 'should return an empty array' do
+          expect(build_fixtures).to be == []
+        end
+      end
+
+      wrap_context 'when data is defined for the resource' do
+        let(:options) { super().merge(skip_middleware: true) }
+
+        it 'should return the results' do
+          expect(build_fixtures).to be == expected
+        end
+
+        wrap_context 'when options[:middleware] is defined for the resource' do
+          it 'should return the raw results' do
+            expect(build_fixtures).to be == expected
+          end
+        end
+      end
+    end
   end
 
   describe '#record_class' do

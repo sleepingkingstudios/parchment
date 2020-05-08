@@ -49,8 +49,6 @@ const MechanicForm = ({
 
   return (
     <Form className="mechanic-form" form={form}>
-      <h2>Mechanic Form</h2>
-
       <FormRow>
         <NameField form={form} colWidth={4} />
 

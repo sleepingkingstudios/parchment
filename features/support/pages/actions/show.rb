@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
+require 'support/pages/base'
 require 'support/pages/books'
 
 module Features::Pages::Actions
-  class Show < SitePrism::Page
+  class Show < Features::Pages::Base
     set_url '/mechanics/actions{/action_id}'
 
     element :action_block, '.mechanic-block'

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'support/pages'
+require 'support/pages/base'
 
 module Features::Pages
-  class Home < SitePrism::Page
+  class Home < Features::Pages::Base
     set_url '/'
 
     element :spells_link, 'a.spells-link'

@@ -28,7 +28,14 @@ module Fixtures
     ).exist?
   end
 
-  def self.read(record_class, count: nil, data_path: 'fixtures')
-    Builder.new(record_class, data_path: data_path).read(count: count)
+  def self.read(
+    record_class,
+    count:           nil,
+    data_path:       'fixtures',
+    skip_middleware: false
+  )
+    Builder
+      .new(record_class, data_path: data_path)
+      .read(count: count, skip_middleware: skip_middleware)
   end
 end

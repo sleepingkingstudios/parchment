@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AuthenticationLoginForm /> should match the snapshot 1`] = `
+<Form
+  className="login-form"
+  form={
+    Object {
+      "data": Object {
+        "password": "tronlives",
+        "username": "Alan Bradley",
+      },
+      "errors": Object {},
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [],
+    }
+  }
+>
+  <FormRow
+    align="left"
+    className=""
+    verticalAlign="top"
+  >
+    <UsernameField
+      colWidth={6}
+      form={
+        Object {
+          "data": Object {
+            "password": "tronlives",
+            "username": "Alan Bradley",
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [],
+        }
+      }
+    />
+    <PasswordField
+      colWidth={6}
+      form={
+        Object {
+          "data": Object {
+            "password": "tronlives",
+            "username": "Alan Bradley",
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [],
+        }
+      }
+    />
+  </FormRow>
+  <FormRow
+    align="right"
+    className=""
+    verticalAlign="top"
+  >
+    <SubmitButton
+      colWidth="3"
+      form={
+        Object {
+          "data": Object {
+            "password": "tronlives",
+            "username": "Alan Bradley",
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [],
+        }
+      }
+      status="initialized"
+    />
+  </FormRow>
+</Form>
+`;

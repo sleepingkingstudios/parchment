@@ -12,9 +12,9 @@ module Serializers
       :slug,
       :title
 
-    alias_method :book, :object
-
     private
+
+    alias_method :book, :object
 
     def can_serialize?(object)
       object.is_a?(Book)

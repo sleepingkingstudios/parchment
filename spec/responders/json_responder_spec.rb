@@ -24,6 +24,67 @@ RSpec.describe Responders::JsonResponder do
         .and_any_keywords
     end
 
+    describe 'with a failing result with error: Authentication::Base' do
+      let(:error)  { Errors::Authentication::Base.new }
+      let(:result) { Cuprum::Result.new(error: error) }
+      let(:json) do
+        {
+          'ok'    => false,
+          'error' => { 'message' => 'Unable to authenticate user.' }
+        }
+      end
+      let(:expected) { { json: json, status: :unauthorized } }
+
+      it 'should render 401 Unauthorized with the error details' do
+        responder.call(result)
+
+        expect(controller).to have_received(:render).with(expected)
+      end
+
+      describe 'with status: value' do
+        let(:options) { { status: :forbidden } }
+
+        it 'should render 401 Unauthorized with the error details' do
+          responder.call(result, options)
+
+          expect(controller).to have_received(:render).with(expected)
+        end
+      end
+    end
+
+    describe 'with a failing result with error: Authentication::FailedLogin' do
+      let(:message) { 'Something went wrong.' }
+      let(:error) do
+        Errors::Authentication::FailedLogin.new(message: message)
+      end
+      let(:result) { Cuprum::Result.new(error: error) }
+      let(:json) do
+        {
+          'ok'    => false,
+          'error' => {
+            'message' => 'Unable to log in with the given credentials'
+          }
+        }
+      end
+      let(:expected) { { json: json, status: :forbidden } }
+
+      it 'should render 403 Forbidden with the error details' do
+        responder.call(result)
+
+        expect(controller).to have_received(:render).with(expected)
+      end
+
+      describe 'with status: value' do
+        let(:options) { { status: :forbidden } }
+
+        it 'should render 403 Forbidden with the error details' do
+          responder.call(result, options)
+
+          expect(controller).to have_received(:render).with(expected)
+        end
+      end
+    end
+
     describe 'with a failing result with error: FailedValidation' do
       let(:record) { Spell.new }
       let(:error)  { Errors::FailedValidation.new(record: record) }
@@ -107,6 +168,56 @@ RSpec.describe Responders::JsonResponder do
 
         it 'should render 404 Not Found with the error details' do
           responder.call(result, options)
+
+          expect(controller).to have_received(:render).with(expected)
+        end
+      end
+    end
+
+    describe 'with a failing result with error: Server::Base' do
+      let(:error)  { Errors::Server::Base.new }
+      let(:result) { Cuprum::Result.new(error: error) }
+      let(:json) do
+        {
+          'ok'    => false,
+          'error' => {
+            'message' => 'Something went wrong when processing the request.'
+          }
+        }
+      end
+      let(:expected) { { json: json, status: :internal_server_error } }
+
+      it 'should render 500 Internal Server Error with with a generic error' do
+        responder.call(result)
+
+        expect(controller).to have_received(:render).with(expected)
+      end
+
+      describe 'with status: value' do
+        let(:options) { { status: :forbidden } }
+
+        it 'should render 500 Internal Server Error with with a generic error' \
+        do
+          responder.call(result)
+
+          expect(controller).to have_received(:render).with(expected)
+        end
+      end
+
+      context 'when the Rails environment is development' do
+        let(:json) do
+          {
+            'ok'    => false,
+            'error' => error.as_json
+          }
+        end
+
+        before(:example) do
+          allow(Rails.env).to receive(:development?).and_return(true)
+        end
+
+        it 'should render 500 Internal Server Error with the error details' do
+          responder.call(result)
 
           expect(controller).to have_received(:render).with(expected)
         end
