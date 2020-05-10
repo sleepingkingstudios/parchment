@@ -1,6 +1,6 @@
 # Build Options
 language: ruby
-rvm: 2.6.3
+rvm: 2.6.6
 node_js: "10.15.3"
 install:
   - bundle install
