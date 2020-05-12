@@ -2,6 +2,8 @@
 
 # Controller for performing CRUD actions on Books via a JSON API.
 class Api::BooksController < Api::ResourcesController
+  before_action :require_authenticated_user
+
   PERMITTED_ATTRIBUTES = %i[
     playtest
     publication_date

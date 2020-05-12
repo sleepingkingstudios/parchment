@@ -4,7 +4,11 @@ require 'rails_helper'
 
 require 'fixtures/builder'
 
+require 'support/examples/controller_examples'
+
 RSpec.describe Api::BooksController, type: :request do
+  include Spec::Support::Examples::ControllerExamples
+
   shared_context 'when there are many books' do
     let(:books) { Fixtures.build(Book, count: 3) }
 
@@ -74,19 +78,13 @@ RSpec.describe Api::BooksController, type: :request do
     end
   end
 
-  shared_examples 'should respond with JSON content' do
-    it 'should respond with JSON content' do
-      call_action
-
-      expect(response.content_type).to be == 'application/json; charset=utf-8'
-    end
-  end
-
   let(:headers) { { 'ACCEPT' => 'application/json' } }
   let(:params)  { {} }
   let(:json)    { JSON.parse(response.body) }
 
   describe 'GET /api/books.json' do
+    include_context 'with an authorization token for a user'
+
     let(:expected_data) do
       { 'books' => [] }
     end
@@ -100,6 +98,8 @@ RSpec.describe Api::BooksController, type: :request do
     def call_action
       get '/api/books.json', headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     it 'should respond with 200 OK' do
       call_action
@@ -135,12 +135,16 @@ RSpec.describe Api::BooksController, type: :request do
   end
 
   describe 'POST /api/books.json' do
+    include_context 'with an authorization token for a user'
+
     let(:params)      { super().merge(book: book_params) }
     let(:book_params) { { title: 'Invoked Apocalypse' } }
 
     def call_action
       post '/api/books.json', headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     include_examples 'should require valid book params'
 
@@ -254,6 +258,7 @@ RSpec.describe Api::BooksController, type: :request do
   end
 
   describe 'GET /api/books/:id.json' do
+    include_context 'with an authorization token for a user'
     include_context 'when there are many books'
 
     let(:book)    { books.first }
@@ -270,6 +275,8 @@ RSpec.describe Api::BooksController, type: :request do
     def call_action
       get "/api/books/#{book_id}.json", headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     include_examples 'should require a valid book id'
 
@@ -289,6 +296,7 @@ RSpec.describe Api::BooksController, type: :request do
   end
 
   describe 'PATCH /api/books/:id.json' do
+    include_context 'with an authorization token for a user'
     include_context 'when there are many books'
 
     let(:params)      { super().merge(book: book_params) }
@@ -299,6 +307,8 @@ RSpec.describe Api::BooksController, type: :request do
     def call_action
       patch "/api/books/#{book_id}.json", headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     include_examples 'should require a valid book id'
 
@@ -417,6 +427,7 @@ RSpec.describe Api::BooksController, type: :request do
   end
 
   describe 'DELETE /api/books/:id.json' do
+    include_context 'with an authorization token for a user'
     include_context 'when there are many books'
 
     let(:book)    { books.first }
@@ -431,6 +442,8 @@ RSpec.describe Api::BooksController, type: :request do
     def call_action
       delete "/api/books/#{book_id}.json", headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     include_examples 'should require a valid book id'
 

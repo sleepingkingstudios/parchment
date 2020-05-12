@@ -1,4 +1,5 @@
 import FindOneEndpoint from '../../../api/findOne';
+import authorization from '../../../api/middleware/authorization';
 import alerts from './alerts';
 import redirect from './redirect';
 import { buildBook } from '../../entities';
@@ -8,6 +9,7 @@ const REQUEST_URL = '/api/books/:id';
 const endpoint = new FindOneEndpoint({
   data: { book: buildBook() },
   middleware: [
+    authorization,
     {
       handleSuccess: next => ({ dispatch, getState, response }) => {
         next({ dispatch, getState, response });

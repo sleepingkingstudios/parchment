@@ -1,5 +1,6 @@
 import FormEndpoint from '../../../api/form';
 import { buildBook } from '../../entities';
+import authorization from '../../../api/middleware/authorization';
 import alerts from './alerts';
 import redirect from './redirect';
 
@@ -10,6 +11,7 @@ const endpoint = new FormEndpoint({
   data: { book: buildBook() },
   method: 'PATCH',
   middleware: [
+    authorization,
     redirect,
     alerts,
   ],
