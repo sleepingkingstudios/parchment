@@ -2,6 +2,8 @@
 
 # Base controller for performing CRUD actions on Actions via a JSON API.
 class Api::Mechanics::ActionsController < Api::MechanicsController
+  before_action :require_authenticated_user
+
   private
 
   def resource_class

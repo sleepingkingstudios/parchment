@@ -1,4 +1,5 @@
 import FindOneEndpoint from '../../../../api/findOne';
+import authorization from '../../../../api/middleware/authorization';
 import alerts from './alerts';
 import redirect from './redirect';
 import { buildMechanic } from '../../../entities';
@@ -9,6 +10,7 @@ const REQUEST_URL = '/api/mechanics/actions/:id';
 const endpoint = new FindOneEndpoint({
   data: { mechanic: buildAction() },
   middleware: [
+    authorization,
     {
       handleSuccess: next => ({ dispatch, getState, response }) => {
         next({ dispatch, getState, response });

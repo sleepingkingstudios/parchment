@@ -4,7 +4,11 @@ require 'rails_helper'
 
 require 'fixtures/builder'
 
+require 'support/examples/controller_examples'
+
 RSpec.describe Api::Mechanics::ActionsController do
+  include Spec::Support::Examples::ControllerExamples
+
   shared_context 'when there are many actions' do
     let(:actions) { Fixtures.build(Mechanics::Action, count: 3) }
 
@@ -74,19 +78,13 @@ RSpec.describe Api::Mechanics::ActionsController do
     end
   end
 
-  shared_examples 'should respond with JSON content' do
-    it 'should respond with JSON content' do
-      call_action
-
-      expect(response.content_type).to be == 'application/json; charset=utf-8'
-    end
-  end
-
   let(:headers) { { 'ACCEPT' => 'application/json' } }
   let(:params)  { {} }
   let(:json)    { JSON.parse(response.body) }
 
   describe 'GET /api/mechanics/actions.json' do
+    include_context 'with an authorization token for a user'
+
     let(:expected_data) do
       { 'actions' => [] }
     end
@@ -100,6 +98,8 @@ RSpec.describe Api::Mechanics::ActionsController do
     def call_action
       get '/api/mechanics/actions.json', headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     it 'should respond with 200 OK' do
       call_action
@@ -135,12 +135,16 @@ RSpec.describe Api::Mechanics::ActionsController do
   end
 
   describe 'POST /api/mechanics/actions.json' do
+    include_context 'with an authorization token for a user'
+
     let(:params)        { super().merge(mechanic: action_params) }
     let(:action_params) { { name: 'Explode' } }
 
     def call_action
       post '/api/mechanics/actions.json', headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     include_examples 'should require valid mechanic params'
 
@@ -251,6 +255,7 @@ RSpec.describe Api::Mechanics::ActionsController do
   end
 
   describe 'GET /api/mechanics/actions/:id.json' do
+    include_context 'with an authorization token for a user'
     include_context 'when there are many actions'
 
     let(:action)    { actions.first }
@@ -270,6 +275,8 @@ RSpec.describe Api::Mechanics::ActionsController do
         params:  params
     end
 
+    include_examples 'should require an authenticated user'
+
     include_examples 'should require a valid action id'
 
     it 'should respond with 200 OK' do
@@ -288,6 +295,7 @@ RSpec.describe Api::Mechanics::ActionsController do
   end
 
   describe 'PATCH /api/mechanics/actions/:id.json' do
+    include_context 'with an authorization token for a user'
     include_context 'when there are many actions'
 
     let(:params)        { super().merge(mechanic: action_params) }
@@ -300,6 +308,8 @@ RSpec.describe Api::Mechanics::ActionsController do
         headers: headers,
         params:  params
     end
+
+    include_examples 'should require an authenticated user'
 
     include_examples 'should require a valid action id'
 
@@ -415,6 +425,7 @@ RSpec.describe Api::Mechanics::ActionsController do
   end
 
   describe 'DELETE /api/mechanics/actions/:id.json' do
+    include_context 'with an authorization token for a user'
     include_context 'when there are many actions'
 
     let(:action)    { actions.first }
@@ -431,6 +442,8 @@ RSpec.describe Api::Mechanics::ActionsController do
         headers: headers,
         params:  params
     end
+
+    include_examples 'should require an authenticated user'
 
     include_examples 'should require a valid action id'
 
