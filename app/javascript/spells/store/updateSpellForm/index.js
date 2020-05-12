@@ -1,4 +1,5 @@
 import FormEndpoint from '../../../api/form';
+import authorization from '../../../api/middleware/authorization';
 import { buildSpell } from '../../entities';
 import alerts from './alerts';
 import redirect from './redirect';
@@ -10,6 +11,7 @@ const endpoint = new FormEndpoint({
   data: { spell: buildSpell() },
   method: 'PATCH',
   middleware: [
+    authorization,
     redirect,
     alerts,
   ],

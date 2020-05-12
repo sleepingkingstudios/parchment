@@ -1,4 +1,5 @@
 import FindOneEndpoint from '../../../api/findOne';
+import authorization from '../../../api/middleware/authorization';
 import collectAssociations from '../../../api/middleware/collectAssociations';
 import alerts from './alerts';
 import redirect from './redirect';
@@ -16,6 +17,7 @@ const collectSource = collectAssociations({
 const endpoint = new FindOneEndpoint({
   data: { spell: buildSpell() },
   middleware: [
+    authorization,
     {
       handleSuccess: next => ({ dispatch, getState, response }) => {
         next({ dispatch, getState, response });

@@ -2,6 +2,8 @@
 
 # Controller for performing CRUD actions on Spells via a JSON API.
 class Api::SpellsController < Api::ResourcesController
+  before_action :require_authenticated_user
+
   PERMITTED_ATTRIBUTES = %i[
     casting_time
     description
