@@ -20,6 +20,8 @@ module Api
 
     rescue_from StandardError, with: :handle_exception
 
+    before_action :require_authenticated_user
+
     private
 
     def authenticate_user

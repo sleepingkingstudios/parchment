@@ -1,4 +1,5 @@
 import FormEndpoint from '../../../../api/form';
+import authorization from '../../../../api/middleware/authorization';
 import { buildMechanic } from '../../../entities';
 import alerts from './alerts';
 import redirect from './redirect';
@@ -8,6 +9,7 @@ const REQUEST_URL = '/api/mechanics/actions';
 const endpoint = new FormEndpoint({
   data: { mechanic: buildAction() },
   middleware: [
+    authorization,
     redirect,
     alerts,
   ],

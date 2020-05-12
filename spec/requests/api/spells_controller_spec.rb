@@ -4,7 +4,11 @@ require 'rails_helper'
 
 require 'fixtures/builder'
 
-RSpec.describe Api::SpellsController do
+require 'support/examples/controller_examples'
+
+RSpec.describe Api::SpellsController, type: :request do
+  include Spec::Support::Examples::ControllerExamples
+
   shared_context 'when there are many spells' do
     let(:spells) { Fixtures.build(Spell, count: 3) }
     let(:sources) do
@@ -82,19 +86,13 @@ RSpec.describe Api::SpellsController do
     end
   end
 
-  shared_examples 'should respond with JSON content' do
-    it 'should respond with JSON content' do
-      call_action
-
-      expect(response.content_type).to be == 'application/json; charset=utf-8'
-    end
-  end
-
   let(:headers) { { 'ACCEPT' => 'application/json' } }
   let(:params)  { {} }
   let(:json)    { JSON.parse(response.body) }
 
   describe 'GET /api/spells.json' do
+    include_context 'with an authorization token for a user'
+
     let(:expected_data) do
       {
         'sources' => [],
@@ -111,6 +109,8 @@ RSpec.describe Api::SpellsController do
     def call_action
       get '/api/spells.json', headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     it 'should respond with 200 OK' do
       call_action
@@ -155,12 +155,16 @@ RSpec.describe Api::SpellsController do
   end
 
   describe 'POST /api/spells.json' do
+    include_context 'with an authorization token for a user'
+
     let(:params)       { super().merge(spell: spell_params) }
     let(:spell_params) { { name: 'Invoked Apocalypse' } }
 
     def call_action
       post '/api/spells.json', headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     include_examples 'should require valid spell params'
 
@@ -339,6 +343,7 @@ RSpec.describe Api::SpellsController do
   end
 
   describe 'GET /api/spells/:id.json' do
+    include_context 'with an authorization token for a user'
     include_context 'when there are many spells'
 
     let(:spell)    { spells.first }
@@ -356,6 +361,8 @@ RSpec.describe Api::SpellsController do
     def call_action
       get "/api/spells/#{spell_id}.json", headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     include_examples 'should require a valid spell id'
 
@@ -375,6 +382,7 @@ RSpec.describe Api::SpellsController do
   end
 
   describe 'PATCH /api/spells/:id.json' do
+    include_context 'with an authorization token for a user'
     include_context 'when there are many spells'
 
     let(:params)       { super().merge(spell: spell_params) }
@@ -385,6 +393,8 @@ RSpec.describe Api::SpellsController do
     def call_action
       patch "/api/spells/#{spell_id}.json", headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     include_examples 'should require a valid spell id'
 
@@ -635,6 +645,7 @@ RSpec.describe Api::SpellsController do
   end
 
   describe 'DELETE /api/spells/:id.json' do
+    include_context 'with an authorization token for a user'
     include_context 'when there are many spells'
 
     let(:spell)    { spells.find { |spell| spell.source.nil? } }
@@ -649,6 +660,8 @@ RSpec.describe Api::SpellsController do
     def call_action
       delete "/api/spells/#{spell_id}.json", headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     include_examples 'should require a valid spell id'
 

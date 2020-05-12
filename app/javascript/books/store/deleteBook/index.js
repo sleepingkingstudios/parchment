@@ -1,4 +1,5 @@
 import DeleteOneEndpoint from '../../../api/deleteOne';
+import authorization from '../../../api/middleware/authorization';
 import alerts from './alerts';
 import redirect from './redirect';
 
@@ -6,6 +7,7 @@ const REQUEST_URL = '/api/books/:id';
 const endpoint = new DeleteOneEndpoint({
   data: {},
   middleware: [
+    authorization,
     alerts,
     redirect,
   ],

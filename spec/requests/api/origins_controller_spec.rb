@@ -2,7 +2,11 @@
 
 require 'rails_helper'
 
+require 'support/examples/controller_examples'
+
 RSpec.describe Api::OriginsController, type: :request do
+  include Spec::Support::Examples::ControllerExamples
+
   shared_context 'when there are many books' do
     let(:books) { Array.new(3) { FactoryBot.build(:book) } }
 
@@ -15,19 +19,13 @@ RSpec.describe Api::OriginsController, type: :request do
     end
   end
 
-  shared_examples 'should respond with JSON content' do
-    it 'should respond with JSON content' do
-      call_action
-
-      expect(response.content_type).to be == 'application/json; charset=utf-8'
-    end
-  end
-
   let(:headers) { { 'ACCEPT' => 'application/json' } }
   let(:params)  { {} }
   let(:json)    { JSON.parse(response.body) }
 
   describe 'GET /api/origins.json' do
+    include_context 'with an authorization token for a user'
+
     let(:expected_data) do
       Source::ORIGIN_TYPES.each.with_object({}) \
       do |origin_type, hsh|
@@ -44,6 +42,8 @@ RSpec.describe Api::OriginsController, type: :request do
     def call_action
       get '/api/origins.json', headers: headers, params: params
     end
+
+    include_examples 'should require an authenticated user'
 
     it 'should respond with 200 OK' do
       call_action

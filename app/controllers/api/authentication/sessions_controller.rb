@@ -7,7 +7,7 @@ require 'operations/authentication/strategies/password'
 module Api::Authentication
   # Controller for creating and viewing authentication sessions.
   class SessionsController < Api::BaseController
-    before_action :require_authenticated_user, except: :create
+    skip_before_action :require_authenticated_user, only: :create
 
     def create
       responder.call(create_session, status: :created)

@@ -21,25 +21,6 @@ const buildEmptyResponse = () => ({
   json: { ok: false },
 });
 
-const buildRequest = ({ getState, method, namespace }) => {
-  const request = {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  if (method === 'GET' || method === 'DELETE') { return request; }
-
-  const state = getState();
-  const data = getData({ namespace, state });
-
-  return Object.assign(
-    request,
-    { body: JSON.stringify(data) },
-  );
-};
-
 const buildUrl = (url, options) => {
   const wildcards = valueOrDefault(options.wildcards, {});
 
@@ -78,6 +59,12 @@ const processResponse = async (response) => {
   };
 };
 
+const evaluateMiddleware = (middleware, next, ...args) => {
+  if (typeof middleware !== 'function') { return next(...args); }
+
+  return middleware(next)(...args);
+};
+
 class ApiRequest {
   constructor(options) {
     const {
@@ -104,6 +91,25 @@ class ApiRequest {
       requestSuccess,
     } = actions;
 
+    this.buildRequest = ({ getState, method, namespace }) => {
+      const request = {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      if (method === 'GET' || method === 'DELETE') { return request; }
+
+      const state = getState();
+      const data = getData({ namespace, state });
+
+      return Object.assign(
+        request,
+        { body: JSON.stringify(data) },
+      );
+    };
+
     this.handleFailure = ({ dispatch, response }) => {
       const { json } = response;
       const errors = extractErrors(json);
@@ -127,6 +133,7 @@ class ApiRequest {
 
     return async (dispatch, getState) => {
       const {
+        buildRequest,
         handleFailure,
         handlePending,
         handleSuccess,
@@ -134,18 +141,17 @@ class ApiRequest {
         namespace,
         url,
       } = request;
-
+      const {
+        onFailure,
+        onPending,
+        onRequest,
+        onSuccess,
+      } = params;
       const requestStatus = getRequestStatus({ getState, namespace });
 
       if (requestStatus === PENDING) { return; }
 
-      const { onPending } = params;
-
-      if (onPending) {
-        onPending(handlePending)({ dispatch, getState });
-      } else {
-        handlePending({ dispatch, getState });
-      }
+      evaluateMiddleware(onPending, handlePending, { dispatch, getState });
 
       const fullUrl = buildUrl(url, params);
       let response;
@@ -153,16 +159,11 @@ class ApiRequest {
       try {
         const rawResponse = await fetch(
           fullUrl,
-          buildRequest({
-            getState,
-            method,
-            namespace,
-          }),
+          evaluateMiddleware(onRequest, buildRequest, { getState, method, namespace }),
         );
+
         response = await processResponse(rawResponse);
       } catch (error) {
-        const { onFailure } = params;
-
         response = buildEmptyResponse();
 
         if (onFailure) {
@@ -175,21 +176,9 @@ class ApiRequest {
       }
 
       if (response.ok) {
-        const { onSuccess } = params;
-
-        if (onSuccess) {
-          onSuccess(handleSuccess)({ dispatch, getState, response });
-        } else {
-          handleSuccess({ dispatch, getState, response });
-        }
+        evaluateMiddleware(onSuccess, handleSuccess, { dispatch, getState, response });
       } else {
-        const { onFailure } = params;
-
-        if (onFailure) {
-          onFailure(handleFailure)({ dispatch, getState, response });
-        } else {
-          handleFailure({ dispatch, getState, response });
-        }
+        evaluateMiddleware(onFailure, handleFailure, { dispatch, getState, response });
       }
     };
   }
