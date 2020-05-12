@@ -4,6 +4,8 @@ require 'operations/sources/find_all_origins_operation'
 
 # Controller for requesting the available origins for a referenced object.
 class Api::OriginsController < Api::ResourcesController
+  before_action :require_authenticated_user
+
   private
 
   def index_resources
