@@ -7,6 +7,10 @@ import {
 import { valueOrDefault } from '../../utils/object';
 
 const applyMiddlewareToRequest = (request, middleware) => {
+  request.buildRequest = applyMiddleware(
+    request.buildRequest,
+    selectMiddleware(middleware, 'buildRequest'),
+  );
   request.handleFailure = applyMiddleware(
     request.handleFailure,
     selectMiddleware(middleware, 'handleFailure'),

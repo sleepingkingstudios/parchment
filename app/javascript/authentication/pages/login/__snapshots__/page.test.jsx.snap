@@ -38,6 +38,7 @@ exports[`<AuthenticationLoginPage /> should match the snapshot 1`] = `
           "namespace": "authentication/loginForm",
           "reducer": [Function],
           "request": FormRequest {
+            "buildRequest": [Function],
             "defineHandlers": [Function],
             "handleFailure": [Function],
             "handlePending": [Function],

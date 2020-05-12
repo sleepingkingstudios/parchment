@@ -255,6 +255,11 @@ describe('ApiEndpoint', () => {
   describe('with middleware: array', () => {
     const calledMiddleware = [];
     const generateMiddleware = label => ({
+      buildRequest: next => ({ getState, method, namespace }) => {
+        calledMiddleware.push(`request ${label}`);
+
+        next({ getState, method, namespace });
+      },
       handleAction: next => (state, action) => {
         calledMiddleware.push(`action ${label}`);
 
@@ -307,10 +312,27 @@ describe('ApiEndpoint', () => {
 
     describe('request', () => {
       const {
+        buildRequest,
         handleFailure,
         handlePending,
         handleSuccess,
       } = request;
+
+      describe('buildRequest()', () => {
+        const getState = jest.fn();
+        const method = 'GET';
+        const namespace = 'api/endpoint';
+
+        it('should be a function', () => {
+          expect(typeof buildRequest).toEqual('function');
+        });
+
+        it('should call the middleware', () => {
+          buildRequest({ getState, method, namespace });
+
+          expect(calledMiddleware).toEqual(['request A', 'request B', 'request C']);
+        });
+      });
 
       describe('handleFailure()', () => {
         const dispatch = jest.fn();

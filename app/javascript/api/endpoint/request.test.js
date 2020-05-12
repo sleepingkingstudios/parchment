@@ -62,6 +62,54 @@ describe('ApiRequest', () => {
 
       expect(fetch).toBeCalledWith(url, opts);
     });
+
+    it('should call buildRequest()', async () => {
+      const originalBuildRequest = request.buildRequest;
+      const state = buildState(namespace, { data });
+      const dispatch = jest.fn();
+      const getState = jest.fn(() => state);
+      const response = { ok: true, json: () => ({ data: {} }) };
+
+      request.buildRequest = jest.fn();
+
+      fetch.mockResolvedValue(response);
+
+      await performRequest()(dispatch, getState);
+
+      expect(request.buildRequest)
+        .toHaveBeenCalledWith({ getState, method, namespace });
+
+      request.buildRequest = originalBuildRequest;
+    });
+
+    describe('with onRequest: function', () => {
+      it('should call onRequest and buildRequest()', async () => {
+        const onRequestInner = jest.fn();
+        const onRequest = next => (props) => {
+          next(props);
+
+          onRequestInner(props);
+        };
+        const originalBuildRequest = request.buildRequest;
+        const state = buildState(namespace, { data });
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => state);
+        const response = { ok: true, json: () => ({ data: {} }) };
+
+        request.buildRequest = jest.fn();
+
+        fetch.mockResolvedValue(response);
+
+        await performRequest({ onRequest })(dispatch, getState);
+
+        expect(onRequestInner)
+          .toHaveBeenCalledWith({ getState, method, namespace });
+        expect(request.buildRequest)
+          .toHaveBeenCalledWith({ getState, method, namespace });
+
+        request.buildRequest = originalBuildRequest;
+      });
+    });
   };
   const shouldHandleTheResponse = ({ actions, namespace, request }) => {
     const {
