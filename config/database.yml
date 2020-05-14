@@ -81,3 +81,4 @@ test:
 production:
   <<: *default
   database: parchment_production
+  url: <%= ENV['DATABASE_URL'] %>
