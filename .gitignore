@@ -36,3 +36,6 @@ yarn-debug.log*
 /config/credentials/development.key
 
 /config/credentials/test.key
+
+/.ssh/*_rsa
+/.ssh/*_rsa.pub
