@@ -2,6 +2,10 @@
 
 require 'fixtures'
 
+require 'operations/data/clone'
+require 'operations/data/exists'
+require 'operations/data/pull'
+
 namespace :data do # rubocop:disable Metrics/BlockLength
   authentication_classes = %w[
     Authentication::User
@@ -42,6 +46,23 @@ namespace :data do # rubocop:disable Metrics/BlockLength
       next unless Fixtures.exist?(record_class, data_path: args.directory)
 
       Fixtures.create(record_class, data_path: args.directory)
+    end
+  end
+
+  desc 'Clones a git repository or pulls the latest commit as a data source'
+  task :pull, %i[source] => :environment do |_task, args|
+    raise ArgumentError, "source can't be blank" if args.source.blank?
+
+    organization, repository = args.source.split '/'
+
+    if Operations::Data::Exists.new.call(directory_name: repository).success?
+      Operations::Data::Pull
+        .new(ssh_key: '.ssh/deploy_rsa')
+        .call(repository: repository)
+    else
+      Operations::Data::Clone
+        .new(ssh_key: '.ssh/deploy_rsa')
+        .call(organization: organization, repository: repository)
     end
   end
 end

@@ -2,36 +2,20 @@
 
 ## Authentication
 
-- in Cucumber tests, generate token directly rather than going through login
-
-### Endpoints
-
-- Api::Authentication::Session
-  - #create
-    - takes :username, :password
-    - return serialized User, Session token
-    - delegate to a generic Authentication::Strategy ?
-
-### Workflows
-
-- Log In
-- Log Out
-- User Management (Admin)
+- User Management (Admin-only)
+- Add Authentication::User::Roles::GUEST
 
 ## Authorization
 
-- read authorization
-  - public - any user can view, including anonymous users
-    - do not show additional details without write permissions
-  - protected (default) - only logged in users can view
-  - private - only creator (and authorized users?) can view
-- write authorization
-  - public - any user can edit
-  - protected - only logged in users can edit
-  - private (default) - only creator can edit
+- admin - full access, including user management
+- user  - read/write feature access
+- guest - read-only feature access
 
 ## Client
 
+- Top Navigation
+  - Home
+  - Spells, ..., Mechanics, Sources
 - generic 404 page for non-matching route
 - add Loading overlay for resource tables
   - wait for Loading overlay to appear/disappear in features
@@ -128,6 +112,10 @@
 
 ## Spells
 
+- authorship - belongs_to :user
+  - for Homebrew, display in Source for client e.g. "Homebrew (_username_)"
+- validate slug format - must be /[a-z]+(-[a-z]+)*/
+  - automatically update slug in form?
 - locking slugs
   - slug_lock field
   - if false, automatically update slug when name is changed

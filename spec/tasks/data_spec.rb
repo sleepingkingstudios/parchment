@@ -154,4 +154,101 @@ RSpec.describe 'rake' do # rubocop:disable RSpec/DescribeClass
       end
     end
   end
+
+  describe 'data:pull' do
+    let(:organization)  { 'example_organization' }
+    let(:repository)    { 'example_repository' }
+    let(:source)        { "#{organization}/#{repository}" }
+    let(:task)          { Rake::Task['data:pull'].tap(&:reenable) }
+
+    context 'when the data directory is not a repository' do
+      let(:exists_result) { Cuprum::Result.new(status: :failure) }
+      let(:clone_result)  { Cuprum::Result.new(status: :success) }
+      let(:exists_operation) do
+        instance_double(Cuprum::Operation, call: exists_result)
+      end
+      let(:clone_operation) do
+        instance_double(Cuprum::Operation, call: clone_result)
+      end
+
+      before(:example) do
+        allow(Operations::Data::Exists)
+          .to receive(:new)
+          .and_return(exists_operation)
+
+        allow(Operations::Data::Clone)
+          .to receive(:new)
+          .and_return(clone_operation)
+      end
+
+      it 'should check if the data directory is a repository' do
+        task.invoke(source)
+
+        expect(exists_operation)
+          .to have_received(:call)
+          .with(directory_name: repository)
+      end
+
+      it 'should use the configured ssh key' do
+        task.invoke(source)
+
+        expect(Operations::Data::Clone)
+          .to have_received(:new)
+          .with(ssh_key: '.ssh/deploy_rsa')
+      end
+
+      it 'should clone the repository' do
+        task.invoke(source)
+
+        expect(clone_operation)
+          .to have_received(:call)
+          .with(organization: organization, repository: repository)
+      end
+    end
+
+    context 'when the data directory is a repository' do
+      let(:exists_result) { Cuprum::Result.new(status: :success) }
+      let(:pull_result)   { Cuprum::Result.new(status: :success) }
+      let(:exists_operation) do
+        instance_double(Cuprum::Operation, call: exists_result)
+      end
+      let(:pull_operation) do
+        instance_double(Cuprum::Operation, call: pull_result)
+      end
+
+      before(:example) do
+        allow(Operations::Data::Exists)
+          .to receive(:new)
+          .and_return(exists_operation)
+
+        allow(Operations::Data::Pull)
+          .to receive(:new)
+          .and_return(pull_operation)
+      end
+
+      it 'should check if the data directory is a repository' do
+        task.invoke(source)
+
+        expect(exists_operation)
+          .to have_received(:call)
+          .with(directory_name: repository)
+      end
+
+      it 'should use the configured ssh key' do
+        task.invoke(source)
+
+        expect(Operations::Data::Pull)
+          .to have_received(:new)
+          .with(ssh_key: '.ssh/deploy_rsa')
+      end
+
+      it 'should pull the latest commit' do
+        task.invoke(source)
+
+        expect(pull_operation)
+          .to have_received(:call)
+          .with(repository: repository)
+      end
+    end
+  end
 end
