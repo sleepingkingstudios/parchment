@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'operations/data/clone'
+require 'operations/data/pull'
 
-RSpec.describe Operations::Data::Clone do
+RSpec.describe Operations::Data::Pull do
   subject(:operation) { described_class.new(**options) }
 
   let(:options) { {} }
@@ -17,12 +17,8 @@ RSpec.describe Operations::Data::Clone do
   end
 
   describe '#call' do
-    let(:organization) { 'example_organization' }
-    let(:repository)   { 'example_repository' }
-    let(:expected_syscall) do
-      "git clone git@github.com:#{organization}/#{repository}.git" \
-      " data/#{repository}"
-    end
+    let(:repository)       { 'example_repository' }
+    let(:expected_syscall) { "cd data/#{repository} && git pull" }
 
     before(:example) { allow(Kernel).to receive(:system) }
 
@@ -30,18 +26,16 @@ RSpec.describe Operations::Data::Clone do
       expect(operation)
         .to respond_to(:call)
         .with(0).arguments
-        .and_keywords(:organization, :repository)
+        .and_keywords(:repository)
     end
 
     it 'should return a passing result' do
-      expect(
-        operation.call(organization: organization, repository: repository)
-      )
+      expect(operation.call(repository: repository))
         .to have_passing_result
     end
 
     it 'should run the syscall' do
-      operation.call(organization: organization, repository: repository)
+      operation.call(repository: repository)
 
       expect(Kernel).to have_received(:system).with(expected_syscall)
     end
@@ -50,18 +44,17 @@ RSpec.describe Operations::Data::Clone do
       let(:ssh_key) { '.ssh/example_key' }
       let(:options) { super().merge(ssh_key: ssh_key) }
       let(:expected_syscall) do
-        %(GIT_SSH_COMMAND="ssh -i #{ssh_key} -o IdentitiesOnly=yes" #{super()})
+        "cd data/#{repository} && " +
+          %(GIT_SSH_COMMAND="ssh -i #{ssh_key} -o IdentitiesOnly=yes" git pull)
       end
 
       it 'should return a passing result' do
-        expect(
-          operation.call(organization: organization, repository: repository)
-        )
+        expect(operation.call(repository: repository))
           .to have_passing_result
       end
 
       it 'should run the syscall' do
-        operation.call(organization: organization, repository: repository)
+        operation.call(repository: repository)
 
         expect(Kernel).to have_received(:system).with(expected_syscall)
       end
