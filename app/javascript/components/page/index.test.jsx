@@ -31,6 +31,7 @@ describe('<Page />', () => {
     expect(header).toExist();
     expect(header).toHaveProp('title', 'Parchment');
     expect(header).toHaveProp('subtitle', '5e Campaign Companion');
+    expect(header).toHaveProp({ showNavigation: true });
   });
 
   it('should render the current user', () => {
@@ -157,6 +158,20 @@ describe('<Page />', () => {
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('container-fluid');
       expect(rendered).toHaveClassName('page');
+    });
+  });
+
+  describe('with showNavigation: false', () => {
+    const props = { ...defaultProps, showNavigation: false };
+
+    it('should render the header', () => {
+      const rendered = shallow(<Page {...props} />);
+      const header = rendered.find('PageHeader');
+
+      expect(header).toExist();
+      expect(header).toHaveProp('title', 'Parchment');
+      expect(header).toHaveProp('subtitle', '5e Campaign Companion');
+      expect(header).toHaveProp({ showNavigation: false });
     });
   });
 

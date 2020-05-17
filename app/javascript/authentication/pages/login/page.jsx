@@ -7,7 +7,7 @@ import endpoint from '../../store/loginForm';
 const breadcrumbs = [];
 
 const AuthenticationLoginPage = () => (
-  <Page breadcrumbs={breadcrumbs} className="page-login">
+  <Page breadcrumbs={breadcrumbs} className="page-login" showNavigation={false}>
     <div>
       <h1>Log In</h1>
 

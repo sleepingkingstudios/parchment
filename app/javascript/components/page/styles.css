@@ -13,3 +13,8 @@
 .page .page-flex-container .page-body {
   flex: 1;
 }
+
+.page .page-header .page-header-title a {
+  color: #000;
+  text-decoration: none;
+}

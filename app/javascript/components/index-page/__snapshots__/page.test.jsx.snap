@@ -17,6 +17,7 @@ exports[`<IndexPage /> should match the snapshot 1`] = `
   }
   className="page-widgets"
   layout={null}
+  showNavigation={true}
   showUser={true}
   subtitle="5e Campaign Companion"
   title="Parchment"

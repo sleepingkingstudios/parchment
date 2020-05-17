@@ -27,6 +27,7 @@ class Page extends React.Component {
       breadcrumbs,
       children,
       title,
+      showNavigation,
       showUser,
       subtitle,
     } = this.props;
@@ -35,7 +36,7 @@ class Page extends React.Component {
     return (
       <div className={this.buildClassName()}>
         <div className="page-flex-container">
-          <PageHeader {...{ title, subtitle }} />
+          <PageHeader {...{ showNavigation, subtitle, title }} />
 
           {currentUser}
 
@@ -57,6 +58,7 @@ Page.defaultProps = {
   children: null,
   className: null,
   layout: null,
+  showNavigation: true,
   showUser: true,
   subtitle: '5e Campaign Companion',
   title: 'Parchment',
@@ -71,6 +73,7 @@ Page.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   layout: PropTypes.string,
+  showNavigation: PropTypes.bool,
   showUser: PropTypes.bool,
   subtitle: PropTypes.string,
   title: PropTypes.string,
