@@ -5,6 +5,7 @@ exports[`<AuthenticationLoginPage /> should match the snapshot 1`] = `
   breadcrumbs={Array []}
   className="page-login"
   layout={null}
+  showNavigation={false}
   showUser={true}
   subtitle="5e Campaign Companion"
   title="Parchment"

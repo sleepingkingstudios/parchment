@@ -1,38 +1,77 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-const renderHeading = ({ title, subtitle }) => {
+import { Link } from 'react-router-dom';
+import PageNavigation from '../navigation';
+
+const navigation = {
+  Home: '/',
+  Spells: '/spells',
+  Mechanics: {
+    Actions: '/mechanics/actions',
+  },
+  Books: '/books',
+};
+
+const renderTitle = ({ showNavigation, title }) => {
+  if (!showNavigation) { return <Fragment>{ title }</Fragment>; }
+
+  return (
+    <Link to="/">{ title }</Link>
+  );
+};
+
+const renderHeading = ({ showNavigation, subtitle, title }) => {
   if (!subtitle) {
     return (
-      <h1 className="display-4">{ title }</h1>
+      <h1 className="page-header-title display-4">
+        { renderTitle({ showNavigation, title }) }
+      </h1>
     );
   }
 
   return (
-    <h1 className="display-4">
-      { title }
+    <h1 className="page-header-title display-4">
+      { renderTitle({ showNavigation, title }) }
       { ' ' }
-      <small style={{ fontWeight: 300 }}>{ subtitle }</small>
+      <small className="d-none d-lg-inline" style={{ fontWeight: 300 }}>
+        { subtitle }
+      </small>
     </h1>
   );
 };
 
-const PageHeader = (props) => {
-  const { title, subtitle } = props;
+const renderNavigation = ({ showNavigation }) => {
+  if (!showNavigation) { return null; }
 
   return (
-    <header>
-      { renderHeading({ title, subtitle }) }
+    <PageNavigation items={navigation} />
+  );
+};
+
+const PageHeader = (props) => {
+  const {
+    showNavigation,
+    subtitle,
+    title,
+  } = props;
+
+  return (
+    <header className="page-header">
+      { renderHeading({ showNavigation, subtitle, title }) }
+      { renderNavigation({ showNavigation }) }
       <hr />
     </header>
   );
 };
 
 PageHeader.defaultProps = {
+  showNavigation: true,
   subtitle: null,
 };
 
 PageHeader.propTypes = {
+  showNavigation: PropTypes.bool,
   subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
 };

@@ -8,6 +8,7 @@ exports[`<Page /> should match the snapshot 1`] = `
     className="page-flex-container"
   >
     <PageHeader
+      showNavigation={true}
       subtitle="5e Campaign Companion"
       title="Parchment"
     />

@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PageNavigation /> should match the snapshot 1`] = `
+<nav
+  className="navbar navbar-light navbar-expand-md bg-light page-header-navigation"
+>
+  <div
+    className="navbar-nav"
+  >
+    <PageNavigationItem
+      key="Home"
+      label="Home"
+      url="/"
+    />
+    <PageNavigationItem
+      key="Magic"
+      label="Magic"
+      url="/magic"
+    />
+    <PageNavigationItem
+      key="Spells"
+      label="Spells"
+      url="/spells"
+    />
+    <PageNavigationDropdown
+      items={
+        Object {
+          "Bows": "/weapons/bows",
+          "Firearms": "/weapons/firearms",
+          "Swords": "/weapons/swords",
+        }
+      }
+      key="Weapons"
+      label="Weapons"
+    />
+  </div>
+</nav>
+`;

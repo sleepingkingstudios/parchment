@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PageNavigationItem /> should match the snapshot 1`] = `
+<div
+  className="nav-item"
+>
+  <Link
+    className="nav-link"
+    to="/path/to/resource"
+  >
+    Resource
+  </Link>
+</div>
+`;

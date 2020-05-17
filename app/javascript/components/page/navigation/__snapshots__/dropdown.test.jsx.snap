@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PageNavigationDropdown /> should match the snapshot 1`] = `
+<div
+  className="nav-item dropdown"
+>
+  <div
+    aria-expanded="false"
+    aria-haspopup="true"
+    className="nav-link dropdown-toggle"
+    data-toggle="dropdown"
+  >
+    Weapons
+  </div>
+  <div
+    className="dropdown-menu"
+  >
+    <Link
+      className="dropdown-item"
+      key="Swords"
+      to="/weapons/swords"
+    >
+      Swords
+    </Link>
+    <Link
+      className="dropdown-item"
+      key="Bows"
+      to="/weapons/bows"
+    >
+      Bows
+    </Link>
+    <Link
+      className="dropdown-item"
+      key="Firearms"
+      to="/weapons/firearms"
+    >
+      Firearms
+    </Link>
+  </div>
+</div>
+`;

@@ -14,6 +14,7 @@ describe('<AuthenticationLoginPage />', () => {
     expect(rendered).toHaveDisplayName('Page');
     expect(rendered).toHaveClassName('page-login');
     expect(rendered).toHaveProp({ breadcrumbs });
+    expect(rendered).toHaveProp({ showNavigation: false });
   });
 
   it('should render the heading', () => {

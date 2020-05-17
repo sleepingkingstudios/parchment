@@ -4,30 +4,96 @@ import { shallow } from 'enzyme';
 import PageHeader from './index';
 
 describe('<PageHeader />', () => {
-  const props = { title: 'Example Title' };
-  const rendered = shallow(<PageHeader {...props} />);
+  const defaultProps = { title: 'Example Title' };
 
   it('should wrap the contents in a <header> element', () => {
+    const rendered = shallow(<PageHeader {...defaultProps} />);
+
     expect(rendered).toHaveDisplayName('header');
   });
 
-  it('should render the title in an <h1> element', () => {
-    expect(rendered.find('h1')).toHaveText(props.title);
+  it('should render the title link in an <h1> element', () => {
+    const rendered = shallow(<PageHeader {...defaultProps} />);
+    const heading = rendered.find('h1');
+    const titleLink = heading.find('Link');
+    const { title } = defaultProps;
+
+    expect(titleLink).toExist();
+    expect(titleLink).toHaveProp({ children: title });
+    expect(titleLink).toHaveProp({ to: '/' });
   });
 
-  describe('when the subtitle is set', () => {
-    const subtitle = 'Example Subtitle';
-    const renderedWithSubtitle = shallow(
-      <PageHeader {...props} subtitle={subtitle} />,
-    );
+  it('should render the navigation', () => {
+    const rendered = shallow(<PageHeader {...defaultProps} />);
+    const navigation = rendered.find('PageNavigation');
+    const expected = {
+      Home: '/',
+      Spells: '/spells',
+      Mechanics: {
+        Actions: '/mechanics/actions',
+      },
+      Books: '/books',
+    };
 
-    it('should render the title in an <h1> element', () => {
-      expect(renderedWithSubtitle.find('h1')).toIncludeText(props.title);
+    expect(navigation).toExist();
+    expect(navigation).toHaveProp({ items: expected });
+  });
+
+  describe('with showNavigation: false', () => {
+    it('should render the title without a link', () => {
+      const rendered = shallow(<PageHeader {...defaultProps} showNavigation={false} />);
+      const heading = rendered.find('h1');
+      const titleLink = heading.find('Link');
+      const { title } = defaultProps;
+
+      expect(titleLink).not.toExist();
+      expect(heading).toHaveText(title);
+    });
+
+    it('should not render the navigation', () => {
+      const rendered = shallow(<PageHeader {...defaultProps} showNavigation={false} />);
+      const navigation = rendered.find('PageNavigation');
+
+      expect(navigation).not.toExist();
+    });
+  });
+
+  describe('with subtitle: value', () => {
+    const subtitle = 'Example Subtitle';
+
+    it('should render the title link in an <h1> element', () => {
+      const rendered = shallow(<PageHeader {...defaultProps} />);
+      const heading = rendered.find('h1');
+      const titleLink = heading.find('Link');
+      const { title } = defaultProps;
+
+      expect(titleLink).toExist();
+      expect(titleLink).toHaveProp({ children: title });
+      expect(titleLink).toHaveProp({ to: '/' });
     });
 
     it('should render the subtitle in an <h1><small> element', () => {
-      expect(renderedWithSubtitle.find('h1').find('small'))
+      const rendered = shallow(
+        <PageHeader {...defaultProps} subtitle={subtitle} />,
+      );
+      const heading = rendered.find('h1');
+
+      expect(heading.find('small'))
         .toHaveText(subtitle);
+    });
+
+    describe('with showNavigation: false', () => {
+      it('should render the title without a link', () => {
+        const rendered = shallow(
+          <PageHeader {...defaultProps} showNavigation={false} subtitle={subtitle} />,
+        );
+        const heading = rendered.find('h1');
+        const titleLink = heading.find('Link');
+        const { title } = defaultProps;
+
+        expect(titleLink).not.toExist();
+        expect(heading).toIncludeText(title);
+      });
     });
   });
 });
