@@ -18,3 +18,7 @@
   color: #000;
   text-decoration: none;
 }
+
+.page .page-header-navigation .nav-item.dropdown {
+  cursor: pointer;
+}

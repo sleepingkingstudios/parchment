@@ -2,6 +2,16 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
+import PageNavigation from '../navigation';
+
+const navigation = {
+  Home: '/',
+  Spells: '/spells',
+  Mechanics: {
+    Actions: '/mechanics/actions',
+  },
+  Books: '/books',
+};
 
 const renderTitle = ({ showNavigation, title }) => {
   if (!showNavigation) { return <Fragment>{ title }</Fragment>; }
@@ -31,6 +41,14 @@ const renderHeading = ({ showNavigation, subtitle, title }) => {
   );
 };
 
+const renderNavigation = ({ showNavigation }) => {
+  if (!showNavigation) { return null; }
+
+  return (
+    <PageNavigation items={navigation} />
+  );
+};
+
 const PageHeader = (props) => {
   const {
     showNavigation,
@@ -41,6 +59,7 @@ const PageHeader = (props) => {
   return (
     <header className="page-header">
       { renderHeading({ showNavigation, subtitle, title }) }
+      { renderNavigation({ showNavigation }) }
       <hr />
     </header>
   );

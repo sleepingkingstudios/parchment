@@ -3,6 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import 'bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -20,4 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <Client />,
     document.body.appendChild(document.createElement('div')),
   );
+
+  /* eslint-disable-next-line no-undef */
+  jQuery('[data-toggle="dropdown"]').dropdown();
 });

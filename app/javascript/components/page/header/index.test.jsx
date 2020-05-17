@@ -23,6 +23,22 @@ describe('<PageHeader />', () => {
     expect(titleLink).toHaveProp({ to: '/' });
   });
 
+  it('should render the navigation', () => {
+    const rendered = shallow(<PageHeader {...defaultProps} />);
+    const navigation = rendered.find('PageNavigation');
+    const expected = {
+      Home: '/',
+      Spells: '/spells',
+      Mechanics: {
+        Actions: '/mechanics/actions',
+      },
+      Books: '/books',
+    };
+
+    expect(navigation).toExist();
+    expect(navigation).toHaveProp({ items: expected });
+  });
+
   describe('with showNavigation: false', () => {
     it('should render the title without a link', () => {
       const rendered = shallow(<PageHeader {...defaultProps} showNavigation={false} />);
@@ -32,6 +48,13 @@ describe('<PageHeader />', () => {
 
       expect(titleLink).not.toExist();
       expect(heading).toHaveText(title);
+    });
+
+    it('should not render the navigation', () => {
+      const rendered = shallow(<PageHeader {...defaultProps} showNavigation={false} />);
+      const navigation = rendered.find('PageNavigation');
+
+      expect(navigation).not.toExist();
     });
   });
 
