@@ -7,7 +7,7 @@ import {
 } from './actions';
 import {
   isUuid,
-} from '../../../utils/uuid';
+} from '../../utils/uuid';
 
 describe('Alerts reducer', () => {
   const alerts = [

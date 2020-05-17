@@ -1,5 +1,5 @@
 import alerts from './alerts';
-import { addAlert } from '../../../components/alerts/store/actions';
+import { addAlert } from '../../../alerts/store/actions';
 import { generateFingerprintUuid } from '../../../utils/uuid';
 
 describe('DeleteBook store alerts', () => {

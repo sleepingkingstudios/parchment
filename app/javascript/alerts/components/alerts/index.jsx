@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Alerts from './alerts';
-import { dismissAlert } from './store/actions';
+import { dismissAlert } from '../../store/actions';
 
 const mapStateToProps = state => state.alerts;
 

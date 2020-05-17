@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Alerts from '../alerts';
+import { Alerts } from '../../alerts';
 import ConnectedCurrentUser from './current-user';
 import PageFooter from './footer';
 import PageHeader from './header';

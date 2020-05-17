@@ -4,8 +4,8 @@ import {
   DISMISS_ALERT,
   DISMISS_ALL_ALERTS,
 } from './actions';
-import { indexOfMatching } from '../../../utils/array';
-import { generateRandomUuid } from '../../../utils/uuid';
+import { indexOfMatching } from '../../utils/array';
+import { generateRandomUuid } from '../../utils/uuid';
 
 const addIdToAlert = (alert) => {
   if (alert.id) { return alert; }

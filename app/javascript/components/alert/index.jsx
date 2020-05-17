@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import AlertDismissButton from './dismissButton';
-import { alertType } from '../entities';
-import { capitalize } from '../../../utils/string';
+import { alertType } from '../../alerts/entities';
+import { capitalize } from '../../utils/string';
 
 const alertBadge = ({ alertStyle }) => {
   switch (alertStyle) {

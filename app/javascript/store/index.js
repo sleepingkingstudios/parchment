@@ -3,7 +3,7 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
-import alerts from '../components/alerts/store/reducer';
+import { reducer as alerts } from '../alerts';
 import {
   reducer as authentication,
   observer as createAuthTokenObserver,
