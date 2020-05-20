@@ -1,20 +1,10 @@
 import { push } from 'connected-react-router';
 
 import redirectToShow from './index';
+import { dig } from '../../../utils/object';
 import {
-  dig,
-  valueOrDefault,
-} from '../../../utils/object';
-
-const shouldCallTheNextFunction = (fn, props, expected) => {
-  it('should call the next function', () => {
-    const next = jest.fn();
-
-    fn(next)(props);
-
-    expect(next).toHaveBeenCalledWith(valueOrDefault(expected, props));
-  });
-};
+  shouldCallTheNextFunction,
+} from '../testHelpers';
 
 describe('RedirectToShow middleware', () => {
   const resourceName = 'widget';
