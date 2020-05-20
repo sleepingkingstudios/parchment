@@ -1,19 +1,9 @@
-import FormEndpoint from '../../../api/form';
-import authorization from '../../../api/middleware/authorization';
+import createFormEndpoint from '../../../api/createForm';
 import { buildBook } from '../../entities';
-import alerts from './alerts';
-import redirect from './redirect';
 
-const REQUEST_URL = '/api/books';
-const endpoint = new FormEndpoint({
+const endpoint = createFormEndpoint({
   data: { book: buildBook() },
-  middleware: [
-    authorization,
-    redirect,
-    alerts,
-  ],
-  namespace: 'books/createBookForm',
-  url: REQUEST_URL,
+  resourceName: 'book',
 });
 
 export default endpoint;

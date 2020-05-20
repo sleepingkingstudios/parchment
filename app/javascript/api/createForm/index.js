@@ -28,6 +28,10 @@ const generateUrl = (options) => {
 
 const createFormEndpoint = (options) => {
   const { resourceName } = options;
+  const data = valueOrDefault(options.data, {});
+  const namespace = generateNamespace(options);
+  const url = generateUrl({ ...options, namespace });
+
   const alerts = generateAlerts({
     action: 'create',
     resourceName,
@@ -36,17 +40,16 @@ const createFormEndpoint = (options) => {
     success: true,
   });
   const redirect = generateRedirectToShow({
+    baseUrl: `/${namespace.replace(/\/\w+$/, '')}`,
     resourceName,
     on: 'success',
   });
-  const data = valueOrDefault(options.data, {});
   const middleware = [
     authorization,
     alerts,
     redirect,
   ];
-  const namespace = generateNamespace(options);
-  const url = generateUrl({ ...options, namespace });
+
   const endpoint = new FormEndpoint({
     data,
     middleware,

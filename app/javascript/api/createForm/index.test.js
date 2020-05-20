@@ -251,6 +251,7 @@ describe('createFormEndpoint', () => {
         expect(type).toEqual('api/redirectToShow');
 
         expect(options).toEqual({
+          baseUrl: '/widgets',
           resourceName,
           on: 'success',
         });
@@ -357,6 +358,21 @@ describe('createFormEndpoint', () => {
       shouldGenerateTheEndpointActions({ actions, namespace });
 
       shouldGenerateTheCreateFormActions({ actions, namespace });
+    });
+
+    describe('middleware', () => {
+      it('should set the redirect middleware', () => {
+        const alerts = endpoint.middleware[2];
+        const { options, type } = alerts;
+
+        expect(type).toEqual('api/redirectToShow');
+
+        expect(options).toEqual({
+          baseUrl: '/path/to/widgets',
+          resourceName,
+          on: 'success',
+        });
+      });
     });
 
     describe('namespace', () => {
