@@ -8,15 +8,15 @@ import {
 
 const defaultSelector = resourceName => data => dig(data, resourceName);
 
-const buildRedirect = (props) => {
-  const { resourceName } = props;
-  const primaryKey = valueOrDefault(props.primaryKey, 'id');
+const buildRedirect = (options) => {
+  const { resourceName } = options;
+  const primaryKey = valueOrDefault(options.primaryKey, 'id');
   const baseUrl = valueOrDefault(
-    props.baseUrl,
+    options.baseUrl,
     `/${pluralize(resourceName)}`,
   );
   const selector = valueOrDefault(
-    props.selector,
+    options.selector,
     defaultSelector(resourceName),
   );
 
@@ -30,18 +30,20 @@ const buildRedirect = (props) => {
   };
 };
 
-const redirectToShow = (props) => {
-  const { on } = props;
+const redirectToShow = (options) => {
+  const { on } = options;
+  const middleware = {
+    options,
+    type: 'api/redirectToShow',
+  };
 
   if (on === 'failure') {
-    return { handleFailure: buildRedirect(props) };
+    middleware.handleFailure = buildRedirect(options);
+  } else if (on === 'success') {
+    middleware.handleSuccess = buildRedirect(options);
   }
 
-  if (on === 'success') {
-    return { handleSuccess: buildRedirect(props) };
-  }
-
-  return {};
+  return middleware;
 };
 
 export default redirectToShow;

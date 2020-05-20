@@ -31,14 +31,37 @@ describe('Alerts middleware', () => {
   });
 
   describe('with no arguments', () => {
-    it('should return an empty object', () => {
-      expect(alerts({})).toEqual({});
+    const middleware = alerts({});
+    const { type, options } = middleware;
+
+    it('should not define handleFailure()', () => {
+      expect(middleware.handleFailure).toBeUndefined();
+    });
+
+    it('should not define handlePending()', () => {
+      expect(middleware.handlePending).toBeUndefined();
+    });
+
+    it('should not define handleSuccess()', () => {
+      expect(middleware.handleSuccess).toBeUndefined();
+    });
+
+    describe('options', () => {
+      it('should return an empty object', () => {
+        expect(options).toEqual({});
+      });
+    });
+
+    describe('type', () => {
+      it('should return "api/alerts"', () => {
+        expect(type).toEqual('api/alerts');
+      });
     });
   });
 
   describe('with failure: true', () => {
     const middleware = alerts({ failure: true });
-    const { handleFailure } = middleware;
+    const { handleFailure, options } = middleware;
 
     it('should not define handlePending()', () => {
       expect(middleware.handlePending).toBeUndefined();
@@ -76,12 +99,18 @@ describe('Alerts middleware', () => {
         message: 'Unable to process resource.',
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ failure: true });
+      });
+    });
   });
 
   describe('with failure: an object with message: value', () => {
     const message = 'Operation failed.';
     const middleware = alerts({ failure: { message } });
-    const { handleFailure } = middleware;
+    const { handleFailure, options } = middleware;
 
     it('should not define handlePending()', () => {
       expect(middleware.handlePending).toBeUndefined();
@@ -119,11 +148,17 @@ describe('Alerts middleware', () => {
         message,
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ failure: { message } });
+      });
+    });
   });
 
   describe('with pending: true', () => {
     const middleware = alerts({ pending: true });
-    const { handlePending } = middleware;
+    const { handlePending, options } = middleware;
 
     it('should not define handleFailure()', () => {
       expect(middleware.handleFailure).toBeUndefined();
@@ -160,12 +195,18 @@ describe('Alerts middleware', () => {
         message: 'Processing resource...',
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ pending: true });
+      });
+    });
   });
 
   describe('with pending: an object with message: value', () => {
     const message = 'Operation pending...';
     const middleware = alerts({ pending: { message } });
-    const { handlePending } = middleware;
+    const { handlePending, options } = middleware;
 
     it('should not define handleFailure()', () => {
       expect(middleware.handleFailure).toBeUndefined();
@@ -202,11 +243,17 @@ describe('Alerts middleware', () => {
         message,
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ pending: { message } });
+      });
+    });
   });
 
   describe('with success: true', () => {
     const middleware = alerts({ success: true });
-    const { handleSuccess } = middleware;
+    const { handleSuccess, options } = middleware;
 
     it('should not define handleFailure()', () => {
       expect(middleware.handleFailure).toBeUndefined();
@@ -244,12 +291,18 @@ describe('Alerts middleware', () => {
         message: 'Successfully processed resource.',
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ success: true });
+      });
+    });
   });
 
   describe('with success: an object with message: value', () => {
     const message = 'Operation successful';
     const middleware = alerts({ success: { message } });
-    const { handleSuccess } = middleware;
+    const { handleSuccess, options } = middleware;
 
     it('should not define handleFailure()', () => {
       expect(middleware.handleFailure).toBeUndefined();
@@ -287,6 +340,12 @@ describe('Alerts middleware', () => {
         message,
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ success: { message } });
+      });
+    });
   });
 
   describe('with multiple handlers', () => {
@@ -295,6 +354,7 @@ describe('Alerts middleware', () => {
       handleFailure,
       handlePending,
       handleSuccess,
+      options,
     } = middleware;
 
     describe('handleFailure()', () => {
@@ -314,6 +374,12 @@ describe('Alerts middleware', () => {
         expect(typeof handleSuccess).toEqual('function');
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ failure: true, pending: true, success: true });
+      });
+    });
   });
 
   describe('with action: value and resourceName: value', () => {
@@ -322,7 +388,7 @@ describe('Alerts middleware', () => {
 
     describe('with failure: true', () => {
       const middleware = alerts({ action, resourceName, failure: true });
-      const { handleFailure } = middleware;
+      const { handleFailure, options } = middleware;
 
       describe('handleFailure()', () => {
         const props = {
@@ -340,12 +406,18 @@ describe('Alerts middleware', () => {
           message: 'Unable to update widget.',
         });
       });
+
+      describe('options', () => {
+        it('should return the options', () => {
+          expect(options).toEqual({ action, resourceName, failure: true });
+        });
+      });
     });
 
     describe('with failure: an object with message: value', () => {
       const message = 'Operation failed.';
       const middleware = alerts({ action, resourceName, failure: { message } });
-      const { handleFailure } = middleware;
+      const { handleFailure, options } = middleware;
 
       describe('handleFailure()', () => {
         const props = {
@@ -363,11 +435,17 @@ describe('Alerts middleware', () => {
           message,
         });
       });
+
+      describe('options', () => {
+        it('should return the options', () => {
+          expect(options).toEqual({ action, resourceName, failure: { message } });
+        });
+      });
     });
 
     describe('with pending: true', () => {
       const middleware = alerts({ action, resourceName, pending: true });
-      const { handlePending } = middleware;
+      const { handlePending, options } = middleware;
 
       describe('handlePending()', () => {
         const props = {
@@ -385,12 +463,18 @@ describe('Alerts middleware', () => {
           message: 'Updating widget...',
         });
       });
+
+      describe('options', () => {
+        it('should return the options', () => {
+          expect(options).toEqual({ action, resourceName, pending: true });
+        });
+      });
     });
 
     describe('with pending: an object with message: value', () => {
       const message = 'Operation pending...';
       const middleware = alerts({ action, resourceName, pending: { message } });
-      const { handlePending } = middleware;
+      const { handlePending, options } = middleware;
 
       describe('handleFailure()', () => {
         const props = {
@@ -408,11 +492,17 @@ describe('Alerts middleware', () => {
           message,
         });
       });
+
+      describe('options', () => {
+        it('should return the options', () => {
+          expect(options).toEqual({ action, resourceName, pending: { message } });
+        });
+      });
     });
 
     describe('with success: true', () => {
       const middleware = alerts({ action, resourceName, success: true });
-      const { handleSuccess } = middleware;
+      const { handleSuccess, options } = middleware;
 
       describe('handleSuccess()', () => {
         const props = {
@@ -430,12 +520,18 @@ describe('Alerts middleware', () => {
           message: 'Successfully updated widget.',
         });
       });
+
+      describe('options', () => {
+        it('should return the options', () => {
+          expect(options).toEqual({ action, resourceName, success: true });
+        });
+      });
     });
 
     describe('with success: an object with message: value', () => {
       const message = 'Operation successful.';
       const middleware = alerts({ action, resourceName, success: { message } });
-      const { handleSuccess } = middleware;
+      const { handleSuccess, options } = middleware;
 
       describe('handleSuccess()', () => {
         const props = {
@@ -451,6 +547,12 @@ describe('Alerts middleware', () => {
           alertStyle: 'success',
           dismissible: true,
           message,
+        });
+      });
+
+      describe('options', () => {
+        it('should return the options', () => {
+          expect(options).toEqual({ action, resourceName, success: { message } });
         });
       });
     });

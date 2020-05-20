@@ -26,6 +26,7 @@ const authorization = {
 
     dispatch(clearSession());
   },
+  type: 'api/authorization',
 };
 
 export default authorization;

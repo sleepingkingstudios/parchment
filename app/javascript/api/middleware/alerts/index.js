@@ -12,11 +12,11 @@ import {
   progressiveTense,
 } from '../../../utils/inflector';
 
-const buildFailureAlert = (props) => {
-  const action = valueOrDefault(props.action, 'process');
-  const resource = valueOrDefault(props.resourceName, 'resource');
+const buildFailureAlert = (options) => {
+  const action = valueOrDefault(options.action, 'process');
+  const resource = valueOrDefault(options.resourceName, 'resource');
   const message = valueOrDefault(
-    dig(props, 'failure', 'message'),
+    dig(options, 'failure', 'message'),
     `Unable to ${action} ${resource}.`,
   );
 
@@ -28,11 +28,11 @@ const buildFailureAlert = (props) => {
   };
 };
 
-const buildPendingAlert = (props) => {
-  const action = valueOrDefault(props.action, 'process');
-  const resource = valueOrDefault(props.resourceName, 'resource');
+const buildPendingAlert = (options) => {
+  const action = valueOrDefault(options.action, 'process');
+  const resource = valueOrDefault(options.resourceName, 'resource');
   const message = valueOrDefault(
-    dig(props, 'pending', 'message'),
+    dig(options, 'pending', 'message'),
     `${capitalize(progressiveTense(action))} ${resource}...`,
   );
 
@@ -44,11 +44,11 @@ const buildPendingAlert = (props) => {
   };
 };
 
-const buildSuccessAlert = (props) => {
-  const action = valueOrDefault(props.action, 'process');
-  const resource = valueOrDefault(props.resourceName, 'resource');
+const buildSuccessAlert = (options) => {
+  const action = valueOrDefault(options.action, 'process');
+  const resource = valueOrDefault(options.resourceName, 'resource');
   const message = valueOrDefault(
-    dig(props, 'success', 'message'),
+    dig(options, 'success', 'message'),
     `Successfully ${pastTense(action)} ${resource}.`,
   );
 
@@ -60,39 +60,42 @@ const buildSuccessAlert = (props) => {
   };
 };
 
-const handleFailure = props => next => ({ dispatch, getState, response }) => {
+const handleFailure = options => next => ({ dispatch, getState, response }) => {
   next({ dispatch, getState, response });
 
-  const alert = buildFailureAlert(props);
+  const alert = buildFailureAlert(options);
   const action = addAlert(alert);
 
   dispatch(action);
 };
 
-const handlePending = props => next => ({ dispatch, getState }) => {
+const handlePending = options => next => ({ dispatch, getState }) => {
   next({ dispatch, getState });
 
-  const alert = buildPendingAlert(props);
+  const alert = buildPendingAlert(options);
   const action = addAlert(alert);
 
   dispatch(action);
 };
 
-const handleSuccess = props => next => ({ dispatch, getState, response }) => {
+const handleSuccess = options => next => ({ dispatch, getState, response }) => {
   next({ dispatch, getState, response });
 
-  const alert = buildSuccessAlert(props);
+  const alert = buildSuccessAlert(options);
   const action = addAlert(alert);
 
   dispatch(action);
 };
 
-const alerts = (props) => {
-  const middleware = {};
+const alerts = (options) => {
+  const middleware = {
+    options,
+    type: 'api/alerts',
+  };
 
-  if (props.failure) { middleware.handleFailure = handleFailure(props); }
-  if (props.pending) { middleware.handlePending = handlePending(props); }
-  if (props.success) { middleware.handleSuccess = handleSuccess(props); }
+  if (options.failure) { middleware.handleFailure = handleFailure(options); }
+  if (options.pending) { middleware.handlePending = handlePending(options); }
+  if (options.success) { middleware.handleSuccess = handleSuccess(options); }
 
   return middleware;
 };

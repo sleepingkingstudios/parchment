@@ -24,14 +24,33 @@ describe('RedirectToShow middleware', () => {
   });
 
   describe('with no arguments', () => {
-    it('should return an empty object', () => {
-      expect(redirectToShow({})).toEqual({});
+    const middleware = redirectToShow({});
+    const { options, type } = middleware;
+
+    it('should not define handleFailure()', () => {
+      expect(middleware.handleSuccess).toBeUndefined();
+    });
+
+    it('should not define handleSuccess()', () => {
+      expect(middleware.handleSuccess).toBeUndefined();
+    });
+
+    describe('options', () => {
+      it('should return an empty object', () => {
+        expect(options).toEqual({});
+      });
+    });
+
+    describe('type', () => {
+      it('should be "api/redirectToShow"', () => {
+        expect(type).toEqual('api/redirectToShow');
+      });
     });
   });
 
   describe('with on: failure', () => {
     const middleware = redirectToShow({ resourceName, on: 'failure' });
-    const { handleFailure } = middleware;
+    const { handleFailure, options } = middleware;
 
     it('should not define handleSuccess()', () => {
       expect(middleware.handleSuccess).toBeUndefined();
@@ -69,12 +88,18 @@ describe('RedirectToShow middleware', () => {
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ resourceName, on: 'failure' });
+      });
+    });
   });
 
   describe('with on: failure and baseUrl: value', () => {
     const baseUrl = '/path/to/widgets';
     const middleware = redirectToShow({ resourceName, baseUrl, on: 'failure' });
-    const { handleFailure } = middleware;
+    const { handleFailure, options } = middleware;
 
     describe('handleFailure()', () => {
       const id = '00000000-0000-0000-0000-000000000000';
@@ -94,12 +119,18 @@ describe('RedirectToShow middleware', () => {
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ resourceName, baseUrl, on: 'failure' });
+      });
+    });
   });
 
   describe('with on: failure and primaryKey: value', () => {
     const primaryKey = 'slug';
     const middleware = redirectToShow({ resourceName, primaryKey, on: 'failure' });
-    const { handleFailure } = middleware;
+    const { handleFailure, options } = middleware;
 
     describe('handleFailure()', () => {
       const slug = 'self-sealing-stem-bolt';
@@ -119,12 +150,18 @@ describe('RedirectToShow middleware', () => {
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ resourceName, primaryKey, on: 'failure' });
+      });
+    });
   });
 
   describe('with on: failure and selector: function', () => {
     const selector = data => dig(data, 'widgets', 'small', 'bolts');
     const middleware = redirectToShow({ resourceName, selector, on: 'failure' });
-    const { handleFailure } = middleware;
+    const { handleFailure, options } = middleware;
 
     describe('handleFailure()', () => {
       const id = '00000000-0000-0000-0000-000000000000';
@@ -144,11 +181,17 @@ describe('RedirectToShow middleware', () => {
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ resourceName, selector, on: 'failure' });
+      });
+    });
   });
 
   describe('with on: success', () => {
     const middleware = redirectToShow({ resourceName, on: 'success' });
-    const { handleSuccess } = middleware;
+    const { handleSuccess, options } = middleware;
 
     it('should not define handleFailure()', () => {
       expect(middleware.handleFailure).toBeUndefined();
@@ -186,12 +229,18 @@ describe('RedirectToShow middleware', () => {
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ resourceName, on: 'success' });
+      });
+    });
   });
 
   describe('with on: success and baseUrl: value', () => {
     const baseUrl = '/path/to/widgets';
     const middleware = redirectToShow({ resourceName, baseUrl, on: 'success' });
-    const { handleSuccess } = middleware;
+    const { handleSuccess, options } = middleware;
 
     describe('handleSuccess()', () => {
       const id = '00000000-0000-0000-0000-000000000000';
@@ -211,12 +260,18 @@ describe('RedirectToShow middleware', () => {
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ resourceName, baseUrl, on: 'success' });
+      });
+    });
   });
 
   describe('with on: success and primaryKey: value', () => {
     const primaryKey = 'slug';
     const middleware = redirectToShow({ resourceName, primaryKey, on: 'success' });
-    const { handleSuccess } = middleware;
+    const { handleSuccess, options } = middleware;
 
     describe('handleSuccess()', () => {
       const slug = 'self-sealing-stem-bolt';
@@ -236,12 +291,18 @@ describe('RedirectToShow middleware', () => {
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ resourceName, primaryKey, on: 'success' });
+      });
+    });
   });
 
   describe('with on: success and selector: function', () => {
     const selector = data => dig(data, 'widgets', 'small', 'bolts');
     const middleware = redirectToShow({ resourceName, selector, on: 'success' });
-    const { handleSuccess } = middleware;
+    const { handleSuccess, options } = middleware;
 
     describe('handleSuccess()', () => {
       const id = '00000000-0000-0000-0000-000000000000';
@@ -259,6 +320,12 @@ describe('RedirectToShow middleware', () => {
         handleSuccess(next)(props);
 
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
+      });
+    });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ resourceName, selector, on: 'success' });
       });
     });
   });
