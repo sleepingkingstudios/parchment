@@ -1,19 +1,6 @@
-import DeleteOneEndpoint from '../../../api/deleteOne';
-import authorization from '../../../api/middleware/authorization';
-import alerts from './alerts';
-import redirect from './redirect';
+import deleteEndpoint from '../../../api/resources/delete';
 
-const REQUEST_URL = '/api/books/:id';
-const endpoint = new DeleteOneEndpoint({
-  data: {},
-  middleware: [
-    authorization,
-    alerts,
-    redirect,
-  ],
-  namespace: 'books/deleteBook',
-  url: REQUEST_URL,
-});
+const endpoint = deleteEndpoint({ resourceName: 'book' });
 
 export default endpoint;
 
