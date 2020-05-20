@@ -15,6 +15,7 @@ import {
 const buildFailureAlert = (options) => {
   const action = valueOrDefault(options.action, 'process');
   const resource = valueOrDefault(options.resourceName, 'resource');
+  const alertStyle = valueOrDefault(dig(options, 'failure', 'alertStyle'), 'warning');
   const message = valueOrDefault(
     dig(options, 'failure', 'message'),
     `Unable to ${action} ${resource}.`,
@@ -22,7 +23,7 @@ const buildFailureAlert = (options) => {
 
   return {
     id: generateFingerprintUuid(`${pluralize(resource)}/${action}`),
-    alertStyle: 'warning',
+    alertStyle,
     dismissible: true,
     message,
   };
@@ -31,6 +32,7 @@ const buildFailureAlert = (options) => {
 const buildPendingAlert = (options) => {
   const action = valueOrDefault(options.action, 'process');
   const resource = valueOrDefault(options.resourceName, 'resource');
+  const alertStyle = valueOrDefault(dig(options, 'pending', 'alertStyle'), 'info');
   const message = valueOrDefault(
     dig(options, 'pending', 'message'),
     `${capitalize(progressiveTense(action))} ${resource}...`,
@@ -38,7 +40,7 @@ const buildPendingAlert = (options) => {
 
   return {
     id: generateFingerprintUuid(`${pluralize(resource)}/${action}`),
-    alertStyle: 'info',
+    alertStyle,
     dismissible: true,
     message,
   };
@@ -47,6 +49,7 @@ const buildPendingAlert = (options) => {
 const buildSuccessAlert = (options) => {
   const action = valueOrDefault(options.action, 'process');
   const resource = valueOrDefault(options.resourceName, 'resource');
+  const alertStyle = valueOrDefault(dig(options, 'success', 'alertStyle'), 'success');
   const message = valueOrDefault(
     dig(options, 'success', 'message'),
     `Successfully ${pastTense(action)} ${resource}.`,
@@ -54,7 +57,7 @@ const buildSuccessAlert = (options) => {
 
   return {
     id: generateFingerprintUuid(`${pluralize(resource)}/${action}`),
-    alertStyle: 'success',
+    alertStyle,
     dismissible: true,
     message,
   };

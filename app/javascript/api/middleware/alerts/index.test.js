@@ -107,6 +107,55 @@ describe('Alerts middleware', () => {
     });
   });
 
+  describe('with failure: an object with alertStyle: value', () => {
+    const alertStyle = 'danger';
+    const middleware = alerts({ failure: { alertStyle } });
+    const { handleFailure, options } = middleware;
+
+    it('should not define handlePending()', () => {
+      expect(middleware.handlePending).toBeUndefined();
+    });
+
+    it('should not define handleSuccess()', () => {
+      expect(middleware.handleSuccess).toBeUndefined();
+    });
+
+    describe('handleFailure()', () => {
+      const props = {
+        dispatch: jest.fn(),
+        getState: jest.fn(),
+        response: {},
+      };
+
+      afterEach(() => { props.dispatch.mockClear(); });
+
+      it('should be a function', () => {
+        expect(typeof handleFailure).toEqual('function');
+      });
+
+      it('should return a function', () => {
+        const next = jest.fn();
+
+        expect(typeof handleFailure(next)).toEqual('function');
+      });
+
+      shouldCallTheNextFunction(handleFailure, props);
+
+      shouldAddAlert(handleFailure, props, {
+        id: generateFingerprintUuid('resources/process'),
+        alertStyle,
+        dismissible: true,
+        message: 'Unable to process resource.',
+      });
+    });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ failure: { alertStyle } });
+      });
+    });
+  });
+
   describe('with failure: an object with message: value', () => {
     const message = 'Operation failed.';
     const middleware = alerts({ failure: { message } });
@@ -203,6 +252,54 @@ describe('Alerts middleware', () => {
     });
   });
 
+  describe('with pending: an object with alertStyle: value', () => {
+    const alertStyle = 'danger';
+    const middleware = alerts({ pending: { alertStyle } });
+    const { handlePending, options } = middleware;
+
+    it('should not define handleFailure()', () => {
+      expect(middleware.handleFailure).toBeUndefined();
+    });
+
+    it('should not define handleSuccess()', () => {
+      expect(middleware.handleSuccess).toBeUndefined();
+    });
+
+    describe('handlePending()', () => {
+      const props = {
+        dispatch: jest.fn(),
+        getState: jest.fn(),
+      };
+
+      afterEach(() => { props.dispatch.mockClear(); });
+
+      it('should be a function', () => {
+        expect(typeof handlePending).toEqual('function');
+      });
+
+      it('should return a function', () => {
+        const next = jest.fn();
+
+        expect(typeof handlePending(next)).toEqual('function');
+      });
+
+      shouldCallTheNextFunction(handlePending, props);
+
+      shouldAddAlert(handlePending, props, {
+        id: generateFingerprintUuid('resources/process'),
+        alertStyle,
+        dismissible: true,
+        message: 'Processing resource...',
+      });
+    });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ pending: { alertStyle } });
+      });
+    });
+  });
+
   describe('with pending: an object with message: value', () => {
     const message = 'Operation pending...';
     const middleware = alerts({ pending: { message } });
@@ -295,6 +392,55 @@ describe('Alerts middleware', () => {
     describe('options', () => {
       it('should return the options', () => {
         expect(options).toEqual({ success: true });
+      });
+    });
+  });
+
+  describe('with success: an object with alertStyle: value', () => {
+    const alertStyle = 'danger';
+    const middleware = alerts({ success: { alertStyle } });
+    const { handleSuccess, options } = middleware;
+
+    it('should not define handleFailure()', () => {
+      expect(middleware.handleFailure).toBeUndefined();
+    });
+
+    it('should not define handlePending()', () => {
+      expect(middleware.handlePending).toBeUndefined();
+    });
+
+    describe('handleSuccess()', () => {
+      const props = {
+        dispatch: jest.fn(),
+        getState: jest.fn(),
+        response: {},
+      };
+
+      afterEach(() => { props.dispatch.mockClear(); });
+
+      it('should be a function', () => {
+        expect(typeof handleSuccess).toEqual('function');
+      });
+
+      it('should return a function', () => {
+        const next = jest.fn();
+
+        expect(typeof handleSuccess(next)).toEqual('function');
+      });
+
+      shouldCallTheNextFunction(handleSuccess, props);
+
+      shouldAddAlert(handleSuccess, props, {
+        id: generateFingerprintUuid('resources/process'),
+        alertStyle,
+        dismissible: true,
+        message: 'Successfully processed resource.',
+      });
+    });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ success: { alertStyle } });
       });
     });
   });
@@ -414,6 +560,35 @@ describe('Alerts middleware', () => {
       });
     });
 
+    describe('with failure: an object with alertStyle: value', () => {
+      const alertStyle = 'danger';
+      const middleware = alerts({ action, resourceName, failure: { alertStyle } });
+      const { handleFailure, options } = middleware;
+
+      describe('handleFailure()', () => {
+        const props = {
+          dispatch: jest.fn(),
+          getState: jest.fn(),
+          response: {},
+        };
+
+        afterEach(() => { props.dispatch.mockClear(); });
+
+        shouldAddAlert(handleFailure, props, {
+          id: generateFingerprintUuid('widgets/update'),
+          alertStyle,
+          dismissible: true,
+          message: 'Unable to update widget.',
+        });
+      });
+
+      describe('options', () => {
+        it('should return the options', () => {
+          expect(options).toEqual({ action, resourceName, failure: { alertStyle } });
+        });
+      });
+    });
+
     describe('with failure: an object with message: value', () => {
       const message = 'Operation failed.';
       const middleware = alerts({ action, resourceName, failure: { message } });
@@ -471,6 +646,35 @@ describe('Alerts middleware', () => {
       });
     });
 
+    describe('with pending: an object with alertStyle: value', () => {
+      const alertStyle = 'danger';
+      const middleware = alerts({ action, resourceName, pending: { alertStyle } });
+      const { handlePending, options } = middleware;
+
+      describe('handlePending()', () => {
+        const props = {
+          dispatch: jest.fn(),
+          getState: jest.fn(),
+          response: {},
+        };
+
+        afterEach(() => { props.dispatch.mockClear(); });
+
+        shouldAddAlert(handlePending, props, {
+          id: generateFingerprintUuid('widgets/update'),
+          alertStyle,
+          dismissible: true,
+          message: 'Updating widget...',
+        });
+      });
+
+      describe('options', () => {
+        it('should return the options', () => {
+          expect(options).toEqual({ action, resourceName, pending: { alertStyle } });
+        });
+      });
+    });
+
     describe('with pending: an object with message: value', () => {
       const message = 'Operation pending...';
       const middleware = alerts({ action, resourceName, pending: { message } });
@@ -524,6 +728,35 @@ describe('Alerts middleware', () => {
       describe('options', () => {
         it('should return the options', () => {
           expect(options).toEqual({ action, resourceName, success: true });
+        });
+      });
+    });
+
+    describe('with success: an object with alertStyle: value', () => {
+      const alertStyle = 'danger';
+      const middleware = alerts({ action, resourceName, success: { alertStyle } });
+      const { handleSuccess, options } = middleware;
+
+      describe('handleSuccess()', () => {
+        const props = {
+          dispatch: jest.fn(),
+          getState: jest.fn(),
+          response: {},
+        };
+
+        afterEach(() => { props.dispatch.mockClear(); });
+
+        shouldAddAlert(handleSuccess, props, {
+          id: generateFingerprintUuid('widgets/update'),
+          alertStyle,
+          dismissible: true,
+          message: 'Successfully updated widget.',
+        });
+      });
+
+      describe('options', () => {
+        it('should return the options', () => {
+          expect(options).toEqual({ action, resourceName, success: { alertStyle } });
         });
       });
     });

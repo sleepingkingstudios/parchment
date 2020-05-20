@@ -1,9 +1,9 @@
 import createFormEndpoint from './index';
-import { INITIALIZED } from '../status';
+import { INITIALIZED } from '../../status';
 import {
   shouldGenerateTheEndpointActions,
   shouldGenerateTheSelector,
-} from '../endpoint/testHelpers';
+} from '../../endpoint/testHelpers';
 
 const shouldGenerateTheCreateFormActions = ({ actions, namespace }) => {
   const {
@@ -313,7 +313,7 @@ describe('createFormEndpoint', () => {
 
     describe('type', () => {
       it('should be api/createForm', () => {
-        expect(endpoint.type).toEqual('api/createForm');
+        expect(endpoint.type).toEqual('api/resources/createForm');
       });
     });
   });

@@ -14,6 +14,6 @@ describe('CreateBookForm store', () => {
   });
 
   it('should return the type', () => {
-    expect(type).toEqual('api/createForm');
+    expect(type).toEqual('api/resources/createForm');
   });
 });

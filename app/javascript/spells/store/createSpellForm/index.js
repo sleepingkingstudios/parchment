@@ -1,4 +1,4 @@
-import createFormEndpoint from '../../../api/createForm';
+import createFormEndpoint from '../../../api/resources/createForm';
 import { buildSpell } from '../../entities';
 
 const endpoint = createFormEndpoint({

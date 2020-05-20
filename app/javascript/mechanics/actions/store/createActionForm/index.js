@@ -1,4 +1,4 @@
-import createFormEndpoint from '../../../../api/createForm';
+import createFormEndpoint from '../../../../api/resources/createForm';
 import { buildMechanic } from '../../../entities';
 
 const buildAction = () => Object.assign(buildMechanic(), { type: 'Mechanics::Action' });

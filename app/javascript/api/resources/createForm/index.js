@@ -1,14 +1,14 @@
 import pluralize from 'pluralize';
 
-import FormEndpoint from '../form';
-import authorization from '../middleware/authorization';
-import generateAlerts from '../middleware/alerts';
-import generateRedirectToShow from '../middleware/redirectToShow';
+import FormEndpoint from '../../form';
+import authorization from '../../middleware/authorization';
+import generateAlerts from '../../middleware/alerts';
+import generateRedirectToShow from '../../middleware/redirectToShow';
 import {
   exists,
   valueOrDefault,
-} from '../../utils/object';
-import { capitalize } from '../../utils/string';
+} from '../../../utils/object';
+import { capitalize } from '../../../utils/string';
 
 const generateNamespace = (options) => {
   if (exists(options.namespace)) { return options.namespace; }
@@ -59,7 +59,7 @@ const createFormEndpoint = (options) => {
 
   endpoint.middleware = middleware;
   endpoint.options = options;
-  endpoint.type = 'api/createForm';
+  endpoint.type = 'api/resources/createForm';
 
   return endpoint;
 };
