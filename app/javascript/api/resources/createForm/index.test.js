@@ -397,7 +397,7 @@ describe('createFormEndpoint', () => {
       });
 
       describe('url', () => {
-        it('should be /api/widgets', () => {
+        it('should be /api/path/to/widgets', () => {
           expect(request.url).toEqual('/api/path/to/widgets');
         });
       });
@@ -430,7 +430,7 @@ describe('createFormEndpoint', () => {
       });
 
       describe('url', () => {
-        it('should be /api/widgets', () => {
+        it('should be the given url', () => {
           expect(request.url).toEqual(url);
         });
       });

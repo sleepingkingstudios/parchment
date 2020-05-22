@@ -1,21 +1,21 @@
-import deleteEndpoint from './index';
+import indexEndpoint from './index';
 import { INITIALIZED } from '../../status';
 import {
   shouldGenerateTheEndpointActions,
   shouldGenerateTheSelector,
 } from '../../endpoint/testHelpers';
 
-describe('deleteEndpoint', () => {
-  const resourceName = 'widget';
+describe('indexEndpoint', () => {
+  const resourceName = 'widgets';
   const defaultOptions = { resourceName };
 
   it('should be a function', () => {
-    expect(typeof deleteEndpoint).toEqual('function');
+    expect(typeof indexEndpoint).toEqual('function');
   });
 
   describe('with default options', () => {
-    const namespace = 'widgets/deleteWidget';
-    const endpoint = deleteEndpoint({ ...defaultOptions });
+    const namespace = 'widgets/indexFindWidgets';
+    const endpoint = indexEndpoint({ ...defaultOptions });
 
     describe('actions', () => {
       const { actions } = endpoint;
@@ -25,18 +25,27 @@ describe('deleteEndpoint', () => {
 
     describe('hooks', () => {
       const { hooks } = endpoint;
-      const { useDeleteData } = hooks;
+      const {
+        useEndpoint,
+        useRequestData,
+      } = hooks;
 
-      describe('useDeleteData()', () => {
+      describe('useEndpoint()', () => {
         it('should be a function', () => {
-          expect(typeof useDeleteData).toEqual('function');
+          expect(typeof useEndpoint).toEqual('function');
+        });
+      });
+
+      describe('useRequestData()', () => {
+        it('should be a function', () => {
+          expect(typeof useRequestData).toEqual('function');
         });
       });
     });
 
     describe('middleware', () => {
       it('should set the middleware', () => {
-        expect(endpoint.middleware.length).toEqual(3);
+        expect(endpoint.middleware.length).toEqual(2);
       });
 
       it('should set the authorization middleware', () => {
@@ -53,24 +62,9 @@ describe('deleteEndpoint', () => {
         expect(type).toEqual('api/alerts');
 
         expect(options).toEqual({
-          action: 'delete',
+          action: 'find',
           resourceName,
-          pending: true,
           failure: true,
-          success: { alertStyle: 'danger' },
-        });
-      });
-
-      it('should set the redirect middleware', () => {
-        const alerts = endpoint.middleware[2];
-        const { options, type } = alerts;
-
-        expect(type).toEqual('api/redirectToIndex');
-
-        expect(options).toEqual({
-          baseUrl: '/widgets',
-          resourceName,
-          on: 'success',
         });
       });
     });
@@ -110,14 +104,14 @@ describe('deleteEndpoint', () => {
       const { request } = endpoint;
 
       describe('method', () => {
-        it('should be DELETE', () => {
-          expect(request.method).toEqual('DELETE');
+        it('should be GET', () => {
+          expect(request.method).toEqual('GET');
         });
       });
 
       describe('url', () => {
-        it('should be /api/widgets/:id', () => {
-          expect(request.url).toEqual('/api/widgets/:id');
+        it('should be /api/widgets', () => {
+          expect(request.url).toEqual('/api/widgets');
         });
       });
     });
@@ -130,34 +124,43 @@ describe('deleteEndpoint', () => {
 
     describe('type', () => {
       it('should be api/delete', () => {
-        expect(endpoint.type).toEqual('api/resources/delete');
+        expect(endpoint.type).toEqual('api/resources/index');
+      });
+    });
+  });
+
+  describe('with data: value', () => {
+    const data = { widgets: [] };
+    const endpoint = indexEndpoint({ ...defaultOptions, data });
+
+    describe('reducer', () => {
+      const { reducer } = endpoint;
+
+      it('should generate the reducer', () => {
+        expect(typeof reducer).toEqual('function');
+      });
+
+      it('should set the initial state', () => {
+        const state = reducer(undefined, { type: 'test/action' });
+        const expected = {
+          data,
+          errors: {},
+          status: INITIALIZED,
+        };
+
+        expect(state).toEqual(expected);
       });
     });
   });
 
   describe('with namespace: value', () => {
-    const namespace = 'path/to/widgets/deleteWidget';
-    const endpoint = deleteEndpoint({ ...defaultOptions, namespace });
+    const namespace = 'path/to/widgets/indexWidgets';
+    const endpoint = indexEndpoint({ ...defaultOptions, namespace });
 
     describe('actions', () => {
       const { actions } = endpoint;
 
       shouldGenerateTheEndpointActions({ actions, namespace });
-    });
-
-    describe('middleware', () => {
-      it('should set the redirect middleware', () => {
-        const alerts = endpoint.middleware[2];
-        const { options, type } = alerts;
-
-        expect(type).toEqual('api/redirectToIndex');
-
-        expect(options).toEqual({
-          baseUrl: '/path/to/widgets',
-          resourceName,
-          on: 'success',
-        });
-      });
     });
 
     describe('namespace', () => {
@@ -176,14 +179,59 @@ describe('deleteEndpoint', () => {
       const { request } = endpoint;
 
       describe('method', () => {
-        it('should be DELETE', () => {
-          expect(request.method).toEqual('DELETE');
+        it('should be GET', () => {
+          expect(request.method).toEqual('GET');
         });
       });
 
       describe('url', () => {
-        it('should be /api/path/to/widgets/:id', () => {
-          expect(request.url).toEqual('/api/path/to/widgets/:id');
+        it('should be /api/path/to/widgets', () => {
+          expect(request.url).toEqual('/api/path/to/widgets');
+        });
+      });
+    });
+
+    describe('selector', () => {
+      const { selector } = endpoint;
+
+      shouldGenerateTheSelector({ namespace, selector });
+    });
+  });
+
+  describe('with namespace: value', () => {
+    const namespace = 'path/to/widgets/indexFindWidgets';
+    const endpoint = indexEndpoint({ ...defaultOptions, namespace });
+
+    describe('actions', () => {
+      const { actions } = endpoint;
+
+      shouldGenerateTheEndpointActions({ actions, namespace });
+    });
+
+    describe('namespace', () => {
+      it('should set the namespace', () => {
+        expect(endpoint.namespace).toEqual(namespace);
+      });
+    });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(endpoint.options).toEqual({ ...defaultOptions, namespace });
+      });
+    });
+
+    describe('request', () => {
+      const { request } = endpoint;
+
+      describe('method', () => {
+        it('should be GET', () => {
+          expect(request.method).toEqual('GET');
+        });
+      });
+
+      describe('url', () => {
+        it('should be /api/path/to/widgets', () => {
+          expect(request.url).toEqual('/api/path/to/widgets');
         });
       });
     });
@@ -196,8 +244,8 @@ describe('deleteEndpoint', () => {
   });
 
   describe('with url: value', () => {
-    const url = '/api/v0/widgets/:id';
-    const endpoint = deleteEndpoint({ ...defaultOptions, url });
+    const url = '/api/v0/widgets';
+    const endpoint = indexEndpoint({ ...defaultOptions, url });
 
     describe('options', () => {
       it('should return the options', () => {
@@ -209,8 +257,8 @@ describe('deleteEndpoint', () => {
       const { request } = endpoint;
 
       describe('method', () => {
-        it('should be DELETE', () => {
-          expect(request.method).toEqual('DELETE');
+        it('should be GET', () => {
+          expect(request.method).toEqual('GET');
         });
       });
 
