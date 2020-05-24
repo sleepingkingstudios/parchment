@@ -3,6 +3,7 @@ import pluralize from 'pluralize';
 import FindManyEndpoint from '../../findMany';
 import authorization from '../../middleware/authorization';
 import generateAlerts from '../../middleware/alerts';
+import { injectMiddleware } from '../../middleware/utils';
 import {
   exists,
   valueOrDefault,
@@ -36,10 +37,13 @@ const indexEndpoint = (options) => {
     resourceName: pluralize(resourceName),
     failure: true,
   });
-  const middleware = [
-    authorization,
-    alerts,
-  ];
+  const middleware = injectMiddleware(
+    [
+      authorization,
+      alerts,
+    ],
+    valueOrDefault(options.middleware, []),
+  );
 
   const endpoint = new FindManyEndpoint({
     data,

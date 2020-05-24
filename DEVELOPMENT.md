@@ -27,6 +27,21 @@
 
 - clear (some?) alerts when the URL (not query!) changes
 
+### API
+
+- Refactor Endpoint class to client() function.
+- Clean up reducer namespaces: |
+    resourceName: {
+      create: {},
+      delete: {},
+      index: {},
+      show: {},
+      update: { // combinedReducer
+        find: {},
+        form: {},
+      }
+    }
+
 ### Components
 
 - refactor CreatePage, IndexPage, ShowPage, UpdatePage

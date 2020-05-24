@@ -4,6 +4,9 @@ import {
   shouldGenerateTheEndpointActions,
   shouldGenerateTheSelector,
 } from '../../endpoint/testHelpers';
+import {
+  shouldInjectTheMiddleware,
+} from '../../middleware/testHelpers';
 
 describe('deleteEndpoint', () => {
   const resourceName = 'widget';
@@ -132,6 +135,36 @@ describe('deleteEndpoint', () => {
       it('should be api/delete', () => {
         expect(endpoint.type).toEqual('api/resources/delete');
       });
+    });
+  });
+
+  describe('with middleware: directives', () => {
+    const directives = [
+      {
+        middleware: { type: 'test/first' },
+        before: ':all',
+      },
+      {
+        middleware: { type: 'test/afterAuthorization' },
+        after: 'api/authorization',
+      },
+      {
+        middleware: { type: 'test/last' },
+        after: ':all',
+      },
+    ];
+    const endpoint = deleteEndpoint({ ...defaultOptions, middleware: directives });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(endpoint.options).toEqual({ ...defaultOptions, middleware: directives });
+      });
+    });
+
+    shouldInjectTheMiddleware({
+      directives,
+      middleware: endpoint.middleware,
+      original: deleteEndpoint({ ...defaultOptions }).middleware,
     });
   });
 

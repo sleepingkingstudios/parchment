@@ -4,6 +4,9 @@ import {
   shouldGenerateTheEndpointActions,
   shouldGenerateTheSelector,
 } from '../../endpoint/testHelpers';
+import {
+  shouldInjectTheMiddleware,
+} from '../../middleware/testHelpers';
 
 const shouldGenerateTheCreateFormActions = ({ actions, namespace }) => {
   const {
@@ -345,6 +348,36 @@ describe('createFormEndpoint', () => {
 
         expect(state).toEqual(expected);
       });
+    });
+  });
+
+  describe('with middleware: directives', () => {
+    const directives = [
+      {
+        middleware: { type: 'test/first' },
+        before: ':all',
+      },
+      {
+        middleware: { type: 'test/afterAuthorization' },
+        after: 'api/authorization',
+      },
+      {
+        middleware: { type: 'test/last' },
+        after: ':all',
+      },
+    ];
+    const endpoint = createFormEndpoint({ ...defaultOptions, middleware: directives });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(endpoint.options).toEqual({ ...defaultOptions, middleware: directives });
+      });
+    });
+
+    shouldInjectTheMiddleware({
+      directives,
+      middleware: endpoint.middleware,
+      original: createFormEndpoint({ ...defaultOptions }).middleware,
     });
   });
 

@@ -4,6 +4,9 @@ import {
   shouldGenerateTheEndpointActions,
   shouldGenerateTheSelector,
 } from '../../endpoint/testHelpers';
+import {
+  shouldInjectTheMiddleware,
+} from '../../middleware/testHelpers';
 
 describe('indexEndpoint', () => {
   const resourceName = 'widgets';
@@ -153,48 +156,33 @@ describe('indexEndpoint', () => {
     });
   });
 
-  describe('with namespace: value', () => {
-    const namespace = 'path/to/widgets/indexWidgets';
-    const endpoint = indexEndpoint({ ...defaultOptions, namespace });
-
-    describe('actions', () => {
-      const { actions } = endpoint;
-
-      shouldGenerateTheEndpointActions({ actions, namespace });
-    });
-
-    describe('namespace', () => {
-      it('should set the namespace', () => {
-        expect(endpoint.namespace).toEqual(namespace);
-      });
-    });
+  describe('with middleware: directives', () => {
+    const directives = [
+      {
+        middleware: { type: 'test/first' },
+        before: ':all',
+      },
+      {
+        middleware: { type: 'test/afterAuthorization' },
+        after: 'api/authorization',
+      },
+      {
+        middleware: { type: 'test/last' },
+        after: ':all',
+      },
+    ];
+    const endpoint = indexEndpoint({ ...defaultOptions, middleware: directives });
 
     describe('options', () => {
       it('should return the options', () => {
-        expect(endpoint.options).toEqual({ ...defaultOptions, namespace });
+        expect(endpoint.options).toEqual({ ...defaultOptions, middleware: directives });
       });
     });
 
-    describe('request', () => {
-      const { request } = endpoint;
-
-      describe('method', () => {
-        it('should be GET', () => {
-          expect(request.method).toEqual('GET');
-        });
-      });
-
-      describe('url', () => {
-        it('should be /api/path/to/widgets', () => {
-          expect(request.url).toEqual('/api/path/to/widgets');
-        });
-      });
-    });
-
-    describe('selector', () => {
-      const { selector } = endpoint;
-
-      shouldGenerateTheSelector({ namespace, selector });
+    shouldInjectTheMiddleware({
+      directives,
+      middleware: endpoint.middleware,
+      original: indexEndpoint({ ...defaultOptions }).middleware,
     });
   });
 

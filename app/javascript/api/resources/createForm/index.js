@@ -4,6 +4,7 @@ import FormEndpoint from '../../form';
 import authorization from '../../middleware/authorization';
 import generateAlerts from '../../middleware/alerts';
 import generateRedirectToShow from '../../middleware/redirectToShow';
+import { injectMiddleware } from '../../middleware/utils';
 import {
   exists,
   valueOrDefault,
@@ -44,11 +45,14 @@ const createFormEndpoint = (options) => {
     resourceName,
     on: 'success',
   });
-  const middleware = [
-    authorization,
-    alerts,
-    redirect,
-  ];
+  const middleware = injectMiddleware(
+    [
+      authorization,
+      alerts,
+      redirect,
+    ],
+    valueOrDefault(options.middleware, []),
+  );
 
   const endpoint = new FormEndpoint({
     data,

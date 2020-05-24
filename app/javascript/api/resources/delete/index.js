@@ -4,7 +4,11 @@ import DeleteOneEndpoint from '../../deleteOne';
 import authorization from '../../middleware/authorization';
 import generateAlerts from '../../middleware/alerts';
 import generateRedirectToIndex from '../../middleware/redirectToIndex';
-import { exists } from '../../../utils/object';
+import { injectMiddleware } from '../../middleware/utils';
+import {
+  exists,
+  valueOrDefault,
+} from '../../../utils/object';
 import { capitalize } from '../../../utils/string';
 
 const generateNamespace = (options) => {
@@ -40,11 +44,14 @@ const deleteEndpoint = (options) => {
     resourceName,
     on: 'success',
   });
-  const middleware = [
-    authorization,
-    alerts,
-    redirect,
-  ];
+  const middleware = injectMiddleware(
+    [
+      authorization,
+      alerts,
+      redirect,
+    ],
+    valueOrDefault(options.middleware, []),
+  );
 
   const endpoint = new DeleteOneEndpoint({
     middleware,
