@@ -5,16 +5,28 @@ describe('collectAssociations request middleware', () => {
     expect(typeof collectAssociations).toEqual('function');
   });
 
+  describe('with default options', () => {
+    const middleware = collectAssociations({});
+    const { type } = middleware;
+
+    describe('type', () => {
+      it('should return api/collectAssociations', () => {
+        expect(type).toEqual('api/collectAssociations');
+      });
+    });
+  });
+
   describe('with a resource with a polymorphic belongsTo association', () => {
     const associationName = 'source';
     const associationType = 'belongsTo';
     const resourceName = 'spell';
-    const middleware = collectAssociations({
+    const options = {
       associationName,
       associationType,
       polymorphic: true,
       resourceName,
-    });
+    };
+    const middleware = collectAssociations(options);
 
     describe('handleSuccess()', () => {
       const { handleSuccess } = middleware;
@@ -131,6 +143,12 @@ describe('collectAssociations request middleware', () => {
         });
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(middleware.options).toEqual(options);
+      });
+    });
   });
 
   describe('with a resource with a polymorphic hasOne association', () => {
@@ -138,13 +156,14 @@ describe('collectAssociations request middleware', () => {
     const associationType = 'hasOne';
     const inverseName = 'printable';
     const resourceName = 'book';
-    const middleware = collectAssociations({
+    const options = {
       associationName,
       associationType,
       inverseName,
       polymorphic: true,
       resourceName,
-    });
+    };
+    const middleware = collectAssociations(options);
 
     describe('handleSuccess()', () => {
       const { handleSuccess } = middleware;
@@ -222,18 +241,25 @@ describe('collectAssociations request middleware', () => {
         });
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(middleware.options).toEqual(options);
+      });
+    });
   });
 
   describe('with a resources array with a polymorphic belongsTo association', () => {
     const associationName = 'source';
     const associationType = 'belongsTo';
     const resourceName = 'spells';
-    const middleware = collectAssociations({
+    const options = {
       associationName,
       associationType,
       polymorphic: true,
       resourceName,
-    });
+    };
+    const middleware = collectAssociations(options);
 
     describe('handleSuccess()', () => {
       const { handleSuccess } = middleware;
@@ -492,6 +518,12 @@ describe('collectAssociations request middleware', () => {
         });
       });
     });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(middleware.options).toEqual(options);
+      });
+    });
   });
 
   describe('with a resources array with a polymorphic hasOne association', () => {
@@ -499,13 +531,14 @@ describe('collectAssociations request middleware', () => {
     const associationType = 'hasOne';
     const inverseName = 'printable';
     const resourceName = 'books';
-    const middleware = collectAssociations({
+    const options = {
       associationName,
       associationType,
       inverseName,
       polymorphic: true,
       resourceName,
-    });
+    };
+    const middleware = collectAssociations(options);
 
     describe('handleSuccess()', () => {
       const { handleSuccess } = middleware;
@@ -633,6 +666,12 @@ describe('collectAssociations request middleware', () => {
 
           expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
         });
+      });
+    });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(middleware.options).toEqual(options);
       });
     });
   });

@@ -1,14 +1,8 @@
-import FindManyEndpoint from '../../../api/findMany';
-import authorization from '../../../api/middleware/authorization';
+import indexEndpoint from '../../../api/resources/index';
 
-const REQUEST_URL = '/api/books';
-const endpoint = new FindManyEndpoint({
+const endpoint = indexEndpoint({
   data: { books: [] },
-  middleware: [
-    authorization,
-  ],
-  namespace: 'books/indexFindBooks',
-  url: REQUEST_URL,
+  resourceName: 'books',
 });
 
 export default endpoint;

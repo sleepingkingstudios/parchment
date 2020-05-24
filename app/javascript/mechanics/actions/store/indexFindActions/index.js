@@ -1,14 +1,9 @@
-import FindManyEndpoint from '../../../../api/findMany';
-import authorization from '../../../../api/middleware/authorization';
+import indexEndpoint from '../../../../api/resources/index';
 
-const REQUEST_URL = '/api/mechanics/actions';
-const endpoint = new FindManyEndpoint({
+const endpoint = indexEndpoint({
   data: { actions: [] },
-  middleware: [
-    authorization,
-  ],
   namespace: 'mechanics/actions/indexFindActions',
-  url: REQUEST_URL,
+  resourceName: 'actions',
 });
 
 export default endpoint;
