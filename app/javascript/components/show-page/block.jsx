@@ -37,6 +37,7 @@ const ShowPageBlock = (props) => {
   const { hooks } = endpoint;
   const { useEndpoint } = hooks;
   const { data, status } = useEndpoint();
+
   const actualMapData = valueOrDefault(
     mapData,
     defaultMapData(singularResourceName),

@@ -1,19 +1,9 @@
-import FindOneEndpoint from '../../../api/findOne';
-import authorization from '../../../api/middleware/authorization';
-import alerts from './alerts';
+import showEndpoint from '../../../api/resources/show';
 import { buildBook } from '../../entities';
-import redirect from './redirect';
 
-const REQUEST_URL = '/api/books/:id';
-const endpoint = new FindOneEndpoint({
+const endpoint = showEndpoint({
   data: { book: buildBook() },
-  middleware: [
-    authorization,
-    redirect,
-    alerts,
-  ],
-  namespace: 'books/showFindBook',
-  url: REQUEST_URL,
+  resourceName: 'book',
 });
 
 export default endpoint;
