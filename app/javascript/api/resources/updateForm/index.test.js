@@ -1,4 +1,4 @@
-import createFormEndpoint from './index';
+import updateFormEndpoint from './index';
 import { INITIALIZED } from '../../status';
 import {
   shouldGenerateTheEndpointActions,
@@ -11,17 +11,17 @@ import {
   shouldInjectTheMiddleware,
 } from '../../middleware/testHelpers';
 
-describe('createFormEndpoint', () => {
+describe('updateFormEndpoint', () => {
   const resourceName = 'widget';
   const defaultOptions = { resourceName };
 
   it('should be a function', () => {
-    expect(typeof createFormEndpoint).toEqual('function');
+    expect(typeof updateFormEndpoint).toEqual('function');
   });
 
   describe('with default options', () => {
-    const namespace = 'widgets/createWidgetForm';
-    const endpoint = createFormEndpoint({ ...defaultOptions });
+    const namespace = 'widgets/updateWidgetForm';
+    const endpoint = updateFormEndpoint({ ...defaultOptions });
 
     describe('actions', () => {
       const { actions } = endpoint;
@@ -77,7 +77,7 @@ describe('createFormEndpoint', () => {
         expect(type).toEqual('api/alerts');
 
         expect(options).toEqual({
-          action: 'create',
+          action: 'update',
           resourceName,
           pending: true,
           failure: true,
@@ -134,14 +134,14 @@ describe('createFormEndpoint', () => {
       const { request } = endpoint;
 
       describe('method', () => {
-        it('should be POST', () => {
-          expect(request.method).toEqual('POST');
+        it('should be PATCH', () => {
+          expect(request.method).toEqual('PATCH');
         });
       });
 
       describe('url', () => {
         it('should be /api/widgets', () => {
-          expect(request.url).toEqual('/api/widgets');
+          expect(request.url).toEqual('/api/widgets/:id');
         });
       });
     });
@@ -154,14 +154,14 @@ describe('createFormEndpoint', () => {
 
     describe('type', () => {
       it('should be api/createForm', () => {
-        expect(endpoint.type).toEqual('api/resources/createForm');
+        expect(endpoint.type).toEqual('api/resources/updateForm');
       });
     });
   });
 
   describe('with data: value', () => {
     const data = { widget: { name: '' } };
-    const endpoint = createFormEndpoint({ ...defaultOptions, data });
+    const endpoint = updateFormEndpoint({ ...defaultOptions, data });
 
     describe('options', () => {
       it('should return the options', () => {
@@ -204,7 +204,7 @@ describe('createFormEndpoint', () => {
         after: ':all',
       },
     ];
-    const endpoint = createFormEndpoint({ ...defaultOptions, middleware: directives });
+    const endpoint = updateFormEndpoint({ ...defaultOptions, middleware: directives });
 
     describe('options', () => {
       it('should return the options', () => {
@@ -215,13 +215,13 @@ describe('createFormEndpoint', () => {
     shouldInjectTheMiddleware({
       directives,
       middleware: endpoint.middleware,
-      original: createFormEndpoint({ ...defaultOptions }).middleware,
+      original: updateFormEndpoint({ ...defaultOptions }).middleware,
     });
   });
 
   describe('with namespace: value', () => {
-    const namespace = 'path/to/widgets/createWidgetForm';
-    const endpoint = createFormEndpoint({ ...defaultOptions, namespace });
+    const namespace = 'path/to/widgets/updateWidgetForm';
+    const endpoint = updateFormEndpoint({ ...defaultOptions, namespace });
 
     describe('actions', () => {
       const { actions } = endpoint;
@@ -262,14 +262,14 @@ describe('createFormEndpoint', () => {
       const { request } = endpoint;
 
       describe('method', () => {
-        it('should be POST', () => {
-          expect(request.method).toEqual('POST');
+        it('should be PATCH', () => {
+          expect(request.method).toEqual('PATCH');
         });
       });
 
       describe('url', () => {
-        it('should be /api/path/to/widgets', () => {
-          expect(request.url).toEqual('/api/path/to/widgets');
+        it('should be /api/path/to/widgets/:id', () => {
+          expect(request.url).toEqual('/api/path/to/widgets/:id');
         });
       });
     });
@@ -282,8 +282,8 @@ describe('createFormEndpoint', () => {
   });
 
   describe('with url: value', () => {
-    const url = '/api/v0/widgets';
-    const endpoint = createFormEndpoint({ ...defaultOptions, url });
+    const url = '/api/v0/widgets/:id';
+    const endpoint = updateFormEndpoint({ ...defaultOptions, url });
 
     describe('options', () => {
       it('should return the options', () => {
@@ -295,8 +295,8 @@ describe('createFormEndpoint', () => {
       const { request } = endpoint;
 
       describe('method', () => {
-        it('should be POST', () => {
-          expect(request.method).toEqual('POST');
+        it('should be PATCH', () => {
+          expect(request.method).toEqual('PATCH');
         });
       });
 
