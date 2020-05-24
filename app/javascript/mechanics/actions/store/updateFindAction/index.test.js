@@ -1,42 +1,30 @@
-import {
-  hooks,
-  namespace,
-  request,
-} from './index';
+import endpoint from './index';
+import { buildMechanic } from '../../../entities';
+import formEndpoint from '../updateActionForm';
 
-describe('UpdateFindAction store', () => {
-  describe('hooks', () => {
-    const {
-      useEndpoint,
-      useRequestData,
-    } = hooks;
+const buildAction = () => Object.assign(buildMechanic(), { type: 'Mechanics::Action' });
 
-    describe('useEndpoint()', () => {
-      it('should be a function', () => {
-        expect(typeof useEndpoint).toEqual('function');
-      });
-    });
+describe('UpdateFindBook store', () => {
+  const { options, type } = endpoint;
 
-    describe('useRequestData()', () => {
-      it('should be a function', () => {
-        expect(typeof useRequestData).toEqual('function');
-      });
-    });
+  it('should return the options', () => {
+    expect(options.data).toEqual({ mechanic: buildAction() });
+    expect(options.formEndpoint).toEqual(formEndpoint);
+    expect(options.namespace).toEqual('mechanics/actions/updateFindAction');
+    expect(options.resourceName).toEqual('action');
   });
 
-  describe('namespace', () => {
-    it('should equal mechanics/actions/updateFindAction', () => {
-      expect(namespace).toEqual('mechanics/actions/updateFindAction');
-    });
+  it('should map the data', () => {
+    const { mapData } = options;
+    const data = { action: { name: 'Self-Destruct' } };
+    const expected = { mechanic: { name: 'Self-Destruct' } };
+
+    expect(typeof mapData).toEqual('function');
+
+    expect(mapData(data)).toEqual(expected);
   });
 
-  describe('request', () => {
-    const { url } = request;
-
-    describe('url', () => {
-      it('should be the action show URL', () => {
-        expect(url).toEqual('/api/mechanics/actions/:id');
-      });
-    });
+  it('should return the type', () => {
+    expect(type).toEqual('api/resources/updateFind');
   });
 });

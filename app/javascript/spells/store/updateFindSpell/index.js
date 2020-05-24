@@ -1,12 +1,8 @@
-import FindOneEndpoint from '../../../api/findOne';
-import authorization from '../../../api/middleware/authorization';
+import updateFindEndpoint from '../../../api/resources/updateFind';
 import collectAssociations from '../../../api/middleware/collectAssociations';
-import alerts from './alerts';
-import redirect from './redirect';
 import { buildSpell } from '../../entities';
-import { actions as formActions } from '../updateSpellForm';
+import formEndpoint from '../updateSpellForm';
 
-const REQUEST_URL = '/api/spells/:id';
 const collectSource = collectAssociations({
   associationName: 'source',
   associationType: 'hasOne',
@@ -14,28 +10,16 @@ const collectSource = collectAssociations({
   polymorphic: true,
   resourceName: 'spell',
 });
-const endpoint = new FindOneEndpoint({
+const endpoint = updateFindEndpoint({
   data: { spell: buildSpell() },
+  formEndpoint,
   middleware: [
-    authorization,
     {
-      handleSuccess: next => ({ dispatch, getState, response }) => {
-        next({ dispatch, getState, response });
-
-        const { spells } = getState();
-        const { updateFindSpell } = spells;
-        const { data } = updateFindSpell;
-        const { setFormData } = formActions;
-
-        dispatch(setFormData(data));
-      },
+      middleware: collectSource,
+      after: 'api/authorization',
     },
-    redirect,
-    alerts,
-    collectSource,
   ],
-  namespace: 'spells/updateFindSpell',
-  url: REQUEST_URL,
+  resourceName: 'spell',
 });
 
 export default endpoint;

@@ -1,32 +1,11 @@
-import FindOneEndpoint from '../../../api/findOne';
-import authorization from '../../../api/middleware/authorization';
-import alerts from './alerts';
-import redirect from './redirect';
+import updateFindEndpoint from '../../../api/resources/updateFind';
 import { buildBook } from '../../entities';
-import { actions as formActions } from '../updateBookForm';
+import formEndpoint from '../updateBookForm';
 
-const REQUEST_URL = '/api/books/:id';
-const endpoint = new FindOneEndpoint({
+const endpoint = updateFindEndpoint({
   data: { book: buildBook() },
-  middleware: [
-    authorization,
-    {
-      handleSuccess: next => ({ dispatch, getState, response }) => {
-        next({ dispatch, getState, response });
-
-        const { books } = getState();
-        const { updateFindBook } = books;
-        const { data } = updateFindBook;
-        const { setFormData } = formActions;
-
-        dispatch(setFormData(data));
-      },
-    },
-    redirect,
-    alerts,
-  ],
-  namespace: 'books/updateFindBook',
-  url: REQUEST_URL,
+  formEndpoint,
+  resourceName: 'book',
 });
 
 export default endpoint;
