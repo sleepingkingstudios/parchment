@@ -53,9 +53,15 @@
     - takes data, errors, status, resourceName props
     - takes callback props: onChange, onSubmit, onDelete, etc
 
+### Forms
+
 #### Submit Button
 
 - status switch to display Loading... message
+
+#### Text Areas
+
+- auto-size based on contents? opt-in via prop?
 
 ## Characters
 

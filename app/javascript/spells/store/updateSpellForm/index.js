@@ -1,22 +1,9 @@
-import FormEndpoint from '../../../api/form';
-import authorization from '../../../api/middleware/authorization';
+import updateFormEndpoint from '../../../api/resources/updateForm';
 import { buildSpell } from '../../entities';
-import alerts from './alerts';
-import redirect from './redirect';
 
-const namespace = 'spells/updateSpellForm';
-const REQUEST_URL = '/api/spells/:id';
-
-const endpoint = new FormEndpoint({
+const endpoint = updateFormEndpoint({
   data: { spell: buildSpell() },
-  method: 'PATCH',
-  middleware: [
-    authorization,
-    redirect,
-    alerts,
-  ],
-  namespace,
-  url: REQUEST_URL,
+  resourceName: 'spell',
 });
 
 export default endpoint;
