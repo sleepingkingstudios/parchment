@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import PlainText from '../../../components/plain-text';
+import RichText from '../../../components/rich-text';
 import { spellType } from '../../entities';
 import {
   formatComponents,
@@ -57,7 +57,7 @@ const SpellBlock = ({ data, showAdditionalDetails }) => (
       </p>
     </div>
 
-    <PlainText className="spell-block-description" text={data.description} />
+    <RichText className="spell-block-description" text={data.description} />
 
     { renderAdditionalDetails({ data, showAdditionalDetails }) }
   </div>
