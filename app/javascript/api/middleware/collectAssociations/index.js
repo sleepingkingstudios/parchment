@@ -183,6 +183,14 @@ const collectAssociations = ({
 
     next({ dispatch, getState, response: modifiedResponse });
   },
+  options: {
+    associationName,
+    associationType,
+    inverseName,
+    polymorphic,
+    resourceName,
+  },
+  type: 'api/collectAssociations',
 });
 
 export default collectAssociations;

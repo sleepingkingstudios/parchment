@@ -1,51 +1,33 @@
-import {
-  hooks,
-  namespace,
-  request,
-} from './index';
+import endpoint from './index';
 
 describe('IndexFindSpells store', () => {
-  describe('hooks', () => {
-    const {
-      useEndpoint,
-      useRequestData,
-    } = hooks;
+  const { options, type } = endpoint;
 
-    describe('useEndpoint()', () => {
-      it('should be a function', () => {
-        expect(typeof useEndpoint).toEqual('function');
-      });
-    });
+  it('should return the options', () => {
+    const { data, resourceName } = options;
 
-    describe('useRequestData()', () => {
-      it('should be a function', () => {
-        expect(typeof useRequestData).toEqual('function');
-      });
+    expect(data).toEqual({ spells: [] });
+    expect(resourceName).toEqual('spells');
+  });
+
+  it('should set the middleware', () => {
+    expect(options.middleware.length).toEqual(1);
+
+    const directive = options.middleware[0];
+    const { after, middleware } = directive;
+
+    expect(after).toEqual('api/authorization');
+    expect(middleware.type).toEqual('api/collectAssociations');
+    expect(middleware.options).toEqual({
+      associationName: 'source',
+      associationType: 'hasOne',
+      inverseName: 'reference',
+      polymorphic: true,
+      resourceName: 'spells',
     });
   });
 
-  describe('namespace', () => {
-    it('should be spells/indexFindSpells', () => {
-      expect(namespace).toEqual('spells/indexFindSpells');
-    });
-  });
-
-  describe('request', () => {
-    const {
-      method,
-      url,
-    } = request;
-
-    describe('method', () => {
-      it('should be GET', () => {
-        expect(method).toEqual('GET');
-      });
-    });
-
-    describe('url', () => {
-      it('should be the spell index URL', () => {
-        expect(url).toEqual('/api/spells');
-      });
-    });
+  it('should return the type', () => {
+    expect(type).toEqual('api/resources/index');
   });
 });

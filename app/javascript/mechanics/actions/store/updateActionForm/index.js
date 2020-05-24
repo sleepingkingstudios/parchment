@@ -1,23 +1,12 @@
-import FormEndpoint from '../../../../api/form';
+import updateFormEndpoint from '../../../../api/resources/updateForm';
 import { buildMechanic } from '../../../entities';
-import authorization from '../../../../api/middleware/authorization';
-import alerts from './alerts';
-import redirect from './redirect';
 
 const buildAction = () => Object.assign(buildMechanic(), { type: 'Mechanics::Action' });
-const namespace = 'mechanics/actions/updateActionForm';
-const REQUEST_URL = '/api/mechanics/actions/:id';
 
-const endpoint = new FormEndpoint({
+const endpoint = updateFormEndpoint({
   data: { mechanic: buildAction() },
-  method: 'PATCH',
-  middleware: [
-    authorization,
-    redirect,
-    alerts,
-  ],
-  namespace,
-  url: REQUEST_URL,
+  namespace: 'mechanics/actions/updateActionForm',
+  resourceName: 'action',
 });
 
 export default endpoint;

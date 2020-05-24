@@ -1,5 +1,6 @@
 import {
   applyMiddleware,
+  injectMiddleware,
   selectMiddleware,
 } from './utils';
 
@@ -79,6 +80,282 @@ describe('Request middleware utils', () => {
         ];
 
         expect(applied([])).toEqual(expected);
+      });
+    });
+  });
+
+  describe('injectMiddleware()', () => {
+    it('should be a function', () => {
+      expect(typeof injectMiddleware).toEqual('function');
+    });
+
+    describe('with an empty middleware array', () => {
+      const middleware = [];
+
+      describe('with an empty directives array', () => {
+        const directives = [];
+
+        it('should return an empty array', () => {
+          expect(injectMiddleware(middleware, directives)).toEqual([]);
+        });
+      });
+
+      describe('with after: :all', () => {
+        const injected = { type: 'test/middleware' };
+        const directives = [
+          {
+            middleware: injected,
+            after: ':all',
+          },
+        ];
+
+        it('should inject the middleware to the array', () => {
+          expect(injectMiddleware(middleware, directives)).toEqual([injected]);
+        });
+      });
+
+      describe('with after: an undefined type', () => {
+        const directives = [
+          {
+            middleware: {},
+            after: 'invalid',
+          },
+        ];
+        const error = new Error('Unable to inject middleware after "invalid"');
+
+        it('should throw an error', () => {
+          expect(() => (
+            injectMiddleware(middleware, directives)
+          )).toThrowError(error);
+        });
+      });
+
+      describe('with before: :all', () => {
+        const injected = { type: 'test/middleware' };
+        const directives = [
+          {
+            middleware: injected,
+            before: ':all',
+          },
+        ];
+
+        it('should inject the middleware to the array', () => {
+          expect(injectMiddleware(middleware, directives)).toEqual([injected]);
+        });
+      });
+
+      describe('with before: an undefined type', () => {
+        const directives = [
+          {
+            middleware: {},
+            before: 'invalid',
+          },
+        ];
+        const error = new Error('Unable to inject middleware before "invalid"');
+
+        it('should throw an error', () => {
+          expect(() => (
+            injectMiddleware(middleware, directives)
+          )).toThrowError(error);
+        });
+      });
+    });
+
+    describe('with a non-empty middleware array', () => {
+      const middleware = [
+        { type: 'test/first' },
+        { type: 'test/second' },
+        { type: 'test/third' },
+      ];
+
+      describe('with an empty directives array', () => {
+        const directives = [];
+
+        it('should return an empty array', () => {
+          expect(injectMiddleware(middleware, directives)).toEqual(middleware);
+        });
+      });
+
+      describe('with after: :all', () => {
+        const injected = { type: 'test/middleware' };
+        const directives = [
+          {
+            middleware: injected,
+            after: ':all',
+          },
+        ];
+        const expected = [...middleware, injected];
+
+        it('should inject the middleware to the array', () => {
+          expect(injectMiddleware(middleware, directives)).toEqual(expected);
+        });
+      });
+
+      describe('with after: the first item', () => {
+        const injected = { type: 'test/middleware' };
+        const directives = [
+          {
+            middleware: injected,
+            after: 'test/first',
+          },
+        ];
+        const expected = [
+          { type: 'test/first' },
+          injected,
+          { type: 'test/second' },
+          { type: 'test/third' },
+        ];
+
+        it('should inject the middleware to the array', () => {
+          expect(injectMiddleware(middleware, directives)).toEqual(expected);
+        });
+      });
+
+      describe('with after: an item in the middle of the array', () => {
+        const injected = { type: 'test/middleware' };
+        const directives = [
+          {
+            middleware: injected,
+            after: 'test/second',
+          },
+        ];
+        const expected = [
+          { type: 'test/first' },
+          { type: 'test/second' },
+          injected,
+          { type: 'test/third' },
+        ];
+
+        it('should inject the middleware to the array', () => {
+          expect(injectMiddleware(middleware, directives)).toEqual(expected);
+        });
+      });
+
+      describe('with after: the last item', () => {
+        const injected = { type: 'test/middleware' };
+        const directives = [
+          {
+            middleware: injected,
+            after: 'test/third',
+          },
+        ];
+        const expected = [
+          { type: 'test/first' },
+          { type: 'test/second' },
+          { type: 'test/third' },
+          injected,
+        ];
+
+        it('should inject the middleware to the array', () => {
+          expect(injectMiddleware(middleware, directives)).toEqual(expected);
+        });
+      });
+
+      describe('with after: an undefined type', () => {
+        const directives = [
+          {
+            middleware: {},
+            after: 'invalid',
+          },
+        ];
+        const error = new Error('Unable to inject middleware after "invalid"');
+
+        it('should throw an error', () => {
+          expect(() => (
+            injectMiddleware(middleware, directives)
+          )).toThrowError(error);
+        });
+      });
+
+      describe('with before: :all', () => {
+        const injected = { type: 'test/middleware' };
+        const directives = [
+          {
+            middleware: injected,
+            before: ':all',
+          },
+        ];
+        const expected = [injected, ...middleware];
+
+        it('should inject the middleware to the array', () => {
+          expect(injectMiddleware(middleware, directives)).toEqual(expected);
+        });
+      });
+
+      describe('with before: the first item', () => {
+        const injected = { type: 'test/middleware' };
+        const directives = [
+          {
+            middleware: injected,
+            before: 'test/first',
+          },
+        ];
+        const expected = [
+          injected,
+          { type: 'test/first' },
+          { type: 'test/second' },
+          { type: 'test/third' },
+        ];
+
+        it('should inject the middleware to the array', () => {
+          expect(injectMiddleware(middleware, directives)).toEqual(expected);
+        });
+      });
+
+      describe('with before: an item in the middle of the array', () => {
+        const injected = { type: 'test/middleware' };
+        const directives = [
+          {
+            middleware: injected,
+            before: 'test/second',
+          },
+        ];
+        const expected = [
+          { type: 'test/first' },
+          injected,
+          { type: 'test/second' },
+          { type: 'test/third' },
+        ];
+
+        it('should inject the middleware to the array', () => {
+          expect(injectMiddleware(middleware, directives)).toEqual(expected);
+        });
+      });
+
+      describe('with before: the last item', () => {
+        const injected = { type: 'test/middleware' };
+        const directives = [
+          {
+            middleware: injected,
+            before: 'test/third',
+          },
+        ];
+        const expected = [
+          { type: 'test/first' },
+          { type: 'test/second' },
+          injected,
+          { type: 'test/third' },
+        ];
+
+        it('should inject the middleware to the array', () => {
+          expect(injectMiddleware(middleware, directives)).toEqual(expected);
+        });
+      });
+
+      describe('with before: an undefined type', () => {
+        const directives = [
+          {
+            middleware: {},
+            before: 'invalid',
+          },
+        ];
+        const error = new Error('Unable to inject middleware before "invalid"');
+
+        it('should throw an error', () => {
+          expect(() => (
+            injectMiddleware(middleware, directives)
+          )).toThrowError(error);
+        });
       });
     });
   });

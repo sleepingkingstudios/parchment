@@ -5,6 +5,7 @@ describe('authorization request middleware', () => {
   const {
     buildRequest,
     handleFailure,
+    type,
   } = authorization;
 
   describe('buildRequest()', () => {
@@ -148,6 +149,12 @@ describe('authorization request middleware', () => {
 
         expect(next).toHaveBeenCalledWith({ dispatch, getState, response });
       });
+    });
+  });
+
+  describe('type', () => {
+    it('should return "api/authorization"', () => {
+      expect(type).toEqual('api/authorization');
     });
   });
 });

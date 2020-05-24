@@ -1,42 +1,36 @@
-import {
-  hooks,
-  namespace,
-  request,
-} from './index';
+import endpoint from './index';
+import { buildSpell } from '../../entities';
+import formEndpoint from '../updateSpellForm';
 
 describe('UpdateFindSpell store', () => {
-  describe('hooks', () => {
-    const {
-      useEndpoint,
-      useRequestData,
-    } = hooks;
+  const { options, type } = endpoint;
 
-    describe('useEndpoint()', () => {
-      it('should be a function', () => {
-        expect(typeof useEndpoint).toEqual('function');
-      });
-    });
+  it('should return the options', () => {
+    const { data, resourceName } = options;
 
-    describe('useRequestData()', () => {
-      it('should be a function', () => {
-        expect(typeof useRequestData).toEqual('function');
-      });
+    expect(data).toEqual({ spell: buildSpell() });
+    expect(options.formEndpoint).toEqual(formEndpoint);
+    expect(resourceName).toEqual('spell');
+  });
+
+  it('should set the middleware', () => {
+    expect(options.middleware.length).toEqual(1);
+
+    const directive = options.middleware[0];
+    const { after, middleware } = directive;
+
+    expect(after).toEqual('api/authorization');
+    expect(middleware.type).toEqual('api/collectAssociations');
+    expect(middleware.options).toEqual({
+      associationName: 'source',
+      associationType: 'hasOne',
+      inverseName: 'reference',
+      polymorphic: true,
+      resourceName: 'spell',
     });
   });
 
-  describe('namespace', () => {
-    it('should equal spells/updateFindSpell', () => {
-      expect(namespace).toEqual('spells/updateFindSpell');
-    });
-  });
-
-  describe('request', () => {
-    const { url } = request;
-
-    describe('url', () => {
-      it('should be the spell show URL', () => {
-        expect(url).toEqual('/api/spells/:id');
-      });
-    });
+  it('should return the type', () => {
+    expect(type).toEqual('api/resources/updateFind');
   });
 });

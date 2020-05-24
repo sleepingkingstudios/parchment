@@ -1,42 +1,19 @@
-import {
-  hooks,
-  namespace,
-  request,
-} from './index';
+import endpoint from './index';
+import { buildBook } from '../../entities';
+import formEndpoint from '../updateBookForm';
 
 describe('UpdateFindBook store', () => {
-  describe('hooks', () => {
-    const {
-      useEndpoint,
-      useRequestData,
-    } = hooks;
+  const { options, type } = endpoint;
 
-    describe('useEndpoint()', () => {
-      it('should be a function', () => {
-        expect(typeof useEndpoint).toEqual('function');
-      });
-    });
-
-    describe('useRequestData()', () => {
-      it('should be a function', () => {
-        expect(typeof useRequestData).toEqual('function');
-      });
+  it('should return the options', () => {
+    expect(options).toEqual({
+      data: { book: buildBook() },
+      formEndpoint,
+      resourceName: 'book',
     });
   });
 
-  describe('namespace', () => {
-    it('should equal books/updateFindBook', () => {
-      expect(namespace).toEqual('books/updateFindBook');
-    });
-  });
-
-  describe('request', () => {
-    const { url } = request;
-
-    describe('url', () => {
-      it('should be the book show URL', () => {
-        expect(url).toEqual('/api/books/:id');
-      });
-    });
+  it('should return the type', () => {
+    expect(type).toEqual('api/resources/updateFind');
   });
 });

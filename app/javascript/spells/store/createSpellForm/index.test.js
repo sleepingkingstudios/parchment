@@ -1,83 +1,19 @@
-import {
-  actions,
-  hooks,
-  namespace,
-  reducer,
-  request,
-} from './index';
-import { spellDefaultAttributes } from '../../entities';
+import endpoint from './index';
+import { buildSpell } from '../../entities';
 
 describe('CreateSpellForm store', () => {
-  describe('actions', () => {
-    const { UPDATE_FORM_FIELD } = actions;
+  const { options, type } = endpoint;
 
-    describe('UPDATE_FORM_FIELD', () => {
-      it('should define the namespaced action', () => {
-        expect(UPDATE_FORM_FIELD).toEqual('spells/createSpellForm/updateFormField');
-      });
+  it('should return the options', () => {
+    const data = { spell: buildSpell() };
+
+    expect(options).toEqual({
+      data,
+      resourceName: 'spell',
     });
   });
 
-  describe('hooks', () => {
-    const {
-      useEndpoint,
-      useSubmitForm,
-      useUpdateForm,
-    } = hooks;
-
-    describe('useEndpoint()', () => {
-      it('should be a function', () => {
-        expect(typeof useEndpoint).toEqual('function');
-      });
-    });
-
-    describe('useSubmitForm()', () => {
-      it('should be a function', () => {
-        expect(typeof useSubmitForm).toEqual('function');
-      });
-    });
-
-    describe('useUpdateForm()', () => {
-      it('should be a function', () => {
-        expect(typeof useUpdateForm).toEqual('function');
-      });
-    });
-  });
-
-  describe('namespace', () => {
-    it('should equal spells/createSpellForm', () => {
-      expect(namespace).toEqual('spells/createSpellForm');
-    });
-  });
-
-  describe('reducer', () => {
-    describe('initial state', () => {
-      it('should set the data to an empty spell', () => {
-        const action = { type: 'test/unknownAction' };
-        const initialState = reducer(undefined, action);
-        const { data } = initialState;
-
-        expect(data).toEqual({ spell: spellDefaultAttributes });
-      });
-    });
-  });
-
-  describe('request', () => {
-    const {
-      method,
-      url,
-    } = request;
-
-    describe('method', () => {
-      it('should be POST', () => {
-        expect(method).toEqual('POST');
-      });
-    });
-
-    describe('url', () => {
-      it('should be the spell create URL', () => {
-        expect(url).toEqual('/api/spells');
-      });
-    });
+  it('should return the type', () => {
+    expect(type).toEqual('api/resources/createForm');
   });
 });

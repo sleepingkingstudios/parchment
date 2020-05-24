@@ -27,6 +27,21 @@
 
 - clear (some?) alerts when the URL (not query!) changes
 
+### API
+
+- Refactor Endpoint class to client() function.
+- Clean up reducer namespaces: |
+    resourceName: {
+      create: {},
+      delete: {},
+      index: {},
+      show: {},
+      update: { // combinedReducer
+        find: {},
+        form: {},
+      }
+    }
+
 ### Components
 
 - refactor CreatePage, IndexPage, ShowPage, UpdatePage
@@ -38,9 +53,15 @@
     - takes data, errors, status, resourceName props
     - takes callback props: onChange, onSubmit, onDelete, etc
 
+### Forms
+
 #### Submit Button
 
 - status switch to display Loading... message
+
+#### Text Areas
+
+- auto-size based on contents? opt-in via prop?
 
 ## Characters
 

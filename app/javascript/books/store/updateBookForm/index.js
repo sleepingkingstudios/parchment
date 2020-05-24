@@ -1,22 +1,9 @@
-import FormEndpoint from '../../../api/form';
+import updateForm from '../../../api/resources/updateForm';
 import { buildBook } from '../../entities';
-import authorization from '../../../api/middleware/authorization';
-import alerts from './alerts';
-import redirect from './redirect';
 
-const namespace = 'books/updateBookForm';
-const REQUEST_URL = '/api/books/:id';
-
-const endpoint = new FormEndpoint({
+const endpoint = updateForm({
   data: { book: buildBook() },
-  method: 'PATCH',
-  middleware: [
-    authorization,
-    redirect,
-    alerts,
-  ],
-  namespace,
-  url: REQUEST_URL,
+  resourceName: 'book',
 });
 
 export default endpoint;

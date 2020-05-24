@@ -1,5 +1,4 @@
-import FindManyEndpoint from '../../../api/findMany';
-import authorization from '../../../api/middleware/authorization';
+import indexEndpoint from '../../../api/resources/index';
 import collectAssociations from '../../../api/middleware/collectAssociations';
 
 const collectSources = collectAssociations({
@@ -9,15 +8,15 @@ const collectSources = collectAssociations({
   polymorphic: true,
   resourceName: 'spells',
 });
-const REQUEST_URL = '/api/spells';
-const endpoint = new FindManyEndpoint({
+const endpoint = indexEndpoint({
   data: { spells: [] },
   middleware: [
-    authorization,
-    collectSources,
+    {
+      middleware: collectSources,
+      after: 'api/authorization',
+    },
   ],
-  namespace: 'spells/indexFindSpells',
-  url: REQUEST_URL,
+  resourceName: 'spells',
 });
 
 export default endpoint;
