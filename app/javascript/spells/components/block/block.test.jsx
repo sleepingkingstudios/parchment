@@ -84,7 +84,7 @@ describe('<SpellBlock />', () => {
 
   it('should render the spell description', () => {
     const rendered = shallow(<SpellBlock {...defaultProps} />);
-    const descriptionElement = rendered.find('PlainText');
+    const descriptionElement = rendered.find('RichText');
 
     expect(descriptionElement).toExist();
     expect(descriptionElement).toHaveClassName('spell-block-description');

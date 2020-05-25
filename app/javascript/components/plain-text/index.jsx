@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { addClassName } from '../../utils/react';
+
 const formatParagraph = (paragraph) => {
   const lines = paragraph.split('\n');
   const elements = [];
@@ -25,7 +27,7 @@ const formatText = (text) => {
 };
 
 const PlainText = ({ className, text }) => (
-  <div className={`plain-text ${className}`.trim()}>
+  <div className={addClassName('plain-text', className)}>
     { formatText(text) }
   </div>
 );
