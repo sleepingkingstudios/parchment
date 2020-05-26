@@ -5,6 +5,7 @@ import {
   addClassName,
   addClassNameToProps,
   injectProps,
+  responsiveText,
 } from './react';
 
 describe('React utils', () => {
@@ -305,6 +306,110 @@ describe('React utils', () => {
           expect(rendered).toHaveProp({ defaultKey: 'default value' });
           expect(rendered).toHaveProp({ otherKey: 'other value' });
         });
+      });
+    });
+  });
+
+  describe('responsiveText()', () => {
+    it('should be a function', () => {
+      expect(typeof responsiveText).toEqual('function');
+    });
+
+    describe('with an empty component', () => {
+      const rendered = shallow(<span />);
+
+      it('should return an empty string', () => {
+        expect(responsiveText(rendered)).toEqual('');
+      });
+    });
+
+    describe('with a component with text', () => {
+      const rendered = shallow(<span>Greetings, programs!</span>);
+
+      it('should return the component text', () => {
+        expect(responsiveText(rendered, 'xs')).toEqual('Greetings, programs!');
+        expect(responsiveText(rendered, 'xl')).toEqual('Greetings, programs!');
+      });
+    });
+
+    describe('with a component with nested components', () => {
+      const rendered = shallow(<span><span>Greetings</span>, <span>programs!</span></span>);
+
+      it('should return the component text', () => {
+        expect(responsiveText(rendered, 'xs')).toEqual('Greetings, programs!');
+        expect(responsiveText(rendered, 'xl')).toEqual('Greetings, programs!');
+      });
+    });
+
+    describe('with a component with display: none', () => {
+      const rendered = shallow(<span className="d-none">Greetings, programs!</span>);
+
+      it('should return an empty string', () => {
+        expect(responsiveText(rendered, 'xs')).toEqual('');
+        expect(responsiveText(rendered, 'xl')).toEqual('');
+      });
+    });
+
+    describe('with a component with display: inline', () => {
+      const rendered = shallow(<span className="d-inline">Greetings, programs!</span>);
+
+      it('should return an empty string', () => {
+        expect(responsiveText(rendered, 'xs')).toEqual('Greetings, programs!');
+        expect(responsiveText(rendered, 'xl')).toEqual('Greetings, programs!');
+      });
+    });
+
+    describe('with a component with a minimum size', () => {
+      const rendered = shallow(<span className="d-none d-md-inline">Greetings, programs!</span>);
+
+      it('should return the responsive text', () => {
+        expect(responsiveText(rendered, 'xs')).toEqual('');
+        expect(responsiveText(rendered, 'sm')).toEqual('');
+        expect(responsiveText(rendered, 'md')).toEqual('Greetings, programs!');
+        expect(responsiveText(rendered, 'lg')).toEqual('Greetings, programs!');
+        expect(responsiveText(rendered, 'xl')).toEqual('Greetings, programs!');
+      });
+    });
+
+    describe('with a component with a maximum size', () => {
+      const rendered = shallow(<span className="d-inline d-md-none">Greetings, programs!</span>);
+
+      it('should return the responsive text', () => {
+        expect(responsiveText(rendered, 'xs')).toEqual('Greetings, programs!');
+        expect(responsiveText(rendered, 'sm')).toEqual('Greetings, programs!');
+        expect(responsiveText(rendered, 'md')).toEqual('');
+        expect(responsiveText(rendered, 'lg')).toEqual('');
+        expect(responsiveText(rendered, 'xl')).toEqual('');
+      });
+    });
+
+    describe('with a component with a minimum and a maximum size', () => {
+      const rendered = shallow(<span className="d-none d-sm-inline d-lg-none">Greetings, programs!</span>);
+
+      it('should return the responsive text', () => {
+        expect(responsiveText(rendered, 'xs')).toEqual('');
+        expect(responsiveText(rendered, 'sm')).toEqual('Greetings, programs!');
+        expect(responsiveText(rendered, 'md')).toEqual('Greetings, programs!');
+        expect(responsiveText(rendered, 'lg')).toEqual('');
+        expect(responsiveText(rendered, 'xl')).toEqual('');
+      });
+    });
+
+    describe('with a component with alternate content', () => {
+      const rendered = shallow(
+        <span>
+          Greetings
+          <span className="d-none d-sm-inline d-lg-none">, programs!</span>
+          <span className="d-none d-lg-inline">, starfighter!</span>
+        </span>,
+      );
+
+      it('should return the responsive text', () => {
+        expect(responsiveText(rendered, 'xs')).toEqual('Greetings');
+        expect(responsiveText(rendered, 'sm')).toEqual('Greetings, programs!');
+        expect(responsiveText(rendered, 'md')).toEqual('Greetings, programs!');
+        expect(responsiveText(rendered, 'lg')).toEqual('Greetings, starfighter!');
+        expect(responsiveText(rendered, 'xl')).toEqual('Greetings, starfighter!');
       });
     });
   });

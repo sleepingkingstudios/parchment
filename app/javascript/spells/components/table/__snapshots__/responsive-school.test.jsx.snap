@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ResponsiveSchool /> with level: 0 should match the snapshot 1`] = `
+<span>
+  Pyr
+  <span
+    className="d-none d-md-inline"
+  >
+    omancy
+  </span>
+  <span
+    className="d-none d-lg-inline"
+  >
+     cantrip
+  </span>
+  <span
+    className="d-inline d-lg-none"
+  >
+     0
+  </span>
+</span>
+`;
+
+exports[`<ResponsiveSchool /> with level: 1 should match the snapshot 1`] = `
+<span>
+  <span
+    className="d-none d-lg-inline"
+  >
+    1st
+    -level 
+    pyromancy
+  </span>
+  <span
+    className="d-inline d-lg-none"
+  >
+    Pyr
+    <span
+      className="d-none d-md-inline"
+    >
+      omancy
+    </span>
+     
+    1
+  </span>
+</span>
+`;
+
+exports[`<ResponsiveSchool /> with level: 2 should match the snapshot 1`] = `
+<span>
+  <span
+    className="d-none d-lg-inline"
+  >
+    2nd
+    -level 
+    pyromancy
+  </span>
+  <span
+    className="d-inline d-lg-none"
+  >
+    Pyr
+    <span
+      className="d-none d-md-inline"
+    >
+      omancy
+    </span>
+     
+    2
+  </span>
+</span>
+`;
+
+exports[`<ResponsiveSchool /> with level: 3 should match the snapshot 1`] = `
+<span>
+  <span
+    className="d-none d-lg-inline"
+  >
+    3rd
+    -level 
+    pyromancy
+  </span>
+  <span
+    className="d-inline d-lg-none"
+  >
+    Pyr
+    <span
+      className="d-none d-md-inline"
+    >
+      omancy
+    </span>
+     
+    3
+  </span>
+</span>
+`;
+
+exports[`<ResponsiveSchool /> with level: 4+ should match the snapshot 1`] = `
+<span>
+  <span
+    className="d-none d-lg-inline"
+  >
+    4th
+    -level 
+    pyromancy
+  </span>
+  <span
+    className="d-inline d-lg-none"
+  >
+    Pyr
+    <span
+      className="d-none d-md-inline"
+    >
+      omancy
+    </span>
+     
+    4
+  </span>
+</span>
+`;
