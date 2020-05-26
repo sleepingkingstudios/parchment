@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import pluralize from 'pluralize';
 
 import StatusSwitch from '../status-switch';
-import Table from '../table';
+import BasicTable from '../table';
 import { valueOrDefault } from '../../utils/object';
 import { underscore } from '../../utils/string';
 
@@ -32,6 +32,7 @@ const renderPending = (resourceName) => {
 
 const IndexPageTable = (props) => {
   const {
+    Table,
     columns,
     endpoint,
     mapData,
@@ -50,12 +51,14 @@ const IndexPageTable = (props) => {
   const onDelete = ({ dispatch, getState }) => {
     performRequest()(dispatch, getState);
   };
+  const ActualTable = valueOrDefault(Table, BasicTable);
 
   const AppliedIndexPageTable = () => (
-    <Table
+    <ActualTable
       columns={columns}
       data={mappedData}
       message={emptyMessage(pluralResourceName)}
+      resourceName={pluralResourceName}
       cellProps={{ onDelete }}
     />
   );
@@ -72,10 +75,12 @@ const IndexPageTable = (props) => {
 };
 
 IndexPageTable.defaultProps = {
+  Table: null,
   mapData: null,
 };
 
 IndexPageTable.propTypes = {
+  Table: PropTypes.elementType,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   endpoint: PropTypes.shape({
     hooks: PropTypes.shape({

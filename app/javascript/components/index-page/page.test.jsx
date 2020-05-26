@@ -168,4 +168,23 @@ describe('<IndexPage />', () => {
       expect(table).toHaveProp({ resourceName });
     });
   });
+
+  describe('with Table: component', () => {
+    const CustomTable = () => {};
+
+    it('should render the index table', () => {
+      const endpoint = buildEndpoint({});
+      const rendered = shallow(
+        <IndexPage {...defaultProps} endpoint={endpoint} Table={CustomTable} />,
+      );
+
+      const table = rendered.find('IndexPageTable');
+
+      expect(table).toExist();
+      expect(table).toHaveProp({ columns });
+      expect(table).toHaveProp({ endpoint });
+      expect(table).toHaveProp({ resourceName });
+      expect(table).toHaveProp({ Table: CustomTable });
+    });
+  });
 });
