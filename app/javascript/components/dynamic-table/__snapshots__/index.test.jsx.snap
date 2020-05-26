@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DynamicTable /> with data: an array of objects should match the snapshot 1`] = `
+<div
+  className="dynamic-table container"
+>
+  <DynamicTableHeader
+    columns={
+      Array [
+        Object {
+          "label": true,
+          "prop": "id",
+        },
+        Object {
+          "label": true,
+          "prop": "name",
+        },
+        Object {
+          "label": true,
+          "prop": "price",
+        },
+        Object {
+          "label": true,
+          "prop": "quantity",
+        },
+      ]
+    }
+    resourceName={null}
+  />
+  <DynamicTableRow
+    cellProps={Object {}}
+    columns={
+      Array [
+        Object {
+          "label": true,
+          "prop": "id",
+        },
+        Object {
+          "label": true,
+          "prop": "name",
+        },
+        Object {
+          "label": true,
+          "prop": "price",
+        },
+        Object {
+          "label": true,
+          "prop": "quantity",
+        },
+      ]
+    }
+    data={
+      Object {
+        "id": "00000000-0000-0000-0000-000000000000",
+        "name": "Self-sealing Stem Bolt",
+        "price": "10.00",
+        "quantity": 50,
+      }
+    }
+    key="00000000-0000-0000-0000-000000000000"
+    resourceName={null}
+  />
+  <DynamicTableRow
+    cellProps={Object {}}
+    columns={
+      Array [
+        Object {
+          "label": true,
+          "prop": "id",
+        },
+        Object {
+          "label": true,
+          "prop": "name",
+        },
+        Object {
+          "label": true,
+          "prop": "price",
+        },
+        Object {
+          "label": true,
+          "prop": "quantity",
+        },
+      ]
+    }
+    data={
+      Object {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "name": "Inverse Spatial Manifold",
+        "price": "1000.00",
+        "quantity": 10,
+      }
+    }
+    key="00000000-0000-0000-0000-000000000001"
+    resourceName={null}
+  />
+  <DynamicTableRow
+    cellProps={Object {}}
+    columns={
+      Array [
+        Object {
+          "label": true,
+          "prop": "id",
+        },
+        Object {
+          "label": true,
+          "prop": "name",
+        },
+        Object {
+          "label": true,
+          "prop": "price",
+        },
+        Object {
+          "label": true,
+          "prop": "quantity",
+        },
+      ]
+    }
+    data={
+      Object {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "name": "Ambrosia Software License",
+        "price": "10000.00",
+        "quantity": 5,
+      }
+    }
+    key="00000000-0000-0000-0000-000000000002"
+    resourceName={null}
+  />
+</div>
+`;
+
+exports[`<DynamicTable /> with data: an empty array should match the snapshot 1`] = `
+<div
+  className="dynamic-table container"
+>
+  <DynamicTableHeader
+    columns={
+      Array [
+        Object {
+          "label": true,
+          "prop": "id",
+        },
+        Object {
+          "label": true,
+          "prop": "name",
+        },
+        Object {
+          "label": true,
+          "prop": "price",
+        },
+        Object {
+          "label": true,
+          "prop": "quantity",
+        },
+      ]
+    }
+    resourceName={null}
+  />
+  <DynamicTableEmptyMessage
+    message="There are no widgets matching the criteria."
+  />
+</div>
+`;

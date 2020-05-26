@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DynamicTableHeader /> with default properties should match the snapshot 1`] = `
+<div
+  className="dynamic-table-header row"
+>
+  <DynamicTableHeaderCell
+    header={true}
+    key="id"
+    label={true}
+    prop="id"
+    resourceName={null}
+    width={null}
+  />
+  <DynamicTableHeaderCell
+    header={true}
+    key="name"
+    label={true}
+    prop="name"
+    resourceName={null}
+    width={null}
+  />
+  <DynamicTableHeaderCell
+    header={true}
+    key="price"
+    label={true}
+    prop="price"
+    resourceName={null}
+    width={null}
+  />
+  <DynamicTableHeaderCell
+    header={true}
+    key="quantity"
+    label={true}
+    prop="quantity"
+    resourceName={null}
+    width={null}
+  />
+</div>
+`;

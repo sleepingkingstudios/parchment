@@ -1,0 +1,19 @@
+.dynamic-table {
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 1rem;
+}
+
+.dynamic-table .dynamic-table-header {
+  border-bottom: 1px solid #dee2e6;
+  border-top: 1px solid #dee2e6;
+  font-weight: bold;
+}
+
+.dynamic-table .dynamic-table-header,
+.dynamic-table .dynamic-table-row {
+  padding: 0.75rem;
+}
+
+.dynamic-table .dynamic-table-row:nth-child(odd) {
+  background-color: #f8f9fa;
+}

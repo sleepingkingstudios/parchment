@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DynamicTableEmptyMessage /> with default props should match the snapshot 1`] = `
+<div
+  className="col-12 dynamic-table-empty-message"
+>
+  There are no widgets matching the criteria.
+</div>
+`;

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DynamicTableRowCell /> with default properties should match the snapshot 1`] = `
+<div
+  className="dynamic-table-row-cell col"
+>
+  Self-sealing Stem Bolt
+</div>
+`;

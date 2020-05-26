@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DynamicTableHeaderCell /> with default props should match the snapshot 1`] = `
+<div
+  className="dynamic-table-header-cell col"
+>
+  Property Name
+</div>
+`;
