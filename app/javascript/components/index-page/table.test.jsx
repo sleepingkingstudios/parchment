@@ -162,4 +162,34 @@ describe('<IndexPageTable />', () => {
       expect(rendered).toHaveProp({ message });
     });
   });
+
+  describe('with Table: component', () => {
+    const widgets = [
+      { name: 'Widget' },
+      { name: 'Gadget' },
+      { name: 'Thingamabob' },
+    ];
+    const state = { data: { widgets }, status: SUCCESS };
+    const CustomTable = () => (<div />);
+
+    it('should render the table', () => {
+      const endpoint = buildEndpoint({ state });
+      const { status } = state;
+      const wrapper = shallow(
+        <IndexPageTable {...defaultProps} endpoint={endpoint} Table={CustomTable} />,
+      );
+      const rendered = wrapper
+        .find('StatusSwitch')
+        .renderProp('renderSuccess')({ widgets });
+      const message = 'There are no widgets matching the criteria.';
+
+      expect(wrapper).toHaveDisplayName('StatusSwitch');
+      expect(wrapper).toHaveProp({ status });
+
+      expect(rendered).toHaveDisplayName('CustomTable');
+      expect(rendered).toHaveProp({ columns });
+      expect(rendered).toHaveProp({ data: widgets });
+      expect(rendered).toHaveProp({ message });
+    });
+  });
 });

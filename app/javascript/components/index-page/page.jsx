@@ -33,6 +33,7 @@ const generateBreadcrumbs = ({ resourceName }) => (
 
 const IndexPage = (props) => {
   const {
+    Table,
     buttons,
     breadcrumbs,
     columns,
@@ -58,6 +59,7 @@ const IndexPage = (props) => {
       </HeadingWithButtons>
 
       <IndexPageTable
+        Table={Table}
         columns={columns}
         endpoint={endpoint}
         mapData={mapData}
@@ -68,12 +70,14 @@ const IndexPage = (props) => {
 };
 
 IndexPage.defaultProps = {
+  Table: null,
   buttons: null,
   breadcrumbs: null,
   mapData: null,
 };
 
 IndexPage.propTypes = {
+  Table: PropTypes.elementType,
   buttons: PropTypes.arrayOf(PropTypes.object),
   breadcrumbs: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.object),

@@ -35,14 +35,17 @@ module Features::Resources
     end
 
     def fetch_level_school(spell)
-      str =
-        if spell.level.zero?
-          "#{spell.school.capitalize} cantrip"
-        else
-          "#{ordinal(spell.level)}-level #{spell.school}"
-        end
+      str = fetch_level_school_without_ritual(spell)
 
       spell.ritual? ? "#{str} (ritual)" : str
+    end
+
+    def fetch_level_school_without_ritual(spell)
+      if spell.level.zero?
+        "#{spell.school.capitalize} cantrip"
+      else
+        "#{ordinal(spell.level)}-level #{spell.school}"
+      end
     end
 
     def fetch_school(spell)
@@ -60,9 +63,7 @@ module Features::Resources
     def table_columns
       @table_columns ||= %w[
         name
-        source
-        school
-        level
+        level_school_without_ritual
         short_description
       ]
     end

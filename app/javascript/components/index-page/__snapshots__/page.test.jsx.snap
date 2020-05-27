@@ -36,6 +36,7 @@ exports[`<IndexPage /> should match the snapshot 1`] = `
     Widgets
   </HeadingWithButtons>
   <IndexPageTable
+    Table={null}
     columns={
       Array [
         Object {

@@ -9,6 +9,8 @@ module Features::Pages::Spells
 
     element :loading_message, '.loading-message-pending'
 
-    elements :table_rows, 'table tbody tr'
+    element :empty_message, '.spells-table .dynamic-table-empty-message'
+
+    elements :table_rows, '.spells-table .spells-table-row'
   end
 end
