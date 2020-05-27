@@ -8,6 +8,8 @@ require 'site_prism'
 Capybara.register_driver :site_prism do |app|
   browser_options = ::Selenium::WebDriver::Chrome::Options.new
 
+  browser_options.args << '--window-size=1920,1080'
+
   unless ENV['HEADLESS'] == 'false'
     browser_options.args << '--headless'
     browser_options.args << '--disable-gpu'

@@ -27,9 +27,11 @@ Then('the {string} table should be empty') do |resource|
 
   resource_name = resource.underscore.pluralize
   rows          = @current_page.table_rows
+  empty_message = @current_page.empty_message
 
-  expect(rows.size).to be 1
-  expect(rows.first.text)
+  expect(rows.size).to be <= 1
+
+  expect(empty_message.text)
     .to be == "There are no #{resource_name} matching the criteria."
 end
 

@@ -1,54 +1,43 @@
+import ResponsiveSchool from './responsive-school';
 import SpellsTableActions from './actions';
 
-import { exists } from '../../../utils/object';
-import {
-  capitalize,
-  truncate,
-} from '../../../utils/string';
+import { truncate } from '../../../utils/string';
 
-const sourceLink = (spell) => {
-  const { source } = spell;
-
-  return exists(source) ? source.name : 'Homebrew';
-};
+import './spells-table-styles.css';
 
 const spellDescription = (spell) => {
   if (spell.shortDescription) {
-    return truncate(spell.shortDescription, 60);
+    return truncate(spell.shortDescription, 80);
   }
 
-  return truncate(spell.description, 60);
+  return truncate(spell.description, 80);
 };
 
-const columns = [
+const spellColumns = [
   {
     label: 'Name',
     prop: 'name',
-  },
-  {
-    label: 'Source',
-    prop: 'source',
-    value: sourceLink,
+    width: 6,
   },
   {
     label: 'School',
     prop: 'school',
-    value: spell => capitalize(spell.school),
+    width: 3,
+    value: ResponsiveSchool,
   },
   {
-    label: 'Level',
-    prop: 'level',
-  },
-  {
-    label: 'Description',
-    prop: 'description',
-    value: spellDescription,
-  },
-  {
-    label: ' ',
+    label: false,
     prop: 'actions',
+    width: 3,
     value: SpellsTableActions,
+  },
+  {
+    header: false,
+    label: false,
+    prop: 'description',
+    width: 12,
+    value: spellDescription,
   },
 ];
 
-export default columns;
+export default spellColumns;

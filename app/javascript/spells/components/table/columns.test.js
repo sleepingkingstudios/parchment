@@ -1,4 +1,5 @@
 import columns from './columns';
+import ResponsiveSchool from './responsive-school';
 import SpellsTableActions from './actions';
 
 describe('Spells table columns', () => {
@@ -6,11 +7,9 @@ describe('Spells table columns', () => {
     const props = columns.map(column => column.prop);
     const expected = [
       'name',
-      'source',
       'school',
-      'level',
-      'description',
       'actions',
+      'description',
     ];
 
     expect(props).toEqual(expected);
@@ -20,7 +19,7 @@ describe('Spells table columns', () => {
     it('should have the expected properties', () => {
       const matching = columns.find(column => (column.prop === 'actions'));
 
-      expect(matching.label).toEqual(' ');
+      expect(matching.label).toEqual(false);
       expect(matching.value).toEqual(SpellsTableActions);
     });
   });
@@ -30,7 +29,7 @@ describe('Spells table columns', () => {
       const matching = columns.find(column => (column.prop === 'description'));
       const description = 'What lies beyond the furthest reaches of the sky?';
 
-      expect(matching.label).toEqual('Description');
+      expect(matching.label).toEqual(false);
       expect(typeof matching.value).toEqual('function');
       expect(matching.value({ description })).toEqual(description);
     });
@@ -48,20 +47,13 @@ describe('Spells table columns', () => {
     describe('with a spell with a description that is too long', () => {
       it('should set the value to the truncated description', () => {
         const matching = columns.find(column => (column.prop === 'description'));
-        const description = "That which will lead the lost child back to her mother's arms. Exile";
-        const expected = "That which will lead the lost child back to her mother's ...";
+        const description = 'What lies beyond the furthest reaches of the sky?'
+          + " That which will lead the lost child back to her mother's arms."
+          + ' Exile.';
+        const expected = `${description.slice(0, 77)}...`;
 
         expect(matching.value({ description })).toEqual(expected);
       });
-    });
-  });
-
-  describe('level', () => {
-    it('should have the expected properties', () => {
-      const matching = columns.find(column => (column.prop === 'level'));
-
-      expect(matching.label).toEqual('Level');
-      expect(matching.value).toBeUndefined();
     });
   });
 
@@ -80,29 +72,7 @@ describe('Spells table columns', () => {
 
       expect(matching.label).toEqual('School');
       expect(typeof matching.value).toEqual('function');
-      expect(matching.value({ school: 'nullamancy' })).toEqual('Nullamancy');
-    });
-  });
-
-  describe('source', () => {
-    it('should have the expected properties', () => {
-      const matching = columns.find(column => (column.prop === 'source'));
-
-      expect(matching.label).toEqual('Source');
-      expect(typeof matching.value).toEqual('function');
-      expect(matching.value({})).toEqual('Homebrew');
-    });
-
-    describe('with a spell with a source', () => {
-      const source = { name: "The Flumph Fancier's Handbook" };
-
-      it('should have the expected properties', () => {
-        const matching = columns.find(column => (column.prop === 'source'));
-
-        expect(matching.label).toEqual('Source');
-        expect(typeof matching.value).toEqual('function');
-        expect(matching.value({ source })).toEqual(source.name);
-      });
+      expect(matching.value).toBe(ResponsiveSchool);
     });
   });
 });
