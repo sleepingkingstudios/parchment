@@ -1,7 +1,6 @@
 .dynamic-table {
   border-bottom: 1px solid #dee2e6;
   margin-bottom: 1rem;
-  padding: 0;
 }
 
 .dynamic-table .dynamic-table-header {
@@ -12,7 +11,7 @@
 
 .dynamic-table .dynamic-table-header,
 .dynamic-table .dynamic-table-row {
-  padding: 0.75rem;
+  padding: 0.75rem 0;
 }
 
 .dynamic-table .dynamic-table-row:nth-child(odd) {
