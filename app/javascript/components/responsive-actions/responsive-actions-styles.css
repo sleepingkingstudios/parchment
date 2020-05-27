@@ -1,0 +1,15 @@
+.responsive-actions .delete-link,
+.responsive-actions .show-link,
+.responsive-actions .update-link {
+  border: 0 none;
+  padding: 0;
+}
+
+.responsive-actions .delete-link .bi,
+.responsive-actions .show-link .bi,
+.responsive-actions .update-link .bi {
+  position: relative;
+  font-size: 1.5rem;
+  margin-right: 0.25rem;
+  top: -0.1rem;
+}

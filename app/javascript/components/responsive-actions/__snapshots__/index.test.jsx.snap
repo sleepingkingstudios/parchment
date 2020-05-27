@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ResponsiveActions /> with default props should match the snapshot 1`] = `
+<div
+  className="responsive-actions widget-actions row"
+>
+  <LinkButton
+    block={false}
+    buttonSize={null}
+    buttonStyle="info"
+    className="show-link show-widget-link col"
+    link={true}
+    outline={false}
+    url="/widgets/00000000-0000-0000-0000-000000000000"
+  >
+    <span
+      className="d-lg-none d-xl-inline"
+    >
+      <EyeIcon />
+    </span>
+    <span
+      className="d-none d-lg-inline"
+    >
+      Show
+    </span>
+  </LinkButton>
+  <LinkButton
+    block={false}
+    buttonSize={null}
+    buttonStyle="link"
+    className="update-link update-widget-link col d-none d-md-inline"
+    link={true}
+    outline={false}
+    url="/widgets/00000000-0000-0000-0000-000000000000/update"
+  >
+    <span
+      className="d-lg-none d-xl-inline"
+    >
+      <PencilSquareIcon />
+    </span>
+    <span
+      className="d-none d-lg-inline"
+    >
+      Update
+    </span>
+  </LinkButton>
+</div>
+`;
