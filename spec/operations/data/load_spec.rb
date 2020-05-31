@@ -21,6 +21,7 @@ RSpec.describe Operations::Data::Load do
     let(:expected) do
       %w[
         Mechanics::Action
+        Mechanics::Condition
         Spell
       ]
     end
