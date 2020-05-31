@@ -30,6 +30,8 @@ Rails.application.routes.draw do
 
     namespace :mechanics do
       api_resources :actions
+
+      api_resources :conditions
     end
 
     api_resources :origins, only: :index
