@@ -13,4 +13,8 @@ FactoryBot.define do
   factory :action, class: 'Mechanics::Action', parent: :mechanic do
     sequence(:name) { |index| "Action #{index}" }
   end
+
+  factory :condition, class: 'Mechanics::Condition', parent: :mechanic do
+    sequence(:name) { |index| "Condition #{index}" }
+  end
 end
