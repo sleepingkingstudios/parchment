@@ -10,81 +10,23 @@ RSpec.describe Api::SpellsController, type: :request do
   include Spec::Support::Examples::ControllerExamples
 
   shared_context 'when there are many spells' do
-    let(:spells) { Fixtures.build(Spell, count: 3) }
+    include_context 'when there are many resources'
+
     let(:sources) do
       spells.sort_by(&:name)[0...-1].map do |spell|
         FactoryBot.build(:source, :with_book, reference: spell)
       end
     end
 
-    before(:each) do
-      spells.each(&:save!)
-      sources.each(&:save!)
-    end
+    before(:example) { sources.each(&:save!) }
   end
 
-  shared_examples 'should require a valid spell id' do
-    describe 'with an invalid spell id' do
-      let(:spell_id) { '00000000-0000-0000-0000-000000000000' }
-      let(:expected_error) do
-        Errors::NotFound.new(
-          attributes:   { id: spell_id },
-          record_class: Spell
-        )
-      end
-      let(:expected_json) do
-        {
-          'error' => expected_error.as_json,
-          'ok'    => false
-        }
-      end
-
-      it 'should respond with 404 Not Found' do
-        call_action
-
-        expect(response).to have_http_status(:not_found)
-      end
-
-      it 'should serialize the error' do
-        call_action
-
-        expect(json).to deep_match expected_json
-      end
-
-      include_examples 'should respond with JSON content'
-    end
+  def self.resource_name
+    :spell
   end
 
-  shared_examples 'should require valid spell params' do
-    describe 'with missing spell params' do
-      let(:expected_error) do
-        Errors::InvalidParameters.new(
-          errors: [['spell', "can't be blank"]]
-        ).as_json
-      end
-      let(:expected_json) do
-        {
-          'ok'    => false,
-          'error' => expected_error
-        }
-      end
-      let(:params) { super().tap { |hsh| hsh.delete :spell } }
-
-      it 'should respond with 400 Bad Request' do
-        call_action
-
-        expect(response).to have_http_status(:bad_request)
-      end
-
-      it 'should serialize the error' do
-        call_action
-
-        expect(json).to deep_match expected_json
-      end
-
-      include_examples 'should respond with JSON content'
-    end
-  end
+  let(:resource_class) { Spell }
+  let(:resource_name)  { self.class.resource_name }
 
   let(:headers) { { 'ACCEPT' => 'application/json' } }
   let(:params)  { {} }
@@ -166,7 +108,7 @@ RSpec.describe Api::SpellsController, type: :request do
 
     include_examples 'should require an authenticated user'
 
-    include_examples 'should require valid spell params'
+    include_examples 'should require resource params'
 
     describe 'with invalid attributes' do
       let(:spell_params) do
@@ -364,7 +306,7 @@ RSpec.describe Api::SpellsController, type: :request do
 
     include_examples 'should require an authenticated user'
 
-    include_examples 'should require a valid spell id'
+    include_examples 'should require a valid resource id'
 
     it 'should respond with 200 OK' do
       call_action
@@ -396,9 +338,9 @@ RSpec.describe Api::SpellsController, type: :request do
 
     include_examples 'should require an authenticated user'
 
-    include_examples 'should require a valid spell id'
+    include_examples 'should require a valid resource id'
 
-    include_examples 'should require valid spell params'
+    include_examples 'should require resource params'
 
     describe 'with invalid attributes' do
       let(:spell_params) do
@@ -663,7 +605,7 @@ RSpec.describe Api::SpellsController, type: :request do
 
     include_examples 'should require an authenticated user'
 
-    include_examples 'should require a valid spell id'
+    include_examples 'should require a valid resource id'
 
     it 'should respond with 200 OK' do
       call_action
