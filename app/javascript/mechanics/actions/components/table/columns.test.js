@@ -17,7 +17,7 @@ describe('ActionsTable columns', () => {
     it('should have the expected properties', () => {
       const matching = columns.find(column => (column.prop === 'actions'));
 
-      expect(matching.label).toEqual(' ');
+      expect(matching.label).toEqual(false);
       expect(matching.value).toEqual(ActionsTableActions);
     });
   });

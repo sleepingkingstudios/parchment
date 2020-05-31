@@ -1,5 +1,6 @@
 import React from 'react';
 
+import DynamicTable from '../../../../components/dynamic-table';
 import { IndexPage } from '../../../../components/index-page';
 import { columns } from '../../components/table';
 import endpoint from '../../store/indexFindActions';
@@ -30,6 +31,7 @@ const buttons = [
 
 const IndexActionsPage = () => (
   <IndexPage
+    Table={DynamicTable}
     breadcrumbs={breadcrumbs}
     buttons={buttons}
     columns={columns}
