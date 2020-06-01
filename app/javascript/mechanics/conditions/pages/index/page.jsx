@@ -16,7 +16,7 @@ const breadcrumbs = [
     active: true,
   },
   {
-    label: 'Actions',
+    label: 'Conditions',
     url: 'mechanics/conditions',
     active: true,
   },

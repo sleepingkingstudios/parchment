@@ -1,5 +1,5 @@
 Feature: Showing Actions
-  The spells index provides a tabular view of the defined spell objects.
+  The actions index provides a tabular view of the defined action objects.
 
   Example: Navigating to the Actions Index Page
     When I open the application

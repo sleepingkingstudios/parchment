@@ -20,6 +20,9 @@ const HomePage = props => (
       <li>
         <Link className="actions-link" to="/mechanics/actions">Actions</Link>
       </li>
+      <li>
+        <Link className="conditions-link" to="/mechanics/conditions">Conditions</Link>
+      </li>
     </ul>
 
     <h2>Sources</h2>

@@ -23,10 +23,6 @@
   - see https://reacttraining.com/react-router/web/guides/code-splitting
   - load entire authenticated application lazily?
 
-### Alerts
-
-- clear (some?) alerts when the URL (not query!) changes
-
 ### API
 
 - Refactor Endpoint class to client() function.
@@ -122,14 +118,6 @@
   - #search action
   - #show action
     - `:only` parameter - restrict fields queried/returned
-
-## Fixtures
-
-### External Data
-
-- load data from external source (private repository?)
-  - treat as directory path if starts with '~' or '.' or '/'
-  - e.g. data:load['../srd']
 
 ## Spells
 
