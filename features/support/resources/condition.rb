@@ -17,6 +17,14 @@ module Features::Resources
       'Mechanics::Condition'
     end
 
+    def fetch_description(condition)
+      condition
+        .description
+        .gsub(/[\n\s\-]+/, ' ') # Strip newlines and list dashes.
+        .gsub(/[\*_]/, '')      # Strip formatting.
+        .strip
+    end
+
     def invalid_attributes
       super.merge(
         short_description: nil
