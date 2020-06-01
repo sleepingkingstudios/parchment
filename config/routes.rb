@@ -44,6 +44,8 @@ Rails.application.routes.draw do
   resources :mechanics, only: [] do
     collection do
       client_resources :actions
+
+      client_resources :conditions
     end
   end
 

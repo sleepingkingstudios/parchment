@@ -1,21 +1,21 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import IndexActionsPage from './page';
+import IndexConditionsPage from './page';
 import DynamicTable from '../../../../components/dynamic-table';
 import { columns } from '../../components/table';
-import endpoint from '../../store/indexFindActions';
+import endpoint from '../../store/indexFindConditions';
 
-describe('<IndexActionsPage />', () => {
+describe('<IndexConditionsPage />', () => {
   const defaultProps = {};
 
   it('should render the index page', () => {
-    const rendered = shallow(<IndexActionsPage {...defaultProps} />);
+    const rendered = shallow(<IndexConditionsPage {...defaultProps} />);
 
     expect(rendered).toHaveDisplayName('IndexPage');
     expect(rendered).toHaveProp({ Table: DynamicTable });
     expect(rendered).toHaveProp({ columns });
     expect(rendered).toHaveProp({ endpoint });
-    expect(rendered).toHaveProp({ resourceName: 'Action' });
+    expect(rendered).toHaveProp({ resourceName: 'Condition' });
   });
 });
