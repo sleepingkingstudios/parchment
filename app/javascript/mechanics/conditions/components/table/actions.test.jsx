@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import ActionsTableActions from './actions';
+import deleteEndpoint from '../../store/deleteCondition';
 
 describe('<ActionsTableActions />', () => {
   const defaultProps = { id: '00000000-0000-0000-0000-000000000000' };
@@ -12,6 +13,7 @@ describe('<ActionsTableActions />', () => {
 
     expect(rendered).toHaveDisplayName('ResponsiveActions');
     expect(rendered).toHaveProp({ baseUrl: '/mechanics/conditions' });
+    expect(rendered).toHaveProp({ deleteEndpoint });
     expect(rendered).toHaveProp({ id });
     expect(rendered).toHaveProp({ resourceName: 'condition' });
   });
@@ -24,6 +26,7 @@ describe('<ActionsTableActions />', () => {
 
       expect(rendered).toHaveDisplayName('ResponsiveActions');
       expect(rendered).toHaveProp({ baseUrl: '/mechanics/conditions' });
+      expect(rendered).toHaveProp({ deleteEndpoint });
       expect(rendered).toHaveProp({ id });
       expect(rendered).toHaveProp({ onDelete });
       expect(rendered).toHaveProp({ resourceName: 'condition' });
