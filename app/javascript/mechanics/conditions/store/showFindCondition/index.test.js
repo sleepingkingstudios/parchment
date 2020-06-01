@@ -1,16 +1,16 @@
 import endpoint from './index';
 import { buildMechanic } from '../../../entities';
 
-const buildAction = () => Object.assign(buildMechanic(), { type: 'Mechanics::Action' });
+const buildCondition = () => Object.assign(buildMechanic(), { type: 'Mechanics::Condition' });
 
-describe('ShowFindAction store', () => {
+describe('ShowFindCondition store', () => {
   const { options, type } = endpoint;
 
   it('should return the options', () => {
     expect(options).toEqual({
-      data: { action: buildAction() },
-      namespace: 'mechanics/actions/showFindAction',
-      resourceName: 'action',
+      data: { condition: buildCondition() },
+      namespace: 'mechanics/conditions/showFindCondition',
+      resourceName: 'condition',
     });
   });
 

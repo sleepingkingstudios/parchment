@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { ShowPage } from '../../../../components/show-page';
 import { MechanicBlock } from '../../../components/block';
-import endpoint, { hooks } from '../../store/showFindAction';
-import deleteEndpoint, { hooks as deleteHooks } from '../../store/deleteAction';
+import endpoint, { hooks } from '../../store/showFindCondition';
+import deleteEndpoint, { hooks as deleteHooks } from '../../store/deleteCondition';
 
 const generateBreadcrumbs = ({
   id,
@@ -21,12 +21,12 @@ const generateBreadcrumbs = ({
       active: true,
     },
     {
-      label: 'Actions',
-      url: '/mechanics/actions',
+      label: 'Conditions',
+      url: '/mechanics/conditions',
     },
     {
       label: ((resource && resource.name) || 'Loading...'),
-      url: `/mechanics/actions/${id}`,
+      url: `/mechanics/conditions/${id}`,
       active: true,
     },
   ]
@@ -40,13 +40,13 @@ const generateButtons = ({
 
   return [
     {
-      label: 'Update Action',
+      label: 'Update Condition',
       outline: true,
-      url: `/mechanics/actions/${id}/update`,
+      url: `/mechanics/conditions/${id}/update`,
     },
     {
       buttonStyle: 'danger',
-      label: 'Delete Action',
+      label: 'Delete Condition',
       onClick: deleteData,
       outline: true,
     },
@@ -58,11 +58,11 @@ const getResourceId = ({ match }) => {
   return params.id;
 };
 
-const ShowActionPage = ({ match }) => {
+const ShowConditionPage = ({ match }) => {
   const id = getResourceId({ match });
   const { useEndpoint } = hooks;
   const { data } = useEndpoint();
-  const resource = data.action;
+  const resource = data.condition;
   const breadcrumbs = generateBreadcrumbs({ id, resource });
   const { useDeleteData } = deleteHooks;
   const deleteData = useDeleteData({ wildcards: { id } });
@@ -80,14 +80,14 @@ const ShowActionPage = ({ match }) => {
       deleteEndpoint={deleteEndpoint}
       endpoint={endpoint}
       match={match}
-      resourceName="Action"
+      resourceName="Condition"
     />
   );
 };
 
-ShowActionPage.defaultProps = {};
+ShowConditionPage.defaultProps = {};
 
-ShowActionPage.propTypes = {
+ShowConditionPage.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -95,4 +95,4 @@ ShowActionPage.propTypes = {
   }).isRequired,
 };
 
-export default ShowActionPage;
+export default ShowConditionPage;

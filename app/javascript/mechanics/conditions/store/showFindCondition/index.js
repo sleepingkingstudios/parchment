@@ -1,12 +1,12 @@
 import showEndpoint from '../../../../api/resources/show';
 import { buildMechanic } from '../../../entities';
 
-const buildAction = () => Object.assign(buildMechanic(), { type: 'Mechanics::Action' });
+const buildCondition = () => Object.assign(buildMechanic(), { type: 'Mechanics::Condition' });
 
 const endpoint = showEndpoint({
-  data: { action: buildAction() },
-  namespace: 'mechanics/actions/showFindAction',
-  resourceName: 'action',
+  data: { condition: buildCondition() },
+  namespace: 'mechanics/conditions/showFindCondition',
+  resourceName: 'condition',
 });
 
 export default endpoint;

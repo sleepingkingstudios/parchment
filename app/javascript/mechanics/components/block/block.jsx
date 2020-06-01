@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import PlainText from '../../../components/plain-text';
+import RichText from '../../../components/rich-text';
 import { mechanicType } from '../../entities';
 import { exists } from '../../../utils/object';
 
@@ -45,7 +46,7 @@ const MechanicBlock = ({ data, showAdditionalDetails }) => (
       <strong>Short Description:</strong> { data.shortDescription }
     </p>
 
-    <PlainText className="mechanic-block-description" text={data.description} />
+    <RichText className="mechanic-block-description" text={data.description} />
 
     { renderAdditionalDetails({ data, showAdditionalDetails })}
   </div>
