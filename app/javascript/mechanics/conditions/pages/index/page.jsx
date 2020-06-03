@@ -23,7 +23,7 @@ const breadcrumbs = [
 ];
 const buttons = [
   {
-    label: 'Create Action',
+    label: 'Create Condition',
     outline: true,
     url: '/mechanics/conditions/create',
   },

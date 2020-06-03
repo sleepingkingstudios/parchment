@@ -18,4 +18,39 @@ describe('<IndexActionsPage />', () => {
     expect(rendered).toHaveProp({ endpoint });
     expect(rendered).toHaveProp({ resourceName: 'Action' });
   });
+
+  it('should set the breadcrumbs', () => {
+    const breadcrumbs = [
+      {
+        label: 'Home',
+        url: '/',
+      },
+      {
+        label: 'Mechanics',
+        url: 'mechanics/',
+        active: true,
+      },
+      {
+        label: 'Actions',
+        url: 'mechanics/actions',
+        active: true,
+      },
+    ];
+    const rendered = shallow(<IndexActionsPage {...defaultProps} />);
+
+    expect(rendered).toHaveProp({ breadcrumbs });
+  });
+
+  it('should set the buttons', () => {
+    const buttons = [
+      {
+        label: 'Create Action',
+        outline: true,
+        url: '/mechanics/actions/create',
+      },
+    ];
+    const rendered = shallow(<IndexActionsPage {...defaultProps} />);
+
+    expect(rendered).toHaveProp({ buttons });
+  });
 });

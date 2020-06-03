@@ -2,7 +2,7 @@ import React from 'react';
 
 import { MechanicForm } from '../../../components/form';
 import { CreatePage } from '../../../../components/create-page';
-import endpoint from '../../store/createActionForm';
+import endpoint from '../../store/createConditionForm';
 import { injectProps } from '../../../../utils/react';
 
 const breadcrumbs = [
@@ -16,28 +16,28 @@ const breadcrumbs = [
     active: true,
   },
   {
-    label: 'Actions',
-    url: '/mechanics/actions',
+    label: 'Conditions',
+    url: '/mechanics/conditions',
   },
   {
     label: 'Create',
-    url: '/mechanics/actions/create',
+    url: '/mechanics/conditions/create',
     active: true,
   },
 ];
 
-const CreateActionPage = () => (
+const CreateConditionPage = () => (
   <CreatePage
-    Form={injectProps(MechanicForm, { baseUrl: '/mechanics/actions' })}
+    Form={injectProps(MechanicForm, { baseUrl: '/mechanics/conditions' })}
     breadcrumbs={breadcrumbs}
     endpoint={endpoint}
     mapData={data => data}
-    resourceName="Action"
+    resourceName="Condition"
   />
 );
 
-CreateActionPage.defaultProps = {};
+CreateConditionPage.defaultProps = {};
 
-CreateActionPage.propTypes = {};
+CreateConditionPage.propTypes = {};
 
-export default CreateActionPage;
+export default CreateConditionPage;

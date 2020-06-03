@@ -96,7 +96,7 @@ describe('<MechanicForm />', () => {
 
     expect(rendered).toHaveFormGroup('CancelButton', (formGroup) => {
       expect(formGroup).toHaveFormControl('FormCancelButton', {
-        baseUrl: '/mechanics/actions',
+        baseUrl: '/mechanics',
         form,
         isUpdate: false,
         resourceName: 'Mechanic',
@@ -122,5 +122,22 @@ describe('<MechanicForm />', () => {
     const rendered = shallow(<MechanicForm {...defaultProps} />);
 
     expect(rendered).toMatchSnapshot();
+  });
+
+  describe('with baseUrl: value', () => {
+    const baseUrl = '/mechanics/widgets';
+
+    it('should render the cancel button', () => {
+      const rendered = shallow(<MechanicForm {...defaultProps} baseUrl={baseUrl} />);
+
+      expect(rendered).toHaveFormGroup('CancelButton', (formGroup) => {
+        expect(formGroup).toHaveFormControl('FormCancelButton', {
+          baseUrl,
+          form,
+          isUpdate: false,
+          resourceName: 'Mechanic',
+        });
+      });
+    });
   });
 });

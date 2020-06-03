@@ -22,7 +22,7 @@ const NotesField = formField(FormTextAreaInput, 'notes');
 const ShortDescriptionField = formField(FormInput, 'shortDescription');
 
 const CancelButton = formGroup(
-  injectProps(FormCancelButton, { baseUrl: '/mechanics/actions', resourceName: 'Mechanic' }),
+  injectProps(FormCancelButton, { resourceName: 'Mechanic' }),
   { displayName: 'CancelButton' },
 );
 
@@ -31,14 +31,16 @@ const SubmitButton = formGroup(
   { displayName: 'SubmitButton' },
 );
 
-const MechanicForm = ({
-  data,
-  errors,
-  isUpdate,
-  onChangeAction,
-  onSubmitAction,
-  status,
-}) => {
+const MechanicForm = (props) => {
+  const {
+    baseUrl,
+    data,
+    errors,
+    isUpdate,
+    onChangeAction,
+    onSubmitAction,
+    status,
+  } = props;
   const form = {
     data,
     errors,
@@ -61,6 +63,7 @@ const MechanicForm = ({
 
       <FormRow align="right">
         <CancelButton
+          baseUrl={baseUrl}
           colWidth="3"
           form={form}
           isUpdate={isUpdate}
@@ -77,10 +80,12 @@ const MechanicForm = ({
 };
 
 MechanicForm.defaultProps = {
+  baseUrl: '/mechanics',
   isUpdate: false,
 };
 
 MechanicForm.propTypes = {
+  baseUrl: PropTypes.string,
   data: mechanicFormType.isRequired,
   errors: formErrorsType.isRequired,
   isUpdate: PropTypes.bool,
