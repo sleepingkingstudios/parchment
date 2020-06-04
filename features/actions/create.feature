@@ -1,5 +1,5 @@
 Feature: Creating An Action
-  The create book process allows the user to define an action mechanic.
+  The create action process allows the user to define an action mechanic.
 
   Example: Navigating to the Create Action Page
     When I visit the "Actions index" page
