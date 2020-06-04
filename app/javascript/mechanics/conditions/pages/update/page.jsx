@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { MechanicForm } from '../../../components/form';
 import { UpdatePage } from '../../../../components/update-page';
-import findEndpoint, { hooks } from '../../store/updateFindAction';
-import formEndpoint from '../../store/updateActionForm';
+import findEndpoint, { hooks } from '../../store/updateFindCondition';
+import formEndpoint from '../../store/updateConditionForm';
 import { injectProps } from '../../../../utils/react';
 
 const generateBreadcrumbs = ({
@@ -22,12 +22,12 @@ const generateBreadcrumbs = ({
       active: true,
     },
     {
-      label: 'Actions',
-      url: '/mechanics/actions',
+      label: 'Conditions',
+      url: '/mechanics/conditions',
     },
     {
       label: ((resource && resource.name) || 'Loading...'),
-      url: `/mechanics/actions/${id}`,
+      url: `/mechanics/conditions/${id}`,
     },
     {
       label: 'Update',
@@ -41,29 +41,29 @@ const getResourceId = ({ match }) => {
   return params.id;
 };
 
-const UpdateActionPage = ({ match }) => {
+const UpdateConditionPage = ({ match }) => {
   const id = getResourceId({ match });
   const { useEndpoint } = hooks;
   const { data } = useEndpoint();
-  const breadcrumbs = generateBreadcrumbs({ id, resource: data.action });
+  const breadcrumbs = generateBreadcrumbs({ id, resource: data.condition });
 
   return (
     <UpdatePage
-      Form={injectProps(MechanicForm, { baseUrl: '/mechanics/actions' })}
+      Form={injectProps(MechanicForm, { baseUrl: '/mechanics/conditions' })}
       breadcrumbs={breadcrumbs}
       findEndpoint={findEndpoint}
       formEndpoint={formEndpoint}
       mapData={obj => obj}
-      mapResource={obj => obj.action}
+      mapResource={obj => obj.condition}
       match={match}
-      resourceName="Action"
+      resourceName="Condition"
     />
   );
 };
 
-UpdateActionPage.defaultProps = {};
+UpdateConditionPage.defaultProps = {};
 
-UpdateActionPage.propTypes = {
+UpdateConditionPage.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -71,4 +71,4 @@ UpdateActionPage.propTypes = {
   }).isRequired,
 };
 
-export default UpdateActionPage;
+export default UpdateConditionPage;

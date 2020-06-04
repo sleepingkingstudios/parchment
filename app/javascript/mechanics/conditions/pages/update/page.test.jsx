@@ -1,15 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import UpdateActionPage from './page';
-import findEndpoint, { hooks } from '../../store/updateFindAction';
-import formEndpoint from '../../store/updateActionForm';
+import UpdateConditionPage from './page';
+import findEndpoint, { hooks } from '../../store/updateFindCondition';
+import formEndpoint from '../../store/updateConditionForm';
 
-jest.mock('../../store/updateFindAction');
+jest.mock('../../store/updateFindCondition');
 
 hooks.useEndpoint.mockImplementation(() => () => ({}));
 
-describe('<UpdateActionPage />', () => {
+describe('<UpdateConditionPage />', () => {
   const id = '00000000-0000-0000-0000-000000000000';
   const match = { params: { id } };
   const defaultProps = { match };
@@ -19,13 +19,13 @@ describe('<UpdateActionPage />', () => {
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<UpdateActionPage {...defaultProps} />);
+    const rendered = shallow(<UpdateConditionPage {...defaultProps} />);
 
     expect(rendered).toHaveDisplayName('UpdatePage');
     expect(rendered).toHaveProp({ findEndpoint });
     expect(rendered).toHaveProp({ formEndpoint });
     expect(rendered).toHaveProp({ match });
-    expect(rendered).toHaveProp({ resourceName: 'Action' });
+    expect(rendered).toHaveProp({ resourceName: 'Condition' });
   });
 
   it('should render the form', () => {
@@ -33,7 +33,7 @@ describe('<UpdateActionPage />', () => {
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<UpdateActionPage {...defaultProps} />);
+    const rendered = shallow(<UpdateConditionPage {...defaultProps} />);
     const form = rendered.renderProp('Form')({
       data: {},
       errors: {},
@@ -41,7 +41,7 @@ describe('<UpdateActionPage />', () => {
       onSubmitAction: () => {},
       status: '',
     });
-    const baseUrl = '/mechanics/actions';
+    const baseUrl = '/mechanics/conditions';
 
     expect(form).toHaveDisplayName('MechanicForm');
     expect(form).toHaveProp({ baseUrl });
@@ -59,12 +59,12 @@ describe('<UpdateActionPage />', () => {
         active: true,
       },
       {
-        label: 'Actions',
-        url: '/mechanics/actions',
+        label: 'Conditions',
+        url: '/mechanics/conditions',
       },
       {
         label: 'Loading...',
-        url: `/mechanics/actions/${id}`,
+        url: `/mechanics/conditions/${id}`,
       },
       {
         label: 'Update',
@@ -75,7 +75,7 @@ describe('<UpdateActionPage />', () => {
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<UpdateActionPage {...defaultProps} />);
+    const rendered = shallow(<UpdateConditionPage {...defaultProps} />);
 
     expect(rendered).toHaveProp({ breadcrumbs });
   });
@@ -85,10 +85,10 @@ describe('<UpdateActionPage />', () => {
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<UpdateActionPage {...defaultProps} />);
+    const rendered = shallow(<UpdateConditionPage {...defaultProps} />);
     const mapData = rendered.prop('mapData');
-    const action = { id };
-    const data = { action };
+    const condition = { id };
+    const data = { condition };
 
     expect(typeof mapData).toEqual('function');
     expect(mapData(data)).toEqual(data);
@@ -107,24 +107,24 @@ describe('<UpdateActionPage />', () => {
           active: true,
         },
         {
-          label: 'Actions',
-          url: '/mechanics/actions',
+          label: 'Conditions',
+          url: '/mechanics/conditions',
         },
         {
-          label: 'Self-Destruct',
-          url: `/mechanics/actions/${id}`,
+          label: 'Lethargy',
+          url: `/mechanics/conditions/${id}`,
         },
         {
           label: 'Update',
           active: true,
         },
       ];
-      const action = { id, name: 'Self-Destruct' };
-      const state = { data: { action } };
+      const condition = { id, name: 'Lethargy' };
+      const state = { data: { condition } };
 
       hooks.useEndpoint.mockImplementationOnce(() => state);
 
-      const rendered = shallow(<UpdateActionPage {...defaultProps} />);
+      const rendered = shallow(<UpdateConditionPage {...defaultProps} />);
 
       expect(rendered).toHaveProp({ breadcrumbs });
     });
