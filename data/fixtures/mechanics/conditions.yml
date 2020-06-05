@@ -1,0 +1,17 @@
+---
+- name:              Ridicule
+  short_description: Viciously mocked.
+  description: |
+    - A ridiculed creature cannot take any actions or reactions.
+- name:              Taunt
+  short_description: Creature must attack.
+  description: |
+    - A taunted creature can only use the Attack action, and only to attack the
+      creature that inflicted the taunt.
+- name:              Zombie
+  short_description: Resistances and vulnerabilities of undeath.
+  description: |
+    - A zombied creature is treated as the undead type.
+    - The creature gains no benefit from healing, such as a *cure wounds* spell.
+    - The creature gains resistance to necrotic damage but vulnerability to
+      radiant damage.

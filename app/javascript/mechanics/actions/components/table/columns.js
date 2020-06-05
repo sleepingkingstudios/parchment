@@ -1,12 +1,22 @@
 import ActionsTableActions from './actions';
-import { columns as mechanicsColumns } from '../../../components/table';
 
-const columns = mechanicsColumns.slice();
-
-columns[columns.length - 1] = {
-  label: ' ',
-  prop: 'actions',
-  value: ActionsTableActions,
-};
+const columns = [
+  {
+    label: 'Name',
+    prop: 'name',
+    width: 3,
+  },
+  {
+    label: 'Description',
+    prop: 'shortDescription',
+    width: 6,
+  },
+  {
+    label: false,
+    prop: 'actions',
+    value: ActionsTableActions,
+    width: 3,
+  },
+];
 
 export default columns;

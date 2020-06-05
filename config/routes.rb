@@ -30,6 +30,8 @@ Rails.application.routes.draw do
 
     namespace :mechanics do
       api_resources :actions
+
+      api_resources :conditions
     end
 
     api_resources :origins, only: :index
@@ -42,6 +44,8 @@ Rails.application.routes.draw do
   resources :mechanics, only: [] do
     collection do
       client_resources :actions
+
+      client_resources :conditions
     end
   end
 

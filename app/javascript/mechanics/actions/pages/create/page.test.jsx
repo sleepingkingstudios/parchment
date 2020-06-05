@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { MechanicForm } from '../../../components/form';
 import CreateActionPage from './page';
 import endpoint from '../../store/createActionForm';
 
@@ -12,9 +11,23 @@ describe('CreateActionPage', () => {
     const rendered = shallow(<CreateActionPage {...defaultProps} />);
 
     expect(rendered).toHaveDisplayName('CreatePage');
-    expect(rendered).toHaveProp({ Form: MechanicForm });
     expect(rendered).toHaveProp({ endpoint });
     expect(rendered).toHaveProp({ resourceName: 'Action' });
+  });
+
+  it('should render the form', () => {
+    const rendered = shallow(<CreateActionPage {...defaultProps} />);
+    const form = rendered.renderProp('Form')({
+      data: {},
+      errors: {},
+      onChangeAction: () => {},
+      onSubmitAction: () => {},
+      status: '',
+    });
+    const baseUrl = '/mechanics/actions';
+
+    expect(form).toHaveDisplayName('MechanicForm');
+    expect(form).toHaveProp({ baseUrl });
   });
 
   it('should set the breadcrumbs', () => {

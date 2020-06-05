@@ -42,6 +42,10 @@ Then('the {string} table should display the data') do |resource|
   resource_class = definition.resource_class
   columns        = definition.table_columns
 
+  if resource_class.count.zero?
+    raise "There are no loaded fixtures for #{resource_class}"
+  end
+
   expect(@current_page.table_rows.size).to be resource_class.count
 
   resource_class.all.each do |record|

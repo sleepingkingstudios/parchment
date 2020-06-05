@@ -14,6 +14,7 @@ module Operations::Data
     # Models that store domain data.
     DATA_MODELS = %w[
       Mechanics::Action
+      Mechanics::Condition
       Spell
     ].freeze
 

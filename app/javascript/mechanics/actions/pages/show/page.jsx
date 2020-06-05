@@ -26,7 +26,7 @@ const generateBreadcrumbs = ({
     },
     {
       label: ((resource && resource.name) || 'Loading...'),
-      url: `/mechanics/actions}/${id}`,
+      url: `/mechanics/actions/${id}`,
       active: true,
     },
   ]

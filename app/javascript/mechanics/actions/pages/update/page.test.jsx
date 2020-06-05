@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { MechanicForm } from '../../../components/form';
 import UpdateActionPage from './page';
 import findEndpoint, { hooks } from '../../store/updateFindAction';
 import formEndpoint from '../../store/updateActionForm';
@@ -23,11 +22,29 @@ describe('<UpdateActionPage />', () => {
     const rendered = shallow(<UpdateActionPage {...defaultProps} />);
 
     expect(rendered).toHaveDisplayName('UpdatePage');
-    expect(rendered).toHaveProp({ Form: MechanicForm });
     expect(rendered).toHaveProp({ findEndpoint });
     expect(rendered).toHaveProp({ formEndpoint });
     expect(rendered).toHaveProp({ match });
     expect(rendered).toHaveProp({ resourceName: 'Action' });
+  });
+
+  it('should render the form', () => {
+    const state = { data: {} };
+
+    hooks.useEndpoint.mockImplementationOnce(() => state);
+
+    const rendered = shallow(<UpdateActionPage {...defaultProps} />);
+    const form = rendered.renderProp('Form')({
+      data: {},
+      errors: {},
+      onChangeAction: () => {},
+      onSubmitAction: () => {},
+      status: '',
+    });
+    const baseUrl = '/mechanics/actions';
+
+    expect(form).toHaveDisplayName('MechanicForm');
+    expect(form).toHaveProp({ baseUrl });
   });
 
   it('should render the breadcrumbs', () => {

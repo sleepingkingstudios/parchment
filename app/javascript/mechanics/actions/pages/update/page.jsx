@@ -5,6 +5,7 @@ import { MechanicForm } from '../../../components/form';
 import { UpdatePage } from '../../../../components/update-page';
 import findEndpoint, { hooks } from '../../store/updateFindAction';
 import formEndpoint from '../../store/updateActionForm';
+import { injectProps } from '../../../../utils/react';
 
 const generateBreadcrumbs = ({
   id,
@@ -48,7 +49,7 @@ const UpdateActionPage = ({ match }) => {
 
   return (
     <UpdatePage
-      Form={MechanicForm}
+      Form={injectProps(MechanicForm, { baseUrl: '/mechanics/actions' })}
       breadcrumbs={breadcrumbs}
       findEndpoint={findEndpoint}
       formEndpoint={formEndpoint}

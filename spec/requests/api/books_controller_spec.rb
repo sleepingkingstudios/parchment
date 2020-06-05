@@ -9,74 +9,12 @@ require 'support/examples/controller_examples'
 RSpec.describe Api::BooksController, type: :request do
   include Spec::Support::Examples::ControllerExamples
 
-  shared_context 'when there are many books' do
-    let(:books) { Fixtures.build(Book, count: 3) }
-
-    before(:each) { books.each(&:save!) }
+  def self.resource_name
+    :book
   end
 
-  shared_examples 'should require a valid book id' do
-    describe 'with an invalid book id' do
-      let(:book_id) { '00000000-0000-0000-0000-000000000000' }
-      let(:expected_error) do
-        Errors::NotFound.new(
-          attributes:   { id: book_id },
-          record_class: Book
-        )
-      end
-      let(:expected_json) do
-        {
-          'error' => expected_error.as_json,
-          'ok'    => false
-        }
-      end
-
-      it 'should respond with 404 Not Found' do
-        call_action
-
-        expect(response).to have_http_status(:not_found)
-      end
-
-      it 'should serialize the error' do
-        call_action
-
-        expect(json).to deep_match expected_json
-      end
-
-      include_examples 'should respond with JSON content'
-    end
-  end
-
-  shared_examples 'should require valid book params' do
-    describe 'with missing book params' do
-      let(:expected_error) do
-        Errors::InvalidParameters.new(
-          errors: [['book', "can't be blank"]]
-        ).as_json
-      end
-      let(:expected_json) do
-        {
-          'ok'    => false,
-          'error' => expected_error
-        }
-      end
-      let(:params) { super().tap { |hsh| hsh.delete :book } }
-
-      it 'should respond with 400 Bad Request' do
-        call_action
-
-        expect(response).to have_http_status(:bad_request)
-      end
-
-      it 'should serialize the error' do
-        call_action
-
-        expect(json).to deep_match expected_json
-      end
-
-      include_examples 'should respond with JSON content'
-    end
-  end
+  let(:resource_class) { Book }
+  let(:resource_name)  { self.class.resource_name }
 
   let(:headers) { { 'ACCEPT' => 'application/json' } }
   let(:params)  { {} }
@@ -115,7 +53,7 @@ RSpec.describe Api::BooksController, type: :request do
 
     include_examples 'should respond with JSON content'
 
-    wrap_context 'when there are many books' do
+    wrap_context 'when there are many resources' do
       let(:book_serializer)  { Serializers::BookSerializer.new }
       let(:serialized_books) do
         books
@@ -146,7 +84,7 @@ RSpec.describe Api::BooksController, type: :request do
 
     include_examples 'should require an authenticated user'
 
-    include_examples 'should require valid book params'
+    include_examples 'should require resource params'
 
     describe 'with invalid attributes' do
       let(:book_params) do
@@ -259,7 +197,7 @@ RSpec.describe Api::BooksController, type: :request do
 
   describe 'GET /api/books/:id.json' do
     include_context 'with an authorization token for a user'
-    include_context 'when there are many books'
+    include_context 'when there are many resources'
 
     let(:book)    { books.first }
     let(:book_id) { book.id }
@@ -278,7 +216,7 @@ RSpec.describe Api::BooksController, type: :request do
 
     include_examples 'should require an authenticated user'
 
-    include_examples 'should require a valid book id'
+    include_examples 'should require a valid resource id'
 
     it 'should respond with 200 OK' do
       call_action
@@ -297,7 +235,7 @@ RSpec.describe Api::BooksController, type: :request do
 
   describe 'PATCH /api/books/:id.json' do
     include_context 'with an authorization token for a user'
-    include_context 'when there are many books'
+    include_context 'when there are many resources'
 
     let(:params)      { super().merge(book: book_params) }
     let(:book)        { books.first }
@@ -310,9 +248,9 @@ RSpec.describe Api::BooksController, type: :request do
 
     include_examples 'should require an authenticated user'
 
-    include_examples 'should require a valid book id'
+    include_examples 'should require a valid resource id'
 
-    include_examples 'should require valid book params'
+    include_examples 'should require resource params'
 
     describe 'with invalid attributes' do
       let(:book_params) do
@@ -428,7 +366,7 @@ RSpec.describe Api::BooksController, type: :request do
 
   describe 'DELETE /api/books/:id.json' do
     include_context 'with an authorization token for a user'
-    include_context 'when there are many books'
+    include_context 'when there are many resources'
 
     let(:book)    { books.first }
     let(:book_id) { book.id }
@@ -445,7 +383,7 @@ RSpec.describe Api::BooksController, type: :request do
 
     include_examples 'should require an authenticated user'
 
-    include_examples 'should require a valid book id'
+    include_examples 'should require a valid resource id'
 
     it 'should respond with 200 OK' do
       call_action

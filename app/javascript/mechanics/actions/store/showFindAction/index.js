@@ -1,8 +1,10 @@
 import showEndpoint from '../../../../api/resources/show';
 import { buildMechanic } from '../../../entities';
 
+const buildAction = () => Object.assign(buildMechanic(), { type: 'Mechanics::Action' });
+
 const endpoint = showEndpoint({
-  data: { action: Object.assign(buildMechanic(), { type: 'Action' }) },
+  data: { action: buildAction() },
   namespace: 'mechanics/actions/showFindAction',
   resourceName: 'action',
 });

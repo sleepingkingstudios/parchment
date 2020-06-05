@@ -31,6 +31,7 @@ describe('<PageHeader />', () => {
       Spells: '/spells',
       Mechanics: {
         Actions: '/mechanics/actions',
+        Conditions: '/mechanics/conditions',
       },
       Books: '/books',
     };

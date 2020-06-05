@@ -1,5 +1,5 @@
 Feature: Showing An Action
-  The spells page provides a block view of a defined action object.
+  The action page provides a block view of a defined action object.
 
   Example: Navigating to the Show Action Page
     Given the fixtures are loaded

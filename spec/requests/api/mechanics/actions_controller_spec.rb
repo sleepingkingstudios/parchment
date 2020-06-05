@@ -9,74 +9,12 @@ require 'support/examples/controller_examples'
 RSpec.describe Api::Mechanics::ActionsController do
   include Spec::Support::Examples::ControllerExamples
 
-  shared_context 'when there are many actions' do
-    let(:actions) { Fixtures.build(Mechanics::Action, count: 3) }
-
-    before(:each) { actions.each(&:save!) }
+  def self.resource_name
+    :action
   end
 
-  shared_examples 'should require a valid action id' do
-    describe 'with an invalid action id' do
-      let(:action_id) { '00000000-0000-0000-0000-000000000000' }
-      let(:expected_error) do
-        Errors::NotFound.new(
-          attributes:   { id: action_id },
-          record_class: Mechanics::Action
-        )
-      end
-      let(:expected_json) do
-        {
-          'error' => expected_error.as_json,
-          'ok'    => false
-        }
-      end
-
-      it 'should respond with 404 Not Found' do
-        call_action
-
-        expect(response).to have_http_status(:not_found)
-      end
-
-      it 'should serialize the error' do
-        call_action
-
-        expect(json).to deep_match expected_json
-      end
-
-      include_examples 'should respond with JSON content'
-    end
-  end
-
-  shared_examples 'should require valid mechanic params' do
-    describe 'with missing mechanic params' do
-      let(:expected_error) do
-        Errors::InvalidParameters.new(
-          errors: [['mechanic', "can't be blank"]]
-        ).as_json
-      end
-      let(:expected_json) do
-        {
-          'ok'    => false,
-          'error' => expected_error
-        }
-      end
-      let(:params) { super().tap { |hsh| hsh.delete :mechanic } }
-
-      it 'should respond with 400 Bad Request' do
-        call_action
-
-        expect(response).to have_http_status(:bad_request)
-      end
-
-      it 'should serialize the error' do
-        call_action
-
-        expect(json).to deep_match expected_json
-      end
-
-      include_examples 'should respond with JSON content'
-    end
-  end
+  let(:resource_class) { Mechanics::Action }
+  let(:resource_name)  { self.class.resource_name }
 
   let(:headers) { { 'ACCEPT' => 'application/json' } }
   let(:params)  { {} }
@@ -115,7 +53,7 @@ RSpec.describe Api::Mechanics::ActionsController do
 
     include_examples 'should respond with JSON content'
 
-    wrap_context 'when there are many actions' do
+    wrap_context 'when there are many resources' do
       let(:action_serializer) { Serializers::MechanicSerializer.new }
       let(:serialized_actions) do
         actions
@@ -146,7 +84,7 @@ RSpec.describe Api::Mechanics::ActionsController do
 
     include_examples 'should require an authenticated user'
 
-    include_examples 'should require valid mechanic params'
+    include_examples 'should require resource params', :mechanic
 
     describe 'with invalid attributes' do
       let(:action_params) do
@@ -256,7 +194,7 @@ RSpec.describe Api::Mechanics::ActionsController do
 
   describe 'GET /api/mechanics/actions/:id.json' do
     include_context 'with an authorization token for a user'
-    include_context 'when there are many actions'
+    include_context 'when there are many resources'
 
     let(:action)    { actions.first }
     let(:action_id) { action.id }
@@ -277,7 +215,7 @@ RSpec.describe Api::Mechanics::ActionsController do
 
     include_examples 'should require an authenticated user'
 
-    include_examples 'should require a valid action id'
+    include_examples 'should require a valid resource id'
 
     it 'should respond with 200 OK' do
       call_action
@@ -296,7 +234,7 @@ RSpec.describe Api::Mechanics::ActionsController do
 
   describe 'PATCH /api/mechanics/actions/:id.json' do
     include_context 'with an authorization token for a user'
-    include_context 'when there are many actions'
+    include_context 'when there are many resources'
 
     let(:params)        { super().merge(mechanic: action_params) }
     let(:action)        { actions.first }
@@ -311,9 +249,9 @@ RSpec.describe Api::Mechanics::ActionsController do
 
     include_examples 'should require an authenticated user'
 
-    include_examples 'should require a valid action id'
+    include_examples 'should require a valid resource id'
 
-    include_examples 'should require valid mechanic params'
+    include_examples 'should require resource params', :mechanic
 
     describe 'with invalid attributes' do
       let(:action_params) do
@@ -426,7 +364,7 @@ RSpec.describe Api::Mechanics::ActionsController do
 
   describe 'DELETE /api/mechanics/actions/:id.json' do
     include_context 'with an authorization token for a user'
-    include_context 'when there are many actions'
+    include_context 'when there are many resources'
 
     let(:action)    { actions.first }
     let(:action_id) { action.id }
@@ -445,7 +383,7 @@ RSpec.describe Api::Mechanics::ActionsController do
 
     include_examples 'should require an authenticated user'
 
-    include_examples 'should require a valid action id'
+    include_examples 'should require a valid resource id'
 
     it 'should respond with 200 OK' do
       call_action

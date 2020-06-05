@@ -4,6 +4,7 @@ module Features
   module Resources
     autoload :Action,     'support/resources/action'
     autoload :Book,       'support/resources/book'
+    autoload :Condition,  'support/resources/condition'
     autoload :Definition, 'support/resources/definition'
     autoload :Mechanic,   'support/resources/mechanic'
     autoload :Source,     'support/resources/source'
@@ -12,6 +13,7 @@ module Features
     def self.all
       @all ||= %w[
         Action
+        Condition
         Book
         Spell
       ].map { |resource_name| find(resource_name) }

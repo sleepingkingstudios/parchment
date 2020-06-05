@@ -4,7 +4,7 @@ import formEndpoint from '../updateActionForm';
 
 const buildAction = () => Object.assign(buildMechanic(), { type: 'Mechanics::Action' });
 
-describe('UpdateFindBook store', () => {
+describe('UpdateFindAction store', () => {
   const { options, type } = endpoint;
 
   it('should return the options', () => {

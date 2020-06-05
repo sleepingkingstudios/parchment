@@ -10,6 +10,14 @@ module Spec::Support::Examples
   module ControllerExamples
     extend RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
 
+    shared_context 'when there are many resources' do
+      plural_resource_name = resource_name.to_s.pluralize.intern
+
+      let(plural_resource_name) { Fixtures.build(resource_class, count: 3) }
+
+      before(:example) { send(plural_resource_name).each(&:save!) }
+    end
+
     shared_context 'with a missing authorization header' do
       let(:headers) { super().tap { |hsh| hsh.delete('AUTHORIZATION') } }
     end
@@ -109,6 +117,71 @@ module Spec::Support::Examples
           call_action
 
           expect(response.headers['WWW-Authenticate']).to be == 'Bearer'
+        end
+
+        include_examples 'should respond with JSON content'
+      end
+    end
+
+    shared_examples 'should require a valid resource id' do
+      describe 'with an invalid resource id' do
+        let(:"#{resource_name}_id") { '00000000-0000-0000-0000-000000000000' }
+        let(:expected_error) do
+          Errors::NotFound.new(
+            attributes:   { id: send(:"#{resource_name}_id") },
+            record_class: resource_class
+          )
+        end
+        let(:expected_json) do
+          {
+            'error' => expected_error.as_json,
+            'ok'    => false
+          }
+        end
+
+        it 'should respond with 404 Not Found' do
+          call_action
+
+          expect(response).to have_http_status(:not_found)
+        end
+
+        it 'should serialize the error' do
+          call_action
+
+          expect(json).to deep_match expected_json
+        end
+
+        include_examples 'should respond with JSON content'
+      end
+    end
+
+    shared_examples 'should require resource params' do |parameter_name|
+      parameter_name ||= resource_name
+
+      describe 'with missing resource params' do
+        let(:expected_error) do
+          Errors::InvalidParameters.new(
+            errors: [[parameter_name.to_s, "can't be blank"]]
+          ).as_json
+        end
+        let(:expected_json) do
+          {
+            'ok'    => false,
+            'error' => expected_error
+          }
+        end
+        let(:params) { super().tap { |hsh| hsh.delete(parameter_name) } }
+
+        it 'should respond with 400 Bad Request' do
+          call_action
+
+          expect(response).to have_http_status(:bad_request)
+        end
+
+        it 'should serialize the error' do
+          call_action
+
+          expect(json).to deep_match expected_json
         end
 
         include_examples 'should respond with JSON content'

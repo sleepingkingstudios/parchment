@@ -50,7 +50,7 @@ describe('ShowActionPage', () => {
       },
       {
         label: 'Loading...',
-        url: `/mechanics/actions}/${id}`,
+        url: `/mechanics/actions/${id}`,
         active: true,
       },
     ];
@@ -91,7 +91,7 @@ describe('ShowActionPage', () => {
         },
         {
           label: 'Self-Destruct',
-          url: `/mechanics/actions}/${id}`,
+          url: `/mechanics/actions/${id}`,
           active: true,
         },
       ];

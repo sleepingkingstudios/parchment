@@ -3,6 +3,7 @@ import React from 'react';
 import { MechanicForm } from '../../../components/form';
 import { CreatePage } from '../../../../components/create-page';
 import endpoint from '../../store/createActionForm';
+import { injectProps } from '../../../../utils/react';
 
 const breadcrumbs = [
   {
@@ -27,7 +28,7 @@ const breadcrumbs = [
 
 const CreateActionPage = () => (
   <CreatePage
-    Form={MechanicForm}
+    Form={injectProps(MechanicForm, { baseUrl: '/mechanics/actions' })}
     breadcrumbs={breadcrumbs}
     endpoint={endpoint}
     mapData={data => data}

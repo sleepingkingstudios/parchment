@@ -38,7 +38,7 @@ describe('<MechanicBlock />', () => {
 
   it('should render the mechanic description', () => {
     const rendered = shallow(<MechanicBlock {...defaultProps} />);
-    const descriptionElement = rendered.find('PlainText');
+    const descriptionElement = rendered.find('RichText');
 
     expect(descriptionElement).toExist();
     expect(descriptionElement).toHaveClassName('mechanic-block-description');
@@ -80,7 +80,7 @@ describe('<MechanicBlock />', () => {
       const rendered = shallow(
         <MechanicBlock {...defaultProps} data={mechanicWithNotes} showAdditionalDetails />,
       );
-      const notesElement = rendered.find('PlainText').at(1);
+      const notesElement = rendered.find('PlainText');
 
       expect(notesElement).toExist();
       expect(notesElement).toHaveClassName('mechanic-block-notes');

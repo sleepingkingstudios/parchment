@@ -123,6 +123,7 @@ exports[`<MechanicForm /> should match the snapshot 1`] = `
     verticalAlign="top"
   >
     <CancelButton
+      baseUrl="/mechanics"
       colWidth="3"
       form={
         Object {
