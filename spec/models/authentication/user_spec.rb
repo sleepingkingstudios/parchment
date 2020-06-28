@@ -17,6 +17,8 @@ RSpec.describe Authentication::User, type: :model do
     }
   end
 
+  include_examples 'should have primary key'
+
   include_examples 'should have timestamps'
 
   describe '::Factory' do

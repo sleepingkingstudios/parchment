@@ -108,6 +108,10 @@ RSpec.describe Spell, type: :model do
 
   include_examples 'should define a has_one :source association'
 
+  include_examples 'should have primary key'
+
+  include_examples 'should have timestamps'
+
   describe '#cantrip?' do
     it { expect(spell).to have_predicate(:cantrip?).with_value(false) }
 
@@ -230,28 +234,12 @@ RSpec.describe Spell, type: :model do
     end
   end
 
-  describe '#created_at' do
-    include_examples 'should have reader', :created_at
-  end
-
   describe '#description' do
     include_examples 'should have attribute', :description, default: ''
   end
 
   describe '#duration' do
     include_examples 'should have attribute', :duration, default: ''
-  end
-
-  describe '#id' do
-    include_examples 'should have attribute',
-      :id,
-      value: '00000000-0000-0000-0000-000000000000'
-
-    context 'when the spell is persisted' do
-      before(:example) { spell.save! }
-
-      it { expect(spell.id).to be_a_uuid }
-    end
   end
 
   describe '#level' do
@@ -329,10 +317,6 @@ RSpec.describe Spell, type: :model do
       :somatic_component,
       default: false,
       value:   true
-  end
-
-  describe '#updated_at' do
-    include_examples 'should have reader', :updated_at
   end
 
   describe '#valid?' do

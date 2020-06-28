@@ -47,6 +47,14 @@ module Spec::Support::Examples
         end
       end
 
+    shared_examples 'should have primary key' do
+      describe '#id' do
+        include_examples 'should have attribute',
+          :id,
+          value: '00000000-0000-0000-0000-000000000000'
+      end
+    end
+
     shared_examples 'should have timestamps' do
       describe '#created_at' do
         include_examples 'should have reader', :created_at

@@ -94,24 +94,9 @@ RSpec.describe Source, type: :model do
     it { expect(described_class::Factory.record_class).to be described_class }
   end
 
-  describe '#created_at' do
-    include_examples 'should have reader', :created_at
-  end
+  include_examples 'should have primary key'
 
-  describe '#id' do
-    include_examples 'should have attribute',
-      :id,
-      value: '00000000-0000-0000-0000-000000000000'
-
-    context 'when the source is persisted' do
-      include_context 'when the origin is set'
-      include_context 'when the reference is set'
-
-      before(:example) { source.save! }
-
-      it { expect(source.id).to be_a_uuid }
-    end
-  end
+  include_examples 'should have timestamps'
 
   describe '#metadata' do
     include_examples 'should have attribute', :metadata, default: {}
@@ -193,10 +178,6 @@ RSpec.describe Source, type: :model do
     wrap_context 'when the reference is a spell' do
       it { expect(source.reference_type).to be == 'Spell' }
     end
-  end
-
-  describe '#updated_at' do
-    include_examples 'should have reader', :updated_at
   end
 
   describe '#valid?' do

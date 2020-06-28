@@ -29,6 +29,10 @@ RSpec.describe Book, type: :model do
 
   include_examples 'should define a has_many :sources association'
 
+  include_examples 'should have primary key'
+
+  include_examples 'should have timestamps'
+
   describe '#abbreviation' do
     include_examples 'should have attribute',
       :abbreviation,
@@ -52,22 +56,6 @@ RSpec.describe Book, type: :model do
 
         it { expect(book.abbreviation).to be == expected }
       end
-    end
-  end
-
-  describe '#created_at' do
-    include_examples 'should have reader', :created_at
-  end
-
-  describe '#id' do
-    include_examples 'should have attribute',
-      :id,
-      value: '00000000-0000-0000-0000-000000000000'
-
-    context 'when the book is persisted' do
-      before(:example) { book.save! }
-
-      it { expect(book.id).to be_a_uuid }
     end
   end
 
@@ -159,9 +147,5 @@ RSpec.describe Book, type: :model do
 
       include_examples 'should validate the presence of', :slug, type: String
     end
-  end
-
-  describe '#updated_at' do
-    include_examples 'should have reader', :updated_at
   end
 end
