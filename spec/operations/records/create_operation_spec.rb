@@ -83,6 +83,23 @@ RSpec.describe Operations::Records::CreateOperation do
       it { expect(record.persisted?).to be true }
 
       it { expect { call_operation }.to change(Spell, :count).by(1) }
+
+      describe 'with a hash with a primary key' do
+        let(:id)         { '00000000-0000-0000-0000-000000000000' }
+        let(:attributes) { super().merge('id' => id) }
+
+        include_examples 'should validate the primary key'
+
+        it { expect(call_operation).to have_passing_result }
+
+        it { expect(record).to be_a record_class }
+
+        it { expect(record.attributes).to deep_match expected }
+
+        it { expect(record.persisted?).to be true }
+
+        it { expect { call_operation }.to change(Spell, :count).by(1) }
+      end
     end
   end
 
