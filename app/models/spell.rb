@@ -7,7 +7,7 @@ require 'operations/references/factory'
 
 # Definition of a spell, which is an active ability used by certain magical
 # classes and creatures.
-class Spell < ApplicationRecord
+class Spell < Reference
   extend Models::Naming::Hooks
 
   Factory = Operations::References::Factory.new(self)

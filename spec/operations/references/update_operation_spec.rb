@@ -33,7 +33,7 @@ RSpec.describe Operations::References::UpdateOperation do
     end
 
     let(:attributes)  { {} }
-    let(:expected)    { record_class.new.attributes }
+    let(:expected)    { record.attributes }
     let(:record)      { FactoryBot.build(:spell) }
     let(:reference)   { record }
     let(:origin)      { FactoryBot.build(:book, title: 'New Origin') }
@@ -91,8 +91,18 @@ RSpec.describe Operations::References::UpdateOperation do
           DESCRIPTION
         }
       end
+      let(:expected) do
+        super()
+          .merge('slug' => 'glowing-gaze')
+          .merge(attributes)
+          .except('updated_at')
+      end
 
-      before(:example) { record.save! }
+      before(:example) do
+        record.save!
+
+        expected
+      end
 
       include_examples 'should resolve the polymorphic association',
         :origin,
@@ -103,7 +113,7 @@ RSpec.describe Operations::References::UpdateOperation do
       it 'should update the attributes' do
         expect { call_operation }
           .to change(record, :attributes)
-          .to be >= attributes
+          .to be >= expected
       end
 
       it { expect { call_operation }.not_to change(Source, :count) }
@@ -122,6 +132,16 @@ RSpec.describe Operations::References::UpdateOperation do
         it { expect { call_operation }.to change(Source, :count).by(-1) }
 
         it { expect { call_operation }.to change(record, :source).to be nil }
+      end
+
+      describe 'with a slug attribute' do
+        let(:attributes) { super().merge('slug' => 'custom-slug') }
+
+        it 'should update the attributes' do
+          expect { call_operation }
+            .to change(record, :attributes)
+            .to be >= expected
+        end
       end
 
       describe 'with a valid origin id and type' do

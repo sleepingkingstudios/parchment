@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-require 'operations/records/build_operation'
+require 'operations/references/build_operation'
 
 require 'support/examples/operation_examples'
 
-RSpec.describe Operations::Records::BuildOperation do
+RSpec.describe Operations::References::BuildOperation do
   include Spec::Support::Examples::OperationExamples
 
   subject(:operation) { described_class.new(record_class) }
@@ -65,7 +65,12 @@ RSpec.describe Operations::Records::BuildOperation do
           'description'  => 'It must be the blessing of Yevon!'
         }
       end
-      let(:expected) { super().merge(attributes, 'id' => be_a_uuid) }
+      let(:expected) do
+        super()
+          .merge('slug' => 'blessing-yevon')
+          .merge(attributes)
+          .merge('id' => be_a_uuid)
+      end
 
       it { expect(call_operation).to have_passing_result }
 
@@ -85,10 +90,16 @@ RSpec.describe Operations::Records::BuildOperation do
 
         it { expect(record.attributes).to deep_match expected }
       end
-    end
-  end
 
-  describe '#record_class' do
-    include_examples 'should have reader', :record_class, -> { record_class }
+      describe 'with a hash with a slug' do
+        let(:attributes) { super().merge('slug' => 'custom-slug') }
+
+        it { expect(call_operation).to have_passing_result }
+
+        it { expect(record).to be_a record_class }
+
+        it { expect(record.attributes).to deep_match expected }
+      end
+    end
   end
 end

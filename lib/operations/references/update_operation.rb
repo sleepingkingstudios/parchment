@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'operations/records/update_operation'
-require 'operations/references'
+require 'operations/references/assign_operation'
 require 'operations/sources/set_source_operation'
 
 module Operations::References
@@ -14,8 +14,15 @@ module Operations::References
       .freeze
     private_constant :ORIGIN_KEYS
 
-    def initialize(record_class, set_source_operation: nil)
-      super(record_class)
+    def initialize(
+      record_class,
+      assign_operation:     nil,
+      set_source_operation: nil
+    )
+      assign_operation ||=
+        Operations::References::AssignOperation.new(record_class)
+
+      super(record_class, assign_operation: assign_operation)
 
       @set_source_operation =
         set_source_operation || Operations::Sources::SetSourceOperation.new

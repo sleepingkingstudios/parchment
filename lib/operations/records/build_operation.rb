@@ -3,7 +3,7 @@
 require 'operations/records/base_operation'
 
 module Operations::Records
-  # Initializes a new record for the given table from the given attributes.
+  # Initializes a new record from the given attributes.
   class BuildOperation < Operations::Records::BaseOperation
     include Operations::Records::ParameterValidations::One
 

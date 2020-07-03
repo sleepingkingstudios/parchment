@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-require 'operations/records/assign_operation'
+require 'operations/references/assign_operation'
 
 require 'support/examples/operation_examples'
 
-RSpec.describe Operations::Records::AssignOperation do
+RSpec.describe Operations::References::AssignOperation do
   include Spec::Support::Examples::OperationExamples
 
   subject(:operation) { described_class.new(record_class) }
@@ -45,7 +45,11 @@ RSpec.describe Operations::Records::AssignOperation do
           'description'  => 'It must be the blessing of Yevon!'
         }
       end
-      let(:expected) { super().merge(attributes) }
+      let(:expected) do
+        super()
+          .merge('slug' => 'blessing-yevon')
+          .merge(attributes)
+      end
 
       it { expect(call_operation).to have_passing_result.with_value(record) }
 
@@ -54,10 +58,25 @@ RSpec.describe Operations::Records::AssignOperation do
           .to change(record, :attributes)
           .to be >= expected
       end
-    end
-  end
 
-  describe '#record_class' do
-    include_examples 'should have reader', :record_class, -> { record_class }
+      describe 'with a slug attribute' do
+        let(:attributes) do
+          {
+            'name'         => 'The Blessing of Yevon',
+            'slug'         => 'it-must-be',
+            'casting_time' => '1 action',
+            'description'  => 'It must be the blessing of Yevon!'
+          }
+        end
+
+        it { expect(call_operation).to have_passing_result.with_value(record) }
+
+        it 'should update the attributes' do
+          expect { call_operation }
+            .to change(record, :attributes)
+            .to be >= expected
+        end
+      end
+    end
   end
 end

@@ -106,6 +106,10 @@ RSpec.describe Spell, type: :model do
     end
   end
 
+  describe '.slug_attribute' do
+    include_examples 'should define class reader', :slug_attribute, 'name'
+  end
+
   include_examples 'should define a has_one :source association'
 
   include_examples 'should have primary key'

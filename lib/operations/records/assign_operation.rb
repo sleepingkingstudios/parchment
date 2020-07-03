@@ -3,7 +3,7 @@
 require 'operations/records/base_operation'
 
 module Operations::Records
-  # Initializes the given attributes to the given record.
+  # Updates the given record with the given attributes.
   class AssignOperation < Operations::Records::BaseOperation
     private
 
