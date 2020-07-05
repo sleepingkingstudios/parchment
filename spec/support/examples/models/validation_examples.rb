@@ -26,6 +26,47 @@ module Spec::Support::Examples::Models
       # :nocov:
     end
 
+    shared_examples 'should validate the format of' \
+    do |attr_name, **options|
+      matching    = options.fetch(:matching, [])
+      nonmatching = options.fetch(:nonmatching, %w[xyzzy])
+      message     = options.fetch(:message, 'is invalid')
+
+      matching.each do |value|
+        value, desc =
+          if value.is_a?(Array)
+            value
+          else
+            [value, value]
+          end
+
+        context "when #{attr_name} is #{desc}" do
+          let(:attributes) { super().merge(attr_name => value) }
+
+          it 'should not have an error' do
+            expect(subject).not_to have_errors.on(attr_name)
+          end
+        end
+      end
+
+      nonmatching.each do |value|
+        value, desc =
+          if value.is_a?(Array)
+            value
+          else
+            [value, value]
+          end
+
+        context "when #{attr_name} is #{desc}" do
+          let(:attributes) { super().merge(attr_name => value) }
+
+          it 'should have an error' do
+            expect(subject).to have_errors.on(attr_name).with_message(message)
+          end
+        end
+      end
+    end
+
     shared_examples 'should validate the inclusion of' \
     do |attr_name, **options|
       message = options.fetch(:message, 'is not included in the list')
@@ -173,12 +214,25 @@ module Spec::Support::Examples::Models
 
     shared_examples 'should validate the uniqueness of' \
     do |attr_name, attributes: {}|
+      injected_attributes = attributes
+
       context "when a #{described_class} exists with the same #{attr_name}" do
-        let(:value)   { subject.send(attr_name) }
-        let(:message) { 'has already been taken' }
+        let(:value)        { subject.send(attr_name) }
+        let(:message)      { 'has already been taken' }
+        let(:factory_name) do
+          return super() if defined?(super())
+
+          described_class.name.split('::').last.underscore.intern
+        end
 
         before do
-          described_class.create!(attributes.merge(attr_name => value))
+          attributes =
+            FactoryBot
+            .attributes_for(factory_name)
+            .merge(injected_attributes)
+            .merge(attr_name.intern => value)
+
+          described_class.create!(attributes)
         end
 
         it 'should have an error' do

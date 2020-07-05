@@ -55,6 +55,45 @@ module Spec::Support::Examples
       end
     end
 
+    shared_examples 'should have slug' do
+      describe '#slug' do
+        include_examples 'should have attribute', :slug, default: ''
+
+        describe 'with a slug' do
+          let(:attributes) { super().merge(slug: 'custom-slug') }
+          let(:expected)   { attributes[:slug] }
+
+          it { expect(subject.slug).to be == expected }
+        end
+      end
+
+      describe '#valid?' do
+        # rubocop:disable Layout/AlignHash
+        include_examples 'should validate the format of',
+          :slug,
+          message:     'must be in kebab-case',
+          matching:    {
+            'example'               => 'a lowercase string',
+            'example-slug'          => 'a kebab-case string',
+            'example-compound-slug' =>
+              'a kebab-case string with multiple words',
+            '1st-example'           => 'a kebab-case string with digits'
+          },
+          nonmatching: {
+            'InvalidSlug'   => 'a string with capital letters',
+            'invalid slug'  => 'a string with whitespace',
+            'invalid_slug'  => 'a string with underscores',
+            '-invalid-slug' => 'a string with leading dash',
+            'invalid-slug-' => 'a string with trailing dash'
+          }
+        # rubocop:enable Layout/AlignHash
+
+        include_examples 'should validate the presence of', :slug, type: String
+
+        include_examples 'should validate the uniqueness of', :slug
+      end
+    end
+
     shared_examples 'should have timestamps' do
       describe '#created_at' do
         include_examples 'should have reader', :created_at

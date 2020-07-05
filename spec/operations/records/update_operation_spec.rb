@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+require 'operations/attributes/generate_slug'
 require 'operations/records/update_operation'
 
 require 'support/examples/operation_examples'
@@ -21,6 +22,14 @@ RSpec.describe Operations::Records::UpdateOperation do
     let(:attributes) { {} }
     let(:expected)   { record_class.new.attributes }
     let(:record)     { FactoryBot.build(:spell) }
+    let(:expected_validation_error) do
+      operation          = Operations::Attributes::GenerateSlug.new
+      invalid_attributes =
+        attributes.merge(slug: operation.call(attributes[:name]).value)
+      invalid_record     = record_class.new(invalid_attributes)
+
+      Errors::FailedValidation.new(record: invalid_record.tap(&:valid?))
+    end
 
     def call_operation
       operation.call(record, attributes)

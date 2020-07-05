@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+require 'operations/attributes/generate_slug'
 require 'operations/records/create_or_update_operation'
 
 require 'support/examples/operation_examples'
@@ -219,6 +220,14 @@ RSpec.describe Operations::Records::CreateOrUpdateOperation do
       context 'when the record exists' do
         let(:record) { FactoryBot.build(:spell) }
         let(:id)     { record.id }
+        let(:expected_validation_error) do
+          operation          = Operations::Attributes::GenerateSlug.new
+          invalid_attributes =
+            attributes.merge(slug: operation.call(attributes[:name]).value)
+          invalid_record     = record_class.new(invalid_attributes)
+
+          Errors::FailedValidation.new(record: invalid_record.tap(&:valid?))
+        end
 
         before(:example) { record.save! }
 
@@ -287,7 +296,9 @@ RSpec.describe Operations::Records::CreateOrUpdateOperation do
         let(:record) { FactoryBot.build(:spell, name: name) }
         let(:expected_validation_error) do
           other_name       = 'Power Word: Antidisestablishmentarianism'
-          other_attributes = attributes.merge(name: other_name)
+          other_slug       = 'power-word-antidisestablishmentarianism'
+          other_attributes =
+            attributes.merge(name: other_name, slug: other_slug)
 
           Errors::FailedValidation.new(
             record: record_class.new(other_attributes).tap(&:valid?)
@@ -407,6 +418,14 @@ RSpec.describe Operations::Records::CreateOrUpdateOperation do
             range:    range,
             ritual:   ritual
           )
+        end
+        let(:expected_validation_error) do
+          operation          = Operations::Attributes::GenerateSlug.new
+          invalid_attributes =
+            attributes.merge(slug: operation.call(attributes[:name]).value)
+          invalid_record     = record_class.new(invalid_attributes)
+
+          Errors::FailedValidation.new(record: invalid_record.tap(&:valid?))
         end
 
         before(:example) do

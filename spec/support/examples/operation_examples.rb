@@ -105,7 +105,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
 
         instance_exec(&proc) if proc.is_a?(Proc)
@@ -130,7 +131,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
 
         instance_exec(&proc) if proc.is_a?(Proc)

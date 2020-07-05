@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+require 'operations/attributes/generate_slug'
 require 'operations/references/update_operation'
 
 require 'support/examples/operation_examples'
@@ -39,6 +40,14 @@ RSpec.describe Operations::References::UpdateOperation do
     let(:origin)      { FactoryBot.build(:book, title: 'New Origin') }
     let(:origin_id)   { origin&.id }
     let(:origin_type) { origin&.class&.name }
+    let(:expected_validation_error) do
+      operation          = Operations::Attributes::GenerateSlug.new
+      invalid_attributes =
+        attributes.merge(slug: operation.call(attributes[:name]).value)
+      invalid_record     = record_class.new(invalid_attributes)
+
+      Errors::FailedValidation.new(record: invalid_record.tap(&:valid?))
+    end
 
     def call_operation
       operation.call(record, attributes)
