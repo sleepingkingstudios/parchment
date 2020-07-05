@@ -37,7 +37,9 @@ module Spec::Support::Examples::Models
           if value.is_a?(Array)
             value
           else
+            # :nocov:
             [value, value]
+            # :nocov:
           end
 
         context "when #{attr_name} is #{desc}" do
@@ -54,7 +56,9 @@ module Spec::Support::Examples::Models
           if value.is_a?(Array)
             value
           else
+            # :nocov:
             [value, value]
+            # :nocov:
           end
 
         context "when #{attr_name} is #{desc}" do

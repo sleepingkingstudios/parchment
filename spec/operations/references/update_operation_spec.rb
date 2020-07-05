@@ -143,7 +143,18 @@ RSpec.describe Operations::References::UpdateOperation do
         it { expect { call_operation }.to change(record, :source).to be nil }
       end
 
-      describe 'with a slug attribute' do
+      describe 'with an empty slug' do
+        let(:attributes) { super().merge('slug' => '') }
+        let(:expected)   { super().merge('slug' => 'glowing-gaze') }
+
+        it 'should update the attributes' do
+          expect { call_operation }
+            .to change(record, :attributes)
+            .to be >= expected
+        end
+      end
+
+      describe 'with a non-empty slug' do
         let(:attributes) { super().merge('slug' => 'custom-slug') }
 
         it 'should update the attributes' do

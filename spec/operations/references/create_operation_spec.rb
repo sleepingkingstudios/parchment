@@ -109,7 +109,18 @@ RSpec.describe Operations::References::CreateOperation do
 
       it { expect { call_operation }.to change(Spell, :count).by(1) }
 
-      describe 'with a slug attribute' do
+      describe 'with an empty slug attribute' do
+        let(:attributes) { super().merge(slug: '') }
+        let(:expected)   { super().merge('slug' => 'glowing-gaze') }
+
+        it { expect(call_operation).to have_passing_result }
+
+        it { expect(record).to be_a record_class }
+
+        it { expect(record.attributes).to deep_match expected }
+      end
+
+      describe 'with a non-empty slug attribute' do
         let(:attributes) { super().merge(slug: 'custom-slug') }
 
         it { expect(call_operation).to have_passing_result }

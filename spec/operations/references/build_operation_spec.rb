@@ -91,7 +91,18 @@ RSpec.describe Operations::References::BuildOperation do
         it { expect(record.attributes).to deep_match expected }
       end
 
-      describe 'with a hash with a slug' do
+      describe 'with a hash with an empty slug' do
+        let(:attributes) { super().merge('slug' => '') }
+        let(:expected)   { super().merge('slug' => 'blessing-yevon') }
+
+        it { expect(call_operation).to have_passing_result }
+
+        it { expect(record).to be_a record_class }
+
+        it { expect(record.attributes).to deep_match expected }
+      end
+
+      describe 'with a hash with a non-empty slug' do
         let(:attributes) { super().merge('slug' => 'custom-slug') }
 
         it { expect(call_operation).to have_passing_result }

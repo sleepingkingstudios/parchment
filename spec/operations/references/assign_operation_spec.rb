@@ -59,15 +59,21 @@ RSpec.describe Operations::References::AssignOperation do
           .to be >= expected
       end
 
-      describe 'with a slug attribute' do
-        let(:attributes) do
-          {
-            'name'         => 'The Blessing of Yevon',
-            'slug'         => 'it-must-be',
-            'casting_time' => '1 action',
-            'description'  => 'It must be the blessing of Yevon!'
-          }
+      describe 'with an empty slug' do
+        let(:attributes) { super().merge('slug' => '') }
+        let(:expected)   { super().merge('slug' => 'blessing-yevon') }
+
+        it { expect(call_operation).to have_passing_result.with_value(record) }
+
+        it 'should update the attributes' do
+          expect { call_operation }
+            .to change(record, :attributes)
+            .to be >= expected
         end
+      end
+
+      describe 'with a non-empty slug' do
+        let(:attributes) { super().merge('slug' => 'it-must-be') }
 
         it { expect(call_operation).to have_passing_result.with_value(record) }
 
