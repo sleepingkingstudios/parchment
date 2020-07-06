@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Reference, type: :model do
+RSpec.describe Origin, type: :model do
   describe '.new' do
     let(:error_message) do
-      'Reference is an abstract class and cannot be instantiated.'
+      'Origin is an abstract class and cannot be instantiated.'
     end
 
     it 'should raise an exception' do

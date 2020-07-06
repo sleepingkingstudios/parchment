@@ -22,9 +22,13 @@ RSpec.describe Book, type: :model do
   describe '::Factory' do
     include_examples 'should define constant',
       :Factory,
-      -> { be_a Operations::Records::Factory }
+      -> { be_a Operations::Origins::Factory }
 
     it { expect(described_class::Factory.record_class).to be described_class }
+  end
+
+  describe '.slug_attribute' do
+    include_examples 'should define class reader', :slug_attribute, 'title'
   end
 
   include_examples 'should define a has_many :sources association'

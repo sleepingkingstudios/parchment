@@ -119,6 +119,14 @@
   - #show action
     - `:only` parameter - restrict fields queried/returned
 
+## Operations
+
+- Operations::Middleware
+  - Defines #base_command, #middleware class properties
+  - Extract Fixtures::Middleware.apply
+    - Also extends result with Operations::Middleware
+    - Also sets #base_command, #middleware
+
 ## Spells
 
 - authorship - belongs_to :user

@@ -5,7 +5,7 @@ require 'operations/references/assign_operation'
 require 'operations/sources/set_source_operation'
 
 module Operations::References
-  # Initializes the given attributes to the given record, validates the record,
+  # Assigns the given attributes to the given record, validates the record,
   # creates a source (if applicable) and removes the old source (if any), and
   # persists the record and the source to the database.
   class UpdateOperation < Operations::Records::UpdateOperation

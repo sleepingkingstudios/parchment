@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
 require 'models/naming'
-require 'operations/records/factory'
+require 'operations/origins/factory'
 
 # Definition of a book, which is a publication which can be the source of game
 # objects.
-class Book < ApplicationRecord
+class Book < Origin
   extend Models::Naming::Hooks
 
-  Factory = Operations::Records::Factory.new(self)
+  Factory = Operations::Origins::Factory.new(self)
+
+  def self.slug_attribute
+    'title'
+  end
 
   ### Attributes
   generate_abbreviation :title

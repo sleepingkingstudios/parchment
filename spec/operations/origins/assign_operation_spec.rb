@@ -2,16 +2,16 @@
 
 require 'rails_helper'
 
-require 'operations/references/assign_operation'
+require 'operations/origins/assign_operation'
 
 require 'support/examples/operation_examples'
 
-RSpec.describe Operations::References::AssignOperation do
+RSpec.describe Operations::Origins::AssignOperation do
   include Spec::Support::Examples::OperationExamples
 
   subject(:operation) { described_class.new(record_class) }
 
-  let(:record_class) { Spell }
+  let(:record_class) { Book }
 
   describe '::new' do
     it { expect(described_class).to be_constructible.with(1).argument }
@@ -40,14 +40,14 @@ RSpec.describe Operations::References::AssignOperation do
     describe 'with a hash with valid attributes' do
       let(:attributes) do
         {
-          'name'         => 'The Blessing of Yevon',
-          'casting_time' => '1 action',
-          'description'  => 'It must be the blessing of Yevon!'
+          'title'            => 'Greetings, programs!',
+          'publication_date' => Date.new(1982, 7, 9),
+          'publisher_name'   => 'Master Control Program'
         }
       end
       let(:expected) do
         super()
-          .merge('slug' => 'blessing-yevon')
+          .merge('slug' => 'greetings-programs')
           .merge(attributes)
       end
 
@@ -61,7 +61,7 @@ RSpec.describe Operations::References::AssignOperation do
 
       describe 'with an empty slug' do
         let(:attributes) { super().merge('slug' => '') }
-        let(:expected)   { super().merge('slug' => 'blessing-yevon') }
+        let(:expected)   { super().merge('slug' => 'greetings-programs') }
 
         it { expect(call_operation).to have_passing_result.with_value(record) }
 
@@ -73,7 +73,7 @@ RSpec.describe Operations::References::AssignOperation do
       end
 
       describe 'with a non-empty slug' do
-        let(:attributes) { super().merge('slug' => 'it-must-be') }
+        let(:attributes) { super().merge('slug' => 'end-of-line') }
 
         it { expect(call_operation).to have_passing_result.with_value(record) }
 

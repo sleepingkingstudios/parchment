@@ -83,6 +83,8 @@ module Spec::Support::Examples
     shared_examples 'should handle invalid attributes' do |proc|
       describe 'when the attributes fail validation' do
         let(:attributes) do
+          return invalid_attributes if defined?(invalid_attributes)
+
           {
             name:         'Fire Festival',
             casting_time: nil,
