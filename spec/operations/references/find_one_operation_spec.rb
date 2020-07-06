@@ -28,10 +28,42 @@ RSpec.describe Operations::References::FindOneOperation do
 
     include_examples 'should validate the primary key'
 
-    context 'when there are many records' do
-      let!(:records) do
-        Array.new(3) { FactoryBot.create(:spell) }
+    describe 'with an invalid primary key' do
+      let(:id) { '00000000-0000-0000-0000-000000000000' }
+      let(:expected_errors) do
+        Errors::NotFound.new(
+          attributes:   { id: id },
+          record_class: record_class
+        )
       end
+
+      it 'should have a failing result' do
+        expect(call_operation)
+          .to have_failing_result.with_error(expected_errors)
+      end
+    end
+
+    describe 'with an invalid slug' do
+      let(:id) { 'invalid-slug' }
+      let(:expected_errors) do
+        Errors::NotFound.new(
+          attributes:   { slug: id },
+          record_class: record_class
+        )
+      end
+
+      it 'should have a failing result' do
+        expect(call_operation)
+          .to have_failing_result.with_error(expected_errors)
+      end
+    end
+
+    context 'when there are many records' do
+      let(:records) do
+        Array.new(3) { FactoryBot.build(:spell) }
+      end
+
+      before(:example) { records.each(&:save!) }
 
       describe 'with an invalid primary key' do
         let(:id)              { '00000000-0000-0000-0000-000000000000' }
@@ -49,9 +81,59 @@ RSpec.describe Operations::References::FindOneOperation do
         end
       end
 
+      describe 'with an invalid slug' do
+        let(:id) { 'invalid-slug' }
+        let(:expected_errors) do
+          Errors::NotFound.new(
+            attributes:   { slug: id },
+            record_class: record_class
+          )
+        end
+
+        it 'should have a failing result' do
+          expect(call_operation)
+            .to have_failing_result.with_error(expected_errors)
+        end
+      end
+
       describe 'with a valid primary key' do
         let(:record) { records.first }
         let(:id)     { record.id }
+
+        it 'should have a passing result' do
+          expect(call_operation)
+            .to have_passing_result
+            .with_value(record)
+        end
+
+        # rubocop:disable RSpec/NestedGroups
+        context 'when the reference has a source' do
+          let(:source) do
+            FactoryBot.build(:source, :with_book, reference: records.first)
+          end
+
+          before(:example) { source.save! }
+
+          it 'should have a passing result' do
+            expect(call_operation)
+              .to have_passing_result
+              .with_value(record)
+          end
+
+          it 'should assign the source' do
+            expect(call_operation.value.source).to be == source
+          end
+
+          it 'should warm the association cache' do
+            expect(call_operation.value.association_cached?(:source)).to be true
+          end
+        end
+        # rubocop:enable RSpec/NestedGroups
+      end
+
+      describe 'with a valid slug' do
+        let(:record) { records.first }
+        let(:id)     { record.slug }
 
         it 'should have a passing result' do
           expect(call_operation)

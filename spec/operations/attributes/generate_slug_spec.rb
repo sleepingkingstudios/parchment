@@ -60,6 +60,20 @@ RSpec.describe Operations::Attributes::GenerateSlug do
       end
     end
 
+    describe 'with an invalid string' do
+      let(:expected_error) do
+        Cuprum::Error.new(
+          message: 'Value must contain letters A-Z or digits 0-9'
+        )
+      end
+
+      it 'should return a failing result' do
+        expect(operation.call '---')
+          .to have_failing_result
+          .with_error(expected_error)
+      end
+    end
+
     describe 'with a one-word string' do
       let(:string)   { 'Flumph' }
       let(:expected) { 'flumph' }
@@ -140,6 +154,28 @@ RSpec.describe Operations::Attributes::GenerateSlug do
     describe 'with a string with ignored articles' do
       let(:string)   { 'On The Origin of Flumphs, Revised Edition' }
       let(:expected) { 'origin-flumphs-revised-edition' }
+
+      it 'should return a passing result' do
+        expect(operation.call string)
+          .to have_passing_result
+          .with_value(expected)
+      end
+    end
+
+    describe 'with a kebab-case string' do
+      let(:string)   { 'complete-flumph-manual' }
+      let(:expected) { 'complete-flumph-manual' }
+
+      it 'should return a passing result' do
+        expect(operation.call string)
+          .to have_passing_result
+          .with_value(expected)
+      end
+    end
+
+    describe 'with an underscored string' do
+      let(:string)   { 'complete_flumph_manual' }
+      let(:expected) { 'complete-flumph-manual' }
 
       it 'should return a passing result' do
         expect(operation.call string)

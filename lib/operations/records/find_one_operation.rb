@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'errors/invalid_parameters'
 require 'errors/not_found'
 require 'operations/records/base_operation'
 require 'operations/records/parameter_validations'

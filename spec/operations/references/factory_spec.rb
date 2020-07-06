@@ -23,11 +23,11 @@ RSpec.describe Operations::References::Factory do
 
   include_examples 'should define operation',
     :assign,
-    Operations::Records::AssignOperation
+    Operations::References::AssignOperation
 
   include_examples 'should define operation',
     :build,
-    Operations::Records::BuildOperation
+    Operations::References::BuildOperation
 
   include_examples 'should define operation',
     :create,
