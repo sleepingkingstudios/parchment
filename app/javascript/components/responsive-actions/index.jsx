@@ -94,10 +94,12 @@ const ResponsiveActions = (props) => {
     id,
     onDelete,
     resourceName,
+    slug,
   } = props;
   const classifiedName = underscore(resourceName).replace(/_/i, '-');
   const className = `responsive-actions ${classifiedName}-actions row`;
-  const url = `${valueOrDefault(baseUrl, `/${pluralize(resourceName)}`)}/${id}`;
+  const identifier = valueOrDefault(slug, id);
+  const url = `${valueOrDefault(baseUrl, `/${pluralize(resourceName)}`)}/${identifier}`;
 
   return (
     <div className={className}>
@@ -119,6 +121,7 @@ ResponsiveActions.defaultProps = {
   baseUrl: null,
   deleteEndpoint: null,
   onDelete: null,
+  slug: null,
 };
 
 ResponsiveActions.propTypes = {
@@ -131,6 +134,7 @@ ResponsiveActions.propTypes = {
   id: PropTypes.string.isRequired,
   onDelete: PropTypes.func,
   resourceName: PropTypes.string.isRequired,
+  slug: PropTypes.string,
 };
 
 export default ResponsiveActions;

@@ -43,7 +43,7 @@ TitleField.propTypes = {
 };
 
 const BookFormCancelButton = ({ form, isUpdate }) => (
-  <FormCancelButton form={form} isUpdate={isUpdate} resourceName="Book" />
+  <FormCancelButton form={form} isUpdate={isUpdate} resourceName="Book" propName="slug" />
 );
 
 const CancelButton = formGroup(BookFormCancelButton, { displayName: 'CancelButton' });

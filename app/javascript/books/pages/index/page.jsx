@@ -1,11 +1,12 @@
 import React from 'react';
 
+import DynamicTable from '../../../components/dynamic-table';
 import { IndexPage } from '../../../components/index-page';
 import { columns } from '../../components/table';
 import endpoint from '../../store/indexFindBooks';
 
 const IndexBooksPage = () => (
-  <IndexPage columns={columns} endpoint={endpoint} resourceName="Book" />
+  <IndexPage Table={DynamicTable} columns={columns} endpoint={endpoint} resourceName="Book" />
 );
 
 IndexBooksPage.defaultProps = {};

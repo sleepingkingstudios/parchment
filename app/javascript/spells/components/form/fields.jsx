@@ -120,7 +120,7 @@ SourceField.propTypes = {
 };
 
 const SpellFormCancelButton = ({ form, isUpdate }) => (
-  <FormCancelButton form={form} isUpdate={isUpdate} resourceName="Spell" />
+  <FormCancelButton form={form} isUpdate={isUpdate} resourceName="Spell" propName="slug" />
 );
 
 const CancelButton = formGroup(SpellFormCancelButton, { displayName: 'CancelButton' });

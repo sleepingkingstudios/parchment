@@ -104,6 +104,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             }
           }
           isUpdate={false}
+          propName="slug"
           resourceName="Spell"
         >
           <LinkButton
