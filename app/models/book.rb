@@ -16,10 +16,6 @@ class Book < Origin
 
   ### Attributes
   generate_abbreviation :title
-  generate_slug         :title
-
-  ### Associations
-  has_many :sources, as: :origin, dependent: :destroy
 
   ### Validations
   validates :abbreviation,
@@ -30,9 +26,6 @@ class Book < Origin
     uniqueness: true
   validates :publication_date, presence: true
   validates :publisher_name,   presence: true
-  validates :slug,
-    presence:   true,
-    uniqueness: true
 end
 
 # == Schema Information

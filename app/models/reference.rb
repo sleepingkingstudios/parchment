@@ -8,11 +8,11 @@ class Reference < ApplicationRecord
     'name'
   end
 
-  ### Associations
-  has_one :source, as: :reference, dependent: :destroy
-
   ### Attributes
   attribute :slug, :string, default: ''
+
+  ### Associations
+  has_one :source, as: :reference, dependent: :destroy
 
   ### Validations
   validates :slug,
