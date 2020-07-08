@@ -3,6 +3,7 @@
 require 'operations/origins/assign_operation'
 require 'operations/origins/build_operation'
 require 'operations/origins/create_operation'
+require 'operations/origins/find_one_operation'
 require 'operations/origins/update_operation'
 
 require 'operations/records/factory'
@@ -20,6 +21,10 @@ module Operations::Origins
 
     command_class(:create) do
       Operations::Origins::CreateOperation.subclass(record_class)
+    end
+
+    command_class(:find_one) do
+      Operations::Origins::FindOneOperation.subclass(record_class)
     end
 
     command_class(:update) do

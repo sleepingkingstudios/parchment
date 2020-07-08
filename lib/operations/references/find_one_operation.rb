@@ -6,7 +6,7 @@ require 'operations/references/find_by_slug_operation'
 
 module Operations::References
   # Queries the database for the record in the given table with the given
-  # primary key and assigns its source association, if any.
+  # primary key or slug and assigns its source association, if any.
   class FindOneOperation < Operations::Records::FindOneOperation
     UUID_PATTERN = /\A\h{8}-\h{4}-\h{4}-\h{4}-\h{12}\z/.freeze
     private_constant :UUID_PATTERN

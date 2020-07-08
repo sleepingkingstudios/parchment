@@ -2,16 +2,16 @@
 
 require 'rails_helper'
 
-require 'operations/references/find_one_operation'
+require 'operations/origins/find_one_operation'
 
 require 'support/examples/operation_examples'
 
-RSpec.describe Operations::References::FindOneOperation do
+RSpec.describe Operations::Origins::FindOneOperation do
   include Spec::Support::Examples::OperationExamples
 
   subject(:operation) { described_class.new(record_class) }
 
-  let(:record_class) { Spell }
+  let(:record_class) { Book }
 
   describe '::new' do
     it { expect(described_class).to be_constructible.with(1).argument }
@@ -60,7 +60,7 @@ RSpec.describe Operations::References::FindOneOperation do
 
     context 'when there are many records' do
       let(:records) do
-        Array.new(3) { FactoryBot.build(:spell) }
+        Array.new(3) { FactoryBot.build(:book) }
       end
 
       before(:example) { records.each(&:save!) }
@@ -105,30 +105,6 @@ RSpec.describe Operations::References::FindOneOperation do
             .to have_passing_result
             .with_value(record)
         end
-
-        # rubocop:disable RSpec/NestedGroups
-        context 'when the reference has a source' do
-          let(:source) do
-            FactoryBot.build(:source, :with_book, reference: records.first)
-          end
-
-          before(:example) { source.save! }
-
-          it 'should have a passing result' do
-            expect(call_operation)
-              .to have_passing_result
-              .with_value(record)
-          end
-
-          it 'should assign the source' do
-            expect(call_operation.value.source).to be == source
-          end
-
-          it 'should warm the association cache' do
-            expect(call_operation.value.association_cached?(:source)).to be true
-          end
-        end
-        # rubocop:enable RSpec/NestedGroups
       end
 
       describe 'with a valid slug' do
@@ -140,30 +116,6 @@ RSpec.describe Operations::References::FindOneOperation do
             .to have_passing_result
             .with_value(record)
         end
-
-        # rubocop:disable RSpec/NestedGroups
-        context 'when the reference has a source' do
-          let(:source) do
-            FactoryBot.build(:source, :with_book, reference: records.first)
-          end
-
-          before(:example) { source.save! }
-
-          it 'should have a passing result' do
-            expect(call_operation)
-              .to have_passing_result
-              .with_value(record)
-          end
-
-          it 'should assign the source' do
-            expect(call_operation.value.source).to be == source
-          end
-
-          it 'should warm the association cache' do
-            expect(call_operation.value.association_cached?(:source)).to be true
-          end
-        end
-        # rubocop:enable RSpec/NestedGroups
       end
 
       describe 'with as: :custom_id' do

@@ -2,16 +2,16 @@
 
 require 'rails_helper'
 
-require 'operations/references/find_by_slug_operation'
+require 'operations/origins/find_by_slug_operation'
 
 require 'support/examples/operation_examples'
 
-RSpec.describe Operations::References::FindBySlugOperation do
+RSpec.describe Operations::Origins::FindBySlugOperation do
   include Spec::Support::Examples::OperationExamples
 
   subject(:operation) { described_class.new(record_class) }
 
-  let(:record_class) { Spell }
+  let(:record_class) { Book }
 
   describe '::new' do
     it { expect(described_class).to be_constructible.with(1).argument }
@@ -116,7 +116,7 @@ RSpec.describe Operations::References::FindBySlugOperation do
 
     context 'when there are many records' do
       let(:records) do
-        Array.new(3) { FactoryBot.build(:spell) }
+        Array.new(3) { FactoryBot.build(:book) }
       end
 
       before(:example) { records.each(&:save!) }
@@ -132,7 +132,7 @@ RSpec.describe Operations::References::FindBySlugOperation do
       end
 
       describe 'with a non-slug string' do
-        let(:slug) { records.first.name }
+        let(:slug) { records.first.title }
 
         it 'should have a passing result' do
           expect(call_operation)

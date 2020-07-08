@@ -34,6 +34,10 @@ RSpec.describe Operations::Origins::Factory do
     Operations::Origins::CreateOperation
 
   include_examples 'should define operation',
+    :find_one,
+    Operations::Origins::FindOneOperation
+
+  include_examples 'should define operation',
     :update,
     Operations::Origins::UpdateOperation
 end
