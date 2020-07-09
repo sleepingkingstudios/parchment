@@ -182,7 +182,7 @@ exports[`<BookForm /> fields <PublicationDateField /> should match the snapshot 
             className={null}
             id="book-publication-date-input"
             onChange={[Function]}
-            placeholder=""
+            placeholder={null}
             type="text"
             validStatus={null}
             value="2013-08-15"
@@ -191,7 +191,7 @@ exports[`<BookForm /> fields <PublicationDateField /> should match the snapshot 
               className="form-control"
               id="book-publication-date-input"
               onChange={[Function]}
-              placeholder=""
+              placeholder={null}
               type="text"
               value="2013-08-15"
             />
@@ -276,7 +276,7 @@ exports[`<BookForm /> fields <PublisherNameField /> should match the snapshot 1`
             className={null}
             id="book-publisher-name-input"
             onChange={[Function]}
-            placeholder=""
+            placeholder={null}
             type="text"
             validStatus={null}
             value="Spelljammer Publishing"
@@ -285,7 +285,7 @@ exports[`<BookForm /> fields <PublisherNameField /> should match the snapshot 1`
               className="form-control"
               id="book-publisher-name-input"
               onChange={[Function]}
-              placeholder=""
+              placeholder={null}
               type="text"
               value="Spelljammer Publishing"
             />
@@ -370,7 +370,7 @@ exports[`<BookForm /> fields <SlugField /> should match the snapshot 1`] = `
             className={null}
             id="book-slug-input"
             onChange={[Function]}
-            placeholder=""
+            placeholder="spectres-flumph-fortress"
             type="text"
             validStatus={null}
             value="spectres-flumph-fortress"
@@ -379,7 +379,7 @@ exports[`<BookForm /> fields <SlugField /> should match the snapshot 1`] = `
               className="form-control"
               id="book-slug-input"
               onChange={[Function]}
-              placeholder=""
+              placeholder="spectres-flumph-fortress"
               type="text"
               value="spectres-flumph-fortress"
             />
@@ -570,7 +570,7 @@ exports[`<BookForm /> fields <TitleField /> should match the snapshot 1`] = `
             className={null}
             id="book-title-input"
             onChange={[Function]}
-            placeholder=""
+            placeholder={null}
             type="text"
             validStatus={null}
             value="Spectres of Flumph Fortress"
@@ -579,7 +579,7 @@ exports[`<BookForm /> fields <TitleField /> should match the snapshot 1`] = `
               className="form-control"
               id="book-title-input"
               onChange={[Function]}
-              placeholder=""
+              placeholder={null}
               type="text"
               value="Spectres of Flumph Fortress"
             />

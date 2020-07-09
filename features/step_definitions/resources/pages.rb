@@ -49,7 +49,16 @@ do |action, resource, attribute_value|
   expected_page = action_page(action, resource)
   @current_page = expected_page
 
-  expect(expected_page).to be_displayed(
-    "#{resource.singularize.underscore}_id": @current_resource.id
-  )
+  if @current_resource.respond_to?(:slug)
+    expect(expected_page)
+      .to be_displayed(
+        "#{resource.singularize.underscore}_id": @current_resource.id
+      ).or be_displayed(
+        "#{resource.singularize.underscore}_id": @current_resource.slug
+      )
+  else
+    expect(expected_page).to be_displayed(
+      "#{resource.singularize.underscore}_id": @current_resource.id
+    )
+  end
 end

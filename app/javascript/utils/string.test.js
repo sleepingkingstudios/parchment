@@ -3,6 +3,7 @@ import {
   capitalize,
   interpolate,
   safeCapitalize,
+  slugify,
   titleize,
   truncate,
   underscore,
@@ -192,9 +193,99 @@ describe('String utils', () => {
     });
   });
 
+  describe('slugify', () => {
+    it('should be a function', () => {
+      expect(typeof slugify).toEqual('function');
+    });
+
+    describe('with undefined', () => {
+      it('should return an empty string', () => {
+        expect(slugify(undefined)).toEqual('');
+      });
+    });
+
+    describe('with null', () => {
+      it('should return an empty string', () => {
+        expect(slugify(null)).toEqual('');
+      });
+    });
+
+    describe('with an empty string', () => {
+      it('should return an empty string', () => {
+        expect(slugify('')).toEqual('');
+      });
+    });
+
+    describe('with an invalid string', () => {
+      it('should return an empty string', () => {
+        expect(slugify('---')).toEqual('');
+      });
+    });
+
+    describe('with a one-word string', () => {
+      it('should convert the string to kebab-case', () => {
+        expect(slugify('Flumph')).toEqual('flumph');
+      });
+    });
+
+    describe('with a multi-word string', () => {
+      it('should convert the string to kebab-case', () => {
+        expect(slugify('Complete Flumph Manual')).toEqual('complete-flumph-manual');
+      });
+    });
+
+    describe('with a string with leading and trailing whitespace', () => {
+      it('should convert the string to kebab-case', () => {
+        expect(slugify('\n\tComplete Flumph Manual \n')).toEqual('complete-flumph-manual');
+      });
+    });
+
+    describe('with a string with interstitial whitespace', () => {
+      it('should convert the string to kebab-case', () => {
+        expect(slugify('Complete\tFlumph\tManual')).toEqual('complete-flumph-manual');
+      });
+    });
+
+    describe('with a string with numbers', () => {
+      it('should convert the string to kebab-case', () => {
+        expect(
+          slugify('Complete Flumph Manual 11th Edition'),
+        ).toEqual('complete-flumph-manual-11th-edition');
+      });
+    });
+
+    describe('with a string with non-letter characters', () => {
+      it('should convert the string to kebab-case', () => {
+        expect(
+          slugify("Flumph Master's Guide"),
+        ).toEqual('flumph-masters-guide');
+      });
+    });
+
+    describe('with a string with ignored articles', () => {
+      it('should convert the string to kebab-case', () => {
+        expect(
+          slugify('On The Origin of Flumphs, Revised Edition'),
+        ).toEqual('origin-flumphs-revised-edition');
+      });
+    });
+
+    describe('with a kebab-case string', () => {
+      it('should convert the string to kebab-case', () => {
+        expect(slugify('complete-flumph-manual')).toEqual('complete-flumph-manual');
+      });
+    });
+
+    describe('with an underscored string', () => {
+      it('should convert the string to kebab-case', () => {
+        expect(slugify('complete_flumph_manual')).toEqual('complete-flumph-manual');
+      });
+    });
+  });
+
   describe('truncate', () => {
     it('should be a function', () => {
-      expect(typeof capitalize).toEqual('function');
+      expect(typeof truncate).toEqual('function');
     });
 
     describe('with undefined', () => {

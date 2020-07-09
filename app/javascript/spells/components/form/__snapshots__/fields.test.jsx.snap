@@ -227,7 +227,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             className={null}
             id="spell-casting-time-input"
             onChange={[Function]}
-            placeholder=""
+            placeholder={null}
             type="text"
             validStatus={null}
             value="1 action"
@@ -236,7 +236,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
               className="form-control"
               id="spell-casting-time-input"
               onChange={[Function]}
-              placeholder=""
+              placeholder={null}
               type="text"
               value="1 action"
             />
@@ -339,6 +339,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             className={null}
             id="spell-description-input"
             onChange={[Function]}
+            placeholder={null}
             rows={3}
             validStatus={null}
             value="You conjure a glowing, spectral orb the size of a closed fist and bearing the likeness of everyone's favorite creature, the Flumph. Until the spell ends, the orb sheds bright light in a 20-foot radius and dim light for an additional 20 feet. The light can be colored as you like. The spell ends if you cast it again or dismiss it as an action.
@@ -453,7 +454,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             className={null}
             id="spell-duration-input"
             onChange={[Function]}
-            placeholder=""
+            placeholder={null}
             type="text"
             validStatus={null}
             value="1 hour"
@@ -462,7 +463,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
               className="form-control"
               id="spell-duration-input"
               onChange={[Function]}
-              placeholder=""
+              placeholder={null}
               type="text"
               value="1 hour"
             />
@@ -564,6 +565,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
           <FormNumericInput
             id="spell-level-input"
             onChange={[Function]}
+            placeholder={null}
             type="number"
             value={0}
           >
@@ -571,7 +573,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
               className={null}
               id="spell-level-input"
               onChange={[Function]}
-              placeholder=""
+              placeholder={null}
               type="number"
               validStatus={null}
               value="0"
@@ -580,7 +582,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
                 className="form-control"
                 id="spell-level-input"
                 onChange={[Function]}
-                placeholder=""
+                placeholder={null}
                 type="number"
                 value="0"
               />
@@ -684,7 +686,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             className={null}
             id="spell-name-input"
             onChange={[Function]}
-            placeholder=""
+            placeholder={null}
             type="text"
             validStatus={null}
             value="Flumph Lantern"
@@ -693,7 +695,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
               className="form-control"
               id="spell-name-input"
               onChange={[Function]}
-              placeholder=""
+              placeholder={null}
               type="text"
               value="Flumph Lantern"
             />
@@ -796,7 +798,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             className={null}
             id="spell-range-input"
             onChange={[Function]}
-            placeholder=""
+            placeholder={null}
             type="text"
             validStatus={null}
             value="30 feet"
@@ -805,7 +807,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
               className="form-control"
               id="spell-range-input"
               onChange={[Function]}
-              placeholder=""
+              placeholder={null}
               type="text"
               value="30 feet"
             />
@@ -909,6 +911,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             id="spell-ritual-input"
             label={null}
             onChange={[Function]}
+            placeholder={null}
             validStatus={null}
             value={false}
           >
@@ -1135,6 +1138,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
                 },
               ]
             }
+            placeholder={null}
             validStatus={null}
             value="evocation"
           >
@@ -1332,7 +1336,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             className={null}
             id="spell-short-description-input"
             onChange={[Function]}
-            placeholder=""
+            placeholder={null}
             type="text"
             validStatus={null}
             value="Floating light illuminates 20 feet + 20 feet dim light"
@@ -1341,7 +1345,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
               className="form-control"
               id="spell-short-description-input"
               onChange={[Function]}
-              placeholder=""
+              placeholder={null}
               type="text"
               value="Floating light illuminates 20 feet + 20 feet dim light"
             />
@@ -1444,7 +1448,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             className={null}
             id="spell-slug-input"
             onChange={[Function]}
-            placeholder=""
+            placeholder="flumph-lantern"
             type="text"
             validStatus={null}
             value="flumph-lantern"
@@ -1453,7 +1457,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
               className="form-control"
               id="spell-slug-input"
               onChange={[Function]}
-              placeholder=""
+              placeholder="flumph-lantern"
               type="text"
               value="flumph-lantern"
             />
@@ -1555,6 +1559,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
           <SpellFormSelectSourceField
             id="spell-source-input"
             onChange={[Function]}
+            placeholder={null}
             value=""
           >
             <FormSelectInput
@@ -1570,6 +1575,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
                   },
                 ]
               }
+              placeholder={null}
               validStatus={null}
               value=""
             >

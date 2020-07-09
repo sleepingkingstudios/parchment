@@ -169,6 +169,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
           id="spell-somatic-component-input"
           label="Somatic"
           onChange={[Function]}
+          placeholder={null}
           validStatus={null}
           value={false}
         >
@@ -271,6 +272,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
           id="spell-verbal-component-input"
           label="Verbal"
           onChange={[Function]}
+          placeholder={null}
           validStatus={null}
           value={true}
         >
