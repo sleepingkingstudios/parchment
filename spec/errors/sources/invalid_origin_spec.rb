@@ -30,7 +30,7 @@ RSpec.describe Errors::Sources::InvalidOrigin do
 
   describe '#message' do
     let(:expected_types) do
-      tools.array.humanize_list(Source::ORIGIN_TYPES)
+      tools.array_tools.humanize_list(Source::ORIGIN_TYPES)
     end
 
     def tools

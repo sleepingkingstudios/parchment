@@ -269,7 +269,7 @@ module Spec::Support::Examples::Models
               "#{scope_attribute}: #{scope_value.inspect}"
             end
 
-          context "with #{tools.array.humanize_list(attributes_list)}" do
+          context "with #{tools.array_tools.humanize_list(attributes_list)}" do
             before do
               described_class.create!(
                 attributes

@@ -9,7 +9,7 @@ module Errors::Sources
     TYPE = 'sources.invalid_reference'
 
     def initialize
-      expected_types = tools.array.humanize_list(Source::REFERENCE_TYPES)
+      expected_types = tools.array_tools.humanize_list(Source::REFERENCE_TYPES)
 
       super(message: "Source reference should be one of: #{expected_types}")
     end

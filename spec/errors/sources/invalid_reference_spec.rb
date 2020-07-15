@@ -32,7 +32,7 @@ RSpec.describe Errors::Sources::InvalidReference do
 
   describe '#message' do
     let(:expected_types) do
-      tools.array.humanize_list(Source::REFERENCE_TYPES)
+      tools.array_tools.humanize_list(Source::REFERENCE_TYPES)
     end
 
     def tools
