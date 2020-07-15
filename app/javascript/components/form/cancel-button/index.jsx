@@ -10,25 +10,26 @@ import {
 } from '../../../utils/object';
 import { underscore } from '../../../utils/string';
 
-const findId = ({ data, path }) => {
+const findProp = ({ data, path, propName }) => {
   const actualPath = valueOrDefault(path, []);
 
-  return dig(data, ...actualPath, 'id');
+  return dig(data, ...actualPath, propName);
 };
 
 const cancelUrl = ({
   baseUrl,
   form,
   isUpdate,
+  propName,
   resourceName,
 }) => {
   const url = valueOrDefault(baseUrl, `/${resourceName}`);
 
   if (!isUpdate) { return url; }
 
-  const id = findId(form);
+  const prop = findProp({ ...form, propName });
 
-  return exists(id) ? `${url}/${id}` : url;
+  return exists(prop) ? `${url}/${prop}` : url;
 };
 
 const FormCancelButton = (props) => {
@@ -36,6 +37,7 @@ const FormCancelButton = (props) => {
     baseUrl,
     form,
     isUpdate,
+    propName,
     resourceName,
   } = props;
   const pluralResourceName = underscore(pluralize(resourceName));
@@ -43,6 +45,7 @@ const FormCancelButton = (props) => {
     baseUrl,
     isUpdate,
     form,
+    propName,
     resourceName: pluralResourceName,
   });
 
@@ -56,6 +59,7 @@ const FormCancelButton = (props) => {
 FormCancelButton.defaultProps = {
   baseUrl: null,
   isUpdate: false,
+  propName: 'id',
 };
 
 FormCancelButton.propTypes = {
@@ -64,6 +68,7 @@ FormCancelButton.propTypes = {
     data: PropTypes.object.isRequired,
   }).isRequired,
   isUpdate: PropTypes.bool,
+  propName: PropTypes.string,
   resourceName: PropTypes.string.isRequired,
 };
 

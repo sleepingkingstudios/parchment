@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+require 'operations/attributes/generate_slug'
 require 'operations/references/create_operation'
 
 require 'support/examples/operation_examples'
@@ -29,6 +30,14 @@ RSpec.describe Operations::References::CreateOperation do
     let(:origin)      { FactoryBot.build(:book, title: 'New Origin') }
     let(:origin_id)   { origin&.id }
     let(:origin_type) { origin&.class&.name }
+    let(:expected_validation_error) do
+      operation          = Operations::Attributes::GenerateSlug.new
+      invalid_attributes =
+        attributes.merge(slug: operation.call(attributes[:name]).value)
+      invalid_record     = record_class.new(invalid_attributes)
+
+      Errors::FailedValidation.new(record: invalid_record.tap(&:valid?))
+    end
 
     def call_operation
       operation.call(attributes)
@@ -54,7 +63,6 @@ RSpec.describe Operations::References::CreateOperation do
       let(:attributes) do
         {
           name:         'Glowing Gaze',
-          slug:         'glowing-gaze',
           casting_time: '1 reaction, which you take when a creature within ' \
                         'range takes fire damage',
           duration:     'Instantaneous',
@@ -74,6 +82,7 @@ RSpec.describe Operations::References::CreateOperation do
       end
       let(:expected) do
         super()
+          .merge('slug' => 'glowing-gaze')
           .merge(attributes.stringify_keys)
           .merge(
             'id'         => a_uuid,
@@ -99,6 +108,27 @@ RSpec.describe Operations::References::CreateOperation do
       it { expect { call_operation }.not_to change(Source, :count) }
 
       it { expect { call_operation }.to change(Spell, :count).by(1) }
+
+      describe 'with an empty slug attribute' do
+        let(:attributes) { super().merge(slug: '') }
+        let(:expected)   { super().merge('slug' => 'glowing-gaze') }
+
+        it { expect(call_operation).to have_passing_result }
+
+        it { expect(record).to be_a record_class }
+
+        it { expect(record.attributes).to deep_match expected }
+      end
+
+      describe 'with a non-empty slug attribute' do
+        let(:attributes) { super().merge(slug: 'custom-slug') }
+
+        it { expect(call_operation).to have_passing_result }
+
+        it { expect(record).to be_a record_class }
+
+        it { expect(record.attributes).to deep_match expected }
+      end
 
       describe 'with a valid origin id and type' do
         let(:attributes) do

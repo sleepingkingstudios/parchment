@@ -57,6 +57,8 @@ RSpec.describe Authentication::Credential, type: :model do
 
   include_examples 'should implement the credential methods'
 
+  include_examples 'should have primary key'
+
   include_examples 'should have timestamps'
 
   describe '.active' do
@@ -113,12 +115,6 @@ RSpec.describe Authentication::Credential, type: :model do
 
       it { expect(described_class.unexpired).to contain_exactly(*expected) }
     end
-  end
-
-  describe '#id' do
-    include_examples 'should have attribute',
-      :id,
-      value: '00000000-0000-0000-0000-000000000000'
   end
 
   describe '#type' do

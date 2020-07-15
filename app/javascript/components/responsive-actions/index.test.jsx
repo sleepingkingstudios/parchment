@@ -95,6 +95,37 @@ describe('<ResponsiveActions />', () => {
     });
   });
 
+  describe('with baseUrl: value and slug: value', () => {
+    const baseUrl = '/path/to/widgets';
+    const slug = 'custom-slug';
+
+    it('should render the show link', () => {
+      const rendered = shallow(
+        <ResponsiveActions {...defaultProps} baseUrl={baseUrl} slug={slug} />,
+      );
+      const showLink = rendered.find('.show-link');
+      const url = `/path/to/widgets/${slug}`;
+
+      expect(showLink).toExist();
+      expect(showLink).toHaveDisplayName('LinkButton');
+      expect(showLink).toHaveClassName('show-widget-link');
+      expect(showLink).toHaveProp({ url });
+    });
+
+    it('should render the update link', () => {
+      const rendered = shallow(
+        <ResponsiveActions {...defaultProps} baseUrl={baseUrl} slug={slug} />,
+      );
+      const updateLink = rendered.find('.update-link');
+      const url = `/path/to/widgets/${slug}/update`;
+
+      expect(updateLink).toExist();
+      expect(updateLink).toHaveDisplayName('LinkButton');
+      expect(updateLink).toHaveClassName('update-widget-link');
+      expect(updateLink).toHaveProp({ url });
+    });
+  });
+
   describe('with deleteEndpoint: endpoint', () => {
     const onClick = jest.fn();
     const useDeleteData = jest.fn(() => onClick);
@@ -167,6 +198,32 @@ describe('<ResponsiveActions />', () => {
 
       expect(next).toHaveBeenCalledWith(props);
       expect(onDelete).toHaveBeenCalledWith(props);
+    });
+  });
+
+  describe('with slug: value', () => {
+    const slug = 'custom-slug';
+
+    it('should render the show link', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} slug={slug} />);
+      const showLink = rendered.find('.show-link');
+      const url = `/widgets/${slug}`;
+
+      expect(showLink).toExist();
+      expect(showLink).toHaveDisplayName('LinkButton');
+      expect(showLink).toHaveClassName('show-widget-link');
+      expect(showLink).toHaveProp({ url });
+    });
+
+    it('should render the update link', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} slug={slug} />);
+      const updateLink = rendered.find('.update-link');
+      const url = `/widgets/${slug}/update`;
+
+      expect(updateLink).toExist();
+      expect(updateLink).toHaveDisplayName('LinkButton');
+      expect(updateLink).toHaveClassName('update-widget-link');
+      expect(updateLink).toHaveProp({ url });
     });
   });
 });

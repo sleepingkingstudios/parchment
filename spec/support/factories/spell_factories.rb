@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'operations/attributes/generate_slug'
+
 FactoryBot.define do
   factory :spell, class: 'Spell' do
     id { SecureRandom.uuid }
@@ -9,6 +11,7 @@ FactoryBot.define do
     end
 
     name         { "Spell #{spell_index}" }
+    slug         { Operations::Attributes::GenerateSlug.new.call(name).value }
     casting_time { '1 action' }
     duration     { 'Instantaneous' }
     level        { 1 }

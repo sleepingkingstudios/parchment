@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'operations/records/factory'
+require 'operations/references/assign_operation'
+require 'operations/references/build_operation'
 require 'operations/references/create_operation'
 require 'operations/references/find_many_operation'
 require 'operations/references/find_matching_operation'
@@ -10,6 +12,14 @@ require 'operations/references/update_operation'
 module Operations::References
   # Command factory for generating record operations for references.
   class Factory < Operations::Records::Factory
+    command_class(:assign) do
+      Operations::References::AssignOperation.subclass(record_class)
+    end
+
+    command_class(:build) do
+      Operations::References::BuildOperation.subclass(record_class)
+    end
+
     command_class(:create) do
       Operations::References::CreateOperation.subclass(record_class)
     end

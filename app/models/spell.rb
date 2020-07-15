@@ -2,14 +2,11 @@
 
 require 'sleeping_king_studios/tools/toolbox/constant_map'
 
-require 'models/naming'
 require 'operations/references/factory'
 
 # Definition of a spell, which is an active ability used by certain magical
 # classes and creatures.
-class Spell < ApplicationRecord
-  extend Models::Naming::Hooks
-
+class Spell < Reference
   Factory = Operations::References::Factory.new(self)
 
   Schools = SleepingKingStudios::Tools::Toolbox::ConstantMap.new(
@@ -29,11 +26,6 @@ class Spell < ApplicationRecord
   attribute :school, :string, default: ''
 
   attribute :material_component, :string, default: ''
-
-  generate_slug :name
-
-  ### Associations
-  has_one :source, as: :reference, dependent: :destroy
 
   ### Validations
   validates :casting_time, presence: true
@@ -69,9 +61,6 @@ class Spell < ApplicationRecord
                  'evocation, illusion, necromancy, or transmutation'
     },
     presence:  true
-  validates :slug,
-    presence:   true,
-    uniqueness: true
   validates :somatic_component,
     exclusion: {
       in:      [nil],

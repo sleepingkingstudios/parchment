@@ -28,7 +28,13 @@ RSpec.describe Operations::Records::BuildOperation do
 
     it { expect(operation).to respond_to(:call).with(0..1).arguments }
 
+    include_examples 'should validate the attributes'
+
+    include_examples 'should handle unknown attributes'
+
     describe 'with no arguments' do
+      let(:expected) { super().merge('id' => be_a_uuid) }
+
       def call_operation
         operation.call
       end
@@ -37,21 +43,18 @@ RSpec.describe Operations::Records::BuildOperation do
 
       it { expect(record).to be_a record_class }
 
-      it { expect(record.attributes).to be == expected }
+      it { expect(record.attributes).to deep_match expected }
     end
-
-    include_examples 'should validate the attributes'
-
-    include_examples 'should handle unknown attributes'
 
     describe 'with an empty hash' do
       let(:attributes) { {} }
+      let(:expected)   { super().merge(attributes, 'id' => be_a_uuid) }
 
       it { expect(call_operation).to have_passing_result }
 
       it { expect(record).to be_a record_class }
 
-      it { expect(record.attributes).to be == expected }
+      it { expect(record.attributes).to deep_match expected }
     end
 
     describe 'with a hash with valid attributes' do
@@ -62,13 +65,26 @@ RSpec.describe Operations::Records::BuildOperation do
           'description'  => 'It must be the blessing of Yevon!'
         }
       end
-      let(:expected) { super().merge(attributes) }
+      let(:expected) { super().merge(attributes, 'id' => be_a_uuid) }
 
       it { expect(call_operation).to have_passing_result }
 
       it { expect(record).to be_a record_class }
 
-      it { expect(record.attributes).to be == expected }
+      it { expect(record.attributes).to deep_match expected }
+
+      describe 'with a hash with a primary key' do
+        let(:id)         { '00000000-0000-0000-0000-000000000000' }
+        let(:attributes) { super().merge('id' => id) }
+
+        include_examples 'should validate the primary key'
+
+        it { expect(call_operation).to have_passing_result }
+
+        it { expect(record).to be_a record_class }
+
+        it { expect(record.attributes).to deep_match expected }
+      end
     end
   end
 

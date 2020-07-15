@@ -6,6 +6,12 @@ import {
   shouldCallTheNextFunction,
 } from '../testHelpers';
 
+const buildProps = data => ({
+  dispatch: jest.fn(),
+  getState: jest.fn(),
+  response: { json: { data } },
+});
+
 describe('RedirectToShow middleware', () => {
   const resourceName = 'widget';
 
@@ -48,14 +54,6 @@ describe('RedirectToShow middleware', () => {
 
     describe('handleFailure()', () => {
       const id = '00000000-0000-0000-0000-000000000000';
-      const data = { widget: { id } };
-      const props = {
-        dispatch: jest.fn(),
-        getState: jest.fn(),
-        response: { json: { data } },
-      };
-
-      afterEach(() => { props.dispatch.mockClear(); });
 
       it('should be a function', () => {
         expect(typeof handleFailure).toEqual('function');
@@ -67,15 +65,30 @@ describe('RedirectToShow middleware', () => {
         expect(typeof handleFailure(next)).toEqual('function');
       });
 
-      shouldCallTheNextFunction(handleFailure, props);
+      shouldCallTheNextFunction(handleFailure, buildProps({ widget: { id } }));
 
       it('should redirect to the show page', () => {
         const next = jest.fn();
         const url = `/widgets/${id}`;
+        const props = buildProps({ widget: { id } });
 
         handleFailure(next)(props);
 
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
+      });
+
+      describe('when the data has a slug', () => {
+        const slug = 'self-sealing-stem-bolt';
+
+        it('should redirect to the show page', () => {
+          const next = jest.fn();
+          const url = `/widgets/${slug}`;
+          const props = buildProps({ widget: { slug } });
+
+          handleFailure(next)(props);
+
+          expect(props.dispatch).toHaveBeenCalledWith(push(url));
+        });
       });
     });
 
@@ -93,20 +106,29 @@ describe('RedirectToShow middleware', () => {
 
     describe('handleFailure()', () => {
       const id = '00000000-0000-0000-0000-000000000000';
-      const data = { widget: { id } };
-      const props = {
-        dispatch: jest.fn(),
-        getState: jest.fn(),
-        response: { json: { data } },
-      };
 
       it('should redirect to the show page', () => {
         const next = jest.fn();
         const url = `/path/to/widgets/${id}`;
+        const props = buildProps({ widget: { id } });
 
         handleFailure(next)(props);
 
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
+      });
+
+      describe('when the data has a slug', () => {
+        const slug = 'self-sealing-stem-bolt';
+
+        it('should redirect to the show page', () => {
+          const next = jest.fn();
+          const url = `/path/to/widgets/${slug}`;
+          const props = buildProps({ widget: { slug } });
+
+          handleFailure(next)(props);
+
+          expect(props.dispatch).toHaveBeenCalledWith(push(url));
+        });
       });
     });
 
@@ -118,26 +140,35 @@ describe('RedirectToShow middleware', () => {
   });
 
   describe('with on: failure and primaryKey: value', () => {
-    const primaryKey = 'slug';
+    const primaryKey = 'uuid';
     const middleware = redirectToShow({ resourceName, primaryKey, on: 'failure' });
     const { handleFailure, options } = middleware;
 
     describe('handleFailure()', () => {
-      const slug = 'self-sealing-stem-bolt';
-      const data = { widget: { slug } };
-      const props = {
-        dispatch: jest.fn(),
-        getState: jest.fn(),
-        response: { json: { data } },
-      };
+      const uuid = '00000000-0000-0000-0000-000000000000';
 
       it('should redirect to the show page', () => {
         const next = jest.fn();
-        const url = `/widgets/${slug}`;
+        const url = `/widgets/${uuid}`;
+        const props = buildProps({ widget: { uuid } });
 
         handleFailure(next)(props);
 
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
+      });
+
+      describe('when the data has a slug', () => {
+        const slug = 'self-sealing-stem-bolt';
+
+        it('should redirect to the show page', () => {
+          const next = jest.fn();
+          const url = `/widgets/${slug}`;
+          const props = buildProps({ widget: { slug } });
+
+          handleFailure(next)(props);
+
+          expect(props.dispatch).toHaveBeenCalledWith(push(url));
+        });
       });
     });
 
@@ -189,14 +220,6 @@ describe('RedirectToShow middleware', () => {
 
     describe('handleSuccess()', () => {
       const id = '00000000-0000-0000-0000-000000000000';
-      const data = { widget: { id } };
-      const props = {
-        dispatch: jest.fn(),
-        getState: jest.fn(),
-        response: { json: { data } },
-      };
-
-      afterEach(() => { props.dispatch.mockClear(); });
 
       it('should be a function', () => {
         expect(typeof handleSuccess).toEqual('function');
@@ -208,15 +231,30 @@ describe('RedirectToShow middleware', () => {
         expect(typeof handleSuccess(next)).toEqual('function');
       });
 
-      shouldCallTheNextFunction(handleSuccess, props);
+      shouldCallTheNextFunction(handleSuccess, buildProps({ widget: { id } }));
 
       it('should redirect to the show page', () => {
         const next = jest.fn();
         const url = `/widgets/${id}`;
+        const props = buildProps({ widget: { id } });
 
         handleSuccess(next)(props);
 
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
+      });
+
+      describe('when the data has a slug', () => {
+        const slug = 'self-sealing-stem-bolt';
+
+        it('should redirect to the show page', () => {
+          const next = jest.fn();
+          const url = `/widgets/${slug}`;
+          const props = buildProps({ widget: { slug } });
+
+          handleSuccess(next)(props);
+
+          expect(props.dispatch).toHaveBeenCalledWith(push(url));
+        });
       });
     });
 
@@ -234,20 +272,29 @@ describe('RedirectToShow middleware', () => {
 
     describe('handleSuccess()', () => {
       const id = '00000000-0000-0000-0000-000000000000';
-      const data = { widget: { id } };
-      const props = {
-        dispatch: jest.fn(),
-        getState: jest.fn(),
-        response: { json: { data } },
-      };
 
       it('should redirect to the show page', () => {
         const next = jest.fn();
         const url = `/path/to/widgets/${id}`;
+        const props = buildProps({ widget: { id } });
 
         handleSuccess(next)(props);
 
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
+      });
+
+      describe('when the data has a slug', () => {
+        const slug = 'self-sealing-stem-bolt';
+
+        it('should redirect to the show page', () => {
+          const next = jest.fn();
+          const url = `/path/to/widgets/${slug}`;
+          const props = buildProps({ widget: { slug } });
+
+          handleSuccess(next)(props);
+
+          expect(props.dispatch).toHaveBeenCalledWith(push(url));
+        });
       });
     });
 
@@ -259,26 +306,35 @@ describe('RedirectToShow middleware', () => {
   });
 
   describe('with on: success and primaryKey: value', () => {
-    const primaryKey = 'slug';
+    const primaryKey = 'uuid';
     const middleware = redirectToShow({ resourceName, primaryKey, on: 'success' });
     const { handleSuccess, options } = middleware;
 
     describe('handleSuccess()', () => {
-      const slug = 'self-sealing-stem-bolt';
-      const data = { widget: { slug } };
-      const props = {
-        dispatch: jest.fn(),
-        getState: jest.fn(),
-        response: { json: { data } },
-      };
+      const uuid = '00000000-0000-0000-0000-000000000000';
 
       it('should redirect to the show page', () => {
         const next = jest.fn();
-        const url = `/widgets/${slug}`;
+        const url = `/widgets/${uuid}`;
+        const props = buildProps({ widget: { uuid } });
 
         handleSuccess(next)(props);
 
         expect(props.dispatch).toHaveBeenCalledWith(push(url));
+      });
+
+      describe('when the data has a slug', () => {
+        const slug = 'self-sealing-stem-bolt';
+
+        it('should redirect to the show page', () => {
+          const next = jest.fn();
+          const url = `/widgets/${slug}`;
+          const props = buildProps({ widget: { slug } });
+
+          handleSuccess(next)(props);
+
+          expect(props.dispatch).toHaveBeenCalledWith(push(url));
+        });
       });
     });
 

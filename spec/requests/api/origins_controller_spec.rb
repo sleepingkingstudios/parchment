@@ -2,13 +2,15 @@
 
 require 'rails_helper'
 
+require 'fixtures'
+
 require 'support/examples/controller_examples'
 
 RSpec.describe Api::OriginsController, type: :request do
   include Spec::Support::Examples::ControllerExamples
 
   shared_context 'when there are many books' do
-    let(:books) { Array.new(3) { FactoryBot.build(:book) } }
+    let(:books) { Fixtures.build(Book).sort_by(&:title) }
 
     before(:example) { books.each(&:save!) }
   end

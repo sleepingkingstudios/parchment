@@ -57,7 +57,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -72,7 +73,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
       # :nocov:
@@ -81,6 +83,8 @@ module Spec::Support::Examples
     shared_examples 'should handle invalid attributes' do |proc|
       describe 'when the attributes fail validation' do
         let(:attributes) do
+          return invalid_attributes if defined?(invalid_attributes)
+
           {
             name:         'Fire Festival',
             casting_time: nil,
@@ -105,7 +109,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
 
         instance_exec(&proc) if proc.is_a?(Proc)
@@ -130,7 +135,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
 
         instance_exec(&proc) if proc.is_a?(Proc)
@@ -147,7 +153,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -160,7 +167,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
     end
@@ -175,7 +183,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -188,7 +197,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -201,7 +211,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
     end
@@ -216,7 +227,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -229,7 +241,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -242,7 +255,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -255,7 +269,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -268,7 +283,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
     end
@@ -283,7 +299,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -296,7 +313,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
 
@@ -309,7 +327,8 @@ module Spec::Support::Examples
 
         it 'should have a failing result' do
           expect(call_operation)
-            .to have_failing_result.with_error(expected_error)
+            .to have_failing_result
+            .with_error(expected_error)
         end
       end
     end

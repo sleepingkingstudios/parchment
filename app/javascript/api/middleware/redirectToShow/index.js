@@ -24,7 +24,10 @@ const buildRedirect = (options) => {
     next({ dispatch, getState, response });
 
     const data = dig(response, 'json', 'data');
-    const value = dig(selector(data), primaryKey);
+    const value = valueOrDefault(
+      dig(selector(data), 'slug'),
+      dig(selector(data), primaryKey),
+    );
 
     dispatch(push(`${baseUrl}/${value}`));
   };

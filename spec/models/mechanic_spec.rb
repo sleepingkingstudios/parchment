@@ -30,24 +30,12 @@ RSpec.describe Mechanic, type: :model do
     it { expect(described_class::Factory.record_class).to be described_class }
   end
 
-  describe '#created_at' do
-    include_examples 'should have reader', :created_at
-  end
+  include_examples 'should have primary key'
+
+  include_examples 'should have timestamps'
 
   describe '#description' do
     include_examples 'should have attribute', :description, default: ''
-  end
-
-  describe '#id' do
-    include_examples 'should have attribute',
-      :id,
-      value: '00000000-0000-0000-0000-000000000000'
-
-    context 'when the mechanic is persisted' do
-      before(:example) { mechanic.save! }
-
-      it { expect(mechanic.id).to be_a_uuid }
-    end
   end
 
   describe '#name' do
@@ -85,10 +73,6 @@ RSpec.describe Mechanic, type: :model do
         it { expect(mechanic.type).to be == described_class.name }
       end
     end
-  end
-
-  describe '#updated_at' do
-    include_examples 'should have reader', :updated_at
   end
 
   describe '#valid?' do

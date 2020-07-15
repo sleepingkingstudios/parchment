@@ -21,13 +21,9 @@ RSpec.describe Authentication::AnonymousCredential, type: :model do
 
   include_examples 'should implement the credential methods'
 
-  include_examples 'should have timestamps'
+  include_examples 'should have primary key'
 
-  describe '#id' do
-    include_examples 'should have attribute',
-      :id,
-      value: '00000000-0000-0000-0000-000000000000'
-  end
+  include_examples 'should have timestamps'
 
   describe '#type' do
     it 'should return the credential type' do

@@ -6,7 +6,11 @@ import FormGroup from './group';
 import { handleInputChangeWith } from './actions';
 import { generateFieldId } from './utils';
 import { convertToArray } from '../../utils/array';
-import { assign, dig, valueOrDefault } from '../../utils/object';
+import {
+  assign,
+  dig,
+  valueOrDefault,
+} from '../../utils/object';
 import { upperCamelize } from '../../utils/string';
 
 const defaultMapDataToValue = ({ data, path, prop }) => dig(data, ...path, prop);
@@ -33,6 +37,7 @@ const errorFeedback = (propErrors) => {
 export const formInput = (WrappedInput, prop, opts = {}) => {
   const mapDataToValue = valueOrDefault(opts.mapDataToValue, defaultMapDataToValue);
   const mapValueToData = valueOrDefault(opts.mapValueToData, defaultMapValueToData);
+  const mapDataToPlaceholder = valueOrDefault(opts.mapDataToPlaceholder, () => null);
 
   const FormInputWrapper = (props) => {
     const { form, ...injectedProps } = props;
@@ -44,6 +49,7 @@ export const formInput = (WrappedInput, prop, opts = {}) => {
     const actualPath = convertToArray(path);
     const id = generateFieldId({ path, prop });
     const value = mapDataToValue({ data, path: actualPath, prop });
+    const placeholder = mapDataToPlaceholder({ data, path: actualPath, prop });
     const onChange = handleInputChangeWith(onChangeAction, mapValueToData)({
       path: actualPath,
       propName: prop,
@@ -51,6 +57,7 @@ export const formInput = (WrappedInput, prop, opts = {}) => {
     const inputProps = Object.assign(
       {
         id,
+        placeholder,
         value,
         onChange,
       },

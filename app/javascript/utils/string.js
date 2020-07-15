@@ -1,3 +1,5 @@
+const articles = ['of', 'on', 'the'];
+
 const camelizeMatch = (match, p1, p2) => {
   if (p2) { return p2.toUpperCase(); }
 
@@ -28,6 +30,24 @@ export const safeCapitalize = (word) => {
   if (typeof word === 'undefined' || word == null) { return ''; }
 
   return word.charAt(0).toUpperCase() + word.slice(1);
+};
+
+export const slugify = (str) => {
+  if (typeof str === 'undefined' || str == null) { return ''; }
+
+  if (str.length === 0) { return ''; }
+
+  return str
+    .trim()
+    .toLowerCase()
+    .split(/[\s\-_]+/)
+    .map(word => word.replace(/[^a-z0-9]/g, ''))
+    .filter((word) => {
+      if (word.length === 0) { return false; }
+
+      return !articles.includes(word);
+    })
+    .join('-');
 };
 
 export const truncate = (str, len) => {

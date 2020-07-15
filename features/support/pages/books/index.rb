@@ -9,8 +9,8 @@ module Features::Pages::Books
 
     element :loading_message, '.loading-message-pending'
 
-    element :empty_message, 'table tbody tr'
+    element :empty_message, '.books-table .dynamic-table-empty-message'
 
-    elements :table_rows, 'table tbody tr'
+    elements :table_rows, '.books-table .books-table-row'
   end
 end

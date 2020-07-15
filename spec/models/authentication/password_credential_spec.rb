@@ -23,26 +23,14 @@ RSpec.describe Authentication::PasswordCredential, type: :model do
 
   include_examples 'should implement the credential methods'
 
+  include_examples 'should have primary key'
+
   include_examples 'should have timestamps'
 
   describe '#encrypted_password' do
     include_examples 'should have property',
       :encrypted_password,
       'MTIzNDU='
-  end
-
-  describe '#id' do
-    include_examples 'should have attribute',
-      :id,
-      value: '00000000-0000-0000-0000-000000000000'
-
-    context 'when the credential is persisted' do
-      include_context 'when the credential belongs to a user'
-
-      before(:example) { credential.save! }
-
-      it { expect(credential.id).to be_a_uuid }
-    end
   end
 
   describe '#type' do

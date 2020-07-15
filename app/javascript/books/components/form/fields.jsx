@@ -9,6 +9,12 @@ import {
   formGroup,
 } from '../../../components/form/wrappers';
 import { formType } from '../../../components/form/entities';
+import { dig } from '../../../utils/object';
+import { slugify } from '../../../utils/string';
+
+const generatePlaceholder = propName => ({ data, path }) => (
+  slugify(dig(data, ...path, propName))
+);
 
 const PublicationDateField = formField(FormInput, 'publicationDate');
 
@@ -26,7 +32,7 @@ PublisherNameField.propTypes = {
   form: formType.isRequired,
 };
 
-const SlugField = formField(FormInput, 'slug');
+const SlugField = formField(FormInput, 'slug', { mapDataToPlaceholder: generatePlaceholder('title') });
 
 SlugField.defaultProps = {};
 
@@ -43,7 +49,7 @@ TitleField.propTypes = {
 };
 
 const BookFormCancelButton = ({ form, isUpdate }) => (
-  <FormCancelButton form={form} isUpdate={isUpdate} resourceName="Book" />
+  <FormCancelButton form={form} isUpdate={isUpdate} resourceName="Book" propName="slug" />
 );
 
 const CancelButton = formGroup(BookFormCancelButton, { displayName: 'CancelButton' });

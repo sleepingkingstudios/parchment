@@ -8,6 +8,7 @@ import {
   formInput,
 } from './wrappers';
 import { dig } from '../../utils/object';
+import { slugify } from '../../utils/string';
 
 describe('Form component wrappers', () => {
   describe('formField()', () => {
@@ -404,6 +405,39 @@ describe('Form component wrappers', () => {
         expect(rendered).toHaveProp('value', value.toUpperCase());
 
         expect(mapDataToValue).toHaveBeenCalledWith({ data, path: [], prop: propName });
+      });
+    });
+
+    describe('with mapDataToPlaceholder: function', () => {
+      const multiData = {
+        ...data,
+        otherPropertyName: 'Custom Value',
+      };
+      const form = {
+        ...defaultForm,
+        data: multiData,
+      };
+      const id = 'property-name-input';
+      const mapDataToPlaceholder = jest.fn((props) => {
+        const { path } = props;
+
+        return slugify(dig(props.data, ...path, 'otherPropertyName'));
+      });
+
+      it('should render the input', () => {
+        const Wrapped = formInput(FormInput, propName, { mapDataToPlaceholder });
+        const rendered = shallow(<Wrapped form={form} />);
+
+        expect(rendered).toHaveDisplayName('FormInput');
+        expect(rendered).toHaveProp('id', id);
+        expect(rendered).toHaveProp('placeholder', 'custom-value');
+        expect(rendered).toHaveProp('value', value);
+
+        expect(mapDataToPlaceholder).toHaveBeenCalledWith({
+          data: multiData,
+          path: [],
+          prop: propName,
+        });
       });
     });
 

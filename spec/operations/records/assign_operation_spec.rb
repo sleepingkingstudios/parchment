@@ -52,7 +52,7 @@ RSpec.describe Operations::Records::AssignOperation do
       it 'should update the attributes' do
         expect { call_operation }
           .to change(record, :attributes)
-          .to be >= attributes
+          .to be >= expected
       end
     end
   end

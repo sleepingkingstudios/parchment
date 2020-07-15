@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+require 'operations/attributes/generate_slug'
 require 'operations/references/update_operation'
 
 require 'support/examples/operation_examples'
@@ -33,12 +34,20 @@ RSpec.describe Operations::References::UpdateOperation do
     end
 
     let(:attributes)  { {} }
-    let(:expected)    { record_class.new.attributes }
+    let(:expected)    { record.attributes }
     let(:record)      { FactoryBot.build(:spell) }
     let(:reference)   { record }
     let(:origin)      { FactoryBot.build(:book, title: 'New Origin') }
     let(:origin_id)   { origin&.id }
     let(:origin_type) { origin&.class&.name }
+    let(:expected_validation_error) do
+      operation          = Operations::Attributes::GenerateSlug.new
+      invalid_attributes =
+        attributes.merge(slug: operation.call(attributes[:name]).value)
+      invalid_record     = record_class.new(invalid_attributes)
+
+      Errors::FailedValidation.new(record: invalid_record.tap(&:valid?))
+    end
 
     def call_operation
       operation.call(record, attributes)
@@ -91,8 +100,18 @@ RSpec.describe Operations::References::UpdateOperation do
           DESCRIPTION
         }
       end
+      let(:expected) do
+        super()
+          .merge('slug' => 'glowing-gaze')
+          .merge(attributes)
+          .except('updated_at')
+      end
 
-      before(:example) { record.save! }
+      before(:example) do
+        record.save!
+
+        expected
+      end
 
       include_examples 'should resolve the polymorphic association',
         :origin,
@@ -103,7 +122,7 @@ RSpec.describe Operations::References::UpdateOperation do
       it 'should update the attributes' do
         expect { call_operation }
           .to change(record, :attributes)
-          .to be >= attributes
+          .to be >= expected
       end
 
       it { expect { call_operation }.not_to change(Source, :count) }
@@ -122,6 +141,27 @@ RSpec.describe Operations::References::UpdateOperation do
         it { expect { call_operation }.to change(Source, :count).by(-1) }
 
         it { expect { call_operation }.to change(record, :source).to be nil }
+      end
+
+      describe 'with an empty slug' do
+        let(:attributes) { super().merge('slug' => '') }
+        let(:expected)   { super().merge('slug' => 'glowing-gaze') }
+
+        it 'should update the attributes' do
+          expect { call_operation }
+            .to change(record, :attributes)
+            .to be >= expected
+        end
+      end
+
+      describe 'with a non-empty slug' do
+        let(:attributes) { super().merge('slug' => 'custom-slug') }
+
+        it 'should update the attributes' do
+          expect { call_operation }
+            .to change(record, :attributes)
+            .to be >= expected
+        end
       end
 
       describe 'with a valid origin id and type' do

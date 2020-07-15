@@ -101,4 +101,57 @@ describe('<FormCancelButton />', () => {
       });
     });
   });
+
+  describe('with isUpdate: true and propName: value', () => {
+    const propName = 'slug';
+
+    describe('when the data does not have a slug', () => {
+      it('should render the button', () => {
+        const rendered = shallow(
+          <FormCancelButton {...defaultProps} propName={propName} isUpdate />,
+        );
+        const url = '/widgets';
+
+        expect(rendered).toHaveDisplayName('LinkButton');
+        expect(rendered).toHaveProp('block', true);
+        expect(rendered).toHaveProp('outline', true);
+        expect(rendered).toHaveProp({ url });
+        expect(rendered).toHaveProp('children', 'Cancel');
+      });
+    });
+
+    describe('when the data has a slug', () => {
+      it('should render the button', () => {
+        const slug = 'custom-slug';
+        const form = { data: { slug } };
+        const rendered = shallow(
+          <FormCancelButton {...defaultProps} form={form} propName={propName} isUpdate />,
+        );
+        const url = `/widgets/${slug}`;
+
+        expect(rendered).toHaveDisplayName('LinkButton');
+        expect(rendered).toHaveProp('block', true);
+        expect(rendered).toHaveProp('outline', true);
+        expect(rendered).toHaveProp({ url });
+        expect(rendered).toHaveProp('children', 'Cancel');
+      });
+    });
+
+    describe('when the form has a path', () => {
+      it('should render the button', () => {
+        const slug = 'custom-slug';
+        const form = { data: { slug } };
+        const rendered = shallow(
+          <FormCancelButton {...defaultProps} form={form} propName={propName} isUpdate />,
+        );
+        const url = `/widgets/${slug}`;
+
+        expect(rendered).toHaveDisplayName('LinkButton');
+        expect(rendered).toHaveProp('block', true);
+        expect(rendered).toHaveProp('outline', true);
+        expect(rendered).toHaveProp({ url });
+        expect(rendered).toHaveProp('children', 'Cancel');
+      });
+    });
+  });
 });

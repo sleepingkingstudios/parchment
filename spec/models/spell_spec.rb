@@ -18,6 +18,7 @@ RSpec.describe Spell, type: :model do
   let(:attributes) do
     {
       name:              'The Blessing of Yevon',
+      slug:              'blessing-yevon',
       casting_time:      '1 action',
       description:       'It must be the blessing of Yevon!',
       duration:          'Instantaneous',
@@ -106,7 +107,17 @@ RSpec.describe Spell, type: :model do
     end
   end
 
+  describe '.slug_attribute' do
+    include_examples 'should define class reader', :slug_attribute, 'name'
+  end
+
   include_examples 'should define a has_one :source association'
+
+  include_examples 'should have primary key'
+
+  include_examples 'should have slug'
+
+  include_examples 'should have timestamps'
 
   describe '#cantrip?' do
     it { expect(spell).to have_predicate(:cantrip?).with_value(false) }
@@ -230,28 +241,12 @@ RSpec.describe Spell, type: :model do
     end
   end
 
-  describe '#created_at' do
-    include_examples 'should have reader', :created_at
-  end
-
   describe '#description' do
     include_examples 'should have attribute', :description, default: ''
   end
 
   describe '#duration' do
     include_examples 'should have attribute', :duration, default: ''
-  end
-
-  describe '#id' do
-    include_examples 'should have attribute',
-      :id,
-      value: '00000000-0000-0000-0000-000000000000'
-
-    context 'when the spell is persisted' do
-      before(:example) { spell.save! }
-
-      it { expect(spell.id).to be_a_uuid }
-    end
   end
 
   describe '#level' do
@@ -298,41 +293,11 @@ RSpec.describe Spell, type: :model do
     include_examples 'should have attribute', :short_description, default: ''
   end
 
-  describe '#slug' do
-    include_examples 'should have attribute',
-      :slug,
-      default: '',
-      value:   'blessing-yevon'
-
-    describe 'when the spell is validated' do
-      let(:spell) { super().tap(&:valid?) }
-
-      it { expect(spell.slug).to be == 'blessing-yevon' }
-    end
-
-    describe 'with a slug' do
-      let(:attributes) { super().merge(slug: 'yevons-blessing') }
-      let(:expected)   { attributes[:slug] }
-
-      it { expect(spell.slug).to be == expected }
-
-      describe 'when the spell is validated' do
-        let(:spell) { super().tap(&:valid?) }
-
-        it { expect(spell.slug).to be == expected }
-      end
-    end
-  end
-
   describe '#somatic_component' do
     include_examples 'should have attribute',
       :somatic_component,
       default: false,
       value:   true
-  end
-
-  describe '#updated_at' do
-    include_examples 'should have reader', :updated_at
   end
 
   describe '#valid?' do
@@ -362,16 +327,7 @@ RSpec.describe Spell, type: :model do
 
     include_examples 'should validate the presence of', :name, type: String
 
-    include_examples 'should validate the uniqueness of',
-      :name,
-      attributes: {
-        casting_time: '1 minute',
-        description:  'Example description',
-        duration:     '1 hour',
-        level:        1,
-        range:        'Self',
-        school:       'abjuration'
-      }
+    include_examples 'should validate the uniqueness of', :name
 
     include_examples 'should validate the presence of', :range
 
@@ -385,27 +341,11 @@ RSpec.describe Spell, type: :model do
 
     include_examples 'should validate the presence of', :school, type: String
 
-    include_examples 'should validate the uniqueness of',
-      :slug,
-      attributes: {
-        casting_time: '1 minute',
-        description:  'Example description',
-        duration:     '1 hour',
-        level:        1,
-        name:         'Blessing of Yevon',
-        range:        'Self',
-        school:       'abjuration'
-      }
+    include_examples 'should validate the uniqueness of', :slug
 
     include_examples 'should validate the presence of', :somatic_component
 
     include_examples 'should validate the presence of', :verbal_component
-
-    context 'when the name is empty' do
-      let(:attributes) { super().merge(name: nil) }
-
-      include_examples 'should validate the presence of', :slug, type: String
-    end
   end
 
   describe '#verbal_component' do
