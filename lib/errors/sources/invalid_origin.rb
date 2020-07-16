@@ -9,7 +9,7 @@ module Errors::Sources
     TYPE = 'sources.invalid_origin'
 
     def initialize
-      expected_types = tools.array.humanize_list(Source::ORIGIN_TYPES)
+      expected_types = tools.array_tools.humanize_list(Source::ORIGIN_TYPES)
 
       super(message: "Source origin should be one of: #{expected_types}")
     end

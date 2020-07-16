@@ -13,7 +13,8 @@ RSpec.describe Fixtures::Middleware do
       described_class.apply(command: command, middleware: middleware)
     end
 
-    example_class 'Spec::Middleware', Fixtures::Middleware::Base do |klass|
+    example_class 'Spec::ExampleMiddleware', Fixtures::Middleware::Base \
+    do |klass|
       klass.send :define_method, :process do |cmd, ary|
         ary << ['before', options[:index]].compact.join('_')
 
@@ -49,7 +50,7 @@ RSpec.describe Fixtures::Middleware do
     describe 'with a middleware array with one item' do
       let(:middleware) do
         [
-          Spec::Middleware.new
+          Spec::ExampleMiddleware.new
         ]
       end
       let(:expected) { %w[before command after] }
@@ -68,9 +69,9 @@ RSpec.describe Fixtures::Middleware do
     describe 'with a middleware array with many items' do
       let(:middleware) do
         [
-          Spec::Middleware.new(index: 1),
-          Spec::Middleware.new(index: 2),
-          Spec::Middleware.new(index: 3)
+          Spec::ExampleMiddleware.new(index: 1),
+          Spec::ExampleMiddleware.new(index: 2),
+          Spec::ExampleMiddleware.new(index: 3)
         ]
       end
       let(:expected) do
