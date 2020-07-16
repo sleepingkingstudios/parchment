@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 require 'errors/failed_validation'
-require 'fixtures/middleware/base'
+require 'fixtures/middleware'
 require 'operations/authentication/password/encrypt'
+require 'operations/middleware'
 
 module Fixtures::Middleware
   # Fixture middleware for generating a password credential for a user.
-  class SetPassword < Fixtures::Middleware::Base
+  class SetPassword < Operations::Middleware
     private
 
     def create_credential(encrypted:, user:)

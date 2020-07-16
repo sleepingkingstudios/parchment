@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 require 'fixtures/builder'
+require 'operations/middleware'
 
 RSpec.describe Fixtures::Builder do
   shared_context 'with a custom data path' do
@@ -82,7 +83,7 @@ RSpec.describe Fixtures::Builder do
       }
     end
 
-    example_class 'Spec::UpcaseProperty', Fixtures::Middleware::Base do |klass|
+    example_class 'Spec::UpcaseProperty', Operations::Middleware do |klass|
       klass.send(:define_method, :process) do |next_command, data|
         prop  = options[:property]
         value = data[prop].upcase

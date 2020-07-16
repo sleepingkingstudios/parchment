@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
-require 'fixtures/middleware/base'
+require 'fixtures/middleware'
+require 'operations/middleware'
 require 'operations/records/factory'
 require 'operations/records/parameter_validations'
 require 'operations/sources/set_source_operation'
 
 module Fixtures::Middleware
   # Middleware command to create a source relationship.
-  class SetSource < Fixtures::Middleware::Base
+  class SetSource < Operations::Middleware
     include Operations::Records::ParameterValidations::One
 
     private

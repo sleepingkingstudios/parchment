@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-require 'fixtures/middleware/base'
+require 'fixtures/middleware'
+require 'operations/middleware'
 
 module Fixtures::Middleware
   # Middleware command to format long-form text from data files.
-  class FormatText < Fixtures::Middleware::Base
+  class FormatText < Operations::Middleware
     def initialize(property:, **options)
       @property = property
 

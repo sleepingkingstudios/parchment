@@ -2,8 +2,8 @@
 
 require 'cuprum/built_in/identity_command'
 
-require 'fixtures'
 require 'fixtures/middleware'
+require 'operations/middleware'
 
 module Fixtures
   # Class to load data, or instantiate or persist records from stored fixture
@@ -109,7 +109,7 @@ module Fixtures
 
       unless skip_middleware
         command =
-          Fixtures::Middleware.apply(command: command, middleware: middleware)
+          Operations::Middleware.apply(command: command, middleware: middleware)
       end
 
       data.map { |hsh| command.call(hsh).value }
