@@ -60,11 +60,7 @@ module Operations::Records
 
     # rubocop:disable Metrics/MethodLength
 
-    # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
-    #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
-    def process(attributes = {}, **keywords)
-      attributes = keywords.merge(attributes) if attributes.is_a?(Hash)
-
+    def process(attributes: {})
       step :validate_primary_key, attributes
 
       query  = build_query(attributes)
@@ -76,7 +72,7 @@ module Operations::Records
           record:     record
         )
       else
-        create_operation.call(attributes)
+        create_operation.call(attributes: attributes)
       end
     end
     # rubocop:enable Metrics/MethodLength

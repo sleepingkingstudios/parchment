@@ -22,12 +22,8 @@ module Operations::Records
 
     attr_reader :save_operation
 
-    # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
-    #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
-    def process(attributes = {}, **keywords)
-      attributes = keywords.merge(attributes) if attributes.is_a?(Hash)
-
-      record = step { build_operation.call(attributes) }
+    def process(attributes: {})
+      record = step { build_operation.call(attributes: attributes) }
 
       save_operation.call(record)
     end

@@ -112,7 +112,7 @@ module Fixtures
           Operations::Middleware.apply(command: command, middleware: middleware)
       end
 
-      data.map { |hsh| command.call(hsh).value }
+      data.map { |hsh| command.call(attributes: hsh).value }
     end
 
     def process_data(data, count: nil, except: nil)
@@ -123,7 +123,7 @@ module Fixtures
     end
 
     def read_command(**_options)
-      Cuprum::BuiltIn::IdentityCommand.new
+      Cuprum::Command.new { |attributes:| attributes }
     end
 
     def resource_name

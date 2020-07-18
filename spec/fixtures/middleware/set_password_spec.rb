@@ -31,16 +31,18 @@ RSpec.describe Fixtures::Middleware::SetPassword do
     let(:expected_data) { data.except('password') }
 
     def call_operation
-      curried.call(data)
+      curried.call(attributes: data)
     end
 
     context 'when the returned value is a Hash' do
       let(:next_result) { Cuprum::Result.new(value: expected_data) }
 
       it 'should call the next command' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected_data)
+        expect(next_command)
+          .to have_received(:call)
+          .with(attributes: expected_data)
       end
 
       it 'should return a result with the data' do
@@ -53,9 +55,11 @@ RSpec.describe Fixtures::Middleware::SetPassword do
         let(:data) { super().merge('password' => password) }
 
         it 'should call the next command' do
-          curried.call(data)
+          curried.call(attributes: data)
 
-          expect(next_command).to have_received(:call).with(expected_data)
+          expect(next_command)
+            .to have_received(:call)
+            .with(attributes: expected_data)
         end
 
         it 'should return a result with the data' do
@@ -70,9 +74,11 @@ RSpec.describe Fixtures::Middleware::SetPassword do
       let(:next_result) { Cuprum::Result.new(value: FactoryBot.build(:user)) }
 
       it 'should call the next command' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected_data)
+        expect(next_command)
+          .to have_received(:call)
+          .with(attributes: expected_data)
       end
 
       it 'should return a result with the value' do
@@ -85,9 +91,11 @@ RSpec.describe Fixtures::Middleware::SetPassword do
         let(:data) { super().merge('password' => password) }
 
         it 'should call the next command' do
-          curried.call(data)
+          curried.call(attributes: data)
 
-          expect(next_command).to have_received(:call).with(expected_data)
+          expect(next_command)
+            .to have_received(:call)
+            .with(attributes: expected_data)
         end
 
         it 'should return a result with the value' do
@@ -105,9 +113,11 @@ RSpec.describe Fixtures::Middleware::SetPassword do
       before(:example) { user.save! }
 
       it 'should call the next command' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected_data)
+        expect(next_command)
+          .to have_received(:call)
+          .with(attributes: expected_data)
       end
 
       it 'should return a result with the value' do
@@ -120,9 +130,11 @@ RSpec.describe Fixtures::Middleware::SetPassword do
         let(:data) { super().merge('password' => password) }
 
         it 'should call the next command' do
-          curried.call(data)
+          curried.call(attributes: data)
 
-          expect(next_command).to have_received(:call).with(expected_data)
+          expect(next_command)
+            .to have_received(:call)
+            .with(attributes: expected_data)
         end
 
         it 'should return a result with the value' do
@@ -178,7 +190,7 @@ RSpec.describe Fixtures::Middleware::SetPassword do
           end
 
           it 'should return a failing result' do
-            expect(curried.call(data))
+            expect(curried.call(attributes: data))
               .to be_a_failing_result
               .with_error(expected_error)
           end

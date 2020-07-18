@@ -25,23 +25,23 @@ RSpec.describe Fixtures::Middleware::FormatText do
     let(:expected)     { { 'description' => '' }.merge(data) }
 
     it 'should call the next command' do
-      curried.call(data)
+      curried.call(attributes: data)
 
-      expect(next_command).to have_received(:call).with(expected)
+      expect(next_command).to have_received(:call).with(attributes: expected)
     end
 
     it 'should return the result of the next command' do
-      result = curried.call(data)
+      result = curried.call(attributes: data)
 
       expect(result).to be == next_result
     end
 
     describe 'with a Hash with property: nil' do
       let(:data)     { super().merge('description' => nil) }
-      let(:expected) { data.merge('description' => '') }
+      let(:expected) { { attributes: data.merge('description' => '') } }
 
       it 'should call the next command' do
-        curried.call(data)
+        curried.call(attributes: data)
 
         expect(next_command).to have_received(:call).with(expected)
       end
@@ -51,9 +51,9 @@ RSpec.describe Fixtures::Middleware::FormatText do
       let(:data) { super().merge('description' => '') }
 
       it 'should call the next command' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected)
+        expect(next_command).to have_received(:call).with(attributes: expected)
       end
     end
 
@@ -62,9 +62,9 @@ RSpec.describe Fixtures::Middleware::FormatText do
       let(:data)        { super().merge('description' => description) }
 
       it 'should call the next command' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected)
+        expect(next_command).to have_received(:call).with(attributes: expected)
       end
     end
 
@@ -74,9 +74,9 @@ RSpec.describe Fixtures::Middleware::FormatText do
       let(:expected)    { super().merge('description' => description.strip) }
 
       it 'should call the next command' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected)
+        expect(next_command).to have_received(:call).with(attributes: expected)
       end
     end
 
@@ -94,9 +94,9 @@ RSpec.describe Fixtures::Middleware::FormatText do
       let(:expected) { data.merge('description' => trimmed) }
 
       it 'should call the next command' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected)
+        expect(next_command).to have_received(:call).with(attributes: expected)
       end
     end
 
@@ -133,9 +133,9 @@ RSpec.describe Fixtures::Middleware::FormatText do
       let(:expected) { data.merge('description' => trimmed) }
 
       it 'should call the next command' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected)
+        expect(next_command).to have_received(:call).with(attributes: expected)
       end
     end
 
@@ -155,9 +155,9 @@ RSpec.describe Fixtures::Middleware::FormatText do
       end
 
       it 'should call the next command' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected)
+        expect(next_command).to have_received(:call).with(attributes: expected)
       end
     end
 
@@ -202,9 +202,9 @@ RSpec.describe Fixtures::Middleware::FormatText do
       let(:expected) { data.merge('description' => trimmed) }
 
       it 'should call the next command' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected)
+        expect(next_command).to have_received(:call).with(attributes: expected)
       end
     end
   end

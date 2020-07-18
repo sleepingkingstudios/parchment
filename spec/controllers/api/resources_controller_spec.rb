@@ -110,7 +110,9 @@ RSpec.describe Api::ResourcesController do
         it 'should call the create operation' do
           controller.send :create_resource
 
-          expect(create_operation).to have_received(:call).with(resource_params)
+          expect(create_operation)
+            .to have_received(:call)
+            .with(attributes: resource_params)
         end
 
         it 'should return the failing result' do
@@ -129,7 +131,9 @@ RSpec.describe Api::ResourcesController do
         it 'should call the create operation' do
           controller.send :create_resource
 
-          expect(create_operation).to have_received(:call).with(resource_params)
+          expect(create_operation)
+            .to have_received(:call)
+            .with(attributes: resource_params)
         end
 
         it 'should return a passing result' do

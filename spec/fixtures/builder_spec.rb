@@ -84,12 +84,12 @@ RSpec.describe Fixtures::Builder do
     end
 
     example_class 'Spec::UpcaseProperty', Operations::Middleware do |klass|
-      klass.send(:define_method, :process) do |next_command, data|
-        prop  = options[:property]
-        value = data[prop].upcase
-        data  = data.merge(prop => value)
+      klass.send(:define_method, :process) do |next_command, attributes:|
+        prop        = options[:property]
+        value       = attributes[prop].upcase
+        attributes  = attributes.merge(prop => value)
 
-        super(next_command, data)
+        super(next_command, attributes: attributes)
       end
     end
   end
@@ -286,7 +286,8 @@ RSpec.describe Fixtures::Builder do
     let(:expected) do
       build_command = Spell::Factory.build
 
-      expected_data.map { |attributes| build_command.call(attributes).value }
+      expected_data
+        .map { |attributes| build_command.call(attributes: attributes).value }
     end
     let(:options) { {} }
 
@@ -336,7 +337,8 @@ RSpec.describe Fixtures::Builder do
     let(:expected) do
       create_command = Spell::Factory.create
 
-      expected_data.map { |attributes| create_command.call(attributes).value }
+      expected_data
+        .map { |attributes| create_command.call(attributes: attributes).value }
     end
     let(:options) { {} }
 

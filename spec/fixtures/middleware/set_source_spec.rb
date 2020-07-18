@@ -40,7 +40,7 @@ RSpec.describe Fixtures::Middleware::SetSource do
     let(:expected_data) { data.except('source') }
 
     def call_operation
-      curried.call(data)
+      curried.call(attributes: data)
     end
 
     before(:example) do
@@ -52,9 +52,11 @@ RSpec.describe Fixtures::Middleware::SetSource do
       let(:next_result) { Cuprum::Result.new(value: expected_data) }
 
       it 'should call the next command sans the source data' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected_data)
+        expect(next_command)
+          .to have_received(:call)
+          .with(attributes: expected_data)
       end
 
       it 'should return a result with the data' do
@@ -68,9 +70,11 @@ RSpec.describe Fixtures::Middleware::SetSource do
       let(:next_result) { Cuprum::Result.new(value: FactoryBot.build(:spell)) }
 
       it 'should call the next command sans the source data' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected_data)
+        expect(next_command)
+          .to have_received(:call)
+          .with(attributes: expected_data)
       end
 
       it 'should return a result with the value' do
@@ -88,9 +92,11 @@ RSpec.describe Fixtures::Middleware::SetSource do
       let(:data) { { 'name' => 'Noodly Appendages' } }
 
       it 'should call the next command' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected_data)
+        expect(next_command)
+          .to have_received(:call)
+          .with(attributes: expected_data)
       end
 
       it 'should return a result with the reference' do
@@ -176,9 +182,11 @@ RSpec.describe Fixtures::Middleware::SetSource do
     end
 
     it 'should call the next command sans the source data' do
-      curried.call(data)
+      curried.call(attributes: data)
 
-      expect(next_command).to have_received(:call).with(expected_data)
+      expect(next_command)
+        .to have_received(:call)
+        .with(attributes: expected_data)
     end
 
     it 'should return a result with the reference' do
@@ -272,9 +280,11 @@ RSpec.describe Fixtures::Middleware::SetSource do
       end
 
       it 'should call the next command sans the source data' do
-        curried.call(data)
+        curried.call(attributes: data)
 
-        expect(next_command).to have_received(:call).with(expected_data)
+        expect(next_command)
+          .to have_received(:call)
+          .with(attributes: expected_data)
       end
 
       it 'should return a result with the reference' do

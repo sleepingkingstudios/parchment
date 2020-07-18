@@ -23,10 +23,15 @@ RSpec.describe Operations::Origins::BuildOperation do
     let(:record)     { call_operation.value }
 
     def call_operation
-      operation.call(attributes)
+      operation.call(attributes: attributes)
     end
 
-    it { expect(operation).to respond_to(:call).with(0..1).arguments }
+    it 'should define the method' do
+      expect(operation)
+        .to respond_to(:call)
+        .with(0).arguments
+        .and_keywords(:attributes)
+    end
 
     include_examples 'should validate the attributes'
 

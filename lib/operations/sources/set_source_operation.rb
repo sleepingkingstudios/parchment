@@ -65,7 +65,8 @@ module Operations::Sources
 
     def set_source(reference:, **attributes)
       source = step do
-        create_source_operation.call(reference: reference, **attributes)
+        create_source_operation
+          .call(attributes: attributes.merge(reference: reference))
       end
 
       reference.tap { reference.source = source }

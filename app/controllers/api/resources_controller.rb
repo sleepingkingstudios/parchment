@@ -40,7 +40,7 @@ module Api
 
       steps do
         attributes = step :require_resource_params
-        resource   = step { create_operation.call(attributes) }
+        resource   = step { create_operation.call(attributes: attributes) }
 
         { resource_name => resource }
       end
