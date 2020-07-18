@@ -6,6 +6,22 @@ def action_page(action, resource)
     .new
 end
 
+def be_displayed_for_resource(current_resource:, resource:)
+  expect(current_resource).not_to be nil
+
+  key = "#{resource.singularize.underscore}_id"
+
+  unless current_resource.respond_to?(:slug)
+    return be_displayed(key => current_resource.id)
+  end
+
+  be_displayed(
+    key => current_resource.id
+  ).or be_displayed(
+    key => current_resource.slug
+  )
+end
+
 When('I visit the {string} page for {string} {string}') \
 do |action, resource, attribute_value|
   definition        = Features::Resources.find(resource)
@@ -26,18 +42,10 @@ do |action, resource|
   expected_page = action_page(action, resource)
   @current_page = expected_page
 
-  if @current_resource.respond_to?(:slug)
-    expect(expected_page)
-      .to be_displayed(
-        "#{resource.singularize.underscore}_id": @current_resource.id
-      ).or be_displayed(
-        "#{resource.singularize.underscore}_id": @current_resource.slug
-      )
-  else
-    expect(expected_page).to be_displayed(
-      "#{resource.singularize.underscore}_id": @current_resource.id
-    )
-  end
+  expect(expected_page).to be_displayed_for_resource(
+    current_resource: @current_resource,
+    resource:         resource
+  )
 end
 
 Then('I should be on the {string} page for {string} {string}') \
@@ -49,16 +57,8 @@ do |action, resource, attribute_value|
   expected_page = action_page(action, resource)
   @current_page = expected_page
 
-  if @current_resource.respond_to?(:slug)
-    expect(expected_page)
-      .to be_displayed(
-        "#{resource.singularize.underscore}_id": @current_resource.id
-      ).or be_displayed(
-        "#{resource.singularize.underscore}_id": @current_resource.slug
-      )
-  else
-    expect(expected_page).to be_displayed(
-      "#{resource.singularize.underscore}_id": @current_resource.id
-    )
-  end
+  expect(expected_page).to be_displayed_for_resource(
+    current_resource: @current_resource,
+    resource:         resource
+  )
 end
