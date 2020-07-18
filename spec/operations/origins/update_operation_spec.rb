@@ -41,10 +41,15 @@ RSpec.describe Operations::Origins::UpdateOperation do
     end
 
     def call_operation
-      operation.call(record, attributes)
+      operation.call(attributes: attributes, record: record)
     end
 
-    it { expect(operation).to respond_to(:call).with(2).arguments }
+    it 'should define the method' do
+      expect(operation)
+        .to respond_to(:call)
+        .with(0).arguments
+        .and_keywords(:attributes, :record)
+    end
 
     include_examples 'should validate the attributes'
 

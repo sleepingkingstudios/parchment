@@ -23,10 +23,15 @@ RSpec.describe Operations::Records::AssignOperation do
     let(:record)     { record_class.new }
 
     def call_operation
-      operation.call(record, attributes)
+      operation.call(attributes: attributes, record: record)
     end
 
-    it { expect(operation).to respond_to(:call).with(2).arguments }
+    it 'should define the method' do
+      expect(operation)
+        .to respond_to(:call)
+        .with(0).arguments
+        .and_keywords(:attributes, :record)
+    end
 
     include_examples 'should validate the attributes'
 

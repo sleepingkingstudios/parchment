@@ -998,7 +998,7 @@ RSpec.describe Api::ResourcesController do
 
           expect(update_operation)
             .to have_received(:call)
-            .with(widget, resource_params)
+            .with(attributes: resource_params, record: widget)
         end
 
         it 'should return the failing result' do
@@ -1028,7 +1028,7 @@ RSpec.describe Api::ResourcesController do
 
           expect(update_operation)
             .to have_received(:call)
-            .with(widget, resource_params)
+            .with(attributes: resource_params, record: widget)
         end
 
         it 'should return a passing result' do

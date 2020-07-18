@@ -58,6 +58,8 @@ module Operations::Records
       step { find_operation.call(where: query) }.first
     end
 
+    # rubocop:disable Metrics/MethodLength
+
     # @note The keywords/attributes merge handles pre-2.7 keyword delegation.
     #   See https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/
     def process(attributes = {}, **keywords)
@@ -69,11 +71,15 @@ module Operations::Records
       record = step :find_record, query
 
       if record
-        update_operation.call(record, attributes.except(:id, 'id'))
+        update_operation.call(
+          attributes: attributes.except(:id, 'id'),
+          record:     record
+        )
       else
         create_operation.call(attributes)
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     def resolve_query_params(find_by)
       params = Array(find_by)
