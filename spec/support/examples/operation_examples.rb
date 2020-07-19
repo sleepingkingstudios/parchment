@@ -12,6 +12,43 @@ module Spec::Support::Examples
   module OperationExamples
     extend RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
 
+    shared_examples 'should define a subclass' do
+      subject(:operation) { subclass.new(*constructor_args) }
+
+      let(:subclass) { build_subclass }
+      let(:expected) do
+        ::Operations::Records::Subclass
+          .subclass_name(operation_class, record_class)
+      end
+      let(:operation_class) do
+        defined?(super()) ? super() : described_class
+      end
+      let(:constructor_args) do
+        defined?(super()) ? super() : []
+      end
+
+      it { expect(subclass).to be_a Class }
+
+      it { expect(subclass).to be < described_class }
+
+      it { expect(subclass.inspect).to be == expected }
+
+      it { expect(subclass.name).to be == expected }
+
+      it { expect(subclass.record_class).to be record_class }
+
+      it { expect(operation.record_class).to be record_class }
+
+      describe 'with as: name' do
+        let(:custom_name) { 'Spec::CustomOperation' }
+        let(:subclass)    { build_subclass(as: custom_name) }
+
+        it { expect(subclass.inspect).to be == custom_name }
+
+        it { expect(subclass.name).to be == custom_name }
+      end
+    end
+
     shared_examples 'should handle an invalid association name' do
       # :nocov:
       describe 'with a nil association name' do
