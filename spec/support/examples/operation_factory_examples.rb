@@ -8,32 +8,50 @@ module Spec::Support::Examples
   module OperationFactoryExamples
     extend RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
 
-    shared_examples 'should define operation' do |method_name, parent_class|
+    def be_a_subclass_of(operation_class)
+      be_instance_of(Class)
+        .and(be < operation_class)
+        .and(
+          satisfy("have record_class: #{record_class}") do |actual|
+            actual.record_class == record_class
+          end
+        )
+    end
+
+    shared_examples 'should define operation' do |method_name, expectation|
       constant_name = method_name.to_s.camelize
 
       describe "::#{constant_name}" do
         let(:operation_class) { factory.const_get(constant_name) }
         let(:operation)       { operation_class.new }
+        let(:expectation)     { expectation }
+
+        # :nocov:
+        def match_expectation
+          if expectation.is_a?(Proc)
+            instance_exec(&expectation)
+          elsif expectation.is_a?(Class)
+            be <= expectation
+          end
+        end
+        # :nocov:
 
         it { expect(factory).to define_constant(constant_name) }
 
         it { expect(operation_class).to be_a Class }
 
-        it { expect(operation_class).to be <= parent_class }
+        it { expect(operation_class).to match_expectation }
 
         it { expect(operation_class).to be_constructible.with(0).arguments }
-
-        it { expect(operation.record_class).to be record_class }
       end
 
       describe "##{method_name}" do
-        let(:operation) { factory.public_send(method_name) }
+        let(:operation_class) { factory.const_get(constant_name) }
+        let(:operation)       { factory.public_send(method_name) }
 
         it { expect(factory).to respond_to(method_name).with(0).arguments }
 
-        it { expect(operation).to be_a parent_class }
-
-        it { expect(operation.record_class).to be record_class }
+        it { expect(operation).to be_a operation_class }
       end
     end
   end

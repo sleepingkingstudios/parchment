@@ -23,37 +23,37 @@ RSpec.describe Operations::References::Factory do
 
   include_examples 'should define operation',
     :assign,
-    Operations::References::AssignOperation
+    -> { be_a_subclass_of(Operations::References::AssignOperation) }
 
   include_examples 'should define operation',
     :build,
-    Operations::References::BuildOperation
+    -> { be_a_subclass_of(Operations::References::BuildOperation) }
 
   include_examples 'should define operation',
     :create,
-    Operations::References::CreateOperation
+    -> { be_a_subclass_of(Operations::References::CreateOperation) }
 
   include_examples 'should define operation',
     :destroy,
-    Operations::Records::DestroyOperation
+    -> { be_a_subclass_of(Operations::Records::DestroyOperation) }
 
   include_examples 'should define operation',
     :find_many,
-    Operations::References::FindManyOperation
+    -> { be_a_subclass_of(Operations::References::FindManyOperation) }
 
   include_examples 'should define operation',
     :find_matching,
-    Operations::References::FindMatchingOperation
+    -> { be_a_subclass_of(Operations::References::FindMatchingOperation) }
 
   include_examples 'should define operation',
     :find_one,
-    Operations::References::FindOneOperation
+    -> { be_a_subclass_of(Operations::References::FindOneOperation) }
 
   include_examples 'should define operation',
     :save,
-    Operations::Records::SaveOperation
+    -> { be_a_subclass_of(Operations::Records::SaveOperation) }
 
   include_examples 'should define operation',
     :update,
-    Operations::References::UpdateOperation
+    -> { be_a_subclass_of(Operations::References::UpdateOperation) }
 end

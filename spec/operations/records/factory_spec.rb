@@ -70,41 +70,41 @@ RSpec.describe Operations::Records::Factory do
 
   include_examples 'should define operation',
     :assign,
-    Operations::Records::AssignOperation
+    -> { be_a_subclass_of(Operations::Records::AssignOperation) }
 
   include_examples 'should define operation',
     :build,
-    Operations::Records::BuildOperation
+    -> { be_a_subclass_of(Operations::Records::BuildOperation) }
 
   include_examples 'should define operation',
     :create,
-    Operations::Records::CreateOperation
+    -> { be_a_subclass_of(Operations::Records::CreateOperation) }
 
   include_examples 'should define operation',
     :create_or_update,
-    Operations::Records::CreateOrUpdateOperation
+    -> { be_a_subclass_of(Operations::Records::CreateOrUpdateOperation) }
 
   include_examples 'should define operation',
     :destroy,
-    Operations::Records::DestroyOperation
+    -> { be_a_subclass_of(Operations::Records::DestroyOperation) }
 
   include_examples 'should define operation',
     :find_many,
-    Operations::Records::FindManyOperation
+    -> { be_a_subclass_of(Operations::Records::FindManyOperation) }
 
   include_examples 'should define operation',
     :find_matching,
-    Operations::Records::FindMatchingOperation
+    -> { be_a_subclass_of(Operations::Records::FindMatchingOperation) }
 
   include_examples 'should define operation',
     :find_one,
-    Operations::Records::FindOneOperation
+    -> { be_a_subclass_of(Operations::Records::FindOneOperation) }
 
   include_examples 'should define operation',
     :save,
-    Operations::Records::SaveOperation
+    -> { be_a_subclass_of(Operations::Records::SaveOperation) }
 
   include_examples 'should define operation',
     :update,
-    Operations::Records::UpdateOperation
+    -> { be_a_subclass_of(Operations::Records::UpdateOperation) }
 end

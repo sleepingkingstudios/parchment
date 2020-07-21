@@ -11,7 +11,7 @@ RSpec.describe Operations::Origins::Factory do
 
   subject(:factory) { described_class.new(record_class) }
 
-  let(:record_class) { Spell }
+  let(:record_class) { Book }
 
   describe '::new' do
     it { expect(described_class).to be_constructible.with(1).argument }
@@ -23,21 +23,21 @@ RSpec.describe Operations::Origins::Factory do
 
   include_examples 'should define operation',
     :assign,
-    Operations::Origins::AssignOperation
+    -> { be_a_subclass_of(Operations::Origins::AssignOperation) }
 
   include_examples 'should define operation',
     :build,
-    Operations::Origins::BuildOperation
+    -> { be_a_subclass_of(Operations::Origins::BuildOperation) }
 
   include_examples 'should define operation',
     :create,
-    Operations::Origins::CreateOperation
+    -> { be_a_subclass_of(Operations::Origins::CreateOperation) }
 
   include_examples 'should define operation',
     :find_one,
-    Operations::Origins::FindOneOperation
+    -> { be_a_subclass_of(Operations::Origins::FindOneOperation) }
 
   include_examples 'should define operation',
     :update,
-    Operations::Origins::UpdateOperation
+    -> { be_a_subclass_of(Operations::Origins::UpdateOperation) }
 end
