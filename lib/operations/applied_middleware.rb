@@ -3,6 +3,8 @@
 require 'operations/middleware'
 
 module Operations
+  # rubocop:disable Metrics/ClassLength
+
   # Command class that wraps a base command class with middleware.
   class AppliedMiddleware < Cuprum::Command
     class << self
@@ -86,8 +88,8 @@ module Operations
     end
 
     def initialize(command, middleware, *args, **kwargs)
-      self.class.send(:validate_command,    command, as: 'command')
-      self.class.send(:validate_middleware, middleware)
+      validate_command(command)
+      validate_middleware(middleware)
 
       @command    = build_definition(command,    *args, **kwargs)
       @middleware = build_middleware(middleware, *args, **kwargs)
@@ -114,6 +116,8 @@ module Operations
     end
 
     def build_definition(definition, *args, **kwargs)
+      return definition if definition.is_a?(Cuprum::Command)
+
       return build_proc(definition, *args, **kwargs) if definition.is_a?(Proc)
 
       if definition.is_a?(String)
@@ -138,5 +142,20 @@ module Operations
     def process(*args, **kwargs)
       kwargs.empty? ? applied.call(*args) : applied.call(*args, **kwargs)
     end
+
+    def validate_command(command)
+      return if command.is_a?(Cuprum::Command)
+
+      self.class.send(:validate_command, command, as: 'command')
+    end
+
+    def validate_middleware(middleware)
+      return if middleware.is_a?(Array) && middleware.all? do |command|
+        command.is_a?(Cuprum::Command)
+      end
+
+      self.class.send(:validate_middleware, middleware)
+    end
   end
+  # rubocop:enable Metrics/ClassLength
 end

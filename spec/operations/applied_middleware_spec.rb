@@ -17,6 +17,11 @@ RSpec.describe Operations::AppliedMiddleware do
     let(:command_definition) { command_class.name }
   end
 
+  shared_context 'when the command definition is a command' do
+    let(:command_class)      { Spec::ExampleCommand }
+    let(:command_definition) { command_class.new }
+  end
+
   shared_context 'when the command definition is a Proc' do
     include_context 'when the command definition has params'
 
@@ -52,6 +57,11 @@ RSpec.describe Operations::AppliedMiddleware do
     end
   end
 
+  shared_context 'when the middleware definitions have one command' do
+    let(:middleware_class)       { Spec::ExampleMiddleware }
+    let(:middleware_definitions) { Array.new(1, Spec::ExampleMiddleware.new) }
+  end
+
   shared_context 'when the middleware definitions have many Classes' do
     let(:middleware_class)       { Spec::ExampleMiddleware }
     let(:middleware_definitions) { Array.new(3, Spec::ExampleMiddleware) }
@@ -70,6 +80,11 @@ RSpec.describe Operations::AppliedMiddleware do
         end
       end
     end
+  end
+
+  shared_context 'when the middleware definitions have many commands' do
+    let(:middleware_class)       { Spec::ExampleMiddleware }
+    let(:middleware_definitions) { Array.new(3, Spec::ExampleMiddleware.new) }
   end
 
   shared_context 'when the middleware has a label' do
@@ -452,10 +467,6 @@ RSpec.describe Operations::AppliedMiddleware do
   end
 
   describe '#call' do
-    include_context 'when the command definition is a Class'
-
-    let(:expected) { %w[root] }
-
     it 'should define the method' do
       expect(applied_middleware)
         .to respond_to(:call)
@@ -463,53 +474,450 @@ RSpec.describe Operations::AppliedMiddleware do
         .and_any_keywords
     end
 
-    it 'should call the root command' do
-      expect(applied_middleware.call([]))
-        .to be_a_passing_result
-        .with_value(expected)
-    end
+    wrap_context 'when the command definition is a Class' do
+      let(:expected) { %w[root] }
 
-    context 'when there is one middleware command' do
-      include_context 'when the middleware has a label'
-
-      let(:middleware_definitions) do
-        %w[middleware].map do |label|
-          -> { Spec::LabeledMiddleware.subclass(label).new }
-        end
+      it 'should define the method' do
+        expect(applied_middleware)
+          .to respond_to(:call)
+          .with_unlimited_arguments
+          .and_any_keywords
       end
-      let(:expected) { %w[before_middleware root after_middleware] }
 
-      it 'should call the root command and the middleware' do
+      it 'should call the root command' do
         expect(applied_middleware.call([]))
           .to be_a_passing_result
           .with_value(expected)
       end
-    end
 
-    context 'when there are many middleware commands' do
-      include_context 'when the middleware has a label'
+      context 'when the middleware definitions have one Class' do
+        include_context 'when the middleware has a label'
 
-      let(:middleware_definitions) do
-        %w[first second third].map do |label|
-          -> { Spec::LabeledMiddleware.subclass(label).new }
+        let(:middleware_definitions) do
+          %w[middleware].map do |label|
+            Spec::LabeledMiddleware.subclass(label)
+          end
+        end
+        let(:expected) { %w[before_middleware root after_middleware] }
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
         end
       end
-      let(:expected) do
-        %w[
-          before_first
-          before_second
-          before_third
-          root
-          after_third
-          after_second
-          after_first
-        ]
+
+      context 'when the middleware definitions have one Proc' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[middleware].map do |label|
+            -> { Spec::LabeledMiddleware.subclass(label).new }
+          end
+        end
+        let(:expected) { %w[before_middleware root after_middleware] }
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
       end
 
-      it 'should call the root command and the middleware' do
+      context 'when the middleware definitions have one command' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[middleware].map do |label|
+            Spec::LabeledMiddleware.subclass(label).new
+          end
+        end
+        let(:expected) { %w[before_middleware root after_middleware] }
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have many Classes' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[first second third].map do |label|
+            Spec::LabeledMiddleware.subclass(label)
+          end
+        end
+        let(:expected) do
+          %w[
+            before_first
+            before_second
+            before_third
+            root
+            after_third
+            after_second
+            after_first
+          ]
+        end
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have many Procs' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[first second third].map do |label|
+            -> { Spec::LabeledMiddleware.subclass(label).new }
+          end
+        end
+        let(:expected) do
+          %w[
+            before_first
+            before_second
+            before_third
+            root
+            after_third
+            after_second
+            after_first
+          ]
+        end
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have many commands' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[first second third].map do |label|
+            Spec::LabeledMiddleware.subclass(label).new
+          end
+        end
+        let(:expected) do
+          %w[
+            before_first
+            before_second
+            before_third
+            root
+            after_third
+            after_second
+            after_first
+          ]
+        end
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+    end
+
+    wrap_context 'when the command definition is a Proc' do
+      let(:expected) { %w[root] }
+
+      it 'should define the method' do
+        expect(applied_middleware)
+          .to respond_to(:call)
+          .with_unlimited_arguments
+          .and_any_keywords
+      end
+
+      it 'should call the root command' do
         expect(applied_middleware.call([]))
           .to be_a_passing_result
           .with_value(expected)
+      end
+
+      context 'when the middleware definitions have one Class' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[middleware].map do |label|
+            Spec::LabeledMiddleware.subclass(label)
+          end
+        end
+        let(:expected) { %w[before_middleware root after_middleware] }
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have one Proc' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[middleware].map do |label|
+            -> { Spec::LabeledMiddleware.subclass(label).new }
+          end
+        end
+        let(:expected) { %w[before_middleware root after_middleware] }
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have one command' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[middleware].map do |label|
+            Spec::LabeledMiddleware.subclass(label).new
+          end
+        end
+        let(:expected) { %w[before_middleware root after_middleware] }
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have many Classes' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[first second third].map do |label|
+            Spec::LabeledMiddleware.subclass(label)
+          end
+        end
+        let(:expected) do
+          %w[
+            before_first
+            before_second
+            before_third
+            root
+            after_third
+            after_second
+            after_first
+          ]
+        end
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have many Procs' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[first second third].map do |label|
+            -> { Spec::LabeledMiddleware.subclass(label).new }
+          end
+        end
+        let(:expected) do
+          %w[
+            before_first
+            before_second
+            before_third
+            root
+            after_third
+            after_second
+            after_first
+          ]
+        end
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have many commands' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[first second third].map do |label|
+            Spec::LabeledMiddleware.subclass(label).new
+          end
+        end
+        let(:expected) do
+          %w[
+            before_first
+            before_second
+            before_third
+            root
+            after_third
+            after_second
+            after_first
+          ]
+        end
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+    end
+
+    wrap_context 'when the command definition is a command' do
+      let(:expected) { %w[root] }
+
+      it 'should define the method' do
+        expect(applied_middleware)
+          .to respond_to(:call)
+          .with_unlimited_arguments
+          .and_any_keywords
+      end
+
+      it 'should call the root command' do
+        expect(applied_middleware.call([]))
+          .to be_a_passing_result
+          .with_value(expected)
+      end
+
+      context 'when the middleware definitions have one Class' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[middleware].map do |label|
+            Spec::LabeledMiddleware.subclass(label)
+          end
+        end
+        let(:expected) { %w[before_middleware root after_middleware] }
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have one Proc' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[middleware].map do |label|
+            -> { Spec::LabeledMiddleware.subclass(label).new }
+          end
+        end
+        let(:expected) { %w[before_middleware root after_middleware] }
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have one command' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[middleware].map do |label|
+            Spec::LabeledMiddleware.subclass(label).new
+          end
+        end
+        let(:expected) { %w[before_middleware root after_middleware] }
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have many Classes' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[first second third].map do |label|
+            Spec::LabeledMiddleware.subclass(label)
+          end
+        end
+        let(:expected) do
+          %w[
+            before_first
+            before_second
+            before_third
+            root
+            after_third
+            after_second
+            after_first
+          ]
+        end
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have many Procs' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[first second third].map do |label|
+            -> { Spec::LabeledMiddleware.subclass(label).new }
+          end
+        end
+        let(:expected) do
+          %w[
+            before_first
+            before_second
+            before_third
+            root
+            after_third
+            after_second
+            after_first
+          ]
+        end
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when the middleware definitions have many commands' do
+        include_context 'when the middleware has a label'
+
+        let(:middleware_definitions) do
+          %w[first second third].map do |label|
+            Spec::LabeledMiddleware.subclass(label).new
+          end
+        end
+        let(:expected) do
+          %w[
+            before_first
+            before_second
+            before_third
+            root
+            after_third
+            after_second
+            after_first
+          ]
+        end
+
+        it 'should call the root command and the middleware' do
+          expect(applied_middleware.call([]))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
       end
     end
   end
@@ -518,10 +926,6 @@ RSpec.describe Operations::AppliedMiddleware do
     include_examples 'should have reader', :command
 
     wrap_context 'when the command definition is a Class' do
-      it { expect(applied_middleware.command).to be_a command_class }
-    end
-
-    wrap_context 'when the command definition is a Class name' do
       it { expect(applied_middleware.command).to be_a command_class }
     end
 
@@ -561,6 +965,10 @@ RSpec.describe Operations::AppliedMiddleware do
             .to be == constructor_kwargs
         end
       end
+    end
+
+    wrap_context 'when the command definition is a command' do
+      it { expect(applied_middleware.command).to be command_definition }
     end
 
     wrap_context 'when the command definition has params' do
@@ -765,6 +1173,37 @@ RSpec.describe Operations::AppliedMiddleware do
       end
     end
 
+    wrap_context 'when the middleware definitions have one command' do
+      include_context 'when the command definition has params'
+
+      it { expect(applied_middleware.middleware.size).to be 1 }
+
+      it 'should build the middleware' do
+        expect(applied_middleware.middleware.first).to be_a middleware_class
+      end
+
+      it { expect(applied_middleware.middleware.first.arguments).to be == [] }
+
+      it { expect(applied_middleware.middleware.first.keywords).to be == {} }
+
+      context 'when initialized with arguments' do
+        let(:constructor_args) { %i[foo bar baz] }
+
+        it { expect(applied_middleware.middleware.first.arguments).to be == [] }
+
+        it { expect(applied_middleware.middleware.first.keywords).to be == {} }
+      end
+
+      context 'when initialized with arguments and keywords' do
+        let(:constructor_args)   { %i[foo bar baz] }
+        let(:constructor_kwargs) { { ichi: 1, ni: 2, san: 3 } }
+
+        it { expect(applied_middleware.middleware.first.arguments).to be == [] }
+
+        it { expect(applied_middleware.middleware.first.keywords).to be == {} }
+      end
+    end
+
     wrap_context 'when the middleware definitions have many Classes' do
       include_context 'when the command definition has params'
 
@@ -853,6 +1292,53 @@ RSpec.describe Operations::AppliedMiddleware do
         it 'should pass the constructor keywords' do
           expect(applied_middleware.middleware.map(&:keywords))
             .to all(be == constructor_kwargs)
+        end
+      end
+    end
+
+    wrap_context 'when the middleware definitions have many commands' do
+      include_context 'when the command definition has params'
+
+      it { expect(applied_middleware.middleware.size).to be 3 }
+
+      it 'should build the middleware' do
+        expect(applied_middleware.middleware).to all(be_a middleware_class)
+      end
+
+      it 'should initialize the middleware with no arguments' do
+        expect(applied_middleware.middleware.map(&:arguments)).to all(be == [])
+      end
+
+      it 'should initialize the middleware with no keywords' do
+        expect(applied_middleware.middleware.map(&:keywords)).to all(be == {})
+      end
+
+      context 'when initialized with arguments' do
+        let(:constructor_args) { %i[foo bar baz] }
+
+        it 'should initialize the middleware with no arguments' do
+          expect(applied_middleware.middleware.map(&:arguments))
+            .to all(be == [])
+        end
+
+        it 'should initialize the middleware with no keywords' do
+          expect(applied_middleware.middleware.map(&:keywords))
+            .to all(be == {})
+        end
+      end
+
+      context 'when initialized with arguments and keywords' do
+        let(:constructor_args)   { %i[foo bar baz] }
+        let(:constructor_kwargs) { { ichi: 1, ni: 2, san: 3 } }
+
+        it 'should initialize the middleware with no arguments' do
+          expect(applied_middleware.middleware.map(&:arguments))
+            .to all(be == [])
+        end
+
+        it 'should initialize the middleware with no keywords' do
+          expect(applied_middleware.middleware.map(&:keywords))
+            .to all(be == {})
         end
       end
     end
