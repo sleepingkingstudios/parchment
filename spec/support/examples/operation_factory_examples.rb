@@ -1,12 +1,28 @@
 # frozen_string_literal: true
 
 require 'rspec/sleeping_king_studios/concerns/shared_example_group'
+require 'rspec/sleeping_king_studios/matchers/base_matcher'
+
+require 'operations/middleware'
 
 require 'support/examples'
+require 'support/matchers/be_applied_middleware_matcher'
 
 module Spec::Support::Examples
   module OperationFactoryExamples
     extend RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
+
+    # :nocov:
+    def a_subclass_of(operation_class)
+      an_instance_of(Class)
+        .and(be < operation_class)
+        .and(
+          satisfy("have record_class: #{record_class}") do |actual|
+            actual.record_class == record_class
+          end
+        )
+    end
+    # :nocov:
 
     def be_a_subclass_of(operation_class)
       be_instance_of(Class)
@@ -17,6 +33,12 @@ module Spec::Support::Examples
           end
         )
     end
+
+    # :nocov:
+    def be_applied_middleware
+      Spec::Support::Matchers::BeAppliedMiddlewareMatcher.new
+    end
+    # :nocov:
 
     shared_examples 'should define operation' do |method_name, expectation|
       constant_name = method_name.to_s.camelize
