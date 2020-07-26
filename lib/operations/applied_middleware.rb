@@ -12,7 +12,9 @@ module Operations
 
       attr_reader :middleware
 
-      def subclass(command, middleware)
+      def subclass(command, *middleware)
+        middleware = Array(middleware).flatten
+
         validate_command(command, as: 'command')
 
         validate_middleware(middleware)
@@ -77,10 +79,6 @@ module Operations
       end
 
       def validate_middleware(middleware)
-        unless middleware.is_a?(Array)
-          raise ArgumentError, 'middleware must be an Array', caller(1..-1)
-        end
-
         middleware.each do |defn|
           validate_command(defn, as: 'middleware item', depth: 2)
         end

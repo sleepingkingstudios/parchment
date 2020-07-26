@@ -23,15 +23,39 @@ RSpec.describe Operations::Origins::Factory do
 
   include_examples 'should define operation',
     :assign,
-    -> { be_a_subclass_of(Operations::Origins::AssignOperation) }
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::AssignOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::GenerateSlug)
+        )
+    }
 
   include_examples 'should define operation',
     :build,
-    -> { be_a_subclass_of(Operations::Origins::BuildOperation) }
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::BuildOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::GenerateSlug)
+        )
+    }
 
   include_examples 'should define operation',
     :create,
-    -> { be_a_subclass_of(Operations::Origins::CreateOperation) }
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::CreateOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::GenerateSlug)
+        )
+    }
 
   include_examples 'should define operation',
     :find_one,
@@ -39,5 +63,13 @@ RSpec.describe Operations::Origins::Factory do
 
   include_examples 'should define operation',
     :update,
-    -> { be_a_subclass_of(Operations::Origins::UpdateOperation) }
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::UpdateOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::GenerateSlug)
+        )
+    }
 end

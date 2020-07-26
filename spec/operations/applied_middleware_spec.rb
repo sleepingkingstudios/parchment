@@ -189,28 +189,6 @@ RSpec.describe Operations::AppliedMiddleware do
   end
 
   shared_examples 'should validate the middleware' do
-    describe 'with middleware: nil' do
-      let(:middleware_definitions) { nil }
-      let(:error_message) do
-        'middleware must be an Array'
-      end
-
-      it 'should raise an exception' do
-        expect { build_command }.to raise_error ArgumentError, error_message
-      end
-    end
-
-    describe 'with middleware: an Object' do
-      let(:middleware_definitions) { Object.new.freeze }
-      let(:error_message) do
-        'middleware must be an Array'
-      end
-
-      it 'should raise an exception' do
-        expect { build_command }.to raise_error ArgumentError, error_message
-      end
-    end
-
     describe 'with middleware item: nil' do
       let(:middleware_definitions) { [nil] }
       let(:error_message) do
@@ -433,6 +411,36 @@ RSpec.describe Operations::AppliedMiddleware do
         .to be == middleware_definitions.size
     end
 
+    context 'when the middleware is given as a splatted array' do
+      def build_command
+        described_class.subclass(
+          command_definition,
+          *middleware_definitions
+        )
+      end
+
+      include_examples 'should validate the command'
+
+      include_examples 'should validate the middleware'
+
+      it { expect(build_command).to be_a Class }
+
+      it { expect(build_command).to be < described_class }
+
+      it { expect(build_command.command).to be command_definition }
+
+      it { expect(build_command.middleware).to be == middleware_definitions }
+
+      it { expect(applied_middleware.command).to be_a command_class }
+
+      it { expect(applied_middleware.middleware).to be_a Array }
+
+      it 'should set the middleware' do
+        expect(applied_middleware.middleware.size)
+          .to be == middleware_definitions.size
+      end
+    end
+
     describe 'with command: a subclass of AppliedMiddleware' do
       let(:parent_command) { Spec::ExampleCommand }
       let(:parent_middleware) do
@@ -456,6 +464,26 @@ RSpec.describe Operations::AppliedMiddleware do
       it 'should set the middleware' do
         expect(applied_middleware.middleware.size)
           .to be == expected_middleware.size
+      end
+
+      context 'when the middleware is given as a splatted array' do
+        def build_command
+          described_class.subclass(
+            command_definition,
+            *middleware_definitions
+          )
+        end
+
+        it { expect(build_command.command).to be parent_command }
+
+        it { expect(build_command.middleware).to be == expected_middleware }
+
+        it { expect(applied_middleware.command).to be_a parent_command }
+
+        it 'should set the middleware' do
+          expect(applied_middleware.middleware.size)
+            .to be == expected_middleware.size
+        end
       end
     end
   end

@@ -12,7 +12,6 @@ module Spec::Support::Examples
   module OperationFactoryExamples
     extend RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
 
-    # :nocov:
     def a_subclass_of(operation_class)
       an_instance_of(Class)
         .and(be < operation_class)
@@ -22,7 +21,6 @@ module Spec::Support::Examples
           end
         )
     end
-    # :nocov:
 
     def be_a_subclass_of(operation_class)
       be_instance_of(Class)
@@ -34,11 +32,9 @@ module Spec::Support::Examples
         )
     end
 
-    # :nocov:
     def be_applied_middleware
       Spec::Support::Matchers::BeAppliedMiddlewareMatcher.new
     end
-    # :nocov:
 
     shared_examples 'should define operation' do |method_name, expectation|
       constant_name = method_name.to_s.camelize
@@ -48,15 +44,15 @@ module Spec::Support::Examples
         let(:operation)       { operation_class.new }
         let(:expectation)     { expectation }
 
-        # :nocov:
         def match_expectation
+          # :nocov:
           if expectation.is_a?(Proc)
             instance_exec(&expectation)
           elsif expectation.is_a?(Class)
             be <= expectation
           end
+          # :nocov:
         end
-        # :nocov:
 
         it { expect(factory).to define_constant(constant_name) }
 
