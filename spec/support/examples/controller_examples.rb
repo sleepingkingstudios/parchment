@@ -63,6 +63,50 @@ module Spec::Support::Examples
       end
     end
 
+    shared_examples 'should find the resource by slug' do
+      describe 'with an invalid slug' do
+        let(:"#{resource_name}_id") { 'invalid-slug' }
+        let(:expected_error) do
+          Errors::NotFound.new(
+            attributes:   { slug: send(:"#{resource_name}_id") },
+            record_class: resource_class
+          )
+        end
+        let(:expected_json) do
+          {
+            'error' => expected_error.as_json,
+            'ok'    => false
+          }
+        end
+
+        it 'should respond with 404 Not Found' do
+          call_action
+
+          expect(response).to have_http_status(:not_found)
+        end
+
+        it 'should serialize the error' do
+          call_action
+
+          expect(json).to deep_match expected_json
+        end
+
+        include_examples 'should respond with JSON content'
+      end
+
+      describe 'with a valid slug' do
+        let(:"#{resource_name}_id") { send(resource_name).slug }
+
+        it 'should respond with 200 OK' do
+          call_action
+
+          expect(response).to have_http_status(:ok)
+        end
+
+        include_examples 'should respond with JSON content'
+      end
+    end
+
     shared_examples 'should require an authenticated user' do
       wrap_context 'with a missing authorization header' do
         let(:expected_json) do

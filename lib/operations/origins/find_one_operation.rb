@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'operations/origins/find_by_slug_operation'
+require 'operations/records/find_by_slug_operation'
 require 'operations/records/find_one_operation'
 
 module Operations::Origins
@@ -13,7 +13,7 @@ module Operations::Origins
     private
 
     def find_by_slug(slug)
-      Operations::Origins::FindBySlugOperation.new(record_class).call(slug)
+      Operations::Records::FindBySlugOperation.new(record_class).call(slug)
     end
 
     def process(id, as: :id)

@@ -54,7 +54,8 @@ RSpec.describe Operations::Origins::FindOneOperation do
 
       it 'should have a failing result' do
         expect(call_operation)
-          .to have_failing_result.with_error(expected_errors)
+          .to have_failing_result
+          .with_error(expected_errors)
       end
     end
 

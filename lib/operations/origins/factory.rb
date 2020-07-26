@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
 require 'operations/applied_middleware'
-require 'operations/origins/find_one_operation'
+require 'operations/records/assign_operation'
+require 'operations/records/build_operation'
+require 'operations/records/create_operation'
+require 'operations/records/find_one_operation'
+require 'operations/records/middleware/find_by_slug'
 require 'operations/records/middleware/generate_slug'
+require 'operations/records/update_operation'
 
 require 'operations/records/factory'
 
@@ -31,7 +36,10 @@ module Operations::Origins
     end
 
     command_class(:find_one) do
-      Operations::Origins::FindOneOperation.subclass(record_class)
+      Operations::AppliedMiddleware.subclass(
+        Operations::Records::FindOneOperation.subclass(record_class),
+        find_by_slug_middleware
+      )
     end
 
     command_class(:update) do
@@ -42,6 +50,14 @@ module Operations::Origins
     end
 
     private
+
+    def find_by_slug_middleware
+      @find_by_slug_middleware ||=
+        Operations::Records::Middleware::FindBySlug.subclass(
+          record_class,
+          as: "Operations::Origins::Find#{record_class}BySlugOperation"
+        )
+    end
 
     def generate_slug_middleware
       @generate_slug_middleware ||=

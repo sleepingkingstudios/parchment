@@ -3,10 +3,9 @@
 require 'errors/invalid_parameters'
 require 'errors/not_found'
 require 'operations/attributes/generate_slug'
-require 'operations/origins'
 require 'operations/records/base_operation'
 
-module Operations::Origins
+module Operations::Records
   # Queries the database for the record in the given table with the given slug.
   class FindBySlugOperation < Operations::Records::BaseOperation
     private

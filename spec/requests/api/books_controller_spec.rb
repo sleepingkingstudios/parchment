@@ -218,6 +218,8 @@ RSpec.describe Api::BooksController, type: :request do
 
     include_examples 'should require a valid resource id'
 
+    include_examples 'should find the resource by slug'
+
     it 'should respond with 200 OK' do
       call_action
 
@@ -251,6 +253,8 @@ RSpec.describe Api::BooksController, type: :request do
     include_examples 'should require a valid resource id'
 
     include_examples 'should require resource params'
+
+    include_examples 'should find the resource by slug'
 
     describe 'with invalid attributes' do
       let(:book_params) do
@@ -384,6 +388,8 @@ RSpec.describe Api::BooksController, type: :request do
     include_examples 'should require an authenticated user'
 
     include_examples 'should require a valid resource id'
+
+    include_examples 'should find the resource by slug'
 
     it 'should respond with 200 OK' do
       call_action

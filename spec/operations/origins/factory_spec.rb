@@ -59,7 +59,15 @@ RSpec.describe Operations::Origins::Factory do
 
   include_examples 'should define operation',
     :find_one,
-    -> { be_a_subclass_of(Operations::Origins::FindOneOperation) }
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::FindOneOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::FindBySlug)
+        )
+    }
 
   include_examples 'should define operation',
     :update,

@@ -115,30 +115,79 @@ RSpec.describe Operations::Middleware do
       end
     end
 
-    let(:next_status)  { :success }
-    let(:next_command) { instance_double(Cuprum::Command, call: nil) }
-    let(:data)         { { key: 'value' } }
-    let(:expected)     { data.merge(inner: true) }
+    shared_context 'with a basic middleware implementation' do
+      let(:data)      { { key: 'value' } }
+      let(:arguments) { [data] }
+      let(:expected)  { data.merge(inner: true) }
 
-    before(:example) do
-      allow(next_command).to receive(:call) do |hsh|
-        Cuprum::Result.new(status: next_status, value: hsh.merge(inner: true))
+      before(:example) do
+        allow(next_command).to receive(:call) do |hsh|
+          Cuprum::Result.new(status: next_status, value: hsh.merge(inner: true))
+        end
       end
     end
 
-    def call_command(*args)
-      middleware.call(next_command, *args)
+    shared_examples 'should call the next command' do
+      it 'should call the next command' do
+        call_command
+
+        expect(next_command).to have_received(:call).with(no_args)
+      end
+
+      describe 'with arguments' do
+        let(:arguments) { %w[uno dos tres] }
+
+        it 'should call the next command' do
+          call_command(*arguments)
+
+          expect(next_command).to have_received(:call).with(*arguments)
+        end
+      end
+
+      describe 'with keywords' do
+        let(:keywords) { { ichi: 1, ni: 2, san: 3 } }
+
+        it 'should call the next command' do
+          call_command(**keywords)
+
+          expect(next_command).to have_received(:call).with(**keywords)
+        end
+      end
+
+      describe 'with arguments and keywords' do
+        let(:arguments) { %w[uno dos tres] }
+        let(:keywords)  { { ichi: 1, ni: 2, san: 3 } }
+
+        it 'should call the next command' do
+          call_command(*arguments, **keywords)
+
+          expect(next_command)
+            .to have_received(:call)
+            .with(*arguments, **keywords)
+        end
+      end
+    end
+
+    let(:next_status)  { :success }
+    let(:next_command) { instance_double(Cuprum::Command, call: nil) }
+    let(:arguments)    { [] }
+    let(:keywords)     { {} }
+
+    def call_command(*args, **kwargs)
+      if kwargs.empty?
+        middleware.call(next_command, *args)
+      else
+        middleware.call(next_command, *args, **kwargs)
+      end
     end
 
     it { expect(middleware).to respond_to(:call).with(2).arguments }
 
-    it 'should call the next command' do
-      call_command(data)
-
-      expect(next_command).to have_received(:call).with(data)
-    end
+    include_examples 'should call the next command'
 
     context 'when the next_command returns a failing result' do
+      include_context 'with a basic middleware implementation'
+
       let(:next_status) { :failure }
 
       it 'should return the result of the next command' do
@@ -149,6 +198,8 @@ RSpec.describe Operations::Middleware do
     end
 
     context 'when the next command returns a passing result' do
+      include_context 'with a basic middleware implementation'
+
       let(:next_status) { :success }
 
       it 'should return the result of the next command' do
@@ -159,13 +210,11 @@ RSpec.describe Operations::Middleware do
     end
 
     wrap_context 'when the middleware is partially applied' do
-      it 'should call the next command' do
-        call_command(data)
-
-        expect(next_command).to have_received(:call).with(data)
-      end
+      include_examples 'should call the next command'
 
       context 'when the next command returns a passing result' do
+        include_context 'with a basic middleware implementation'
+
         let(:next_status) { :success }
 
         it 'should return the result of the next command' do
@@ -176,6 +225,8 @@ RSpec.describe Operations::Middleware do
       end
 
       context 'when the next_command returns a failing result' do
+        include_context 'with a basic middleware implementation'
+
         let(:next_status) { :failure }
 
         it 'should return the result of the next command' do
@@ -187,6 +238,8 @@ RSpec.describe Operations::Middleware do
     end
 
     context 'with a middleware implementation' do
+      include_context 'with a basic middleware implementation'
+
       let(:described_class) { Spec::ExampleMiddleware }
 
       example_class 'Spec::ExampleMiddleware', described_class do |klass|

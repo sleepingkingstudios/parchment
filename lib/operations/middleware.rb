@@ -21,8 +21,12 @@ module Operations
 
     private
 
-    def process(next_command, data)
-      step { next_command.call(data) }
+    def process(next_command, *args, **kwargs)
+      if kwargs.empty?
+        step { next_command.call(*args) }
+      else
+        step { next_command.call(*args, **kwargs) }
+      end
     end
   end
 end

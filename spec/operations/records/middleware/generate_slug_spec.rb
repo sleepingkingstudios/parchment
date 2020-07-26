@@ -36,6 +36,8 @@ RSpec.describe Operations::Records::Middleware::GenerateSlug do
 
   describe '#call' do
     shared_examples 'should call the next operation' do
+      it { expect(call_operation).to be == next_result }
+
       it 'should call the next operation' do
         call_operation
 
@@ -46,6 +48,8 @@ RSpec.describe Operations::Records::Middleware::GenerateSlug do
 
       describe 'with additional keywords' do
         let(:keywords) { { ichi: 1, ni: 2, san: 3 } }
+
+        it { expect(call_operation).to be == next_result }
 
         it 'should call the next operation' do
           call_operation

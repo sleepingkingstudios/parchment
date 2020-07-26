@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-require 'operations/origins/find_by_slug_operation'
+require 'operations/records/find_by_slug_operation'
 
 require 'support/examples/operation_examples'
 
-RSpec.describe Operations::Origins::FindBySlugOperation do
+RSpec.describe Operations::Records::FindBySlugOperation do
   include Spec::Support::Examples::OperationExamples
 
   subject(:operation) { described_class.new(record_class) }
