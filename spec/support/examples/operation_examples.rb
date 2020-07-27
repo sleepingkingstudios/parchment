@@ -12,6 +12,79 @@ module Spec::Support::Examples
   module OperationExamples
     extend RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
 
+    shared_examples 'should define a #transaction method' do
+      describe '#transaction' do
+        let(:transaction_status) do
+          Struct.new(:in_transaction, :rollback).new(false, false)
+        end
+
+        before(:example) do
+          allow(ApplicationRecord).to receive(:transaction) do |&block|
+            transaction_status.in_transaction = true
+
+            begin
+              block.call
+            rescue ActiveRecord::Rollback
+              transaction_status.rollback = true
+            end
+
+            transaction_status.in_transaction = false
+          end
+        end
+
+        it 'should define the private method' do
+          expect(operation).to respond_to(:transaction, true).with(0).arguments
+        end
+
+        it 'should yield the block' do
+          expect { |block| operation.send(:transaction, &block) }
+            .to yield_control
+        end
+
+        it 'should execute the block inside a transaction' do
+          operation.send(:transaction) do
+            expect(transaction_status.in_transaction).to be true
+          end
+        end
+
+        context 'when the block has a failing step' do
+          let(:error)  { Cuprum::Error.new(message: 'Something went wrong.') }
+          let(:result) { Cuprum::Result.new(error: error) }
+
+          it 'should return the result' do
+            expect(
+              operation.send(:transaction) { operation.send(:step) { result } }
+            )
+              .to be == result
+          end
+
+          it 'should roll back the transaction' do
+            operation.send(:transaction) { operation.send(:step) { result } }
+
+            expect(transaction_status.rollback).to be true
+          end
+        end
+
+        context 'when the block has a passing step' do
+          let(:value)  { Object.new.freeze }
+          let(:result) { Cuprum::Result.new(value: value) }
+
+          it 'should return the result' do
+            expect(
+              operation.send(:transaction) { operation.send(:step) { result } }
+            )
+              .to be == result
+          end
+
+          it 'should not roll back the transaction' do
+            operation.send(:transaction) { operation.send(:step) { result } }
+
+            expect(transaction_status.rollback).to be false
+          end
+        end
+      end
+    end
+
     shared_examples 'should define a subclass' do
       subject(:operation) { subclass.new(*constructor_args) }
 

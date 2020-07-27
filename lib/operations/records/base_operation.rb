@@ -3,12 +3,14 @@
 require 'operations/records'
 require 'operations/records/parameter_validations'
 require 'operations/records/subclass'
+require 'operations/transaction'
 
 module Operations::Records
   # Abstract base class for record operations.
   class BaseOperation < Cuprum::Operation
     extend  Operations::Records::Subclass
     include Operations::Records::ParameterValidations
+    include Operations::Transaction
 
     # @param record_class [Class] The class of record that the operation's
     #   business logic operates on.
@@ -19,19 +21,5 @@ module Operations::Records
     # @return [Class] the class of record that the operation's business logic
     #   operates on.
     attr_reader :record_class
-
-    private
-
-    def transaction
-      result = nil
-
-      record_class.transaction do
-        result = steps { yield }
-
-        raise ActiveRecord::Rollback unless result.success?
-      end
-
-      result
-    end
   end
 end
