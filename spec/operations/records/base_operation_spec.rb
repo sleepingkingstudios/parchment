@@ -29,7 +29,7 @@ RSpec.describe Operations::Records::BaseOperation do
       described_class.subclass(record_class, as: as)
     end
 
-    include_examples 'should define a subclass'
+    include_examples 'should define a subclass for the record class'
   end
 
   include_examples 'should define a #transaction method'

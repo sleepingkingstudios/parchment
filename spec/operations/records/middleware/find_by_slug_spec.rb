@@ -31,7 +31,7 @@ RSpec.describe Operations::Records::Middleware::FindBySlug do
       described_class.subclass(record_class, as: as)
     end
 
-    include_examples 'should define a subclass'
+    include_examples 'should define a subclass for the record class'
   end
 
   describe '#call' do

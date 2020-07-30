@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 require 'operations/records'
+require 'operations/subclass'
 
 module Operations::Records
   # Mixin for defining operation subclasses associated with a record class.
   module Subclass
+    include Operations::Subclass
+
     OPERATION_NAME_PATTERN = /Operation\z/.freeze
     private_constant :OPERATION_NAME_PATTERN
 
@@ -25,24 +28,18 @@ module Operations::Records
 
     attr_reader :record_class
 
-    def subclass(record_class, as: nil) # rubocop:disable Metrics/MethodLength
-      operation_class = self
-      operation_name  = as || ::Operations::Records::Subclass.subclass_name(
-        operation_class,
-        record_class
+    def subclass(record_class, arguments: [], as: nil, keywords: {})
+      as ||= ::Operations::Records::Subclass.subclass_name(self, record_class)
+
+      klass = super(
+        arguments: [record_class, *arguments],
+        as:        as,
+        keywords:  keywords
       )
 
-      Class.new(self) do
-        define_method(:initialize) do |*args|
-          super(self.class.record_class, *args)
-        end
+      klass.record_class = record_class
 
-        define_singleton_method(:inspect) { operation_name }
-
-        define_singleton_method(:name) { operation_name }
-
-        self.record_class = record_class
-      end
+      klass
     end
 
     protected

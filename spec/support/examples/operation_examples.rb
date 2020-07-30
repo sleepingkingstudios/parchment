@@ -86,31 +86,45 @@ module Spec::Support::Examples
     end
 
     shared_examples 'should define a subclass' do
-      subject(:operation) { subclass.new(*constructor_args) }
+      subject(:operation) do
+        # :nocov:
+        if constructor_kwargs.empty?
+          subclass.new(*constructor_args)
+        else
+          subclass.new(*constructor_args, **constructor_kwargs)
+        end
+        # :nocov:
+      end
 
       let(:subclass) { build_subclass }
-      let(:expected) do
-        ::Operations::Records::Subclass
-          .subclass_name(operation_class, record_class)
-      end
       let(:operation_class) do
         defined?(super()) ? super() : described_class
       end
+      let(:expected_operation_name) do
+        next operation_name if defined?(operation_name)
+
+        name_method    = Class.instance_method(:name)
+        named_ancestor =
+          subclass
+          .ancestors
+          .map { |ancestor| name_method.bind(ancestor).call }
+          .find(&:itself)
+
+        "#{Object.instance_method(:inspect).bind(subclass).call}" \
+        " (#{named_ancestor})"
+      end
       let(:constructor_args) do
         defined?(super()) ? super() : []
+      end
+      let(:constructor_kwargs) do
+        defined?(super()) ? super() : {}
       end
 
       it { expect(subclass).to be_a Class }
 
       it { expect(subclass).to be < described_class }
 
-      it { expect(subclass.inspect).to be == expected }
-
-      it { expect(subclass.name).to be == expected }
-
-      it { expect(subclass.record_class).to be record_class }
-
-      it { expect(operation.record_class).to be record_class }
+      it { expect(subclass.inspect).to be == expected_operation_name }
 
       describe 'with as: name' do
         let(:custom_name) { 'Spec::CustomOperation' }
@@ -120,6 +134,31 @@ module Spec::Support::Examples
 
         it { expect(subclass.name).to be == custom_name }
       end
+    end
+
+    shared_examples 'should define a subclass for the record class' do
+      include_examples 'should define a subclass'
+
+      let(:expected) do
+        ::Operations::Records::Subclass
+          .subclass_name(operation_class, record_class)
+      end
+      let(:expected_operation_name) do
+        next operation_name if defined?(operation_name)
+
+        ::Operations::Records::Subclass.subclass_name(
+          described_class,
+          record_class
+        )
+      end
+
+      it { expect(subclass.inspect).to be == expected }
+
+      it { expect(subclass.name).to be == expected }
+
+      it { expect(subclass.record_class).to be record_class }
+
+      it { expect(operation.record_class).to be record_class }
     end
 
     shared_examples 'should handle an invalid association name' do
