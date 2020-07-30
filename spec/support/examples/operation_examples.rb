@@ -87,13 +87,11 @@ module Spec::Support::Examples
 
     shared_examples 'should define a subclass' do
       subject(:operation) do
-        # :nocov:
         if constructor_kwargs.empty?
           subclass.new(*constructor_args)
         else
           subclass.new(*constructor_args, **constructor_kwargs)
         end
-        # :nocov:
       end
 
       let(:subclass) { build_subclass }
