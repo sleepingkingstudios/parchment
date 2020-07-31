@@ -12,25 +12,43 @@ module Spec::Support::Examples
   module OperationFactoryExamples
     extend RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
 
-    def a_subclass_of(operation_class)
-      an_instance_of(Class)
-        .and(be < operation_class)
-        .and(
-          satisfy("have record_class: #{record_class}") do |actual|
-            actual.record_class == record_class
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Style/MultilineBlockChain
+    def a_subclass_of(operation_class, **properties)
+      if operation_class.is_a?(::Operations::Records::Subclass)
+        properties = properties.merge(record_class: record_class)
+      end
+
+      base_matcher = an_instance_of(Class).and(be < operation_class)
+      properties
+        .map do |property, value|
+          satisfy("have #{property}: #{value}") do |actual|
+            actual.new.send(property) == value
           end
-        )
+        end
+        .reduce(base_matcher) do |composed, matcher|
+          composed.and(matcher)
+        end
     end
 
-    def be_a_subclass_of(operation_class)
-      be_instance_of(Class)
-        .and(be < operation_class)
-        .and(
-          satisfy("have record_class: #{record_class}") do |actual|
-            actual.record_class == record_class
+    def be_a_subclass_of(operation_class, **properties)
+      if operation_class.is_a?(::Operations::Records::Subclass)
+        properties = properties.merge(record_class: record_class)
+      end
+
+      base_matcher = be_instance_of(Class).and(be < operation_class)
+      properties
+        .map do |property, value|
+          satisfy("have #{property}: #{value}") do |actual|
+            actual.new.send(property) == value
           end
-        )
+        end
+        .reduce(base_matcher) do |composed, matcher|
+          composed.and(matcher)
+        end
     end
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Style/MultilineBlockChain
 
     def be_applied_middleware
       Spec::Support::Matchers::BeAppliedMiddlewareMatcher.new

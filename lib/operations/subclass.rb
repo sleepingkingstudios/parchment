@@ -10,7 +10,7 @@ module Operations
         named_ancestor = first_named_ancestor(klass)
 
         "#{Object.instance_method(:inspect).bind(klass).call}" \
-        " (#{named_ancestor.name})"
+        " (#{name_method.bind(named_ancestor).call})"
       end
 
       private
@@ -24,19 +24,44 @@ module Operations
       end
     end
 
+    def applied_arguments
+      return @applied_arguments if @applied_arguments
+
+      superclass.is_a?(Operations::Subclass) ? superclass.applied_arguments : []
+    end
+
+    def applied_keywords
+      return @applied_keywords if @applied_keywords
+
+      superclass.is_a?(Operations::Subclass) ? superclass.applied_keywords : {}
+    end
+
     def subclass(arguments: [], as: nil, keywords: {})
       validate_arguments!(arguments)
       validate_keywords!(keywords)
 
       klass = Class.new(self)
 
+      apply_parameters(klass,   arguments: arguments, keywords: keywords)
       define_constructor(klass, arguments: arguments, keywords: keywords)
       define_reflections(klass, as: as)
 
       klass
     end
 
+    protected
+
+    attr_writer :applied_arguments
+
+    attr_writer :applied_keywords
+
     private
+
+    def apply_parameters(klass, arguments:, keywords:)
+      klass.applied_arguments += arguments
+
+      klass.applied_keywords = klass.applied_keywords.merge(keywords)
+    end
 
     def define_constructor(klass, arguments:, keywords:)
       klass.define_method(:initialize) do |*args, **kwargs|

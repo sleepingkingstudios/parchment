@@ -9,6 +9,8 @@ require 'support/examples/operation_examples'
 RSpec.describe Operations::Subclass do
   include Spec::Support::Examples::OperationExamples
 
+  let(:described_class) { Spec::ParametersOperation }
+
   example_class 'Spec::ParametersOperation' do |klass|
     klass.extend(Operations::Subclass) # rubocop:disable RSpec/DescribedClass
 
@@ -20,6 +22,14 @@ RSpec.describe Operations::Subclass do
     klass.attr_reader :arguments
 
     klass.attr_reader :keywords
+  end
+
+  describe '.applied_arguments' do
+    include_examples 'should define class reader', :applied_arguments, []
+  end
+
+  describe '.applied_keywords' do
+    include_examples 'should define class reader', :applied_keywords, {}
   end
 
   describe '.subclass' do
@@ -34,8 +44,20 @@ RSpec.describe Operations::Subclass do
 
       let(:constructor_arguments) { [] }
       let(:constructor_keywords)  { {} }
-      let(:expected_arguments)    { arguments + constructor_arguments }
-      let(:expected_keywords)     { keywords.merge(constructor_keywords) }
+      let(:expected_arguments) do
+        applied_arguments + constructor_arguments
+      end
+      let(:expected_keywords) do
+        applied_keywords.merge(constructor_keywords)
+      end
+
+      it 'should set the applied arguments' do
+        expect(build_subclass.applied_arguments).to be == applied_arguments
+      end
+
+      it 'should set the applied keywords' do
+        expect(build_subclass.applied_keywords).to be == applied_keywords
+      end
 
       it { expect(operation.arguments).to be == expected_arguments }
 
@@ -71,10 +93,11 @@ RSpec.describe Operations::Subclass do
       end
     end
 
-    let(:described_class) { Spec::ParametersOperation }
-    let(:arguments)       { [] }
-    let(:keywords)        { {} }
-    let(:options)         { {} }
+    let(:arguments)         { [] }
+    let(:keywords)          { {} }
+    let(:options)           { {} }
+    let(:applied_arguments) { arguments }
+    let(:applied_keywords)  { keywords }
 
     it 'should define the class method' do
       expect(described_class)
@@ -179,6 +202,64 @@ RSpec.describe Operations::Subclass do
       include_examples 'should define a subclass'
 
       include_examples 'should merge the parameters'
+    end
+
+    context 'when the base class is a subclass with applied parameters' do
+      let(:described_class)      { Spec::AppliedOperation }
+      let(:superclass_arguments) { %w[cero] }
+      let(:superclass_keywords) do
+        { color: 'infrared', decoration: 'rainbows', label: false }
+      end
+      let(:applied_arguments) do
+        superclass_arguments + arguments
+      end
+      let(:applied_keywords) do
+        superclass_keywords.merge(keywords)
+      end
+
+      example_constant 'Spec::AppliedOperation' do
+        Spec::ParametersOperation
+          .subclass(
+            arguments: superclass_arguments,
+            keywords:  superclass_keywords
+          )
+      end
+
+      include_examples 'should define a subclass'
+
+      include_examples 'should merge the parameters'
+
+      describe 'with arguments: an array with items' do
+        let(:arguments) { %w[uno dos tres] }
+        let(:options)   { { arguments: arguments } }
+
+        include_examples 'should define a subclass'
+
+        include_examples 'should merge the parameters'
+      end
+
+      describe 'with keywords: a hash with values' do
+        let(:keywords) do
+          { color: 'indigo', shape: 'Klein bottle',  size: 'M' }
+        end
+        let(:options) { { keywords: keywords } }
+
+        include_examples 'should define a subclass'
+
+        include_examples 'should merge the parameters'
+      end
+
+      describe 'with arguments: an array and keywords: a hash' do
+        let(:arguments) { %w[uno dos tres] }
+        let(:keywords) do
+          { color: 'indigo', shape: 'Klein bottle',  size: 'M' }
+        end
+        let(:options) { { arguments: arguments, keywords: keywords } }
+
+        include_examples 'should define a subclass'
+
+        include_examples 'should merge the parameters'
+      end
     end
   end
 end
