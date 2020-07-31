@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-require 'fixtures/middleware/base'
+require 'fixtures/middleware'
+require 'operations/middleware'
 
 module Fixtures::Middleware
   # Middleware command to format long-form text from data files.
-  class FormatText < Fixtures::Middleware::Base
+  class FormatText < Operations::Middleware
     def initialize(property:, **options)
       @property = property
 
@@ -21,16 +22,16 @@ module Fixtures::Middleware
       text.split(/\n\n+/).map { |para| trim_newlines(para) }.join("\n\n")
     end
 
-    def process(next_command, data)
-      data =
-        Array(property).reduce(data) do |hsh, property_name|
-          old_value = data[property_name]
+    def process(next_command, attributes:)
+      attributes =
+        Array(property).reduce(attributes) do |hsh, property_name|
+          old_value = attributes[property_name]
           new_value = format_text(old_value)
 
           hsh.merge(property_name => new_value)
         end
 
-      super(next_command, data)
+      super(next_command, attributes: attributes)
     end
 
     def trim_newlines(paragraph)

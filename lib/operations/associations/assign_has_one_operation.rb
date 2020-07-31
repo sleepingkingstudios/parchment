@@ -22,16 +22,10 @@ module Operations::Associations
 
     def assign_associated_records(associated_records:, records:)
       records.each do |record|
-        record.send(
-          association_writer_name,
+        record.association(association_name).target =
           associated_records
-            .find { |other| other.send(foreign_key_name) == record.id }
-        )
+          .find { |other| other.send(foreign_key_name) == record.id }
       end
-    end
-
-    def association_writer_name
-      @association_writer_name ||= :"#{association_name}="
     end
 
     def find_associated_records(records)

@@ -12,6 +12,153 @@ module Spec::Support::Examples
   module OperationExamples
     extend RSpec::SleepingKingStudios::Concerns::SharedExampleGroup
 
+    shared_examples 'should define a #transaction method' do
+      describe '#transaction' do
+        let(:transaction_status) do
+          Struct.new(:in_transaction, :rollback).new(false, false)
+        end
+
+        before(:example) do
+          allow(ApplicationRecord).to receive(:transaction) do |&block|
+            transaction_status.in_transaction = true
+
+            begin
+              block.call
+            rescue ActiveRecord::Rollback
+              transaction_status.rollback = true
+            end
+
+            transaction_status.in_transaction = false
+          end
+        end
+
+        it 'should define the private method' do
+          expect(operation).to respond_to(:transaction, true).with(0).arguments
+        end
+
+        it 'should yield the block' do
+          expect { |block| operation.send(:transaction, &block) }
+            .to yield_control
+        end
+
+        it 'should execute the block inside a transaction' do
+          operation.send(:transaction) do
+            expect(transaction_status.in_transaction).to be true
+          end
+        end
+
+        context 'when the block has a failing step' do
+          let(:error)  { Cuprum::Error.new(message: 'Something went wrong.') }
+          let(:result) { Cuprum::Result.new(error: error) }
+
+          it 'should return the result' do
+            expect(
+              operation.send(:transaction) { operation.send(:step) { result } }
+            )
+              .to be == result
+          end
+
+          it 'should roll back the transaction' do
+            operation.send(:transaction) { operation.send(:step) { result } }
+
+            expect(transaction_status.rollback).to be true
+          end
+        end
+
+        context 'when the block has a passing step' do
+          let(:value)  { Object.new.freeze }
+          let(:result) { Cuprum::Result.new(value: value) }
+
+          it 'should return the result' do
+            expect(
+              operation.send(:transaction) { operation.send(:step) { result } }
+            )
+              .to be == result
+          end
+
+          it 'should not roll back the transaction' do
+            operation.send(:transaction) { operation.send(:step) { result } }
+
+            expect(transaction_status.rollback).to be false
+          end
+        end
+      end
+    end
+
+    shared_examples 'should define a subclass' do
+      subject(:operation) do
+        if constructor_kwargs.empty?
+          subclass.new(*constructor_args)
+        else
+          subclass.new(*constructor_args, **constructor_kwargs)
+        end
+      end
+
+      let(:subclass) { build_subclass }
+      let(:operation_class) do
+        defined?(super()) ? super() : described_class
+      end
+      let(:expected_operation_name) do
+        next operation_name if defined?(operation_name)
+
+        name_method    = Class.instance_method(:name)
+        named_ancestor =
+          subclass
+          .ancestors
+          .map { |ancestor| name_method.bind(ancestor).call }
+          .find(&:itself)
+
+        "#{Object.instance_method(:inspect).bind(subclass).call}" \
+        " (#{named_ancestor})"
+      end
+      let(:constructor_args) do
+        defined?(super()) ? super() : []
+      end
+      let(:constructor_kwargs) do
+        defined?(super()) ? super() : {}
+      end
+
+      it { expect(subclass).to be_a Class }
+
+      it { expect(subclass).to be < described_class }
+
+      it { expect(subclass.inspect).to be == expected_operation_name }
+
+      describe 'with as: name' do
+        let(:custom_name) { 'Spec::CustomOperation' }
+        let(:subclass)    { build_subclass(as: custom_name) }
+
+        it { expect(subclass.inspect).to be == custom_name }
+
+        it { expect(subclass.name).to be == custom_name }
+      end
+    end
+
+    shared_examples 'should define a subclass for the record class' do
+      include_examples 'should define a subclass'
+
+      let(:expected) do
+        ::Operations::Records::Subclass
+          .subclass_name(operation_class, record_class)
+      end
+      let(:expected_operation_name) do
+        next operation_name if defined?(operation_name)
+
+        ::Operations::Records::Subclass.subclass_name(
+          described_class,
+          record_class
+        )
+      end
+
+      it { expect(subclass.inspect).to be == expected }
+
+      it { expect(subclass.name).to be == expected }
+
+      it { expect(subclass.record_class).to be record_class }
+
+      it { expect(operation.record_class).to be record_class }
+    end
+
     shared_examples 'should handle an invalid association name' do
       # :nocov:
       describe 'with a nil association name' do

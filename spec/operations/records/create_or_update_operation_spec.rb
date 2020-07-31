@@ -181,10 +181,15 @@ RSpec.describe Operations::Records::CreateOrUpdateOperation do
     let(:attributes) { {} }
 
     def call_operation
-      operation.call(attributes)
+      operation.call(attributes: attributes)
     end
 
-    it { expect(operation).to respond_to(:call).with(1).argument }
+    it 'should define the method' do
+      expect(operation)
+        .to respond_to(:call)
+        .with(0).arguments
+        .and_keywords(:attributes)
+    end
 
     context 'when querying by primary key' do
       let(:id) { '00000000-0000-0000-0000-000000000000' }

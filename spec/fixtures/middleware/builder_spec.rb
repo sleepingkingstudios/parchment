@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-require 'fixtures/middleware/base'
 require 'fixtures/middleware/builder'
+require 'operations/middleware'
 
 RSpec.describe Fixtures::Middleware::Builder do
   subject(:builder) { described_class.new }
@@ -31,7 +31,7 @@ RSpec.describe Fixtures::Middleware::Builder do
     let(:name)    { '' }
     let(:options) { {} }
 
-    example_class 'Fixtures::Middleware::Custom', Fixtures::Middleware::Base
+    example_class 'Fixtures::Middleware::Custom', Operations::Middleware
 
     it 'should define the method' do
       expect(builder).to respond_to(:build).with(1).argument.and_any_keywords

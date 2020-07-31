@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 require 'errors/failed_validation'
-require 'fixtures/middleware/base'
+require 'fixtures/middleware'
 require 'operations/authentication/password/encrypt'
+require 'operations/middleware'
 
 module Fixtures::Middleware
   # Fixture middleware for generating a password credential for a user.
-  class SetPassword < Fixtures::Middleware::Base
+  class SetPassword < Operations::Middleware
     private
 
     def create_credential(encrypted:, user:)
@@ -43,11 +44,14 @@ module Fixtures::Middleware
       value.is_a?(ApplicationRecord) && !value.persisted?
     end
 
-    def process(next_command, attributes)
+    # rubocop:disable Metrics/MethodLength
+    def process(next_command, attributes:)
       password = fetch_password(attributes)
-
-      user     =
-        step { super(next_command, attributes.except(:password, 'password')) }
+      user     = step do
+        super(
+          next_command, attributes: attributes.except(:password, 'password')
+        )
+      end
 
       if user.is_a?(Hash) || non_persisted_record?(user) || password.blank?
         return success(user)
@@ -60,5 +64,6 @@ module Fixtures::Middleware
 
       success(user)
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

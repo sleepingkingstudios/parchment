@@ -2,8 +2,8 @@
 
 require 'cuprum/built_in/identity_command'
 
-require 'fixtures'
 require 'fixtures/middleware'
+require 'operations/middleware'
 
 module Fixtures
   # Class to load data, or instantiate or persist records from stored fixture
@@ -109,10 +109,10 @@ module Fixtures
 
       unless skip_middleware
         command =
-          Fixtures::Middleware.apply(command: command, middleware: middleware)
+          Operations::Middleware.apply(command: command, middleware: middleware)
       end
 
-      data.map { |hsh| command.call(hsh).value }
+      data.map { |hsh| command.call(attributes: hsh).value }
     end
 
     def process_data(data, count: nil, except: nil)
@@ -123,7 +123,7 @@ module Fixtures
     end
 
     def read_command(**_options)
-      Cuprum::BuiltIn::IdentityCommand.new
+      Cuprum::Command.new { |attributes:| attributes }
     end
 
     def resource_name

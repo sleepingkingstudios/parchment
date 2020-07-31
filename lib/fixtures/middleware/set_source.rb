@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
-require 'fixtures/middleware/base'
+require 'fixtures/middleware'
+require 'operations/middleware'
 require 'operations/records/factory'
 require 'operations/records/parameter_validations'
 require 'operations/sources/set_source_operation'
 
 module Fixtures::Middleware
   # Middleware command to create a source relationship.
-  class SetSource < Fixtures::Middleware::Base
+  class SetSource < Operations::Middleware
     include Operations::Records::ParameterValidations::One
 
     private
@@ -70,10 +71,12 @@ module Fixtures::Middleware
       Source::ORIGIN_TYPES.map(&:constantize)
     end
 
-    def process(next_command, attributes) # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength
+    def process(next_command, attributes:)
       source_data = attributes.fetch(:source, attributes.fetch('source', {}))
-      reference   =
-        step { super(next_command, attributes.except(:source, 'source')) }
+      reference   = step do
+        super(next_command, attributes: attributes.except(:source, 'source'))
+      end
 
       return success(reference) if reference.is_a?(Hash)
       return success(reference) if non_persisted_record?(reference)
@@ -89,6 +92,7 @@ module Fixtures::Middleware
 
       reference
     end
+    # rubocop:enable Metrics/MethodLength
 
     def reference_types
       Source::REFERENCE_TYPES.map(&:constantize)

@@ -40,7 +40,7 @@ module Api
 
       steps do
         attributes = step :require_resource_params
-        resource   = step { create_operation.call(attributes) }
+        resource   = step { create_operation.call(attributes: attributes) }
 
         { resource_name => resource }
       end
@@ -188,14 +188,19 @@ module Api
       Cuprum::Result.new(value: value)
     end
 
-    def update_resource
+    def update_resource # rubocop:disable Metrics/MethodLength
       find_operation   = operation_factory.find_one
       update_operation = operation_factory.update
 
       steps do
         attributes = step :require_resource_params
         resource   = step { find_operation.call(resource_id) }
-        resource   = step { update_operation.call(resource, attributes) }
+        resource   = step do
+          update_operation.call(
+            attributes: attributes,
+            record:     resource
+          )
+        end
 
         { resource_name => resource }
       end

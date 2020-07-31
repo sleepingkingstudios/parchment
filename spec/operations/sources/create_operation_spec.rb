@@ -31,10 +31,15 @@ RSpec.describe Operations::Sources::CreateOperation do
     let(:reference_type) { reference&.class&.name }
 
     def call_operation
-      operation.call(attributes)
+      operation.call(attributes: attributes)
     end
 
-    it { expect(operation).to respond_to(:call).with(0..1).arguments }
+    it 'should define the method' do
+      expect(operation)
+        .to respond_to(:call)
+        .with(0).arguments
+        .and_keywords(:attributes)
+    end
 
     describe 'with no arguments' do
       let(:expected_error) do

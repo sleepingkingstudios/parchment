@@ -1,5 +1,9 @@
 # Development Notes
 
+- Handle changes to Cucumber loading
+  - Update version to 4.0 release or 4.1.
+  - Fix loading issues! See https://cucumber.io/blog/open-source/tweaking-cucumber-rubys-auto-loader/
+
 ## Authentication
 
 - User Management (Admin-only)

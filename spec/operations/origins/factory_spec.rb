@@ -11,7 +11,7 @@ RSpec.describe Operations::Origins::Factory do
 
   subject(:factory) { described_class.new(record_class) }
 
-  let(:record_class) { Spell }
+  let(:record_class) { Book }
 
   describe '::new' do
     it { expect(described_class).to be_constructible.with(1).argument }
@@ -23,21 +23,61 @@ RSpec.describe Operations::Origins::Factory do
 
   include_examples 'should define operation',
     :assign,
-    Operations::Origins::AssignOperation
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::AssignOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::GenerateSlug)
+        )
+    }
 
   include_examples 'should define operation',
     :build,
-    Operations::Origins::BuildOperation
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::BuildOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::GenerateSlug)
+        )
+    }
 
   include_examples 'should define operation',
     :create,
-    Operations::Origins::CreateOperation
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::CreateOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::GenerateSlug)
+        )
+    }
 
   include_examples 'should define operation',
     :find_one,
-    Operations::Origins::FindOneOperation
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::FindOneOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::FindBySlug)
+        )
+    }
 
   include_examples 'should define operation',
     :update,
-    Operations::Origins::UpdateOperation
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::UpdateOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::GenerateSlug)
+        )
+    }
 end

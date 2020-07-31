@@ -23,37 +23,105 @@ RSpec.describe Operations::References::Factory do
 
   include_examples 'should define operation',
     :assign,
-    Operations::References::AssignOperation
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::AssignOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::GenerateSlug)
+        )
+    }
 
   include_examples 'should define operation',
     :build,
-    Operations::References::BuildOperation
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::BuildOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::GenerateSlug)
+        )
+    }
 
   include_examples 'should define operation',
     :create,
-    Operations::References::CreateOperation
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::CreateOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::GenerateSlug),
+          a_subclass_of(Operations::Sources::Middleware::SetSource)
+        )
+    }
 
   include_examples 'should define operation',
     :destroy,
-    Operations::Records::DestroyOperation
+    -> { be_a_subclass_of(Operations::Records::DestroyOperation) }
 
   include_examples 'should define operation',
     :find_many,
-    Operations::References::FindManyOperation
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::FindManyOperation)
+        )
+        .and_middleware(
+          a_subclass_of(
+            Operations::Associations::Middleware::AssignHasOne,
+            association_name: :source
+          )
+        )
+    }
 
   include_examples 'should define operation',
     :find_matching,
-    Operations::References::FindMatchingOperation
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::FindMatchingOperation)
+        )
+        .and_middleware(
+          a_subclass_of(
+            Operations::Associations::Middleware::AssignHasOne,
+            association_name: :source
+          )
+        )
+    }
 
   include_examples 'should define operation',
     :find_one,
-    Operations::References::FindOneOperation
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::FindOneOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::FindBySlug),
+          a_subclass_of(
+            Operations::Associations::Middleware::AssignHasOne,
+            association_name: :source
+          )
+        )
+    }
 
   include_examples 'should define operation',
     :save,
-    Operations::Records::SaveOperation
+    -> { be_a_subclass_of(Operations::Records::SaveOperation) }
 
   include_examples 'should define operation',
     :update,
-    Operations::References::UpdateOperation
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::UpdateOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::GenerateSlug),
+          a_subclass_of(Operations::Sources::Middleware::SetSource)
+        )
+    }
 end
