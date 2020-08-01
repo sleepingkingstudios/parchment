@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'support/resources'
+require_relative '../resources'
+require_relative './mechanic'
 
 module Features::Resources
   class Action < Features::Resources::Mechanic

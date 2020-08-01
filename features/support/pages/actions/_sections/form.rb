@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'support/pages/actions'
-require 'support/pages/form_helper'
+require_relative '../../actions'
+require_relative '../../form_helper'
 
 module Features::Pages::Actions
   class Form < SitePrism::Section

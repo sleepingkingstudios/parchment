@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'support/pages/conditions'
-require 'support/pages/form_helper'
+require_relative '../../conditions'
+require_relative '../../form_helper'
 
 module Features::Pages::Conditions
   class Form < SitePrism::Section

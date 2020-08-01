@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'support/pages'
+require_relative '../pages'
 
 module Features::Pages
   module Actions; end

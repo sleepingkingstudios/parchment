@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'support/pages/base'
-require 'support/pages/spells'
+require_relative '../base'
+require_relative '../spells'
 
 module Features::Pages::Spells
   class Show < Features::Pages::Base

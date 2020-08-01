@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'support/pages/actions'
-require 'support/pages/base'
+require_relative '../actions'
+require_relative '../base'
 
 module Features::Pages::Actions
   class Show < Features::Pages::Base

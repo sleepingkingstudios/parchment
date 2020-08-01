@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require 'support/pages/base'
-require 'support/pages/conditions'
+require_relative '../base'
+require_relative '../conditions'
+require_relative './_sections/form'
 
 module Features::Pages::Conditions
   class Update < Features::Pages::Base
