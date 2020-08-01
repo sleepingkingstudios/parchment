@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'support/pages/base'
-require 'support/pages/conditions'
+require_relative '../base'
+require_relative '../conditions'
 
 module Features::Pages::Conditions
   class Index < Features::Pages::Base

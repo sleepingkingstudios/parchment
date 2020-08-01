@@ -2,7 +2,7 @@
 
 require 'fixtures'
 
-require 'support/resources'
+require_relative '../resources'
 
 module Features::Resources
   class Definition

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'support/pages/form_helper'
-require 'support/pages/books'
+require_relative '../../books'
+require_relative '../../form_helper'
 
 module Features::Pages::Books
   class Form < SitePrism::Section

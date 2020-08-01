@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'support/pages/form_helper'
+require_relative '../../pages'
+require_relative '../form_helper'
 
 module Features::Pages
   class LoginForm < SitePrism::Section

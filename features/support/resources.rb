@@ -2,14 +2,6 @@
 
 module Features
   module Resources
-    autoload :Action,     'support/resources/action'
-    autoload :Book,       'support/resources/book'
-    autoload :Condition,  'support/resources/condition'
-    autoload :Definition, 'support/resources/definition'
-    autoload :Mechanic,   'support/resources/mechanic'
-    autoload :Source,     'support/resources/source'
-    autoload :Spell,      'support/resources/spell'
-
     def self.all
       @all ||= %w[
         Action

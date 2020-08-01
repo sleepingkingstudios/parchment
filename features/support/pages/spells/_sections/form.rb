@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'support/pages/form_helper'
-require 'support/pages/spells'
+require_relative '../../form_helper'
+require_relative '../../spells'
 
 module Features::Pages::Spells
   class Form < SitePrism::Section

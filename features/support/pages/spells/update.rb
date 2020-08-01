@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require 'support/pages/base'
-require 'support/pages/spells'
+require_relative '../base'
+require_relative '../spells'
+require_relative './_sections/form'
 
 module Features::Pages::Spells
   class Update < Features::Pages::Base

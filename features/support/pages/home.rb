@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'support/pages/base'
+require_relative './base'
+require_relative '../pages'
 
 module Features::Pages
   class Home < Features::Pages::Base
