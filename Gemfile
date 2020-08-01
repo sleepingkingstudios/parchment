@@ -57,8 +57,8 @@ group :development do
 end
 
 group :test do
-  gem 'cucumber', '4.0.0.rc.1'
-  gem 'cucumber-rails', '~> 1.8', require: false
+  gem 'cucumber', '~> 4.1'
+  gem 'cucumber-rails', '~> 2.1', require: false
   gem 'database_cleaner', '~> 1.7'
   gem 'selenium-webdriver', '~> 3.142'
   gem 'site_prism', '~> 3.4'
