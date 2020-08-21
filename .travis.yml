@@ -3,7 +3,9 @@ language: ruby
 rvm: 2.6.6
 node_js: "10.15.3"
 env:
-  - NODE_OPTIONS="--max_old_space_size=4096"
+  global:
+    - NODE_OPTIONS="--max_old_space_size=4096"
+    - PGPORT=5433
 install:
   - bundle install
   - nvm install 10.15.3
@@ -32,4 +34,8 @@ cache:
     - node_modules
 addons:
   chrome: stable
-  postgresql: 9.6
+  postgresql: 12
+  apt:
+    packages:
+    - postgresql-12
+    - postgresql-client-12

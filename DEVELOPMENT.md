@@ -1,9 +1,5 @@
 # Development Notes
 
-- Handle changes to Cucumber loading
-  - Update version to 4.0 release or 4.1.
-  - Fix loading issues! See https://cucumber.io/blog/open-source/tweaking-cucumber-rubys-auto-loader/
-
 ## Authentication
 
 - User Management (Admin-only)
@@ -17,9 +13,6 @@
 
 ## Client
 
-- Top Navigation
-  - Home
-  - Spells, ..., Mechanics, Sources
 - generic 404 page for non-matching route
 - add Loading overlay for resource tables
   - wait for Loading overlay to appear/disappear in features
@@ -123,24 +116,37 @@
   - #show action
     - `:only` parameter - restrict fields queried/returned
 
-## Operations
+## Mechanics
 
-- Operations::Middleware
-  - Defines #base_command, #middleware class properties
-  - Extract Fixtures::Middleware.apply
-    - Also extends result with Operations::Middleware
-    - Also sets #base_command, #middleware
+- Add :data (JSON) column
+- Add :slug column
+
+### Actions
+
+- Add data keys
+  - action_type (String) - action, bonus_action, reaction
+  - action_trigger (String) - bonus action only
+  - category (String) - standard, class, monster, feat
+
+### Operations
+
+- Apply slug middleware.
+
+## Sources
+
+- flag columns - official, playtest, homebrew
+
+### Books
+
+- Refactor to Sources::Books ?
+
+### Homebrew
+
+- belongs_to :user
+  - inverse of has_one :homebrew_source
 
 ## Spells
 
-- authorship - belongs_to :user
-  - for Homebrew, display in Source for client e.g. "Homebrew (_username_)"
-- validate slug format - must be /[a-z]+(-[a-z]+)*/
-  - automatically update slug in form?
-- locking slugs
-  - slug_lock field
-  - if false, automatically update slug when name is changed
-    - live update on client (locked checkbox, disables field)
 - composite_slug field
   - `"#{source.slug || 'homebrew'}-#{slug}"`
   - if new? or slug_changed? or source_changed?
@@ -180,13 +186,3 @@
   - school
   - level
   - ritual
-
-## Serializers
-
-- Extract AttributesSerializer as base class to ResourceSerializer
-  - extract .attribute, .attributes, #call from BaseSerializer
-- Implement StringSerializer
-  - defines .instance
-  - returns the string
-- Implement ArraySerializer
-- Implement HashSerializer
