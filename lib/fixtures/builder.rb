@@ -112,7 +112,7 @@ module Fixtures
           Operations::Middleware.apply(command: command, middleware: middleware)
       end
 
-      data.map { |hsh| command.call(attributes: hsh).value }
+      data.map { |hsh| warn_on_failure(hsh) { command.call(attributes: hsh) } }
     end
 
     def process_data(data, count: nil, except: nil)
@@ -128,6 +128,19 @@ module Fixtures
 
     def resource_name
       @resource_name ||= record_class.name.underscore.pluralize
+    end
+
+    def warn_on_failure(hsh)
+      result = yield
+
+      return result.value if result.success?
+
+      Kernel.warn(
+        "Unable to process #{record_class}" \
+        " #{(hsh['name'] || hsh['title']).inspect} (#{result.error.message})"
+      )
+
+      result.value
     end
   end
 end

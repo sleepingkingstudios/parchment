@@ -8,6 +8,9 @@ FactoryBot.define do
 
     description       { 'Does something, somehow.' }
     short_description { 'Does something.' }
+    slug do
+      Operations::Attributes::GenerateSlug.new.call(name).value
+    end
   end
 
   factory :action, class: 'Mechanics::Action', parent: :mechanic do

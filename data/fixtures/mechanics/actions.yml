@@ -1,9 +1,11 @@
 ---
 - name:        Defenestrate
+  slug:        defenestrate
   description: |
     You throw the target creature out the nearest window. Harsh.
   short_description: Throw target creature out the nearest window.
 - name:        Ponder
+  slug:        ponder
   description: |
     You sit and think for a while.
 
@@ -11,6 +13,7 @@
     about that instead.
   short_description: Sit and think for a while.
 - name:        Splash
+  slug:        splash
   description: |
     Bounce around uselessly while others are doing the hard work.
 

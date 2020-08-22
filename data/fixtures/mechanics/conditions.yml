@@ -1,14 +1,17 @@
 ---
 - name:              Ridicule
+  slug:              ridicule
   short_description: Viciously mocked.
   description: |
     - A ridiculed creature cannot take any actions or reactions.
 - name:              Taunt
+  slug:              taunt
   short_description: Creature must attack.
   description: |
     - A taunted creature can only use the Attack action, and only to attack the
       creature that inflicted the taunt.
 - name:              Zombie
+  slug:              zombie
   short_description: Resistances and vulnerabilities of undeath.
   description: |
     - A zombied creature is treated as the undead type.

@@ -11,6 +11,7 @@ RSpec.describe Mechanic, type: :model do
 
   let(:attributes) do
     {
+      data:              {},
       description:       <<~TEXT,
         You sit and think for a while.
 
@@ -18,21 +19,32 @@ RSpec.describe Mechanic, type: :model do
         think about that instead.
       TEXT
       name:              'Ponder',
-      short_description: 'Sit and think for a while.'
+      short_description: 'Sit and think for a while.',
+      slug:              'ponder'
     }
   end
 
   describe '::Factory' do
     include_examples 'should define constant',
       :Factory,
-      -> { be_a Operations::Records::Factory }
+      -> { be_a Operations::Mechanics::Factory }
 
     it { expect(described_class::Factory.record_class).to be described_class }
   end
 
+  describe '.slug_attribute' do
+    include_examples 'should define class reader', :slug_attribute, 'name'
+  end
+
   include_examples 'should have primary key'
 
+  include_examples 'should have slug'
+
   include_examples 'should have timestamps'
+
+  describe '#data' do
+    include_examples 'should have attribute', :data, default: {}
+  end
 
   describe '#description' do
     include_examples 'should have attribute', :description, default: ''
