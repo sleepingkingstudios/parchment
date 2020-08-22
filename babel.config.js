@@ -28,6 +28,7 @@ module.exports = function(api) {
       (isProductionEnv || isDevelopmentEnv) && [
         require('@babel/preset-env').default,
         {
+          corejs: 3,
           forceAllTransforms: true,
           useBuiltIns: 'entry',
           modules: false,
@@ -37,6 +38,7 @@ module.exports = function(api) {
       [
         require('@babel/preset-react').default,
         {
+          corejs: 3,
           development: isDevelopmentEnv || isTestEnv,
           useBuiltIns: true
         }
@@ -56,6 +58,7 @@ module.exports = function(api) {
       [
         require('@babel/plugin-proposal-object-rest-spread').default,
         {
+          corejs: 3,
           useBuiltIns: true
         }
       ],
