@@ -19,6 +19,12 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+# Ignore local credentials.
+/config/credentials/development.key
+/config/credentials/development.yml.enc
+/config/credentials/test.key
+/config/credentials/test.yml.enc
+
 # Ignore Javascript modules and compiled files.
 /public/packs
 /public/packs-test
@@ -32,10 +38,6 @@ yarn-debug.log*
 /doc/*
 .yardoc
 .yardopts
-
-/config/credentials/development.key
-
-/config/credentials/test.key
 
 /.ssh/*_rsa
 /.ssh/*_rsa.pub
