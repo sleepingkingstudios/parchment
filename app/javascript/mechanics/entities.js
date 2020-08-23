@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 export const mechanicType = PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   shortDescription: PropTypes.string.isRequired,
   notes: PropTypes.string,
@@ -21,6 +22,7 @@ export const mechanicDefaultAttributes = {
   name: '',
   description: '',
   shortDescription: '',
+  slug: '',
   notes: '',
 };
 

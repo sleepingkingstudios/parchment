@@ -84,7 +84,9 @@ CREATE TABLE public.mechanics (
     name character varying DEFAULT ''::character varying NOT NULL,
     description text DEFAULT ''::text NOT NULL,
     short_description character varying DEFAULT ''::character varying NOT NULL,
-    notes text DEFAULT ''::text NOT NULL
+    notes text DEFAULT ''::text NOT NULL,
+    data jsonb,
+    slug character varying DEFAULT ''::character varying NOT NULL
 );
 
 
@@ -264,6 +266,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200220214104'),
 ('20200220214830'),
 ('20200415062324'),
-('20200415082014');
+('20200415082014'),
+('20200821230610');
 
 

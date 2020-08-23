@@ -8,6 +8,7 @@ describe('<MechanicBlock />', () => {
     id: '00000000-0000-0000-0000-000000000000',
     type: '',
     name: 'Self-Destruct',
+    slug: 'self-destruct',
     shortDescription: 'Creates a big boom',
     description: 'Destroys all nearby foes at the cost of your life.',
   };
@@ -45,6 +46,12 @@ describe('<MechanicBlock />', () => {
     expect(descriptionElement).toHaveProp('text', mechanic.description);
   });
 
+  it('should match the snapshot', () => {
+    const rendered = shallow(<MechanicBlock {...defaultProps} />);
+
+    expect(rendered).toMatchSnapshot();
+  });
+
   describe('when the mechanic has a type', () => {
     const action = Object.assign(
       {},
@@ -75,6 +82,17 @@ describe('<MechanicBlock />', () => {
       mechanic,
       { notes: "It's a real blast" },
     );
+
+    it('should render the mechanic slug', () => {
+      const rendered = shallow(
+        <MechanicBlock {...defaultProps} data={mechanicWithNotes} showAdditionalDetails />,
+      );
+      const descriptionElement = rendered.find('.mechanic-block-slug');
+
+      expect(descriptionElement).toExist();
+      expect(descriptionElement).toHaveDisplayName('p');
+      expect(descriptionElement).toHaveText(`Slug: ${mechanic.slug}`);
+    });
 
     it('should render the mechanic notes', () => {
       const rendered = shallow(

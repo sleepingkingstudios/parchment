@@ -11,26 +11,34 @@ RSpec.describe Mechanics::Condition, type: :model do
 
   let(:attributes) do
     {
+      data:              {},
       description:       <<~TEXT,
         You take damage from healing effects, but are healed by *inflict* spells
         and similar effects.
       TEXT
       name:              'Zombie',
-      short_description: 'Gain resistances and vulnerabilities of undead.'
+      short_description: 'Gain resistances and vulnerabilities of undead.',
+      slug:              'zombie'
     }
   end
 
   describe '::Factory' do
     include_examples 'should define constant',
       :Factory,
-      -> { be_a Operations::Records::Factory }
+      -> { be_a Operations::Mechanics::Factory }
 
     it { expect(described_class::Factory.record_class).to be described_class }
   end
 
   include_examples 'should have primary key'
 
+  include_examples 'should have slug'
+
   include_examples 'should have timestamps'
+
+  describe '#data' do
+    include_examples 'should have attribute', :data, default: {}
+  end
 
   describe '#description' do
     include_examples 'should have attribute', :description, default: ''

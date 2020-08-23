@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require 'operations/applied_middleware'
-require 'operations/origins'
+require 'operations/mechanics'
 require 'operations/records/factory'
 require 'operations/records/middleware/find_by_slug'
 require 'operations/records/middleware/generate_slug'
 
-module Operations::Origins
-  # Command factory for generating record operations for origins.
+module Operations::Mechanics
+  # Command factory for generating record operations for mechanics.
   class Factory < Operations::Records::Factory
     command_class(:assign) do
       Operations::AppliedMiddleware.subclass(
@@ -50,7 +50,7 @@ module Operations::Origins
       @find_by_slug_middleware ||=
         Operations::Records::Middleware::FindBySlug.subclass(
           record_class,
-          as: "Operations::Origins::Find#{record_class}BySlugOperation"
+          as: "Operations::Mechanics::Find#{record_class}BySlugOperation"
         )
     end
 
@@ -58,7 +58,7 @@ module Operations::Origins
       @generate_slug_middleware ||=
         Operations::Records::Middleware::GenerateSlug.subclass(
           record_class,
-          as: "Operations::Origins::Generate#{record_class}SlugOperation"
+          as: "Operations::Mechanics::Generate#{record_class}SlugOperation"
         )
     end
   end

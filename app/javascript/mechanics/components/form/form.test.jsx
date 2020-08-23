@@ -23,6 +23,7 @@ describe('<MechanicForm />', () => {
   const mechanic = {
     id: '00000000-0000-0000-0000-000000000000',
     name: 'Self-Destruct',
+    slug: 'self-destruct',
     description: 'Destroy yourself in a giant explosion',
     shortDescription: 'Sacrifice yourself to destroy others',
     notes: '',
@@ -88,6 +89,14 @@ describe('<MechanicForm />', () => {
 
     expect(rendered).toHaveFormGroup('ShortDescriptionField', (formGroup) => {
       expect(formGroup).toHaveFormInput({ form, prop: 'shortDescription' });
+    });
+  });
+
+  it('should render the slug field', () => {
+    const rendered = shallow(<MechanicForm {...defaultProps} />);
+
+    expect(rendered).toHaveFormGroup('SlugField', (formGroup) => {
+      expect(formGroup).toHaveFormInput({ form, prop: 'slug' });
     });
   });
 

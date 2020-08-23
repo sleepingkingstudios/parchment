@@ -261,6 +261,46 @@ RSpec.describe Fixtures::Builder do
     end
   end
 
+  shared_examples 'should warn on failures' do
+    def warning_message_for(hsh)
+      "Unable to process #{record_class}" \
+      " #{(hsh['name'] || hsh['title']).inspect} (#{result.error.message})"
+    end
+
+    wrap_context 'when data is defined for the resource' do
+      let(:error)     { Cuprum::Error.new(message: 'Something went wrong.') }
+      let(:result)    { Cuprum::Result.new(error: error) }
+      let(:operation) { instance_double(Cuprum::Operation, call: result) }
+      let(:factory) do
+        instance_double(
+          Operations::Records::Factory,
+          build:            operation,
+          create_or_update: operation
+        )
+      end
+
+      before(:example) do
+        allow(Kernel).to receive(:warn)
+
+        # rubocop:disable RSpec/SubjectStub
+        allow(builder).to receive(:read_command).and_return(operation)
+
+        allow(builder).to receive(:operation_factory).and_return(factory)
+        # rubocop:enable RSpec/SubjectStub
+      end
+
+      it 'should print a warning', :aggregate_failures do
+        build_fixtures
+
+        data.each do |attributes|
+          expect(Kernel)
+            .to have_received(:warn)
+            .with(warning_message_for(attributes))
+        end
+      end
+    end
+  end
+
   subject(:builder) { described_class.new(record_class) }
 
   let(:record_class) { Spell }
@@ -324,6 +364,8 @@ RSpec.describe Fixtures::Builder do
     end
 
     include_examples 'should filter the data'
+
+    include_examples 'should warn on failures'
   end
 
   describe '#create' do
@@ -387,6 +429,8 @@ RSpec.describe Fixtures::Builder do
     end
 
     include_examples 'should filter the data'
+
+    include_examples 'should warn on failures'
 
     wrap_context 'when options[:find_by] is an array of values' do
       it 'should delegate to the create or update command' do
@@ -465,6 +509,8 @@ RSpec.describe Fixtures::Builder do
     end
 
     include_examples 'should filter the data'
+
+    include_examples 'should warn on failures'
 
     describe 'with skip_middleware: true' do
       it 'should return an empty array' do

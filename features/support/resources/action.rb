@@ -10,6 +10,7 @@ module Features::Resources
         name
         description
         short_description
+        slug
         type
       ]
     end

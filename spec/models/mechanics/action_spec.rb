@@ -11,25 +11,33 @@ RSpec.describe Mechanics::Action, type: :model do
 
   let(:attributes) do
     {
+      data:              {},
       description:       <<~TEXT,
         You throw the target creature out the nearest window. Harsh.
       TEXT
       name:              'Defenestrate',
-      short_description: 'Throw target creature out the nearest window.'
+      short_description: 'Throw target creature out the nearest window.',
+      slug:              'defenestrate'
     }
   end
 
   describe '::Factory' do
     include_examples 'should define constant',
       :Factory,
-      -> { be_a Operations::Records::Factory }
+      -> { be_a Operations::Mechanics::Factory }
 
     it { expect(described_class::Factory.record_class).to be described_class }
   end
 
   include_examples 'should have primary key'
 
+  include_examples 'should have slug'
+
   include_examples 'should have timestamps'
+
+  describe '#data' do
+    include_examples 'should have attribute', :data, default: {}
+  end
 
   describe '#description' do
     include_examples 'should have attribute', :description, default: ''

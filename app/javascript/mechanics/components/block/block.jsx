@@ -8,19 +8,31 @@ import { exists } from '../../../utils/object';
 
 import './mechanic-block-styles.css';
 
+const renderNotes = ({ data }) => {
+  if (!exists(data.notes) || data.notes.length === 0) { return null; }
+
+  return (
+    <Fragment>
+      <p><em>Notes</em></p>
+
+      <PlainText className="mechanic-block-notes" text={data.notes} />
+    </Fragment>
+  );
+};
+
 const renderAdditionalDetails = ({ data, showAdditionalDetails }) => {
   if (!showAdditionalDetails) { return null; }
-
-  if (!exists(data.notes) || data.notes.length === 0) { return null; }
 
   return (
     <Fragment>
       <hr />
 
       <div className="mechanic-block-additional-details">
-        <p><em>Notes</em></p>
+        <p className="mechanic-block-slug">
+          <em>Slug:</em> { data.slug }
+        </p>
 
-        <PlainText className="mechanic-block-notes" text={data.notes} />
+        { renderNotes({ data }) }
       </div>
     </Fragment>
   );
