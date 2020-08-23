@@ -58,6 +58,18 @@ RSpec.describe Operations::Mechanics::Factory do
     }
 
   include_examples 'should define operation',
+    :find_one,
+    lambda {
+      be_applied_middleware
+        .with_command(
+          a_subclass_of(Operations::Records::FindOneOperation)
+        )
+        .and_middleware(
+          a_subclass_of(Operations::Records::Middleware::FindBySlug)
+        )
+    }
+
+  include_examples 'should define operation',
     :update,
     lambda {
       be_applied_middleware

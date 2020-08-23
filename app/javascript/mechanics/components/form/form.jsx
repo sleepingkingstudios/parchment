@@ -12,17 +12,25 @@ import { injectProps } from '../../../utils/react';
 
 import { formErrorsType } from '../../../components/form/entities';
 import { mechanicFormType } from '../../entities';
+import { dig } from '../../../utils/object';
+import { slugify } from '../../../utils/string';
+
+const generatePlaceholder = propName => ({ data, path }) => (
+  slugify(dig(data, ...path, propName))
+);
 
 const DescriptionField = formField(FormTextAreaInput, 'description');
 
 const NameField = formField(FormInput, 'name');
+
+const SlugField = formField(FormInput, 'slug', { mapDataToPlaceholder: generatePlaceholder('name') });
 
 const NotesField = formField(FormTextAreaInput, 'notes');
 
 const ShortDescriptionField = formField(FormInput, 'shortDescription');
 
 const CancelButton = formGroup(
-  injectProps(FormCancelButton, { resourceName: 'Mechanic' }),
+  injectProps(FormCancelButton, { propName: 'slug', resourceName: 'Mechanic' }),
   { displayName: 'CancelButton' },
 );
 
@@ -52,9 +60,11 @@ const MechanicForm = (props) => {
   return (
     <Form className="mechanic-form" form={form}>
       <FormRow>
-        <NameField form={form} colWidth={4} />
+        <NameField form={form} colWidth={8} />
 
-        <ShortDescriptionField form={form} colWidth={8} />
+        <SlugField form={form} colWidth={4} />
+
+        <ShortDescriptionField form={form} colWidth={12} />
 
         <DescriptionField form={form} colWidth={12} />
 

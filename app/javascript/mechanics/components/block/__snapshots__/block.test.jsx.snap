@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MechanicBlock /> should match the snapshot 1`] = `
+<div
+  className="mechanic-block"
+>
+  <p
+    className="mechanic-block-name"
+  >
+    Self-Destruct
+     
+    <MechanicBlockType
+      description="Destroys all nearby foes at the cost of your life."
+      id="00000000-0000-0000-0000-000000000000"
+      name="Self-Destruct"
+      shortDescription="Creates a big boom"
+      slug="self-destruct"
+      type=""
+    />
+  </p>
+  <p
+    className="mechanic-block-short-description"
+  >
+    <strong>
+      Short Description:
+    </strong>
+     
+    Creates a big boom
+  </p>
+  <RichText
+    className="mechanic-block-description"
+    markdown={true}
+    text="Destroys all nearby foes at the cost of your life."
+  />
+</div>
+`;

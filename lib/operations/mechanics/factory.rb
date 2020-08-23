@@ -3,6 +3,7 @@
 require 'operations/applied_middleware'
 require 'operations/mechanics'
 require 'operations/records/factory'
+require 'operations/records/middleware/find_by_slug'
 require 'operations/records/middleware/generate_slug'
 
 module Operations::Mechanics
@@ -29,6 +30,13 @@ module Operations::Mechanics
       )
     end
 
+    command_class(:find_one) do
+      Operations::AppliedMiddleware.subclass(
+        Operations::Records::FindOneOperation.subclass(record_class),
+        find_by_slug_middleware
+      )
+    end
+
     command_class(:update) do
       Operations::AppliedMiddleware.subclass(
         Operations::Records::UpdateOperation.subclass(record_class),
@@ -38,11 +46,19 @@ module Operations::Mechanics
 
     private
 
+    def find_by_slug_middleware
+      @find_by_slug_middleware ||=
+        Operations::Records::Middleware::FindBySlug.subclass(
+          record_class,
+          as: "Operations::Mechanics::Find#{record_class}BySlugOperation"
+        )
+    end
+
     def generate_slug_middleware
       @generate_slug_middleware ||=
         Operations::Records::Middleware::GenerateSlug.subclass(
           record_class,
-          as: "Operations:: Mechanics::Generate#{record_class}SlugOperation"
+          as: "Operations::Mechanics::Generate#{record_class}SlugOperation"
         )
     end
   end

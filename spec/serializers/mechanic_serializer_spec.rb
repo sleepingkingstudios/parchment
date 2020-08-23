@@ -28,6 +28,7 @@ RSpec.describe Serializers::MechanicSerializer do
       :name,
       :notes,
       :short_description,
+      :slug,
       :type
   end
 end

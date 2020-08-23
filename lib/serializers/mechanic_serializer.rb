@@ -12,6 +12,7 @@ module Serializers
       :name,
       :notes,
       :short_description,
+      :slug,
       :type
 
     private
