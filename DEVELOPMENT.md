@@ -1,5 +1,31 @@
 # Development Notes
 
+## Ability
+
+- belongs_to :granter, polymorphic: true
+- has_many :versions
+- columns:
+  - name (String)
+  - slug (String)
+  - description (Text)
+  - active (Boolean) [true => active, false => passive]
+  - action (String) [action, bonus action, reaction] if active
+  - recharge (String) [none, short rest, long rest]
+
+### AbilityVersion (WIP)
+
+- belongs_to :ability
+- columns:
+  - description (Text)
+  - min_level (Integer)
+  - max_level (Integer)
+
+### CharacterAbility
+
+- belongs_to :ability
+- belongs_to :character
+- belongs_to :granter, polymorphic: true
+
 ## Authentication
 
 - User Management (Admin-only)
@@ -56,27 +82,13 @@
 
 - auto-size based on contents? opt-in via prop?
 
-## Characters
+## Character
 
 - columns
   - name (String)
   - level (Integer, 1...20)
 
-### Abilities
-
-- columns
-  - active (Boolean) [true => active, false => passive]
-  - action (String) [action, bonus action, reaction]
-  - recharge (String) [none, short rest, long rest]
-  - text (String)
-- belongs_to :character
-- the most basic ability is a passive ability with text
-
-#### Abilities::Base
-
-- abstract base class
-
-#### SpellcastingAbility
+### Character::SpellcastingAbility
 
 - belongs_to :character
 - has_many :spells_known
@@ -92,12 +104,12 @@
   - spell save DC
   - spell attack bonus
 
-##### SpellKnown
+#### Character::SpellKnown
 
 - belongs_to :spell
 - belongs_to :spellcasting_ability
 
-##### SpellPrepared
+#### Character::SpellPrepared
 
 - belongs_to :spell
 - belongs_to :spellcasting_ability
@@ -116,6 +128,68 @@
   - #show action
     - `:only` parameter - restrict fields queried/returned
 
+## Decision
+
+- belongs_to :granter
+- has_many :options
+- columns
+  - category (String) - Class name (e.g. 'Tools::MusicalInstrument')
+
+### DecisionOption
+
+- belongs_to :decision
+- has_many :abilities,     type: CharacterAbility,     inverse_of: :granter
+- has_many :proficiencies, type: CharacterProficiency, inverse_of: :granter
+
+### CharacterDecision
+
+- belongs_to :character
+- belongs_to :decision
+- has_many :abilities,     type: CharacterAbility,     inverse_of: :granter
+- has_many :proficiencies, type: CharacterProficiency, inverse_of: :granter
+- columns:
+  - resolved (Boolean)
+
+Example: Choosing A Proficiency
+
+- Abigail (Character) belongs_to Outlander (Background)
+  - Outlander has "choose one musical instrument" (Decision)
+    - decision has category: Tools::MusicalInstrument
+    - decision has count: 1
+    - decision has options: []
+  - Abigail has "choose one musical instrument" (CharacterDecision)
+    - CharacterDecision#decision is "choose one musical instrument"
+    - CharacterDecision#resolved is false
+    - CharacterDecision#proficiencies is []
+  - Abigail's player selects the Theremin
+    - CharacterDecision#resolved is true
+    - CharacterDecision#proficiencies is [CharacterProficiency]
+      - CharacterProficiency#granter is CharacterDecision
+      - CharacterProficiency#proficiency is Proficiency
+        - Proficiency#type is ToolProficiency
+        - Proficiency#reference is theremin
+
+Example: Choosing A Skill From A List
+
+- Abigail (Character) belongs_to Barbarian (Profession)
+  - Barbarian has "choose two Skills from list" (Decision)
+  - decision has category: Skill
+    - decision has options: Animal Handling, Athletics, Intimidation, ...
+    - decision has count: 2
+  - Abigail has "choose two Skills from List" (CharacterDecision)
+    - CharacterDecision#decision is "choose two Skills from List"
+    - CharacterDecision#resolved is false
+    - CharacterDecision#proficiencies is []
+  - Abigail's player selects Athletics and Intimidation
+    - CharacterDecision#resolved is true
+    - CharacterDecision#proficiencies is [CharacterProficiency, ...]
+      - Proficiency#type is SkillProficiency
+      - Proficiency#reference is athletics, intimidation
+
+### Decision::AbilityScoreIncrease
+
+### Decision::
+
 ## Mechanics
 
 - Add :data (JSON) column
@@ -131,6 +205,109 @@
 ### Operations
 
 - Apply slug middleware.
+
+## Proficiencies
+
+- belongs_to :granter, polymorphic: true
+  - entity that grants the proficiency
+  - e.g. a Race, a CharacterClass, a Feat, a CharacterDecision, etc.
+- belongs_to :reference, polymorphic: true
+  - e.g. a Weapon, WeaponGroup, Skill, SkillGroup, etc.
+- columns
+  - name (String)
+  - slug (String)
+  - type (String)
+    - STI - WeaponProficiency, WeaponGroupProficiency, etc.
+  - double_bonus (Boolean)
+
+### Examples
+
+- name: Lasers
+  type: WeaponGroupProficiency
+  granter: Laser Lover (Feat)
+  reference: Lasers (WeaponGroup)
+- name: Laser Pistols
+  type: WeaponProficiency
+  granter: Flumph (Race)
+  reference: Laser Pistol (Weapon)
+
+### Character Proficiency
+
+- belongs_to :character
+- belongs_to :proficiency
+
+## Races
+
+- has_many :variants
+- has_many :abilities
+- has_many :ability_score_increases
+- has_many :character_decisions
+- has_many :proficiencies
+- belongs_to :size
+- columns
+  - name (String)
+  - slug (String)
+  - speed (Integer)
+
+### RaceVariant
+
+- extends Race
+- belongs_to :race
+
+### CharacterRace
+
+- belongs_to :character
+- belongs_to :race
+  - can be a RaceVariant
+
+## References
+
+### AbilityScore
+
+- has_many :skills
+- columns
+  - name (String)
+  - slug (String)
+  - description (Text)
+- not editable
+  - only editable by admin? (see Authorization)
+- in data/seeds
+
+#### AbilityScoreIncrease
+
+- belongs_to :ability_score, inverse: false
+- columns
+  - amount (Integer)
+
+### Armor
+
+#### ArmorGroup
+
+### Language
+
+### Size
+
+- not editable
+  - only editable by admin? (see Authorization)
+- in data/seeds
+
+### Skill
+
+- belongs_to :ability_score
+
+### Tool
+
+#### Tools::ArtisansTools
+
+#### Tools::MusicalInstrument
+
+### Weapon
+
+- belongs_to :weapon_group
+
+#### WeaponGroup
+
+- has_many :weapons
 
 ## Sources
 

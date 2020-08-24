@@ -1,54 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  HtmlRenderer,
-  Parser as CommonmarkParser,
-} from 'commonmark';
-import { Parser as HtmlParser } from 'html-to-react';
 import striptags from 'striptags';
 
+import MarkdownText from '../markdown-text';
+import PlainText from '../plain-text';
+import { useLiquid } from './liquid/hooks';
 import { addClassName } from '../../utils/react';
 
-const parseHtml = markdown => new HtmlParser().parse(markdown);
+const renderContent = ({ markdown, text }) => {
+  if (markdown) { return (<MarkdownText text={text} />); }
 
-const processMarkdown = (raw) => {
-  const stripped = striptags(raw);
-  const parser = new CommonmarkParser();
-  const parsed = parser.parse(stripped);
-  const renderer = new HtmlRenderer({ safe: true });
-  const rendered = renderer.render(parsed);
-
-  return rendered.trim();
+  return (<PlainText text={text} />);
 };
 
 const RichText = (props) => {
   const {
     className,
+    liquid,
     markdown,
     text,
   } = props;
-  let buffer = striptags(text);
+  const safeText = striptags(text);
 
-  if (markdown) {
-    buffer = processMarkdown(buffer);
-  } else if (buffer.length > 0) {
-    buffer = `<p>${buffer}</p>`;
-  }
+  if (safeText.length === 0) { return null; }
+
+  const [content, updateContent] = useState(
+    liquid ? 'Loading...' : safeText,
+  );
+
+  if (liquid) { useLiquid({ callback: updateContent, template: safeText }); }
 
   return (
     <div className={addClassName('rich-text', className)}>
-      { parseHtml(buffer) }
+      { renderContent({ markdown, text: content }) }
     </div>
   );
 };
 
 RichText.defaultProps = {
   className: null,
+  liquid: true,
   markdown: true,
 };
 
 RichText.propTypes = {
   className: PropTypes.string,
+  liquid: PropTypes.bool,
   markdown: PropTypes.bool,
   text: PropTypes.string.isRequired,
 };

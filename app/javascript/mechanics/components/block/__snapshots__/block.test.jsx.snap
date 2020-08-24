@@ -29,6 +29,7 @@ exports[`<MechanicBlock /> should match the snapshot 1`] = `
   </p>
   <RichText
     className="mechanic-block-description"
+    liquid={true}
     markdown={true}
     text="Destroys all nearby foes at the cost of your life."
   />
