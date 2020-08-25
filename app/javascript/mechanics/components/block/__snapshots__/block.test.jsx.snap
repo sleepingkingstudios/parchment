@@ -18,14 +18,33 @@ exports[`<MechanicBlock /> should match the snapshot 1`] = `
       type=""
     />
   </p>
+  <RichText
+    className="mechanic-block-description"
+    liquid={true}
+    markdown={true}
+    text="Destroys all nearby foes at the cost of your life."
+  />
+</div>
+`;
+
+exports[`<MechanicBlock /> with showAdditionalDetails: true should match the snapshot 1`] = `
+<div
+  className="mechanic-block"
+>
   <p
-    className="mechanic-block-short-description"
+    className="mechanic-block-name"
   >
-    <strong>
-      Short Description:
-    </strong>
+    Self-Destruct
      
-    Creates a big boom
+    <MechanicBlockType
+      description="Destroys all nearby foes at the cost of your life."
+      id="00000000-0000-0000-0000-000000000000"
+      name="Self-Destruct"
+      notes="It's a real blast"
+      shortDescription="Creates a big boom"
+      slug="self-destruct"
+      type=""
+    />
   </p>
   <RichText
     className="mechanic-block-description"
@@ -33,5 +52,37 @@ exports[`<MechanicBlock /> should match the snapshot 1`] = `
     markdown={true}
     text="Destroys all nearby foes at the cost of your life."
   />
+  <hr />
+  <div
+    className="mechanic-block-additional-details"
+  >
+    <p
+      className="mechanic-block-slug"
+    >
+      <em>
+        Slug:
+      </em>
+       
+      self-destruct
+    </p>
+    <p
+      className="mechanic-block-short-description"
+    >
+      <em>
+        Short Description:
+      </em>
+       
+      Creates a big boom
+    </p>
+    <p>
+      <em>
+        Notes
+      </em>
+    </p>
+    <PlainText
+      className="mechanic-block-notes"
+      text="It's a real blast"
+    />
+  </div>
 </div>
 `;

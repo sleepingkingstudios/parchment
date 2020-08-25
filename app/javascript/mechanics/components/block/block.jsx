@@ -32,6 +32,10 @@ const renderAdditionalDetails = ({ data, showAdditionalDetails }) => {
           <em>Slug:</em> { data.slug }
         </p>
 
+        <p className="mechanic-block-short-description">
+          <em>Short Description:</em> { data.shortDescription }
+        </p>
+
         { renderNotes({ data }) }
       </div>
     </Fragment>
@@ -52,10 +56,6 @@ const MechanicBlock = ({ data, showAdditionalDetails }) => (
   <div className="mechanic-block">
     <p className="mechanic-block-name">
       { data.name } <MechanicBlockType {...data} />
-    </p>
-
-    <p className="mechanic-block-short-description">
-      <strong>Short Description:</strong> { data.shortDescription }
     </p>
 
     <RichText className="mechanic-block-description" text={data.description} />
