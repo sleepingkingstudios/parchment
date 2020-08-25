@@ -29,14 +29,6 @@ describe('<MechanicBlock />', () => {
     expect(nameElement).toIncludeText(mechanic.name);
   });
 
-  it('should render the mechanic short description', () => {
-    const rendered = shallow(<MechanicBlock {...defaultProps} />);
-    const shortDescriptionElement = rendered.find('.mechanic-block-short-description');
-
-    expect(shortDescriptionElement).toHaveDisplayName('p');
-    expect(shortDescriptionElement).toHaveText(`Short Description: ${mechanic.shortDescription}`);
-  });
-
   it('should render the mechanic description', () => {
     const rendered = shallow(<MechanicBlock {...defaultProps} />);
     const descriptionElement = rendered.find('RichText');
@@ -94,6 +86,16 @@ describe('<MechanicBlock />', () => {
       expect(descriptionElement).toHaveText(`Slug: ${mechanic.slug}`);
     });
 
+    it('should render the mechanic short description', () => {
+      const rendered = shallow(
+        <MechanicBlock {...defaultProps} data={mechanicWithNotes} showAdditionalDetails />,
+      );
+      const shortDescriptionElement = rendered.find('.mechanic-block-short-description');
+
+      expect(shortDescriptionElement).toHaveDisplayName('p');
+      expect(shortDescriptionElement).toHaveText(`Short Description: ${mechanic.shortDescription}`);
+    });
+
     it('should render the mechanic notes', () => {
       const rendered = shallow(
         <MechanicBlock {...defaultProps} data={mechanicWithNotes} showAdditionalDetails />,
@@ -103,6 +105,14 @@ describe('<MechanicBlock />', () => {
       expect(notesElement).toExist();
       expect(notesElement).toHaveClassName('mechanic-block-notes');
       expect(notesElement).toHaveProp('text', mechanicWithNotes.notes);
+    });
+
+    it('should match the snapshot', () => {
+      const rendered = shallow(
+        <MechanicBlock {...defaultProps} data={mechanicWithNotes} showAdditionalDetails />,
+      );
+
+      expect(rendered).toMatchSnapshot();
     });
   });
 });
