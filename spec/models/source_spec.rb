@@ -83,7 +83,12 @@ RSpec.describe Source, type: :model do
   describe '::REFERENCE_TYPES' do
     include_examples 'should define immutable constant',
       :REFERENCE_TYPES,
-      -> { contain_exactly('Spell') }
+      lambda {
+        contain_exactly(
+          'References::Skill',
+          'Spell'
+        )
+      }
   end
 
   describe '::Factory' do

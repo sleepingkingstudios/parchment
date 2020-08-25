@@ -9,10 +9,6 @@ RSpec.describe Spell, type: :model do
   include Spec::Support::Examples::ModelExamples
   include Spec::Support::Examples::Models::SourceExamples
 
-  shared_context 'when the spell has a source' do
-    include_context 'when the reference has a source'
-  end
-
   subject(:spell) { described_class.new(attributes) }
 
   let(:attributes) do

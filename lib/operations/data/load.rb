@@ -15,6 +15,7 @@ module Operations::Data
     DATA_MODELS = %w[
       Mechanics::Action
       Mechanics::Condition
+      References::Skill
       Spell
     ].freeze
 

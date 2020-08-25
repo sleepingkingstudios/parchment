@@ -1,0 +1,35 @@
+---
+- name:              Bioluminescence
+  id:                82d76a6b-ae6b-4c47-950e-581753c9117c
+  slug:              bioluminescence
+  ability_score:     constitution
+  short_description: Glow with inner power.
+  description:
+    Your Constitution (Bioluminescence) check determines how brightly you glow,
+    you shining star you.
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
+- name:              Hover
+  id:                9a5c20a9-cb33-48bf-8a10-76666477e71f
+  slug:              hover
+  ability_score:     wisdom
+  short_description: Float above the ground.
+  description:
+    Your Wisdom (Hover) check determines how well you can float over the world's
+    cares, untouched by the base and fallen earth.
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
+- name:              Unspeakable Knowledge
+  id:                fa54b382-508c-43c7-b79f-47a1f3d528a5
+  slug:              unspeakable-knowledge
+  ability_score:     intelligence
+  short_description: Knowledge from beyond the stars.
+  description:
+    Your Intelligence (Unspeakable Knowledge) determines your command of
+    knowledge from beyond the stars, where dark and hideous creatures await in
+    restless slumber.
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
