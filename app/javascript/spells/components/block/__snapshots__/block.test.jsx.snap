@@ -61,6 +61,7 @@ exports[`<SpellBlock /> should be match the snapshot 1`] = `
   </div>
   <RichText
     className="spell-block-description"
+    liquid={true}
     markdown={true}
     text="You conjure a glowing, spectral orb the size of a closed fist and bearing the likeness of everyone's favorite creature, the Flumph. Until the spell ends, the orb sheds bright light in a 20-foot radius and dim light for an additional 20 feet. The light can be colored as you like. The spell ends if you cast it again or dismiss it as an action.
 
@@ -130,6 +131,7 @@ exports[`<SpellBlock /> with showAdditionalDetails: true should be match the sna
   </div>
   <RichText
     className="spell-block-description"
+    liquid={true}
     markdown={true}
     text="You conjure a glowing, spectral orb the size of a closed fist and bearing the likeness of everyone's favorite creature, the Flumph. Until the spell ends, the orb sheds bright light in a 20-foot radius and dim light for an additional 20 feet. The light can be colored as you like. The spell ends if you cast it again or dismiss it as an action.
 

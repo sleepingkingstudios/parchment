@@ -2,96 +2,207 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import RichText from './index';
+import renderLiquid from './liquid/render';
+import { useLiquid } from './liquid/hooks';
+
+jest.mock('./liquid/hooks');
+
+useLiquid.mockImplementation(() => {});
+
+const nextEventLoop = () => (
+  new Promise((resolve) => { setTimeout(resolve, 0); })
+);
 
 describe('<RichText />', () => {
+  beforeEach(() => {
+    useLiquid.mockClear();
+
+    useLiquid.mockImplementationOnce(async ({ callback, template }) => {
+      await renderLiquid({ callback, status: { active: true }, template });
+    });
+  });
+
   describe('with text: an empty string', () => {
-    it('should be empty', () => {
-      const rendered = shallow(<RichText text="" />);
+    const text = '';
 
-      expect(rendered).toHaveDisplayName('div');
-      expect(rendered).toHaveClassName('rich-text');
+    it('should return an empty component', () => {
+      const rendered = shallow(<RichText text={text} />);
 
-      const paragraph = rendered.find('p');
+      expect(rendered).toBeEmptyRender();
+    });
 
-      expect(paragraph).not.toExist();
+    it('should not call useLiquid', () => {
+      shallow(<RichText text={text} />);
+
+      expect(useLiquid).not.toHaveBeenCalled();
     });
   });
 
   describe('with text: a plaintext string', () => {
     const text = 'Greetings, programs!';
 
-    it('should wrap the text', () => {
-      const rendered = shallow(<RichText text={text} />);
+    it('should process the text as markdown', async () => {
+      const rendered = await shallow(<RichText text={text} />);
+
+      await nextEventLoop(); // Allows Liquid rendering to resolve.
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('rich-text');
 
-      const paragraph = rendered.find('p');
+      const markdown = rendered.find('MarkdownText');
 
-      expect(paragraph).toExist();
-      expect(paragraph).toHaveText(text);
+      expect(markdown).toExist();
+      expect(markdown).toHaveProp({ text });
+    });
+
+    it('should call useLiquid', () => {
+      shallow(<RichText text={text} />);
+
+      expect(useLiquid).toHaveBeenCalledWith({
+        callback: expect.any(Function),
+        template: text,
+      });
+    });
+  });
+
+  describe('with text: a plaintext string with HTML tags', () => {
+    const text = '<p>Greetings, programs!<p>';
+    const expected = 'Greetings, programs!';
+
+    it('should strip the HTML tags', async () => {
+      const rendered = await shallow(<RichText text={text} />);
+
+      await nextEventLoop(); // Allows Liquid rendering to resolve.
+
+      expect(rendered).toHaveDisplayName('div');
+      expect(rendered).toHaveClassName('rich-text');
+
+      const markdown = rendered.find('MarkdownText');
+
+      expect(markdown).toExist();
+      expect(markdown).toHaveProp({ text: expected });
+    });
+
+    it('should call useLiquid', () => {
+      shallow(<RichText text={text} />);
+
+      expect(useLiquid).toHaveBeenCalledWith({
+        callback: expect.any(Function),
+        template: expected,
+      });
     });
   });
 
   describe('with text: a markdown document', () => {
     const text = '# Greetings, Starfighter\n\nYou have been recruited by the Star League...';
 
-    it('should render the markdown', () => {
-      const rendered = shallow(<RichText text={text} />);
+    it('should process the text as markdown', async () => {
+      const rendered = await shallow(<RichText text={text} />);
+
+      await nextEventLoop(); // Allows Liquid rendering to resolve.
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('rich-text');
 
-      const heading = rendered.find('h1');
+      const markdown = rendered.find('MarkdownText');
 
-      expect(heading).toExist();
-      expect(heading).toHaveText('Greetings, Starfighter');
+      expect(markdown).toExist();
+      expect(markdown).toHaveProp({ text });
+    });
 
-      const paragraph = rendered.find('p');
+    it('should call useLiquid', () => {
+      shallow(<RichText text={text} />);
 
-      expect(paragraph).toExist();
-      expect(paragraph).toHaveText('You have been recruited by the Star League...');
+      expect(useLiquid).toHaveBeenCalledWith({
+        callback: expect.any(Function),
+        template: text,
+      });
     });
   });
 
   describe('with text: a markdown document with HTML tags', () => {
     const text = '# Greetings, Starfighter\n\nYou have been recruited by the <em>Star League</em>...';
+    const expected = '# Greetings, Starfighter\n\nYou have been recruited by the Star League...';
 
-    it('should strip the HTML tags and render the markdown', () => {
-      const rendered = shallow(<RichText text={text} />);
+    it('should strip the HTML tags', async () => {
+      const rendered = await shallow(<RichText text={text} />);
+
+      await nextEventLoop(); // Allows Liquid rendering to resolve.
 
       expect(rendered).toHaveDisplayName('div');
       expect(rendered).toHaveClassName('rich-text');
 
-      const heading = rendered.find('h1');
+      const markdown = rendered.find('MarkdownText');
 
-      expect(heading).toExist();
-      expect(heading).toHaveText('Greetings, Starfighter');
+      expect(markdown).toExist();
+      expect(markdown).toHaveProp({ text: expected });
+    });
 
-      const paragraph = rendered.find('p');
+    it('should call useLiquid', () => {
+      shallow(<RichText text={text} />);
 
-      expect(paragraph).toExist();
-      expect(paragraph).toHaveText('You have been recruited by the Star League...');
-
-      const emphasized = rendered.find('em');
-      expect(emphasized).not.toExist();
+      expect(useLiquid).toHaveBeenCalledWith({
+        callback: expect.any(Function),
+        template: expected,
+      });
     });
   });
 
-  describe('with text: a string with HTML tags', () => {
-    const text = '<p>Greetings, programs!<p>';
+  describe('with liquid: false', () => {
+    const defaultProps = { liquid: false };
 
-    it('should strip the HTML tags', () => {
-      const rendered = shallow(<RichText text={text} />);
-      const expected = 'Greetings, programs!';
+    describe('with text: an empty string', () => {
+      const text = '';
 
-      expect(rendered).toHaveDisplayName('div');
-      expect(rendered).toHaveClassName('rich-text');
+      it('should return an empty component', () => {
+        const rendered = shallow(<RichText {...defaultProps} text={text} />);
 
-      const paragraph = rendered.find('p');
+        expect(rendered).toBeEmptyRender();
+      });
 
-      expect(paragraph).toExist();
-      expect(paragraph).toHaveText(expected);
+      it('should not call useLiquid', () => {
+        shallow(<RichText {...defaultProps} text={text} />);
+
+        expect(useLiquid).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('with text: a plaintext string', () => {
+      const text = 'Greetings, programs!';
+
+      it('should process the text as markdown', () => {
+        const rendered = shallow(<RichText {...defaultProps} text={text} />);
+
+        expect(rendered).toHaveDisplayName('div');
+        expect(rendered).toHaveClassName('rich-text');
+
+        const markdown = rendered.find('MarkdownText');
+
+        expect(markdown).toExist();
+        expect(markdown).toHaveProp({ text });
+      });
+
+      it('should not call useLiquid', () => {
+        shallow(<RichText {...defaultProps} text={text} />);
+
+        expect(useLiquid).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('with text: a markdown document', () => {
+      const text = '# Greetings, Starfighter\n\nYou have been recruited by the Star League...';
+
+      it('should process the text as markdown', () => {
+        const rendered = shallow(<RichText {...defaultProps} text={text} />);
+
+        expect(rendered).toHaveDisplayName('div');
+        expect(rendered).toHaveClassName('rich-text');
+
+        const markdown = rendered.find('MarkdownText');
+
+        expect(markdown).toExist();
+        expect(markdown).toHaveProp({ text });
+      });
     });
   });
 
@@ -99,81 +210,72 @@ describe('<RichText />', () => {
     const defaultProps = { markdown: false };
 
     describe('with text: an empty string', () => {
-      it('should be empty', () => {
-        const rendered = shallow(<RichText {...defaultProps} text="" />);
+      const text = '';
 
-        expect(rendered).toHaveDisplayName('div');
-        expect(rendered).toHaveClassName('rich-text');
+      it('should return an empty component', () => {
+        const rendered = shallow(<RichText {...defaultProps} text={text} />);
 
-        const paragraph = rendered.find('p');
+        expect(rendered).toBeEmptyRender();
+      });
 
-        expect(paragraph).not.toExist();
+      it('should not call useLiquid', () => {
+        shallow(<RichText {...defaultProps} text={text} />);
+
+        expect(useLiquid).not.toHaveBeenCalled();
       });
     });
 
     describe('with text: a plaintext string', () => {
       const text = 'Greetings, programs!';
 
-      it('should wrap the text', () => {
-        const rendered = shallow(<RichText {...defaultProps} text={text} />);
+      it('should process the text as plain text', async () => {
+        const rendered = await shallow(<RichText {...defaultProps} text={text} />);
+
+        await nextEventLoop(); // Allows Liquid rendering to resolve.
 
         expect(rendered).toHaveDisplayName('div');
         expect(rendered).toHaveClassName('rich-text');
 
-        const paragraph = rendered.find('p');
+        const plaintext = rendered.find('PlainText');
 
-        expect(paragraph).toExist();
-        expect(paragraph).toHaveText(text);
+        expect(plaintext).toExist();
+        expect(plaintext).toHaveProp({ text });
+      });
+
+      it('should call useLiquid', () => {
+        shallow(<RichText {...defaultProps} text={text} />);
+
+        expect(useLiquid).toHaveBeenCalledWith({
+          callback: expect.any(Function),
+          template: text,
+        });
       });
     });
 
     describe('with text: a markdown document', () => {
       const text = '# Greetings, Starfighter\n\nYou have been recruited by the Star League...';
 
-      it('should wrap the text', () => {
-        const rendered = shallow(<RichText {...defaultProps} text={text} />);
+      it('should process the text as plain text', async () => {
+        const rendered = await shallow(<RichText {...defaultProps} text={text} />);
+
+        await nextEventLoop(); // Allows Liquid rendering to resolve.
 
         expect(rendered).toHaveDisplayName('div');
         expect(rendered).toHaveClassName('rich-text');
 
-        const paragraph = rendered.find('p');
+        const plaintext = rendered.find('PlainText');
 
-        expect(paragraph).toExist();
-        expect(paragraph).toHaveText(text);
+        expect(plaintext).toExist();
+        expect(plaintext).toHaveProp({ text });
       });
-    });
 
-    describe('with text: a markdown document with HTML tags', () => {
-      const text = '# Greetings, Starfighter\n\nYou have been recruited by the <em>Star League</em>...';
+      it('should call useLiquid', () => {
+        shallow(<RichText {...defaultProps} text={text} />);
 
-      it('should strip the HTML tags', () => {
-        const rendered = shallow(<RichText {...defaultProps} text={text} />);
-        const expected = '# Greetings, Starfighter\n\nYou have been recruited by the Star League...';
-
-        expect(rendered).toHaveDisplayName('div');
-        expect(rendered).toHaveClassName('rich-text');
-
-        const paragraph = rendered.find('p');
-
-        expect(paragraph).toExist();
-        expect(paragraph).toHaveText(expected);
-      });
-    });
-
-    describe('with text: a string with HTML tags', () => {
-      const text = '<p>Greetings, programs!<p>';
-
-      it('should strip the HTML tags', () => {
-        const rendered = shallow(<RichText {...defaultProps} text={text} />);
-        const expected = 'Greetings, programs!';
-
-        expect(rendered).toHaveDisplayName('div');
-        expect(rendered).toHaveClassName('rich-text');
-
-        const paragraph = rendered.find('p');
-
-        expect(paragraph).toExist();
-        expect(paragraph).toHaveText(expected);
+        expect(useLiquid).toHaveBeenCalledWith({
+          callback: expect.any(Function),
+          template: text,
+        });
       });
     });
   });
