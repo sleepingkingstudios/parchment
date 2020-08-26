@@ -68,9 +68,7 @@ RSpec.describe Api::SpellsController, type: :request do
 
     include_examples 'should respond with JSON content'
 
-    context 'when there are many spells' do
-      include_context 'when there are many spells'
-
+    wrap_context 'when there are many spells' do
       let(:spell_serializer)  { Serializers::SpellSerializer.new }
       let(:source_serializer) { Serializers::SourceSerializer.new }
       let(:serialized_spells) do
