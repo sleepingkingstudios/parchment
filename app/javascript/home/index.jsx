@@ -14,6 +14,14 @@ const HomePage = props => (
       </li>
     </ul>
 
+    <h2>Reference</h2>
+
+    <ul>
+      <li>
+        <Link className="skills-link" to="/reference/skills">Skills</Link>
+      </li>
+    </ul>
+
     <h2>Mechanics</h2>
 
     <ul>

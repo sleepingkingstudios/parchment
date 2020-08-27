@@ -74,15 +74,12 @@
 
 - Refactor Endpoint class to client() function.
 - Clean up reducer namespaces: |
-    resourceName: {
-      create: {},
+    resourceName: { # Note that index is a reserved word!
+      block: { find },
+      create: { form },
       delete: {},
-      index: {},
-      show: {},
-      update: { // combinedReducer
-        find: {},
-        form: {},
-      }
+      table: { find },
+      update: { find, form }
     }
 
 ### Components
@@ -216,8 +213,7 @@ Example: Choosing A Skill From A List
 
 ## Mechanics
 
-- Add :data (JSON) column
-- Add :slug column
+- Refactor API to /references namespace?
 
 ### Actions
 

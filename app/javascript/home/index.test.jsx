@@ -47,6 +47,16 @@ describe('<HomePage />', () => {
     expect(link).toHaveProp('children', 'Books');
   });
 
+  it('should render the skills link', () => {
+    const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
+    const link = rendered.find('.skills-link');
+
+    expect(link).toExist();
+    expect(link).toHaveDisplayName('Link');
+    expect(link).toHaveProp('to', '/reference/skills');
+    expect(link).toHaveProp('children', 'Skills');
+  });
+
   it('should render the spells link', () => {
     const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
     const link = rendered.find('.spells-link');

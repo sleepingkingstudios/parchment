@@ -12,6 +12,9 @@ const navigation = {
     Conditions: '/mechanics/conditions',
   },
   Books: '/books',
+  Reference: {
+    Skills: '/reference/skills',
+  },
 };
 
 const renderTitle = ({ showNavigation, title }) => {

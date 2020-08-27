@@ -34,6 +34,9 @@ describe('<PageHeader />', () => {
         Conditions: '/mechanics/conditions',
       },
       Books: '/books',
+      Reference: {
+        Skills: '/reference/skills',
+      },
     };
 
     expect(navigation).toExist();
