@@ -15,11 +15,9 @@ describe('<ShowPage />', () => {
   const Block = () => {};
   const id = '00000000-0000-0000-0000-000000000000';
   const match = { params: { id } };
-  const deleteEndpoint = { hooks: { useDeleteData: () => {} } };
   const resourceName = 'Widget';
   const defaultProps = {
     Block,
-    deleteEndpoint,
     match,
     resourceName,
   };
@@ -55,7 +53,6 @@ describe('<ShowPage />', () => {
     const heading = rendered.find('ShowPageHeading');
 
     expect(heading).toExist();
-    expect(heading).toHaveProp({ deleteEndpoint });
     expect(heading).toHaveProp({ id });
     expect(heading).toHaveProp({ resource: null });
     expect(heading).toHaveProp({ resourceName });
@@ -128,7 +125,6 @@ describe('<ShowPage />', () => {
       const heading = rendered.find('ShowPageHeading');
 
       expect(heading).toExist();
-      expect(heading).toHaveProp({ deleteEndpoint });
       expect(heading).toHaveProp({ id });
       expect(heading).toHaveProp({ resource: widget });
       expect(heading).toHaveProp({ resourceName });
@@ -193,6 +189,23 @@ describe('<ShowPage />', () => {
 
       expect(heading).toExist();
       expect(heading).toHaveProp({ buttons });
+      expect(heading).toHaveProp({ id });
+      expect(heading).toHaveProp({ resource: null });
+      expect(heading).toHaveProp({ resourceName });
+    });
+  });
+
+  describe('with deleteEndpoint: endpoint', () => {
+    const deleteEndpoint = { hooks: { useDeleteData: () => {} } };
+
+    it('should render the heading', () => {
+      const endpoint = buildEndpoint({ state: { data: {} } });
+      const rendered = shallow(
+        <ShowPage {...defaultProps} endpoint={endpoint} deleteEndpoint={deleteEndpoint} />,
+      );
+      const heading = rendered.find('ShowPageHeading');
+
+      expect(heading).toExist();
       expect(heading).toHaveProp({ deleteEndpoint });
       expect(heading).toHaveProp({ id });
       expect(heading).toHaveProp({ resource: null });
@@ -240,7 +253,6 @@ describe('<ShowPage />', () => {
       const heading = rendered.find('ShowPageHeading');
 
       expect(heading).toExist();
-      expect(heading).toHaveProp({ deleteEndpoint });
       expect(heading).toHaveProp({ id });
       expect(heading).toHaveProp({ resource: widget });
       expect(heading).toHaveProp({ resourceName });

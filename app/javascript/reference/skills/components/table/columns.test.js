@@ -1,3 +1,4 @@
+import SkillsTableActions from './actions';
 import columns from './columns';
 
 describe('SkillsTable columns', () => {
@@ -29,7 +30,7 @@ describe('SkillsTable columns', () => {
       const matching = columns.find(column => (column.prop === 'actions'));
 
       expect(matching.label).toEqual(false);
-      expect(matching.value).toEqual(null);
+      expect(matching.value).toEqual(SkillsTableActions);
     });
   });
 

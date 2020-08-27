@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SkillBlock /> should match the snapshot 1`] = `
+<div
+  className="skill-block"
+>
+  <p
+    className="skill-block-name"
+  >
+    Disco
+  </p>
+  <p
+    className="skill-block-ability-score"
+  >
+    <strong>
+      Ability Score:
+    </strong>
+     
+    Charisma
+  </p>
+  <RichText
+    className="skill-block-description"
+    liquid={true}
+    markdown={true}
+    text="Disco will never die!"
+  />
+</div>
+`;

@@ -89,6 +89,7 @@ const renderUpdateLink = (props) => {
 
 const ResponsiveActions = (props) => {
   const {
+    actions,
     baseUrl,
     deleteEndpoint,
     id,
@@ -103,10 +104,10 @@ const ResponsiveActions = (props) => {
 
   return (
     <div className={className}>
-      { renderShowLink({ resourceName, url }) }
-      { renderUpdateLink({ resourceName, url }) }
+      { actions.includes('show') && renderShowLink({ resourceName, url }) }
+      { actions.includes('update') && renderUpdateLink({ resourceName, url }) }
       {
-        renderDeleteLink({
+        actions.includes('delete') && renderDeleteLink({
           deleteEndpoint,
           id,
           onDelete,
@@ -118,6 +119,7 @@ const ResponsiveActions = (props) => {
 };
 
 ResponsiveActions.defaultProps = {
+  actions: ['show', 'update', 'delete'],
   baseUrl: null,
   deleteEndpoint: null,
   onDelete: null,
@@ -125,6 +127,7 @@ ResponsiveActions.defaultProps = {
 };
 
 ResponsiveActions.propTypes = {
+  actions: PropTypes.arrayOf(PropTypes.string),
   baseUrl: PropTypes.string,
   deleteEndpoint: PropTypes.shape({
     hooks: PropTypes.shape({

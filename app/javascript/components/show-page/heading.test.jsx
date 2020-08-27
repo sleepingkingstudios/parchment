@@ -5,7 +5,6 @@ import ShowPageHeading from './heading';
 
 describe('<ShowPageHeading />', () => {
   const defaultProps = {
-    deleteEndpoint: { hooks: { useDeleteData: () => {} } },
     id: '00000000-0000-0000-0000-000000000000',
     resourceName: 'Widget',
   };
@@ -37,25 +36,24 @@ describe('<ShowPageHeading />', () => {
     });
   });
 
+  describe('with deleteEndpoint: endpoint', () => {
+    const deleteEndpoint = { hooks: { useDeleteData: () => {} } };
+
+    it('should render the heading with no buttons', () => {
+      const rendered = shallow(
+        <ShowPageHeading {...defaultProps} deleteEndpoint={deleteEndpoint} />,
+      );
+      const heading = rendered.find('HeadingWithButtons');
+
+      expect(rendered).toContainMatchingElement('HeadingWithButtons');
+      expect(heading).toHaveProp('buttons', []);
+      expect(heading).toHaveProp('children', 'Show Widget');
+    });
+  });
+
   describe('with resource: object', () => {
     const { id } = defaultProps;
     const resource = { id };
-    const deleteData = jest.fn();
-    const useDeleteData = jest.fn(() => deleteData);
-    const deleteEndpoint = { hooks: { useDeleteData } };
-    const expected = [
-      {
-        label: 'Update Widget',
-        outline: true,
-        url: `/widgets/${id}/update`,
-      },
-      {
-        buttonStyle: 'danger',
-        label: 'Delete Widget',
-        outline: true,
-        onClick: deleteData,
-      },
-    ];
 
     it('should render the heading', () => {
       const rendered = shallow(<ShowPageHeading {...defaultProps} resource={resource} />);
@@ -65,16 +63,51 @@ describe('<ShowPageHeading />', () => {
       expect(heading).toHaveProp('children', 'Show Widget');
     });
 
-    it('should render the update and delete buttons', () => {
+    it('should render the update button', () => {
       const rendered = shallow(
-        <ShowPageHeading {...defaultProps} deleteEndpoint={deleteEndpoint} resource={resource} />,
+        <ShowPageHeading {...defaultProps} resource={resource} />,
       );
       const heading = rendered.find('HeadingWithButtons');
+      const expected = [
+        {
+          label: 'Update Widget',
+          outline: true,
+          url: `/widgets/${id}/update`,
+        },
+      ];
 
       expect(rendered).toContainMatchingElement('HeadingWithButtons');
       expect(heading).toHaveProp('buttons', expected);
+    });
 
-      expect(useDeleteData).toHaveBeenCalledWith({ wildcards: { id } });
+    describe('with deleteEndpoint: endpoint', () => {
+      it('should render the update and delete buttons', () => {
+        const deleteData = jest.fn();
+        const useDeleteData = jest.fn(() => deleteData);
+        const deleteEndpoint = { hooks: { useDeleteData } };
+        const rendered = shallow(
+          <ShowPageHeading {...defaultProps} deleteEndpoint={deleteEndpoint} resource={resource} />,
+        );
+        const heading = rendered.find('HeadingWithButtons');
+        const expected = [
+          {
+            label: 'Update Widget',
+            outline: true,
+            url: `/widgets/${id}/update`,
+          },
+          {
+            buttonStyle: 'danger',
+            label: 'Delete Widget',
+            outline: true,
+            onClick: deleteData,
+          },
+        ];
+
+        expect(rendered).toContainMatchingElement('HeadingWithButtons');
+        expect(heading).toHaveProp('buttons', expected);
+
+        expect(useDeleteData).toHaveBeenCalledWith({ wildcards: { id } });
+      });
     });
   });
 });

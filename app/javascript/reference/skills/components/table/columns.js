@@ -1,3 +1,4 @@
+import SkillsTableActions from './actions';
 import { capitalize } from '../../../../utils/string';
 
 import './skills-table-styles.css';
@@ -17,7 +18,7 @@ const columns = [
   {
     label: false,
     prop: 'actions',
-    value: null,
+    value: SkillsTableActions,
     width: 3,
   },
   {
