@@ -6,24 +6,45 @@ env:
   global:
     - NODE_OPTIONS="--max_old_space_size=4096"
     - PGPORT=5433
-install:
-  - bundle install
-  - nvm install 10.15.3
-  - node -v
-  - npm i -g yarn
-  - yarn install
-before_script:
-  - bin/webpack
-  - cp .rspec.example .rspec
-  - cp .rubocop.example .rubocop
-  - bundle exec rake db:setup
-  - bundle exec rake db:test:prepare
-  - bundle exec rake assets:precompile webpacker:compile
-  - AUTHENTICATION_SESSION_KEY="$(bundle exec rails secret)" bundle exec rails server --port=5101 --daemon
-script:
-  - bundle exec thor ci:steps
-after_script:
-  - kill -9 $(cat tmp/pids/server.pid)
+jobs:
+  include:
+    - name: Ruby
+      install:
+        - bundle install
+        - nvm install 10.15.3
+        - node -v
+        - npm i -g yarn
+        - yarn install
+      before_script:
+        - bin/webpack
+        - cp .rspec.example .rspec
+        - cp .rubocop.example .rubocop
+        - bundle exec rake db:setup
+        - bundle exec rake db:test:prepare
+        - bundle exec rake assets:precompile webpacker:compile
+      script: bundle exec rspec && bundle exec rubocop
+    - name: JavaScript
+      install:
+        - nvm install 10.15.3
+        - node -v
+        - npm i -g yarn
+        - yarn install
+      script: yarn ci
+    - name: Cucumber
+      install:
+        - bundle install
+        - nvm install 10.15.3
+        - node -v
+        - npm i -g yarn
+        - yarn install
+      before_script:
+        - bin/webpack
+        - bundle exec rake db:test:prepare
+        - bundle exec rake assets:precompile webpacker:compile
+        - AUTHENTICATION_SESSION_KEY="$(bundle exec rails secret)" bundle exec rails server --port=5101 --daemon
+      script: bundle exec cucumber
+      after_script:
+        - kill -9 $(cat tmp/pids/server.pid)
 
 # Travis-CI Configuration
 sudo: false # Enable containerized builds.
