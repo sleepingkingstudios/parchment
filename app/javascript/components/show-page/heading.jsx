@@ -6,6 +6,17 @@ import HeadingWithButtons from '../heading-with-buttons';
 import { valueOrDefault } from '../../utils/object';
 import { underscore } from '../../utils/string';
 
+const generateDeleteButton = ({ deleteData, resourceName }) => ({
+  buttonStyle: 'danger',
+  label: `Delete ${resourceName}`,
+  onClick: deleteData,
+  outline: true,
+});
+const generateUpdateButton = ({ id, resourceName }) => ({
+  label: `Update ${resourceName}`,
+  outline: true,
+  url: `/${underscore(pluralize(resourceName))}/${id}/update`,
+});
 const generateButtons = ({
   deleteData,
   id,
@@ -14,18 +25,11 @@ const generateButtons = ({
 }) => {
   if (!(resource && resource.id)) { return []; }
 
+  if (!deleteData) { return [generateUpdateButton({ id, resourceName })]; }
+
   return [
-    {
-      label: `Update ${resourceName}`,
-      outline: true,
-      url: `/${underscore(pluralize(resourceName))}/${id}/update`,
-    },
-    {
-      buttonStyle: 'danger',
-      label: `Delete ${resourceName}`,
-      onClick: deleteData,
-      outline: true,
-    },
+    generateUpdateButton({ id, resourceName }),
+    generateDeleteButton({ deleteData, resourceName }),
   ];
 };
 
@@ -37,9 +41,14 @@ const ShowPageHeading = (props) => {
     resource,
     resourceName,
   } = props;
-  const { hooks } = deleteEndpoint;
-  const { useDeleteData } = hooks;
-  const deleteData = useDeleteData({ wildcards: { id } });
+  let deleteData = null;
+
+  if (deleteEndpoint) {
+    const { hooks } = deleteEndpoint;
+    const { useDeleteData } = hooks;
+
+    deleteData = useDeleteData({ wildcards: { id } });
+  }
 
   return (
     <HeadingWithButtons
@@ -59,6 +68,7 @@ const ShowPageHeading = (props) => {
 
 ShowPageHeading.defaultProps = {
   buttons: null,
+  deleteEndpoint: null,
   resource: null,
 };
 
@@ -68,7 +78,7 @@ ShowPageHeading.propTypes = {
     hooks: PropTypes.shape({
       useDeleteData: PropTypes.func.isRequired,
     }),
-  }).isRequired,
+  }),
   id: PropTypes.string.isRequired,
   resource: PropTypes.shape({
     id: PropTypes.string,

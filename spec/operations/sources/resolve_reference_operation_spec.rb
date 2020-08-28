@@ -34,7 +34,12 @@ RSpec.describe Operations::Sources::ResolveReferenceOperation do
       permitted_types: { not: Book }
 
     Source::REFERENCE_TYPES.each do |permitted_type|
-      factory_type = permitted_type.underscore.intern
+      factory_type =
+        permitted_type
+        .underscore
+        .split('/')
+        .last
+        .intern
 
       context "when the reference is a #{permitted_type}" do
         let(:reference) { FactoryBot.build(factory_type) }

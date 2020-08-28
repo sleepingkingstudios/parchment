@@ -69,6 +69,141 @@ describe('<ResponsiveActions />', () => {
     });
   });
 
+  describe('with actions: an array that does not include "delete"', () => {
+    const actions = ['show', 'update'];
+
+    it('should render the show link', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+      const showLink = rendered.find('.show-link');
+      const renderedLink = showLink.shallow();
+      const url = `/widgets/${id}`;
+
+      expect(showLink).toExist();
+      expect(showLink).toHaveDisplayName('LinkButton');
+      expect(showLink).toHaveClassName('show-widget-link');
+      expect(showLink).toHaveProp({ url });
+
+      expect(responsiveText(renderedLink, 'xs')).toEqual('<EyeIcon />');
+      expect(responsiveText(renderedLink, 'sm')).toEqual('<EyeIcon />');
+      expect(responsiveText(renderedLink, 'md')).toEqual('<EyeIcon />');
+      expect(responsiveText(renderedLink, 'lg')).toEqual('Show');
+      expect(responsiveText(renderedLink, 'xl')).toEqual('<EyeIcon />Show');
+    });
+
+    it('should render the update link', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+      const updateLink = rendered.find('.update-link');
+      const renderedLink = updateLink.shallow();
+      const url = `/widgets/${id}/update`;
+
+      expect(updateLink).toExist();
+      expect(updateLink).toHaveDisplayName('LinkButton');
+      expect(updateLink).toHaveClassName('update-widget-link');
+      expect(updateLink).toHaveProp({ url });
+
+      expect(responsiveText(renderedLink, 'xs')).toEqual('');
+      expect(responsiveText(renderedLink, 'sm')).toEqual('');
+      expect(responsiveText(renderedLink, 'md')).toEqual('<PencilSquareIcon />');
+      expect(responsiveText(renderedLink, 'lg')).toEqual('Update');
+      expect(responsiveText(renderedLink, 'xl')).toEqual('<PencilSquareIcon />Update');
+    });
+
+    it('should not render the delete link', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+      const deleteLink = rendered.find('.delete-link');
+
+      expect(deleteLink).not.toExist();
+    });
+  });
+
+  describe('with actions: an array that does not include "show"', () => {
+    const actions = ['update', 'delete'];
+
+    it('should render the actions', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+
+      expect(rendered).toHaveDisplayName('div');
+      expect(rendered).toHaveClassName('responsive-actions');
+      expect(rendered).toHaveClassName('widget-actions');
+    });
+
+    it('should not render the show link', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+      const showLink = rendered.find('.show-link');
+
+      expect(showLink).not.toExist();
+    });
+
+    it('should render the update link', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+      const updateLink = rendered.find('.update-link');
+      const renderedLink = updateLink.shallow();
+      const url = `/widgets/${id}/update`;
+
+      expect(updateLink).toExist();
+      expect(updateLink).toHaveDisplayName('LinkButton');
+      expect(updateLink).toHaveClassName('update-widget-link');
+      expect(updateLink).toHaveProp({ url });
+
+      expect(responsiveText(renderedLink, 'xs')).toEqual('');
+      expect(responsiveText(renderedLink, 'sm')).toEqual('');
+      expect(responsiveText(renderedLink, 'md')).toEqual('<PencilSquareIcon />');
+      expect(responsiveText(renderedLink, 'lg')).toEqual('Update');
+      expect(responsiveText(renderedLink, 'xl')).toEqual('<PencilSquareIcon />Update');
+    });
+
+    it('should not render the delete link', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+      const deleteLink = rendered.find('.delete-link');
+
+      expect(deleteLink).not.toExist();
+    });
+  });
+
+  describe('with actions: an array that does not include "update"', () => {
+    const actions = ['show', 'delete'];
+
+    it('should render the actions', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+
+      expect(rendered).toHaveDisplayName('div');
+      expect(rendered).toHaveClassName('responsive-actions');
+      expect(rendered).toHaveClassName('widget-actions');
+    });
+
+    it('should render the show link', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+      const showLink = rendered.find('.show-link');
+      const renderedLink = showLink.shallow();
+      const url = `/widgets/${id}`;
+
+      expect(showLink).toExist();
+      expect(showLink).toHaveDisplayName('LinkButton');
+      expect(showLink).toHaveClassName('show-widget-link');
+      expect(showLink).toHaveProp({ url });
+
+      expect(responsiveText(renderedLink, 'xs')).toEqual('<EyeIcon />');
+      expect(responsiveText(renderedLink, 'sm')).toEqual('<EyeIcon />');
+      expect(responsiveText(renderedLink, 'md')).toEqual('<EyeIcon />');
+      expect(responsiveText(renderedLink, 'lg')).toEqual('Show');
+      expect(responsiveText(renderedLink, 'xl')).toEqual('<EyeIcon />Show');
+    });
+
+    it('should not render the update link', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+      const updateLink = rendered.find('.update-link');
+
+      expect(updateLink).not.toExist();
+    });
+
+    it('should not render the delete link', () => {
+      const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+      const deleteLink = rendered.find('.delete-link');
+
+      expect(deleteLink).not.toExist();
+    });
+  });
+
   describe('with baseUrl: value', () => {
     const baseUrl = '/path/to/widgets';
 
@@ -158,6 +293,17 @@ describe('<ResponsiveActions />', () => {
       );
 
       expect(useDeleteData).toHaveBeenCalledWith({ wildcards: { id } });
+    });
+
+    describe('with actions: an array that does not include "delete"', () => {
+      const actions = ['show', 'update'];
+
+      it('should not render the delete link', () => {
+        const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+        const deleteLink = rendered.find('.delete-link');
+
+        expect(deleteLink).not.toExist();
+      });
     });
   });
 

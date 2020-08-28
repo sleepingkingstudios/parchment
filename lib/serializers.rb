@@ -94,6 +94,7 @@ module Serializers
   autoload :Authentication,     'serializers/authentication'
   autoload :BookSerializer,     'serializers/book_serializer'
   autoload :MechanicSerializer, 'serializers/mechanic_serializer'
+  autoload :References,         'serializers/references'
   autoload :SourceSerializer,   'serializers/source_serializer'
   autoload :StringSerializer,   'serializers/string_serializer'
   autoload :SpellSerializer,    'serializers/spell_serializer'

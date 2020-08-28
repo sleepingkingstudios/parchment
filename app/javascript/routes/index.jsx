@@ -4,6 +4,7 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import { Routes as BooksRoutes } from '../books';
 import { Routes as MechanicsRoutes } from '../mechanics';
+import { Routes as ReferenceRoutes } from '../reference';
 import { Routes as SpellsRoutes } from '../spells';
 import HomePage from '../home';
 
@@ -12,6 +13,7 @@ const Routes = ({ history }) => (
     <Switch>
       <Route path="/books" component={BooksRoutes} />
       <Route path="/mechanics" component={MechanicsRoutes} />
+      <Route path="/reference" component={ReferenceRoutes} />
       <Route path="/spells" component={SpellsRoutes} />
       <Route path="/" component={HomePage} />
     </Switch>

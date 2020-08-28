@@ -97,6 +97,7 @@ const ShowPage = (props) => {
 ShowPage.defaultProps = {
   breadcrumbs: null,
   buttons: null,
+  deleteEndpoint: null,
   mapData: null,
   resourceNameProp: 'name',
 };
@@ -112,7 +113,7 @@ ShowPage.propTypes = {
     hooks: PropTypes.shape({
       useDeleteData: PropTypes.func.isRequired,
     }),
-  }).isRequired,
+  }),
   endpoint: PropTypes.shape({
     hooks: PropTypes.shape({
       useEndpoint: PropTypes.func.isRequired,

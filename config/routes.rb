@@ -3,22 +3,42 @@
 Rails.application.routes.draw do
   # See https://guides.rubyonrails.org/routing.html
 
+  API_ROUTES    = %i[index create show update destroy]
+  CLIENT_ROUTES = %i[index show new edit]
+
   def self.api_resources(resource_name, **options, &block)
     resources(
       resource_name,
       options.reverse_merge(
         format: :json,
-        only:   %i[index create show update destroy]
+        only:   API_ROUTES
       ),
       &block
     )
   end
 
-  def self.client_resources(resource_name)
-    get "#{resource_name}/create",     to: 'client#index'
-    get "#{resource_name}/:id/update", to: 'client#index'
-    get "#{resource_name}/:id",        to: 'client#index'
-    get "#{resource_name}",            to: 'client#index'
+  def self.client_resources(resource_name, **options)
+    options = options.reverse_merge(
+      except: [],
+      only:   CLIENT_ROUTES
+    )
+    endpoints = Set.new(options[:only] - options[:except])
+
+    if endpoints.include?(:new)
+      get "#{resource_name}/create", to: 'client#index'
+    end
+
+    if endpoints.include?(:edit)
+      get "#{resource_name}/:id/update", to: 'client#index'
+    end
+
+    if endpoints.include?(:show)
+      get "#{resource_name}/:id", to: 'client#index'
+    end
+
+    if endpoints.include?(:index)
+      get "#{resource_name}", to: 'client#index'
+    end
   end
 
   namespace :api do
@@ -36,6 +56,10 @@ Rails.application.routes.draw do
 
     api_resources :origins, only: :index
 
+    namespace :reference do
+      api_resources :skills, only: %i[index show]
+    end
+
     api_resources :spells
   end
 
@@ -47,6 +71,10 @@ Rails.application.routes.draw do
 
       client_resources :conditions
     end
+  end
+
+  scope :reference do
+    client_resources :skills, only: %i[index show]
   end
 
   client_resources :spells

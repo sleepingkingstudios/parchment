@@ -3,14 +3,38 @@
 ## Ability
 
 - belongs_to :granter, polymorphic: true
+- belongs_to :parent_ability
+  - handles abilities that have multiple versions depending on character level
+    - e.g. drow magic at levels 1, 3, 5
+  - if parent ability
+    - displayed in granter (e.g. Race)
+    - not displayed in Character
+  - if child ability
+    - not displayed in granter
+    - only the relevant variant (if any) displayed in Character
+  - if neither parent nor child
+    - displayed in granter and Character
+  - cannot be nested more than once
 - has_many :versions
 - columns:
   - name (String)
   - slug (String)
+  - display_name (String)
+    - generally an unqualified version of the name
+      - name: "Darkvision (Dwarf)"
+        slug: "darkvision-dwarf"
+        display_name: "Darkvision"
+      - name: "Drow Magic 1" # 1st-level version
+        slug: "drow-magic-1"
+        display_name: "Drow Magic"
   - description (Text)
+  - short_description (String)
   - active (Boolean) [true => active, false => passive]
   - action (String) [action, bonus action, reaction] if active
   - recharge (String) [none, short rest, long rest]
+  - min_level (Integer)
+  - max_level (Integer)
+  - data (JSONB)
 
 ### AbilityVersion (WIP)
 
@@ -50,15 +74,12 @@
 
 - Refactor Endpoint class to client() function.
 - Clean up reducer namespaces: |
-    resourceName: {
-      create: {},
+    resourceName: { # Note that index is a reserved word!
+      block: { find },
+      create: { form },
       delete: {},
-      index: {},
-      show: {},
-      update: { // combinedReducer
-        find: {},
-        form: {},
-      }
+      table: { find },
+      update: { find, form }
     }
 
 ### Components
@@ -192,8 +213,7 @@ Example: Choosing A Skill From A List
 
 ## Mechanics
 
-- Add :data (JSON) column
-- Add :slug column
+- Refactor API to /references namespace?
 
 ### Actions
 
@@ -240,14 +260,17 @@ Example: Choosing A Skill From A List
 
 - has_many :variants
 - has_many :abilities
-- has_many :ability_score_increases
-- has_many :character_decisions
+- has_many :choices
 - has_many :proficiencies
 - belongs_to :size
 - columns
   - name (String)
   - slug (String)
+  - description (Text)
+  - size (String)
   - speed (Integer)
+  - ability_scores (JSONB)
+  - data (JSONB)
 
 ### RaceVariant
 
@@ -293,7 +316,11 @@ Example: Choosing A Skill From A List
 
 ### Skill
 
-- belongs_to :ability_score
+- columns
+  - name (String)
+  - slug (String)
+  - ability_score (String)
+  - description (Text)
 
 ### Tool
 

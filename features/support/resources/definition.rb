@@ -35,6 +35,8 @@ module Features::Resources
     def load_fixtures!
       return unless fixtures?
 
+      puts "Loading fixtures for #{resource_class.name}..."
+
       Fixtures.create(resource_class)
     end
 

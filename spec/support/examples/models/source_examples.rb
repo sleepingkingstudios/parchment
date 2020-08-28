@@ -48,8 +48,8 @@ module Spec::Support::Examples::Models
       describe '#source' do
         include_examples 'should have property', :source, nil
 
-        wrap_context 'when the spell has a source' do
-          it { expect(spell.source).to be == source }
+        wrap_context 'when the reference has a source' do
+          it { expect(subject.source).to be == source }
         end
       end
     end

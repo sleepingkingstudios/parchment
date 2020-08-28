@@ -100,6 +100,22 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: skills; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.skills (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    ability_score character varying DEFAULT ''::character varying NOT NULL,
+    description text DEFAULT ''::text NOT NULL,
+    name character varying DEFAULT ''::character varying NOT NULL,
+    short_description character varying DEFAULT ''::character varying NOT NULL,
+    slug character varying DEFAULT ''::character varying NOT NULL
+);
+
+
+--
 -- Name: sources; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -194,6 +210,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: skills skills_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skills
+    ADD CONSTRAINT skills_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: sources sources_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -267,6 +291,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200220214830'),
 ('20200415062324'),
 ('20200415082014'),
-('20200821230610');
+('20200821230610'),
+('20200825045007');
 
 

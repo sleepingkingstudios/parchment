@@ -7,6 +7,7 @@ module Features
         Action
         Condition
         Book
+        Skill
         Spell
       ].map { |resource_name| find(resource_name) }
     end
