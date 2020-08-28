@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'operations/applied_middleware'
-require 'operations/associations/middleware/assign_has_one'
+require 'operations/associations/middleware/cache_one'
 require 'operations/records/factory'
 require 'operations/records/middleware/find_by_slug'
 require 'operations/records/middleware/generate_slug'
@@ -69,7 +69,7 @@ module Operations::References
         "Operations::References::Assign#{record_class}SourceOperation"
 
       @assign_source_middleware ||=
-        Operations::Associations::Middleware::AssignHasOne.subclass(
+        Operations::Associations::Middleware::CacheOne.subclass(
           record_class,
           as:       operation_name,
           keywords: { association_name: :source }

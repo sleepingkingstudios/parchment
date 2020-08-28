@@ -2,19 +2,19 @@
 
 require 'rails_helper'
 
-require 'operations/associations/middleware/assign_has_one'
+require 'operations/associations/middleware/cache_many'
 
 require 'support/examples/operation_examples'
 
-RSpec.describe Operations::Associations::Middleware::AssignHasOne do
+RSpec.describe Operations::Associations::Middleware::CacheMany do
   include Spec::Support::Examples::OperationExamples
 
   subject(:operation) do
     described_class.new(record_class, association_name: association_name)
   end
 
-  let(:record_class)       { Spell }
-  let(:association_name)   { :source }
+  let(:record_class)       { References::Language }
+  let(:association_name)   { :dialects }
   let(:constructor_kwargs) { { association_name: association_name } }
   let(:next_result)        { Cuprum::Result.new(value: nil) }
   let(:next_command) do
@@ -113,7 +113,7 @@ RSpec.describe Operations::Associations::Middleware::AssignHasOne do
     end
 
     context 'when the next command returns a result with one record' do
-      let(:record)      { FactoryBot.build(:spell) }
+      let(:record)      { FactoryBot.build(:language) }
       let(:next_result) { Cuprum::Result.new(value: record) }
 
       before(:example) { record.save! }
@@ -122,16 +122,20 @@ RSpec.describe Operations::Associations::Middleware::AssignHasOne do
 
       it { expect(call_operation).to be == next_result }
 
-      context 'when the record has an associated record' do
-        let(:target) do
-          FactoryBot.build(:source, :with_book, reference: record)
+      context 'when the record has associated records' do
+        let(:dialects) do
+          Array.new(3) do
+            FactoryBot.build(:language, parent_language: record)
+          end
         end
 
-        before(:example) { target.save! }
+        before(:example) { dialects.map(&:save!) }
 
         it { expect(call_operation).to have_passing_result.with_value(record) }
 
-        it { expect(call_operation.value.source).to be == target }
+        it 'should load the association' do
+          expect(call_operation.value.dialects).to contain_exactly(*dialects)
+        end
 
         it 'should cache the association' do
           result = call_operation
@@ -142,7 +146,7 @@ RSpec.describe Operations::Associations::Middleware::AssignHasOne do
     end
 
     context 'when the next command returns a result with many records' do
-      let(:records)     { FactoryBot.build_list(:spell, 3) }
+      let(:records)     { FactoryBot.build_list(:language, 3) }
       let(:next_result) { Cuprum::Result.new(value: records) }
 
       before(:example) { records.map(&:save!) }
@@ -151,33 +155,37 @@ RSpec.describe Operations::Associations::Middleware::AssignHasOne do
 
       it { expect(call_operation).to be == next_result }
 
-      context 'when the records have associated records' do
-        let(:targets) do
-          records.map do |record|
-            FactoryBot.build(:source, :with_book, reference: record)
+      context 'when the record has associated records' do
+        let(:dialects) do
+          records
+            .map do |record|
+              Array.new(3) do
+                FactoryBot.build(:language, parent_language: record)
+              end
+            end
+            .flatten
+        end
+
+        before(:example) { dialects.map(&:save!) }
+
+        it { expect(call_operation).to have_passing_result.with_value(records) }
+
+        it 'should load the association' do
+          call_operation.value.each do |item|
+            expected = dialects.select do |dialect|
+              dialect.parent_language_id == item.id
+            end
+
+            expect(item.dialects).to contain_exactly(*expected)
           end
         end
 
-        before(:example) { targets.map(&:save!) }
-
-        it 'should have a passing result' do
-          expect(call_operation)
-            .to have_passing_result
-            .with_value(contain_exactly(*records))
-        end
-
-        it 'should set the associations' do
-          expect(call_operation.value).to all(satisfy do |value|
-            record = records.find { |item| item.id == value.id }
-
-            value.source == record.source
-          end)
-        end
-
         it 'should cache the associations' do
-          expect(call_operation.value).to all(satisfy do |value|
-            value.association_cached?(association_name)
-          end)
+          expect(call_operation.value).to all(
+            satisfy do |record|
+              record.association_cached?(association_name)
+            end
+          )
         end
       end
     end

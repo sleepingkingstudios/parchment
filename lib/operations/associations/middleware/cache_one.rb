@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'operations/associations/assign_has_one_operation'
+require 'operations/associations/cache_one_operation'
 require 'operations/associations/middleware'
 require 'operations/middleware'
 require 'operations/records/subclass'
 
 module Operations::Associations::Middleware
-  # Middleware to preload a has_one operation on a record or records.
-  class AssignHasOne < Operations::Middleware
+  # Middleware to preload a belongs_to/has_one operation on a record or records.
+  class CacheOne < Operations::Middleware
     extend Operations::Records::Subclass
 
     # @param record_class [Class] The class of record that the operation's
@@ -28,8 +28,8 @@ module Operations::Associations::Middleware
 
     private
 
-    def assign_association(records)
-      operation = Operations::Associations::AssignHasOneOperation.new(
+    def cache_association(records)
+      operation = Operations::Associations::CacheOneOperation.new(
         record_class,
         association_name: association_name
       )
@@ -40,7 +40,7 @@ module Operations::Associations::Middleware
     def process(next_command, *args, **kwargs)
       records = super(next_command, *args, **kwargs)
 
-      step :assign_association, records
+      step :cache_association, records
     end
   end
 end
