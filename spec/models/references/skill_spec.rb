@@ -5,7 +5,7 @@ require 'rails_helper'
 require 'support/examples/model_examples'
 require 'support/examples/models/source_examples'
 
-RSpec.describe References::Skill do
+RSpec.describe References::Skill, type: :model do
   include Spec::Support::Examples::ModelExamples
   include Spec::Support::Examples::Models::SourceExamples
 
