@@ -49,6 +49,10 @@ module Api
     end
 
     def extract_authorization_token
+      if Rails.env.development?
+        return success(params['token']) if params['token'].present?
+      end
+
       Operations::Authentication::ExtractHeader.new.call(request.headers.env)
     end
 

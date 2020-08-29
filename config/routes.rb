@@ -57,6 +57,8 @@ Rails.application.routes.draw do
     api_resources :origins, only: :index
 
     namespace :reference do
+      api_resources :languages, only: %i[index show]
+
       api_resources :skills, only: %i[index show]
     end
 
