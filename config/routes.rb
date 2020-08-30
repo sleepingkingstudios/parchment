@@ -76,6 +76,8 @@ Rails.application.routes.draw do
   end
 
   scope :reference do
+    client_resources :languages, only: %i[index show]
+
     client_resources :skills, only: %i[index show]
   end
 

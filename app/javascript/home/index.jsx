@@ -18,6 +18,9 @@ const HomePage = props => (
 
     <ul>
       <li>
+        <Link className="languages-link" to="/reference/languages">Languages</Link>
+      </li>
+      <li>
         <Link className="skills-link" to="/reference/skills">Skills</Link>
       </li>
     </ul>
