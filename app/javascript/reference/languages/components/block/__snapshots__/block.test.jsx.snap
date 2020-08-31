@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LanguageBlock /> should match the snapshot 1`] = `
+<div
+  className="language-block"
+>
+  <p
+    className="language-block-name"
+  >
+    Body Language
+  </p>
+  <p
+    className="language-block-rarity"
+  >
+    <strong>
+      Rarity:
+    </strong>
+     
+    Standard
+  </p>
+  <p
+    className="language-block-speakers"
+  >
+    <strong>
+      Speakers:
+    </strong>
+     
+    Mimes
+  </p>
+  <p
+    className="language-block-script"
+  >
+    <strong>
+      Script:
+    </strong>
+     
+    None
+  </p>
+</div>
+`;

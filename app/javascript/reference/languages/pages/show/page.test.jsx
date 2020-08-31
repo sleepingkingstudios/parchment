@@ -1,15 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ShowSkillPage from './page';
-import { SkillBlock } from '../../components/block';
-import endpoint, { hooks } from '../../store/showFindSkill';
+import ShowLanguagePage from './page';
+import { LanguageBlock } from '../../components/block';
+import endpoint, { hooks } from '../../store/showFindLanguage';
 
-jest.mock('../../store/showFindSkill');
+jest.mock('../../store/showFindLanguage');
 
 hooks.useEndpoint.mockImplementation(() => () => ({}));
 
-describe('<ShowSkillPage />', () => {
+describe('<ShowLanguagePage />', () => {
   const id = '00000000-0000-0000-0000-000000000000';
   const match = { params: { id } };
   const defaultProps = { match };
@@ -19,12 +19,12 @@ describe('<ShowSkillPage />', () => {
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<ShowSkillPage {...defaultProps} />);
+    const rendered = shallow(<ShowLanguagePage {...defaultProps} />);
 
     expect(rendered).toHaveDisplayName('ShowPage');
-    expect(rendered).toHaveProp({ Block: SkillBlock });
+    expect(rendered).toHaveProp({ Block: LanguageBlock });
     expect(rendered).toHaveProp({ endpoint });
-    expect(rendered).toHaveProp({ resourceName: 'Skill' });
+    expect(rendered).toHaveProp({ resourceName: 'Language' });
   });
 
   it('should render the breadcrumbs', () => {
@@ -39,12 +39,12 @@ describe('<ShowSkillPage />', () => {
         active: true,
       },
       {
-        label: 'Skills',
-        url: '/reference/skills',
+        label: 'Languages',
+        url: '/reference/languages',
       },
       {
         label: 'Loading...',
-        url: `/reference/skills/${id}`,
+        url: `/reference/languages/${id}`,
         active: true,
       },
     ];
@@ -52,7 +52,7 @@ describe('<ShowSkillPage />', () => {
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<ShowSkillPage {...defaultProps} />);
+    const rendered = shallow(<ShowLanguagePage {...defaultProps} />);
 
     expect(rendered).toHaveProp({ breadcrumbs });
   });
@@ -62,7 +62,7 @@ describe('<ShowSkillPage />', () => {
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<ShowSkillPage {...defaultProps} />);
+    const rendered = shallow(<ShowLanguagePage {...defaultProps} />);
 
     expect(rendered).toHaveProp({ buttons: [] });
   });
@@ -80,32 +80,32 @@ describe('<ShowSkillPage />', () => {
           active: true,
         },
         {
-          label: 'Skills',
-          url: '/reference/skills',
+          label: 'Languages',
+          url: '/reference/languages',
         },
         {
-          label: 'Disco',
-          url: `/reference/skills/${id}`,
+          label: 'Body Language',
+          url: `/reference/languages/${id}`,
           active: true,
         },
       ];
-      const skill = { id, name: 'Disco' };
-      const state = { data: { skill } };
+      const language = { id, name: 'Body Language' };
+      const state = { data: { language } };
 
       hooks.useEndpoint.mockImplementationOnce(() => state);
 
-      const rendered = shallow(<ShowSkillPage {...defaultProps} />);
+      const rendered = shallow(<ShowLanguagePage {...defaultProps} />);
 
       expect(rendered).toHaveProp({ breadcrumbs });
     });
 
     it('should render the buttons', () => {
-      const skill = { id, name: 'Disco' };
-      const state = { data: { skill } };
+      const language = { id, name: 'Body Language' };
+      const state = { data: { language } };
 
       hooks.useEndpoint.mockImplementationOnce(() => state);
 
-      const rendered = shallow(<ShowSkillPage {...defaultProps} />);
+      const rendered = shallow(<ShowLanguagePage {...defaultProps} />);
 
       expect(rendered).toHaveProp({ buttons: [] });
     });
