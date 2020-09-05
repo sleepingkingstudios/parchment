@@ -120,13 +120,19 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
               className="btn btn-outline-secondary btn-block"
               to="/spells"
             >
-              <a
+              <LinkAnchor
                 className="btn btn-outline-secondary btn-block"
                 href="/spells"
-                onClick={[Function]}
+                navigate={[Function]}
               >
-                Cancel
-              </a>
+                <a
+                  className="btn btn-outline-secondary btn-block"
+                  href="/spells"
+                  onClick={[Function]}
+                >
+                  Cancel
+                </a>
+              </LinkAnchor>
             </Link>
           </LinkButton>
         </FormCancelButton>

@@ -79,7 +79,10 @@ describe('<ShowPage />', () => {
 
     shallow(<ShowPage {...defaultProps} endpoint={endpoint} />);
 
-    expect(useRequestData).toHaveBeenCalledWith({ wildcards: { id } });
+    expect(useRequestData).toHaveBeenCalledWith(
+      { wildcards: { id } },
+      [{ id }],
+    );
     expect(performRequest).toHaveBeenCalled();
   });
 
