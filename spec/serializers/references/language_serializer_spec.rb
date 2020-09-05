@@ -25,6 +25,7 @@ RSpec.describe Serializers::References::LanguageSerializer do
     include_examples 'should serialize attributes',
       :id,
       :name,
+      :parent_language_id,
       :rarity,
       :script,
       :slug,

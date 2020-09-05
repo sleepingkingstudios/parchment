@@ -19,13 +19,24 @@ const findAssociationData = ({
 
   if (!exists(associationData)) { return undefined; }
 
+  if (Array.isArray(associationData)) { return associationData; }
+
   return [associationData];
 };
 
-const findAssociationById = ({ associationData, foreignKeyName, foreignKeyValue }) => {
+const findAssociationById = (props) => {
+  const {
+    associationData,
+    foreignKeyName,
+    foreignKeyValue,
+    many,
+  } = props;
   const actualForeignKeyName = valueOrDefault(foreignKeyName, 'id');
+  const matchFn = item => (item[actualForeignKeyName] === foreignKeyValue);
 
-  return associationData.find(item => (item[actualForeignKeyName] === foreignKeyValue));
+  if (many) { return associationData.filter(matchFn); }
+
+  return associationData.find(matchFn);
 };
 
 const findAssociationByIdAndType = ({
@@ -50,6 +61,7 @@ const findAssociation = ({
   foreignKeyValue,
   foreignTypeName,
   foreignTypeValue,
+  many,
   plural,
   resourceName,
 }) => {
@@ -64,7 +76,12 @@ const findAssociation = ({
   if (!exists(associationData)) { return undefined; }
 
   if (!exists(foreignTypeName)) {
-    return findAssociationById({ associationData, foreignKeyName, foreignKeyValue });
+    return findAssociationById({
+      associationData,
+      foreignKeyName,
+      foreignKeyValue,
+      many,
+    });
   }
 
   return findAssociationByIdAndType({
@@ -76,12 +93,34 @@ const findAssociation = ({
   });
 };
 
-const collectBelongsToPolymorphicAssociation = ({
-  associationName,
-  data,
-  plural,
-  resource,
-}) => {
+const collectBelongsToAssociation = (props) => {
+  const {
+    associationName,
+    data,
+    plural,
+    resource,
+  } = props;
+  const modifiedData = Object.assign({}, resource);
+  const foreignKeyValue = resource[`${associationName}_id`];
+
+  modifiedData[associationName] = findAssociation({
+    data,
+    foreignKeyValue,
+    many: false,
+    plural,
+    resourceName: associationName,
+  });
+
+  return modifiedData;
+};
+
+const collectBelongsToPolymorphicAssociation = (props) => {
+  const {
+    associationName,
+    data,
+    plural,
+    resource,
+  } = props;
   const modifiedData = Object.assign({}, resource);
   const foreignKeyValue = resource[`${associationName}_id`];
   const resourceName = resource[`${associationName}_type`];
@@ -89,8 +128,39 @@ const collectBelongsToPolymorphicAssociation = ({
   modifiedData[associationName] = findAssociation({
     data,
     foreignKeyValue,
+    many: false,
     plural,
     resourceName,
+  });
+
+  return modifiedData;
+};
+
+const collectHasManyAssociation = (props) => {
+  const {
+    associationName,
+    data,
+    inverseName,
+    plural,
+    resource,
+    resourceName,
+  } = props;
+
+  const actualInverseName = valueOrDefault(
+    inverseName,
+    pluralize.singular(resourceName),
+  );
+  const modifiedData = Object.assign({}, resource);
+  const foreignKeyName = `${actualInverseName}_id`;
+  const foreignKeyValue = resource.id;
+
+  modifiedData[associationName] = findAssociation({
+    data,
+    foreignKeyName,
+    foreignKeyValue,
+    many: true,
+    plural,
+    resourceName: associationName,
   });
 
   return modifiedData;
@@ -116,6 +186,7 @@ const collectHasOnePolymorphicAssociation = ({
     foreignKeyValue,
     foreignTypeName,
     foreignTypeValue,
+    many: false,
     plural,
     resourceName: associationName,
   });
@@ -137,8 +208,12 @@ const collectAssociation = (props) => {
   });
 
   switch (qualifiedAssociationType) {
+    case 'belongsTo':
+      return collectBelongsToAssociation(props);
     case 'belongsToPolymorphic':
       return collectBelongsToPolymorphicAssociation(props);
+    case 'hasMany':
+      return collectHasManyAssociation(props);
     case 'hasOnePolymorphic':
       return collectHasOnePolymorphicAssociation(props);
     default:

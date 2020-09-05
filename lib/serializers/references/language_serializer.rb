@@ -8,6 +8,7 @@ module Serializers::References
   class LanguageSerializer < Serializers::RecordSerializer
     attributes \
       :name,
+      :parent_language_id,
       :rarity,
       :script,
       :slug,

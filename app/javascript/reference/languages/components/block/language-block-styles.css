@@ -4,3 +4,14 @@
   line-height: 1.2;
   margin-bottom: 0.5rem;
 }
+
+.language-block .language-block-dialects {
+  margin: 2rem 0 0;
+}
+
+.language-block .language-block-dialects .language-block-dialects-heading {
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}

@@ -93,6 +93,7 @@ describe('<ShowPageBlock />', () => {
       expect(rendered).toHaveDisplayName('Block');
       expect(rendered).toHaveProp({ data: widget });
       expect(rendered).toHaveProp({ showAdditionalDetails: true });
+      expect(rendered).toHaveProp({ showAssociations: true });
     });
 
     it('should match the snapshot', () => {

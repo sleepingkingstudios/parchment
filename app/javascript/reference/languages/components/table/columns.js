@@ -10,7 +10,7 @@ const columns = [
   {
     label: 'Speakers',
     prop: 'speakers',
-    width: 4,
+    width: 6,
   },
   {
     label: 'Rarity',
@@ -22,7 +22,7 @@ const columns = [
     label: false,
     prop: 'actions',
     value: LanguagesTableActions,
-    width: 3,
+    width: 1,
   },
 ];
 
