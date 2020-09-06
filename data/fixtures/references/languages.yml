@@ -1,0 +1,29 @@
+---
+- name:               Elder Sign
+  id:                 fa3de522-deb9-444d-b2cf-6c0063e7122c
+  slug:               elder-sign
+  rarity:             exotic
+  script:             none
+  speakers:           Dread Beings From Beyond The Stars
+  parent_language_id: 6322b9f2-db2c-4684-bc81-2f451ae3a8a5
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
+- name:               Flumph
+  id:                 f7429a3b-1d20-4789-9679-55406d578ada
+  slug:               flumph
+  rarity:             standard
+  script:             Flumph
+  speakers:           Flumphs
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
+- name:               Tentacle Sign
+  id:                 6322b9f2-db2c-4684-bc81-2f451ae3a8a5
+  slug:               tentacle-sign
+  rarity:             standard
+  script:             none
+  speakers:           Flumphs
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress

@@ -61,7 +61,7 @@ const ShowPage = (props) => {
     defaultMapData(singularResourceName),
   );
   const mappedData = actualMapData(data);
-  const requestData = useRequestData({ wildcards: { id } });
+  const requestData = useRequestData({ wildcards: { id } }, [match.params]);
   const actualBreadcrumbs = valueOrDefault(
     breadcrumbs,
     generateBreadcrumbs({

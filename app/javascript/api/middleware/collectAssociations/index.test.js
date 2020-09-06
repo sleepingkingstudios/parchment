@@ -16,6 +16,249 @@ describe('collectAssociations request middleware', () => {
     });
   });
 
+  describe('with a resource with a belongsTo association', () => {
+    const associationName = 'forest';
+    const associationType = 'belongsTo';
+    const resourceName = 'tree';
+    const options = {
+      associationName,
+      associationType,
+      resourceName,
+    };
+    const middleware = collectAssociations(options);
+
+    describe('handleSuccess()', () => {
+      const { handleSuccess } = middleware;
+
+      it('should be a function', () => {
+        expect(typeof handleSuccess).toEqual('function');
+      });
+
+      it('should return a function', () => {
+        const next = jest.fn();
+
+        expect(typeof handleSuccess(next)).toEqual('function');
+      });
+
+      describe('when the resource does not have an association', () => {
+        const tree = {
+          id: '10000000-0000-0000-0000-000000000000',
+          name: 'Redwood',
+        };
+        const data = { tree };
+
+        it('should modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedData = {
+            tree: {
+              forest: undefined,
+              id: '10000000-0000-0000-0000-000000000000',
+              name: 'Redwood',
+            },
+          };
+
+          const expectedResponse = { json: { data: expectedData } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
+      });
+
+      describe('when the resource has an association', () => {
+        describe('when the association is missing', () => {
+          const tree = {
+            forest_id: '00000000-0000-0000-0000-000000000000',
+            id: '10000000-0000-0000-0000-000000000000',
+            name: 'Cypress',
+          };
+          const data = { tree };
+
+          it('should modify the response', () => {
+            const next = jest.fn();
+            const dispatch = jest.fn();
+            const getState = jest.fn();
+            const response = { json: { data } };
+            const expectedData = {
+              tree: {
+                forest: undefined,
+                forest_id: '00000000-0000-0000-0000-000000000000',
+                id: '10000000-0000-0000-0000-000000000000',
+                name: 'Cypress',
+              },
+            };
+
+            const expectedResponse = { json: { data: expectedData } };
+
+            handleSuccess(next)({ dispatch, getState, response });
+
+            expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+          });
+        });
+
+        describe('when the association is present', () => {
+          const forest = {
+            id: '00000000-0000-0000-0000-000000000000',
+            name: 'Mangrove Groves',
+          };
+          const tree = {
+            forest_id: forest.id,
+            id: '10000000-0000-0000-0000-000000000000',
+            name: 'Mangrove',
+          };
+          const data = {
+            forest,
+            tree,
+          };
+
+          it('should modify the response', () => {
+            const next = jest.fn();
+            const dispatch = jest.fn();
+            const getState = jest.fn();
+            const response = { json: { data } };
+            const expectedData = {
+              forest,
+              tree: {
+                forest,
+                forest_id: forest.id,
+                id: '10000000-0000-0000-0000-000000000000',
+                name: 'Mangrove',
+              },
+            };
+
+            const expectedResponse = { json: { data: expectedData } };
+
+            handleSuccess(next)({ dispatch, getState, response });
+
+            expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+          });
+        });
+      });
+    });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(middleware.options).toEqual(options);
+      });
+    });
+  });
+
+  describe('with a resource with a hasMany association', () => {
+    const associationName = 'trees';
+    const associationType = 'hasMany';
+    const resourceName = 'forest';
+    const options = {
+      associationName,
+      associationType,
+      resourceName,
+    };
+    const middleware = collectAssociations(options);
+
+    describe('handleSuccess()', () => {
+      const { handleSuccess } = middleware;
+
+      it('should be a function', () => {
+        expect(typeof handleSuccess).toEqual('function');
+      });
+
+      it('should return a function', () => {
+        const next = jest.fn();
+
+        expect(typeof handleSuccess(next)).toEqual('function');
+      });
+
+      describe('when the resource does not have any associations', () => {
+        const forest = {
+          id: '00000000-0000-0000-0000-000000000000',
+          name: 'Mangrove Groves',
+        };
+        const data = { forest };
+
+        it('should modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedData = {
+            forest: {
+              id: '00000000-0000-0000-0000-000000000000',
+              name: 'Mangrove Groves',
+              trees: undefined,
+            },
+          };
+
+          const expectedResponse = { json: { data: expectedData } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
+      });
+
+      describe('when the resource has associations', () => {
+        const forest = {
+          id: '00000000-0000-0000-0000-000000000001',
+          name: 'Shady Acres',
+        };
+        const trees = [
+          {
+            forest_id: forest.id,
+            id: '10000000-0000-0000-0000-000000000000',
+            name: 'Cypress',
+          },
+          {
+            forest_id: '00000000-0000-0000-0000-000000000000',
+            id: '10000000-0000-0000-0000-000000000001',
+            name: 'Mangrove',
+          },
+          {
+            forest_id: forest.id,
+            id: '10000000-0000-0000-0000-000000000002',
+            name: 'Redwood',
+          },
+          {
+            id: '10000000-0000-0000-0000-000000000003',
+            name: 'Spruce',
+          },
+        ];
+        const data = {
+          forest,
+          trees,
+        };
+
+        it('should modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedData = {
+            forest: {
+              id: '00000000-0000-0000-0000-000000000001',
+              name: 'Shady Acres',
+              trees: [trees[0], trees[2]],
+            },
+            trees,
+          };
+
+          const expectedResponse = { json: { data: expectedData } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
+      });
+    });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(middleware.options).toEqual(options);
+      });
+    });
+  });
+
   describe('with a resource with a polymorphic belongsTo association', () => {
     const associationName = 'source';
     const associationType = 'belongsTo';
@@ -231,6 +474,386 @@ describe('collectAssociations request middleware', () => {
               name: "The Flumph Fancier's Handbook",
               cover,
             },
+          };
+
+          const expectedResponse = { json: { data: expectedData } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
+      });
+    });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(middleware.options).toEqual(options);
+      });
+    });
+  });
+
+  describe('with a resources array with a belongsTo association', () => {
+    const associationName = 'forest';
+    const associationType = 'belongsTo';
+    const resourceName = 'trees';
+    const options = {
+      associationName,
+      associationType,
+      resourceName,
+    };
+    const middleware = collectAssociations(options);
+
+    describe('handleSuccess()', () => {
+      const { handleSuccess } = middleware;
+
+      it('should be a function', () => {
+        expect(typeof handleSuccess).toEqual('function');
+      });
+
+      it('should return a function', () => {
+        const next = jest.fn();
+
+        expect(typeof handleSuccess(next)).toEqual('function');
+      });
+
+      describe('when the resources do not have associations', () => {
+        const trees = [
+          {
+            id: '10000000-0000-0000-0000-000000000000',
+            name: 'Cypress',
+          },
+          {
+            id: '10000000-0000-0000-0000-000000000001',
+            name: 'Mangrove',
+          },
+          {
+            id: '10000000-0000-0000-0000-000000000002',
+            name: 'Redwood',
+          },
+          {
+            id: '10000000-0000-0000-0000-000000000003',
+            name: 'Spruce',
+          },
+        ];
+        const data = { trees };
+
+        it('should modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedData = {
+            trees: [
+              {
+                forest: undefined,
+                id: '10000000-0000-0000-0000-000000000000',
+                name: 'Cypress',
+              },
+              {
+                forest: undefined,
+                id: '10000000-0000-0000-0000-000000000001',
+                name: 'Mangrove',
+              },
+              {
+                forest: undefined,
+                id: '10000000-0000-0000-0000-000000000002',
+                name: 'Redwood',
+              },
+              {
+                forest: undefined,
+                id: '10000000-0000-0000-0000-000000000003',
+                name: 'Spruce',
+              },
+            ],
+          };
+
+          const expectedResponse = { json: { data: expectedData } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
+      });
+
+      describe('when the resources have associations', () => {
+        describe('when the associations are missing', () => {
+          const forests = [
+            {
+              id: '00000000-0000-0000-0000-000000000000',
+              name: 'Mangrove Groves',
+            },
+          ];
+          const trees = [
+            {
+              forest_id: '00000000-0000-0000-0000-000000000001',
+              id: '10000000-0000-0000-0000-000000000000',
+              name: 'Cypress',
+            },
+            {
+              forest_id: forests[0].id,
+              id: '10000000-0000-0000-0000-000000000001',
+              name: 'Mangrove',
+            },
+            {
+              forest_id: '00000000-0000-0000-0000-000000000001',
+              id: '10000000-0000-0000-0000-000000000002',
+              name: 'Redwood',
+            },
+            {
+              forest_id: '',
+              id: '10000000-0000-0000-0000-000000000003',
+              name: 'Spruce',
+            },
+          ];
+          const data = {
+            forests,
+            trees,
+          };
+
+          it('should modify the response', () => {
+            const next = jest.fn();
+            const dispatch = jest.fn();
+            const getState = jest.fn();
+            const response = { json: { data } };
+            const expectedData = {
+              forests,
+              trees: [
+                {
+                  forest: undefined,
+                  forest_id: '00000000-0000-0000-0000-000000000001',
+                  id: '10000000-0000-0000-0000-000000000000',
+                  name: 'Cypress',
+                },
+                {
+                  forest: forests[0],
+                  forest_id: forests[0].id,
+                  id: '10000000-0000-0000-0000-000000000001',
+                  name: 'Mangrove',
+                },
+                {
+                  forest: undefined,
+                  forest_id: '00000000-0000-0000-0000-000000000001',
+                  id: '10000000-0000-0000-0000-000000000002',
+                  name: 'Redwood',
+                },
+                {
+                  forest: undefined,
+                  forest_id: '',
+                  id: '10000000-0000-0000-0000-000000000003',
+                  name: 'Spruce',
+                },
+              ],
+            };
+            const expectedResponse = { json: { data: expectedData } };
+
+            handleSuccess(next)({ dispatch, getState, response });
+
+            expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+          });
+        });
+
+        describe('when the associations are present', () => {
+          const forests = [
+            {
+              id: '00000000-0000-0000-0000-000000000000',
+              name: 'Mangrove Groves',
+            },
+            {
+              id: '00000000-0000-0000-0000-000000000001',
+              name: 'Shady Acres',
+            },
+          ];
+          const trees = [
+            {
+              forest_id: forests[0].id,
+              id: '10000000-0000-0000-0000-000000000000',
+              name: 'Cypress',
+            },
+            {
+              forest_id: forests[1].id,
+              id: '10000000-0000-0000-0000-000000000001',
+              name: 'Mangrove',
+            },
+            {
+              forest_id: forests[0].id,
+              id: '10000000-0000-0000-0000-000000000002',
+              name: 'Redwood',
+            },
+            {
+              id: '10000000-0000-0000-0000-000000000003',
+              name: 'Spruce',
+            },
+          ];
+          const data = {
+            forests,
+            trees,
+          };
+
+          it('should modify the response', () => {
+            const next = jest.fn();
+            const dispatch = jest.fn();
+            const getState = jest.fn();
+            const response = { json: { data } };
+            const expectedData = {
+              forests,
+              trees: [
+                {
+                  forest: forests[0],
+                  forest_id: forests[0].id,
+                  id: '10000000-0000-0000-0000-000000000000',
+                  name: 'Cypress',
+                },
+                {
+                  forest: forests[1],
+                  forest_id: forests[1].id,
+                  id: '10000000-0000-0000-0000-000000000001',
+                  name: 'Mangrove',
+                },
+                {
+                  forest: forests[0],
+                  forest_id: forests[0].id,
+                  id: '10000000-0000-0000-0000-000000000002',
+                  name: 'Redwood',
+                },
+                {
+                  forest: undefined,
+                  id: '10000000-0000-0000-0000-000000000003',
+                  name: 'Spruce',
+                },
+              ],
+            };
+            const expectedResponse = { json: { data: expectedData } };
+
+            handleSuccess(next)({ dispatch, getState, response });
+
+            expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+          });
+        });
+      });
+    });
+  });
+
+  describe('with a resources array with a hasMany association', () => {
+    const associationName = 'trees';
+    const associationType = 'hasMany';
+    const resourceName = 'forests';
+    const options = {
+      associationName,
+      associationType,
+      resourceName,
+    };
+    const middleware = collectAssociations(options);
+
+    describe('handleSuccess()', () => {
+      const { handleSuccess } = middleware;
+
+      it('should be a function', () => {
+        expect(typeof handleSuccess).toEqual('function');
+      });
+
+      it('should return a function', () => {
+        const next = jest.fn();
+
+        expect(typeof handleSuccess(next)).toEqual('function');
+      });
+
+      describe('when the resources do not have any associations', () => {
+        const forests = [
+          {
+            id: '00000000-0000-0000-0000-000000000000',
+            name: 'Mangrove Groves',
+          },
+          {
+            id: '00000000-0000-0000-0000-000000000001',
+            name: 'Shady Acres',
+          },
+        ];
+        const data = { forests };
+
+        it('should modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedData = {
+            forests: [
+              {
+                id: '00000000-0000-0000-0000-000000000000',
+                name: 'Mangrove Groves',
+                trees: undefined,
+              },
+              {
+                id: '00000000-0000-0000-0000-000000000001',
+                name: 'Shady Acres',
+                trees: undefined,
+              },
+            ],
+          };
+
+          const expectedResponse = { json: { data: expectedData } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
+      });
+
+      describe('when the resources have associations', () => {
+        const forests = [
+          {
+            id: '00000000-0000-0000-0000-000000000000',
+            name: 'Mangrove Groves',
+          },
+          {
+            id: '00000000-0000-0000-0000-000000000001',
+            name: 'Shady Acres',
+          },
+        ];
+        const trees = [
+          {
+            forest_id: forests[1].id,
+            id: '10000000-0000-0000-0000-000000000000',
+            name: 'Cypress',
+          },
+          {
+            forest_id: forests[0].id,
+            id: '10000000-0000-0000-0000-000000000001',
+            name: 'Mangrove',
+          },
+          {
+            forest_id: forests[1].id,
+            id: '10000000-0000-0000-0000-000000000002',
+            name: 'Redwood',
+          },
+          {
+            id: '10000000-0000-0000-0000-000000000003',
+            name: 'Spruce',
+          },
+        ];
+        const data = {
+          forests,
+          trees,
+        };
+
+        it('should modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedData = {
+            forests: [
+              {
+                id: '00000000-0000-0000-0000-000000000000',
+                name: 'Mangrove Groves',
+                trees: [trees[1]],
+              },
+              {
+                id: '00000000-0000-0000-0000-000000000001',
+                name: 'Shady Acres',
+                trees: [trees[0], trees[2]],
+              },
+            ],
+            trees,
           };
 
           const expectedResponse = { json: { data: expectedData } };

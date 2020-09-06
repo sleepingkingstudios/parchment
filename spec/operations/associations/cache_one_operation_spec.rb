@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-require 'operations/associations/assign_has_one_operation'
+require 'operations/associations/cache_one_operation'
 
 require 'support/examples/operation_examples'
 
-RSpec.describe Operations::Associations::AssignHasOneOperation do
+RSpec.describe Operations::Associations::CacheOneOperation do
   include Spec::Support::Examples::OperationExamples
 
   subject(:operation) do

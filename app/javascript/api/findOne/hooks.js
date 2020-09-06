@@ -4,11 +4,14 @@ import { useDispatch, useStore } from 'react-redux';
 import generateEndpointHooks from '../endpoint/hooks';
 
 const generateHooks = ({ performRequest, selector }) => {
-  const useRequestData = params => () => {
+  const useRequestData = (params, skip = []) => () => {
     const dispatch = useDispatch();
     const { getState } = useStore();
 
-    useEffect(() => { performRequest(params)(dispatch, getState); }, []);
+    useEffect(
+      () => { performRequest(params)(dispatch, getState); },
+      skip,
+    );
   };
 
   return Object.assign(

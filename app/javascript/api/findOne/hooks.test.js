@@ -68,7 +68,10 @@ describe('API endpoint hooks', () => {
       it('should call useEffect()', () => {
         requestHook();
 
-        expect(useEffect).toHaveBeenCalled();
+        expect(useEffect).toHaveBeenCalledWith(
+          expect.any(Function),
+          [],
+        );
       });
 
       it('should call performRequest with dispatch and getState', () => {
@@ -87,7 +90,33 @@ describe('API endpoint hooks', () => {
       it('should call useEffect()', () => {
         requestHook();
 
-        expect(useEffect).toHaveBeenCalled();
+        expect(useEffect).toHaveBeenCalledWith(
+          expect.any(Function),
+          [],
+        );
+      });
+
+      it('should call performRequest with dispatch and getState', () => {
+        requestHook();
+
+        expect(performRequest).toHaveBeenCalledWith(params);
+        expect(requestHandler).toHaveBeenCalledWith(dispatch, getState);
+      });
+    });
+
+    describe('with a skip array', () => {
+      const id = '00000000-0000-0000-0000-000000000000';
+      const params = {};
+      const skip = [{ id }];
+      const requestHook = useRequestData(params, skip);
+
+      it('should call useEffect()', () => {
+        requestHook();
+
+        expect(useEffect).toHaveBeenCalledWith(
+          expect.any(Function),
+          skip,
+        );
       });
 
       it('should call performRequest with dispatch and getState', () => {

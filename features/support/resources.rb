@@ -5,8 +5,9 @@ module Features
     def self.all
       @all ||= %w[
         Action
-        Condition
         Book
+        Condition
+        Language
         Skill
         Spell
       ].map { |resource_name| find(resource_name) }

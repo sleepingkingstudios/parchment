@@ -47,6 +47,16 @@ describe('<HomePage />', () => {
     expect(link).toHaveProp('children', 'Books');
   });
 
+  it('should render the languages link', () => {
+    const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
+    const link = rendered.find('.languages-link');
+
+    expect(link).toExist();
+    expect(link).toHaveDisplayName('Link');
+    expect(link).toHaveProp('to', '/reference/languages');
+    expect(link).toHaveProp('children', 'Languages');
+  });
+
   it('should render the skills link', () => {
     const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
     const link = rendered.find('.skills-link');
@@ -65,5 +75,11 @@ describe('<HomePage />', () => {
     expect(link).toHaveDisplayName('Link');
     expect(link).toHaveProp('to', '/spells');
     expect(link).toHaveProp('children', 'Spells');
+  });
+
+  it('should match the snapshot', () => {
+    const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
+
+    expect(rendered).toMatchSnapshot();
   });
 });

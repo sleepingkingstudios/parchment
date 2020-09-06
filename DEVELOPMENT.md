@@ -1,5 +1,11 @@
 # Development Notes
 
+- Test Api::BaseController#extract_authorization_token with params
+  - Implement Operations::Authentication::ExtractParameter ?
+  - Implement Operations::Authentication::Strategy ?
+- Collect authentication features in features/authentication
+  - Specifically, the "As An Anonymous User" examples should be condensed
+
 ## Ability
 
 - belongs_to :granter, polymorphic: true

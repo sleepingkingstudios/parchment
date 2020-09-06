@@ -49,6 +49,12 @@ module Api
     end
 
     def extract_authorization_token
+      if Rails.env.development?
+        # :nocov:
+        return success(params['token']) if params['token'].present?
+        # :nocov:
+      end
+
       Operations::Authentication::ExtractHeader.new.call(request.headers.env)
     end
 

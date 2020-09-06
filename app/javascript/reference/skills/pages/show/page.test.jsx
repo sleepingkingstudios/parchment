@@ -9,7 +9,7 @@ jest.mock('../../store/showFindSkill');
 
 hooks.useEndpoint.mockImplementation(() => () => ({}));
 
-describe('ShowSkillPage', () => {
+describe('<ShowSkillPage />', () => {
   const id = '00000000-0000-0000-0000-000000000000';
   const match = { params: { id } };
   const defaultProps = { match };

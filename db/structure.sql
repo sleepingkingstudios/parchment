@@ -73,6 +73,23 @@ CREATE TABLE public.credentials (
 
 
 --
+-- Name: languages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.languages (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    name character varying DEFAULT ''::character varying NOT NULL,
+    rarity character varying DEFAULT ''::character varying NOT NULL,
+    slug character varying DEFAULT ''::character varying NOT NULL,
+    script character varying DEFAULT ''::character varying NOT NULL,
+    speakers character varying DEFAULT ''::character varying NOT NULL,
+    parent_language_id uuid
+);
+
+
+--
 -- Name: mechanics; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -194,6 +211,14 @@ ALTER TABLE ONLY public.credentials
 
 
 --
+-- Name: languages languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.languages
+    ADD CONSTRAINT languages_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: mechanics mechanics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -292,6 +317,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200415062324'),
 ('20200415082014'),
 ('20200821230610'),
-('20200825045007');
+('20200825045007'),
+('20200828021312');
 
 

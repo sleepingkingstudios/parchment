@@ -35,6 +35,7 @@ describe('<PageHeader />', () => {
       },
       Books: '/books',
       Reference: {
+        Languages: '/reference/languages',
         Skills: '/reference/skills',
       },
     };

@@ -5,8 +5,8 @@ require 'operations/records/base_operation'
 
 module Operations::Associations
   # Takes one or more record objects, loads the associated records for the given
-  # association, and caches the association to avoid an N+1 query.
-  class AssignHasOneOperation < Operations::Records::BaseOperation
+  # plural association, and caches the association to avoid an N+1 query.
+  class CacheManyOperation < Operations::Records::BaseOperation
     def initialize(record_class, association_name:)
       super(record_class)
 
@@ -24,16 +24,8 @@ module Operations::Associations
       records.each do |record|
         record.association(association_name).target =
           associated_records
-          .find { |other| other.send(foreign_key_name) == record.id }
+          .select { |other| other.send(foreign_key_name) == record.id }
       end
-    end
-
-    def find_associated_records(records)
-      query = { foreign_key_name => records.map(&:id) }
-
-      query[foreign_type_name] = record_class.name if polymorphic?
-
-      inverse_factory.find_matching.call(where: query)
     end
 
     def find_association
@@ -45,6 +37,12 @@ module Operations::Associations
         "#{record_class.name} does not define association" \
         " #{association_name.inspect}",
         caller[1..-1]
+    end
+
+    def find_associated_records(records)
+      query = { foreign_key_name => records.map(&:id) }
+
+      inverse_factory.find_matching.call(where: query)
     end
 
     def foreign_key_name
@@ -73,10 +71,6 @@ module Operations::Associations
       Array(records).each do |record|
         step :handle_invalid_record, record
       end
-    end
-
-    def polymorphic?
-      inverse_association.polymorphic?
     end
 
     def process(records)

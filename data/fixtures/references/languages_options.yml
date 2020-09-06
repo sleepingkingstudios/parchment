@@ -1,0 +1,4 @@
+---
+find_by: name
+middleware:
+  - type: set_source

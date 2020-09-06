@@ -93,13 +93,19 @@ exports[`<BookForm /> fields <CancelButton /> should match the snapshot 1`] = `
               className="btn btn-outline-secondary btn-block"
               to="/books"
             >
-              <a
+              <LinkAnchor
                 className="btn btn-outline-secondary btn-block"
                 href="/books"
-                onClick={[Function]}
+                navigate={[Function]}
               >
-                Cancel
-              </a>
+                <a
+                  className="btn btn-outline-secondary btn-block"
+                  href="/books"
+                  onClick={[Function]}
+                >
+                  Cancel
+                </a>
+              </LinkAnchor>
             </Link>
           </LinkButton>
         </FormCancelButton>

@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HomePage /> should match the snapshot 1`] = `
+<Page
+  breadcrumbs={Array []}
+  className={null}
+  layout={null}
+  showNavigation={true}
+  showUser={true}
+  subtitle="5e Campaign Companion"
+  title="Parchment"
+>
+  <h1>
+    Game Reference
+  </h1>
+  <ul>
+    <li>
+      <Link
+        className="spells-link"
+        to="/spells"
+      >
+        Spells
+      </Link>
+    </li>
+  </ul>
+  <h2>
+    Reference
+  </h2>
+  <ul>
+    <li>
+      <Link
+        className="languages-link"
+        to="/reference/languages"
+      >
+        Languages
+      </Link>
+    </li>
+    <li>
+      <Link
+        className="skills-link"
+        to="/reference/skills"
+      >
+        Skills
+      </Link>
+    </li>
+  </ul>
+  <h2>
+    Mechanics
+  </h2>
+  <ul>
+    <li>
+      <Link
+        className="actions-link"
+        to="/mechanics/actions"
+      >
+        Actions
+      </Link>
+    </li>
+    <li>
+      <Link
+        className="conditions-link"
+        to="/mechanics/conditions"
+      >
+        Conditions
+      </Link>
+    </li>
+  </ul>
+  <h2>
+    Sources
+  </h2>
+  <ul>
+    <li>
+      <Link
+        className="books-link"
+        to="/books"
+      >
+        Books
+      </Link>
+    </li>
+  </ul>
+</Page>
+`;

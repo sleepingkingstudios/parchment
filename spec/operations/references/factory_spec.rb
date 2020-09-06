@@ -71,7 +71,7 @@ RSpec.describe Operations::References::Factory do
         )
         .and_middleware(
           a_subclass_of(
-            Operations::Associations::Middleware::AssignHasOne,
+            Operations::Associations::Middleware::CacheOne,
             association_name: :source
           )
         )
@@ -86,7 +86,7 @@ RSpec.describe Operations::References::Factory do
         )
         .and_middleware(
           a_subclass_of(
-            Operations::Associations::Middleware::AssignHasOne,
+            Operations::Associations::Middleware::CacheOne,
             association_name: :source
           )
         )
@@ -102,7 +102,7 @@ RSpec.describe Operations::References::Factory do
         .and_middleware(
           a_subclass_of(Operations::Records::Middleware::FindBySlug),
           a_subclass_of(
-            Operations::Associations::Middleware::AssignHasOne,
+            Operations::Associations::Middleware::CacheOne,
             association_name: :source
           )
         )
