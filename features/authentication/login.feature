@@ -1,3 +1,4 @@
+@authentication @core
 Feature: Authentication
   The login process allows the system to authenticate the user.
 

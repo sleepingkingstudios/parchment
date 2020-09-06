@@ -1,3 +1,4 @@
+@reference @skills @show
 Feature: Showing A Skill
   The skill page provides a block view of a defined skill object.
 
@@ -9,6 +10,7 @@ Feature: Showing A Skill
     Then  I should be on the "Show" page for the "Skill"
 
   Rule: Viewing the Skill
+    @authentication
     Example: As An Anonymous User
       When I visit the "Show" page for "Skill" "Unspeakable Knowledge"
       And  I am not logged in
@@ -19,6 +21,7 @@ Feature: Showing A Skill
       And  I am logged in as a user
       Then I should be on the "Skills index" page
 
+    @core
     Example: When The Skill Exists
       Given the fixtures are loaded
       When  I visit the "Show" page for "Skill" "Unspeakable Knowledge"

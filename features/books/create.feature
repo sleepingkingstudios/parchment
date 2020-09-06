@@ -1,3 +1,4 @@
+@books @create @sources
 Feature: Creating A Book
   The create book process allows the user to define a book object.
 
@@ -8,6 +9,7 @@ Feature: Creating A Book
     Then I should be on the "Books create" page
 
   Rule: Creating a Book
+    @authentication
     Example: As An Anonymous User
       When I visit the "Books create" page
       And  I am not logged in
@@ -21,6 +23,7 @@ Feature: Creating A Book
       And  the "Book" form should display the data
       And  the "Book" form should display the errors
 
+    @core
     Example: With Valid Attributes
       When I visit the "Books create" page
       And  I am logged in as a user

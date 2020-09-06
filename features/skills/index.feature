@@ -1,3 +1,4 @@
+@index @reference @skills
 Feature: Showing Skills
   The skills index provides a tabular view of the defined skill objects.
 
@@ -8,6 +9,7 @@ Feature: Showing Skills
     Then I should be on the "Skills index" page
 
   Rule: Viewing the Skills
+    @authentication
     Example: As An Anonymous User
       When I visit the "Skills index" page
       And  I am not logged in
@@ -18,6 +20,7 @@ Feature: Showing Skills
       And  I am logged in as a user
       Then the "Skills" table should be empty
 
+    @core
     Example: When There Are Many Skills
       Given the fixtures are loaded
       When  I visit the "Skills index" page

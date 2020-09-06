@@ -1,3 +1,4 @@
+@books @sources @update
 Feature: Updating A Book
   The update book process allows the user to modify an existing book object.
 
@@ -17,6 +18,7 @@ Feature: Updating A Book
       Then  I should be on the "Update" page for the "Book"
 
   Rule: Updating the Book
+    @authentication
     Example: As An Anonymous User
       When I visit the "Update" page for "Book" "Crime in Flumphtownville"
       And  I am not logged in
@@ -36,6 +38,7 @@ Feature: Updating A Book
       And   the "Book" form should display the data
       And   the "Book" form should display the errors
 
+    @core
     Example: With Valid Attributes
       Given the fixtures are loaded
       When  I visit the "Update" page for "Book" "Crime in Flumphtownville"

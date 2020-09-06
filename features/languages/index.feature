@@ -1,3 +1,4 @@
+@index @languages @reference
 Feature: Showing Languages
   The languages index provides a tabular view of the defined skill objects.
 
@@ -8,6 +9,7 @@ Feature: Showing Languages
     Then I should be on the "Languages index" page
 
   Rule: Viewing the Languages
+    @authentication
     Example: As An Anonymous User
       When I visit the "Languages index" page
       And  I am not logged in
@@ -18,6 +20,7 @@ Feature: Showing Languages
       And  I am logged in as a user
       Then the "Languages" table should be empty
 
+    @core
     Example: When There Are Many Languages
       Given the fixtures are loaded
       When  I visit the "Languages index" page

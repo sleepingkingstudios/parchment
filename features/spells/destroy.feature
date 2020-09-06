@@ -1,3 +1,4 @@
+@destroy @reference @spells
 Feature: Destroying A Spell
   The destroy spell process allows the user to delete an existing spell object.
 
@@ -12,6 +13,7 @@ Feature: Destroying A Spell
       And   the "Spells" table should display the data
       And   the "Spells" table should not display the data for the resource
 
+    @core
     Example: From the Show Spell Page
       Given the fixtures are loaded
       When  I visit the "Show" page for "Spell" "Flumph Lantern"

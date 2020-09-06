@@ -1,3 +1,4 @@
+@conditions @mechanics @reference @show
 Feature: Showing A Condition
   The condition page provides a block view of a defined condition object.
 
@@ -9,6 +10,7 @@ Feature: Showing A Condition
     Then  I should be on the "Show" page for the "Condition"
 
   Rule: Viewing the Condition
+    @authentication
     Example: As An Anonymous User
       When I visit the "Show" page for "Condition" "Zombie"
       And  I am not logged in
@@ -19,6 +21,7 @@ Feature: Showing A Condition
       And  I am logged in as a user
       Then I should be on the "Conditions index" page
 
+    @core
     Example: When The Condition Exists
       Given the fixtures are loaded
       When  I visit the "Show" page for "Condition" "Zombie"

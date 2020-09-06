@@ -1,3 +1,4 @@
+@books @destroy @sources
 Feature: Destroying A Book
   The destroy book process allows the user to delete an existing book object.
 
@@ -12,6 +13,7 @@ Feature: Destroying A Book
       And   the "Books" table should display the data
       And   the "Books" table should not display the data for the resource
 
+    @core
     Example: From the Show Book Page
       Given the fixtures are loaded
       When  I visit the "Show" page for "Book" "Crime in Flumphtownville"

@@ -1,3 +1,4 @@
+@actions @mechanics @reference @show
 Feature: Showing An Action
   The action page provides a block view of a defined action object.
 
@@ -9,6 +10,7 @@ Feature: Showing An Action
     Then  I should be on the "Show" page for the "Action"
 
   Rule: Viewing the Action
+    @authentication
     Example: As An Anonymous User
       When I visit the "Show" page for "Action" "Defenestrate"
       And  I am not logged in
@@ -19,6 +21,7 @@ Feature: Showing An Action
       And  I am logged in as a user
       Then I should be on the "Actions index" page
 
+    @core
     Example: When The Action Exists
       Given the fixtures are loaded
       When  I visit the "Show" page for "Action" "Defenestrate"
