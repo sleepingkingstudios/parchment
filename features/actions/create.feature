@@ -1,3 +1,4 @@
+@actions @create @mechanics @reference
 Feature: Creating An Action
   The create action process allows the user to define an action mechanic.
 
@@ -8,6 +9,7 @@ Feature: Creating An Action
     Then I should be on the "Actions create" page
 
   Rule: Creating an Action
+    @authentication
     Example: As An Anonymous User
       When I visit the "Actions create" page
       And  I am not logged in
@@ -21,6 +23,7 @@ Feature: Creating An Action
       And  the "Action" form should display the data
       And  the "Action" form should display the errors
 
+    @core
     Example: With Valid Attributes
       When I visit the "Actions create" page
       And  I am logged in as a user

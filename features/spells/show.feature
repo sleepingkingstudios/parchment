@@ -1,3 +1,4 @@
+@reference @show @spells
 Feature: Showing A Spell
   The spells page provides a block view of a defined spell object.
 
@@ -9,6 +10,7 @@ Feature: Showing A Spell
     Then  I should be on the "Show" page for the "Spell"
 
   Rule: Viewing the Spell
+    @authentication
     Example: As An Anonymous User
       When I visit the "Show" page for "Spell" "Flumph Lantern"
       And  I am not logged in
@@ -19,6 +21,7 @@ Feature: Showing A Spell
       And  I am logged in as a user
       Then I should be on the "Spells index" page
 
+    @core
     Example: When The Spell Exists
       Given the fixtures are loaded
       When  I visit the "Show" page for "Spell" "Flumph Lantern"

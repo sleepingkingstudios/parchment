@@ -1,3 +1,4 @@
+@actions @mechanics @reference @update
 Feature: Updating An Action
   The update action process allows the user to modify an existing action object.
 
@@ -17,6 +18,7 @@ Feature: Updating An Action
       Then  I should be on the "Update" page for the "Action"
 
   Rule: Updating the Action
+    @authentication
     Example: As An Anonymous User
       When I visit the "Update" page for "Action" "Defenestrate"
       And  I am not logged in
@@ -36,6 +38,7 @@ Feature: Updating An Action
       And   the "Action" form should display the data
       And   the "Action" form should display the errors
 
+    @core
     Example: With Valid Attributes
       Given the fixtures are loaded
       When  I visit the "Update" page for "Action" "Defenestrate"

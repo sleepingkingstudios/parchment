@@ -1,3 +1,4 @@
+@authentication @core
 Feature: Authentication
   The logout process allows an authenticated user to end their session.
 

@@ -1,3 +1,4 @@
+@conditions @mechanics @reference @update
 Feature: Updating An Condition
   The update condition process allows the user to modify an existing condition object.
 
@@ -17,6 +18,7 @@ Feature: Updating An Condition
       Then  I should be on the "Update" page for the "Condition"
 
   Rule: Updating the Condition
+    @authentication
     Example: As An Anonymous User
       When I visit the "Update" page for "Condition" "Zombie"
       And  I am not logged in
@@ -36,6 +38,7 @@ Feature: Updating An Condition
       And   the "Condition" form should display the data
       And   the "Condition" form should display the errors
 
+    @core
     Example: With Valid Attributes
       Given the fixtures are loaded
       When  I visit the "Update" page for "Condition" "Zombie"

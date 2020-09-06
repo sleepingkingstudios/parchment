@@ -1,3 +1,4 @@
+@conditions @index @mechanics @reference
 Feature: Showing Conditions
   The actions index provides a tabular view of the defined action objects.
 
@@ -8,6 +9,7 @@ Feature: Showing Conditions
     Then I should be on the "Conditions index" page
 
   Rule: Viewing the Conditions
+    @authentication
     Example: As An Anonymous User
       When I visit the "Conditions index" page
       And  I am not logged in
@@ -18,6 +20,7 @@ Feature: Showing Conditions
       And  I am logged in as a user
       Then the "Conditions" table should be empty
 
+    @core
     Example: When There Are Many Conditions
       Given the fixtures are loaded
       When  I visit the "Conditions index" page

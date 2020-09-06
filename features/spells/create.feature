@@ -1,3 +1,4 @@
+@create @reference @spells
 Feature: Creating A Spell
   The create spell process allows the user to define a spell object.
 
@@ -8,6 +9,7 @@ Feature: Creating A Spell
     Then I should be on the "Spells create" page
 
   Rule: Creating a Spell
+    @authentication
     Example: As An Anonymous User
       When I visit the "Spells create" page
       And  I am not logged in
@@ -21,6 +23,7 @@ Feature: Creating A Spell
       And  the "Spell" form should display the data
       And  the "Spell" form should display the errors
 
+    @core
     Example: With Valid Attributes
       When I visit the "Spells create" page
       And  I am logged in as a user

@@ -42,7 +42,9 @@ jobs:
         - bundle exec rake db:test:prepare
         - bundle exec rake assets:precompile webpacker:compile
         - AUTHENTICATION_SESSION_KEY="$(bundle exec rails secret)" bundle exec rails server --port=5101 --daemon
-      script: bundle exec cucumber
+      script:
+        - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bundle exec cucumber; fi'
+        - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bundle exec cucumber --tags @core; fi'
       after_script:
         - kill -9 $(cat tmp/pids/server.pid)
 

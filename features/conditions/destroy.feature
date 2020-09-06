@@ -1,3 +1,4 @@
+@conditions @destroy @mechanics @reference
 Feature: Destroying A Condition
   The destroy condition process allows the user to delete an existing condition object.
 
@@ -12,6 +13,7 @@ Feature: Destroying A Condition
       And   the "Conditions" table should display the data
       And   the "Conditions" table should not display the data for the resource
 
+    @core
     Example: From the Show Condition Page
       Given the fixtures are loaded
       When  I visit the "Show" page for "Condition" "Zombie"

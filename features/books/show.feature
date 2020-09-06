@@ -1,3 +1,4 @@
+@books @show @sources
 Feature: Showing A Book
   The spells page provides a block view of a defined book object.
 
@@ -9,6 +10,7 @@ Feature: Showing A Book
     Then  I should be on the "Show" page for the "Book"
 
   Rule: Viewing the Book
+    @authentication
     Example: As An Anonymous User
       When I visit the "Show" page for "Book" "Great Flumphs of History"
       And  I am not logged in
@@ -19,6 +21,7 @@ Feature: Showing A Book
       And  I am logged in as a user
       Then I should be on the "Books index" page
 
+    @core
     Example: When The Book Exists
       Given the fixtures are loaded
       When  I visit the "Show" page for "Book" "Crime in Flumphtownville"

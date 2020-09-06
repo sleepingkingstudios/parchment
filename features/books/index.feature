@@ -1,3 +1,4 @@
+@books @index @sources
 Feature: Showing Books
   The books index provides a tabular view of the defined book objects.
 
@@ -8,6 +9,7 @@ Feature: Showing Books
     Then I should be on the "Books index" page
 
   Rule: Viewing the Books
+    @authentication
     Example: As An Anonymous User
       When I visit the "Books index" page
       And  I am not logged in
@@ -18,6 +20,7 @@ Feature: Showing Books
       And  I am logged in as a user
       Then the "Books" table should be empty
 
+    @core
     Example: When There Are Many Books
       Given the fixtures are loaded
       When  I visit the "Books index" page

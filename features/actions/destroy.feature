@@ -1,3 +1,4 @@
+@actions @destroy @mechanics @reference
 Feature: Destroying An Action
   The destroy action process allows the user to delete an existing action object.
 
@@ -12,6 +13,7 @@ Feature: Destroying An Action
       And   the "Actions" table should display the data
       And   the "Actions" table should not display the data for the resource
 
+    @core
     Example: From the Show Action Page
       Given the fixtures are loaded
       When  I visit the "Show" page for "Action" "Defenestrate"

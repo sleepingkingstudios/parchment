@@ -1,3 +1,4 @@
+@index @reference @spells
 Feature: Showing Spells
   The spells index provides a tabular view of the defined spell objects.
 
@@ -8,6 +9,7 @@ Feature: Showing Spells
     Then I should be on the "Spells index" page
 
   Rule: Viewing the Spells
+    @authentication
     Example: As An Anonymous User
       When I visit the "Spells index" page
       And  I am not logged in
@@ -18,6 +20,7 @@ Feature: Showing Spells
       And   I am logged in as a user
       Then  the "Spells" table should be empty
 
+    @core
     Example: When There Are Many Spells
       Given the fixtures are loaded
       When  I visit the "Spells index" page

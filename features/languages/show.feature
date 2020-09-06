@@ -1,3 +1,4 @@
+@languages @reference @show
 Feature: Showing A Language
   The language page provides a block view of a defined language object.
 
@@ -9,6 +10,7 @@ Feature: Showing A Language
     Then  I should be on the "Show" page for the "Language"
 
   Rule: Viewing the Language
+    @authentication
     Example: As An Anonymous User
       When I visit the "Show" page for "Language" "Flumph"
       And  I am not logged in
@@ -19,6 +21,7 @@ Feature: Showing A Language
       And  I am logged in as a user
       Then I should be on the "Languages index" page
 
+    @core
     Example: When The Language Exists
       Given the fixtures are loaded
       When  I visit the "Show" page for "Language" "Flumph"

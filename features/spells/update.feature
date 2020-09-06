@@ -1,3 +1,4 @@
+@reference @spells @update
 Feature: Updating A Spell
   The update spell process allows the user to modify an existing spell object.
 
@@ -17,6 +18,7 @@ Feature: Updating A Spell
       Then  I should be on the "Update" page for the "Spell"
 
   Rule: Updating the Spell
+    @authentication
     Example: As An Anonymous User
       When I visit the "Update" page for "Spell" "Flumph Lantern"
       And  I am not logged in
@@ -36,6 +38,7 @@ Feature: Updating A Spell
       And   the "Spell" form should display the data
       And   the "Spell" form should display the errors
 
+    @core
     Example: With Valid Attributes
       Given the fixtures are loaded
       When  I visit the "Update" page for "Spell" "Flumph Lantern"
