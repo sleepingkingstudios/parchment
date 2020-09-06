@@ -26,7 +26,7 @@ const renderAdditionalDetails = ({ data }) => (
 );
 const renderDialects = ({ data }) => {
   const dialects = valueOrDefault(data.dialects, []);
-  const message = 'There are no dialects matching the criteria';
+  const message = 'There are no dialects matching the criteria.';
 
   return (
     <div className="language-block-dialects">

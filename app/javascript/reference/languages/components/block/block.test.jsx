@@ -100,7 +100,7 @@ describe('<LanguageBlock />', () => {
   });
 
   describe('with showAssociations: true', () => {
-    const message = 'There are no dialects matching the criteria';
+    const message = 'There are no dialects matching the criteria.';
 
     it('should render the language dialects', () => {
       const rendered = shallow(<LanguageBlock {...defaultProps} showAssociations />);
