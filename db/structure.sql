@@ -73,6 +73,23 @@ CREATE TABLE public.credentials (
 
 
 --
+-- Name: items; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.items (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    type character varying,
+    name character varying DEFAULT ''::character varying NOT NULL,
+    slug character varying DEFAULT ''::character varying NOT NULL,
+    cost character varying DEFAULT ''::character varying NOT NULL,
+    description text DEFAULT ''::text NOT NULL,
+    data jsonb DEFAULT '{}'::jsonb NOT NULL
+);
+
+
+--
 -- Name: languages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -211,6 +228,14 @@ ALTER TABLE ONLY public.credentials
 
 
 --
+-- Name: items items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT items_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: languages languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -318,6 +343,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200415082014'),
 ('20200821230610'),
 ('20200825045007'),
-('20200828021312');
+('20200828021312'),
+('20201103224744');
 
 

@@ -85,6 +85,7 @@ RSpec.describe Source, type: :model do
       :REFERENCE_TYPES,
       lambda {
         contain_exactly(
+          'References::Item',
           'References::Language',
           'References::Skill',
           'Spell'
