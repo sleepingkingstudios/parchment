@@ -1,0 +1,28 @@
+---
+- name: Mummified Flumph Tentacle
+  id:   9cefda08-49a3-4034-abd2-db18f0ed58a4
+  slug: mummified-flumph-tentacle
+  cost: 1,000 pp
+  description: |
+    A relic of an ancient Flumph saint. Ramen.
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
+- name: Plush Flumph
+  id:   c48226df-c1b4-4d47-98b5-9dfc10096929
+  slug: plush-flumph
+  cost: 50 pp
+  description: |
+    An adorable plush intelligent jellyfish. So cute!
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
+- name: The Book of Flumph
+  id:   88b8ba66-68c1-4653-b2df-ea32eb53f1c5
+  slug: book-of-flumph
+  cost: 5 sp
+  description: |
+    A book filled with the mysterious wisdom of the Flumph. Terribly mysterious!
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
