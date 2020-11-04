@@ -66,6 +66,12 @@ Finally, start up the Rails server with some additional configuration.
 AUTHENTICATION_SESSION_KEY=secret RAILS_SERVE_STATIC_FILES=true RAILS_ENV=production bundle exec rails s
 ```
 
+### Auditing Dependencies
+
+To audit the Ruby dependencies, install the `bundler-audit` gem and run `bundler-audit`.
+
+To audit the JavaScript dependencies, run `yarn audit`.
+
 ### Running the Cucumber Features
 
 The cucumber features require an app server running on port 5101 with the Rails environment set to "test". This can be automated via Overmind by running the following command:
