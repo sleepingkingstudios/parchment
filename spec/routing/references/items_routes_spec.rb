@@ -8,6 +8,6 @@ RSpec.describe 'routes' do
   include Spec::Support::Examples::RoutingExamples
 
   include_examples 'should route to Client resource',
-    'reference/languages',
+    'reference/items',
     only: %i[index show]
 end

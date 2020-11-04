@@ -6,15 +6,15 @@ require 'fixtures/builder'
 
 require 'support/examples/controller_examples'
 
-RSpec.describe Api::Reference::SkillsController, type: :request do
+RSpec.describe Api::Reference::ItemsController, type: :request do
   include Spec::Support::Examples::ControllerExamples
 
-  shared_context 'when there are many skills' do
+  shared_context 'when there are many items' do
     include_context 'when there are many resources'
 
     let(:sources) do
-      skills.sort_by(&:name)[0...-1].map do |skill|
-        FactoryBot.build(:source, :with_book, reference: skill)
+      items.sort_by(&:name)[0...-1].map do |item|
+        FactoryBot.build(:source, :with_book, reference: item)
       end
     end
 
@@ -22,22 +22,22 @@ RSpec.describe Api::Reference::SkillsController, type: :request do
   end
 
   def self.resource_name
-    :skill
+    :item
   end
 
-  let(:resource_class) { References::Skill }
+  let(:resource_class) { References::Item }
   let(:resource_name)  { self.class.resource_name }
 
   let(:headers) { { 'ACCEPT' => 'application/json' } }
   let(:params)  { {} }
   let(:json)    { JSON.parse(response.body) }
 
-  describe 'GET /api/skills.json' do
+  describe 'GET /api/items.json' do
     include_context 'with an authorization token for a user'
 
     let(:expected_data) do
       {
-        'skills'  => [],
+        'items'   => [],
         'sources' => []
       }
     end
@@ -49,7 +49,7 @@ RSpec.describe Api::Reference::SkillsController, type: :request do
     end
 
     def call_action
-      get '/api/reference/skills.json', headers: headers, params: params
+      get '/api/reference/items.json', headers: headers, params: params
     end
 
     include_examples 'should require an authenticated user'
@@ -68,23 +68,23 @@ RSpec.describe Api::Reference::SkillsController, type: :request do
 
     include_examples 'should respond with JSON content'
 
-    wrap_context 'when there are many skills' do
-      let(:serialized_skills) do
-        skills
+    wrap_context 'when there are many items' do
+      let(:serialized_items) do
+        items
           .sort_by(&:name)
-          .map { |skill| Serializers.serialize(skill) }
+          .map { |item| Serializers.serialize(item) }
       end
       let(:serialized_sources) do
         sources.map { |source| Serializers.serialize(source) }
       end
       let(:expected_data) do
         {
-          'skills'  => serialized_skills,
+          'items'   => serialized_items,
           'sources' => serialized_sources
         }
       end
 
-      it 'should serialize the skills' do
+      it 'should serialize the items' do
         call_action
 
         expect(json).to deep_match expected_json
@@ -92,24 +92,24 @@ RSpec.describe Api::Reference::SkillsController, type: :request do
     end
   end
 
-  describe 'GET /api/skills/:id.json' do
+  describe 'GET /api/items/:id.json' do
     include_context 'with an authorization token for a user'
-    include_context 'when there are many skills'
+    include_context 'when there are many items'
 
-    let(:skill)    { skills.first }
-    let(:skill_id) { skill.id }
+    let(:item)    { items.first }
+    let(:item_id) { item.id }
     let(:expected_json) do
       {
         'ok'   => true,
         'data' => {
-          'skill'  => Serializers.serialize(skill),
-          'source' => Serializers.serialize(skill.source)
+          'item'   => Serializers.serialize(item),
+          'source' => Serializers.serialize(item.source)
         }
       }
     end
 
     def call_action
-      get "/api/reference/skills/#{skill_id}.json",
+      get "/api/reference/items/#{item_id}.json",
         headers: headers,
         params:  params
     end
@@ -126,7 +126,7 @@ RSpec.describe Api::Reference::SkillsController, type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'should serialize the skill' do
+    it 'should serialize the item' do
       call_action
 
       expect(json).to deep_match expected_json
