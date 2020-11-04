@@ -57,6 +57,8 @@ Rails.application.routes.draw do
     api_resources :origins, only: :index
 
     namespace :reference do
+      api_resources :items
+
       api_resources :languages, only: %i[index show]
 
       api_resources :skills, only: %i[index show]
@@ -76,6 +78,8 @@ Rails.application.routes.draw do
   end
 
   scope :reference do
+    client_resources :items
+
     client_resources :languages, only: %i[index show]
 
     client_resources :skills, only: %i[index show]

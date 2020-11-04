@@ -69,24 +69,22 @@ RSpec.describe Api::Reference::SkillsController, type: :request do
     include_examples 'should respond with JSON content'
 
     wrap_context 'when there are many skills' do
-      let(:skill_serializer)  { Serializers::References::SkillSerializer.new }
-      let(:source_serializer) { Serializers::SourceSerializer.new }
       let(:serialized_skills) do
         skills
           .sort_by(&:name)
-          .map { |skill| skill_serializer.serialize(skill) }
+          .map { |skill| Serializers.serialize(skill) }
       end
       let(:serialized_sources) do
-        sources.map { |source| source_serializer.serialize(source) }
+        sources.map { |source| Serializers.serialize(source) }
       end
       let(:expected_data) do
         {
-          'sources' => serialized_sources,
-          'skills'  => serialized_skills
+          'skills'  => serialized_skills,
+          'sources' => serialized_sources
         }
       end
 
-      it 'should serialize the skill' do
+      it 'should serialize the skills' do
         call_action
 
         expect(json).to deep_match expected_json
@@ -104,8 +102,8 @@ RSpec.describe Api::Reference::SkillsController, type: :request do
       {
         'ok'   => true,
         'data' => {
-          'source' => Serializers.serialize(skill.source),
-          'skill'  => Serializers.serialize(skill)
+          'skill'  => Serializers.serialize(skill),
+          'source' => Serializers.serialize(skill.source)
         }
       }
     end
