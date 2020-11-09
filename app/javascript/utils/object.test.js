@@ -3,6 +3,7 @@ import {
   camelizeKeys,
   dig,
   exists,
+  isEmpty,
   underscoreKeys,
   valueOrDefault,
 } from './object';
@@ -677,84 +678,6 @@ describe('Object utils', () => {
     });
   });
 
-  describe('exists', () => {
-    it('should be a function', () => {
-      expect(typeof exists).toEqual('function');
-    });
-
-    describe('with undefined', () => {
-      it('should return false', () => {
-        expect(exists(undefined)).toEqual(false);
-      });
-    });
-
-    describe('with null', () => {
-      it('should return false', () => {
-        expect(exists(null)).toEqual(false);
-      });
-    });
-
-    describe('with false', () => {
-      it('should return true', () => {
-        expect(exists(false)).toEqual(true);
-      });
-    });
-
-    describe('with true', () => {
-      it('should return true', () => {
-        expect(exists(true)).toEqual(true);
-      });
-    });
-
-    describe('with a number', () => {
-      it('should return true', () => {
-        expect(exists(0)).toEqual(true);
-      });
-    });
-
-    describe('with an empty string', () => {
-      it('should return true', () => {
-        expect(exists('')).toEqual(true);
-      });
-    });
-
-    describe('with a non-empty string', () => {
-      it('should return true', () => {
-        expect(exists('Greetings, programs!')).toEqual(true);
-      });
-    });
-
-    describe('with an empty array', () => {
-      it('should return true', () => {
-        expect(exists([])).toEqual(true);
-      });
-    });
-
-    describe('with a non-empty array', () => {
-      it('should return true', () => {
-        expect(exists([1, 2, 3])).toEqual(true);
-      });
-    });
-
-    describe('with an empty object', () => {
-      it('should return true', () => {
-        expect(exists({})).toEqual(true);
-      });
-    });
-
-    describe('with a non-empty object', () => {
-      it('should return true', () => {
-        expect(exists({ a: 1, b: 2, c: 3 })).toEqual(true);
-      });
-    });
-
-    describe('with a function', () => {
-      it('should return true', () => {
-        expect(exists(() => {})).toEqual(true);
-      });
-    });
-  });
-
   describe('dig', () => {
     it('should be a function', () => {
       expect(typeof dig).toEqual('function');
@@ -1001,6 +924,126 @@ describe('Object utils', () => {
         it('should return the value', () => {
           expect(dig(obj, 'teams', 1, 'employees', 1)).toEqual(expected);
         });
+      });
+    });
+  });
+
+  describe('exists', () => {
+    it('should be a function', () => {
+      expect(typeof exists).toEqual('function');
+    });
+
+    describe('with undefined', () => {
+      it('should return false', () => {
+        expect(exists(undefined)).toEqual(false);
+      });
+    });
+
+    describe('with null', () => {
+      it('should return false', () => {
+        expect(exists(null)).toEqual(false);
+      });
+    });
+
+    describe('with false', () => {
+      it('should return true', () => {
+        expect(exists(false)).toEqual(true);
+      });
+    });
+
+    describe('with true', () => {
+      it('should return true', () => {
+        expect(exists(true)).toEqual(true);
+      });
+    });
+
+    describe('with a number', () => {
+      it('should return true', () => {
+        expect(exists(0)).toEqual(true);
+      });
+    });
+
+    describe('with an empty string', () => {
+      it('should return true', () => {
+        expect(exists('')).toEqual(true);
+      });
+    });
+
+    describe('with a non-empty string', () => {
+      it('should return true', () => {
+        expect(exists('Greetings, programs!')).toEqual(true);
+      });
+    });
+
+    describe('with an empty array', () => {
+      it('should return true', () => {
+        expect(exists([])).toEqual(true);
+      });
+    });
+
+    describe('with a non-empty array', () => {
+      it('should return true', () => {
+        expect(exists([1, 2, 3])).toEqual(true);
+      });
+    });
+
+    describe('with an empty object', () => {
+      it('should return true', () => {
+        expect(exists({})).toEqual(true);
+      });
+    });
+
+    describe('with a non-empty object', () => {
+      it('should return true', () => {
+        expect(exists({ a: 1, b: 2, c: 3 })).toEqual(true);
+      });
+    });
+
+    describe('with a function', () => {
+      it('should return true', () => {
+        expect(exists(() => {})).toEqual(true);
+      });
+    });
+  });
+
+  describe('isEmpty', () => {
+    it('should be a function', () => {
+      expect(typeof isEmpty).toEqual('function');
+    });
+
+    describe('with undefined', () => {
+      it('should be false', () => {
+        expect(isEmpty(undefined)).toEqual(false);
+      });
+    });
+
+    describe('with null', () => {
+      it('should be false', () => {
+        expect(isEmpty(null)).toEqual(false);
+      });
+    });
+
+    describe('with an empty array', () => {
+      it('should be true', () => {
+        expect(isEmpty([])).toEqual(true);
+      });
+    });
+
+    describe('with an array with items', () => {
+      it('should be true', () => {
+        expect(isEmpty([1, 2, 3])).toEqual(false);
+      });
+    });
+
+    describe('with an empty object', () => {
+      it('should be true', () => {
+        expect(isEmpty({})).toEqual(true);
+      });
+    });
+
+    describe('with an object with properties', () => {
+      it('should be false', () => {
+        expect(isEmpty({ key: 'value' })).toEqual(false);
       });
     });
   });

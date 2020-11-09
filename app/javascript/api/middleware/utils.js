@@ -84,3 +84,9 @@ export const selectMiddleware = (maybeMiddleware, propName) => {
 
   return selected;
 };
+
+export const wrapMiddleware = (middleware, next) => {
+  if (typeof middleware !== 'function') { return next; }
+
+  return middleware(next);
+};

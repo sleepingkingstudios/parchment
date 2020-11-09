@@ -81,11 +81,11 @@
 - Refactor Endpoint class to client() function.
 - Clean up reducer namespaces: |
     resourceName: { # Note that index is a reserved word!
-      block: { find },
-      create: { form },
-      delete: {},
-      table: { find },
-      update: { find, form }
+      create: { form, submit },       # hooks: useForm, useSubmitForm
+      delete: { delete },             # hooks: useDeleteData
+      filter: { data, find },         # hooks: useData, useRequestData
+      show:   { data, find },         # hooks: useData, useRequestData
+      update: { find, form, submit }  # hooks: useForm, useRequestData, useSubmitForm
     }
 
 ### Components
