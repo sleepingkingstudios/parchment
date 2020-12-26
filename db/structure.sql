@@ -85,7 +85,8 @@ CREATE TABLE public.items (
     slug character varying DEFAULT ''::character varying NOT NULL,
     cost character varying DEFAULT ''::character varying NOT NULL,
     description text DEFAULT ''::text NOT NULL,
-    data jsonb DEFAULT '{}'::jsonb NOT NULL
+    data jsonb DEFAULT '{}'::jsonb NOT NULL,
+    short_description character varying DEFAULT ''::character varying NOT NULL
 );
 
 
@@ -344,6 +345,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200821230610'),
 ('20200825045007'),
 ('20200828021312'),
-('20201103224744');
+('20201103224744'),
+('20201226211259');
 
 

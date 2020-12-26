@@ -13,12 +13,13 @@ RSpec.describe References::Item do
 
   let(:attributes) do
     {
-      name:        'Plush Flumph',
-      cost:        '50 pp',
-      data:        {},
-      description: 'An adorable plush intelligent jellyfish. So cure!',
-      slug:        'plush-flumph',
-      type:        nil
+      name:              'Plush Flumph',
+      cost:              '50 pp',
+      data:              { 'size' => 'XXL' },
+      description:       'An adorable plush intelligent jellyfish. So cute!',
+      slug:              'plush-flumph',
+      short_description: 'A Flumph plushie.',
+      type:              nil
     }
   end
 
@@ -56,6 +57,10 @@ RSpec.describe References::Item do
 
   describe '#name' do
     include_examples 'should have attribute', :name, default: ''
+  end
+
+  describe '#short_description' do
+    include_examples 'should have attribute', :short_description, default: ''
   end
 
   describe '#valid?' do

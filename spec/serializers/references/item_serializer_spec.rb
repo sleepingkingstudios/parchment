@@ -28,6 +28,7 @@ RSpec.describe Serializers::References::ItemSerializer do
       :description,
       :data,
       :name,
-      :slug
+      :slug,
+      :short_description
   end
 end

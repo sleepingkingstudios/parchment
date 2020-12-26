@@ -11,7 +11,8 @@ module Serializers::References
       :data,
       :description,
       :name,
-      :slug
+      :slug,
+      :short_description
 
     private
 

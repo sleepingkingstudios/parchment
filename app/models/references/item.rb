@@ -20,13 +20,14 @@ end
 #
 # Table name: items
 #
-#  id          :uuid             not null, primary key
-#  cost        :string           default(""), not null
-#  data        :jsonb            not null
-#  description :text             default(""), not null
-#  name        :string           default(""), not null
-#  slug        :string           default(""), not null
-#  type        :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id                :uuid             not null, primary key
+#  cost              :string           default(""), not null
+#  data              :jsonb            not null
+#  description       :text             default(""), not null
+#  name              :string           default(""), not null
+#  short_description :string           default(""), not null
+#  slug              :string           default(""), not null
+#  type              :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
