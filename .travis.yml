@@ -1,7 +1,7 @@
 # Build Options
 language: ruby
 rvm: 2.6.6
-node_js: "10.15.3"
+node_js: 14
 env:
   global:
     - NODE_OPTIONS="--max_old_space_size=4096"
@@ -11,7 +11,7 @@ jobs:
     - name: Ruby
       install:
         - bundle install
-        - nvm install 10.15.3
+        - nvm install 14.8.0
         - node -v
         - npm i -g yarn
         - yarn install
@@ -25,7 +25,7 @@ jobs:
       script: bundle exec rspec && bundle exec rubocop
     - name: JavaScript
       install:
-        - nvm install 10.15.3
+        - nvm install 14.8.0
         - node -v
         - npm i -g yarn
         - yarn install
@@ -33,7 +33,7 @@ jobs:
     - name: Cucumber
       install:
         - bundle install
-        - nvm install 10.15.3
+        - nvm install 14.8.0
         - node -v
         - npm i -g yarn
         - yarn install
