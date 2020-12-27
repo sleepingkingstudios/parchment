@@ -1,22 +1,22 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import IndexSkillsPage from './page';
+import IndexItemsPage from './page';
 import DynamicTable from '../../../../components/dynamic-table';
 import { columns } from '../../components/table';
-import endpoint from '../../store/indexFindSkills';
+import endpoint from '../../store/indexFindItems';
 
-describe('<IndexSkillsPage />', () => {
+describe('<IndexItemsPage />', () => {
   const defaultProps = {};
 
   it('should render the index page', () => {
-    const rendered = shallow(<IndexSkillsPage {...defaultProps} />);
+    const rendered = shallow(<IndexItemsPage {...defaultProps} />);
 
     expect(rendered).toHaveDisplayName('IndexPage');
     expect(rendered).toHaveProp({ Table: DynamicTable });
     expect(rendered).toHaveProp({ columns });
     expect(rendered).toHaveProp({ endpoint });
-    expect(rendered).toHaveProp({ resourceName: 'Skill' });
+    expect(rendered).toHaveProp({ resourceName: 'Item' });
   });
 
   it('should set the breadcrumbs', () => {
@@ -31,19 +31,25 @@ describe('<IndexSkillsPage />', () => {
         active: true,
       },
       {
-        label: 'Skills',
-        url: 'reference/skills',
+        label: 'Items',
+        url: 'reference/items',
         active: true,
       },
     ];
-    const rendered = shallow(<IndexSkillsPage {...defaultProps} />);
+    const rendered = shallow(<IndexItemsPage {...defaultProps} />);
 
     expect(rendered).toHaveProp({ breadcrumbs });
   });
 
   it('should set the buttons', () => {
-    const buttons = [];
-    const rendered = shallow(<IndexSkillsPage {...defaultProps} />);
+    const buttons = [
+      {
+        label: 'Create Item',
+        outline: true,
+        url: '/reference/items/create',
+      },
+    ];
+    const rendered = shallow(<IndexItemsPage {...defaultProps} />);
 
     expect(rendered).toHaveProp({ buttons });
   });
