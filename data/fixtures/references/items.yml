@@ -19,7 +19,7 @@
     title: Spectres of Flumph Fortress
 - name: The Book of Flumph
   id:   88b8ba66-68c1-4653-b2df-ea32eb53f1c5
-  slug: book-of-flumph
+  slug: book-flumph
   cost: 5 sp
   description: |
     A book filled with the mysterious wisdom of the Flumph. Terribly mysterious!
