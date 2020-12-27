@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import ItemBlock from './block';
+import { valueOrDefault } from '../../../../utils/object';
 
 describe('<ItemBlock />', () => {
   const item = {
@@ -72,6 +73,17 @@ describe('<ItemBlock />', () => {
 
       expect(dataElement).toHaveDisplayName('p');
       expect(dataElement).toHaveText(`Data: ${JSON.stringify(item.data)}`);
+    });
+
+    it('should render the item short description', () => {
+      const rendered = shallow(
+        <ItemBlock {...defaultProps} showAdditionalDetails />,
+      );
+      const shortDescription = valueOrDefault(item.shortDescription, '');
+      const shortDescriptionElement = rendered.find('.item-block-short-description');
+
+      expect(shortDescriptionElement).toHaveDisplayName('p');
+      expect(shortDescriptionElement).toHaveText(`Short Description: ${shortDescription}`);
     });
 
     it('should render the item type', () => {

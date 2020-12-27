@@ -41,6 +41,10 @@ const renderAdditionalDetails = ({ data, showAdditionalDetails }) => {
           <em>Slug:</em> { data.slug }
         </p>
 
+        <p className="item-block-short-description">
+          <em>Short Description:</em> { data.shortDescription }
+        </p>
+
         <p className="item-block-data">
           <em>Data:</em> { JSON.stringify(data.data) }
         </p>

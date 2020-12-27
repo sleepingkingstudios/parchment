@@ -21,6 +21,10 @@ module Features::Resources
       'References::Item'
     end
 
+    def fetch_data(item)
+      convert_keys(item.data).to_json
+    end
+
     def invalid_attributes
       super.merge(description: '')
     end
@@ -34,6 +38,21 @@ module Features::Resources
 
     def valid_attributes
       super.merge(name: 'Do Not Touch Button')
+    end
+
+    private
+
+    def convert_keys(obj)
+      case obj
+      when Hash
+        obj
+          .map { |key, value| [key.to_s.camelize, value] }
+          .yield_self { |ary| Hash[ary] }
+      when Array
+        obj.map { |item| convert_keys(item) }
+      else
+        obj
+      end
     end
   end
 end
