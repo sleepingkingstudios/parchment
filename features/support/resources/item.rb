@@ -4,23 +4,21 @@ require_relative '../resources'
 require_relative './definition'
 
 module Features::Resources
-  class Skill < Features::Resources::Definition
+  class Item < Features::Resources::Definition
     def block_attributes
       %w[
         name
-        ability_score
+        cost
+        data
         description
         short_description
         slug
+        type
       ]
     end
 
     def class_name
-      'References::Skill'
-    end
-
-    def fetch_ability_score(skill)
-      skill.ability_score.capitalize
+      'References::Item'
     end
 
     def invalid_attributes
@@ -30,13 +28,12 @@ module Features::Resources
     def table_columns
       @table_columns ||= %w[
         name
-        ability_score
-        short_description
+        cost
       ]
     end
 
     def valid_attributes
-      super.merge(name: 'Disco')
+      super.merge(name: 'Do Not Touch Button')
     end
   end
 end
