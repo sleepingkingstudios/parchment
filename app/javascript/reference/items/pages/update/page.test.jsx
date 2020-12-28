@@ -1,30 +1,50 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ShowItemPage from './page';
-import { ItemBlock } from '../../components/block';
-import endpoint, { hooks } from '../../store/showFindItem';
+import UpdateItemPage from './page';
+import findEndpoint, { hooks } from '../../store/updateFindItem';
+import formEndpoint from '../../store/updateItemForm';
 
-jest.mock('../../store/showFindItem');
+jest.mock('../../store/updateFindItem');
 
 hooks.useEndpoint.mockImplementation(() => () => ({}));
 
-describe('<ShowItemPage />', () => {
+describe('<UpdateItemPage />', () => {
   const id = '00000000-0000-0000-0000-000000000000';
   const match = { params: { id } };
   const defaultProps = { match };
 
-  it('should render the show page', () => {
+  it('should render the update page', () => {
     const state = { data: {} };
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<ShowItemPage {...defaultProps} />);
+    const rendered = shallow(<UpdateItemPage {...defaultProps} />);
 
-    expect(rendered).toHaveDisplayName('ShowPage');
-    expect(rendered).toHaveProp({ Block: ItemBlock });
-    expect(rendered).toHaveProp({ endpoint });
+    expect(rendered).toHaveDisplayName('UpdatePage');
+    expect(rendered).toHaveProp({ findEndpoint });
+    expect(rendered).toHaveProp({ formEndpoint });
+    expect(rendered).toHaveProp({ match });
     expect(rendered).toHaveProp({ resourceName: 'Item' });
+  });
+
+  it('should render the form', () => {
+    const state = { data: {} };
+
+    hooks.useEndpoint.mockImplementationOnce(() => state);
+
+    const rendered = shallow(<UpdateItemPage {...defaultProps} />);
+    const form = rendered.renderProp('Form')({
+      data: {},
+      errors: {},
+      onChangeAction: () => {},
+      onSubmitAction: () => {},
+      status: '',
+    });
+    const baseUrl = '/reference/items';
+
+    expect(form).toHaveDisplayName('ItemForm');
+    expect(form).toHaveProp({ baseUrl });
   });
 
   it('should render the breadcrumbs', () => {
@@ -45,6 +65,9 @@ describe('<ShowItemPage />', () => {
       {
         label: 'Loading...',
         url: `/reference/items/${id}`,
+      },
+      {
+        label: 'Update',
         active: true,
       },
     ];
@@ -52,19 +75,23 @@ describe('<ShowItemPage />', () => {
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<ShowItemPage {...defaultProps} />);
+    const rendered = shallow(<UpdateItemPage {...defaultProps} />);
 
     expect(rendered).toHaveProp({ breadcrumbs });
   });
 
-  it('should render the buttons', () => {
+  it('should map the data', () => {
     const state = { data: {} };
 
     hooks.useEndpoint.mockImplementationOnce(() => state);
 
-    const rendered = shallow(<ShowItemPage {...defaultProps} />);
+    const rendered = shallow(<UpdateItemPage {...defaultProps} />);
+    const mapData = rendered.prop('mapData');
+    const item = { id };
+    const data = { item };
 
-    expect(rendered).toHaveProp({ buttons: [] });
+    expect(typeof mapData).toEqual('function');
+    expect(mapData(data)).toEqual(data);
   });
 
   describe('when the resource is loaded', () => {
@@ -86,6 +113,9 @@ describe('<ShowItemPage />', () => {
         {
           label: 'Big Red Button',
           url: `/reference/items/${id}`,
+        },
+        {
+          label: 'Update',
           active: true,
         },
       ];
@@ -94,39 +124,9 @@ describe('<ShowItemPage />', () => {
 
       hooks.useEndpoint.mockImplementationOnce(() => state);
 
-      const rendered = shallow(<ShowItemPage {...defaultProps} />);
+      const rendered = shallow(<UpdateItemPage {...defaultProps} />);
 
       expect(rendered).toHaveProp({ breadcrumbs });
-    });
-
-    it('should render the buttons', () => {
-      // const deleteData = jest.fn();
-      // const useDeleteData = jest.fn(() => deleteData);
-      const buttons = [
-        {
-          label: 'Update Item',
-          outline: true,
-          url: `/reference/items/${id}/update`,
-        },
-        // {
-        //   label: 'Delete Action',
-        //   buttonStyle: 'danger',
-        //   outline: true,
-        //   onClick: deleteData,
-        // },
-      ];
-      const item = { id, name: 'Big Red Button' };
-      const state = { data: { item } };
-
-      // deleteHooks.useDeleteData.mockImplementationOnce(useDeleteData);
-
-      hooks.useEndpoint.mockImplementationOnce(() => state);
-
-      const rendered = shallow(<ShowItemPage {...defaultProps} />);
-
-      expect(rendered).toHaveProp({ buttons });
-
-      // expect(useDeleteData).toHaveBeenCalledWith({ wildcards: { id } });
     });
   });
 });

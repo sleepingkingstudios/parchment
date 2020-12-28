@@ -6,7 +6,7 @@ import { injectProps } from '../../../../utils/react';
 const ItemsTableActions = injectProps(
   ResponsiveActions,
   {
-    actions: ['show'],
+    actions: ['show', 'update'],
     baseUrl: '/reference/items',
     resourceName: 'item',
   },

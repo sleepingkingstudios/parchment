@@ -8,6 +8,7 @@ class Api::Reference::ItemsController < Api::ResourcesController
     cost
     description
     name
+    short_description
     slug
   ].freeze
   private_constant :PERMITTED_ATTRIBUTES

@@ -11,7 +11,7 @@ describe('<ItemsTableActions />', () => {
     const rendered = shallow(<ItemsTableActions {...defaultProps} />);
 
     expect(rendered).toHaveDisplayName('ResponsiveActions');
-    expect(rendered).toHaveProp({ actions: ['show'] });
+    expect(rendered).toHaveProp({ actions: ['show', 'update'] });
     expect(rendered).toHaveProp({ baseUrl: '/reference/items' });
     expect(rendered).toHaveProp({ id });
     expect(rendered).toHaveProp({ resourceName: 'item' });

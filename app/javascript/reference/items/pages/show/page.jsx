@@ -30,6 +30,27 @@ const generateBreadcrumbs = ({
     },
   ]
 );
+const generateButtons = ({
+  // deleteData,
+  id,
+  resource,
+}) => {
+  if (!(resource && resource.id)) { return []; }
+
+  return [
+    {
+      label: 'Update Item',
+      outline: true,
+      url: `/reference/items/${id}/update`,
+    },
+    // {
+    //   buttonStyle: 'danger',
+    //   label: 'Delete Action',
+    //   onClick: deleteData,
+    //   outline: true,
+    // },
+  ];
+};
 const getResourceId = ({ match }) => {
   const { params } = match;
 
@@ -42,7 +63,11 @@ const ShowItemPage = ({ match }) => {
   const { data } = useEndpoint();
   const resource = data.item;
   const breadcrumbs = generateBreadcrumbs({ id, resource });
-  const buttons = [];
+  const buttons = generateButtons({
+    // deleteData,
+    id,
+    resource,
+  });
 
   return (
     <ShowPage
