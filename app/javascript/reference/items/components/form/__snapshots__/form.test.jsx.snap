@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ItemForm /> should match the snapshot 1`] = `
+<Form
+  className="item-form"
+  form={
+    Object {
+      "data": Object {
+        "item": Object {
+          "cost": "1 cp",
+          "data": Object {
+            "color": "red",
+            "size": "big",
+          },
+          "description": "It's a big red button. Press it to destroy the world!",
+          "id": "00000000-0000-0000-0000-000000000000",
+          "name": "Big Red Button",
+          "shortDescription": "An ominous button.",
+          "slug": "big-red-button",
+          "type": null,
+        },
+      },
+      "errors": Object {},
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "item",
+      ],
+    }
+  }
+>
+  <FormRow
+    align="left"
+    className=""
+    verticalAlign="top"
+  >
+    <NameField
+      colWidth={4}
+      form={
+        Object {
+          "data": Object {
+            "item": Object {
+              "cost": "1 cp",
+              "data": Object {
+                "color": "red",
+                "size": "big",
+              },
+              "description": "It's a big red button. Press it to destroy the world!",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Big Red Button",
+              "shortDescription": "An ominous button.",
+              "slug": "big-red-button",
+              "type": null,
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "item",
+          ],
+        }
+      }
+    />
+    <SlugField
+      colWidth={4}
+      form={
+        Object {
+          "data": Object {
+            "item": Object {
+              "cost": "1 cp",
+              "data": Object {
+                "color": "red",
+                "size": "big",
+              },
+              "description": "It's a big red button. Press it to destroy the world!",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Big Red Button",
+              "shortDescription": "An ominous button.",
+              "slug": "big-red-button",
+              "type": null,
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "item",
+          ],
+        }
+      }
+    />
+    <CostField
+      colWidth={4}
+      form={
+        Object {
+          "data": Object {
+            "item": Object {
+              "cost": "1 cp",
+              "data": Object {
+                "color": "red",
+                "size": "big",
+              },
+              "description": "It's a big red button. Press it to destroy the world!",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Big Red Button",
+              "shortDescription": "An ominous button.",
+              "slug": "big-red-button",
+              "type": null,
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "item",
+          ],
+        }
+      }
+    />
+    <ShortDescriptionField
+      colWidth={12}
+      form={
+        Object {
+          "data": Object {
+            "item": Object {
+              "cost": "1 cp",
+              "data": Object {
+                "color": "red",
+                "size": "big",
+              },
+              "description": "It's a big red button. Press it to destroy the world!",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Big Red Button",
+              "shortDescription": "An ominous button.",
+              "slug": "big-red-button",
+              "type": null,
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "item",
+          ],
+        }
+      }
+    />
+    <DescriptionField
+      colWidth={12}
+      form={
+        Object {
+          "data": Object {
+            "item": Object {
+              "cost": "1 cp",
+              "data": Object {
+                "color": "red",
+                "size": "big",
+              },
+              "description": "It's a big red button. Press it to destroy the world!",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Big Red Button",
+              "shortDescription": "An ominous button.",
+              "slug": "big-red-button",
+              "type": null,
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "item",
+          ],
+        }
+      }
+    />
+  </FormRow>
+  <FormRow
+    align="right"
+    className=""
+    verticalAlign="top"
+  >
+    <CancelButton
+      baseUrl="/items"
+      colWidth="3"
+      form={
+        Object {
+          "data": Object {
+            "item": Object {
+              "cost": "1 cp",
+              "data": Object {
+                "color": "red",
+                "size": "big",
+              },
+              "description": "It's a big red button. Press it to destroy the world!",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Big Red Button",
+              "shortDescription": "An ominous button.",
+              "slug": "big-red-button",
+              "type": null,
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "item",
+          ],
+        }
+      }
+      isUpdate={false}
+    />
+    <SubmitButton
+      actionName="Create"
+      colWidth="3"
+      form={
+        Object {
+          "data": Object {
+            "item": Object {
+              "cost": "1 cp",
+              "data": Object {
+                "color": "red",
+                "size": "big",
+              },
+              "description": "It's a big red button. Press it to destroy the world!",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Big Red Button",
+              "shortDescription": "An ominous button.",
+              "slug": "big-red-button",
+              "type": null,
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "item",
+          ],
+        }
+      }
+      status="initialized"
+    />
+  </FormRow>
+</Form>
+`;

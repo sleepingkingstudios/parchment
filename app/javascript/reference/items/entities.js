@@ -13,6 +13,12 @@ export const itemType = PropTypes.shape({
 
 export const itemListType = PropTypes.arrayOf(itemType);
 
+export const itemFormType = PropTypes.shape(
+  {
+    item: itemType,
+  },
+);
+
 export const itemDefaultAttributes = {
   id: '',
   name: '',
