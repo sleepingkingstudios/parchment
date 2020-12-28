@@ -37,7 +37,7 @@ module Features::Resources
     end
 
     def valid_attributes
-      super.merge(name: 'Do Not Touch Button')
+      super.merge(name: 'Big Red Button')
     end
 
     private

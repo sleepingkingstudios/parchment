@@ -1,4 +1,4 @@
-@reference @skills @show
+@items @reference @show
 Feature: Showing An Item
   The items page provides a block view of a defined item object.
 

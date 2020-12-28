@@ -1,4 +1,4 @@
-@index @reference @skills
+@index @items @reference
 Feature: Showing Index
   The items index provides a tabular view of the defined item objects.
 
