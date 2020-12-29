@@ -16,6 +16,7 @@
     "connected-react-router": "^6.5.2",
     "core-js": "^3.6.5",
     "cross-fetch": "^3.0.2",
+    "css-loader": "^5.0.1",
     "handlebars": "^4.5.3",
     "history": "^4.9.0",
     "html-to-react": "^1.4.3",
@@ -41,7 +42,6 @@
   "devDependencies": {
     "babel-jest": "^24.7.1",
     "babel-loader": "^8.2.2",
-    "css-loader": "^5.0.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "eslint": "^5.16.0",
