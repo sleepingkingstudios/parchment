@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { ShowPage } from '../../../../components/show-page';
 import { ItemBlock } from '../../components/block';
 import endpoint, { hooks } from '../../store/showFindItem';
+import deleteEndpoint, { hooks as deleteHooks } from '../../store/deleteItem';
 
 const generateBreadcrumbs = ({
   id,
@@ -31,7 +32,7 @@ const generateBreadcrumbs = ({
   ]
 );
 const generateButtons = ({
-  // deleteData,
+  deleteData,
   id,
   resource,
 }) => {
@@ -43,12 +44,12 @@ const generateButtons = ({
       outline: true,
       url: `/reference/items/${id}/update`,
     },
-    // {
-    //   buttonStyle: 'danger',
-    //   label: 'Delete Action',
-    //   onClick: deleteData,
-    //   outline: true,
-    // },
+    {
+      buttonStyle: 'danger',
+      label: 'Delete Item',
+      onClick: deleteData,
+      outline: true,
+    },
   ];
 };
 const getResourceId = ({ match }) => {
@@ -63,8 +64,10 @@ const ShowItemPage = ({ match }) => {
   const { data } = useEndpoint();
   const resource = data.item;
   const breadcrumbs = generateBreadcrumbs({ id, resource });
+  const { useDeleteData } = deleteHooks;
+  const deleteData = useDeleteData({ wildcards: { id } });
   const buttons = generateButtons({
-    // deleteData,
+    deleteData,
     id,
     resource,
   });
@@ -74,6 +77,7 @@ const ShowItemPage = ({ match }) => {
       Block={ItemBlock}
       breadcrumbs={breadcrumbs}
       buttons={buttons}
+      deleteEndpoint={deleteEndpoint}
       endpoint={endpoint}
       match={match}
       resourceName="Item"

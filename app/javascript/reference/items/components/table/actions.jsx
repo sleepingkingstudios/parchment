@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
 
 import ResponsiveActions from '../../../../components/responsive-actions';
+import deleteEndpoint from '../../store/deleteItem';
 import { injectProps } from '../../../../utils/react';
 
 const ItemsTableActions = injectProps(
   ResponsiveActions,
   {
-    actions: ['show', 'update'],
     baseUrl: '/reference/items',
+    deleteEndpoint,
     resourceName: 'item',
   },
 );

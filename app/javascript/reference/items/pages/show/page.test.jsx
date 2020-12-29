@@ -4,8 +4,13 @@ import { shallow } from 'enzyme';
 import ShowItemPage from './page';
 import { ItemBlock } from '../../components/block';
 import endpoint, { hooks } from '../../store/showFindItem';
+import deleteEndpoint, { hooks as deleteHooks } from '../../store/deleteItem';
+
+jest.mock('../../store/deleteItem');
 
 jest.mock('../../store/showFindItem');
+
+deleteHooks.useDeleteData.mockImplementation(() => ({}));
 
 hooks.useEndpoint.mockImplementation(() => () => ({}));
 
@@ -23,6 +28,7 @@ describe('<ShowItemPage />', () => {
 
     expect(rendered).toHaveDisplayName('ShowPage');
     expect(rendered).toHaveProp({ Block: ItemBlock });
+    expect(rendered).toHaveProp({ deleteEndpoint });
     expect(rendered).toHaveProp({ endpoint });
     expect(rendered).toHaveProp({ resourceName: 'Item' });
   });
@@ -100,25 +106,25 @@ describe('<ShowItemPage />', () => {
     });
 
     it('should render the buttons', () => {
-      // const deleteData = jest.fn();
-      // const useDeleteData = jest.fn(() => deleteData);
+      const deleteData = jest.fn();
+      const useDeleteData = jest.fn(() => deleteData);
       const buttons = [
         {
           label: 'Update Item',
           outline: true,
           url: `/reference/items/${id}/update`,
         },
-        // {
-        //   label: 'Delete Action',
-        //   buttonStyle: 'danger',
-        //   outline: true,
-        //   onClick: deleteData,
-        // },
+        {
+          label: 'Delete Item',
+          buttonStyle: 'danger',
+          outline: true,
+          onClick: deleteData,
+        },
       ];
       const item = { id, name: 'Big Red Button' };
       const state = { data: { item } };
 
-      // deleteHooks.useDeleteData.mockImplementationOnce(useDeleteData);
+      deleteHooks.useDeleteData.mockImplementationOnce(useDeleteData);
 
       hooks.useEndpoint.mockImplementationOnce(() => state);
 
@@ -126,7 +132,7 @@ describe('<ShowItemPage />', () => {
 
       expect(rendered).toHaveProp({ buttons });
 
-      // expect(useDeleteData).toHaveBeenCalledWith({ wildcards: { id } });
+      expect(useDeleteData).toHaveBeenCalledWith({ wildcards: { id } });
     });
   });
 });
