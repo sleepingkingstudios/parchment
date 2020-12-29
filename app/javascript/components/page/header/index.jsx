@@ -13,6 +13,7 @@ const navigation = {
   },
   Books: '/books',
   Reference: {
+    Items: '/reference/items',
     Languages: '/reference/languages',
     Skills: '/reference/skills',
   },

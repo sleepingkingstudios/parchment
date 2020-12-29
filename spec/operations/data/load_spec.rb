@@ -22,6 +22,7 @@ RSpec.describe Operations::Data::Load do
       %w[
         Mechanics::Action
         Mechanics::Condition
+        References::Item
         References::Language
         References::Skill
         Spell

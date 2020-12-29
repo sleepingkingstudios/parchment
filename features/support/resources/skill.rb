@@ -36,7 +36,7 @@ module Features::Resources
     end
 
     def valid_attributes
-      super.merge(title: 'Disco')
+      super.merge(name: 'Disco')
     end
   end
 end

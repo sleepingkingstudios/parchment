@@ -7,6 +7,7 @@ module Features
         Action
         Book
         Condition
+        Item
         Language
         Skill
         Spell

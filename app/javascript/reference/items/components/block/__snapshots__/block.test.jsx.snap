@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ItemBlock /> should match the snapshot 1`] = `
+<div
+  className="item-block"
+>
+  <p
+    className="item-block-name"
+  >
+    Mummified Flumph Tentacle
+  </p>
+  <p
+    className="item-block-cost"
+  >
+    <strong>
+      Cost:
+    </strong>
+     
+    1,000 pp
+  </p>
+  <RichText
+    className="item-block-description"
+    liquid={true}
+    markdown={true}
+    text="A relic of an ancient Flumph saint. Ramen."
+  />
+</div>
+`;

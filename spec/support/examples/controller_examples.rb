@@ -214,7 +214,12 @@ module Spec::Support::Examples
             'error' => expected_error
           }
         end
-        let(:params) { super().tap { |hsh| hsh.delete(parameter_name) } }
+        let(:params) do
+          super().tap do |hsh|
+            hsh.delete(parameter_name.intern)
+            hsh.delete(parameter_name.to_s)
+          end
+        end
 
         it 'should respond with 400 Bad Request' do
           call_action
@@ -237,6 +242,410 @@ module Spec::Support::Examples
         call_action
 
         expect(response.content_type).to be == 'application/json; charset=utf-8'
+      end
+    end
+
+    shared_examples 'should serialize the resource' \
+    do |resource_name, includes: []|
+      let(:expected_data) do
+        [resource_name, *includes]
+          .map(&:to_s)
+          .reduce({}) { |hsh, name| hsh.merge(name => serialize(name)) }
+      end
+      let(:expected_json) do
+        {
+          'ok'   => true,
+          'data' => expected_data
+        }
+      end
+
+      def serialize(resource_name)
+        resources =
+          if respond_to?(:"expected_#{resource_name}")
+            send :"expected_#{resource_name}"
+          else
+            send resource_name
+          end
+
+        return Serializers.serialize(resources) unless resources.is_a?(Array)
+
+        # :nocov:
+        resources.map do |resource|
+          Serializers.serialize(resource)
+        end
+        # :nocov:
+      end
+
+      it "should serialize the #{resource_name}" do
+        call_action
+
+        expect(json).to deep_match expected_json
+      end
+    end
+
+    shared_examples 'should serialize the resources' \
+    do |resource_name, includes: []|
+      let(:expected_data) do
+        [resource_name, *includes]
+          .map { |name| name.to_s.pluralize }
+          .reduce({}) { |hsh, name| hsh.merge(name => serialize(name)) }
+      end
+      let(:expected_json) do
+        {
+          'ok'   => true,
+          'data' => expected_data
+        }
+      end
+
+      def serialize(resource_name)
+        resources =
+          if respond_to?(:"expected_#{resource_name}")
+            send :"expected_#{resource_name}"
+          else
+            send resource_name
+          end
+
+        return Serializers.serialize(resources) unless resources.is_a?(Array)
+
+        resources.map do |resource|
+          Serializers.serialize(resource)
+        end
+      end
+
+      it "should serialize the #{resource_name}" do
+        call_action
+
+        expect(json).to deep_match expected_json
+      end
+    end
+
+    shared_examples 'should create the resource' \
+    do |resource_name|
+      include_context 'with an authorization token for a user'
+
+      shared_context 'with invalid attributes' do
+        let(:"#{resource_name}_params") do
+          send(:"invalid_#{resource_name}_params")
+        end
+      end
+
+      shared_context 'with valid attributes' do
+        let(:"#{resource_name}_params") do
+          send(:"valid_#{resource_name}_params")
+        end
+      end
+
+      let(:"#{resource_name}_params") do
+        send(:"valid_#{resource_name}_params")
+      end
+      let(:params) do
+        super().merge(
+          resource_name.to_s => send(:"#{resource_name}_params")
+        )
+      end
+
+      include_examples 'should require an authenticated user'
+
+      include_examples 'should require resource params'
+
+      wrap_context 'with invalid attributes' do
+        let(:expected_error) do
+          errors  = send(:"invalid_#{resource_name}_errors")
+          message =
+            "#{resource_class} has validation errors:" \
+            " #{errors.map { |ary| ary.join ' ' }.join ', '}"
+
+          {
+            'data'    => {
+              'errors'       => errors,
+              'record_class' => resource_class.name
+            },
+            'message' => message,
+            'type'    => 'failed_validation'
+          }
+        end
+        let(:expected_json) do
+          {
+            'ok'    => false,
+            'error' => expected_error
+          }
+        end
+        let(:resource_query) do
+          attribute = resource_class.slug_attribute
+          value     = send(:"#{resource_name}_params")[attribute]
+
+          resource_class.where(attribute => value)
+        end
+
+        it 'should respond with 422 Unprocessable Entity' do
+          call_action
+
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'should serialize the errors' do
+          call_action
+
+          expect(json).to deep_match expected_json
+        end
+
+        it "should not create the #{resource_name}", :aggregate_failures do
+          expect { call_action }.not_to change(resource_class, :count)
+
+          query = resource_query
+
+          expect(query.exists?).to be false
+        end
+
+        include_examples 'should respond with JSON content'
+      end
+
+      wrap_context 'with valid attributes' do
+        let(:"expected_#{resource_name}") { resource_query.first }
+        let(:created_attributes) do
+          defined?(super()) ? super() : send(:"#{resource_name}_params")
+        end
+        let(:resource_query) do
+          attribute = resource_class.slug_attribute
+          value     = send(:"#{resource_name}_params")[attribute]
+
+          resource_class.where(attribute => value)
+        end
+
+        it 'should respond with 201 Created' do
+          call_action
+
+          expect(response).to have_http_status(:created)
+        end
+
+        include_examples 'should serialize the resource', resource_name
+
+        it "should create the #{resource_name}", :aggregate_failures do
+          expect { call_action }.to change(resource_class, :count).by(1)
+
+          query = resource_query
+
+          expect(query.exists?).to be true
+
+          resource = query.first
+
+          created_attributes.each do |attribute, value|
+            expect(resource.send attribute).to be == value
+          end
+        end
+
+        include_examples 'should respond with JSON content'
+      end
+    end
+
+    shared_examples 'should destroy the resource' \
+    do |resource_name|
+      include_context 'with an authorization token for a user'
+      include_context "when there are many #{resource_name.to_s.pluralize}"
+
+      let(:expected_json) do
+        {
+          'data' => {},
+          'ok'   => true
+        }
+      end
+
+      include_examples 'should require an authenticated user'
+
+      include_examples 'should require a valid resource id'
+
+      include_examples 'should find the resource by slug'
+
+      it 'should respond with 200 OK' do
+        call_action
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'should return a JSON response' do
+        call_action
+
+        expect(json).to deep_match expected_json
+      end
+
+      it "should destroy the #{resource_name}", :aggregate_failures do
+        expect { call_action }.to change(resource_class, :count).by(-1)
+
+        query = resource_class.where(id: send(:"#{resource_name}_id"))
+
+        expect(query.exists?).to be false
+      end
+
+      include_examples 'should respond with JSON content'
+    end
+
+    shared_examples 'should index the resources' \
+    do |resource_name, includes: []|
+      include_context 'with an authorization token for a user'
+
+      include_examples 'should require an authenticated user'
+
+      it 'should respond with 200 OK' do
+        call_action
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      include_examples 'should serialize the resources',
+        resource_name,
+        includes: includes
+
+      include_examples 'should respond with JSON content'
+
+      context 'when there are many resources' do
+        # :nocov:
+        begin
+          include_context "when there are many #{resource_name}"
+        rescue ArgumentError
+          include_context 'when there are many resources'
+        end
+        # :nocov:
+
+        include_examples 'should serialize the resources',
+          resource_name,
+          includes: includes
+      end
+    end
+
+    shared_examples 'should show the resource' \
+    do |resource_name, includes: []|
+      include_context 'with an authorization token for a user'
+      include_context "when there are many #{resource_name.to_s.pluralize}"
+
+      include_examples 'should require an authenticated user'
+
+      include_examples 'should require a valid resource id'
+
+      include_examples 'should find the resource by slug'
+
+      it 'should respond with 200 OK' do
+        call_action
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      include_examples 'should serialize the resource',
+        resource_name,
+        includes: includes
+
+      include_examples 'should respond with JSON content'
+    end
+
+    shared_examples 'should update the resource' \
+    do |resource_name|
+      include_context 'with an authorization token for a user'
+      include_context "when there are many #{resource_name.to_s.pluralize}"
+
+      shared_context 'with invalid attributes' do
+        let(:"#{resource_name}_params") do
+          send(:"invalid_#{resource_name}_params")
+        end
+      end
+
+      shared_context 'with valid attributes' do
+        let(:"#{resource_name}_params") do
+          send(:"valid_#{resource_name}_params")
+        end
+      end
+
+      let(:"#{resource_name}_params") do
+        send(:"valid_#{resource_name}_params")
+      end
+      let(:params) do
+        super().merge(
+          resource_name.to_s => send(:"#{resource_name}_params")
+        )
+      end
+
+      include_examples 'should require an authenticated user'
+
+      include_examples 'should require a valid resource id'
+
+      include_examples 'should find the resource by slug'
+
+      wrap_context 'with invalid attributes' do
+        let(:expected_error) do
+          errors  = send(:"invalid_#{resource_name}_errors")
+          message =
+            "#{resource_class} has validation errors:" \
+            " #{errors.map { |ary| ary.join ' ' }.join ', '}"
+
+          {
+            'data'    => {
+              'errors'       => errors,
+              'record_class' => resource_class.name
+            },
+            'message' => message,
+            'type'    => 'failed_validation'
+          }
+        end
+        let(:expected_json) do
+          {
+            'ok'    => false,
+            'error' => expected_error
+          }
+        end
+        let(:updated_attributes) do
+          defined?(super()) ? super() : send(:"#{resource_name}_params")
+        end
+
+        it 'should respond with 422 Unprocessable Entity' do
+          call_action
+
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'should serialize the errors' do
+          call_action
+
+          expect(json).to deep_match expected_json
+        end
+
+        it "should not update the #{resource_name}" do
+          call_action
+
+          resource = resource_class.find(send(:"#{resource_name}_id"))
+
+          updated_attributes.each do |attribute, value|
+            expect(resource.send attribute).not_to be == value
+          end
+        end
+
+        include_examples 'should respond with JSON content'
+      end
+
+      wrap_context 'with valid attributes' do
+        let(:"expected_#{resource_name}") do
+          resource_class.find(send(:"#{resource_name}_id"))
+        end
+        let(:updated_attributes) do
+          defined?(super()) ? super() : send(:"#{resource_name}_params")
+        end
+
+        it 'should respond with 200 OK' do
+          call_action
+
+          expect(response).to have_http_status(:ok)
+        end
+
+        include_examples 'should serialize the resource', resource_name
+
+        it "should update the #{resource_name}" do
+          call_action
+
+          resource = resource_class.find(send(:"#{resource_name}_id"))
+
+          updated_attributes.each do |attribute, value|
+            expect(resource.send attribute).to be == value
+          end
+        end
+
+        include_examples 'should respond with JSON content'
       end
     end
   end

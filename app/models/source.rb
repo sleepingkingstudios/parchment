@@ -11,6 +11,7 @@ class Source < ApplicationRecord
   ].freeze
 
   REFERENCE_TYPES = %w[
+    References::Item
     References::Language
     References::Skill
     Spell

@@ -6,7 +6,7 @@ import DynamicTable from '../../../../components/dynamic-table';
 import { columns } from '../../components/table';
 import endpoint from '../../store/indexFindSkills';
 
-describe('<IndexActionsPage />', () => {
+describe('<IndexSkillsPage />', () => {
   const defaultProps = {};
 
   it('should render the index page', () => {

@@ -47,6 +47,16 @@ describe('<HomePage />', () => {
     expect(link).toHaveProp('children', 'Books');
   });
 
+  it('should render the items link', () => {
+    const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
+    const link = rendered.find('.items-link');
+
+    expect(link).toExist();
+    expect(link).toHaveDisplayName('Link');
+    expect(link).toHaveProp('to', '/reference/items');
+    expect(link).toHaveProp('children', 'Items');
+  });
+
   it('should render the languages link', () => {
     const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
     const link = rendered.find('.languages-link');
