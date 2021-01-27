@@ -43,11 +43,13 @@ const IndexPage = (props) => {
   } = props;
   const pluralResourceName = underscore(pluralize(resourceName));
   const { hooks } = endpoint;
-  const { useRequestData } = hooks;
+  const { useFindRequest } = hooks;
 
-  const requestData = useRequestData();
+  console.log('hooks:', hooks);
 
-  requestData();
+  const findRequest = useFindRequest();
+
+  findRequest();
 
   return (
     <Page
@@ -87,7 +89,7 @@ IndexPage.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   endpoint: PropTypes.shape({
     hooks: PropTypes.shape({
-      useRequestData: PropTypes.func.isRequired,
+      useRequestData: PropTypes.func,
     }).isRequired,
   }).isRequired,
   mapData: PropTypes.func,

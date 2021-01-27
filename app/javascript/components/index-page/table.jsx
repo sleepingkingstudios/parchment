@@ -39,14 +39,19 @@ const IndexPageTable = (props) => {
     resourceName,
   } = props;
   const pluralResourceName = underscore(pluralize(resourceName));
-  const { hooks, request } = endpoint;
-  const { useEndpoint } = hooks;
-  const { data, status } = useEndpoint();
+  const { hooks } = endpoint;
+  const { useData, useFindStatus, useFindRequest, useStore } = hooks;
+
+  console.log('state:', useStore().getState());
+  const data = useData();
+  const status = useFindStatus();
+  console.log('status:', status);
   const actualMapData = valueOrDefault(
     mapData,
     defaultMapData(pluralResourceName),
   );
   const mappedData = actualMapData(data);
+  const request = useFindRequest();
   const { performRequest } = request;
   const onDelete = ({ dispatch, getState }) => {
     performRequest()(dispatch, getState);
@@ -84,11 +89,11 @@ IndexPageTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   endpoint: PropTypes.shape({
     hooks: PropTypes.shape({
-      useEndpoint: PropTypes.func.isRequired,
+      useEndpoint: PropTypes.func,
     }).isRequired,
     request: PropTypes.shape({
       performRequest: PropTypes.func.isRequired,
-    }).isRequired,
+    }),
   }).isRequired,
   mapData: PropTypes.func,
   resourceName: PropTypes.string.isRequired,

@@ -7,12 +7,14 @@ import { reducer as indexFindSpells } from './indexFindSpells';
 import { reducer as showFindSpell } from './showFindSpell';
 import { reducer as updateFindSpell } from './updateFindSpell';
 import { reducer as updateSpellForm } from './updateSpellForm';
+import { reducer as index } from '../pages/index-page/store';
 
 export default combineReducers({
   createSpellForm,
   deleteSpell,
   formFindOrigins,
   indexFindSpells,
+  index,
   showFindSpell,
   updateFindSpell,
   updateSpellForm,

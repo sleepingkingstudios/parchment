@@ -3,7 +3,10 @@ import React from 'react';
 import DynamicTable from '../../../components/dynamic-table';
 import { IndexPage } from '../../../components/index-page';
 import { columns } from '../../components/table';
-import endpoint from '../../store/indexFindSpells';
+// import endpoint from '../../store/indexFindSpells';
+import { hooks } from '../index-page/store';
+
+const endpoint = { hooks };
 
 const IndexSpellsPage = () => (
   <IndexPage Table={DynamicTable} columns={columns} endpoint={endpoint} resourceName="Spell" />

@@ -78,15 +78,46 @@
 
 ### API
 
-- Refactor Endpoint class to client() function.
-- Clean up reducer namespaces: |
-    resourceName: { # Note that index is a reserved word!
-      create: { form, submit },       # hooks: useForm, useSubmitForm
-      delete: { delete },             # hooks: useDeleteData
-      filter: { data, find },         # hooks: useData, useRequestData
-      show:   { data, find },         # hooks: useData, useRequestData
-      update: { find, form, submit }  # hooks: useForm, useRequestData, useSubmitForm
-    }
+#### Requests
+
+#### Resources
+
+Directory structure (explicit):
+
+- namespace/widgets
+  - components
+    - table
+  - pages
+    - index-page
+      - store
+        - findRequest.js # API Request
+        - index.js       # exports { hooks, reducer }
+      - index.js         # exports { endpoint ({ hooks, reducer }), Page }
+      - page.js
+  - entities.js
+  - index.js             # exports { reducer, routes }
+  - reducer.js           # imports endpoint from index-page
+  - routes.js            # imports Page from index-page
+
+Directory structure (page objects):
+
+- namespace/widgets
+  - components
+    - table
+  - pages
+    - index-page.js      # imports entities, Table and exports { endpoint, Page }
+  - entities.js
+  - index.js             # exports { reducer, routes }
+  - reducer.js           # imports endpoint from index-page
+  - routes.js            # imports Page from index-page
+
+Directory structure (resource object):
+
+- namespace/widgets
+  - components
+    - table
+  - entities.js
+  - index.js             # imports entities, Table(, Block, Form) and exports { reducer, routes }
 
 ### Components
 
