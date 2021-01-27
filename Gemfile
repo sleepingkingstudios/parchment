@@ -29,6 +29,8 @@ gem 'bcrypt', '~> 3.1'
 gem 'cuprum', git: 'https://github.com/sleepingkingstudios/cuprum.git'
 gem 'jwt', '~> 2.2'
 
+gem 'sleeping_king_studios-tools', '~> 1.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
   # console.
@@ -47,8 +49,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   # Run commands to aggregate CI steps, generate templated files, etc.
-  gem 'sleeping_king_studios-tasks',
-    git: 'https://github.com/sleepingkingstudios/sleeping_king_studios-tasks'
+  gem 'sleeping_king_studios-tasks', '~> 0.4', '>= 0.4.1'
   gem 'thor', '~> 0.20', '>= 0.20.3'
 
   # Access an interactive console on exception pages or by calling 'console'
@@ -66,7 +67,8 @@ group :test do
 
   gem 'rspec', '~> 3.8'
   gem 'rspec-rails', '~> 3.8.2'
-  gem 'rspec-sleeping_king_studios', '~> 2.5', '>= 2.5.1'
+  gem 'rspec-sleeping_king_studios',
+    git: 'https://github.com/sleepingkingstudios/rspec-sleeping_king_studios'
 
   gem 'rubocop', '~> 0.66.0'
   gem 'rubocop-rspec', '~> 1.32.0'
