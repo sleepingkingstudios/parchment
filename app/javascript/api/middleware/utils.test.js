@@ -2,6 +2,7 @@ import {
   applyMiddleware,
   injectMiddleware,
   selectMiddleware,
+  wrapMiddleware,
 } from './utils';
 
 describe('Request middleware utils', () => {
@@ -458,6 +459,39 @@ describe('Request middleware utils', () => {
 
       it('should return an array containing the functions', () => {
         expect(selectMiddleware(actual, prop)).toEqual(expected);
+      });
+    });
+  });
+
+  describe('wrapMiddleware', () => {
+    const next = jest.fn();
+
+    beforeEach(() => { next.mockClear(); });
+
+    it('should be a function', () => {
+      expect(typeof wrapMiddleware).toEqual('function');
+    });
+
+    describe('with middleware: null', () => {
+      it('should return the next function', () => {
+        expect(wrapMiddleware(null, next)).toEqual(next);
+      });
+    });
+
+    describe('with middleware: a function', () => {
+      const inner = () => {};
+      const middleware = jest.fn(() => inner);
+
+      beforeEach(() => { middleware.mockClear(); });
+
+      it('should call the middleware', () => {
+        wrapMiddleware(middleware, next);
+
+        expect(middleware).toHaveBeenCalledWith(next);
+      });
+
+      it('should return the inner function', () => {
+        expect(wrapMiddleware(middleware, next)).toEqual(inner);
       });
     });
   });
