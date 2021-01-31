@@ -69,6 +69,12 @@ describe('buildClient()', () => {
       });
     });
 
+    describe('middleware', () => {
+      it('should return an empty array', () => {
+        expect(client.middleware).toEqual([]);
+      });
+    });
+
     describe('namespace', () => {
       it('should return the namespace', () => {
         expect(client.namespace).toEqual(namespace);
@@ -221,6 +227,12 @@ describe('buildClient()', () => {
       },
     ];
     const client = buildClient({ ...defaultOptions, middleware });
+
+    describe('middleware', () => {
+      it('should return the configured middleware', () => {
+        expect(client.middleware).toEqual(middleware);
+      });
+    });
 
     describe('reducer', () => {
       const { actions, reducer } = client;

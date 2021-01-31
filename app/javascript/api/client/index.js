@@ -47,6 +47,7 @@ const buildClient = (options) => {
     actions,
     hooks,
     method,
+    middleware,
     namespace,
     performRequest,
     reducer,
