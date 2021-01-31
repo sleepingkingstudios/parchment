@@ -8,7 +8,7 @@ import { reducer as showFindSpell } from './showFindSpell';
 import { reducer as updateFindSpell } from './updateFindSpell';
 import { reducer as updateSpellForm } from './updateSpellForm';
 
-import { reducer as index } from '../pages/index-page';
+import { reducer as index } from '../index-page';
 
 export default combineReducers({
   createSpellForm,

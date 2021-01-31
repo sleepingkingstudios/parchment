@@ -2,7 +2,6 @@ import {
   generateHooks,
   generateReducer,
 } from 'api/data';
-
 import { actions } from './find';
 
 const initialState = { spells: [] };

@@ -11,7 +11,6 @@ import {
   valueOrDefault,
 } from 'utils/object';
 import { interpolate } from 'utils/string';
-
 import buildEmptyResponse from './emptyResponse';
 import buildOptions from './options';
 import generateHandlers from './handlers';

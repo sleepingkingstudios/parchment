@@ -1,6 +1,12 @@
 import { useEffect } from 'react';
-import { useDispatch, useStore } from 'react-redux';
+import {
+  shallowEqual,
+  useDispatch,
+  useSelector,
+  useStore,
+} from 'react-redux';
 
+import { PENDING } from 'api/status';
 import generateHooks from './hooks';
 
 jest.mock('react');
@@ -12,13 +18,21 @@ const store = { getState };
 
 useDispatch.mockImplementation(() => dispatch);
 useEffect.mockImplementation(fn => fn());
+useSelector.mockImplementation(() => null);
 useStore.mockImplementation(() => store);
 
 describe('API client hooks', () => {
   const requestHandler = jest.fn();
   const performRequest = jest.fn(() => requestHandler);
-  const hooks = generateHooks({ performRequest });
-  const { usePerformRequest } = hooks;
+  const namespace = 'path/to/widgets';
+  const hooks = generateHooks({
+    namespace,
+    performRequest,
+  });
+  const {
+    usePerformRequest,
+    useStatus,
+  } = hooks;
 
   describe('usePerformRequest()', () => {
     it('should be a function', () => {
@@ -89,6 +103,32 @@ describe('API client hooks', () => {
         expect(performRequest).toHaveBeenCalledWith(params);
         expect(requestHandler).toHaveBeenCalledWith(dispatch, getState);
       });
+    });
+  });
+
+  describe('useStatus()', () => {
+    const status = PENDING;
+    const state = { path: { to: { widgets: { status } } } };
+
+    beforeEach(() => {
+      useSelector.mockImplementationOnce(selector => selector(state));
+    });
+
+    it('should be a function', () => {
+      expect(typeof useStatus).toEqual('function');
+    });
+
+    it('should delegate to useSelector()', () => {
+      useStatus();
+
+      expect(useSelector).toHaveBeenCalledWith(
+        expect.any(Function),
+        shallowEqual,
+      );
+    });
+
+    it('should return the request status', () => {
+      expect(useStatus()).toEqual(status);
     });
   });
 });

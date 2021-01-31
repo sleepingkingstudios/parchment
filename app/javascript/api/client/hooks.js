@@ -1,7 +1,14 @@
 import { useEffect } from 'react';
-import { useDispatch, useStore } from 'react-redux';
+import {
+  shallowEqual,
+  useDispatch,
+  useSelector,
+  useStore,
+} from 'react-redux';
 
-const generateHooks = ({ performRequest }) => {
+import { dig } from 'utils/object';
+
+const generateHooks = ({ namespace, performRequest }) => {
   const usePerformRequest = (params, skip = []) => () => {
     const dispatch = useDispatch();
     const { getState } = useStore();
@@ -12,7 +19,17 @@ const generateHooks = ({ performRequest }) => {
     );
   };
 
-  return { usePerformRequest };
+  const selector = state => dig(state, ...namespace.split('/'), 'status');
+
+  const useStatus = () => useSelector(
+    state => selector(state),
+    shallowEqual,
+  );
+
+  return {
+    usePerformRequest,
+    useStatus,
+  };
 };
 
 export default generateHooks;

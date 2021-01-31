@@ -2,7 +2,6 @@ import { INITIALIZED } from 'api/status';
 import {
   shouldGenerateTheActions,
 } from 'api/client/testHelpers';
-
 import client, {
   actions,
   hooks,
@@ -25,11 +24,20 @@ describe('Spells index find client', () => {
   });
 
   describe('hooks', () => {
-    const { usePerformRequest } = hooks;
+    const {
+      usePerformRequest,
+      useStatus,
+    } = hooks;
 
     describe('usePerformRequest', () => {
       it('should be a function', () => {
         expect(typeof usePerformRequest).toEqual('function');
+      });
+    });
+
+    describe('useStatus', () => {
+      it('should be a function', () => {
+        expect(typeof useStatus).toEqual('function');
       });
     });
   });

@@ -1,9 +1,13 @@
 import fetch from 'cross-fetch';
 import { useEffect } from 'react';
-import { useDispatch, useStore } from 'react-redux';
+import {
+  useDispatch,
+  useSelector,
+  useStore,
+} from 'react-redux';
 
+import { PENDING } from 'api/status';
 import { underscoreKeys } from 'utils/object';
-
 import buildClient from './index';
 import generateInitialState from './initialState';
 import {
@@ -26,6 +30,7 @@ const store = { getState };
 
 useDispatch.mockImplementation(() => dispatch);
 useEffect.mockImplementation(fn => fn());
+useSelector.mockImplementation(() => PENDING);
 useStore.mockImplementation(() => store);
 
 describe('buildClient()', () => {
@@ -59,6 +64,18 @@ describe('buildClient()', () => {
 
         it('should return a function', () => {
           expect(typeof usePerformRequest() === 'function').toBe(true);
+        });
+      });
+
+      describe('useStatus()', () => {
+        const { useStatus } = hooks;
+
+        it('should be a function', () => {
+          expect(typeof useStatus === 'function').toBe(true);
+        });
+
+        it('should delegate to useSelector', () => {
+          expect(useStatus()).toEqual(PENDING);
         });
       });
     });

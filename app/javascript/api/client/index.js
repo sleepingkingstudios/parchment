@@ -5,7 +5,6 @@ import {
 import {
   valueOrDefault,
 } from 'utils/object';
-
 import generateActions from './actions';
 import generateHooks from './hooks';
 import generateInitialState from './initialState';
@@ -36,7 +35,10 @@ const buildClient = (options) => {
     namespace,
     url,
   });
-  const hooks = generateHooks({ performRequest });
+  const hooks = generateHooks({
+    namespace,
+    performRequest,
+  });
   const reducer = wrapReducer({
     middleware,
     reducer: generateReducer({ actions, initialState }),

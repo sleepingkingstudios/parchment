@@ -1,5 +1,4 @@
 import { INITIALIZED } from 'api/status';
-
 import generateInitialState from './initialState';
 
 describe('API client generateInitialState()', () => {

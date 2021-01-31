@@ -3,7 +3,6 @@ import {
   isEmpty,
   valueOrDefault,
 } from 'utils/object';
-
 import buildEmptyResponse from './emptyResponse';
 
 const generateJson = ({ status }) => {
