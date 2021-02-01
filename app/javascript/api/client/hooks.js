@@ -19,15 +19,21 @@ const generateHooks = ({ namespace, performRequest }) => {
     );
   };
 
-  const selector = state => dig(state, ...namespace.split('/'), 'status');
+  const useRequest = (params) => {
+    const dispatch = useDispatch();
+    const { getState } = useStore();
+
+    return () => { performRequest(params)(dispatch, getState); };
+  };
 
   const useStatus = () => useSelector(
-    state => selector(state),
+    state => dig(state, ...namespace.split('/'), 'status'),
     shallowEqual,
   );
 
   return {
     usePerformRequest,
+    useRequest,
     useStatus,
   };
 };

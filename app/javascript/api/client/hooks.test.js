@@ -31,6 +31,7 @@ describe('API client hooks', () => {
   });
   const {
     usePerformRequest,
+    useRequest,
     useStatus,
   } = hooks;
 
@@ -99,6 +100,40 @@ describe('API client hooks', () => {
 
       it('should call performRequest with dispatch and getState', () => {
         requestHook();
+
+        expect(performRequest).toHaveBeenCalledWith(params);
+        expect(requestHandler).toHaveBeenCalledWith(dispatch, getState);
+      });
+    });
+  });
+
+  describe('useRequest()', () => {
+    it('should be a function', () => {
+      expect(typeof useRequest === 'function').toBe(true);
+    });
+
+    it('should return a function', () => {
+      expect(typeof useRequest() === 'function').toBe(true);
+    });
+
+    describe('with no arguments', () => {
+      const request = useRequest();
+
+      it('should call performRequest with dispatch and getState', () => {
+        request();
+
+        expect(performRequest).toHaveBeenCalled();
+        expect(requestHandler).toHaveBeenCalledWith(dispatch, getState);
+      });
+    });
+
+    describe('with request params', () => {
+      const id = '00000000-0000-0000-0000-000000000000';
+      const params = { wildcards: { id } };
+      const request = useRequest(params);
+
+      it('should call performRequest with dispatch and getState', () => {
+        request();
 
         expect(performRequest).toHaveBeenCalledWith(params);
         expect(requestHandler).toHaveBeenCalledWith(dispatch, getState);

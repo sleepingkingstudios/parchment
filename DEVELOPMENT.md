@@ -84,36 +84,38 @@
 
 Hooks aggregation:
 
-- index/show pages:
-  - useDataStatus  # from /find   (useStatus)
-  - useRequestData # from /find   (usePerformRequest)
-  - useData        # from /data   (useData)
-  - useDeleteData  # from /delete (usePerformRequest)
+- index page:
+  - useDataStatus     # from /find    (useStatus)
+  - useRequestData    # from /find    (usePerformRequest)
+  - use(Data|Table)   # from /data    (useData)
+  - useDestroyRequest # from /destroy (useRequest)
+- show page:
+  - useDataStatus     # from /find    (useStatus)
+  - useRequestData    # from /find    (usePerformRequest)
+  - useData           # from /data    (useData)
 - create page:
-  - useForm        # from /form   (useForm)
-  - useFormStatus  # from /submit (useStatus)
-  - useSubmitForm  # from /submit (usePerformRequest)
+  - useForm           # from /form    (useForm)
+  - useFormStatus     # from /submit  (useStatus)
+  - useSubmitForm     # from /submit  (usePerformRequest)
 - update page:
-  - useDataStatus  # from /find   (useStatus)
-  - useRequestData # from /find   (usePerformRequest)
-  - useForm        # from /form   (useForm)
-  - useFormStatus  # from /submit (useStatus)
-  - useSubmitForm  # from /submit (usePerformRequest)
+  - useDataStatus     # from /find    (useStatus)
+  - useRequestData    # from /find    (usePerformRequest)
+  - useForm           # from /form    (useForm)
+  - useFormStatus     # from /submit  (useStatus)
+  - useSubmitForm     # from /submit  (usePerformRequest)
 
 Directory structure (explicit):
 
 - namespace/widgets
-  - common
-    - store
-      - delete.js # exports { hooks, reducer }
   - components
     - table
   - index-page
     - store
-      - data.js   # exports { hooks, reducer }
-      - find.js   # exports { hooks, reducer }
-      - index.js  # exports { hooks, reducer }
-    - index.js    # exports { reducer, Page }
+      - data.js    # exports { hooks, reducer }
+      - destroy.js # exports { hooks, reducer }
+      - find.js    # exports { hooks, reducer }
+      - index.js   # exports { hooks, reducer }
+    - index.js     # exports { reducer, Page }
     - page.js
   - entities.js
   - index.js        # exports { reducer, routes }

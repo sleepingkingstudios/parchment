@@ -6,9 +6,9 @@ import client, {
   actions,
   hooks,
   reducer,
-} from './find';
+} from './destroy';
 
-describe('Spells index find client', () => {
+describe('Spells index destroy client', () => {
   const {
     method,
     middleware,
@@ -50,8 +50,8 @@ describe('Spells index find client', () => {
   });
 
   describe('method', () => {
-    it('should be GET', () => {
-      expect(method).toEqual('GET');
+    it('should be DELETE', () => {
+      expect(method).toEqual('DELETE');
     });
   });
 
@@ -70,9 +70,11 @@ describe('Spells index find client', () => {
       it('should be configured with options', () => {
         const { options } = alerts;
         const expected = {
-          action: 'find',
+          action: 'delete',
           failure: true,
-          resourceName: 'spells',
+          pending: true,
+          resourceName: 'spell',
+          success: { alertStyle: 'danger' },
         };
 
         expect(options).toEqual(expected);
@@ -87,31 +89,18 @@ describe('Spells index find client', () => {
       });
     });
 
-    describe('collectAssociations', () => {
-      const collectAssociations = middleware[2];
+    describe('reloadData', () => {
+      const reloadData = middleware[2];
 
-      it('should have type api/alerts', () => {
-        expect(collectAssociations.type).toEqual('api/collectAssociations');
-      });
-
-      it('should be configured with options', () => {
-        const { options } = collectAssociations;
-        const expected = {
-          associationName: 'source',
-          associationType: 'hasOne',
-          inverseName: 'reference',
-          polymorphic: true,
-          resourceName: 'spells',
-        };
-
-        expect(options).toEqual(expected);
+      it('should have type api/reloadData', () => {
+        expect(reloadData.type).toEqual('api/reloadData');
       });
     });
   });
 
   describe('namespace', () => {
-    it('should be spells/index/find', () => {
-      expect(namespace).toEqual('spells/index/find');
+    it('should be spells/index/destroy', () => {
+      expect(namespace).toEqual('spells/index/destroy');
     });
   });
 
@@ -136,7 +125,7 @@ describe('Spells index find client', () => {
 
   describe('url', () => {
     it('should be api/spells', () => {
-      expect(url).toEqual('api/spells');
+      expect(url).toEqual('api/spells/:id');
     });
   });
 });

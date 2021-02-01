@@ -1,28 +1,25 @@
 import buildClient from 'api/client';
 import generateAlerts from 'api/middleware/alerts';
 import authorization from 'api/middleware/authorization';
-import collectAssociations from 'api/middleware/collectAssociations';
+import { performRequest } from './find';
+import reloadData from './reloadData';
 
-const namespace = 'spells/index/find';
-const url = 'api/spells';
+const namespace = 'spells/index/destroy';
+const url = 'api/spells/:id';
 const alerts = generateAlerts({
-  action: 'find',
-  resourceName: 'spells',
+  action: 'delete',
+  resourceName: 'spell',
+  pending: true,
   failure: true,
-});
-const collectSources = collectAssociations({
-  associationName: 'source',
-  associationType: 'hasOne',
-  inverseName: 'reference',
-  polymorphic: true,
-  resourceName: 'spells',
+  success: { alertStyle: 'danger' },
 });
 const middleware = [
   authorization,
   alerts,
-  collectSources,
+  reloadData({ performRequest }),
 ];
 const client = buildClient({
+  method: 'DELETE',
   middleware,
   namespace,
   url,
@@ -33,6 +30,5 @@ export default client;
 export const {
   actions,
   hooks,
-  performRequest,
   reducer,
 } = client;
