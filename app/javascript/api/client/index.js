@@ -51,9 +51,11 @@ const buildClient = (options) => {
     method,
     middleware,
     namespace,
+    options,
     performRequest,
     reducer,
     selector,
+    type: 'api/client',
     url,
   };
 };

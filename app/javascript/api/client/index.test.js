@@ -98,6 +98,14 @@ describe('buildClient()', () => {
       });
     });
 
+    describe('options', () => {
+      const { options } = client;
+
+      it('should return the configured options', () => {
+        expect(options).toEqual(defaultOptions);
+      });
+    });
+
     describe('performRequest()', () => {
       const { actions, performRequest } = client;
 
@@ -136,6 +144,12 @@ describe('buildClient()', () => {
       const { selector } = client;
 
       shouldGenerateTheSelector({ namespace, selector });
+    });
+
+    describe('type', () => {
+      it('should be api/client', () => {
+        expect(client.type).toEqual('api/client');
+      });
     });
 
     describe('url', () => {

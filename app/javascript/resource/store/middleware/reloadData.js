@@ -1,5 +1,6 @@
-const reloadData = ({ performRequest }) => {
-  const type = 'api/reloadData';
+const reloadData = (options) => {
+  const { performRequest } = options;
+  const type = 'resource/store/middleware/reloadData';
   const handleSuccess = next => ({ dispatch, getState, response }) => {
     performRequest()(dispatch, getState);
 
@@ -8,6 +9,7 @@ const reloadData = ({ performRequest }) => {
 
   return {
     handleSuccess,
+    options,
     type,
   };
 };

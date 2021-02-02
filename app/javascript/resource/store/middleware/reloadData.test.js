@@ -1,6 +1,6 @@
 import reloadData from './reloadData';
 
-describe('Spells index reload data middleware', () => {
+describe('resource store middleware reloadData', () => {
   const performRequestInner = jest.fn();
   const performRequest = jest.fn(() => performRequestInner);
   const middleware = reloadData({ performRequest });
@@ -38,11 +38,19 @@ describe('Spells index reload data middleware', () => {
     });
   });
 
+  describe('options', () => {
+    const { options } = middleware;
+
+    it('should return the configured options', () => {
+      expect(options).toEqual({ performRequest });
+    });
+  });
+
   describe('type', () => {
     const { type } = middleware;
 
-    it('should be api/reloadData', () => {
-      expect(type).toEqual('api/reloadData');
+    it('should be resource/store/middleware/reloadData', () => {
+      expect(type).toEqual('resource/store/middleware/reloadData');
     });
   });
 });
