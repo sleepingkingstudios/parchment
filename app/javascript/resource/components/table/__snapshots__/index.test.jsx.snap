@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<IndexPageTable /> with default props should match the snapshot 1`] = `
+<DynamicTable
+  cellProps={Object {}}
+  className={null}
+  columns={
+    Array [
+      Object {
+        "label": "Name",
+        "prop": "name",
+      },
+    ]
+  }
+  data={Array []}
+  message="There are no widgets matching the criteria."
+  resourceName="widgets"
+/>
+`;

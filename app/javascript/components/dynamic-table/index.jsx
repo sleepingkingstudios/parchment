@@ -74,7 +74,10 @@ DynamicTable.propTypes = {
       id: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  message: PropTypes.string.isRequired,
+  message: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.string,
+  ]).isRequired,
   resourceName: PropTypes.string,
 };
 

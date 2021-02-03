@@ -162,6 +162,19 @@ describe('<DynamicTable />', () => {
     });
   });
 
+  describe('with message: an element', () => {
+    const data = [];
+    const element = (<span>Something went wrong.</span>);
+
+    it('should render the empty message', () => {
+      const rendered = shallow(<DynamicTable {...defaultProps} data={data} message={element} />);
+      const emptyMessage = rendered.find('DynamicTableEmptyMessage');
+
+      expect(emptyMessage).toExist();
+      expect(emptyMessage).toHaveProp({ message: element });
+    });
+  });
+
   describe('with resourceName: value', () => {
     const data = [
       {

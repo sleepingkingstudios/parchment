@@ -299,7 +299,13 @@ describe('<ResponsiveActions />', () => {
       const actions = ['show', 'update'];
 
       it('should not render the delete link', () => {
-        const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
+        const rendered = shallow(
+          <ResponsiveActions
+            {...defaultProps}
+            deleteEndpoint={deleteEndpoint}
+            actions={actions}
+          />,
+        );
         const deleteLink = rendered.find('.delete-link');
 
         expect(deleteLink).not.toExist();
@@ -370,6 +376,57 @@ describe('<ResponsiveActions />', () => {
       expect(updateLink).toHaveDisplayName('LinkButton');
       expect(updateLink).toHaveClassName('update-widget-link');
       expect(updateLink).toHaveProp({ url });
+    });
+  });
+
+  describe('with useDestroyRequest: function', () => {
+    const onClick = jest.fn();
+    const useDestroyRequest = jest.fn(() => onClick);
+
+    afterEach(() => { useDestroyRequest.mockClear(); });
+
+    it('should render the delete link', () => {
+      const rendered = shallow(
+        <ResponsiveActions {...defaultProps} useDestroyRequest={useDestroyRequest} />,
+      );
+      const deleteLink = rendered.find('.delete-link');
+      const renderedLink = deleteLink.shallow();
+
+      expect(deleteLink).toExist();
+      expect(deleteLink).toHaveDisplayName('Button');
+      expect(deleteLink).toHaveClassName('delete-widget-link');
+      expect(deleteLink).toHaveProp({ onClick });
+
+      expect(responsiveText(renderedLink, 'xs')).toEqual('');
+      expect(responsiveText(renderedLink, 'sm')).toEqual('');
+      expect(responsiveText(renderedLink, 'md')).toEqual('<TrashIcon />');
+      expect(responsiveText(renderedLink, 'lg')).toEqual('Delete');
+      expect(responsiveText(renderedLink, 'xl')).toEqual('<TrashIcon />Delete');
+    });
+
+    it('should call the useDestroyRequest hook', () => {
+      shallow(
+        <ResponsiveActions {...defaultProps} useDestroyRequest={useDestroyRequest} />,
+      );
+
+      expect(useDestroyRequest).toHaveBeenCalledWith({ wildcards: { id } });
+    });
+
+    describe('with actions: an array that does not include "delete"', () => {
+      const actions = ['show', 'update'];
+
+      it('should not render the delete link', () => {
+        const rendered = shallow(
+          <ResponsiveActions
+            {...defaultProps}
+            useDestroyRequest={useDestroyRequest}
+            actions={actions}
+          />,
+        );
+        const deleteLink = rendered.find('.delete-link');
+
+        expect(deleteLink).not.toExist();
+      });
     });
   });
 });

@@ -14,7 +14,10 @@ const DynamicTableEmptyMessage = (props) => {
 DynamicTableEmptyMessage.defaultProps = {};
 
 DynamicTableEmptyMessage.propTypes = {
-  message: PropTypes.string.isRequired,
+  message: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.string,
+  ]).isRequired,
 };
 
 export default DynamicTableEmptyMessage;
