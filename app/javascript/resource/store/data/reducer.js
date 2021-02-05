@@ -1,9 +1,12 @@
+import pluralize from 'pluralize';
+
 import { valueOrDefault } from 'utils/object';
 
 const defaultData = (resourceName) => {
   const data = {};
+  const isSingular = pluralize.singular(resourceName) === resourceName;
 
-  data[resourceName] = [];
+  data[resourceName] = isSingular ? {} : [];
 
   return data;
 };

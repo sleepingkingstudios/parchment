@@ -64,7 +64,7 @@ describe('API client hooks', () => {
       });
     });
 
-    describe('with request params', () => {
+    describe('with hook params', () => {
       const id = '00000000-0000-0000-0000-000000000000';
       const params = { wildcards: { id } };
       const requestHook = usePerformRequest(params);
@@ -102,6 +102,34 @@ describe('API client hooks', () => {
         requestHook();
 
         expect(performRequest).toHaveBeenCalledWith(params);
+        expect(requestHandler).toHaveBeenCalledWith(dispatch, getState);
+      });
+    });
+
+    describe('with request params', () => {
+      const id = '00000000-0000-0000-0000-000000000000';
+      const params = { wildcards: { id } };
+      const requestHook = usePerformRequest();
+
+      it('should call performRequest with dispatch and getState', () => {
+        requestHook(params);
+
+        expect(performRequest).toHaveBeenCalledWith(params);
+        expect(requestHandler).toHaveBeenCalledWith(dispatch, getState);
+      });
+    });
+
+    describe('with request and hook params', () => {
+      const id = '00000000-0000-0000-0000-000000000000';
+      const hookParams = { mode: 'modern', wildcards: { id } };
+      const requestParams = { mode: 'retro' };
+      const requestHook = usePerformRequest(hookParams);
+      const expected = { mode: 'retro', wildcards: { id } };
+
+      it('should call performRequest with dispatch and getState', () => {
+        requestHook(requestParams);
+
+        expect(performRequest).toHaveBeenCalledWith(expected);
         expect(requestHandler).toHaveBeenCalledWith(dispatch, getState);
       });
     });

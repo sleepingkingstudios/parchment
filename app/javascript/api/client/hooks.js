@@ -9,9 +9,14 @@ import {
 import { dig } from 'utils/object';
 
 const generateHooks = ({ namespace, performRequest }) => {
-  const usePerformRequest = (params, skip = []) => () => {
+  const usePerformRequest = (outer, skip = []) => (inner) => {
     const dispatch = useDispatch();
     const { getState } = useStore();
+    const params = Object.assign(
+      {},
+      outer,
+      inner,
+    );
 
     useEffect(
       () => { performRequest(params)(dispatch, getState); },

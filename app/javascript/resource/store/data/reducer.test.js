@@ -27,4 +27,15 @@ describe('resource data generateReducer()', () => {
       reducer,
     });
   });
+
+  describe('with resourceName: singular string', () => {
+    const data = { widget: {} };
+    const reducer = generateReducer({ actions, resourceName: 'widget' });
+
+    shouldGenerateTheReducer({
+      actions,
+      data,
+      reducer,
+    });
+  });
 });

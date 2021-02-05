@@ -40,6 +40,22 @@ describe('collectAssociations request middleware', () => {
         expect(typeof handleSuccess(next)).toEqual('function');
       });
 
+      describe('when the resource is undefined', () => {
+        const data = {};
+
+        it('should not modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedResponse = { json: { data } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
+      });
+
       describe('when the resource does not have an association', () => {
         const tree = {
           id: '10000000-0000-0000-0000-000000000000',
@@ -170,6 +186,22 @@ describe('collectAssociations request middleware', () => {
         expect(typeof handleSuccess(next)).toEqual('function');
       });
 
+      describe('when the resource is undefined', () => {
+        const data = {};
+
+        it('should not modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedResponse = { json: { data } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
+      });
+
       describe('when the resource does not have any associations', () => {
         const forest = {
           id: '00000000-0000-0000-0000-000000000000',
@@ -282,6 +314,22 @@ describe('collectAssociations request middleware', () => {
         const next = jest.fn();
 
         expect(typeof handleSuccess(next)).toEqual('function');
+      });
+
+      describe('when the resource is undefined', () => {
+        const data = {};
+
+        it('should not modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedResponse = { json: { data } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
       });
 
       describe('when the resource does not have an association', () => {
@@ -419,6 +467,22 @@ describe('collectAssociations request middleware', () => {
         const next = jest.fn();
 
         expect(typeof handleSuccess(next)).toEqual('function');
+      });
+
+      describe('when the resource is undefined', () => {
+        const data = {};
+
+        it('should not modify the response', () => {
+          const next = jest.fn();
+          const dispatch = jest.fn();
+          const getState = jest.fn();
+          const response = { json: { data } };
+          const expectedResponse = { json: { data } };
+
+          handleSuccess(next)({ dispatch, getState, response });
+
+          expect(next).toHaveBeenCalledWith({ dispatch, getState, response: expectedResponse });
+        });
       });
 
       describe('when the resource does not have an association', () => {
