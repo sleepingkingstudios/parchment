@@ -22,7 +22,7 @@ const buildIndexPage = (options) => {
     Page,
     options,
     reducer,
-    type: 'resource/pages/index-page',
+    type: 'resource/pages/indexPage',
   };
 };
 

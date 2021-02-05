@@ -2,31 +2,34 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { INITIALIZED } from 'api/status';
-import buildIndexPage from './index';
+import buildShowPage from './index';
 
-describe('resource buildIndexPage()', () => {
-  const Table = () => (<div />);
+describe('resource buildShowPage()', () => {
+  const Block = () => (<div />);
   const namespace = 'path/to/widgets';
   const resourceName = 'widgets';
   const url = 'api/v1/widgets';
   const defaultOptions = {
-    Table,
+    Block,
     namespace,
     resourceName,
     url,
   };
 
   describe('with default options', () => {
-    const indexPage = buildIndexPage(defaultOptions);
+    const showPage = buildShowPage(defaultOptions);
 
     describe('<Page />', () => {
-      const { Page } = indexPage;
-      const rendered = shallow(<Page />);
+      const { Page } = showPage;
+      const id = 'self-sealing-stem-bolt';
+      const match = { params: { id } };
+      const rendered = shallow(<Page match={match} />);
 
       it('should be an IndexPage with the configured options', () => {
-        expect(rendered).toHaveDisplayName('IndexPage');
+        expect(rendered).toHaveDisplayName('ShowPage');
 
-        expect(rendered).toHaveProp({ Table });
+        expect(rendered).toHaveProp({ Block });
+        expect(rendered).toHaveProp({ baseUrl: '/widgets' });
         expect(rendered).toHaveProp({ namespace });
         expect(rendered).toHaveProp({ resourceName });
       });
@@ -45,12 +48,12 @@ describe('resource buildIndexPage()', () => {
 
     describe('options', () => {
       it('should return the configured options', () => {
-        expect(indexPage.options).toEqual(defaultOptions);
+        expect(showPage.options).toEqual(defaultOptions);
       });
     });
 
     describe('reducer', () => {
-      const { reducer } = indexPage;
+      const { reducer } = showPage;
 
       it('should be a function', () => {
         expect(typeof reducer).toEqual('function');
@@ -78,7 +81,28 @@ describe('resource buildIndexPage()', () => {
 
     describe('type', () => {
       it('should be resource/pages/index-page', () => {
-        expect(indexPage.type).toEqual('resource/pages/indexPage');
+        expect(showPage.type).toEqual('resource/pages/showPage');
+      });
+    });
+  });
+
+  describe('with baseUrl: value', () => {
+    const baseUrl = '/tools/widgets';
+    const showPage = buildShowPage({ ...defaultOptions, baseUrl });
+
+    describe('<Page />', () => {
+      const { Page } = showPage;
+      const id = 'self-sealing-stem-bolt';
+      const match = { params: { id } };
+      const rendered = shallow(<Page match={match} />);
+
+      it('should be an IndexPage with the configured options', () => {
+        expect(rendered).toHaveDisplayName('ShowPage');
+
+        expect(rendered).toHaveProp({ Block });
+        expect(rendered).toHaveProp({ baseUrl });
+        expect(rendered).toHaveProp({ namespace });
+        expect(rendered).toHaveProp({ resourceName });
       });
     });
   });
