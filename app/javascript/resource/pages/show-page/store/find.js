@@ -1,41 +1,27 @@
-import buildApiClient from 'api/client';
-import generateAlerts from 'api/middleware/alerts';
-import authorization from 'api/middleware/authorization';
-import generateRedirectToIndex from 'api/middleware/redirectToIndex';
-import { valueOrDefault } from 'utils/object';
+import pluralize from 'pluralize';
 
-const generateMiddleware = ({ baseUrl, middleware, resourceName }) => {
-  const alerts = generateAlerts({
-    action: 'find',
-    resourceName,
-    failure: true,
-  });
+import generateRedirectToIndex from 'api/middleware/redirectToIndex';
+import buildFindClient from 'resource/store/find';
+import { valueOrDefault } from 'utils/object';
+import { underscore } from 'utils/string';
+
+const buildClient = (options) => {
+  const { resourceName } = options;
+  const baseUrl = valueOrDefault(
+    // eslint-disable-next-line react/destructuring-assignment
+    options.baseUrl,
+    `/${pluralize(underscore(resourceName)).replace(/_/g, '-')}`,
+  );
   const redirect = generateRedirectToIndex({
     baseUrl,
     resourceName,
     on: 'failure',
   });
-
-  return [authorization, alerts, redirect, ...middleware];
-};
-
-const buildClient = (options) => {
-  const {
-    baseUrl,
-    namespace,
-    resourceName,
-    url,
-  } = options;
-  const middleware = generateMiddleware({
-    baseUrl,
-    middleware: valueOrDefault(options.middleware, []),
-    resourceName,
-  });
-  const client = buildApiClient({
-    middleware,
-    namespace,
-    url,
-  });
+  const middleware = [
+    redirect,
+    ...valueOrDefault(options.middleware, []),
+  ];
+  const client = buildFindClient({ ...options, middleware });
 
   return Object.assign(
     client,
