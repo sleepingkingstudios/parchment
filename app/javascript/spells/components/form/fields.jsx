@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import SelectSourceField, {
+  mapSourceToValue,
+  mapValueToSource,
+} from 'origins/components/select-source-field';
 import FormCancelButton from '../../../components/form/cancel-button';
 import FormSubmitButton from '../../../components/form/submit-button';
 import FormCheckboxInput from '../../../components/form/checkbox-input';
@@ -8,10 +12,6 @@ import FormInput from '../../../components/form/input';
 import FormNumericInput from '../../../components/form/numeric-input';
 import FormSelectInput from '../../../components/form/select-input';
 import FormTextAreaInput from '../../../components/form/text-area-input';
-import SpellFormSelectSourceField, {
-  mapSourceToValue,
-  mapValueToSource,
-} from './select-source-field';
 import {
   formField,
   formGroup,
@@ -113,7 +113,7 @@ SlugField.propTypes = {
   form: formType.isRequired,
 };
 
-const SourceField = formField(SpellFormSelectSourceField, 'source', {
+const SourceField = formField(SelectSourceField, 'source', {
   mapDataToValue: mapSourceToValue,
   mapValueToData: mapValueToSource,
 });

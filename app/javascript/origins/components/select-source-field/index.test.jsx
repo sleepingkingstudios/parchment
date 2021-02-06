@@ -1,14 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import SpellFormSelectSourceField, {
+import SelectSourceField, {
   mapSourceToValue,
   mapValueToSource,
 } from './index';
 
-import { hooks } from '../../../store/formFindOrigins';
+import { hooks } from '../../store';
 
-jest.mock('../../../store/formFindOrigins');
+jest.mock('../../store');
 
 describe('mapSourceToValue', () => {
   it('should be a function', () => {
@@ -78,7 +78,7 @@ describe('mapValueToSource', () => {
     const props = {};
 
     it('should return an empty object', () => {
-      expect(mapValueToSource(props)).toEqual({});
+      expect(mapValueToSource(props)).toEqual({ source: null });
     });
   });
 
@@ -86,7 +86,7 @@ describe('mapValueToSource', () => {
     const props = { value: null };
 
     it('should return an empty object', () => {
-      expect(mapValueToSource(props)).toEqual({});
+      expect(mapValueToSource(props)).toEqual({ source: null });
     });
   });
 
@@ -94,7 +94,7 @@ describe('mapValueToSource', () => {
     const props = { value: '' };
 
     it('should return an empty object', () => {
-      expect(mapValueToSource(props)).toEqual({});
+      expect(mapValueToSource(props)).toEqual({ source: null });
     });
   });
 
@@ -103,7 +103,7 @@ describe('mapValueToSource', () => {
     const props = { value: `${originType}:` };
 
     it('should return an empty object', () => {
-      expect(mapValueToSource(props)).toEqual({});
+      expect(mapValueToSource(props)).toEqual({ source: null });
     });
   });
 
@@ -112,7 +112,7 @@ describe('mapValueToSource', () => {
     const props = { value: `:${originId}` };
 
     it('should return an empty object', () => {
-      expect(mapValueToSource(props)).toEqual({});
+      expect(mapValueToSource(props)).toEqual({ source: null });
     });
   });
 
@@ -128,31 +128,39 @@ describe('mapValueToSource', () => {
   });
 });
 
-describe('<SpellFormSelectSourceField />', () => {
+describe('<SelectSourceField />', () => {
   const id = 'spell-source-input';
   const value = 'Book:00000000-0000-0000-0000-000000000000';
   const onChange = jest.fn();
   const defaultProps = { id, value, onChange };
   const state = { data: {} };
+  const requestData = jest.fn();
 
   beforeEach(() => {
-    hooks.useEndpoint.mockImplementationOnce(() => state);
+    hooks.useData.mockImplementationOnce(() => state);
+    hooks.useRequestData.mockImplementationOnce(() => requestData);
   });
 
   it('should render a select input', () => {
-    const rendered = shallow(<SpellFormSelectSourceField {...defaultProps} />);
+    const rendered = shallow(<SelectSourceField {...defaultProps} />);
 
     expect(rendered).toHaveDisplayName('FormSelectInput');
   });
 
+  it('should request the data', () => {
+    shallow(<SelectSourceField {...defaultProps} />);
+
+    expect(requestData).toHaveBeenCalled();
+  });
+
   it('should set the default option', () => {
-    const rendered = shallow(<SpellFormSelectSourceField {...defaultProps} />);
+    const rendered = shallow(<SelectSourceField {...defaultProps} />);
 
     expect(rendered).toHaveProp('defaultOption', 'Homebrew');
   });
 
   it('should set the options', () => {
-    const rendered = shallow(<SpellFormSelectSourceField {...defaultProps} />);
+    const rendered = shallow(<SelectSourceField {...defaultProps} />);
     const expected = [
       {
         label: 'Books',
@@ -164,7 +172,7 @@ describe('<SpellFormSelectSourceField />', () => {
   });
 
   it('should match the snapshot', () => {
-    const rendered = shallow(<SpellFormSelectSourceField {...defaultProps} />);
+    const rendered = shallow(<SelectSourceField {...defaultProps} />);
 
     expect(rendered).toMatchSnapshot();
   });
@@ -206,18 +214,18 @@ describe('<SpellFormSelectSourceField />', () => {
     ];
 
     beforeEach(() => {
-      hooks.useEndpoint.mockReset();
-      hooks.useEndpoint.mockImplementationOnce(() => ({ data }));
+      hooks.useData.mockReset();
+      hooks.useData.mockImplementationOnce(() => data);
     });
 
     it('should set the options', () => {
-      const rendered = shallow(<SpellFormSelectSourceField {...defaultProps} />);
+      const rendered = shallow(<SelectSourceField {...defaultProps} />);
 
       expect(rendered).toHaveProp('options', expected);
     });
 
     it('should match the snapshot', () => {
-      const rendered = shallow(<SpellFormSelectSourceField {...defaultProps} />);
+      const rendered = shallow(<SelectSourceField {...defaultProps} />);
 
       expect(rendered).toMatchSnapshot();
     });

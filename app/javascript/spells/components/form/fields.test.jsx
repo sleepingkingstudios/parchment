@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { MemoryRouter as Router } from 'react-router-dom';
 
+import { hooks } from 'origins/store';
 import {
   CancelButton,
   CastingTimeField,
@@ -19,9 +20,8 @@ import {
 } from './fields';
 import { spellsData } from '../../fixtures';
 import { INITIALIZED } from '../../../api/status';
-import { hooks } from '../../store/formFindOrigins';
 
-jest.mock('../../store/formFindOrigins');
+jest.mock('origins/store');
 
 describe('<SpellForm /> fields', () => {
   const onChangeAction = jest.fn(
@@ -263,10 +263,10 @@ describe('<SpellForm /> fields', () => {
 
   describe('<SourceField />', () => {
     const defaultProps = { form };
-    const state = { data: {} };
 
     beforeEach(() => {
-      hooks.useEndpoint.mockImplementationOnce(() => state);
+      hooks.useData.mockImplementationOnce(() => ({}));
+      hooks.useRequestData.mockImplementationOnce(() => jest.fn());
     });
 
     it('should set the display name', () => {

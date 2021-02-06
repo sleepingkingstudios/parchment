@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormSelectInput from '../../../../components/form/select-input';
-import { hooks } from '../../../store/formFindOrigins';
-import { dig, exists, valueOrDefault } from '../../../../utils/object';
-
-const { useEndpoint } = hooks;
+import FormSelectInput from 'components/form/select-input';
+import {
+  dig,
+  exists,
+  valueOrDefault,
+} from 'utils/object';
+import { hooks } from '../../store';
 
 export const mapSourceToValue = ({ data, path }) => {
   const source = valueOrDefault(dig(data, ...path, 'source'), null);
@@ -20,15 +22,15 @@ export const mapSourceToValue = ({ data, path }) => {
 };
 
 export const mapValueToSource = ({ value }) => {
-  if (!exists(value)) { return {}; }
+  if (!exists(value)) { return { source: null }; }
 
   const segments = value.split(':');
   const originType = segments[0];
   const originId = segments[1];
 
-  if (!exists(originId) || !exists(originType)) { return {}; }
+  if (!exists(originId) || !exists(originType)) { return { source: null }; }
 
-  if (originId.length === 0 || originType.length === 0) { return {}; }
+  if (originId.length === 0 || originType.length === 0) { return { source: null }; }
 
   return { source: { originId, originType } };
 };
@@ -49,20 +51,29 @@ const generateOriginOptions = ({ books }) => ([
   },
 ]);
 
-const SpellFormSelectSourceField = (props) => {
-  const { data } = useEndpoint();
+const SelectSourceField = (props) => {
+  const {
+    useData,
+    useRequestData,
+  } = hooks;
+  const data = useData();
+  const requestData = useRequestData();
+
+  requestData();
+
+  const options = generateOriginOptions(data);
 
   return (
-    <FormSelectInput {...props} defaultOption="Homebrew" options={generateOriginOptions(data)} />
+    <FormSelectInput {...props} defaultOption="Homebrew" options={options} />
   );
 };
 
-SpellFormSelectSourceField.defaultProps = {};
+SelectSourceField.defaultProps = {};
 
-SpellFormSelectSourceField.propTypes = {
+SelectSourceField.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
-export default SpellFormSelectSourceField;
+export default SelectSourceField;

@@ -1562,7 +1562,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
             }
           }
         >
-          <SpellFormSelectSourceField
+          <SelectSourceField
             id="spell-source-input"
             onChange={[Function]}
             placeholder={null}
@@ -1613,7 +1613,7 @@ You can move the orb to anywhere within 30 feet of you as a bonus action. If you
                 </FormSelectOptionGroup>
               </select>
             </FormSelectInput>
-          </SpellFormSelectSourceField>
+          </SelectSourceField>
         </SourceInput>
       </div>
     </FormGroup>

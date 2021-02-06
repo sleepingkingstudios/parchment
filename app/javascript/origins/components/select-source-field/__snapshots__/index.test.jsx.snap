@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SpellFormSelectSourceField /> should match the snapshot 1`] = `
+exports[`<SelectSourceField /> should match the snapshot 1`] = `
 <FormSelectInput
   className={null}
   defaultOption="Homebrew"
@@ -19,7 +19,7 @@ exports[`<SpellFormSelectSourceField /> should match the snapshot 1`] = `
 />
 `;
 
-exports[`<SpellFormSelectSourceField /> when there are many origins should match the snapshot 1`] = `
+exports[`<SelectSourceField /> when there are many origins should match the snapshot 1`] = `
 <FormSelectInput
   className={null}
   defaultOption="Homebrew"

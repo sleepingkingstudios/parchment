@@ -13,6 +13,7 @@ import {
 } from '../authentication';
 import { reducer as books } from '../books';
 import { reducer as mechanics } from '../mechanics';
+import { reducer as origins } from '../origins';
 import { reducer as reference } from '../reference';
 import { reducer as spells } from '../spells';
 
@@ -24,6 +25,7 @@ const createReducer = browserHistory => combineReducers({
   authentication,
   books,
   mechanics,
+  origins,
   reference,
   spells,
 });

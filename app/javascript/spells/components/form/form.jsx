@@ -22,9 +22,6 @@ import {
 
 import { formErrorsType } from '../../../components/form/entities';
 import { spellFormType } from '../../entities';
-import { hooks } from '../../store/formFindOrigins';
-
-const { useRequestData } = hooks;
 
 const SpellForm = ({
   data,
@@ -41,10 +38,6 @@ const SpellForm = ({
     onChangeAction,
     onSubmitAction,
   };
-
-  const requestData = useRequestData();
-
-  requestData();
 
   return (
     <Form className="spell-form" form={form}>
