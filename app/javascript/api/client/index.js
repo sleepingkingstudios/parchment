@@ -20,6 +20,7 @@ const wrapReducer = ({ middleware, reducer }) => applyMiddleware(
 const buildClient = (options) => {
   const {
     namespace,
+    requestData,
     url,
   } = options;
   const data = valueOrDefault(options.data, {});
@@ -33,6 +34,7 @@ const buildClient = (options) => {
     method,
     middleware,
     namespace,
+    requestData,
     url,
   });
   const hooks = generateHooks({

@@ -7,7 +7,11 @@ import {
 } from 'react-redux';
 
 import { PENDING } from 'api/status';
-import { underscoreKeys } from 'utils/object';
+import {
+  assign,
+  dig,
+  underscoreKeys,
+} from 'utils/object';
 import buildClient from './index';
 import generateInitialState from './initialState';
 import {
@@ -304,6 +308,120 @@ describe('buildClient()', () => {
         namespace,
         performRequest,
         url,
+      });
+    });
+  });
+
+  describe('with requestData: function', () => {
+    const requestData = state => dig(state, 'custom', 'path');
+    const client = buildClient({
+      ...defaultOptions,
+      method: 'POST',
+      requestData,
+    });
+    const buildState = state => Object.assign(
+      {},
+      assign({}, state.data, 'custom', 'path'),
+      assign({}, { errors: state.errors, status: state.status }, ...namespace.split('/')),
+    );
+
+    describe('options', () => {
+      const { options } = client;
+
+      it('should return the configured options', () => {
+        expect(options).toEqual({
+          ...defaultOptions,
+          method: 'POST',
+          requestData,
+        });
+      });
+    });
+
+    describe('performRequest()', () => {
+      const { actions, performRequest } = client;
+      const data = {
+        id: '00000000-0000-0000-0000-000000000000',
+        name: 'Self-Sealing Stem Bolt',
+        cargoType: 'Trade Goods',
+        quantity: 50,
+      };
+      const body = JSON.stringify(underscoreKeys(data));
+
+      it('should be a function', () => {
+        expect(typeof performRequest).toEqual('function');
+      });
+
+      shouldPerformTheRequest({
+        body,
+        buildState,
+        fetch,
+        method: 'POST',
+        namespace,
+        performRequest,
+        url,
+      });
+
+      shouldHandleTheResponse({
+        actions,
+        fetch,
+        namespace,
+        performRequest,
+      });
+    });
+  });
+
+  describe('with requestData: value', () => {
+    const requestData = {
+      id: '00000000-0000-0000-0000-000000000000',
+      name: 'Self-Sealing Stem Bolt',
+      cargoType: 'Trade Goods',
+      quantity: 50,
+    };
+    const client = buildClient({
+      ...defaultOptions,
+      method: 'POST',
+      requestData,
+    });
+    const buildState = state => Object.assign(
+      {},
+      assign({}, { errors: state.errors, status: state.status }, ...namespace.split('/')),
+    );
+
+    describe('options', () => {
+      const { options } = client;
+
+      it('should return the configured options', () => {
+        expect(options).toEqual({
+          ...defaultOptions,
+          method: 'POST',
+          requestData,
+        });
+      });
+    });
+
+    describe('performRequest()', () => {
+      const { actions, performRequest } = client;
+      const body = JSON.stringify(underscoreKeys(requestData));
+
+      it('should be a function', () => {
+        expect(typeof performRequest).toEqual('function');
+      });
+
+      shouldPerformTheRequest({
+        body,
+        buildState,
+        fetch,
+        method: 'POST',
+        namespace,
+        performRequest,
+        url,
+      });
+
+      shouldHandleTheResponse({
+        actions,
+        fetch,
+        namespace,
+        performRequest,
       });
     });
   });

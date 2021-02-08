@@ -1,6 +1,10 @@
 import fetch from 'cross-fetch';
 
-import { underscoreKeys } from 'utils/object';
+import {
+  assign,
+  dig,
+  underscoreKeys,
+} from 'utils/object';
 import generateActions from '../actions';
 import generateRequest from './index';
 import {
@@ -132,6 +136,58 @@ describe('API client generateRequest()', () => {
         middleware,
         namespace,
         performRequest,
+      });
+    });
+
+    describe('with requestData: function', () => {
+      const requestData = state => dig(state, 'custom', 'path');
+      const options = {
+        ...defaultOptions,
+        actions,
+        requestData,
+        method,
+      };
+      const performRequest = generateRequest(options);
+      const { url } = options;
+      const buildState = state => Object.assign(
+        {},
+        assign({}, state.data, 'custom', 'path'),
+        assign({}, { errors: state.errors, status: state.status }, ...namespace.split('/')),
+      );
+
+      shouldPerformTheRequest({
+        body,
+        buildState,
+        fetch,
+        method,
+        namespace,
+        performRequest,
+        url,
+      });
+    });
+
+    describe('with requestData: value', () => {
+      const options = {
+        ...defaultOptions,
+        actions,
+        requestData: data,
+        method,
+      };
+      const performRequest = generateRequest(options);
+      const { url } = options;
+      const buildState = state => Object.assign(
+        {},
+        assign({}, { errors: state.errors, status: state.status }, ...namespace.split('/')),
+      );
+
+      shouldPerformTheRequest({
+        body,
+        buildState,
+        fetch,
+        method,
+        namespace,
+        performRequest,
+        url,
       });
     });
 

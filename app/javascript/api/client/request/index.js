@@ -8,6 +8,7 @@ import {
 import { PENDING } from 'api/status';
 import {
   dig,
+  exists,
   valueOrDefault,
 } from 'utils/object';
 import { interpolate } from 'utils/string';
@@ -15,6 +16,25 @@ import buildEmptyResponse from './emptyResponse';
 import buildOptions from './options';
 import generateHandlers from './handlers';
 import processResponse from './response';
+
+const buildRequestBody = (options) => {
+  const {
+    getState,
+    method,
+    namespace,
+    requestData,
+  } = options;
+
+  if (method === 'GET' || method === 'DELETE') { return null; }
+
+  const state = getState();
+
+  if (!exists(requestData)) { return dig(state, ...namespace.split('/'), 'data'); }
+
+  if (typeof requestData === 'function') { return requestData(state); }
+
+  return requestData;
+};
 
 const buildUrl = (url, options) => {
   const wildcards = valueOrDefault(options.wildcards, {});
@@ -36,6 +56,7 @@ const generateRequest = (options) => {
     actions,
     middleware,
     namespace,
+    requestData,
     url,
   } = options;
   const method = options.method.toUpperCase();
@@ -67,14 +88,31 @@ const generateRequest = (options) => {
     let response;
 
     try {
+      const data = buildRequestBody({
+        getState,
+        method,
+        namespace,
+        requestData,
+      });
+
       const request = wrapMiddleware(
         onRequest,
         buildOptionsWithMiddleware,
-      )({ getState, method, namespace });
+      )({
+        data,
+        getState,
+        method,
+        namespace,
+      });
 
       response = await fetch(fullUrl, request);
       response = await processResponse(response);
     } catch (error) {
+      if (!process.env.NODE_ENV === 'test') {
+        // eslint-disable-next-line no-console
+        console.log('performRequest() error', process.env.NODE_ENV, error);
+      }
+
       response = buildEmptyResponse({ error: { message: error.toString() } });
 
       wrapMiddleware(onFailure, handleFailure)({ dispatch, getState, response });

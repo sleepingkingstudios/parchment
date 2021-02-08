@@ -2,10 +2,11 @@ import { clearSession } from '../../../authentication/store/session/actions';
 import { dig, exists } from '../../../utils/object';
 
 const authorization = {
-  buildRequest: next => ({ getState, method, namespace }) => {
+  buildRequest: next => (options) => {
+    const { getState } = options;
     const state = getState();
     const token = dig(state, 'authentication', 'session', 'token');
-    const request = next({ getState, method, namespace });
+    const request = next(options);
 
     if (!exists(token)) { return request; }
 

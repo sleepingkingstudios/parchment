@@ -1,3 +1,4 @@
+import { underscoreKeys } from 'utils/object';
 import buildOptions from './options';
 
 describe('API client request buildOptions()', () => {
@@ -41,106 +42,76 @@ describe('API client request buildOptions()', () => {
 
   describe('with method: PATCH', () => {
     const method = 'PATCH';
+    const data = { name: 'Stem Bolt', itemType: 'Self-Sealing' };
+    const body = JSON.stringify(underscoreKeys(data));
 
     it('should build the request', () => {
       const getState = jest.fn();
+      const options = buildOptions({
+        data,
+        getState,
+        method,
+        namespace,
+      });
       const expected = {
         method,
         headers: {
           'Content-Type': 'application/json',
         },
-        body: '{}',
+        body,
       };
 
-      expect(buildOptions({ getState, method, namespace })).toEqual(expected);
-    });
-
-    describe('when the state has data', () => {
-      const data = { name: 'Self-Sealing Stem Bolt' };
-      const state = { api: { resources: { data } } };
-
-      it('should build the request', () => {
-        const getState = jest.fn(() => state);
-        const expected = {
-          method,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        };
-
-        expect(buildOptions({ getState, method, namespace })).toEqual(expected);
-      });
+      expect(options).toEqual(expected);
     });
   });
 
   describe('with method: POST', () => {
     const method = 'POST';
+    const data = { name: 'Stem Bolt', itemType: 'Self-Sealing' };
+    const body = JSON.stringify(underscoreKeys(data));
 
     it('should build the request', () => {
       const getState = jest.fn();
+      const options = buildOptions({
+        data,
+        getState,
+        method,
+        namespace,
+      });
       const expected = {
         method,
         headers: {
           'Content-Type': 'application/json',
         },
-        body: '{}',
+        body,
       };
 
-      expect(buildOptions({ getState, method, namespace })).toEqual(expected);
-    });
-
-    describe('when the state has data', () => {
-      const data = { name: 'Self-Sealing Stem Bolt' };
-      const state = { api: { resources: { data } } };
-
-      it('should build the request', () => {
-        const getState = jest.fn(() => state);
-        const expected = {
-          method,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        };
-
-        expect(buildOptions({ getState, method, namespace })).toEqual(expected);
-      });
+      expect(options).toEqual(expected);
     });
   });
 
   describe('with method: PUT', () => {
     const method = 'PUT';
+    const data = { name: 'Stem Bolt', itemType: 'Self-Sealing' };
+    const body = JSON.stringify(underscoreKeys(data));
 
     it('should build the request', () => {
       const getState = jest.fn();
+      const options = buildOptions({
+        data,
+        getState,
+        method,
+        namespace,
+      });
       const expected = {
         method,
         headers: {
           'Content-Type': 'application/json',
         },
-        body: '{}',
+        body,
       };
 
-      expect(buildOptions({ getState, method, namespace })).toEqual(expected);
-    });
-
-    describe('when the state has data', () => {
-      const data = { name: 'Self-Sealing Stem Bolt' };
-      const state = { api: { resources: { data } } };
-
-      it('should build the request', () => {
-        const getState = jest.fn(() => state);
-        const expected = {
-          method,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        };
-
-        expect(buildOptions({ getState, method, namespace })).toEqual(expected);
-      });
+      expect(options).toEqual(expected);
     });
   });
 });

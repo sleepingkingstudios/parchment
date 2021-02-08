@@ -291,15 +291,18 @@ export const shouldPerformTheRequest = (opts) => {
     performRequest,
     url,
   } = opts;
+  const buildState = valueOrDefault(
+    opts.buildState,
+    ({ data, errors, status }) => (
+      assign({}, { data, errors, status }, ...namespace.split('/'))
+    ),
+  );
   const data = {
     id: '00000000-0000-0000-0000-000000000000',
     name: 'Self-Sealing Stem Bolt',
     cargoType: 'Trade Goods',
     quantity: 50,
   };
-  const buildState = state => (
-    assign({}, state, ...namespace.split('/'))
-  );
 
   it('should perform the API request', async () => {
     const state = buildState({ data });
@@ -342,13 +345,23 @@ export const shouldPerformTheRequest = (opts) => {
       const dispatch = jest.fn();
       const getState = jest.fn(() => state);
       const response = { ok: true, json: () => ({ data: {} }) };
+      const expected = {
+        getState,
+        method,
+        namespace,
+      };
+
+      if (method === 'GET' || method === 'DELETE') {
+        Object.assign(expected, { data: null });
+      } else {
+        Object.assign(expected, { data });
+      }
 
       fetch.mockResolvedValue(response);
 
       await performRequest({ onRequest })(dispatch, getState);
 
-      expect(onRequestInner)
-        .toHaveBeenCalledWith({ getState, method, namespace });
+      expect(onRequestInner).toHaveBeenCalledWith(expected);
     });
   });
 };
