@@ -1,13 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Button from '../../button';
+import { PENDING } from 'api/status';
+import Button from 'components/button';
+import Spinner from 'components/spinner';
+import { convertToArray } from 'utils/array';
+import { progressiveTense } from 'utils/inflector';
+import { valueOrDefault } from 'utils/object';
 import { handleSubmitWith } from '../actions';
 import { generateFieldId } from '../utils';
-import { convertToArray } from '../../../utils/array';
-import { valueOrDefault } from '../../../utils/object';
 
-const buttonText = ({ actionName, resourceName }) => `${actionName} ${resourceName}`;
+const buttonText = ({ actionName, resourceName, status }) => {
+  if (status !== PENDING) { return `${actionName} ${resourceName}`; }
+
+  return (
+    <span className="loading-message loading-message-pending">
+      <Spinner size="sm" style={{ position: 'relative', top: '-0.1em' }} />
+      {' '}
+      {progressiveTense(actionName)} {resourceName}...
+    </span>
+  );
+};
 
 const classNameForSubmit = ({ path }) => {
   if (path.length === 0) { return 'form-submit'; }
@@ -23,6 +36,7 @@ const FormSubmitButton = (props) => {
     children,
     form,
     resourceName,
+    status,
     ...injectedProps
   } = props;
   const { path, onSubmitAction } = form;
@@ -31,7 +45,10 @@ const FormSubmitButton = (props) => {
   const onClick = handleSubmitWith(onSubmitAction);
   const buttonProps = Object.assign(
     {
-      children: valueOrDefault(children, buttonText({ actionName, resourceName })),
+      children: valueOrDefault(
+        children,
+        buttonText({ actionName, resourceName, status }),
+      ),
       className,
       onClick,
     },
@@ -47,6 +64,7 @@ FormSubmitButton.defaultProps = {
   actionName: 'Submit',
   children: null,
   resourceName: 'Form',
+  status: null,
 };
 
 FormSubmitButton.propTypes = {
@@ -57,6 +75,7 @@ FormSubmitButton.propTypes = {
     path: PropTypes.array,
   }).isRequired,
   resourceName: PropTypes.string,
+  status: PropTypes.string,
 };
 
 export default FormSubmitButton;

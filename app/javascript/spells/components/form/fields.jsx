@@ -137,8 +137,8 @@ CancelButton.propTypes = {
   isUpdate: PropTypes.bool.isRequired,
 };
 
-const SpellFormSubmitButton = ({ form, isUpdate }) => (
-  <FormSubmitButton form={form} actionName={isUpdate ? 'Update' : 'Create'} resourceName="Spell" />
+const SpellFormSubmitButton = ({ form, isUpdate, status }) => (
+  <FormSubmitButton form={form} actionName={isUpdate ? 'Update' : 'Create'} resourceName="Spell" status={status} />
 );
 
 const SubmitButton = formGroup(SpellFormSubmitButton, { displayName: 'SubmitButton' });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { SpellForm } from '../../components/form';
+import { Form as SpellForm } from '../../components/form';
 import UpdateSpellPage from './page';
 import findEndpoint from '../../store/updateFindSpell';
 import formEndpoint from '../../store/updateSpellForm';

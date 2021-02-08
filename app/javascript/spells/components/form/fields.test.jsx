@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { MemoryRouter as Router } from 'react-router-dom';
 
+import { INITIALIZED } from 'api/status';
 import { hooks } from 'origins/store';
 import {
   CancelButton,
@@ -19,7 +20,6 @@ import {
   SubmitButton,
 } from './fields';
 import { spellsData } from '../../fixtures';
-import { INITIALIZED } from '../../../api/status';
 
 jest.mock('origins/store');
 

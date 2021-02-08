@@ -1,6 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import {
+  FAILURE,
+  INITIALIZED,
+  PENDING,
+  SUCCESS,
+} from 'api/status';
 import FormSubmitButton from './index';
 
 describe('<FormSubmitButton />', () => {
@@ -71,6 +77,97 @@ describe('<FormSubmitButton />', () => {
 
       expect(rendered).toHaveDisplayName('Button');
       expect(rendered).toHaveProp({ children: 'Submit Operation' });
+    });
+  });
+
+  describe('with status: FAILURE', () => {
+    const status = FAILURE;
+
+    it('should render the button', () => {
+      const rendered = shallow(<FormSubmitButton {...defaultProps} status={status} />);
+
+      expect(rendered).toHaveDisplayName('Button');
+      expect(rendered).toHaveProp({ children: 'Submit Form' });
+    });
+
+    describe('with resourceName: value', () => {
+      const resourceName = 'Operation';
+
+      it('should render the button', () => {
+        const rendered = shallow(
+          <FormSubmitButton {...defaultProps} status={status} resourceName={resourceName} />,
+        );
+
+        expect(rendered).toHaveDisplayName('Button');
+        expect(rendered).toHaveProp({ children: 'Submit Operation' });
+      });
+    });
+  });
+
+  describe('with status: INITIALIZED', () => {
+    const status = INITIALIZED;
+
+    it('should render the button', () => {
+      const rendered = shallow(<FormSubmitButton {...defaultProps} status={status} />);
+
+      expect(rendered).toHaveDisplayName('Button');
+      expect(rendered).toHaveProp({ children: 'Submit Form' });
+    });
+
+    describe('with resourceName: value', () => {
+      const resourceName = 'Operation';
+
+      it('should render the button', () => {
+        const rendered = shallow(
+          <FormSubmitButton {...defaultProps} status={status} resourceName={resourceName} />,
+        );
+
+        expect(rendered).toHaveDisplayName('Button');
+        expect(rendered).toHaveProp({ children: 'Submit Operation' });
+      });
+    });
+  });
+
+  describe('with status: PENDING', () => {
+    const status = PENDING;
+
+    it('should render the button', () => {
+      const rendered = shallow(<FormSubmitButton {...defaultProps} status={status} />);
+      const children = shallow(rendered.prop('children'));
+      const spinner = children.find('Spinner');
+
+      expect(rendered).toHaveDisplayName('Button');
+
+      expect(children).toExist();
+      expect(children).toHaveDisplayName('span');
+      expect(children).toHaveClassName('loading-message loading-message-pending');
+      expect(children).toIncludeText('Submitting Form');
+
+      expect(spinner).toExist();
+    });
+  });
+
+  describe('with status: SUCCESS', () => {
+    const status = SUCCESS;
+
+    it('should render the button', () => {
+      const rendered = shallow(<FormSubmitButton {...defaultProps} status={status} />);
+
+      expect(rendered).toHaveDisplayName('Button');
+      expect(rendered).toHaveProp({ children: 'Submit Form' });
+    });
+
+    describe('with resourceName: value', () => {
+      const resourceName = 'Operation';
+
+      it('should render the button', () => {
+        const rendered = shallow(
+          <FormSubmitButton {...defaultProps} status={status} resourceName={resourceName} />,
+        );
+
+        expect(rendered).toHaveDisplayName('Button');
+        expect(rendered).toHaveProp({ children: 'Submit Operation' });
+      });
     });
   });
 });

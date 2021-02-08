@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SpellForm } from '../../components/form';
+import { Form as SpellForm } from '../../components/form';
 import { UpdatePage } from '../../../components/update-page';
 import findEndpoint from '../../store/updateFindSpell';
 import formEndpoint from '../../store/updateSpellForm';

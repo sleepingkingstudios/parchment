@@ -2,6 +2,27 @@ import {
   pastTense,
   progressiveTense,
 } from './inflector';
+import { capitalize } from './string';
+
+const shouldMatchTheCase = ({ fn, original, inflected }) => {
+  describe('with a lowercase word', () => {
+    it('should inflect the word', () => {
+      expect(fn(original.toLowerCase())).toEqual(inflected.toLowerCase());
+    });
+  });
+
+  describe('with a capitalized word', () => {
+    it('should inflect the word', () => {
+      expect(fn(capitalize(original))).toEqual(capitalize(inflected));
+    });
+  });
+
+  describe('with an uppercase word', () => {
+    it('should inflect the word', () => {
+      expect(fn(original.toUpperCase())).toEqual(inflected.toUpperCase());
+    });
+  });
+};
 
 describe('String inflector', () => {
   describe('pastTense', () => {
@@ -27,75 +48,33 @@ describe('String inflector', () => {
       });
     });
 
-    describe('with a lowercase word', () => {
-      it('should convert the word to past tense', () => {
-        expect(pastTense('process')).toEqual('processed');
+    shouldMatchTheCase({
+      fn: pastTense,
+      original: 'process',
+      inflected: 'processed',
+    });
+
+    describe('with a word ending in "e"', () => {
+      shouldMatchTheCase({
+        fn: pastTense,
+        original: 'create',
+        inflected: 'created',
       });
     });
 
-    describe('with a capitalized word', () => {
-      it('should convert the word to past tense', () => {
-        expect(pastTense('Process')).toEqual('Processed');
+    describe('with a word ending in "ind"', () => {
+      shouldMatchTheCase({
+        fn: pastTense,
+        original: 'find',
+        inflected: 'found',
       });
     });
 
-    describe('with an uppercase word', () => {
-      it('should convert the word to past tense', () => {
-        expect(pastTense('PROCESS')).toEqual('PROCESSED');
-      });
-    });
-
-    describe('with a lowercase word ending in "e"', () => {
-      it('should convert the word to past tense', () => {
-        expect(pastTense('create')).toEqual('created');
-      });
-    });
-
-    describe('with a capitalized word ending in "e"', () => {
-      it('should convert the word to past tense', () => {
-        expect(pastTense('Create')).toEqual('Created');
-      });
-    });
-
-    describe('with an uppercase word ending in "e"', () => {
-      it('should convert the word to past tense', () => {
-        expect(pastTense('CREATE')).toEqual('CREATED');
-      });
-    });
-
-    describe('with a lowercase word ending in "ind"', () => {
-      it('should convert the word to past tense', () => {
-        expect(pastTense('find')).toEqual('found');
-      });
-    });
-
-    describe('with a capitalized word ending in "ind"', () => {
-      it('should convert the word to past tense', () => {
-        expect(pastTense('Find')).toEqual('Found');
-      });
-    });
-
-    describe('with an uppercase word ending in "ind"', () => {
-      it('should convert the word to past tense', () => {
-        expect(pastTense('FIND')).toEqual('FOUND');
-      });
-    });
-
-    describe('with a lowercase word ending in "y"', () => {
-      it('should convert the word to past tense', () => {
-        expect(pastTense('destroy')).toEqual('destroyed');
-      });
-    });
-
-    describe('with a capitalized word ending in "y"', () => {
-      it('should convert the word to past tense', () => {
-        expect(pastTense('Destroy')).toEqual('Destroyed');
-      });
-    });
-
-    describe('with an uppercase word ending in "y"', () => {
-      it('should convert the word to past tense', () => {
-        expect(pastTense('DESTROY')).toEqual('DESTROYED');
+    describe('with a word ending in "y"', () => {
+      shouldMatchTheCase({
+        fn: pastTense,
+        original: 'destroy',
+        inflected: 'destroyed',
       });
     });
   });
@@ -123,39 +102,33 @@ describe('String inflector', () => {
       });
     });
 
-    describe('with a lowercase word', () => {
-      it('should convert the word to progressive tense', () => {
-        expect(progressiveTense('find')).toEqual('finding');
+    shouldMatchTheCase({
+      fn: progressiveTense,
+      original: 'find',
+      inflected: 'finding',
+    });
+
+    describe('with a word ending in "e"', () => {
+      shouldMatchTheCase({
+        fn: progressiveTense,
+        original: 'create',
+        inflected: 'creating',
       });
     });
 
-    describe('with a capitalized word', () => {
-      it('should convert the word to progressive tense', () => {
-        expect(progressiveTense('find')).toEqual('finding');
+    describe('with a word ending in a consonant and "t"', () => {
+      shouldMatchTheCase({
+        fn: progressiveTense,
+        original: 'subtract',
+        inflected: 'subtracting',
       });
     });
 
-    describe('with an uppercase word', () => {
-      it('should convert the word to progressive tense', () => {
-        expect(progressiveTense('FIND')).toEqual('FINDING');
-      });
-    });
-
-    describe('with a lowercase word ending in "e"', () => {
-      it('should convert the word to progressive tense', () => {
-        expect(progressiveTense('create')).toEqual('creating');
-      });
-    });
-
-    describe('with a capitalized word ending in "e"', () => {
-      it('should convert the word to progressive tense', () => {
-        expect(progressiveTense('Create')).toEqual('Creating');
-      });
-    });
-
-    describe('with an uppercase word ending in "e"', () => {
-      it('should convert the word to progressive tense', () => {
-        expect(progressiveTense('Create')).toEqual('Creating');
+    describe('with a word ending in a vowel and "t"', () => {
+      shouldMatchTheCase({
+        fn: progressiveTense,
+        original: 'format',
+        inflected: 'formatting',
       });
     });
   });

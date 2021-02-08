@@ -35,6 +35,7 @@ export const pastTense = (word) => {
 };
 
 const progressiveTenseRules = [
+  [/(\w+[aeiou]t)$/i, '$1ting'], // Format => Formatting
   [/(\w+)e$/i, '$1ing'],
 ];
 
