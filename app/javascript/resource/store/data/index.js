@@ -14,8 +14,3 @@ const buildStore = (options) => {
 };
 
 export default buildStore;
-
-export {
-  generateHooks,
-  generateReducer,
-};
