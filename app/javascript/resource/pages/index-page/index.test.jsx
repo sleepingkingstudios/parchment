@@ -8,7 +8,7 @@ describe('resource buildIndexPage()', () => {
   const Table = () => (<div />);
   const namespace = 'path/to/widgets';
   const resourceName = 'widgets';
-  const url = 'api/v1/widgets';
+  const url = '/api/v1/widgets';
   const defaultOptions = {
     Table,
     namespace,
@@ -77,7 +77,7 @@ describe('resource buildIndexPage()', () => {
     });
 
     describe('type', () => {
-      it('should be resource/pages/index-page', () => {
+      it('should be resource/pages/indexPage', () => {
         expect(indexPage.type).toEqual('resource/pages/indexPage');
       });
     });

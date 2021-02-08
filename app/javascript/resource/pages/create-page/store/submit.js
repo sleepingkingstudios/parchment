@@ -3,7 +3,7 @@ import pluralize from 'pluralize';
 import buildApiClient from 'api/client';
 import generateAlerts from 'api/middleware/alerts';
 import authorization from 'api/middleware/authorization';
-import generateRedirectToIndex from 'api/middleware/redirectToIndex';
+import generateRedirectToShow from 'api/middleware/redirectToShow';
 import { valueOrDefault } from 'utils/object';
 
 const generateMiddleware = ({
@@ -12,13 +12,13 @@ const generateMiddleware = ({
   resourceName,
 }) => {
   const alerts = generateAlerts({
-    action: 'delete',
+    action: 'create',
     resourceName,
     pending: true,
     failure: true,
-    success: { alertStyle: 'danger' },
+    success: true,
   });
-  const redirect = generateRedirectToIndex({
+  const redirect = generateRedirectToShow({
     baseUrl,
     resourceName,
     on: 'success',
@@ -36,6 +36,7 @@ const buildClient = (options) => {
   const {
     baseUrl,
     namespace,
+    requestData,
     url,
   } = options;
   const resourceName = pluralize.singular(options.resourceName);
@@ -45,9 +46,10 @@ const buildClient = (options) => {
     resourceName,
   });
   const client = buildApiClient({
-    method: 'DELETE',
+    method: 'POST',
     middleware,
     namespace,
+    requestData,
     url,
   });
 
@@ -55,7 +57,7 @@ const buildClient = (options) => {
     client,
     {
       options,
-      type: 'resource/show-page/destroy',
+      type: 'resource/create-page/submit',
     },
   );
 };

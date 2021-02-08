@@ -3,9 +3,20 @@ import generateReducer from './reducer';
 import { shouldGenerateTheReducer } from './testHelpers';
 
 describe('resource data generateReducer()', () => {
+  const REQUEST_FAILURE = 'test/requestFailure';
+  const requestFailure = errors => ({
+    type: REQUEST_FAILURE,
+    payload: { errors },
+  });
+  const submitActions = {
+    REQUEST_FAILURE,
+    requestFailure,
+  };
   const namespace = 'path/to/widgets';
   const resourceName = 'widget';
-  const actions = generateActions({ namespace });
+  const actions = generateActions({
+    namespace,
+  });
 
   describe('with default options', () => {
     const data = { widget: {} };
@@ -13,6 +24,7 @@ describe('resource data generateReducer()', () => {
     const reducer = generateReducer({
       actions,
       resourceName,
+      submitActions,
     });
 
     shouldGenerateTheReducer({
@@ -20,6 +32,7 @@ describe('resource data generateReducer()', () => {
       data,
       errors,
       reducer,
+      submitActions,
     });
   });
 
@@ -30,6 +43,7 @@ describe('resource data generateReducer()', () => {
       actions,
       data,
       resourceName,
+      submitActions,
     });
 
     shouldGenerateTheReducer({
@@ -37,16 +51,18 @@ describe('resource data generateReducer()', () => {
       data,
       errors,
       reducer,
+      submitActions,
     });
   });
 
   describe('with errors: value', () => {
     const data = { widget: {} };
-    const errors = { widget: { purpose: 'is unknown' } };
+    const errors = { purpose: ['is unknown'] };
     const reducer = generateReducer({
       actions,
       errors,
       resourceName,
+      submitActions,
     });
 
     shouldGenerateTheReducer({
@@ -54,6 +70,7 @@ describe('resource data generateReducer()', () => {
       data,
       errors,
       reducer,
+      submitActions,
     });
   });
 });

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
+import buildDataStore from 'resource/store/data';
 import buildDestroyClient from './destroy';
 import buildFindClient from './find';
-import buildDataStore from '../../../store/data';
 
 const generateHooks = ({ dataStore, destroyClient, findClient }) => {
   const { useData } = dataStore.hooks;

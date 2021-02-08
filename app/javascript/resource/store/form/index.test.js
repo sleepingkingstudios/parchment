@@ -18,12 +18,22 @@ useDispatch.mockImplementation(() => dispatch);
 useSelector.mockImplementation(() => null);
 
 describe('resource form buildStore()', () => {
+  const REQUEST_FAILURE = 'test/requestFailure';
+  const requestFailure = errors => ({
+    type: REQUEST_FAILURE,
+    payload: { errors },
+  });
+  const submitActions = {
+    REQUEST_FAILURE,
+    requestFailure,
+  };
   const namespace = 'path/to/widgets';
   const resourceName = 'widget';
   const actions = generateActions({ namespace });
   const defaultOptions = {
     namespace,
     resourceName,
+    submitActions,
   };
 
   describe('with default options', () => {
@@ -57,6 +67,7 @@ describe('resource form buildStore()', () => {
         data,
         errors,
         reducer,
+        submitActions,
       });
     });
 
@@ -86,6 +97,7 @@ describe('resource form buildStore()', () => {
         data,
         errors,
         reducer,
+        submitActions,
       });
     });
   });

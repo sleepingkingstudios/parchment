@@ -174,6 +174,7 @@ export const shouldGenerateTheReducer = (options) => {
     data,
     errors,
     reducer,
+    submitActions,
   } = options;
   const { updateFormData } = actions;
   const initialState = { data, errors };
@@ -187,6 +188,22 @@ export const shouldGenerateTheReducer = (options) => {
       const action = { type: 'test/unknownAction' };
 
       expect(reducer(undefined, action)).toEqual(initialState);
+    });
+  });
+
+  describe('when REQUEST_FAILURE is dispatched', () => {
+    const { requestFailure } = submitActions;
+    const updatedErrors = { legal: 'must accept the terms and conditions' };
+
+    it('should update the errors', () => {
+      const action = requestFailure(updatedErrors);
+      const expected = Object.assign(
+        {},
+        initialState,
+        { errors: updatedErrors },
+      );
+
+      expect(reducer(initialState, action)).toEqual(expected);
     });
   });
 

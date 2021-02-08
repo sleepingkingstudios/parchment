@@ -27,6 +27,7 @@ const generateReducer = (options) => {
   const {
     actions,
     resourceName,
+    submitActions,
   } = options;
   const data = valueOrDefault(options.data, defaultData(resourceName));
   const errors = valueOrDefault(options.errors, {});
@@ -34,10 +35,13 @@ const generateReducer = (options) => {
     UPDATE_FORM_DATA,
   } = actions;
   const initialState = { data, errors };
+  const { REQUEST_FAILURE } = submitActions;
 
   return (
     (state = initialState, action) => {
       switch (action.type) {
+        case REQUEST_FAILURE:
+          return Object.assign({}, state, { errors: action.payload.errors });
         case UPDATE_FORM_DATA:
           return updateData(state, action.payload);
         default:

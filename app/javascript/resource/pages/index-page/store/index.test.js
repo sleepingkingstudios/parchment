@@ -1,19 +1,14 @@
 import { SUCCESS } from 'api/status';
-import buildDataStore from '../../../store/data';
+import buildDataStore from 'resource/store/data';
 import buildDestroyClient from './destroy';
 import buildFindClient from './find';
 import buildStore from './index';
 
-jest.mock('../../../store/data');
+jest.mock('resource/store/data');
 jest.mock('./destroy');
 jest.mock('./find');
 
-const dataStore = {
-  hooks: {
-    useData: jest.fn(),
-  },
-  reducer: () => ({ data: { widgets: [] } }),
-};
+const dataStore = buildDataStore();
 const destroyClient = {
   hooks: {
     useRequest: jest.fn(),
@@ -37,14 +32,13 @@ const findClient = {
   }),
 };
 
-buildDataStore.mockImplementation(() => dataStore);
 buildDestroyClient.mockImplementation(() => destroyClient);
 buildFindClient.mockImplementation(() => findClient);
 
 describe('resource index-page buildStore()', () => {
   const namespace = 'path/to/widgets';
   const resourceName = 'widgets';
-  const url = 'api/v1/widgets';
+  const url = '/api/v1/widgets';
   const defaultOptions = {
     namespace,
     resourceName,
