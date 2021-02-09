@@ -2,7 +2,10 @@
 
 import { shallowEqual } from 'react-redux';
 
-import { assign } from 'utils/object';
+import {
+  assign,
+  exists,
+} from 'utils/object';
 
 const generateState = ({ data, errors, namespace }) => (
   namespace.split('/').reverse().reduce(
@@ -173,6 +176,7 @@ export const shouldGenerateTheReducer = (options) => {
     actions,
     data,
     errors,
+    findActions,
     reducer,
     submitActions,
   } = options;
@@ -236,4 +240,22 @@ export const shouldGenerateTheReducer = (options) => {
       });
     });
   });
+
+  if (exists(findActions)) {
+    describe('when REQUEST_SUCCESS is dispatched', () => {
+      const { requestSuccess } = findActions;
+      const updatedData = { widget: { name: 'Self-Sealing Stem Bolt' } };
+
+      it('should update the data', () => {
+        const action = requestSuccess(updatedData);
+        const expected = Object.assign(
+          {},
+          initialState,
+          { data: updatedData },
+        );
+
+        expect(reducer(initialState, action)).toEqual(expected);
+      });
+    });
+  }
 };

@@ -3,6 +3,7 @@ import pluralize from 'pluralize';
 import {
   assign,
   dig,
+  exists,
   valueOrDefault,
 } from 'utils/object';
 
@@ -26,6 +27,7 @@ const updateData = (state, { data, path }) => {
 const generateReducer = (options) => {
   const {
     actions,
+    findActions,
     resourceName,
     submitActions,
   } = options;
@@ -36,6 +38,25 @@ const generateReducer = (options) => {
   } = actions;
   const initialState = { data, errors };
   const { REQUEST_FAILURE } = submitActions;
+
+  if (exists(findActions)) {
+    const { REQUEST_SUCCESS } = findActions;
+
+    return (
+      (state = initialState, action) => {
+        switch (action.type) {
+          case REQUEST_SUCCESS:
+            return Object.assign({}, state, { data: action.payload.data });
+          case REQUEST_FAILURE:
+            return Object.assign({}, state, { errors: action.payload.errors });
+          case UPDATE_FORM_DATA:
+            return updateData(state, action.payload);
+          default:
+            return state;
+        }
+      }
+    );
+  }
 
   return (
     (state = initialState, action) => {

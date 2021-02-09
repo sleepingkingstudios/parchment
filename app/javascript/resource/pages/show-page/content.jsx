@@ -28,11 +28,11 @@ const renderSuccess = (props) => {
     resourceName,
   } = props;
 
-  const IndexPageTable = () => (
+  const ShowPageBlock = () => (
     <Block data={data} resourceName={resourceName} showAdditionalDetails />
   );
 
-  return IndexPageTable;
+  return ShowPageBlock;
 };
 
 const ShowPageContent = (props) => {

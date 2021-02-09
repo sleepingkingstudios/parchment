@@ -1,14 +1,14 @@
 import { shouldGenerateTheActions } from 'api/client/testHelpers';
 import { INITIALIZED } from 'api/status';
-import buildClient from './find';
+import buildClient from './submit';
 
 jest.mock('cross-fetch');
 
-describe('resource show-page find buildClient()', () => {
+describe('resource update-page submit buildClient()', () => {
   const baseUrl = '/path/to/widgets';
-  const namespace = 'path/to/widgets/find';
-  const resourceName = 'widgets';
-  const url = 'api/v1/widgets';
+  const namespace = 'path/to/widgets/update';
+  const resourceName = 'widget';
+  const url = '/api/v1/widgets';
   const defaultOptions = {
     baseUrl,
     namespace,
@@ -58,7 +58,7 @@ describe('resource show-page find buildClient()', () => {
 
     describe('method', () => {
       it('should return the method', () => {
-        expect(client.method).toEqual('GET');
+        expect(client.method).toEqual('PATCH');
       });
     });
 
@@ -79,9 +79,11 @@ describe('resource show-page find buildClient()', () => {
         it('should be configured with options', () => {
           const { options } = alerts;
           const expected = {
-            action: 'find',
-            failure: true,
+            action: 'update',
             resourceName,
+            pending: true,
+            failure: true,
+            success: true,
           };
 
           expect(options).toEqual(expected);
@@ -99,8 +101,8 @@ describe('resource show-page find buildClient()', () => {
       describe('redirect', () => {
         const redirect = middleware[2];
 
-        it('should have type api/redirectToIndex', () => {
-          expect(redirect.type).toEqual('api/redirectToIndex');
+        it('should have type api/alerts', () => {
+          expect(redirect.type).toEqual('api/redirectToShow');
         });
 
         it('should be configured with options', () => {
@@ -108,7 +110,7 @@ describe('resource show-page find buildClient()', () => {
           const expected = {
             baseUrl,
             resourceName,
-            on: 'failure',
+            on: 'success',
           };
 
           expect(options).toEqual(expected);
@@ -159,8 +161,8 @@ describe('resource show-page find buildClient()', () => {
     });
 
     describe('type', () => {
-      it('should be resource/show-page/find', () => {
-        expect(client.type).toEqual('resource/show-page/find');
+      it('should be resource/update-page/submit', () => {
+        expect(client.type).toEqual('resource/update-page/submit');
       });
     });
 
@@ -192,9 +194,11 @@ describe('resource show-page find buildClient()', () => {
         it('should be configured with options', () => {
           const { options } = alerts;
           const expected = {
-            action: 'find',
-            failure: true,
+            action: 'update',
             resourceName,
+            pending: true,
+            failure: true,
+            success: true,
           };
 
           expect(options).toEqual(expected);
@@ -218,8 +222,8 @@ describe('resource show-page find buildClient()', () => {
       describe('redirect', () => {
         const redirect = middleware[2];
 
-        it('should have type api/redirectToIndex', () => {
-          expect(redirect.type).toEqual('api/redirectToIndex');
+        it('should have type api/alerts', () => {
+          expect(redirect.type).toEqual('api/redirectToShow');
         });
 
         it('should be configured with options', () => {
@@ -227,7 +231,7 @@ describe('resource show-page find buildClient()', () => {
           const expected = {
             baseUrl,
             resourceName,
-            on: 'failure',
+            on: 'success',
           };
 
           expect(options).toEqual(expected);

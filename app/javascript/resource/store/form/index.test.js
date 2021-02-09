@@ -101,4 +101,38 @@ describe('resource form buildStore()', () => {
       });
     });
   });
+
+  describe('with findActions: value', () => {
+    const REQUEST_SUCCESS = 'test/requestSuccess';
+    const requestSuccess = data => ({
+      type: REQUEST_SUCCESS,
+      payload: { data },
+    });
+    const findActions = {
+      REQUEST_SUCCESS,
+      requestSuccess,
+    };
+    const store = buildStore({ ...defaultOptions, findActions });
+
+    describe('options', () => {
+      it('should return the configured options', () => {
+        expect(store.options).toEqual({ ...defaultOptions, findActions });
+      });
+    });
+
+    describe('reducer', () => {
+      const { reducer } = store;
+      const data = { widget: {} };
+      const errors = {};
+
+      shouldGenerateTheReducer({
+        actions,
+        data,
+        errors,
+        findActions,
+        reducer,
+        submitActions,
+      });
+    });
+  });
 });

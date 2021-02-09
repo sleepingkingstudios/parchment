@@ -73,4 +73,33 @@ describe('resource data generateReducer()', () => {
       submitActions,
     });
   });
+
+  describe('with findActions: value', () => {
+    const REQUEST_SUCCESS = 'test/requestSuccess';
+    const requestSuccess = data => ({
+      type: REQUEST_SUCCESS,
+      payload: { data },
+    });
+    const findActions = {
+      REQUEST_SUCCESS,
+      requestSuccess,
+    };
+    const data = { widget: {} };
+    const errors = {};
+    const reducer = generateReducer({
+      actions,
+      findActions,
+      resourceName,
+      submitActions,
+    });
+
+    shouldGenerateTheReducer({
+      actions,
+      data,
+      errors,
+      findActions,
+      reducer,
+      submitActions,
+    });
+  });
 });

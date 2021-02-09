@@ -41,11 +41,11 @@ buildDataStore.mockImplementation(() => dataStore);
 buildDestroyClient.mockImplementation(() => destroyClient);
 buildFindClient.mockImplementation(() => findClient);
 
-describe('resource index-page buildStore()', () => {
+describe('resource show-page buildStore()', () => {
   const baseUrl = '/path/to/widgets';
   const namespace = 'path/to/widgets';
   const resourceName = 'widgets';
-  const url = 'api/v1/widgets';
+  const url = '/api/v1/widgets';
   const defaultOptions = {
     baseUrl,
     namespace,

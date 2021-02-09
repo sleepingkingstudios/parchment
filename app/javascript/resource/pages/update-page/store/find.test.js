@@ -4,7 +4,7 @@ import buildClient from './find';
 
 jest.mock('cross-fetch');
 
-describe('resource show-page find buildClient()', () => {
+describe('resource create-page find buildClient()', () => {
   const baseUrl = '/path/to/widgets';
   const namespace = 'path/to/widgets/find';
   const resourceName = 'widgets';
@@ -159,8 +159,8 @@ describe('resource show-page find buildClient()', () => {
     });
 
     describe('type', () => {
-      it('should be resource/show-page/find', () => {
-        expect(client.type).toEqual('resource/show-page/find');
+      it('should be resource/create-page/find', () => {
+        expect(client.type).toEqual('resource/create-page/find');
       });
     });
 
