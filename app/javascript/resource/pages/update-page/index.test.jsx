@@ -2,33 +2,33 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { INITIALIZED } from 'api/status';
-import buildShowPage from './index';
+import buildUpdatePage from './index';
 
-describe('resource buildShowPage()', () => {
-  const Block = () => (<div />);
+describe('resource buildUpdatePage()', () => {
+  const Form = () => (<div />);
   const namespace = 'path/to/widgets';
   const resourceName = 'widget';
   const url = 'api/v1/widgets';
   const defaultOptions = {
-    Block,
+    Form,
     namespace,
     resourceName,
     url,
   };
 
   describe('with default options', () => {
-    const showPage = buildShowPage(defaultOptions);
+    const updatePage = buildUpdatePage(defaultOptions);
 
     describe('<Page />', () => {
-      const { Page } = showPage;
+      const { Page } = updatePage;
       const id = 'self-sealing-stem-bolt';
       const match = { params: { id } };
       const rendered = shallow(<Page match={match} />);
 
       it('should be an IndexPage with the configured options', () => {
-        expect(rendered).toHaveDisplayName('ShowPage');
+        expect(rendered).toHaveDisplayName('UpdatePage');
 
-        expect(rendered).toHaveProp({ Block });
+        expect(rendered).toHaveProp({ Form });
         expect(rendered).toHaveProp({ baseUrl: '/widgets' });
         expect(rendered).toHaveProp({ namespace });
         expect(rendered).toHaveProp({ resourceName });
@@ -36,10 +36,12 @@ describe('resource buildShowPage()', () => {
 
       it('should pass the store hooks', () => {
         const hooks = {
-          useData: expect.any(Function),
           useDataStatus: expect.any(Function),
-          useDestroyRequest: expect.any(Function),
+          useForm: expect.any(Function),
           useRequestData: expect.any(Function),
+          useSubmitRequest: expect.any(Function),
+          useSubmitStatus: expect.any(Function),
+          useUpdateForm: expect.any(Function),
         };
 
         expect(rendered).toHaveProp({ hooks });
@@ -48,12 +50,12 @@ describe('resource buildShowPage()', () => {
 
     describe('options', () => {
       it('should return the configured options', () => {
-        expect(showPage.options).toEqual(defaultOptions);
+        expect(updatePage.options).toEqual(defaultOptions);
       });
     });
 
     describe('reducer', () => {
-      const { reducer } = showPage;
+      const { reducer } = updatePage;
 
       it('should be a function', () => {
         expect(typeof reducer).toEqual('function');
@@ -62,13 +64,13 @@ describe('resource buildShowPage()', () => {
       it('should set the initial state', () => {
         const action = { type: 'test/unknownAction' };
         const expected = {
-          data: { data: { widget: {} } },
-          destroy: {
+          find: {
             data: {},
             errors: {},
             status: INITIALIZED,
           },
-          find: {
+          form: { data: { widget: {} }, errors: {} },
+          submit: {
             data: {},
             errors: {},
             status: INITIALIZED,
@@ -81,25 +83,25 @@ describe('resource buildShowPage()', () => {
 
     describe('type', () => {
       it('should be resource/pages/index-page', () => {
-        expect(showPage.type).toEqual('resource/pages/showPage');
+        expect(updatePage.type).toEqual('resource/pages/updatePage');
       });
     });
   });
 
   describe('with baseUrl: value', () => {
     const baseUrl = '/tools/widgets';
-    const showPage = buildShowPage({ ...defaultOptions, baseUrl });
+    const updatePage = buildUpdatePage({ ...defaultOptions, baseUrl });
 
     describe('<Page />', () => {
-      const { Page } = showPage;
+      const { Page } = updatePage;
       const id = 'self-sealing-stem-bolt';
       const match = { params: { id } };
       const rendered = shallow(<Page match={match} />);
 
       it('should be an IndexPage with the configured options', () => {
-        expect(rendered).toHaveDisplayName('ShowPage');
+        expect(rendered).toHaveDisplayName('UpdatePage');
 
-        expect(rendered).toHaveProp({ Block });
+        expect(rendered).toHaveProp({ Form });
         expect(rendered).toHaveProp({ baseUrl });
         expect(rendered).toHaveProp({ namespace });
         expect(rendered).toHaveProp({ resourceName });
@@ -108,7 +110,7 @@ describe('resource buildShowPage()', () => {
 
     describe('options', () => {
       it('should return the configured options', () => {
-        expect(showPage.options).toEqual({ ...defaultOptions, baseUrl });
+        expect(updatePage.options).toEqual({ ...defaultOptions, baseUrl });
       });
     });
   });
