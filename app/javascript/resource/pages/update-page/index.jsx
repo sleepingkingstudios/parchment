@@ -8,13 +8,22 @@ import buildStore from './store';
 
 const buildUpdatePage = (options) => {
   const { resourceName } = options;
+  const singularResourceName = valueOrDefault(
+    options.singularResourceName,
+    pluralize.singular(resourceName),
+  );
   const baseUrl = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
     options.baseUrl,
-    `/${pluralize(underscore(resourceName)).replace(/_/g, '-')}`,
+    `/${underscore(resourceName).replace(/_/g, '-')}`,
   );
 
-  const store = buildStore({ ...options, baseUrl });
+  const store = buildStore({
+    ...options,
+    baseUrl,
+    resourceName,
+    singularResourceName,
+  });
   const {
     hooks,
     reducer,
@@ -27,6 +36,7 @@ const buildUpdatePage = (options) => {
       {
         baseUrl,
         hooks,
+        singularResourceName,
       },
       options,
     ),

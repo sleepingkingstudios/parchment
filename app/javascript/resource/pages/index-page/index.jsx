@@ -1,9 +1,20 @@
+import pluralize from 'pluralize';
+
+import { valueOrDefault } from 'utils/object';
 import { injectProps } from 'utils/react';
 import IndexPage from './page';
 import buildStore from './store';
 
 const buildIndexPage = (options) => {
-  const store = buildStore(options);
+  const { resourceName } = options;
+  const singularResourceName = valueOrDefault(
+    options.singularResourceName,
+    pluralize.singular(resourceName),
+  );
+  const store = buildStore({
+    ...options,
+    singularResourceName,
+  });
   const {
     hooks,
     reducer,
@@ -13,7 +24,10 @@ const buildIndexPage = (options) => {
     IndexPage,
     Object.assign(
       {},
-      { hooks },
+      {
+        hooks,
+        singularResourceName,
+      },
       options,
     ),
   );

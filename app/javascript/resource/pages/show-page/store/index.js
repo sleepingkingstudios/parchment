@@ -32,6 +32,7 @@ const generateReducer = ({ dataStore, destroyClient, findClient }) => {
 const buildStore = (options) => {
   const {
     namespace,
+    singularResourceName,
     url,
   } = options;
   const findClient = buildFindClient({
@@ -55,6 +56,7 @@ const buildStore = (options) => {
     ...options,
     actions,
     namespace: `${namespace}/data`,
+    resourceName: singularResourceName,
   });
 
   const hooks = generateHooks({

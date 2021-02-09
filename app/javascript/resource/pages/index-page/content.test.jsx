@@ -7,12 +7,14 @@ import IndexPageContent from './content';
 describe('<IndexPageContent />', () => {
   const Table = () => (<div />);
   const data = { widgets: [] };
+  const pluralDisplayName = 'gadgets';
   const resourceName = 'widgets';
   const status = PENDING;
   const useDestroyRequest = jest.fn();
   const defaultProps = {
     Table,
     data,
+    pluralDisplayName,
     resourceName,
     status,
     useDestroyRequest,
@@ -38,7 +40,7 @@ describe('<IndexPageContent />', () => {
         const message = shallow(content.prop('emptyMessage'));
 
         expect(message).toHaveClassName('loading-message loading-message-pending');
-        expect(message).toHaveText('Loading widgets data from the server...');
+        expect(message).toHaveText('Loading gadgets data from the server...');
       });
     });
 
@@ -53,7 +55,7 @@ describe('<IndexPageContent />', () => {
         const message = shallow(content.prop('emptyMessage'));
 
         expect(message).toHaveClassName('loading-message loading-message-failure');
-        expect(message).toHaveText('Unable to load widgets data from the server.');
+        expect(message).toHaveText('Unable to load gadgets data from the server.');
       });
     });
 
@@ -68,7 +70,7 @@ describe('<IndexPageContent />', () => {
         const message = shallow(content.prop('emptyMessage'));
 
         expect(message).toHaveClassName('loading-message loading-message-pending');
-        expect(message).toHaveText('Loading widgets data from the server...');
+        expect(message).toHaveText('Loading gadgets data from the server...');
       });
     });
 
@@ -79,6 +81,8 @@ describe('<IndexPageContent />', () => {
         expect(content).toHaveDisplayName('Table');
 
         expect(content).toHaveProp({ data });
+        expect(content).toHaveProp({ pluralDisplayName });
+        expect(content).toHaveProp({ resourceName });
         expect(content).toHaveProp({ useDestroyRequest });
       });
     });

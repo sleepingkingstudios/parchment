@@ -1,5 +1,3 @@
-import pluralize from 'pluralize';
-
 import generateRedirectToIndex from 'api/middleware/redirectToIndex';
 import buildFindClient from 'resource/store/find';
 import { valueOrDefault } from 'utils/object';
@@ -10,7 +8,7 @@ const buildClient = (options) => {
   const baseUrl = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
     options.baseUrl,
-    `/${pluralize(underscore(resourceName)).replace(/_/g, '-')}`,
+    `/${underscore(resourceName).replace(/_/g, '-')}`,
   );
   const redirect = generateRedirectToIndex({
     baseUrl,

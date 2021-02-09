@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import StatusSwitch from 'components/status-switch';
 import { injectProps } from 'utils/react';
 
-const renderFailure = ({ Table, resourceName }) => {
+const renderFailure = ({ Table, pluralDisplayName, resourceName }) => {
   const emptyMessage = (
     <span className="loading-message loading-message-failure">
-      Unable to load {resourceName} data from the server.
+      Unable to load {pluralDisplayName} data from the server.
     </span>
   );
 
@@ -15,14 +15,15 @@ const renderFailure = ({ Table, resourceName }) => {
     Table,
     {
       emptyMessage,
+      pluralDisplayName,
       resourceName,
     },
   );
 };
-const renderPending = ({ Table, resourceName }) => {
+const renderPending = ({ Table, pluralDisplayName, resourceName }) => {
   const emptyMessage = (
     <span className="loading-message loading-message-pending">
-      Loading {resourceName} data from the server...
+      Loading {pluralDisplayName} data from the server...
     </span>
   );
 
@@ -30,6 +31,7 @@ const renderPending = ({ Table, resourceName }) => {
     Table,
     {
       emptyMessage,
+      pluralDisplayName,
       resourceName,
     },
   );
@@ -39,11 +41,17 @@ const renderSuccess = (props) => {
     Table,
     data,
     resourceName,
+    pluralDisplayName,
     useDestroyRequest,
   } = props;
 
   const IndexPageTable = () => (
-    <Table data={data} resourceName={resourceName} useDestroyRequest={useDestroyRequest} />
+    <Table
+      data={data}
+      pluralDisplayName={pluralDisplayName}
+      resourceName={resourceName}
+      useDestroyRequest={useDestroyRequest}
+    />
   );
 
   return IndexPageTable;
@@ -53,15 +61,17 @@ const IndexPageContent = (props) => {
   const {
     Table,
     data,
+    pluralDisplayName,
     resourceName,
     status,
     useDestroyRequest,
   } = props;
-  const failure = renderFailure({ Table, resourceName });
-  const pending = renderPending({ Table, resourceName });
+  const failure = renderFailure({ Table, pluralDisplayName, resourceName });
+  const pending = renderPending({ Table, pluralDisplayName, resourceName });
   const success = renderSuccess({
     Table,
     data,
+    pluralDisplayName,
     resourceName,
     useDestroyRequest,
   });
@@ -84,6 +94,7 @@ IndexPageContent.defaultProps = {
 IndexPageContent.propTypes = {
   Table: PropTypes.elementType.isRequired,
   data: PropTypes.objectOf(PropTypes.any).isRequired,
+  pluralDisplayName: PropTypes.string.isRequired,
   resourceName: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   useDestroyRequest: PropTypes.func,

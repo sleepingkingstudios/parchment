@@ -29,6 +29,7 @@ describe('resource buildIndexPage()', () => {
         expect(rendered).toHaveProp({ Table });
         expect(rendered).toHaveProp({ namespace });
         expect(rendered).toHaveProp({ resourceName });
+        expect(rendered).toHaveProp({ singularResourceName: 'widget' });
       });
 
       it('should pass the store hooks', () => {
@@ -79,6 +80,42 @@ describe('resource buildIndexPage()', () => {
     describe('type', () => {
       it('should be resource/pages/indexPage', () => {
         expect(indexPage.type).toEqual('resource/pages/indexPage');
+      });
+    });
+  });
+
+  describe('with singularResourceName: value', () => {
+    const singularResourceName = 'gadget';
+    const indexPage = buildIndexPage({ ...defaultOptions, singularResourceName });
+
+    describe('<Page />', () => {
+      const { Page } = indexPage;
+      const rendered = shallow(<Page />);
+
+      it('should be an IndexPage with the configured options', () => {
+        expect(rendered).toHaveDisplayName('IndexPage');
+
+        expect(rendered).toHaveProp({ Table });
+        expect(rendered).toHaveProp({ namespace });
+        expect(rendered).toHaveProp({ resourceName });
+        expect(rendered).toHaveProp({ singularResourceName });
+      });
+
+      it('should pass the store hooks', () => {
+        const hooks = {
+          useData: expect.any(Function),
+          useDataStatus: expect.any(Function),
+          useDestroyRequest: expect.any(Function),
+          useRequestData: expect.any(Function),
+        };
+
+        expect(rendered).toHaveProp({ hooks });
+      });
+    });
+
+    describe('options', () => {
+      it('should return the configured options', () => {
+        expect(indexPage.options).toEqual({ ...defaultOptions, singularResourceName });
       });
     });
   });

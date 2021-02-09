@@ -4,21 +4,22 @@ import PropTypes from 'prop-types';
 import DynamicTable from 'components/dynamic-table';
 import { valueOrDefault } from 'utils/object';
 
-const defaultEmptyMessage = resourceName => (
-  `There are no ${resourceName} matching the criteria.`
+const defaultEmptyMessage = pluralDisplayName => (
+  `There are no ${pluralDisplayName} matching the criteria.`
 );
 
 const IndexPageTable = (props) => {
   const {
     columns,
     data,
+    pluralDisplayName,
     resourceName,
     useDestroyRequest,
   } = props;
   const emptyMessage = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
     props.emptyMessage,
-    defaultEmptyMessage(resourceName),
+    defaultEmptyMessage(pluralDisplayName),
   );
   const mapData = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
@@ -51,6 +52,7 @@ IndexPageTable.propTypes = {
     PropTypes.string,
   ]),
   mapData: PropTypes.func,
+  pluralDisplayName: PropTypes.string.isRequired,
   resourceName: PropTypes.string.isRequired,
   useDestroyRequest: PropTypes.func,
 };

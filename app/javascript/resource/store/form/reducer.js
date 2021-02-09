@@ -28,10 +28,10 @@ const generateReducer = (options) => {
   const {
     actions,
     findActions,
-    resourceName,
+    singularResourceName,
     submitActions,
   } = options;
-  const data = valueOrDefault(options.data, defaultData(resourceName));
+  const data = valueOrDefault(options.data, defaultData(singularResourceName));
   const errors = valueOrDefault(options.errors, {});
   const {
     UPDATE_FORM_DATA,

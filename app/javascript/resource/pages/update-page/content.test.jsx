@@ -13,7 +13,7 @@ describe('<UpdatePageContent />', () => {
   const errors = {};
   const onChangeAction = jest.fn();
   const onSubmitAction = jest.fn();
-  const resourceName = 'widget';
+  const singularDisplayName = 'gadget';
   const status = SUCCESS;
   const submitStatus = PENDING;
   const defaultProps = {
@@ -22,7 +22,7 @@ describe('<UpdatePageContent />', () => {
     errors,
     onChangeAction,
     onSubmitAction,
-    resourceName,
+    singularDisplayName,
     status,
     submitStatus,
   };
@@ -42,7 +42,7 @@ describe('<UpdatePageContent />', () => {
       it('should display the loading message', () => {
         expect(content).toHaveDisplayName('p');
         expect(content).toHaveClassName('loading-message loading-message-pending');
-        expect(content).toHaveText('Loading widget data from the server...');
+        expect(content).toHaveText('Loading gadget data from the server...');
       });
     });
 
@@ -52,7 +52,7 @@ describe('<UpdatePageContent />', () => {
       it('should display the loading message', () => {
         expect(content).toHaveDisplayName('p');
         expect(content).toHaveClassName('loading-message loading-message-failure');
-        expect(content).toHaveText('Unable to load widget data from the server.');
+        expect(content).toHaveText('Unable to load gadget data from the server.');
       });
     });
 
@@ -62,7 +62,7 @@ describe('<UpdatePageContent />', () => {
       it('should display the loading message', () => {
         expect(content).toHaveDisplayName('p');
         expect(content).toHaveClassName('loading-message loading-message-pending');
-        expect(content).toHaveText('Loading widget data from the server...');
+        expect(content).toHaveText('Loading gadget data from the server...');
       });
     });
 
@@ -77,7 +77,6 @@ describe('<UpdatePageContent />', () => {
         expect(content).toHaveProp({ isUpdate: true });
         expect(content).toHaveProp({ onChangeAction });
         expect(content).toHaveProp({ onSubmitAction });
-        expect(content).toHaveProp({ resourceName });
         expect(content).toHaveProp({ status: submitStatus });
       });
     });

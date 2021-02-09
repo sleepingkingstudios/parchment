@@ -13,19 +13,22 @@ describe('resource data generateReducer()', () => {
     requestFailure,
   };
   const namespace = 'path/to/widgets';
-  const resourceName = 'widget';
+  const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const actions = generateActions({
     namespace,
   });
+  const defaultOptions = {
+    actions,
+    resourceName,
+    singularResourceName,
+    submitActions,
+  };
 
   describe('with default options', () => {
     const data = { widget: {} };
     const errors = {};
-    const reducer = generateReducer({
-      actions,
-      resourceName,
-      submitActions,
-    });
+    const reducer = generateReducer(defaultOptions);
 
     shouldGenerateTheReducer({
       actions,
@@ -40,10 +43,8 @@ describe('resource data generateReducer()', () => {
     const data = { factory: [], widget: {} };
     const errors = {};
     const reducer = generateReducer({
-      actions,
+      ...defaultOptions,
       data,
-      resourceName,
-      submitActions,
     });
 
     shouldGenerateTheReducer({
@@ -59,10 +60,8 @@ describe('resource data generateReducer()', () => {
     const data = { widget: {} };
     const errors = { purpose: ['is unknown'] };
     const reducer = generateReducer({
-      actions,
+      ...defaultOptions,
       errors,
-      resourceName,
-      submitActions,
     });
 
     shouldGenerateTheReducer({
@@ -87,10 +86,8 @@ describe('resource data generateReducer()', () => {
     const data = { widget: {} };
     const errors = {};
     const reducer = generateReducer({
-      actions,
+      ...defaultOptions,
       findActions,
-      resourceName,
-      submitActions,
     });
 
     shouldGenerateTheReducer({

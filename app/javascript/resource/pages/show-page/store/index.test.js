@@ -31,7 +31,7 @@ const findClient = {
   },
   performRequest: jest.fn(),
   reducer: () => ({
-    data: { widgets: [] },
+    data: { widget: {} },
     errors: {},
     status: SUCCESS,
   }),
@@ -45,11 +45,13 @@ describe('resource show-page buildStore()', () => {
   const baseUrl = '/path/to/widgets';
   const namespace = 'path/to/widgets';
   const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const url = '/api/v1/widgets';
   const defaultOptions = {
     baseUrl,
     namespace,
     resourceName,
+    singularResourceName,
     url,
   };
 
@@ -83,6 +85,7 @@ describe('resource show-page buildStore()', () => {
         ...defaultOptions,
         actions,
         namespace: `${namespace}/data`,
+        resourceName: singularResourceName,
       });
     });
 

@@ -19,11 +19,13 @@ describe('<CreatePage />', () => {
     useSubmitStatus: jest.fn(() => status),
     useUpdateForm,
   };
-  const resourceName = 'widget';
+  const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const defaultProps = {
     Form,
     hooks,
     resourceName,
+    singularResourceName,
   };
 
   describe('with default props', () => {
@@ -51,7 +53,7 @@ describe('<CreatePage />', () => {
           url: '/widgets',
         },
         {
-          label: 'Create Widget',
+          label: 'Create',
           url: '/widgets/create',
           active: true,
         },
@@ -87,7 +89,7 @@ describe('<CreatePage />', () => {
           url: '/tools/widgets',
         },
         {
-          label: 'Create Widget',
+          label: 'Create',
           url: '/tools/widgets/create',
           active: true,
         },
@@ -118,13 +120,54 @@ describe('<CreatePage />', () => {
           url: '/widgets',
         },
         {
-          label: 'Create Widget',
+          label: 'Create',
           url: '/widgets/create',
           active: true,
         },
       ];
 
       expect(rendered).toHaveProp({ breadcrumbs: expected });
+    });
+  });
+
+  describe('with pluralDisplayName: value', () => {
+    const pluralDisplayName = 'gadgets';
+    const rendered = shallow(
+      <CreatePage {...defaultProps} pluralDisplayName={pluralDisplayName} />,
+    );
+
+    it('should set the breadcrumbs', () => {
+      const expected = [
+        {
+          label: 'Home',
+          url: '/',
+        },
+        {
+          label: 'Gadgets',
+          url: '/widgets',
+        },
+        {
+          label: 'Create',
+          url: '/widgets/create',
+          active: true,
+        },
+      ];
+
+      expect(rendered).toHaveProp({ breadcrumbs: expected });
+    });
+  });
+
+  describe('with singularDisplayName: value', () => {
+    const singularDisplayName = 'gadget';
+    const rendered = shallow(
+      <CreatePage {...defaultProps} singularDisplayName={singularDisplayName} />,
+    );
+
+    it('should render the page heading', () => {
+      const heading = rendered.find('h1');
+
+      expect(heading).toExist();
+      expect(heading).toHaveText('Create Gadget');
     });
   });
 });

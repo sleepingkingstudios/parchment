@@ -22,13 +22,15 @@ describe('<ShowPage />', () => {
     useDestroyRequest,
     useRequestData,
   };
-  const resourceName = 'widget';
+  const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const defaultProps = {
     Block,
     baseUrl,
     hooks,
     match,
     resourceName,
+    singularResourceName,
   };
 
   beforeEach(() => {
@@ -48,7 +50,7 @@ describe('<ShowPage />', () => {
       const expected = [];
 
       expect(heading).toExist();
-      expect(heading.shallow()).toIncludeText(`Show ${titleize(resourceName)}`);
+      expect(heading.shallow()).toIncludeText('Show Widget');
       expect(heading).toHaveProp({ buttons: expected });
     });
 
@@ -85,7 +87,9 @@ describe('<ShowPage />', () => {
       expect(content).toExist();
       expect(content).toHaveProp({ Block });
       expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName: 'widget' });
       expect(content).toHaveProp({ status });
     });
 
@@ -115,7 +119,7 @@ describe('<ShowPage />', () => {
         ];
 
         expect(heading).toExist();
-        expect(heading.shallow()).toIncludeText(`Show ${titleize(resourceName)}`);
+        expect(heading.shallow()).toIncludeText('Show Widget');
         expect(heading).toHaveProp({ buttons: expected });
       });
 
@@ -222,6 +226,77 @@ describe('<ShowPage />', () => {
     });
   });
 
+  describe('with pluralDisplayName: value', () => {
+    const pluralDisplayName = 'gadgets';
+    const rendered = shallow(
+      <ShowPage {...defaultProps} pluralDisplayName={pluralDisplayName} />,
+    );
+
+    it('should set the breadcrumbs', () => {
+      const expected = [
+        {
+          label: 'Home',
+          url: '/',
+        },
+        {
+          label: 'Gadgets',
+          url: '/widgets',
+        },
+        {
+          label: 'Loading...',
+          url: `/widgets/${id}`,
+          active: true,
+        },
+      ];
+
+      expect(rendered).toHaveProp({ breadcrumbs: expected });
+    });
+
+    it('should render the default content', () => {
+      const content = rendered.find('ShowPageContent');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ Block });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ pluralDisplayName });
+      expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ status });
+    });
+
+    describe('when the resource has loaded', () => {
+      const widget = { id, name: 'Self-Sealing Stem Bolt' };
+      const loadedHooks = Object.assign(
+        {},
+        hooks,
+        { useData: () => ({ widget }) },
+      );
+      const loaded = shallow(
+        <ShowPage {...defaultProps} pluralDisplayName={pluralDisplayName} hooks={loadedHooks} />,
+      );
+
+      it('should set the breadcrumbs', () => {
+        const expected = [
+          {
+            label: 'Home',
+            url: '/',
+          },
+          {
+            label: 'Gadgets',
+            url: '/widgets',
+          },
+          {
+            label: 'Self-Sealing Stem Bolt',
+            url: '/widgets/self-sealing-stem-bolt',
+            active: true,
+          },
+        ];
+
+        expect(loaded).toHaveProp({ breadcrumbs: expected });
+      });
+    });
+  });
+
   describe('with resourceNameProp: value', () => {
     const resourceNameProp = 'title';
 
@@ -254,6 +329,71 @@ describe('<ShowPage />', () => {
         ];
 
         expect(loaded).toHaveProp({ breadcrumbs: expected });
+      });
+    });
+  });
+
+  describe('with singularDisplayName: value', () => {
+    const singularDisplayName = 'gadget';
+    const rendered = shallow(
+      <ShowPage {...defaultProps} singularDisplayName={singularDisplayName} />,
+    );
+
+    it('should render the page heading', () => {
+      const heading = rendered.find('HeadingWithButtons');
+      const expected = [];
+
+      expect(heading).toExist();
+      expect(heading.shallow()).toIncludeText(`Show ${titleize(singularDisplayName)}`);
+      expect(heading).toHaveProp({ buttons: expected });
+    });
+
+    it('should render the default content', () => {
+      const content = rendered.find('ShowPageContent');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ Block });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
+      expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName });
+      expect(content).toHaveProp({ status });
+    });
+
+    describe('when the resource has loaded', () => {
+      const widget = { id, name: 'Self-Sealing Stem Bolt' };
+      const loadedHooks = Object.assign(
+        {},
+        hooks,
+        { useData: () => ({ widget }) },
+      );
+      const loaded = shallow(
+        <ShowPage
+          {...defaultProps}
+          singularDisplayName={singularDisplayName}
+          hooks={loadedHooks}
+        />,
+      );
+
+      it('should render the page heading', () => {
+        const heading = loaded.find('HeadingWithButtons');
+        const expected = [
+          {
+            label: 'Update Gadget',
+            outline: true,
+            url: `${baseUrl}/${id}/update`,
+          },
+          {
+            buttonStyle: 'danger',
+            label: 'Delete Gadget',
+            onClick: destroyRequest,
+            outline: true,
+          },
+        ];
+
+        expect(heading).toExist();
+        expect(heading.shallow()).toIncludeText(`Show ${titleize(singularDisplayName)}`);
+        expect(heading).toHaveProp({ buttons: expected });
       });
     });
   });

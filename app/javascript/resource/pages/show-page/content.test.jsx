@@ -7,12 +7,12 @@ import ShowPageContent from './content';
 describe('<ShowPageContent />', () => {
   const Block = () => (<div />);
   const data = { widget: {} };
-  const resourceName = 'widget';
+  const singularDisplayName = 'gadget';
   const status = PENDING;
   const defaultProps = {
     Block,
     data,
-    resourceName,
+    singularDisplayName,
     status,
   };
 
@@ -31,7 +31,7 @@ describe('<ShowPageContent />', () => {
       it('should display the loading message', () => {
         expect(content).toHaveDisplayName('p');
         expect(content).toHaveClassName('loading-message loading-message-pending');
-        expect(content).toHaveText('Loading widget data from the server...');
+        expect(content).toHaveText('Loading gadget data from the server...');
       });
     });
 
@@ -41,7 +41,7 @@ describe('<ShowPageContent />', () => {
       it('should display the loading message', () => {
         expect(content).toHaveDisplayName('p');
         expect(content).toHaveClassName('loading-message loading-message-failure');
-        expect(content).toHaveText('Unable to load widget data from the server.');
+        expect(content).toHaveText('Unable to load gadget data from the server.');
       });
     });
 
@@ -51,7 +51,7 @@ describe('<ShowPageContent />', () => {
       it('should display the loading message', () => {
         expect(content).toHaveDisplayName('p');
         expect(content).toHaveClassName('loading-message loading-message-pending');
-        expect(content).toHaveText('Loading widget data from the server...');
+        expect(content).toHaveText('Loading gadget data from the server...');
       });
     });
 
@@ -62,7 +62,6 @@ describe('<ShowPageContent />', () => {
         expect(content).toHaveDisplayName('Block');
 
         expect(content).toHaveProp({ data });
-        expect(content).toHaveProp({ resourceName });
         expect(content).toHaveProp({ showAdditionalDetails: true });
       });
     });

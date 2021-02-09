@@ -1,19 +1,19 @@
-import pluralize from 'pluralize';
-
 import buildApiClient from 'api/client';
 import generateAlerts from 'api/middleware/alerts';
 import authorization from 'api/middleware/authorization';
 import generateRedirectToShow from 'api/middleware/redirectToShow';
 import { valueOrDefault } from 'utils/object';
 
-const generateMiddleware = ({
-  baseUrl,
-  middleware,
-  resourceName,
-}) => {
+const generateMiddleware = (options) => {
+  const {
+    baseUrl,
+    middleware,
+    resourceName,
+    singularResourceName,
+  } = options;
   const alerts = generateAlerts({
     action: 'create',
-    resourceName,
+    resourceName: singularResourceName,
     pending: true,
     failure: true,
     success: true,
@@ -21,6 +21,7 @@ const generateMiddleware = ({
   const redirect = generateRedirectToShow({
     baseUrl,
     resourceName,
+    singularResourceName,
     on: 'success',
   });
 
@@ -37,13 +38,15 @@ const buildClient = (options) => {
     baseUrl,
     namespace,
     requestData,
+    resourceName,
+    singularResourceName,
     url,
   } = options;
-  const resourceName = pluralize.singular(options.resourceName);
   const middleware = generateMiddleware({
     baseUrl,
     middleware: valueOrDefault(options.middleware, []),
     resourceName,
+    singularResourceName,
   });
   const client = buildApiClient({
     method: 'POST',

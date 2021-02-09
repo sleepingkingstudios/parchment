@@ -17,20 +17,20 @@ const defaultBreadcrumbs = [
     url: '/',
   },
 ];
-const generateBreadcrumbs = ({ baseUrl, breadcrumbs, resourceName }) => (
+const generateBreadcrumbs = ({ baseUrl, breadcrumbs, pluralDisplayName }) => (
   [
     ...valueOrDefault(breadcrumbs, defaultBreadcrumbs),
     {
-      label: titleize(resourceName),
+      label: titleize(pluralDisplayName),
       url: `${baseUrl}`,
       active: true,
     },
   ]
 );
-const generateButtons = ({ baseUrl, resourceName }) => (
+const generateButtons = ({ baseUrl, singularDisplayName }) => (
   [
     {
-      label: `Create ${pluralize.singular(titleize(resourceName))}`,
+      label: `Create ${titleize(singularDisplayName)}`,
       outline: true,
       url: `${baseUrl}/create`,
     },
@@ -48,13 +48,23 @@ const IndexPage = (props) => {
     props.baseUrl,
     `/${underscore(resourceName).replace(/_/g, '-')}`,
   );
+  const pluralDisplayName = valueOrDefault(
+    // eslint-disable-next-line react/destructuring-assignment
+    props.pluralDisplayName,
+    pluralize(resourceName),
+  );
+  const singularDisplayName = valueOrDefault(
+    // eslint-disable-next-line react/destructuring-assignment
+    props.singularDisplayName,
+    pluralize.singular(resourceName),
+  );
   const breadcrumbs = generateBreadcrumbs({
     baseUrl,
     // eslint-disable-next-line react/destructuring-assignment
     breadcrumbs: props.breadcrumbs,
-    resourceName,
+    pluralDisplayName,
   });
-  const buttons = generateButtons({ baseUrl, resourceName });
+  const buttons = generateButtons({ baseUrl, singularDisplayName });
   const {
     useData,
     useDataStatus,
@@ -70,13 +80,15 @@ const IndexPage = (props) => {
   return (
     <Page breadcrumbs={breadcrumbs}>
       <HeadingWithButtons buttons={buttons}>
-        {titleize(resourceName)}
+        {titleize(pluralDisplayName)}
       </HeadingWithButtons>
 
       <IndexPageContent
         Table={Table}
         data={data}
+        pluralDisplayName={pluralDisplayName}
         resourceName={resourceName}
+        singularDisplayName={singularDisplayName}
         status={status}
         useDestroyRequest={useDestroyRequest}
       />
@@ -88,6 +100,8 @@ IndexPage.defaultProps = {
   Table: null,
   baseUrl: null,
   breadcrumbs: null,
+  pluralDisplayName: null,
+  singularDisplayName: null,
 };
 
 IndexPage.propTypes = {
@@ -100,7 +114,9 @@ IndexPage.propTypes = {
     useDestroyRequest: PropTypes.func.isRequired,
     useRequestData: PropTypes.func.isRequired,
   }).isRequired,
+  pluralDisplayName: PropTypes.string,
   resourceName: PropTypes.string.isRequired,
+  singularDisplayName: PropTypes.string,
 };
 
 export default IndexPage;

@@ -8,11 +8,13 @@ describe('resource show-page find buildClient()', () => {
   const baseUrl = '/path/to/widgets';
   const namespace = 'path/to/widgets/find';
   const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const url = 'api/v1/widgets';
   const defaultOptions = {
     baseUrl,
     namespace,
     resourceName,
+    singularResourceName,
     url,
   };
 
@@ -81,7 +83,7 @@ describe('resource show-page find buildClient()', () => {
           const expected = {
             action: 'find',
             failure: true,
-            resourceName,
+            resourceName: singularResourceName,
           };
 
           expect(options).toEqual(expected);
@@ -108,6 +110,7 @@ describe('resource show-page find buildClient()', () => {
           const expected = {
             baseUrl,
             resourceName,
+            singularResourceName,
             on: 'failure',
           };
 
@@ -194,7 +197,7 @@ describe('resource show-page find buildClient()', () => {
           const expected = {
             action: 'find',
             failure: true,
-            resourceName,
+            resourceName: singularResourceName,
           };
 
           expect(options).toEqual(expected);
@@ -227,6 +230,7 @@ describe('resource show-page find buildClient()', () => {
           const expected = {
             baseUrl,
             resourceName,
+            singularResourceName,
             on: 'failure',
           };
 

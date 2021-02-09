@@ -7,7 +7,7 @@ describe('spells createPage', () => {
     spell: buildSpell(),
   };
   const namespace = 'spells/create';
-  const resourceName = 'spell';
+  const resourceName = 'spells';
   const url = '/api/spells';
 
   describe('options', () => {

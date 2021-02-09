@@ -1,9 +1,9 @@
 import showPage from './index';
 import { Block } from '../../components/block';
 
-describe('spells indexPage', () => {
+describe('spells showPage', () => {
   const namespace = 'spells/show';
-  const resourceName = 'spell';
+  const resourceName = 'spells';
   const url = '/api/spells';
 
   describe('options', () => {

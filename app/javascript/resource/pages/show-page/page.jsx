@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import pluralize from 'pluralize';
 
 import HeadingWithButtons from 'components/heading-with-buttons';
 import Page from 'components/page';
@@ -19,8 +18,8 @@ const generateBreadcrumbs = (props) => {
     baseUrl,
     breadcrumbs,
     id,
+    pluralDisplayName,
     resource,
-    resourceName,
     resourceNameProp,
   } = props;
 
@@ -28,7 +27,7 @@ const generateBreadcrumbs = (props) => {
     [
       ...valueOrDefault(breadcrumbs, defaultBreadcrumbs),
       {
-        label: titleize(pluralize(resourceName)),
+        label: titleize(pluralDisplayName),
         url: baseUrl,
       },
       {
@@ -39,29 +38,31 @@ const generateBreadcrumbs = (props) => {
     ]
   );
 };
-const generateDeleteButton = ({ destroyRequest, resourceName }) => ({
+const generateDeleteButton = ({ destroyRequest, singularDisplayName }) => ({
   buttonStyle: 'danger',
-  label: `Delete ${titleize(resourceName)}`,
+  label: `Delete ${titleize(singularDisplayName)}`,
   onClick: destroyRequest,
   outline: true,
 });
-const generateUpdateButton = ({ baseUrl, id, resourceName }) => ({
-  label: `Update ${titleize(resourceName)}`,
+const generateUpdateButton = ({ baseUrl, id, singularDisplayName }) => ({
+  label: `Update ${titleize(singularDisplayName)}`,
   outline: true,
   url: `${baseUrl}/${id}/update`,
 });
-const generateButtons = ({
-  baseUrl,
-  destroyRequest,
-  id,
-  resource,
-  resourceName,
-}) => {
+const generateButtons = (options) => {
+  const {
+    baseUrl,
+    destroyRequest,
+    id,
+    resource,
+    singularDisplayName,
+  } = options;
+
   if (!(resource && resource.id)) { return []; }
 
   return [
-    generateUpdateButton({ baseUrl, id, resourceName }),
-    generateDeleteButton({ destroyRequest, resourceName }),
+    generateUpdateButton({ baseUrl, id, singularDisplayName }),
+    generateDeleteButton({ destroyRequest, singularDisplayName }),
   ];
 };
 
@@ -73,11 +74,22 @@ const ShowPage = (props) => {
     match,
     resourceName,
     resourceNameProp,
+    singularResourceName,
   } = props;
+  const pluralDisplayName = valueOrDefault(
+    // eslint-disable-next-line react/destructuring-assignment
+    props.pluralDisplayName,
+    resourceName,
+  );
+  const singularDisplayName = valueOrDefault(
+    // eslint-disable-next-line react/destructuring-assignment
+    props.singularDisplayName,
+    singularResourceName,
+  );
   const mapData = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
     props.mapData,
-    data => data[resourceName],
+    data => data[singularResourceName],
   );
   const { params } = match;
   const { id } = params;
@@ -97,6 +109,7 @@ const ShowPage = (props) => {
     // eslint-disable-next-line react/destructuring-assignment
     breadcrumbs: props.breadcrumbs,
     id,
+    pluralDisplayName,
     resource,
     resourceName,
     resourceNameProp,
@@ -107,6 +120,7 @@ const ShowPage = (props) => {
     id,
     resource,
     resourceName,
+    singularDisplayName,
   });
 
   requestData();
@@ -114,13 +128,15 @@ const ShowPage = (props) => {
   return (
     <Page breadcrumbs={breadcrumbs}>
       <HeadingWithButtons buttons={buttons}>
-        Show {titleize(resourceName)}
+        Show {titleize(singularDisplayName)}
       </HeadingWithButtons>
 
       <ShowPageContent
         Block={Block}
         data={data}
+        pluralDisplayName={pluralDisplayName}
         resourceName={resourceName}
+        singularDisplayName={singularDisplayName}
         status={status}
       />
     </Page>
@@ -131,7 +147,9 @@ ShowPage.defaultProps = {
   Block: null,
   breadcrumbs: null,
   mapData: null,
+  pluralDisplayName: null,
   resourceNameProp: 'name',
+  singularDisplayName: null,
 };
 
 ShowPage.propTypes = {
@@ -150,8 +168,11 @@ ShowPage.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  pluralDisplayName: PropTypes.string,
   resourceName: PropTypes.string.isRequired,
   resourceNameProp: PropTypes.string,
+  singularDisplayName: PropTypes.string,
+  singularResourceName: PropTypes.string.isRequired,
 };
 
 export default ShowPage;

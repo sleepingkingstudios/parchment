@@ -1,15 +1,18 @@
-import pluralize from 'pluralize';
-
 import buildApiClient from 'api/client';
 import generateAlerts from 'api/middleware/alerts';
 import authorization from 'api/middleware/authorization';
 import { valueOrDefault } from 'utils/object';
 import reloadData from '../../../store/middleware/reloadData';
 
-const generateMiddleware = ({ middleware, performRequest, resourceName }) => {
+const generateMiddleware = (options) => {
+  const {
+    middleware,
+    performRequest,
+    singularResourceName,
+  } = options;
   const alerts = generateAlerts({
     action: 'delete',
-    resourceName,
+    resourceName: singularResourceName,
     pending: true,
     failure: true,
     success: { alertStyle: 'danger' },
@@ -27,13 +30,15 @@ const buildClient = (options) => {
   const {
     findRequest,
     namespace,
+    resourceName,
+    singularResourceName,
     url,
   } = options;
-  const resourceName = pluralize.singular(options.resourceName);
   const middleware = generateMiddleware({
     middleware: valueOrDefault(options.middleware, []),
     performRequest: findRequest,
     resourceName,
+    singularResourceName,
   });
   const client = buildApiClient({
     method: 'DELETE',

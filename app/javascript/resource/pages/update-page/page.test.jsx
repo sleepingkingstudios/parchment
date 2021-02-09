@@ -31,13 +31,15 @@ describe('<UpdatePage />', () => {
     useSubmitStatus: jest.fn(() => submitStatus),
     useUpdateForm,
   };
-  const resourceName = 'widget';
+  const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const defaultProps = {
     Form,
     baseUrl,
     hooks,
     match,
     resourceName,
+    singularResourceName,
   };
 
   beforeEach(() => {
@@ -56,7 +58,7 @@ describe('<UpdatePage />', () => {
       const heading = rendered.find('h1');
 
       expect(heading).toExist();
-      expect(heading).toHaveText(`Update ${titleize(resourceName)}`);
+      expect(heading).toHaveText('Update Widget');
     });
 
     it('should set the breadcrumbs', () => {
@@ -100,7 +102,10 @@ describe('<UpdatePage />', () => {
       expect(content).toHaveProp({ errors });
       expect(content).toHaveProp({ onChangeAction: updateForm });
       expect(content).toHaveProp({ onSubmitAction: submitRequest });
+      expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName: 'widget' });
       expect(content).toHaveProp({ status: findStatus });
     });
 
@@ -237,6 +242,97 @@ describe('<UpdatePage />', () => {
     });
   });
 
+  describe('with pluralDisplayName: value', () => {
+    const pluralDisplayName = 'gadgets';
+    const rendered = shallow(
+      <UpdatePage {...defaultProps} pluralDisplayName={pluralDisplayName} />,
+    );
+
+    it('should set the breadcrumbs', () => {
+      const expected = [
+        {
+          label: 'Home',
+          url: '/',
+        },
+        {
+          label: 'Gadgets',
+          url: '/widgets',
+        },
+        {
+          label: 'Loading...',
+          url: `/widgets/${id}`,
+          active: true,
+        },
+        {
+          label: 'Update',
+          url: `/widgets/${id}/update`,
+          active: true,
+        },
+      ];
+
+      expect(rendered).toHaveProp({ breadcrumbs: expected });
+    });
+
+    it('should render the default content', () => {
+      const content = rendered.find('UpdatePageContent');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ Form });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ errors });
+      expect(content).toHaveProp({ onChangeAction: updateForm });
+      expect(content).toHaveProp({ onSubmitAction: submitRequest });
+      expect(content).toHaveProp({ pluralDisplayName });
+      expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ status: findStatus });
+    });
+
+    describe('when the resource has loaded', () => {
+      const widget = { id, name: 'Self-Sealing Stem Bolt' };
+      const loadedHooks = Object.assign(
+        {},
+        hooks,
+        {
+          useDataStatus: () => SUCCESS,
+          useForm: () => ({ data: { widget }, errors }),
+        },
+      );
+      const loaded = shallow(
+        <UpdatePage
+          {...defaultProps}
+          hooks={loadedHooks}
+          pluralDisplayName={pluralDisplayName}
+        />,
+      );
+
+      it('should set the breadcrumbs', () => {
+        const expected = [
+          {
+            label: 'Home',
+            url: '/',
+          },
+          {
+            label: 'Gadgets',
+            url: '/widgets',
+          },
+          {
+            label: 'Self-Sealing Stem Bolt',
+            url: '/widgets/self-sealing-stem-bolt',
+            active: false,
+          },
+          {
+            label: 'Update',
+            url: '/widgets/self-sealing-stem-bolt/update',
+            active: true,
+          },
+        ];
+
+        expect(loaded).toHaveProp({ breadcrumbs: expected });
+      });
+    });
+  });
+
   describe('with resourceNameProp: value', () => {
     const resourceNameProp = 'title';
 
@@ -278,6 +374,35 @@ describe('<UpdatePage />', () => {
 
         expect(loaded).toHaveProp({ breadcrumbs: expected });
       });
+    });
+  });
+
+  describe('with singularDisplayName: value', () => {
+    const singularDisplayName = 'gadget';
+    const rendered = shallow(
+      <UpdatePage {...defaultProps} singularDisplayName={singularDisplayName} />,
+    );
+
+    it('should render the page heading', () => {
+      const heading = rendered.find('h1');
+
+      expect(heading).toExist();
+      expect(heading).toHaveText(`Update ${titleize(singularDisplayName)}`);
+    });
+
+    it('should render the default content', () => {
+      const content = rendered.find('UpdatePageContent');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ Form });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ errors });
+      expect(content).toHaveProp({ onChangeAction: updateForm });
+      expect(content).toHaveProp({ onSubmitAction: submitRequest });
+      expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
+      expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName });
+      expect(content).toHaveProp({ status: findStatus });
     });
   });
 });

@@ -13,14 +13,14 @@ const buildProps = data => ({
 });
 
 describe('RedirectToShow middleware', () => {
-  const resourceName = 'widget';
+  const resourceName = 'widgets';
 
   it('should be a function', () => {
     expect(typeof redirectToShow).toEqual('function');
   });
 
-  describe('with no arguments', () => {
-    const middleware = redirectToShow({});
+  describe('with no callbacks', () => {
+    const middleware = redirectToShow({ resourceName });
     const { options, type } = middleware;
 
     it('should not define handleFailure()', () => {
@@ -32,8 +32,8 @@ describe('RedirectToShow middleware', () => {
     });
 
     describe('options', () => {
-      it('should return an empty object', () => {
-        expect(options).toEqual({});
+      it('should return the configured options', () => {
+        expect(options).toEqual({ resourceName });
       });
     });
 
@@ -372,6 +372,94 @@ describe('RedirectToShow middleware', () => {
     describe('options', () => {
       it('should return the options', () => {
         expect(options).toEqual({ resourceName, selector, on: 'success' });
+      });
+    });
+  });
+
+  describe('with singularResourceName: value and on: :failure', () => {
+    const singularResourceName = 'gadget';
+    const middleware = redirectToShow({
+      resourceName,
+      singularResourceName,
+      on: 'failure',
+    });
+    const { handleFailure, options } = middleware;
+
+    describe('handleFailure()', () => {
+      const id = '00000000-0000-0000-0000-000000000000';
+
+      it('should redirect to the show page', () => {
+        const next = jest.fn();
+        const url = `/widgets/${id}`;
+        const props = buildProps({ gadget: { id } });
+
+        handleFailure(next)(props);
+
+        expect(props.dispatch).toHaveBeenCalledWith(push(url));
+      });
+
+      describe('when the data has a slug', () => {
+        const slug = 'self-sealing-stem-bolt';
+
+        it('should redirect to the show page', () => {
+          const next = jest.fn();
+          const url = `/widgets/${slug}`;
+          const props = buildProps({ gadget: { slug } });
+
+          handleFailure(next)(props);
+
+          expect(props.dispatch).toHaveBeenCalledWith(push(url));
+        });
+      });
+    });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ resourceName, singularResourceName, on: 'failure' });
+      });
+    });
+  });
+
+  describe('with singularResourceName: value and on: :success', () => {
+    const singularResourceName = 'gadget';
+    const middleware = redirectToShow({
+      resourceName,
+      singularResourceName,
+      on: 'success',
+    });
+    const { handleSuccess, options } = middleware;
+
+    describe('handleSuccess()', () => {
+      const id = '00000000-0000-0000-0000-000000000000';
+
+      it('should redirect to the show page', () => {
+        const next = jest.fn();
+        const url = `/widgets/${id}`;
+        const props = buildProps({ gadget: { id } });
+
+        handleSuccess(next)(props);
+
+        expect(props.dispatch).toHaveBeenCalledWith(push(url));
+      });
+
+      describe('when the data has a slug', () => {
+        const slug = 'self-sealing-stem-bolt';
+
+        it('should redirect to the show page', () => {
+          const next = jest.fn();
+          const url = `/widgets/${slug}`;
+          const props = buildProps({ gadget: { slug } });
+
+          handleSuccess(next)(props);
+
+          expect(props.dispatch).toHaveBeenCalledWith(push(url));
+        });
+      });
+    });
+
+    describe('options', () => {
+      it('should return the options', () => {
+        expect(options).toEqual({ resourceName, singularResourceName, on: 'success' });
       });
     });
   });

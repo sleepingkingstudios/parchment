@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 
 import StatusSwitch from 'components/status-switch';
 
-const renderFailure = ({ resourceName }) => {
+const renderFailure = ({ singularDisplayName }) => {
   const ShowPageFailureMessage = () => (
     <p className="loading-message loading-message-failure">
-      Unable to load {resourceName} data from the server.
+      Unable to load {singularDisplayName} data from the server.
     </p>
   );
 
   return ShowPageFailureMessage;
 };
-const renderPending = ({ resourceName }) => {
+const renderPending = ({ singularDisplayName }) => {
   const ShowPagePendingMessage = () => (
     <p className="loading-message loading-message-pending">
-      Loading {resourceName} data from the server...
+      Loading {singularDisplayName} data from the server...
     </p>
   );
 
@@ -28,7 +28,6 @@ const renderSuccess = (props) => {
     errors,
     onChangeAction,
     onSubmitAction,
-    resourceName,
     submitStatus,
   } = props;
 
@@ -38,7 +37,6 @@ const renderSuccess = (props) => {
       errors={errors}
       onChangeAction={onChangeAction}
       onSubmitAction={onSubmitAction}
-      resourceName={resourceName}
       status={submitStatus}
       isUpdate
     />
@@ -54,19 +52,18 @@ const UpdatePageContent = (props) => {
     errors,
     onChangeAction,
     onSubmitAction,
-    resourceName,
+    singularDisplayName,
     status,
     submitStatus,
   } = props;
-  const failure = renderFailure({ resourceName });
-  const pending = renderPending({ resourceName });
+  const failure = renderFailure({ singularDisplayName });
+  const pending = renderPending({ singularDisplayName });
   const success = renderSuccess({
     Form,
     data,
     errors,
     onChangeAction,
     onSubmitAction,
-    resourceName,
     submitStatus,
   });
 
@@ -91,7 +88,7 @@ UpdatePageContent.propTypes = {
   errors: PropTypes.objectOf(PropTypes.any),
   onChangeAction: PropTypes.func.isRequired,
   onSubmitAction: PropTypes.func.isRequired,
-  resourceName: PropTypes.string.isRequired,
+  singularDisplayName: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   submitStatus: PropTypes.string.isRequired,
 };

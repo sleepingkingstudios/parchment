@@ -4,7 +4,7 @@ import { buildSpell } from '../../entities';
 
 const data = { spell: buildSpell() };
 const namespace = 'spells/create';
-const resourceName = 'spell';
+const resourceName = 'spells';
 const url = '/api/spells';
 
 const createPage = buildCreatePage({

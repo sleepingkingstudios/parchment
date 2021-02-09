@@ -4,17 +4,19 @@ import buildClient from './destroy';
 
 jest.mock('cross-fetch');
 
-describe('resource index-page destroy buildClient()', () => {
+describe('resource show-page destroy buildClient()', () => {
   const findRequest = jest.fn();
   const baseUrl = '/path/to/widgets';
   const namespace = 'path/to/widgets/destroy';
-  const resourceName = 'widget';
+  const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const url = 'api/v1/widgets/:id';
   const defaultOptions = {
     baseUrl,
     findRequest,
     namespace,
     resourceName,
+    singularResourceName,
     url,
   };
 

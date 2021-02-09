@@ -7,12 +7,14 @@ jest.mock('cross-fetch');
 describe('resource create-page submit buildClient()', () => {
   const baseUrl = '/path/to/widgets';
   const namespace = 'path/to/widgets/create';
-  const resourceName = 'widget';
+  const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const url = '/api/v1/widgets';
   const defaultOptions = {
     baseUrl,
     namespace,
     resourceName,
+    singularResourceName,
     url,
   };
 
@@ -80,7 +82,7 @@ describe('resource create-page submit buildClient()', () => {
           const { options } = alerts;
           const expected = {
             action: 'create',
-            resourceName,
+            resourceName: singularResourceName,
             pending: true,
             failure: true,
             success: true,
@@ -110,6 +112,7 @@ describe('resource create-page submit buildClient()', () => {
           const expected = {
             baseUrl,
             resourceName,
+            singularResourceName,
             on: 'success',
           };
 
@@ -195,7 +198,7 @@ describe('resource create-page submit buildClient()', () => {
           const { options } = alerts;
           const expected = {
             action: 'create',
-            resourceName,
+            resourceName: singularResourceName,
             pending: true,
             failure: true,
             success: true,
@@ -231,6 +234,7 @@ describe('resource create-page submit buildClient()', () => {
           const expected = {
             baseUrl,
             resourceName,
+            singularResourceName,
             on: 'success',
           };
 

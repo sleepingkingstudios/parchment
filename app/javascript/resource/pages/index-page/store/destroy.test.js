@@ -8,11 +8,13 @@ describe('resource index page destroy buildClient()', () => {
   const findRequest = jest.fn();
   const namespace = 'path/to/widgets/destroy';
   const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const url = 'api/v1/widgets/:id';
   const defaultOptions = {
     findRequest,
     namespace,
     resourceName,
+    singularResourceName,
     url,
   };
 

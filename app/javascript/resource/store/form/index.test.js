@@ -28,11 +28,13 @@ describe('resource form buildStore()', () => {
     requestFailure,
   };
   const namespace = 'path/to/widgets';
-  const resourceName = 'widget';
+  const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const actions = generateActions({ namespace });
   const defaultOptions = {
     namespace,
     resourceName,
+    singularResourceName,
     submitActions,
   };
 

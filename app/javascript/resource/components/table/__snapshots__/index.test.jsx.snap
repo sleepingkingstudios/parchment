@@ -13,7 +13,7 @@ exports[`<IndexPageTable /> with default props should match the snapshot 1`] = `
     ]
   }
   data={Array []}
-  message="There are no widgets matching the criteria."
+  message="There are no gadgets matching the criteria."
   resourceName="widgets"
 />
 `;

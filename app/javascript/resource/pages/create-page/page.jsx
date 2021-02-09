@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import pluralize from 'pluralize';
 
 import Page from 'components/page';
 import { valueOrDefault } from 'utils/object';
@@ -15,15 +14,15 @@ const defaultBreadcrumbs = [
     url: '/',
   },
 ];
-const generateBreadcrumbs = ({ baseUrl, breadcrumbs, resourceName }) => (
+const generateBreadcrumbs = ({ baseUrl, breadcrumbs, pluralDisplayName }) => (
   [
     ...valueOrDefault(breadcrumbs, defaultBreadcrumbs),
     {
-      label: titleize(pluralize(resourceName)),
+      label: titleize(pluralDisplayName),
       url: baseUrl,
     },
     {
-      label: `Create ${titleize(resourceName)}`,
+      label: 'Create',
       url: `${baseUrl}/create`,
       active: true,
     },
@@ -35,7 +34,18 @@ const CreatePage = (props) => {
     Form,
     hooks,
     resourceName,
+    singularResourceName,
   } = props;
+  const pluralDisplayName = valueOrDefault(
+    // eslint-disable-next-line react/destructuring-assignment
+    props.pluralDisplayName,
+    resourceName,
+  );
+  const singularDisplayName = valueOrDefault(
+    // eslint-disable-next-line react/destructuring-assignment
+    props.singularDisplayName,
+    singularResourceName,
+  );
   const {
     useForm,
     useSubmitRequest,
@@ -52,18 +62,18 @@ const CreatePage = (props) => {
   const baseUrl = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
     props.baseUrl,
-    `/${underscore(pluralize(resourceName)).replace(/_/g, '-')}`,
+    `/${underscore(resourceName).replace(/_/g, '-')}`,
   );
   const breadcrumbs = generateBreadcrumbs({
     baseUrl,
     // eslint-disable-next-line react/destructuring-assignment
     breadcrumbs: props.breadcrumbs,
-    resourceName,
+    pluralDisplayName,
   });
 
   return (
     <Page breadcrumbs={breadcrumbs}>
-      <h1>Create {titleize(resourceName)}</h1>
+      <h1>Create {titleize(singularDisplayName)}</h1>
 
       <Form
         data={data}
@@ -80,6 +90,8 @@ CreatePage.defaultProps = {
   Form: null,
   baseUrl: null,
   breadcrumbs: null,
+  pluralDisplayName: null,
+  singularDisplayName: null,
 };
 
 CreatePage.propTypes = {
@@ -92,7 +104,10 @@ CreatePage.propTypes = {
     useSubmitStatus: PropTypes.func.isRequired,
     useUpdateForm: PropTypes.func.isRequired,
   }).isRequired,
+  pluralDisplayName: PropTypes.string,
   resourceName: PropTypes.string.isRequired,
+  singularDisplayName: PropTypes.string,
+  singularResourceName: PropTypes.string.isRequired,
 };
 
 export default CreatePage;

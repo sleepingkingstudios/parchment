@@ -7,7 +7,7 @@ import buildUpdatePage from './index';
 describe('resource buildUpdatePage()', () => {
   const Form = () => (<div />);
   const namespace = 'path/to/widgets';
-  const resourceName = 'widget';
+  const resourceName = 'widgets';
   const url = 'api/v1/widgets';
   const defaultOptions = {
     Form,
@@ -32,6 +32,7 @@ describe('resource buildUpdatePage()', () => {
         expect(rendered).toHaveProp({ baseUrl: '/widgets' });
         expect(rendered).toHaveProp({ namespace });
         expect(rendered).toHaveProp({ resourceName });
+        expect(rendered).toHaveProp({ singularResourceName: 'widget' });
       });
 
       it('should pass the store hooks', () => {
@@ -111,6 +112,51 @@ describe('resource buildUpdatePage()', () => {
     describe('options', () => {
       it('should return the configured options', () => {
         expect(updatePage.options).toEqual({ ...defaultOptions, baseUrl });
+      });
+    });
+  });
+
+  describe('with singularResourceName: value', () => {
+    const singularResourceName = 'gadget';
+    const updatePage = buildUpdatePage({ ...defaultOptions, singularResourceName });
+
+    describe('<Page />', () => {
+      const { Page } = updatePage;
+      const id = 'self-sealing-stem-bolt';
+      const match = { params: { id } };
+      const rendered = shallow(<Page match={match} />);
+
+      it('should be an IndexPage with the configured options', () => {
+        expect(rendered).toHaveDisplayName('UpdatePage');
+
+        expect(rendered).toHaveProp({ Form });
+        expect(rendered).toHaveProp({ baseUrl: '/widgets' });
+        expect(rendered).toHaveProp({ namespace });
+        expect(rendered).toHaveProp({ resourceName });
+        expect(rendered).toHaveProp({ singularResourceName });
+      });
+    });
+
+    describe('reducer', () => {
+      const { reducer } = updatePage;
+
+      it('should set the initial state', () => {
+        const action = { type: 'test/unknownAction' };
+        const expected = {
+          find: {
+            data: {},
+            errors: {},
+            status: INITIALIZED,
+          },
+          form: { data: { gadget: {} }, errors: {} },
+          submit: {
+            data: {},
+            errors: {},
+            status: INITIALIZED,
+          },
+        };
+
+        expect(reducer(undefined, action)).toEqual(expected);
       });
     });
   });

@@ -7,7 +7,7 @@ import buildShowPage from './index';
 describe('resource buildShowPage()', () => {
   const Block = () => (<div />);
   const namespace = 'path/to/widgets';
-  const resourceName = 'widget';
+  const resourceName = 'widgets';
   const url = 'api/v1/widgets';
   const defaultOptions = {
     Block,
@@ -32,6 +32,7 @@ describe('resource buildShowPage()', () => {
         expect(rendered).toHaveProp({ baseUrl: '/widgets' });
         expect(rendered).toHaveProp({ namespace });
         expect(rendered).toHaveProp({ resourceName });
+        expect(rendered).toHaveProp({ singularResourceName: 'widget' });
       });
 
       it('should pass the store hooks', () => {
@@ -109,6 +110,51 @@ describe('resource buildShowPage()', () => {
     describe('options', () => {
       it('should return the configured options', () => {
         expect(showPage.options).toEqual({ ...defaultOptions, baseUrl });
+      });
+    });
+  });
+
+  describe('with singularResourceName: value', () => {
+    const singularResourceName = 'gadget';
+    const showPage = buildShowPage({ ...defaultOptions, singularResourceName });
+
+    describe('<Page />', () => {
+      const { Page } = showPage;
+      const id = 'self-sealing-stem-bolt';
+      const match = { params: { id } };
+      const rendered = shallow(<Page match={match} />);
+
+      it('should be an IndexPage with the configured options', () => {
+        expect(rendered).toHaveDisplayName('ShowPage');
+
+        expect(rendered).toHaveProp({ Block });
+        expect(rendered).toHaveProp({ baseUrl: '/widgets' });
+        expect(rendered).toHaveProp({ namespace });
+        expect(rendered).toHaveProp({ resourceName });
+        expect(rendered).toHaveProp({ singularResourceName });
+      });
+    });
+
+    describe('reducer', () => {
+      const { reducer } = showPage;
+
+      it('should set the initial state', () => {
+        const action = { type: 'test/unknownAction' };
+        const expected = {
+          data: { data: { gadget: {} } },
+          destroy: {
+            data: {},
+            errors: {},
+            status: INITIALIZED,
+          },
+          find: {
+            data: {},
+            errors: {},
+            status: INITIALIZED,
+          },
+        };
+
+        expect(reducer(undefined, action)).toEqual(expected);
       });
     });
   });

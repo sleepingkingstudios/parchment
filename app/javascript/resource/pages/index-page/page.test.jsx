@@ -78,7 +78,9 @@ describe('<IndexPage />', () => {
       expect(content).toExist();
       expect(content).toHaveProp({ Table });
       expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName: 'widget' });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -144,6 +146,92 @@ describe('<IndexPage />', () => {
       ];
 
       expect(rendered).toHaveProp({ breadcrumbs: expected });
+    });
+  });
+
+  describe('with pluralDisplayName: value', () => {
+    const pluralDisplayName = 'gadgets';
+    const rendered = shallow(
+      <IndexPage {...defaultProps} pluralDisplayName={pluralDisplayName} />,
+    );
+
+    it('should render the page heading', () => {
+      const heading = rendered.find('HeadingWithButtons');
+      const expected = [
+        {
+          label: 'Create Widget',
+          outline: true,
+          url: '/widgets/create',
+        },
+      ];
+
+      expect(heading).toExist();
+      expect(heading).toHaveProp('children', titleize(pluralDisplayName));
+      expect(heading).toHaveProp({ buttons: expected });
+    });
+
+    it('should set the breadcrumbs', () => {
+      const expected = [
+        {
+          label: 'Home',
+          url: '/',
+        },
+        {
+          label: 'Gadgets',
+          url: '/widgets',
+          active: true,
+        },
+      ];
+
+      expect(rendered).toHaveProp({ breadcrumbs: expected });
+    });
+
+    it('should render the default content', () => {
+      const content = rendered.find('IndexPageContent');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ Table });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ pluralDisplayName });
+      expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ status });
+      expect(content).toHaveProp({ useDestroyRequest });
+    });
+  });
+
+  describe('with singularDisplayName: value', () => {
+    const singularDisplayName = 'gadget';
+    const rendered = shallow(
+      <IndexPage {...defaultProps} singularDisplayName={singularDisplayName} />,
+    );
+
+    it('should render the page heading', () => {
+      const heading = rendered.find('HeadingWithButtons');
+      const expected = [
+        {
+          label: 'Create Gadget',
+          outline: true,
+          url: '/widgets/create',
+        },
+      ];
+
+      expect(heading).toExist();
+      expect(heading).toHaveProp('children', titleize(resourceName));
+      expect(heading).toHaveProp({ buttons: expected });
+    });
+
+    it('should render the default content', () => {
+      const content = rendered.find('IndexPageContent');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ Table });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
+      expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName });
+      expect(content).toHaveProp({ status });
+      expect(content).toHaveProp({ useDestroyRequest });
     });
   });
 });

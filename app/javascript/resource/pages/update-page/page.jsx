@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import pluralize from 'pluralize';
 
 import Page from 'components/page';
 import {
@@ -16,15 +15,15 @@ const defaultBreadcrumbs = [
     url: '/',
   },
 ];
-const generateBreadcrumbs = (props) => {
+const generateBreadcrumbs = (options) => {
   const {
     baseUrl,
     breadcrumbs,
     id,
+    pluralDisplayName,
     resource,
-    resourceName,
     resourceNameProp,
-  } = props;
+  } = options;
   const name = resource && resource[resourceNameProp];
   const loaded = exists(name) && name.length > 0;
 
@@ -32,7 +31,7 @@ const generateBreadcrumbs = (props) => {
     [
       ...valueOrDefault(breadcrumbs, defaultBreadcrumbs),
       {
-        label: titleize(pluralize(resourceName)),
+        label: titleize(pluralDisplayName),
         url: baseUrl,
       },
       {
@@ -57,11 +56,22 @@ const UpdatePage = (props) => {
     match,
     resourceName,
     resourceNameProp,
+    singularResourceName,
   } = props;
+  const pluralDisplayName = valueOrDefault(
+    // eslint-disable-next-line react/destructuring-assignment
+    props.pluralDisplayName,
+    resourceName,
+  );
+  const singularDisplayName = valueOrDefault(
+    // eslint-disable-next-line react/destructuring-assignment
+    props.singularDisplayName,
+    singularResourceName,
+  );
   const mapData = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
     props.mapData,
-    data => data[resourceName],
+    data => data[singularResourceName],
   );
   const { params } = match;
   const { id } = params;
@@ -85,8 +95,8 @@ const UpdatePage = (props) => {
     // eslint-disable-next-line react/destructuring-assignment
     breadcrumbs: props.breadcrumbs,
     id,
+    pluralDisplayName,
     resource,
-    resourceName,
     resourceNameProp,
   });
 
@@ -94,7 +104,7 @@ const UpdatePage = (props) => {
 
   return (
     <Page breadcrumbs={breadcrumbs}>
-      <h1>Update {titleize(resourceName)}</h1>
+      <h1>Update {titleize(singularDisplayName)}</h1>
 
       <UpdatePageContent
         Form={Form}
@@ -102,7 +112,10 @@ const UpdatePage = (props) => {
         errors={errors}
         onChangeAction={updateForm}
         onSubmitAction={submitForm}
+        pluralDisplayName={pluralDisplayName}
         resourceName={resourceName}
+        singularDisplayName={singularDisplayName}
+        singularResourceName={singularResourceName}
         status={status}
         submitStatus={submitStatus}
       />
@@ -114,7 +127,9 @@ UpdatePage.defaultProps = {
   Form: null,
   breadcrumbs: null,
   mapData: null,
+  pluralDisplayName: null,
   resourceNameProp: 'name',
+  singularDisplayName: null,
 };
 
 UpdatePage.propTypes = {
@@ -135,8 +150,11 @@ UpdatePage.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  pluralDisplayName: PropTypes.string,
   resourceName: PropTypes.string.isRequired,
   resourceNameProp: PropTypes.string,
+  singularDisplayName: PropTypes.string,
+  singularResourceName: PropTypes.string.isRequired,
 };
 
 export default UpdatePage;

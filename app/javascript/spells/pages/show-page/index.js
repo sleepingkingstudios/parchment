@@ -11,7 +11,7 @@ const collectSource = collectAssociations({
 });
 const middleware = [collectSource];
 const namespace = 'spells/show';
-const resourceName = 'spell';
+const resourceName = 'spells';
 const url = '/api/spells';
 
 const showPage = buildShowPage({

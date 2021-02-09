@@ -7,7 +7,7 @@ import buildCreatePage from './index';
 describe('resource buildCreatePage()', () => {
   const Form = () => (<div />);
   const namespace = 'path/to/widgets';
-  const resourceName = 'widget';
+  const resourceName = 'widgets';
   const url = '/api/v1/widgets';
   const defaultOptions = {
     Form,
@@ -29,6 +29,7 @@ describe('resource buildCreatePage()', () => {
         expect(rendered).toHaveProp({ Form });
         expect(rendered).toHaveProp({ namespace });
         expect(rendered).toHaveProp({ resourceName });
+        expect(rendered).toHaveProp({ singularResourceName: 'widget' });
       });
 
       it('should pass the store hooks', () => {
@@ -106,6 +107,52 @@ describe('resource buildCreatePage()', () => {
         const expected = {
           form: {
             data,
+            errors: {},
+          },
+          submit: {
+            data: {},
+            errors: {},
+            status: INITIALIZED,
+          },
+        };
+
+        expect(reducer(undefined, action)).toEqual(expected);
+      });
+    });
+  });
+
+  describe('with singularResourceName: value', () => {
+    const singularResourceName = 'gadget';
+    const createPage = buildCreatePage({ ...defaultOptions, singularResourceName });
+
+    describe('<Page />', () => {
+      const { Page } = createPage;
+      const rendered = shallow(<Page />);
+
+      it('should be a CreatePage with the configured options', () => {
+        expect(rendered).toHaveDisplayName('CreatePage');
+
+        expect(rendered).toHaveProp({ Form });
+        expect(rendered).toHaveProp({ namespace });
+        expect(rendered).toHaveProp({ resourceName });
+        expect(rendered).toHaveProp({ singularResourceName });
+      });
+    });
+
+    describe('options', () => {
+      it('should return the configured options', () => {
+        expect(createPage.options).toEqual({ ...defaultOptions, singularResourceName });
+      });
+    });
+
+    describe('reducer', () => {
+      const { reducer } = createPage;
+
+      it('should set the initial state', () => {
+        const action = { type: 'test/unknownAction' };
+        const expected = {
+          form: {
+            data: { gadget: {} },
             errors: {},
           },
           submit: {

@@ -38,10 +38,12 @@ buildFindClient.mockImplementation(() => findClient);
 describe('resource index-page buildStore()', () => {
   const namespace = 'path/to/widgets';
   const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const url = '/api/v1/widgets';
   const defaultOptions = {
     namespace,
     resourceName,
+    singularResourceName,
     url,
   };
 

@@ -6,10 +6,12 @@ import IndexPageTable from './index';
 describe('<IndexPageTable />', () => {
   const columns = jest.fn(() => ([{ label: 'Name', prop: 'name' }]));
   const data = { widgets: [] };
+  const pluralDisplayName = 'gadgets';
   const resourceName = 'widgets';
   const defaultProps = {
     columns,
     data,
+    pluralDisplayName,
     resourceName,
   };
 
@@ -27,7 +29,7 @@ describe('<IndexPageTable />', () => {
     });
 
     it('should set the empty message', () => {
-      const expected = `There are no ${resourceName} matching the criteria.`;
+      const expected = `There are no ${pluralDisplayName} matching the criteria.`;
 
       expect(rendered).toHaveProp({ message: expected });
     });

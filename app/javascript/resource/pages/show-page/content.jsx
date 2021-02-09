@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 
 import StatusSwitch from 'components/status-switch';
 
-const renderFailure = ({ resourceName }) => {
+const renderFailure = ({ singularDisplayName }) => {
   const ShowPageFailureMessage = () => (
     <p className="loading-message loading-message-failure">
-      Unable to load {resourceName} data from the server.
+      Unable to load {singularDisplayName} data from the server.
     </p>
   );
 
   return ShowPageFailureMessage;
 };
-const renderPending = ({ resourceName }) => {
+const renderPending = ({ singularDisplayName }) => {
   const ShowPagePendingMessage = () => (
     <p className="loading-message loading-message-pending">
-      Loading {resourceName} data from the server...
+      Loading {singularDisplayName} data from the server...
     </p>
   );
 
@@ -25,11 +25,10 @@ const renderSuccess = (props) => {
   const {
     Block,
     data,
-    resourceName,
   } = props;
 
   const ShowPageBlock = () => (
-    <Block data={data} resourceName={resourceName} showAdditionalDetails />
+    <Block data={data} showAdditionalDetails />
   );
 
   return ShowPageBlock;
@@ -39,15 +38,14 @@ const ShowPageContent = (props) => {
   const {
     Block,
     data,
-    resourceName,
+    singularDisplayName,
     status,
   } = props;
-  const failure = renderFailure({ resourceName });
-  const pending = renderPending({ resourceName });
+  const failure = renderFailure({ singularDisplayName });
+  const pending = renderPending({ singularDisplayName });
   const success = renderSuccess({
     Block,
     data,
-    resourceName,
   });
 
   return (
@@ -66,7 +64,7 @@ ShowPageContent.defaultProps = {};
 ShowPageContent.propTypes = {
   Block: PropTypes.elementType.isRequired,
   data: PropTypes.objectOf(PropTypes.any).isRequired,
-  resourceName: PropTypes.string.isRequired,
+  singularDisplayName: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
 };
 

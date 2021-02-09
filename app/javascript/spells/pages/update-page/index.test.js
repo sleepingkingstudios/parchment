@@ -5,7 +5,7 @@ import { buildSpell } from '../../entities';
 describe('spells updatePage', () => {
   const data = { spell: buildSpell() };
   const namespace = 'spells/update';
-  const resourceName = 'spell';
+  const resourceName = 'spells';
   const url = '/api/spells';
 
   describe('options', () => {

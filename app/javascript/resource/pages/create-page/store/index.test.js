@@ -24,11 +24,13 @@ buildSubmitClient.mockImplementation(() => submitClient);
 
 describe('resource create-page buildStore()', () => {
   const namespace = 'path/to/widgets';
-  const resourceName = 'widget';
+  const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const url = '/api/v1/widgets';
   const defaultOptions = {
     namespace,
     resourceName,
+    singularResourceName,
     url,
   };
 
