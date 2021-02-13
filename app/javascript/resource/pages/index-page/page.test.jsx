@@ -77,6 +77,7 @@ describe('<IndexPage />', () => {
 
       expect(content).toExist();
       expect(content).toHaveProp({ Table });
+      expect(content).toHaveProp({ baseUrl: '/widgets' });
       expect(content).toHaveProp({ data });
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
@@ -119,6 +120,20 @@ describe('<IndexPage />', () => {
       ];
 
       expect(rendered).toHaveProp({ breadcrumbs: expected });
+    });
+
+    it('should render the default content', () => {
+      const content = rendered.find('IndexPageContent');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ Table });
+      expect(content).toHaveProp({ baseUrl });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
+      expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ status });
+      expect(content).toHaveProp({ useDestroyRequest });
     });
   });
 
@@ -191,6 +206,7 @@ describe('<IndexPage />', () => {
 
       expect(content).toExist();
       expect(content).toHaveProp({ Table });
+      expect(content).toHaveProp({ baseUrl: '/widgets' });
       expect(content).toHaveProp({ data });
       expect(content).toHaveProp({ pluralDisplayName });
       expect(content).toHaveProp({ resourceName });
@@ -226,6 +242,7 @@ describe('<IndexPage />', () => {
 
       expect(content).toExist();
       expect(content).toHaveProp({ Table });
+      expect(content).toHaveProp({ baseUrl: '/widgets' });
       expect(content).toHaveProp({ data });
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });

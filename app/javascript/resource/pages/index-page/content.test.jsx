@@ -6,6 +6,7 @@ import IndexPageContent from './content';
 
 describe('<IndexPageContent />', () => {
   const Table = () => (<div />);
+  const baseUrl = '/widgets';
   const data = { widgets: [] };
   const pluralDisplayName = 'gadgets';
   const resourceName = 'widgets';
@@ -13,6 +14,7 @@ describe('<IndexPageContent />', () => {
   const useDestroyRequest = jest.fn();
   const defaultProps = {
     Table,
+    baseUrl,
     data,
     pluralDisplayName,
     resourceName,
@@ -80,6 +82,7 @@ describe('<IndexPageContent />', () => {
       it('should display the table with the data', () => {
         expect(content).toHaveDisplayName('Table');
 
+        expect(content).toHaveProp({ baseUrl });
         expect(content).toHaveProp({ data });
         expect(content).toHaveProp({ pluralDisplayName });
         expect(content).toHaveProp({ resourceName });

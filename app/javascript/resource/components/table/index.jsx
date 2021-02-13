@@ -10,6 +10,7 @@ const defaultEmptyMessage = pluralDisplayName => (
 
 const IndexPageTable = (props) => {
   const {
+    baseUrl,
     columns,
     data,
     pluralDisplayName,
@@ -29,7 +30,7 @@ const IndexPageTable = (props) => {
 
   return (
     <DynamicTable
-      columns={columns({ useDestroyRequest })}
+      columns={columns({ baseUrl, useDestroyRequest })}
       data={valueOrDefault(mapData(data), [])}
       message={emptyMessage}
       resourceName={resourceName}
@@ -38,6 +39,7 @@ const IndexPageTable = (props) => {
 };
 
 IndexPageTable.defaultProps = {
+  baseUrl: null,
   data: {},
   emptyMessage: null,
   mapData: null,
@@ -45,6 +47,7 @@ IndexPageTable.defaultProps = {
 };
 
 IndexPageTable.propTypes = {
+  baseUrl: PropTypes.string,
   columns: PropTypes.func.isRequired,
   data: PropTypes.objectOf(PropTypes.any),
   emptyMessage: PropTypes.oneOfType([

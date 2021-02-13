@@ -85,6 +85,7 @@ const IndexPage = (props) => {
 
       <IndexPageContent
         Table={Table}
+        baseUrl={baseUrl}
         data={data}
         pluralDisplayName={pluralDisplayName}
         resourceName={resourceName}

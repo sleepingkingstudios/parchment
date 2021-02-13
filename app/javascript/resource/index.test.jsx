@@ -44,6 +44,7 @@ describe('resource buildResource()', () => {
       const expected = {
         ...defaultOptions,
         baseUrl: '/widgets',
+        breadcrumbs: null,
         namespace: 'widgets',
         singularResourceName: 'widget',
       };
@@ -92,6 +93,7 @@ describe('resource buildResource()', () => {
       const expected = {
         ...defaultOptions,
         baseUrl,
+        breadcrumbs: null,
         namespace: 'widgets',
         singularResourceName: 'widget',
       };
@@ -108,14 +110,59 @@ describe('resource buildResource()', () => {
     });
   });
 
-  describe('with namespace: value', () => {
-    const namespace = 'tools/widgets';
-    const resource = buildResource({ ...defaultOptions, namespace });
+  describe('with breadcrumbs: value', () => {
+    const breadcrumbs = [
+      {
+        label: 'Home',
+        url: '/',
+      },
+      {
+        label: 'Gadgets',
+        url: '/gadgets',
+      },
+    ];
+    const resource = buildResource({ ...defaultOptions, breadcrumbs });
 
     it('should normalize the resources', () => {
       const expected = {
         ...defaultOptions,
         baseUrl: '/widgets',
+        breadcrumbs,
+        namespace: 'widgets',
+        singularResourceName: 'widget',
+      };
+
+      buildResource({ ...defaultOptions, breadcrumbs });
+
+      expect(normalizeResources).toHaveBeenCalledWith(expected);
+    });
+
+    describe('options', () => {
+      it('should return the configured options', () => {
+        expect(resource.options).toEqual({ ...defaultOptions, breadcrumbs });
+      });
+    });
+  });
+
+  describe('with namespace: value', () => {
+    const namespace = 'tools/widgets';
+    const resource = buildResource({ ...defaultOptions, namespace });
+    const breadcrumbs = [
+      {
+        label: 'Home',
+        url: '/',
+      },
+      {
+        label: 'Tools',
+        url: '/tools',
+      },
+    ];
+
+    it('should normalize the resources', () => {
+      const expected = {
+        ...defaultOptions,
+        baseUrl: '/tools/widgets',
+        breadcrumbs,
         namespace,
         singularResourceName: 'widget',
       };
@@ -140,6 +187,7 @@ describe('resource buildResource()', () => {
       const expected = {
         ...defaultOptions,
         baseUrl: '/widgets',
+        breadcrumbs: null,
         namespace: 'widgets',
         singularResourceName,
       };
@@ -174,6 +222,7 @@ describe('resource buildResource()', () => {
       const expected = {
         ...defaultOptions,
         baseUrl: '/widgets',
+        breadcrumbs: null,
         namespace: 'widgets',
         resources,
         singularResourceName: 'widget',
@@ -246,6 +295,7 @@ describe('resource buildResource()', () => {
       const expected = {
         ...defaultOptions,
         baseUrl: '/widgets',
+        breadcrumbs: null,
         namespace: 'widgets',
         resources,
         singularResourceName: 'widget',
@@ -312,6 +362,7 @@ describe('resource buildResource()', () => {
       const expected = {
         ...defaultOptions,
         baseUrl: '/widgets',
+        breadcrumbs: null,
         namespace: 'widgets',
         resources,
         singularResourceName: 'widget',
@@ -381,6 +432,7 @@ describe('resource buildResource()', () => {
       const expected = {
         ...defaultOptions,
         baseUrl: '/widgets',
+        breadcrumbs: null,
         namespace: 'widgets',
         resources,
         singularResourceName: 'widget',

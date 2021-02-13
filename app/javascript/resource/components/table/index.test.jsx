@@ -49,6 +49,21 @@ describe('<IndexPageTable />', () => {
     });
   });
 
+  describe('with baseUrl: value', () => {
+    const baseUrl = '/path/to/widgets';
+
+    beforeEach(() => { columns.mockClear(); });
+
+    it('should pass the baseUrl to columns', () => {
+      shallow(<IndexPageTable {...defaultProps} baseUrl={baseUrl} />);
+
+      expect(columns).toHaveBeenCalledWith({
+        baseUrl,
+        useDestroyRequest: null,
+      });
+    });
+  });
+
   describe('with emptyMessage: string', () => {
     const emptyMessage = "These aren't the widgets you're looking for.";
     const rendered = shallow(<IndexPageTable {...defaultProps} emptyMessage={emptyMessage} />);
@@ -80,7 +95,10 @@ describe('<IndexPageTable />', () => {
     it('should pass the request to columns', () => {
       shallow(<IndexPageTable {...defaultProps} useDestroyRequest={useDestroyRequest} />);
 
-      expect(columns).toHaveBeenCalledWith({ useDestroyRequest });
+      expect(columns).toHaveBeenCalledWith({
+        baseUrl: null,
+        useDestroyRequest,
+      });
     });
   });
 });
