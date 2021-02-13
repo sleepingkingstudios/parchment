@@ -27,9 +27,11 @@ describe('<ShowPage />', () => {
   const defaultProps = {
     Block,
     baseUrl,
+    destroy: true,
     hooks,
     match,
     resourceName,
+    resources: { update: true },
     singularResourceName,
   };
 
@@ -226,6 +228,33 @@ describe('<ShowPage />', () => {
     });
   });
 
+  describe('with destroy: false', () => {
+    describe('when the resource has loaded', () => {
+      const widget = { id, name: 'Self-Sealing Stem Bolt' };
+      const loadedHooks = Object.assign(
+        {},
+        hooks,
+        { useData: () => ({ widget }) },
+      );
+      const loaded = shallow(<ShowPage {...defaultProps} hooks={loadedHooks} destroy={false} />);
+
+      it('should render the page heading', () => {
+        const heading = loaded.find('HeadingWithButtons');
+        const expected = [
+          {
+            label: 'Update Widget',
+            outline: true,
+            url: `${baseUrl}/${id}/update`,
+          },
+        ];
+
+        expect(heading).toExist();
+        expect(heading.shallow()).toIncludeText('Show Widget');
+        expect(heading).toHaveProp({ buttons: expected });
+      });
+    });
+  });
+
   describe('with pluralDisplayName: value', () => {
     const pluralDisplayName = 'gadgets';
     const rendered = shallow(
@@ -329,6 +358,38 @@ describe('<ShowPage />', () => {
         ];
 
         expect(loaded).toHaveProp({ breadcrumbs: expected });
+      });
+    });
+  });
+
+  describe('with resources: object', () => {
+    const resources = { create: true };
+
+    describe('when the resource has loaded', () => {
+      const widget = { id, name: 'Self-Sealing Stem Bolt' };
+      const loadedHooks = Object.assign(
+        {},
+        hooks,
+        { useData: () => ({ widget }) },
+      );
+      const loaded = shallow(
+        <ShowPage {...defaultProps} hooks={loadedHooks} resources={resources} />,
+      );
+
+      it('should render the page heading', () => {
+        const heading = loaded.find('HeadingWithButtons');
+        const expected = [
+          {
+            buttonStyle: 'danger',
+            label: 'Delete Widget',
+            onClick: destroyRequest,
+            outline: true,
+          },
+        ];
+
+        expect(heading).toExist();
+        expect(heading.shallow()).toIncludeText('Show Widget');
+        expect(heading).toHaveProp({ buttons: expected });
       });
     });
   });

@@ -64,6 +64,7 @@ const buildResource = (options) => {
     namespace,
     singularResourceName,
   });
+  // TODO: authorized = authorizeResources(normalized);
 
   const Routes = generateRoutes(resources);
   const reducer = generateReducer(resources);

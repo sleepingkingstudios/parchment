@@ -11,6 +11,13 @@ import {
 } from 'utils/string';
 import IndexPageContent from './content';
 
+const generateActions = ({ destroy, resources }) => {
+  const actions = Object.keys(resources);
+
+  if (destroy) { actions.push('destroy'); }
+
+  return actions;
+};
 const defaultBreadcrumbs = [
   {
     label: 'Home',
@@ -27,21 +34,29 @@ const generateBreadcrumbs = ({ baseUrl, breadcrumbs, pluralDisplayName }) => (
     },
   ]
 );
-const generateButtons = ({ baseUrl, singularDisplayName }) => (
-  [
-    {
-      label: `Create ${titleize(singularDisplayName)}`,
-      outline: true,
-      url: `${baseUrl}/create`,
-    },
-  ]
-);
+const generateButtons = ({ actions, baseUrl, singularDisplayName }) => {
+  const buttons = [];
+
+  if (actions.includes('create')) {
+    buttons.push(
+      {
+        label: `Create ${titleize(singularDisplayName)}`,
+        outline: true,
+        url: `${baseUrl}/create`,
+      },
+    );
+  }
+
+  return buttons;
+};
 
 const IndexPage = (props) => {
   const {
     Table,
+    destroy,
     hooks,
     resourceName,
+    resources,
   } = props;
   const baseUrl = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
@@ -58,13 +73,18 @@ const IndexPage = (props) => {
     props.singularDisplayName,
     pluralize.singular(resourceName),
   );
+  const actions = generateActions({ destroy, resources });
   const breadcrumbs = generateBreadcrumbs({
     baseUrl,
     // eslint-disable-next-line react/destructuring-assignment
     breadcrumbs: props.breadcrumbs,
     pluralDisplayName,
   });
-  const buttons = generateButtons({ baseUrl, singularDisplayName });
+  const buttons = generateButtons({
+    actions,
+    baseUrl,
+    singularDisplayName,
+  });
   const {
     useData,
     useDataStatus,
@@ -85,6 +105,7 @@ const IndexPage = (props) => {
 
       <IndexPageContent
         Table={Table}
+        actions={actions}
         baseUrl={baseUrl}
         data={data}
         pluralDisplayName={pluralDisplayName}
@@ -101,6 +122,7 @@ IndexPage.defaultProps = {
   Table: null,
   baseUrl: null,
   breadcrumbs: null,
+  destroy: true,
   pluralDisplayName: null,
   singularDisplayName: null,
 };
@@ -109,6 +131,7 @@ IndexPage.propTypes = {
   Table: PropTypes.elementType,
   baseUrl: PropTypes.string,
   breadcrumbs: PropTypes.arrayOf(PropTypes.object),
+  destroy: PropTypes.bool,
   hooks: PropTypes.shape({
     useData: PropTypes.func.isRequired,
     useDataStatus: PropTypes.func.isRequired,
@@ -117,6 +140,8 @@ IndexPage.propTypes = {
   }).isRequired,
   pluralDisplayName: PropTypes.string,
   resourceName: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  resources: PropTypes.object.isRequired,
   singularDisplayName: PropTypes.string,
 };
 

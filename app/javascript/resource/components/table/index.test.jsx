@@ -9,6 +9,7 @@ describe('<IndexPageTable />', () => {
   const pluralDisplayName = 'gadgets';
   const resourceName = 'widgets';
   const defaultProps = {
+    actions: ['update', 'destroy'],
     columns,
     data,
     pluralDisplayName,
@@ -44,8 +45,34 @@ describe('<IndexPageTable />', () => {
       expect(rendered).toHaveProp({ columns: expected });
     });
 
+    it('should pass the actions and baseUrl to columns', () => {
+      const actions = ['update', 'destroy'];
+
+      shallow(<IndexPageTable {...defaultProps} />);
+
+      expect(columns).toHaveBeenCalledWith({
+        actions,
+        baseUrl: null,
+        useDestroyRequest: null,
+      });
+    });
+
     it('should match the snapshot', () => {
       expect(rendered).toMatchSnapshot();
+    });
+  });
+
+  describe('with actions: value', () => {
+    const actions = ['index', 'show'];
+
+    it('should pass the actions and baseUrl to columns', () => {
+      shallow(<IndexPageTable {...defaultProps} actions={actions} />);
+
+      expect(columns).toHaveBeenCalledWith({
+        actions,
+        baseUrl: null,
+        useDestroyRequest: null,
+      });
     });
   });
 
@@ -54,10 +81,13 @@ describe('<IndexPageTable />', () => {
 
     beforeEach(() => { columns.mockClear(); });
 
-    it('should pass the baseUrl to columns', () => {
+    it('should pass the actions and baseUrl to columns', () => {
+      const actions = ['update', 'destroy'];
+
       shallow(<IndexPageTable {...defaultProps} baseUrl={baseUrl} />);
 
       expect(columns).toHaveBeenCalledWith({
+        actions,
         baseUrl,
         useDestroyRequest: null,
       });
@@ -93,9 +123,12 @@ describe('<IndexPageTable />', () => {
     beforeEach(() => { columns.mockClear(); });
 
     it('should pass the request to columns', () => {
+      const actions = ['update', 'destroy'];
+
       shallow(<IndexPageTable {...defaultProps} useDestroyRequest={useDestroyRequest} />);
 
       expect(columns).toHaveBeenCalledWith({
+        actions,
         baseUrl: null,
         useDestroyRequest,
       });

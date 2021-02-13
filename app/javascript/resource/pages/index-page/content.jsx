@@ -39,6 +39,7 @@ const renderPending = ({ Table, pluralDisplayName, resourceName }) => {
 const renderSuccess = (props) => {
   const {
     Table,
+    actions,
     baseUrl,
     data,
     resourceName,
@@ -48,6 +49,7 @@ const renderSuccess = (props) => {
 
   const IndexPageTable = () => (
     <Table
+      actions={actions}
       baseUrl={baseUrl}
       data={data}
       pluralDisplayName={pluralDisplayName}
@@ -62,6 +64,7 @@ const renderSuccess = (props) => {
 const IndexPageContent = (props) => {
   const {
     Table,
+    actions,
     baseUrl,
     data,
     pluralDisplayName,
@@ -73,6 +76,7 @@ const IndexPageContent = (props) => {
   const pending = renderPending({ Table, pluralDisplayName, resourceName });
   const success = renderSuccess({
     Table,
+    actions,
     baseUrl,
     data,
     pluralDisplayName,
@@ -98,6 +102,7 @@ IndexPageContent.defaultProps = {
 IndexPageContent.propTypes = {
   Table: PropTypes.elementType.isRequired,
   baseUrl: PropTypes.string.isRequired,
+  actions: PropTypes.arrayOf(PropTypes.string).isRequired,
   data: PropTypes.objectOf(PropTypes.any).isRequired,
   pluralDisplayName: PropTypes.string.isRequired,
   resourceName: PropTypes.string.isRequired,

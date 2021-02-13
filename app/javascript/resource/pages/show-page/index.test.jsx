@@ -8,11 +8,13 @@ describe('resource buildShowPage()', () => {
   const Block = () => (<div />);
   const namespace = 'path/to/widgets';
   const resourceName = 'widgets';
+  const resources = { update: true };
   const url = 'api/v1/widgets';
   const defaultOptions = {
     Block,
     namespace,
     resourceName,
+    resources,
     url,
   };
 

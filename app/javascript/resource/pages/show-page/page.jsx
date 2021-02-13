@@ -7,6 +7,13 @@ import { valueOrDefault } from 'utils/object';
 import { titleize } from 'utils/string';
 import ShowPageContent from './content';
 
+const generateActions = ({ destroy, resources }) => {
+  const actions = Object.keys(resources);
+
+  if (destroy) { actions.push('destroy'); }
+
+  return actions;
+};
 const defaultBreadcrumbs = [
   {
     label: 'Home',
@@ -51,6 +58,7 @@ const generateUpdateButton = ({ baseUrl, id, singularDisplayName }) => ({
 });
 const generateButtons = (options) => {
   const {
+    actions,
     baseUrl,
     destroyRequest,
     id,
@@ -60,20 +68,29 @@ const generateButtons = (options) => {
 
   if (!(resource && resource.id)) { return []; }
 
-  return [
-    generateUpdateButton({ baseUrl, id, singularDisplayName }),
-    generateDeleteButton({ destroyRequest, singularDisplayName }),
-  ];
+  const buttons = [];
+
+  if (actions.includes('update')) {
+    buttons.push(generateUpdateButton({ baseUrl, id, singularDisplayName }));
+  }
+
+  if (actions.includes('destroy')) {
+    buttons.push(generateDeleteButton({ destroyRequest, singularDisplayName }));
+  }
+
+  return buttons;
 };
 
 const ShowPage = (props) => {
   const {
     Block,
     baseUrl,
+    destroy,
     hooks,
     match,
     resourceName,
     resourceNameProp,
+    resources,
     singularResourceName,
   } = props;
   const pluralDisplayName = valueOrDefault(
@@ -104,6 +121,7 @@ const ShowPage = (props) => {
   const destroyRequest = useDestroyRequest({ wildcards: { id } });
   const requestData = useRequestData({ wildcards: { id } });
   const resource = mapData(data);
+  const actions = generateActions({ destroy, resources });
   const breadcrumbs = generateBreadcrumbs({
     baseUrl,
     // eslint-disable-next-line react/destructuring-assignment
@@ -115,6 +133,7 @@ const ShowPage = (props) => {
     resourceNameProp,
   });
   const buttons = generateButtons({
+    actions,
     baseUrl,
     destroyRequest,
     id,
@@ -146,6 +165,7 @@ const ShowPage = (props) => {
 ShowPage.defaultProps = {
   Block: null,
   breadcrumbs: null,
+  destroy: true,
   mapData: null,
   pluralDisplayName: null,
   resourceNameProp: 'name',
@@ -156,6 +176,7 @@ ShowPage.propTypes = {
   Block: PropTypes.elementType,
   baseUrl: PropTypes.string.isRequired,
   breadcrumbs: PropTypes.arrayOf(PropTypes.object),
+  destroy: PropTypes.bool,
   hooks: PropTypes.shape({
     useData: PropTypes.func.isRequired,
     useDataStatus: PropTypes.func.isRequired,
@@ -171,6 +192,8 @@ ShowPage.propTypes = {
   pluralDisplayName: PropTypes.string,
   resourceName: PropTypes.string.isRequired,
   resourceNameProp: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  resources: PropTypes.object.isRequired,
   singularDisplayName: PropTypes.string,
   singularResourceName: PropTypes.string.isRequired,
 };
