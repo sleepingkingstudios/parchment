@@ -11,21 +11,27 @@ const joinPath = (...segments) => {
   return `/${trimmed.join('/').replace(/\/$/, '')}`;
 };
 
-const generateRoute = (key, resource) => {
+const generateRoute = ({ key, resource, resources }) => {
   const {
     exact,
     options,
   } = resource;
   const { baseUrl } = options;
   const path = joinPath(baseUrl, resource.path);
-  const component = injectProps(resource.component, options);
+  const component = injectProps(
+    resource.component,
+    {
+      ...options,
+      resources,
+    },
+  );
 
   return (<Route key={key} component={component} exact={exact} path={path} />);
 };
 
 const generateRoutes = (resources) => {
   const routes = Object.entries(resources).map(
-    ([key, resource]) => generateRoute(key, resource),
+    ([key, resource]) => generateRoute({ key, resource, resources }),
   );
   const ResourceRoutes = () => (
     <Switch>

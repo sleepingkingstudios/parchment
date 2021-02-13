@@ -99,7 +99,7 @@ describe('resource normalizeResources()', () => {
 
       it('should set the component to the IndexPage', () => {
         const Page = index.component;
-        const rendered = shallow(<Page />);
+        const rendered = shallow(<Page resources={applied} />);
 
         expect(rendered).toHaveDisplayName('IndexPage');
         expect(rendered).toHaveProp({ Table });
@@ -139,7 +139,7 @@ describe('resource normalizeResources()', () => {
       it('should set the component to the ShowPage', () => {
         const Page = show.component;
         const match = { params: { id: '00000000-0000-0000-0000-000000000000' } };
-        const rendered = shallow(<Page match={match} />);
+        const rendered = shallow(<Page match={match} resources={applied} />);
 
         expect(rendered).toHaveDisplayName('ShowPage');
         expect(rendered).toHaveProp({ Block });

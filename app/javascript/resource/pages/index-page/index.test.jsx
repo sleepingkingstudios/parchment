@@ -8,11 +8,18 @@ describe('resource buildIndexPage()', () => {
   const Table = () => (<div />);
   const namespace = 'path/to/widgets';
   const resourceName = 'widgets';
+  const resources = {
+    create: true,
+    index: true,
+    show: true,
+    update: true,
+  };
   const url = '/api/v1/widgets';
   const defaultOptions = {
     Table,
     namespace,
     resourceName,
+    resources,
     url,
   };
 

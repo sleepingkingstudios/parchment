@@ -81,6 +81,8 @@ export const shouldGenerateTheRoutes = ({ Routes, normalized }) => {
         Object.entries(options).forEach(([prop, value]) => {
           expect(component).toHaveProp(prop, value);
         });
+
+        expect(component).toHaveProp('resources', normalized);
       });
     });
   });
