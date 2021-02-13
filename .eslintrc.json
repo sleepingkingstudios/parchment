@@ -37,6 +37,10 @@
           ".css",
           ".js",
           ".jsx"
+        ],
+        "moduleDirectory": [
+          "node_modules",
+          "app/javascript"
         ]
       }
     }

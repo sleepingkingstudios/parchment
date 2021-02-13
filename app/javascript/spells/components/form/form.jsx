@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { INITIALIZED } from 'api/status';
 import Form from '../../../components/form';
 import FormRow from '../../../components/form/row';
 import SpellFormComponentsField from './components-field';
@@ -22,9 +23,6 @@ import {
 
 import { formErrorsType } from '../../../components/form/entities';
 import { spellFormType } from '../../entities';
-import { hooks } from '../../store/formFindOrigins';
-
-const { useRequestData } = hooks;
 
 const SpellForm = ({
   data,
@@ -41,10 +39,6 @@ const SpellForm = ({
     onChangeAction,
     onSubmitAction,
   };
-
-  const requestData = useRequestData();
-
-  requestData();
 
   return (
     <Form className="spell-form" form={form}>
@@ -93,6 +87,7 @@ const SpellForm = ({
 
 SpellForm.defaultProps = {
   isUpdate: false,
+  status: INITIALIZED,
 };
 
 SpellForm.propTypes = {
@@ -101,7 +96,7 @@ SpellForm.propTypes = {
   isUpdate: PropTypes.bool,
   onChangeAction: PropTypes.func.isRequired,
   onSubmitAction: PropTypes.func.isRequired,
-  status: PropTypes.string.isRequired,
+  status: PropTypes.string,
 };
 
 export default SpellForm;

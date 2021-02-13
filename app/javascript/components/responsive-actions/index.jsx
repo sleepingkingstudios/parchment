@@ -15,19 +15,30 @@ import { underscore } from '../../utils/string';
 
 import './responsive-actions-styles.css';
 
+const resolveDestroyHook = ({ deleteEndpoint, useDestroyRequest }) => {
+  if (exists(useDestroyRequest)) { return useDestroyRequest; }
+
+  if (exists(deleteEndpoint)) {
+    const { hooks } = deleteEndpoint;
+    const { useDeleteData } = hooks;
+
+    return useDeleteData;
+  }
+
+  return null;
+};
+
 const renderDeleteLink = (props) => {
   const {
-    deleteEndpoint,
+    destroyHook,
     id,
     onDelete,
     resourceName,
   } = props;
 
-  if (!exists(deleteEndpoint)) { return null; }
+  if (!exists(destroyHook)) { return null; }
 
   const classifiedName = underscore(resourceName).replace(/_/i, '-');
-  const { hooks } = deleteEndpoint;
-  const { useDeleteData } = hooks;
   const hookOptions = { wildcards: { id } };
 
   if (exists(onDelete)) {
@@ -38,7 +49,7 @@ const renderDeleteLink = (props) => {
     };
   }
 
-  const deleteResource = useDeleteData(hookOptions);
+  const deleteResource = destroyHook(hookOptions);
 
   return (
     <Button
@@ -96,11 +107,16 @@ const ResponsiveActions = (props) => {
     onDelete,
     resourceName,
     slug,
+    useDestroyRequest,
   } = props;
   const classifiedName = underscore(resourceName).replace(/_/i, '-');
   const className = `responsive-actions ${classifiedName}-actions row`;
   const identifier = valueOrDefault(slug, id);
   const url = `${valueOrDefault(baseUrl, `/${pluralize(resourceName)}`)}/${identifier}`;
+  const destroyHook = resolveDestroyHook({
+    deleteEndpoint,
+    useDestroyRequest,
+  });
 
   return (
     <div className={className}>
@@ -108,7 +124,7 @@ const ResponsiveActions = (props) => {
       { actions.includes('update') && renderUpdateLink({ resourceName, url }) }
       {
         actions.includes('delete') && renderDeleteLink({
-          deleteEndpoint,
+          destroyHook,
           id,
           onDelete,
           resourceName,
@@ -124,6 +140,7 @@ ResponsiveActions.defaultProps = {
   deleteEndpoint: null,
   onDelete: null,
   slug: null,
+  useDestroyRequest: null,
 };
 
 ResponsiveActions.propTypes = {
@@ -138,6 +155,7 @@ ResponsiveActions.propTypes = {
   onDelete: PropTypes.func,
   resourceName: PropTypes.string.isRequired,
   slug: PropTypes.string,
+  useDestroyRequest: PropTypes.func,
 };
 
 export default ResponsiveActions;

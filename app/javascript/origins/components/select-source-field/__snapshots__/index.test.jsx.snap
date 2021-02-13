@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SelectSourceField /> should match the snapshot 1`] = `
+<FormSelectInput
+  className={null}
+  defaultOption="Homebrew"
+  id="spell-source-input"
+  onChange={[MockFunction]}
+  options={
+    Array [
+      Object {
+        "label": "Books",
+        "value": Array [],
+      },
+    ]
+  }
+  validStatus={null}
+  value="Book:00000000-0000-0000-0000-000000000000"
+/>
+`;
+
+exports[`<SelectSourceField /> when there are many origins should match the snapshot 1`] = `
+<FormSelectInput
+  className={null}
+  defaultOption="Homebrew"
+  id="spell-source-input"
+  onChange={[MockFunction]}
+  options={
+    Array [
+      Object {
+        "label": "Books",
+        "value": Array [
+          Object {
+            "label": "The Fellowship of the Ring",
+            "value": "Book:00000000-0000-0000-0000-000000000000",
+          },
+          Object {
+            "label": "The Two Towers",
+            "value": "Book:00000000-0000-0000-0000-000000000001",
+          },
+          Object {
+            "label": "The Return of the King",
+            "value": "Book:00000000-0000-0000-0000-000000000002",
+          },
+        ],
+      },
+    ]
+  }
+  validStatus={null}
+  value="Book:00000000-0000-0000-0000-000000000000"
+/>
+`;

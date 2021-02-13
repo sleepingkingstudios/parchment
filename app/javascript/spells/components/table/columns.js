@@ -1,9 +1,7 @@
+import ResponsiveActions from 'components/responsive-actions';
+import { injectProps } from 'utils/react';
+import { truncate } from 'utils/string';
 import ResponsiveSchool from './responsive-school';
-import SpellsTableActions from './actions';
-
-import { truncate } from '../../../utils/string';
-
-import './spells-table-styles.css';
 
 const spellDescription = (spell) => {
   if (spell.shortDescription) {
@@ -13,7 +11,7 @@ const spellDescription = (spell) => {
   return truncate(spell.description, 80);
 };
 
-const spellColumns = [
+const generateColumns = ({ useDestroyRequest }) => ([
   {
     label: 'Name',
     prop: 'name',
@@ -29,7 +27,13 @@ const spellColumns = [
     label: false,
     prop: 'actions',
     width: 3,
-    value: SpellsTableActions,
+    value: injectProps(
+      ResponsiveActions,
+      {
+        resourceName: 'spell',
+        useDestroyRequest,
+      },
+    ),
   },
   {
     header: false,
@@ -38,6 +42,6 @@ const spellColumns = [
     width: 12,
     value: spellDescription,
   },
-];
+]);
 
-export default spellColumns;
+export default generateColumns;

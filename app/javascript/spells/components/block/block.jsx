@@ -14,61 +14,69 @@ import './spell-block-styles.css';
 const renderAdditionalDetails = ({ data, showAdditionalDetails }) => {
   if (!showAdditionalDetails) { return null; }
 
+  const { spell } = data;
+
   return (
     <Fragment>
       <hr />
 
       <div className="spell-block-additional-details">
         <p className="spell-block-slug">
-          <em>Slug:</em> { data.slug }
+          <em>Slug:</em> { spell.slug }
         </p>
         <p className="spell-block-short-description">
-          <em>Short Description:</em> { data.shortDescription }
+          <em>Short Description:</em> { spell.shortDescription }
         </p>
       </div>
     </Fragment>
   );
 };
 
-const SpellBlock = ({ data, showAdditionalDetails }) => (
-  <div className="spell-block">
-    <p className="spell-block-name">{ data.name }</p>
+const SpellBlock = ({ data, showAdditionalDetails }) => {
+  const { spell } = data;
 
-    <p className="spell-block-source">
-      { exists(data.source) ? data.source.name : 'Homebrew' }
-    </p>
+  return (
+    <div className="spell-block">
+      <p className="spell-block-name">{ spell.name }</p>
 
-    <p className="spell-block-level-school">
-      { formatSchoolAndLevel(data) }
-    </p>
+      <p className="spell-block-source">
+        { exists(spell.source) ? spell.source.name : 'Homebrew' }
+      </p>
 
-    <div className="spell-block-stats">
-      <p className="spell-block-casting-time">
-        <strong>Casting Time:</strong> { data.castingTime }
+      <p className="spell-block-level-school">
+        { formatSchoolAndLevel(spell) }
       </p>
-      <p className="spell-block-range">
-        <strong>Range:</strong> { data.range }
-      </p>
-      <p className="spell-block-components">
-        <strong>Components:</strong> { formatComponents(data, true) }
-      </p>
-      <p className="spell-block-duration">
-        <strong>Duration:</strong> { data.duration }
-      </p>
+
+      <div className="spell-block-stats">
+        <p className="spell-block-casting-time">
+          <strong>Casting Time:</strong> { spell.castingTime }
+        </p>
+        <p className="spell-block-range">
+          <strong>Range:</strong> { spell.range }
+        </p>
+        <p className="spell-block-components">
+          <strong>Components:</strong> { formatComponents(spell, true) }
+        </p>
+        <p className="spell-block-duration">
+          <strong>Duration:</strong> { spell.duration }
+        </p>
+      </div>
+
+      <RichText className="spell-block-description" text={spell.description} />
+
+      { renderAdditionalDetails({ data, showAdditionalDetails }) }
     </div>
-
-    <RichText className="spell-block-description" text={data.description} />
-
-    { renderAdditionalDetails({ data, showAdditionalDetails }) }
-  </div>
-);
+  );
+};
 
 SpellBlock.defaultProps = {
   showAdditionalDetails: false,
 };
 
 SpellBlock.propTypes = {
-  data: spellType.isRequired,
+  data: PropTypes.shape({
+    spell: spellType.isRequired,
+  }).isRequired,
   showAdditionalDetails: PropTypes.bool,
 };
 

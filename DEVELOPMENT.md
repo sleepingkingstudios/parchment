@@ -78,15 +78,69 @@
 
 ### API
 
-- Refactor Endpoint class to client() function.
-- Clean up reducer namespaces: |
-    resourceName: { # Note that index is a reserved word!
-      block: { find },
-      create: { form },
-      delete: {},
-      table: { find },
-      update: { find, form }
-    }
+#### Requests
+
+#### Resources
+
+Hooks aggregation:
+
+- index page:
+  - useDataStatus     # from /find    (useStatus)
+  - useRequestData    # from /find    (usePerformRequest)
+  - use(Data|Table)   # from /data    (useData)
+  - useDestroyRequest # from /destroy (useRequest)
+- show page:
+  - useDataStatus     # from /find    (useStatus)
+  - useRequestData    # from /find    (usePerformRequest)
+  - useData           # from /data    (useData)
+- create page:
+  - useForm           # from /form    (useForm)
+  - useFormStatus     # from /submit  (useStatus)
+  - useSubmitForm     # from /submit  (usePerformRequest)
+- update page:
+  - useDataStatus     # from /find    (useStatus)
+  - useRequestData    # from /find    (usePerformRequest)
+  - useForm           # from /form    (useForm)
+  - useFormStatus     # from /submit  (useStatus)
+  - useSubmitForm     # from /submit  (usePerformRequest)
+
+Directory structure (explicit):
+
+- namespace/widgets
+  - components
+    - table
+  - index-page
+    - store
+      - data.js    # exports { hooks, reducer }
+      - destroy.js # exports { hooks, reducer }
+      - find.js    # exports { hooks, reducer }
+      - index.js   # exports { hooks, reducer }
+    - index.js     # exports { reducer, Page }
+    - page.js
+  - entities.js
+  - index.js        # exports { reducer, routes }
+  - reducer.js      # imports endpoint from index-page
+  - routes.js       # imports Page from index-page
+
+Directory structure (page objects):
+
+- namespace/widgets
+  - components
+    - table
+  - pages
+    - index-page.js      # imports entities, Table and exports { endpoint, Page }
+  - entities.js
+  - index.js             # exports { reducer, routes }
+  - reducer.js           # imports endpoint from index-page
+  - routes.js            # imports Page from index-page
+
+Directory structure (resource object):
+
+- namespace/widgets
+  - components
+    - table
+  - entities.js
+  - index.js             # imports entities, Table(, Block, Form) and exports { reducer, routes }
 
 ### Components
 

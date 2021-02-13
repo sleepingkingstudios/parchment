@@ -15,14 +15,15 @@ import {
   TitleField,
 } from './fields';
 
-const BookForm = ({
-  data,
-  errors,
-  isUpdate,
-  onChangeAction,
-  onSubmitAction,
-  status,
-}) => {
+const BookForm = (props) => {
+  const {
+    data,
+    errors,
+    isUpdate,
+    onChangeAction,
+    onSubmitAction,
+    status,
+  } = props;
   const form = {
     data,
     errors,

@@ -1,9 +1,10 @@
-import SkillsTableActions from './actions';
-import { capitalize } from '../../../../utils/string';
+import ResponsiveActions from 'components/responsive-actions';
+import { injectProps } from 'utils/react';
+import { capitalize } from 'utils/string';
 
 import './skills-table-styles.css';
 
-const columns = [
+const generateColumns = ({ actions, baseUrl, useDestroyRequest }) => ([
   {
     label: 'Name',
     prop: 'name',
@@ -18,7 +19,15 @@ const columns = [
   {
     label: false,
     prop: 'actions',
-    value: SkillsTableActions,
+    value: injectProps(
+      ResponsiveActions,
+      {
+        actions,
+        baseUrl,
+        resourceName: 'skill',
+        useDestroyRequest,
+      },
+    ),
     width: 3,
   },
   {
@@ -27,6 +36,6 @@ const columns = [
     prop: 'shortDescription',
     width: 12,
   },
-];
+]);
 
-export default columns;
+export default generateColumns;

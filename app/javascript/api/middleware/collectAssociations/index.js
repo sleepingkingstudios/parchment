@@ -207,6 +207,8 @@ const collectAssociation = (props) => {
     polymorphic,
   });
 
+  if (!exists(resource)) { return resource; }
+
   switch (qualifiedAssociationType) {
     case 'belongsTo':
       return collectBelongsToAssociation(props);

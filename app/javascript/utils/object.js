@@ -107,3 +107,11 @@ export const dig = (obj, ...path) => {
 
   return dig(obj[childName], ...path.slice(1));
 };
+
+export const isEmpty = (obj) => {
+  if (!exists(obj)) { return false; }
+
+  if (Array.isArray(obj)) { return obj.length === 0; }
+
+  return Object.entries(obj).length === 0;
+};

@@ -11,7 +11,7 @@ import {
 const spell = spellsData[0];
 
 describe('<SpellBlock />', () => {
-  const defaultProps = { data: spell };
+  const defaultProps = { data: { spell } };
 
   it('should wrap the contents in a <div> element', () => {
     const rendered = shallow(<SpellBlock {...defaultProps} />);
@@ -109,7 +109,7 @@ describe('<SpellBlock />', () => {
       referenceType: 'Spell',
     };
     const spellWithSource = { ...spell, source };
-    const props = { ...defaultProps, data: spellWithSource };
+    const props = { ...defaultProps, data: { spell: spellWithSource } };
 
     it('should render the spell source', () => {
       const rendered = shallow(<SpellBlock {...props} />);
