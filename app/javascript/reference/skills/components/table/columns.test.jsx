@@ -1,7 +1,18 @@
-import SkillsTableActions from './actions';
-import columns from './columns';
+import React from 'react';
+import { shallow } from 'enzyme';
+
+import generateColumns from './columns';
 
 describe('SkillsTable columns', () => {
+  const baseUrl = '/reference/skills';
+  const useDestroyRequest = jest.fn();
+  const actions = ['show'];
+  const columns = generateColumns({ actions, baseUrl, useDestroyRequest });
+
+  it('should be a function', () => {
+    expect(typeof generateColumns).toEqual('function');
+  });
+
   it('should have the expected props', () => {
     const props = columns.map(column => column.prop);
     const expected = [
@@ -30,7 +41,19 @@ describe('SkillsTable columns', () => {
       const matching = columns.find(column => (column.prop === 'actions'));
 
       expect(matching.label).toEqual(false);
-      expect(matching.value).toEqual(SkillsTableActions);
+    });
+
+    it('should render the actions component', () => {
+      const matching = columns.find(column => (column.prop === 'actions'));
+      const Actions = matching.value;
+      const id = '00000000-0000-0000-0000-000000000000';
+      const rendered = shallow(<Actions id={id} />);
+
+      expect(rendered).toHaveDisplayName('ResponsiveActions');
+      expect(rendered).toHaveProp({ actions });
+      expect(rendered).toHaveProp({ baseUrl });
+      expect(rendered).toHaveProp({ resourceName: 'skill' });
+      expect(rendered).toHaveProp({ useDestroyRequest });
     });
   });
 

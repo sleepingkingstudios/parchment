@@ -1,2 +1,2 @@
 /* eslint-disable-next-line import/prefer-default-export */
-export { default as SkillBlock } from './block';
+export { default as Block } from './block';

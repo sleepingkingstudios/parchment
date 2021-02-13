@@ -13,7 +13,7 @@ describe('<SkillBlock />', () => {
     shortDescription: 'Get down and boogie.',
     description: 'Disco will never die!',
   };
-  const defaultProps = { data: skill };
+  const defaultProps = { data: { skill } };
 
   it('should wrap the contents in a <div> element', () => {
     const rendered = shallow(<SkillBlock {...defaultProps} />);
