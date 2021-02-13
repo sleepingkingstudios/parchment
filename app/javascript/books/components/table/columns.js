@@ -1,6 +1,7 @@
-import BooksTableActions from './actions';
+import ResponsiveActions from 'components/responsive-actions';
+import { injectProps } from 'utils/react';
 
-const columns = [
+const generateColumns = ({ useDestroyRequest }) => ([
   {
     label: 'Title',
     prop: 'title',
@@ -12,11 +13,17 @@ const columns = [
     width: 4,
   },
   {
-    label: ' ',
+    label: false,
     prop: 'actions',
-    value: BooksTableActions,
+    value: injectProps(
+      ResponsiveActions,
+      {
+        resourceName: 'book',
+        useDestroyRequest,
+      },
+    ),
     width: 3,
   },
-];
+]);
 
-export default columns;
+export default generateColumns;

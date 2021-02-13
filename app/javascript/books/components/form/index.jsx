@@ -1,2 +1,2 @@
 /* eslint-disable-next-line import/prefer-default-export */
-export { default as BookForm } from './form';
+export { default as Form } from './form';

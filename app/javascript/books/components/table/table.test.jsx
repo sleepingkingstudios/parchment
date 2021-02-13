@@ -1,17 +1,17 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import SpellsTable from './table';
+import BooksTable from './table';
 import columns from './columns';
 
-describe('<SpellsTable />', () => {
-  const data = { spells: [] };
-  const pluralDisplayName = 'spells';
-  const resourceName = 'spells';
+describe('<BooksTable />', () => {
+  const data = { books: [] };
+  const pluralDisplayName = 'books';
+  const resourceName = 'books';
   const defaultOptions = { data, pluralDisplayName, resourceName };
 
   describe('with default options', () => {
-    const rendered = shallow(<SpellsTable {...defaultOptions} />);
+    const rendered = shallow(<BooksTable {...defaultOptions} />);
 
     it('should be an IndexPageTable', () => {
       expect(rendered).toHaveDisplayName('IndexPageTable');
