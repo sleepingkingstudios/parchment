@@ -1,0 +1,35 @@
+---
+- name:     Chimes of Crime
+  id:       ac43a96e-d220-4620-a89f-8b4d5913501d
+  slug:     chimes-of-crime
+  category: wondrous item
+  rarity:   rare
+  description: |
+    A set of silver chimes, which ring loudly when a law is broken nearby.
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
+- name:     Draught of Drafts
+  id:       f5ca01e7-098c-4d5e-b68a-ad332638d5ad
+  slug:     draught-of-drafts
+  category: potion
+  rarity:   uncommon
+  description: |
+    For 1 hour after drinking this potion, you can cause mild winds (up to 5
+    miles per hour) in up to a 30 foot radius as a bonus action.
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
+- name:     Flagon of Dragons
+  id:       48818213-6684-47b0-b88c-75689b1eb6bc
+  slug:     flagon-of-dragons
+  category: wondrous item
+  rarity:   artifact
+  description: |
+    This bottle contains a great wyrm dragon in an enchanted sleep. When opened,
+    the dragon emerges and grows to full size. It will likely attack anyone
+    nearby for its imprisonment.
+  source:
+    type:  Book
+    title: Spectres of Flumph Fortress
+

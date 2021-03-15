@@ -16,4 +16,11 @@ FactoryBot.define do
     data        { {} }
     description { "The description for item #{item_index}." }
   end
+
+  factory :magic_item, class: 'References::Items::MagicItem', parent: :item do
+    category { References::Items::MagicItem::Categories::WONDROUS_ITEM }
+    data     { { 'category' => category, 'rarity' => rarity } }
+    name     { "Magic Item #{item_index}" }
+    rarity   { References::Items::MagicItem::Rarities::UNCOMMON }
+  end
 end

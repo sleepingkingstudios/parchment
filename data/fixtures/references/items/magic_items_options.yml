@@ -1,0 +1,6 @@
+---
+find_by: name
+middleware:
+  - type: format_text
+    options: { property: description }
+  - type: set_source
