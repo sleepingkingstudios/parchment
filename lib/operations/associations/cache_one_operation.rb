@@ -31,7 +31,9 @@ module Operations::Associations
     def find_associated_records(records)
       query = { foreign_key_name => records.map(&:id) }
 
-      query[foreign_type_name] = record_class.name if polymorphic?
+      if polymorphic?
+        query[foreign_type_name] = non_sti_class_name(record_class)
+      end
 
       inverse_factory.find_matching.call(where: query)
     end
@@ -65,6 +67,12 @@ module Operations::Associations
 
     def inverse_factory
       @inverse_factory ||= Operations::Records::Factory.for(inverse_class)
+    end
+
+    def non_sti_class_name(record_class)
+      return record_class.name if record_class.descends_from_active_record?
+
+      non_sti_class_name(record_class.superclass)
     end
 
     def normalize_records(records)

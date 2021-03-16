@@ -441,7 +441,8 @@ module Spec::Support::Examples
     shared_examples 'should destroy the resource' \
     do |resource_name|
       include_context 'with an authorization token for a user'
-      include_context "when there are many #{resource_name.to_s.pluralize}"
+      include_context 'when there are many' \
+                      " #{resource_name.to_s.pluralize.tr('_', ' ')}"
 
       let(:expected_json) do
         {
@@ -500,7 +501,8 @@ module Spec::Support::Examples
       context 'when there are many resources' do
         # :nocov:
         begin
-          include_context "when there are many #{resource_name}"
+          include_context 'when there are many' \
+                          " #{resource_name.to_s.tr('_', ' ')}"
         rescue ArgumentError
           include_context 'when there are many resources'
         end
@@ -515,7 +517,8 @@ module Spec::Support::Examples
     shared_examples 'should show the resource' \
     do |resource_name, includes: []|
       include_context 'with an authorization token for a user'
-      include_context "when there are many #{resource_name.to_s.pluralize}"
+      include_context 'when there are many' \
+                      " #{resource_name.to_s.pluralize.tr('_', ' ')}"
 
       include_examples 'should require an authenticated user'
 
@@ -539,7 +542,8 @@ module Spec::Support::Examples
     shared_examples 'should update the resource' \
     do |resource_name|
       include_context 'with an authorization token for a user'
-      include_context "when there are many #{resource_name.to_s.pluralize}"
+      include_context 'when there are many' \
+                      " #{resource_name.to_s.pluralize.tr('_', ' ')}"
 
       shared_context 'with invalid attributes' do
         let(:"#{resource_name}_params") do
