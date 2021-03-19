@@ -76,6 +76,7 @@ const CreatePage = (props) => {
       <h1>Create {titleize(singularDisplayName)}</h1>
 
       <Form
+        baseUrl={baseUrl}
         data={data}
         errors={errors}
         onChangeAction={updateForm}

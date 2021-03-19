@@ -108,6 +108,7 @@ const UpdatePage = (props) => {
 
       <UpdatePageContent
         Form={Form}
+        baseUrl={baseUrl}
         data={data}
         errors={errors}
         onChangeAction={updateForm}

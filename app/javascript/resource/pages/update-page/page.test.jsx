@@ -98,6 +98,7 @@ describe('<UpdatePage />', () => {
 
       expect(content).toExist();
       expect(content).toHaveProp({ Form });
+      expect(content).toHaveProp({ baseUrl });
       expect(content).toHaveProp({ data });
       expect(content).toHaveProp({ errors });
       expect(content).toHaveProp({ onChangeAction: updateForm });

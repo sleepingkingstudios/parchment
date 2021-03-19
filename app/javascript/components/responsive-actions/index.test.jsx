@@ -69,7 +69,7 @@ describe('<ResponsiveActions />', () => {
     });
   });
 
-  describe('with actions: an array that does not include "delete"', () => {
+  describe('with actions: an array that does not include "destroy"', () => {
     const actions = ['show', 'update'];
 
     it('should render the show link', () => {
@@ -117,7 +117,7 @@ describe('<ResponsiveActions />', () => {
   });
 
   describe('with actions: an array that does not include "show"', () => {
-    const actions = ['update', 'delete'];
+    const actions = ['update', 'destroy'];
 
     it('should render the actions', () => {
       const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
@@ -161,7 +161,7 @@ describe('<ResponsiveActions />', () => {
   });
 
   describe('with actions: an array that does not include "update"', () => {
-    const actions = ['show', 'delete'];
+    const actions = ['show', 'destroy'];
 
     it('should render the actions', () => {
       const rendered = shallow(<ResponsiveActions {...defaultProps} actions={actions} />);
@@ -412,7 +412,7 @@ describe('<ResponsiveActions />', () => {
       expect(useDestroyRequest).toHaveBeenCalledWith({ wildcards: { id } });
     });
 
-    describe('with actions: an array that does not include "delete"', () => {
+    describe('with actions: an array that does not include "destroy"', () => {
       const actions = ['show', 'update'];
 
       it('should not render the delete link', () => {

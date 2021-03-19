@@ -31,6 +31,7 @@ RSpec.describe Serializers::References::Items::MagicItemSerializer do
       :name,
       :rarity,
       :slug,
-      :short_description
+      :short_description,
+      :type
   end
 end

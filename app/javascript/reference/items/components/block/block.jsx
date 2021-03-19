@@ -1,28 +1,37 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import RichText from '../../../../components/rich-text';
+import RichText from 'components/rich-text';
+import { exists } from 'utils/object';
+import {
+  capitalize,
+  underscore,
+} from 'utils/string';
+
 import { itemType } from '../../entities';
-import { exists } from '../../../../utils/object';
 
 import './item-block-styles.css';
 
-const renderItemType = ({ data }) => {
-  const { type } = data;
+const renderItemType = ({ item }) => {
+  const { type } = item;
 
   if (exists(type)) {
-    const words = type.split('::');
+    const segments = type.split('::');
+    const words = underscore(segments[segments.length - 1])
+      .split('_')
+      .map(capitalize)
+      .join(' ');
 
     return (
       <p className="item-block-type">
-        <em>Type:</em> { words[words.length - 1] }
+        <em>Type:</em> { words }
       </p>
     );
   }
 
   return (
-    <p className="item-block-type text-muted">
-      <em>Type:</em> (None)
+    <p className="item-block-type">
+      <em>Type:</em> <span className="text-muted">(None)</span>
     </p>
   );
 };
@@ -30,49 +39,57 @@ const renderItemType = ({ data }) => {
 const renderAdditionalDetails = ({ data, showAdditionalDetails }) => {
   if (!showAdditionalDetails) { return null; }
 
+  const { item } = data;
+
   return (
     <Fragment>
       <hr />
 
       <div className="item-block-additional-details">
-        { renderItemType({ data }) }
+        { renderItemType({ item }) }
 
         <p className="item-block-slug">
-          <em>Slug:</em> { data.slug }
+          <em>Slug:</em> { item.slug }
         </p>
 
         <p className="item-block-short-description">
-          <em>Short Description:</em> { data.shortDescription }
+          <em>Short Description:</em> { item.shortDescription }
         </p>
 
         <p className="item-block-data">
-          <em>Data:</em> { JSON.stringify(data.data) }
+          <em>Data:</em> { JSON.stringify(item.data) }
         </p>
       </div>
     </Fragment>
   );
 };
 
-const ItemBlock = ({ data, showAdditionalDetails }) => (
-  <div className="item-block">
-    <p className="item-block-name">{ data.name }</p>
+const ItemBlock = ({ data, showAdditionalDetails }) => {
+  const { item } = data;
 
-    <p className="item-block-cost">
-      <strong>Cost:</strong> { data.cost }
-    </p>
+  return (
+    <div className="item-block">
+      <p className="item-block-name">{ item.name }</p>
 
-    <RichText className="item-block-description" text={data.description} />
+      <p className="item-block-cost">
+        <strong>Cost:</strong> { item.cost }
+      </p>
 
-    { renderAdditionalDetails({ data, showAdditionalDetails })}
-  </div>
-);
+      <RichText className="item-block-description" text={item.description} />
+
+      { renderAdditionalDetails({ data, showAdditionalDetails })}
+    </div>
+  );
+};
 
 ItemBlock.defaultProps = {
   showAdditionalDetails: false,
 };
 
 ItemBlock.propTypes = {
-  data: itemType.isRequired,
+  data: PropTypes.shape({
+    item: itemType.isRequired,
+  }).isRequired,
   showAdditionalDetails: PropTypes.bool,
 };
 

@@ -9,6 +9,7 @@ import UpdatePageContent from './content';
 
 describe('<UpdatePageContent />', () => {
   const Form = () => (<div />);
+  const baseUrl = '/widgets';
   const data = { widget: {} };
   const errors = {};
   const onChangeAction = jest.fn();
@@ -18,6 +19,7 @@ describe('<UpdatePageContent />', () => {
   const submitStatus = PENDING;
   const defaultProps = {
     Form,
+    baseUrl,
     data,
     errors,
     onChangeAction,
@@ -72,6 +74,7 @@ describe('<UpdatePageContent />', () => {
       it('should display the form with the data and actions', () => {
         expect(content).toHaveDisplayName('Form');
 
+        expect(content).toHaveProp({ baseUrl });
         expect(content).toHaveProp({ data });
         expect(content).toHaveProp({ errors });
         expect(content).toHaveProp({ isUpdate: true });

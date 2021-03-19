@@ -1,6 +1,7 @@
-import ItemsTableActions from './actions';
+import ResponsiveActions from 'components/responsive-actions';
+import { injectProps } from 'utils/react';
 
-const columns = [
+const generateColumns = ({ actions, baseUrl, useDestroyRequest }) => ([
   {
     label: 'Name',
     prop: 'name',
@@ -14,9 +15,17 @@ const columns = [
   {
     label: false,
     prop: 'actions',
-    value: ItemsTableActions,
+    value: injectProps(
+      ResponsiveActions,
+      {
+        actions,
+        baseUrl,
+        resourceName: 'item',
+        useDestroyRequest,
+      },
+    ),
     width: 3,
   },
-];
+]);
 
-export default columns;
+export default generateColumns;

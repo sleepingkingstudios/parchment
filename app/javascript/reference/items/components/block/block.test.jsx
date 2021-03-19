@@ -13,7 +13,7 @@ describe('<ItemBlock />', () => {
     data: { holy: true },
     description: 'A relic of an ancient Flumph saint. Ramen.',
   };
-  const defaultProps = { data: item };
+  const defaultProps = { data: { item } };
 
   it('should wrap the contents in a <div> element', () => {
     const rendered = shallow(<ItemBlock {...defaultProps} />);
@@ -91,14 +91,17 @@ describe('<ItemBlock />', () => {
       const typeElement = rendered.find('.item-block-type');
 
       expect(typeElement).toHaveDisplayName('p');
-      expect(typeElement).toHaveClassName('text-muted');
       expect(typeElement).toHaveText('Type: (None)');
     });
 
     describe('when the item has a type', () => {
+      const data = {
+        item: { ...item, type: 'References::Items::Explosives' },
+      };
+
       it('should render the item type', () => {
         const rendered = shallow(
-          <ItemBlock {...defaultProps} showAdditionalDetails data={{ ...item, type: 'References::Items::Explosives' }} />,
+          <ItemBlock {...defaultProps} showAdditionalDetails data={data} />,
         );
         const typeElement = rendered.find('.item-block-type');
 
