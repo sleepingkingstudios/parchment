@@ -2,7 +2,7 @@
 
 exports[`<PageNavigationItem /> should match the snapshot 1`] = `
 <div
-  className="nav-item"
+  className="nav-item nav-item-resource"
 >
   <Link
     className="nav-link"

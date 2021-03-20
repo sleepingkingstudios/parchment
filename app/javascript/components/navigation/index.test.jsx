@@ -62,4 +62,19 @@ describe('<PageNavigation />', () => {
 
     expect(rendered).toMatchSnapshot();
   });
+
+  describe('with className: value', () => {
+    const className = 'custom-navigation';
+
+    it('should render the navigation bar', () => {
+      const rendered = shallow(<PageNavigation {...defaultProps} className={className} />);
+
+      expect(rendered).toHaveDisplayName('nav');
+      expect(rendered).toHaveClassName('navbar');
+      expect(rendered).toHaveClassName('navbar-expand-md');
+      expect(rendered).toHaveClassName('navbar-light');
+      expect(rendered).toHaveClassName('page-header-navigation');
+      expect(rendered).toHaveClassName(className);
+    });
+  });
 });

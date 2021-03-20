@@ -58,4 +58,24 @@ describe('resource generateRoutes()', () => {
       normalized,
     });
   });
+
+  describe('with an additional page with multiword path', () => {
+    const landing = {
+      component: LandingPage,
+      exact: true,
+      options: { baseUrl: '/widgets', resourceName: 'widget' },
+      path: '/landing-page',
+      reducer: null,
+    };
+    const normalized = {
+      ...fixtures,
+      landing,
+    };
+    const Routes = generateRoutes(normalized);
+
+    shouldGenerateTheRoutes({
+      Routes,
+      normalized,
+    });
+  });
 });

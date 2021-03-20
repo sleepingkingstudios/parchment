@@ -3,8 +3,8 @@ import { shallow } from 'enzyme';
 
 import generateColumns from './columns';
 
-describe('ItemsTable columns', () => {
-  const baseUrl = '/reference/items';
+describe('MagicItemsTable columns', () => {
+  const baseUrl = '/reference/items/magic-items';
   const useDestroyRequest = jest.fn();
   const actions = ['show', 'update', 'destroy'];
   const columns = generateColumns({ actions, baseUrl, useDestroyRequest });
@@ -17,8 +17,8 @@ describe('ItemsTable columns', () => {
     const props = columns.map(column => column.prop);
     const expected = [
       'name',
-      'type',
-      'cost',
+      'category',
+      'rarity',
       'actions',
     ];
 
@@ -41,17 +41,18 @@ describe('ItemsTable columns', () => {
       expect(rendered).toHaveDisplayName('ResponsiveActions');
       expect(rendered).toHaveProp({ actions });
       expect(rendered).toHaveProp({ baseUrl });
-      expect(rendered).toHaveProp({ resourceName: 'item' });
+      expect(rendered).toHaveProp({ resourceName: 'magicItem' });
       expect(rendered).toHaveProp({ useDestroyRequest });
     });
   });
 
-  describe('cost', () => {
+  describe('category', () => {
     it('should have the expected properties', () => {
-      const matching = columns.find(column => (column.prop === 'cost'));
+      const matching = columns.find(column => (column.prop === 'category'));
 
-      expect(matching.label).toEqual('Cost');
-      expect(matching.value).toBeUndefined();
+      expect(matching.label).toEqual('Category');
+      expect(typeof matching.value).toEqual('function');
+      expect(matching.value({ category: 'wondrous item' })).toEqual('Wondrous Item');
     });
   });
 
@@ -64,30 +65,13 @@ describe('ItemsTable columns', () => {
     });
   });
 
-  describe('type', () => {
-    describe('with an item with no type', () => {
-      it('should have the expected properties', () => {
-        const matching = columns.find(column => (column.prop === 'type'));
-        const rendered = shallow(matching.value({}));
+  describe('rarity', () => {
+    it('should have the expected properties', () => {
+      const matching = columns.find(column => (column.prop === 'rarity'));
 
-        expect(matching.label).toEqual('Type');
-        expect(typeof matching.value).toEqual('function');
-
-        expect(rendered).toExist();
-        expect(rendered).toHaveDisplayName('span');
-        expect(rendered).toHaveClassName('text-muted');
-        expect(rendered).toHaveText('(None)');
-      });
-    });
-
-    describe('with an item with type: a value', () => {
-      it('should have the expected properties', () => {
-        const matching = columns.find(column => (column.prop === 'type'));
-
-        expect(matching.label).toEqual('Type');
-        expect(typeof matching.value).toEqual('function');
-        expect(matching.value({ type: 'Types::RocketFuel' })).toEqual('Rocket Fuel');
-      });
+      expect(matching.label).toEqual('Rarity');
+      expect(typeof matching.value).toEqual('function');
+      expect(matching.value({ rarity: 'very rare' })).toEqual('Very Rare');
     });
   });
 });

@@ -148,15 +148,21 @@ const normalizeResources = (options) => {
       const [key, raw] = tuple;
       const resource = applyDefaultsToResource(key, raw, options);
 
-      if (exists(resource)) {
-        resource.options = Object.assign(
-          {},
-          removeResources(options),
-          valueOrDefault(raw.options, {}),
-        );
-      }
+      if (!exists(resource)) { return [key, null]; }
 
-      return [key, resource];
+      const resourceWithOptions = Object.assign(
+        {},
+        resource,
+        {
+          options: Object.assign(
+            {},
+            removeResources(options),
+            valueOrDefault(raw.options, {}),
+          ),
+        },
+      );
+
+      return [key, resourceWithOptions];
     },
   );
 

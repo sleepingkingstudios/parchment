@@ -3,12 +3,9 @@ import PropTypes from 'prop-types';
 
 import RichText from 'components/rich-text';
 import { exists } from 'utils/object';
-import {
-  capitalize,
-  underscore,
-} from 'utils/string';
 
 import { itemType } from '../../entities';
+import { formatType } from '../../utils';
 
 import './item-block-styles.css';
 
@@ -16,15 +13,9 @@ const renderItemType = ({ item }) => {
   const { type } = item;
 
   if (exists(type)) {
-    const segments = type.split('::');
-    const words = underscore(segments[segments.length - 1])
-      .split('_')
-      .map(capitalize)
-      .join(' ');
-
     return (
       <p className="item-block-type">
-        <em>Type:</em> { words }
+        <em>Type:</em> { formatType(type) }
       </p>
     );
   }

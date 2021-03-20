@@ -1,16 +1,24 @@
 import ResponsiveActions from 'components/responsive-actions';
 import { injectProps } from 'utils/react';
+import { titleize } from 'utils/string';
 
 const generateColumns = ({ actions, baseUrl, useDestroyRequest }) => ([
   {
     label: 'Name',
     prop: 'name',
-    width: 6,
+    width: 4,
   },
   {
-    label: 'Cost',
-    prop: 'cost',
+    label: 'Category',
+    prop: 'category',
     width: 3,
+    value: magicItem => titleize(magicItem.category),
+  },
+  {
+    label: 'Rarity',
+    prop: 'rarity',
+    width: 2,
+    value: magicItem => titleize(magicItem.rarity),
   },
   {
     label: false,
@@ -20,7 +28,7 @@ const generateColumns = ({ actions, baseUrl, useDestroyRequest }) => ([
       {
         actions,
         baseUrl,
-        resourceName: 'item',
+        resourceName: 'magicItem',
         useDestroyRequest,
       },
     ),

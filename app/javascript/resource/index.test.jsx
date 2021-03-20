@@ -179,6 +179,45 @@ describe('resource buildResource()', () => {
     });
   });
 
+  describe('with namespace: multiword value', () => {
+    const namespace = 'parts/rocketEngines/liquidFuel';
+    const resource = buildResource({ ...defaultOptions, namespace });
+    const breadcrumbs = [
+      {
+        label: 'Home',
+        url: '/',
+      },
+      {
+        label: 'Parts',
+        url: '/parts',
+      },
+      {
+        label: 'Rocket Engines',
+        url: '/parts/rocket-engines',
+      },
+    ];
+
+    it('should normalize the resources', () => {
+      const expected = {
+        ...defaultOptions,
+        baseUrl: '/parts/rocket-engines/liquid-fuel',
+        breadcrumbs,
+        namespace,
+        singularResourceName: 'widget',
+      };
+
+      buildResource({ ...defaultOptions, namespace });
+
+      expect(normalizeResources).toHaveBeenCalledWith(expected);
+    });
+
+    describe('options', () => {
+      it('should return the configured options', () => {
+        expect(resource.options).toEqual({ ...defaultOptions, namespace });
+      });
+    });
+  });
+
   describe('with singularResourceName: value', () => {
     const singularResourceName = 'gadget';
     const resource = buildResource({ ...defaultOptions, singularResourceName });

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
-import PageNavigation from '../navigation';
+import PageNavigation from 'components/navigation';
 
 const navigation = {
   Home: '/',
@@ -14,6 +14,7 @@ const navigation = {
   Books: '/books',
   Reference: {
     Items: '/reference/items',
+    '— Magic Items': '/reference/items/magic-items',
     Languages: '/reference/languages',
     Skills: '/reference/skills',
   },
@@ -51,7 +52,7 @@ const renderNavigation = ({ showNavigation }) => {
   if (!showNavigation) { return null; }
 
   return (
-    <PageNavigation items={navigation} />
+    <PageNavigation className="primary-navigation" items={navigation} />
   );
 };
 

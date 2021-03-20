@@ -1,15 +1,8 @@
 import resource from './index';
-import { Content as ItemsIndexPageContent } from './pages/index-page';
-import { Block } from './components/block';
-import { Form } from './components/form';
+import { Content as ItemsIndexPageContent } from '../pages/index-page';
 import { Table } from './components/table';
-import { buildItem } from './entities';
-import {
-  Routes as MagicItems,
-  reducer as magicItemsReducer,
-} from './magic-items';
 
-describe('items resource', () => {
+describe('magic items resource', () => {
   const breadcrumbs = [
     {
       label: 'Home',
@@ -20,29 +13,24 @@ describe('items resource', () => {
       url: '/reference',
       active: true,
     },
-  ];
-  const namespace = 'reference/items';
-  const resourceName = 'items';
-  const url = '/api/reference/items';
-  const resources = {
-    create: { options: { data: { item: buildItem() } } },
-    index: { options: { Content: ItemsIndexPageContent } },
-    magicItems: {
-      component: MagicItems,
-      exact: false,
-      options: {},
-      path: '/magic-items',
-      reducer: magicItemsReducer,
+    {
+      label: 'Items',
+      url: '/reference/items',
     },
-    show: true,
-    update: true,
+  ];
+  const namespace = 'reference/items/magicItems';
+  const resourceName = 'magicItems';
+  const url = '/api/reference/items/magic_items';
+  const resources = {
+    index: { options: { Content: ItemsIndexPageContent } },
+    create: false,
+    show: false,
+    update: false,
   };
 
   describe('options', () => {
     it('should return the configured options', () => {
       const expected = {
-        Block,
-        Form,
         Table,
         breadcrumbs,
         namespace,

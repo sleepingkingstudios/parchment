@@ -36,12 +36,14 @@ describe('<PageHeader />', () => {
       Books: '/books',
       Reference: {
         Items: '/reference/items',
+        '— Magic Items': '/reference/items/magic-items',
         Languages: '/reference/languages',
         Skills: '/reference/skills',
       },
     };
 
     expect(navigation).toExist();
+    expect(navigation).toHaveClassName('primary-navigation');
     expect(navigation).toHaveProp({ items: expected });
   });
 

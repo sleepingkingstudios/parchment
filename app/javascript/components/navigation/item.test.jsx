@@ -13,6 +13,7 @@ describe('<PageNavigationItem />', () => {
 
     expect(rendered).toHaveDisplayName('div');
     expect(rendered).toHaveClassName('nav-item');
+    expect(rendered).toHaveClassName('nav-item nav-item-resource');
   });
 
   it('should render the navigation link', () => {

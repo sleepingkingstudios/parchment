@@ -17,12 +17,14 @@ Rails.application.routes.draw do
     )
   end
 
-  def self.client_resources(resource_name, **options)
+  def self.client_resources(resource_name, **options, &block)
     options = options.reverse_merge(
       except: [],
       only:   CLIENT_ROUTES
     )
     endpoints = Set.new(options[:only] - options[:except])
+
+    scope(resource_name, &block) if block_given?
 
     if endpoints.include?(:new)
       get "#{resource_name}/create", to: 'client#index'
@@ -82,7 +84,9 @@ Rails.application.routes.draw do
   end
 
   scope :reference do
-    client_resources :items
+    client_resources :items do
+      client_resources :magic_items
+    end
 
     client_resources :languages, only: %i[index show]
 

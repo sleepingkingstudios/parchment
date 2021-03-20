@@ -67,6 +67,16 @@ describe('<HomePage />', () => {
     expect(link).toHaveProp('children', 'Languages');
   });
 
+  it('should render the magic items link', () => {
+    const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
+    const link = rendered.find('.magic-items-link');
+
+    expect(link).toExist();
+    expect(link).toHaveDisplayName('Link');
+    expect(link).toHaveProp('to', '/reference/items/magic-items');
+    expect(link).toHaveProp('children', 'Magic Items');
+  });
+
   it('should render the skills link', () => {
     const rendered = shallow(<HomePage {...defaultProps} />, { wrappingComponent: Router });
     const link = rendered.find('.skills-link');
