@@ -72,6 +72,23 @@ describe('<DynamicTableHeaderCell />', () => {
     });
   });
 
+  describe('with resourceName: multiword value', () => {
+    const resourceName = 'rocketParts';
+
+    it('should render the header cell', () => {
+      const rendered = shallow(
+        <DynamicTableHeaderCell {...defaultProps} resourceName={resourceName} />,
+      );
+
+      expect(rendered).toHaveDisplayName('div');
+      expect(rendered).toHaveClassName('col');
+      expect(rendered).toHaveClassName('dynamic-table-header-cell');
+      expect(rendered).toHaveClassName('rocket-parts-table-header-cell');
+      expect(rendered).toHaveClassName('rocket-parts-table-header-property-name-cell');
+      expect(rendered).toHaveText('Property Name');
+    });
+  });
+
   describe('with width: value', () => {
     const width = 3;
 

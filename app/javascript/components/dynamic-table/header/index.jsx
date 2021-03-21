@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { exists } from 'utils/object';
+import { addClassName } from 'utils/react';
+import { kebabize } from 'utils/string';
 import DynamicTableHeaderCell from './cell';
 import { columnsType } from '../entities';
-import { exists } from '../../../utils/object';
-import { addClassName } from '../../../utils/react';
 
 const DynamicTableHeader = (props) => {
   const { columns, resourceName } = props;
   const className = addClassName(
     'dynamic-table-header',
-    exists(resourceName) ? `${resourceName}-table-header` : null,
+    exists(resourceName) ? `${kebabize(resourceName)}-table-header` : null,
     'row',
   );
 

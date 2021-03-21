@@ -9,6 +9,7 @@ module Features
         Condition
         Item
         Language
+        MagicItem
         Skill
         Spell
       ].map { |resource_name| find(resource_name) }

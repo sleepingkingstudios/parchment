@@ -225,4 +225,27 @@ describe('<DynamicTable />', () => {
       });
     });
   });
+
+  describe('with resourceName: multiword value', () => {
+    const data = [
+      {
+        id: '00000000-0000-0000-0000-000000000000',
+        name: 'Self-sealing Stem Bolt',
+        price: '10.00',
+        quantity: 50,
+      },
+    ];
+    const resourceName = 'rocketParts';
+
+    it('should render the dynamic table', () => {
+      const rendered = shallow(
+        <DynamicTable {...defaultProps} data={data} resourceName={resourceName} />,
+      );
+
+      expect(rendered).toHaveDisplayName('div');
+      expect(rendered).toHaveClassName('dynamic-table');
+      expect(rendered).toHaveClassName('rocket-parts-table');
+      expect(rendered).toHaveClassName('container');
+    });
+  });
 });

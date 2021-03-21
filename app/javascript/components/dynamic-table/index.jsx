@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { exists } from 'utils/object';
+import { addClassName } from 'utils/react';
+import { kebabize } from 'utils/string';
 import DynamicTableEmptyMessage from './empty-message';
 import DynamicTableHeader from './header';
 import DynamicTableRow from './row';
 import { columnsType } from './entities';
-import { exists } from '../../utils/object';
-import { addClassName } from '../../utils/react';
 
 import './dynamic-table-styles.css';
 
@@ -31,7 +32,7 @@ const DynamicTable = (props) => {
   } = props;
   const actualClassName = addClassName(
     'dynamic-table',
-    exists(resourceName) ? `${resourceName}-table` : null,
+    exists(resourceName) ? `${kebabize(resourceName)}-table` : null,
     'container',
     className,
   );

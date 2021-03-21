@@ -4,13 +4,15 @@ require_relative '../resources'
 require_relative './definition'
 
 module Features::Resources
-  class Item < Features::Resources::Definition
-    def block_attributes
+  class MagicItem < Features::Resources::Definition
+    def block_attributes # rubocop:disable Metrics/MethodLength
       %w[
         name
+        category
         cost
         data
         description
+        rarity
         short_description
         slug
         type
@@ -18,17 +20,19 @@ module Features::Resources
     end
 
     def class_name
-      'References::Item'
+      'References::Items::MagicItem'
     end
 
-    def fetch_data(item)
-      convert_keys(item.data).to_json
+    def fetch_category(magic_item)
+      magic_item.category.titleize
     end
 
-    def fetch_type(item)
-      return '(None)' if item.type.nil?
+    def fetch_data(magic_item)
+      convert_keys(magic_item.data).to_json
+    end
 
-      item.type.split('::').last.underscore.split('_').map(&:titleize).join(' ')
+    def fetch_rarity(magic_item)
+      magic_item.rarity.titleize
     end
 
     def invalid_attributes
@@ -38,13 +42,13 @@ module Features::Resources
     def table_columns
       @table_columns ||= %w[
         name
-        cost
-        type
+        category
+        rarity
       ]
     end
 
     def valid_attributes
-      super.merge(name: 'Big Red Button')
+      super.merge(name: 'Philter of Filtering')
     end
 
     private

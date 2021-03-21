@@ -1,18 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { columnProps } from '../entities';
-import { addClassName } from '../../../utils/react';
 import {
   exists,
   valueOrDefault,
-} from '../../../utils/object';
-import { underscore } from '../../../utils/string';
+} from 'utils/object';
+import { addClassName } from 'utils/react';
+import {
+  kebabize,
+  underscore,
+} from 'utils/string';
+import { columnProps } from '../entities';
 
 const customClassName = ({ prop, resourceName }) => {
   const classifiedProp = underscore(prop).replace(/_/i, '-');
 
-  return `${resourceName}-table-row-cell ${resourceName}-table-row-${classifiedProp}-cell`;
+  return `${kebabize(resourceName)}-table-row-cell ${kebabize(resourceName)}-table-row-${classifiedProp}-cell`;
 };
 
 const defaultValue = prop => data => data[prop];

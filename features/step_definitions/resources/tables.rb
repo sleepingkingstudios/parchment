@@ -26,7 +26,7 @@ end
 Then('the {string} table should be empty') do |resource|
   @current_page.wait_until_loading_message_invisible
 
-  resource_name = resource.underscore.pluralize
+  resource_name = resource.underscore.pluralize.tr('_', ' ')
   rows          = @current_page.table_rows
   empty_message = @current_page.empty_message
 
