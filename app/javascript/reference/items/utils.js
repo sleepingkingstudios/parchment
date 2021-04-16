@@ -10,7 +10,7 @@ export const formatType = (str) => {
   const segments = str.split('::');
 
   return underscore(segments[segments.length - 1])
-    .split('_')
+    .split(/[_ ]/)
     .map(capitalize)
     .join(' ');
 };

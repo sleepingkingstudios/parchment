@@ -1,16 +1,19 @@
 import pluralize from 'pluralize';
 
-import { addAlert } from '../../../alerts/store/actions';
-import { generateFingerprintUuid } from '../../../utils/uuid';
-import {
-  dig,
-  valueOrDefault,
-} from '../../../utils/object';
-import { capitalize } from '../../../utils/string';
+import { addAlert } from 'alerts/store/actions';
 import {
   pastTense,
   progressiveTense,
-} from '../../../utils/inflector';
+} from 'utils/inflector';
+import {
+  dig,
+  valueOrDefault,
+} from 'utils/object';
+import {
+  capitalize,
+  underscore,
+} from 'utils/string';
+import { generateFingerprintUuid } from 'utils/uuid';
 
 const buildFailureAlert = (options) => {
   const action = valueOrDefault(options.action, 'process');
@@ -18,7 +21,7 @@ const buildFailureAlert = (options) => {
   const alertStyle = valueOrDefault(dig(options, 'failure', 'alertStyle'), 'warning');
   const message = valueOrDefault(
     dig(options, 'failure', 'message'),
-    `Unable to ${action} ${resource}.`,
+    `Unable to ${action} ${underscore(resource).replace(/_/, ' ')}.`,
   );
 
   return {
@@ -35,7 +38,7 @@ const buildPendingAlert = (options) => {
   const alertStyle = valueOrDefault(dig(options, 'pending', 'alertStyle'), 'info');
   const message = valueOrDefault(
     dig(options, 'pending', 'message'),
-    `${capitalize(progressiveTense(action))} ${resource}...`,
+    `${capitalize(progressiveTense(action))} ${underscore(resource).replace(/_/, ' ')}...`,
   );
 
   return {
@@ -52,7 +55,7 @@ const buildSuccessAlert = (options) => {
   const alertStyle = valueOrDefault(dig(options, 'success', 'alertStyle'), 'success');
   const message = valueOrDefault(
     dig(options, 'success', 'message'),
-    `Successfully ${pastTense(action)} ${resource}.`,
+    `Successfully ${pastTense(action)} ${underscore(resource).replace(/_/, ' ')}.`,
   );
 
   return {

@@ -1,5 +1,6 @@
 import buildResource from 'resource';
 import { Content as ItemsIndexPageContent } from '../pages/index-page';
+import { Block } from './components/block';
 import { Table } from './components/table';
 
 const breadcrumbs = [
@@ -21,13 +22,14 @@ const namespace = 'reference/items/magicItems';
 const resourceName = 'magicItems';
 const url = '/api/reference/items/magic_items';
 const resources = {
-  index: { options: { Content: ItemsIndexPageContent } },
   create: false,
-  show: false,
+  index: { options: { Content: ItemsIndexPageContent } },
+  show: true,
   update: false,
 };
 
 const resource = buildResource({
+  Block,
   Table,
   breadcrumbs,
   namespace,

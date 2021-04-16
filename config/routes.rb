@@ -85,7 +85,7 @@ Rails.application.routes.draw do
 
   scope :reference do
     client_resources :items do
-      client_resources :magic_items
+      client_resources :'magic-items'
     end
 
     client_resources :languages, only: %i[index show]

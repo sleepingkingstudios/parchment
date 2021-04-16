@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MagicItemBlock /> should match the snapshot 1`] = `
+<div
+  className="magic-item-block"
+>
+  <p
+    className="magic-item-block-name"
+  >
+    Chimes of Crime
+  </p>
+  <p
+    className="magic-item-block-category"
+  >
+    <strong>
+      Category:
+    </strong>
+     
+    Wondrous Item
+  </p>
+  <p
+    className="magic-item-block-rarity"
+  >
+    <strong>
+      Rarity:
+    </strong>
+     
+    Rare
+  </p>
+  <p
+    className="magic-item-block-cost"
+  >
+    <strong>
+      Cost:
+    </strong>
+     
+    501-5,000 gp
+  </p>
+  <RichText
+    className="magic-item-block-description"
+    liquid={true}
+    markdown={true}
+    text="A relic of an ancient Flumph saint. Ramen."
+  />
+</div>
+`;

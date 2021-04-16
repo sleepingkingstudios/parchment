@@ -19,6 +19,7 @@ describe('<IndexPage />', () => {
     useRequestData: jest.fn(() => requestData),
   };
   const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const defaultProps = {
     Table,
     hooks,
@@ -28,6 +29,7 @@ describe('<IndexPage />', () => {
       show: true,
       update: true,
     },
+    singularResourceName,
   };
 
   beforeEach(() => {
@@ -90,6 +92,7 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -112,6 +115,7 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -162,6 +166,7 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -209,6 +214,7 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -228,6 +234,7 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -280,6 +287,7 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -297,7 +305,8 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ data });
       expect(content).toHaveProp({ pluralDisplayName: 'rocket parts' });
       expect(content).toHaveProp({ resourceName: customResourceName });
-      expect(content).toHaveProp({ singularDisplayName: 'rocket part' });
+      expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -331,6 +340,7 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -367,6 +377,28 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName });
+      expect(content).toHaveProp({ singularResourceName });
+      expect(content).toHaveProp({ status });
+      expect(content).toHaveProp({ useDestroyRequest });
+    });
+  });
+
+  describe('with singularResourceName: a multiword string', () => {
+    const customResourceName = 'rocket_part';
+    const rendered = shallow(
+      <IndexPage {...defaultProps} singularResourceName={customResourceName} />,
+    );
+
+    it('should render the default content', () => {
+      const content = rendered.find('IndexPageContent');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ Table });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
+      expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName: 'rocket part' });
+      expect(content).toHaveProp({ singularResourceName: customResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });

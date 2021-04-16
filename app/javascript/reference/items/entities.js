@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 
-// eslint-disable-next-line import/prefer-default-export
 export const itemType = PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

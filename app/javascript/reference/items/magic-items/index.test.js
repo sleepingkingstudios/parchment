@@ -1,5 +1,6 @@
 import resource from './index';
 import { Content as ItemsIndexPageContent } from '../pages/index-page';
+import { Block } from './components/block';
 import { Table } from './components/table';
 
 describe('magic items resource', () => {
@@ -24,13 +25,14 @@ describe('magic items resource', () => {
   const resources = {
     index: { options: { Content: ItemsIndexPageContent } },
     create: false,
-    show: false,
+    show: true,
     update: false,
   };
 
   describe('options', () => {
     it('should return the configured options', () => {
       const expected = {
+        Block,
         Table,
         breadcrumbs,
         namespace,

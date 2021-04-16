@@ -790,4 +790,74 @@ describe('Alerts middleware', () => {
       });
     });
   });
+
+  describe('with resourceName: a multi-word string', () => {
+    const resourceName = 'rocketPart';
+
+    describe('with failure: true', () => {
+      const middleware = alerts({ resourceName, failure: true });
+      const { handleFailure } = middleware;
+
+      describe('handleFailure()', () => {
+        const props = {
+          dispatch: jest.fn(),
+          getState: jest.fn(),
+          response: {},
+        };
+
+        afterEach(() => { props.dispatch.mockClear(); });
+
+        shouldAddAlert(handleFailure, props, {
+          id: generateFingerprintUuid('rocketParts/process'),
+          alertStyle: 'warning',
+          dismissible: true,
+          message: 'Unable to process rocket part.',
+        });
+      });
+    });
+
+    describe('with pending: true', () => {
+      const middleware = alerts({ resourceName, pending: true });
+      const { handlePending } = middleware;
+
+      describe('handlePending()', () => {
+        const props = {
+          dispatch: jest.fn(),
+          getState: jest.fn(),
+          response: {},
+        };
+
+        afterEach(() => { props.dispatch.mockClear(); });
+
+        shouldAddAlert(handlePending, props, {
+          id: generateFingerprintUuid('rocketParts/process'),
+          alertStyle: 'info',
+          dismissible: true,
+          message: 'Processing rocket part...',
+        });
+      });
+    });
+
+    describe('with success: true', () => {
+      const middleware = alerts({ resourceName, success: true });
+      const { handleSuccess } = middleware;
+
+      describe('handleSuccess()', () => {
+        const props = {
+          dispatch: jest.fn(),
+          getState: jest.fn(),
+          response: {},
+        };
+
+        afterEach(() => { props.dispatch.mockClear(); });
+
+        shouldAddAlert(handleSuccess, props, {
+          id: generateFingerprintUuid('rocketParts/process'),
+          alertStyle: 'success',
+          dismissible: true,
+          message: 'Successfully processed rocket part.',
+        });
+      });
+    });
+  });
 });

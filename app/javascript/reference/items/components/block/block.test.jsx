@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { valueOrDefault } from 'utils/object';
 import ItemBlock from './block';
-import { valueOrDefault } from '../../../../utils/object';
 
 describe('<ItemBlock />', () => {
   const item = {

@@ -34,7 +34,19 @@ describe('items utils', () => {
 
     describe('with a multiple word type', () => {
       it('should format the type', () => {
+        expect(formatType('rocket fuel')).toEqual('Rocket Fuel');
+      });
+    });
+
+    describe('with a camelcase word type', () => {
+      it('should format the type', () => {
         expect(formatType('Types::RocketFuel')).toEqual('Rocket Fuel');
+      });
+    });
+
+    describe('with an underscored word type', () => {
+      it('should format the type', () => {
+        expect(formatType('rocket_fuel')).toEqual('Rocket Fuel');
       });
     });
   });

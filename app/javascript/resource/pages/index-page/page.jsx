@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import pluralize from 'pluralize';
 
 import HeadingWithButtons from 'components/heading-with-buttons';
 import Page from 'components/page';
@@ -58,6 +57,7 @@ const IndexPage = (props) => {
     mapData,
     resourceName,
     resources,
+    singularResourceName,
   } = props;
   const PageContent = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
@@ -72,12 +72,12 @@ const IndexPage = (props) => {
   const pluralDisplayName = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
     props.pluralDisplayName,
-    underscore(pluralize(resourceName)).replace(/_/, ' '),
+    underscore(resourceName).replace(/_/, ' '),
   );
   const singularDisplayName = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
     props.singularDisplayName,
-    underscore(pluralize.singular(resourceName)).replace(/_/, ' '),
+    underscore(singularResourceName).replace(/_/, ' '),
   );
   const actions = generateActions({ destroy, resources });
   const breadcrumbs = generateBreadcrumbs({
@@ -119,6 +119,7 @@ const IndexPage = (props) => {
         pluralDisplayName={pluralDisplayName}
         resourceName={resourceName}
         singularDisplayName={singularDisplayName}
+        singularResourceName={singularResourceName}
         status={status}
         useDestroyRequest={useDestroyRequest}
       />
@@ -155,6 +156,7 @@ IndexPage.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   resources: PropTypes.object.isRequired,
   singularDisplayName: PropTypes.string,
+  singularResourceName: PropTypes.string.isRequired,
 };
 
 export default IndexPage;

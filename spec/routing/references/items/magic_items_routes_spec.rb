@@ -8,5 +8,5 @@ RSpec.describe 'routes' do
   include Spec::Support::Examples::RoutingExamples
 
   include_examples 'should route to Client resource',
-    'reference/items/magic_items'
+    'reference/items/magic-items'
 end
