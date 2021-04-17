@@ -1,4 +1,4 @@
-@items @destroy @reference
+@destroy @items @reference
 Feature: Destroying An Item
   The destroy item process allows the user to delete an existing item object.
 
