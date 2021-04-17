@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../resources'
-require_relative './definition'
+require_relative '../items'
+require_relative '../definition'
 
-module Features::Resources
+module Features::Resources::Items
   class MagicItem < Features::Resources::Definition
     def block_attributes # rubocop:disable Metrics/MethodLength
       %w[
@@ -28,11 +28,15 @@ module Features::Resources
     end
 
     def fetch_data(magic_item)
-      convert_keys(magic_item.data).to_json
+      magic_item.data.to_json
     end
 
     def fetch_rarity(magic_item)
       magic_item.rarity.titleize
+    end
+
+    def fetch_type(magic_item)
+      magic_item.type.split('::').last.titleize
     end
 
     def invalid_attributes
@@ -49,21 +53,6 @@ module Features::Resources
 
     def valid_attributes
       super.merge(name: 'Philter of Filtering')
-    end
-
-    private
-
-    def convert_keys(obj)
-      case obj
-      when Hash
-        obj
-          .map { |key, value| [key.to_s.camelize, value] }
-          .yield_self { |ary| Hash[ary] }
-      when Array
-        obj.map { |item| convert_keys(item) }
-      else
-        obj
-      end
     end
   end
 end

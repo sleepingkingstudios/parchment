@@ -8,8 +8,8 @@ module Features
         Book
         Condition
         Item
+        Items::MagicItem
         Language
-        MagicItem
         Skill
         Spell
       ].map { |resource_name| find(resource_name) }

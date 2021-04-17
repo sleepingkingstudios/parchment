@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../pages'
+require_relative '../items'
 
-module Features::Pages
+module Features::Pages::Items
   module MagicItems; end
 end

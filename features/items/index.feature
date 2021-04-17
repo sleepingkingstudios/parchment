@@ -1,5 +1,5 @@
 @index @items @reference
-Feature: Showing Index
+Feature: Showing Items
   The items index provides a tabular view of the defined item objects.
 
   Example: Navigating to the Items Index Page

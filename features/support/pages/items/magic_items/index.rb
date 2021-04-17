@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../base'
-require_relative '../items'
+require_relative '../../base'
+require_relative '../magic_items'
 
-module Features::Pages::MagicItems
+module Features::Pages::Items::MagicItems
   class Index < Features::Pages::Base
     set_url '/reference/items/magic-items'
 
