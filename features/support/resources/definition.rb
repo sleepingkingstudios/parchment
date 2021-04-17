@@ -63,7 +63,9 @@ module Features::Resources
     end
 
     def valid_attributes
-      FactoryBot.attributes_for(name.underscore.singularize)
+      resource_name = name.split('::').last
+
+      FactoryBot.attributes_for(resource_name.underscore.singularize)
     end
   end
 end

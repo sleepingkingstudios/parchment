@@ -152,8 +152,6 @@ const MagicItemForm = (props) => {
 
   return (
     <Form className="magic-item-form" form={form}>
-      <h2>Magic Item Form</h2>
-
       <FormRow>
         <NameField form={form} colWidth={8} />
 

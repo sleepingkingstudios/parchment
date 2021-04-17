@@ -17,7 +17,7 @@ Feature: Showing A Magic Item
       Then I should see the Login form
 
     Example: When The Magic Item Does Not Exist
-      When I visit the "Show" page for "Items::MagicItem" "Severed Head of Vecna"
+      When I visit the "Show" page for "Items::MagicItem" "Collect Call of Cthulhu"
       And  I am logged in as a user
       Then I should be on the "Items::MagicItems index" page
 

@@ -32,9 +32,6 @@ exports[`<MagicItemForm /> should match the snapshot 1`] = `
     }
   }
 >
-  <h2>
-    Magic Item Form
-  </h2>
   <FormRow
     align="left"
     className=""
