@@ -27,7 +27,7 @@ const resources = {
   create: { options: { data: { magicItem: buildMagicItem() } } },
   index: { options: { Content: ItemsIndexPageContent } },
   show: true,
-  update: false,
+  update: { options: { data: { magicItem: buildMagicItem() } } },
 };
 
 const resource = buildResource({

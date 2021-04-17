@@ -1,4 +1,4 @@
-@create @items @reference
+@create @magic_items @reference
 Feature: Creating A Magic Item
   The create magic item process allows the user to define a magic item.
 
