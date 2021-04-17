@@ -29,7 +29,7 @@ export const magicItemDefaultAttributes = Object.assign(
   {
     category: 'wondrous item',
     rarity: 'common',
-    type: 'References::Items::magicItem',
+    type: 'References::Items::MagicItem',
   },
 );
 

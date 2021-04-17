@@ -2,9 +2,10 @@ import { push } from 'connected-react-router';
 import pluralize from 'pluralize';
 
 import {
+  camelizeKeys,
   dig,
   valueOrDefault,
-} from '../../../utils/object';
+} from 'utils/object';
 
 const defaultSelector = resourceName => data => dig(data, resourceName);
 
@@ -26,7 +27,7 @@ const buildRedirect = (options) => {
   return next => ({ dispatch, getState, response }) => {
     next({ dispatch, getState, response });
 
-    const data = dig(response, 'json', 'data');
+    const data = camelizeKeys(dig(response, 'json', 'data'));
     const value = valueOrDefault(
       dig(selector(data), 'slug'),
       dig(selector(data), primaryKey),

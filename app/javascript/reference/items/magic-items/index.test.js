@@ -1,7 +1,9 @@
 import resource from './index';
 import { Content as ItemsIndexPageContent } from '../pages/index-page';
 import { Block } from './components/block';
+import { Form } from './components/form';
 import { Table } from './components/table';
+import { buildMagicItem } from './entities';
 
 describe('magic items resource', () => {
   const breadcrumbs = [
@@ -23,8 +25,8 @@ describe('magic items resource', () => {
   const resourceName = 'magicItems';
   const url = '/api/reference/items/magic_items';
   const resources = {
+    create: { options: { data: { magicItem: buildMagicItem() } } },
     index: { options: { Content: ItemsIndexPageContent } },
-    create: false,
     show: true,
     update: false,
   };
@@ -33,6 +35,7 @@ describe('magic items resource', () => {
     it('should return the configured options', () => {
       const expected = {
         Block,
+        Form,
         Table,
         breadcrumbs,
         namespace,

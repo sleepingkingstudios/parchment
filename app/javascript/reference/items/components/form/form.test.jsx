@@ -1,13 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ItemForm from './form';
-import { INITIALIZED } from '../../../../api/status';
+import { INITIALIZED } from 'api/status';
 import {
   toHaveFormControl,
   toHaveFormGroup,
   toHaveFormInput,
-} from '../../../../utils/enzyme';
+} from 'utils/enzyme';
+import ItemForm from './form';
 
 expect.extend({
   toHaveFormControl: toHaveFormControl(expect),

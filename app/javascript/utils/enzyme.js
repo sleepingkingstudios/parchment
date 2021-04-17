@@ -1,4 +1,7 @@
-import { valueOrDefault } from './object';
+import {
+  exists,
+  valueOrDefault,
+} from './object';
 import { safeCapitalize } from './string';
 
 export const extractInjectedComponent = (component) => {
@@ -27,7 +30,7 @@ export const toHaveFormGroup = expect => (received, expectedGroup, fn) => {
   return { pass: true, message: () => '' };
 };
 
-export const toHaveFormInput = expect => (received, props) => {
+export const toHaveFormInput = expect => (received, props, fn) => {
   const {
     form,
     inputType,
@@ -45,6 +48,8 @@ export const toHaveFormInput = expect => (received, props) => {
 
   expect(shallowInput).toExist();
   expect(shallowInput).toHaveDisplayName(valueOrDefault(inputType, 'FormInput'));
+
+  if (exists(fn)) { fn(shallowInput); }
 
   return { pass: true, message: () => '' };
 };
