@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Form from '../../../../components/form';
-import FormCancelButton from '../../../../components/form/cancel-button';
-import FormInput from '../../../../components/form/input';
-import FormRow from '../../../../components/form/row';
-import FormSubmitButton from '../../../../components/form/submit-button';
-import FormTextAreaInput from '../../../../components/form/text-area-input';
+import Form from 'components/form';
+import FormCancelButton from 'components/form/cancel-button';
+import FormInput from 'components/form/input';
+import FormRow from 'components/form/row';
+import FormSubmitButton from 'components/form/submit-button';
+import FormTextAreaInput from 'components/form/text-area-input';
+import { formErrorsType } from 'components/form/entities';
+import { formField, formGroup } from 'components/form/wrappers';
+import { dig } from 'utils/object';
+import { injectProps } from 'utils/react';
+import { slugify } from 'utils/string';
 import { itemFormType } from '../../entities';
-import { formErrorsType } from '../../../../components/form/entities';
-import { formField, formGroup } from '../../../../components/form/wrappers';
-import { dig } from '../../../../utils/object';
-import { injectProps } from '../../../../utils/react';
-import { slugify } from '../../../../utils/string';
 
 const generatePlaceholder = propName => ({ data, path }) => (
   slugify(dig(data, ...path, propName))

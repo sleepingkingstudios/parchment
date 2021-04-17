@@ -4,7 +4,10 @@ import {
   exists,
   valueOrDefault,
 } from 'utils/object';
-import { titleize } from 'utils/string';
+import {
+  kebabize,
+  titleize,
+} from 'utils/string';
 import generateReducer from './reducer';
 import generateRoutes from './routes';
 import normalizeResources from './normalize';
@@ -20,7 +23,7 @@ const buildBreadcrumbs = (namespace) => {
 
   return segments.reduce(
     (breadcrumbs, path) => {
-      relativePath = `${relativePath}/${path}`;
+      relativePath = `${relativePath}/${kebabize(path)}`;
 
       return [
         ...breadcrumbs,
@@ -39,6 +42,10 @@ const buildBreadcrumbs = (namespace) => {
   );
 };
 
+const generateBaseUrl = namespace => (
+  `/${namespace.split('/').map(kebabize).join('/')}`
+);
+
 const buildResource = (options) => {
   const { resourceName } = options;
   const breadcrumbs = valueOrDefault(
@@ -51,7 +58,7 @@ const buildResource = (options) => {
   );
   const baseUrl = valueOrDefault(
     options.baseUrl,
-    `/${namespace}`,
+    generateBaseUrl(namespace),
   );
   const singularResourceName = valueOrDefault(
     options.singularResourceName,

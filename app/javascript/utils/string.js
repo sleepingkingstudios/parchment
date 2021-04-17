@@ -18,6 +18,17 @@ export const capitalize = (word) => {
   return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 };
 
+export const kebabize = (str) => {
+  if (typeof str === 'undefined' || str == null) { return ''; }
+
+  return str
+    .trim()
+    .replace(/([a-z\d])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z]+)([A-Z][a-z\d]+)/g, '$1-$2')
+    .replace(/[_\s]+/, '-')
+    .toLowerCase();
+};
+
 export const interpolate = (str, rxp, params) => {
   if (typeof str === 'undefined' || str == null) { return ''; }
 

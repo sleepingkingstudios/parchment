@@ -5,9 +5,10 @@
 ################################################################################
 
 Then('the {string} block should display the data') do |resource|
-  definition = Features::Resources.find(resource)
+  definition    = Features::Resources.find(resource)
+  resource_name = resource.split('::').last.underscore.singularize
 
-  expect(@current_page.send :"has_#{resource.underscore.singularize}_block?")
+  expect(@current_page.send :"has_#{resource_name}_block?")
     .to be true
 
   definition.block_attributes.each do |attribute|

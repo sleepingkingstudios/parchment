@@ -11,7 +11,7 @@ const spellDescription = (spell) => {
   return truncate(spell.description, 80);
 };
 
-const generateColumns = ({ useDestroyRequest }) => ([
+const generateColumns = ({ actions, baseUrl, useDestroyRequest }) => ([
   {
     label: 'Name',
     prop: 'name',
@@ -30,6 +30,8 @@ const generateColumns = ({ useDestroyRequest }) => ([
     value: injectProps(
       ResponsiveActions,
       {
+        actions,
+        baseUrl,
         resourceName: 'spell',
         useDestroyRequest,
       },

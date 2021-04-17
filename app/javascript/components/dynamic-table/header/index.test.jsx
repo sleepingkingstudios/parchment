@@ -75,4 +75,19 @@ describe('<DynamicTableHeader />', () => {
       });
     });
   });
+
+  describe('with resourceName: multiword value', () => {
+    const resourceName = 'rocketParts';
+
+    it('should render the header', () => {
+      const rendered = shallow(
+        <DynamicTableHeader {...defaultProps} resourceName={resourceName} />,
+      );
+
+      expect(rendered).toHaveDisplayName('div');
+      expect(rendered).toHaveClassName('dynamic-table-header');
+      expect(rendered).toHaveClassName('rocket-parts-table-header');
+      expect(rendered).toHaveClassName('row');
+    });
+  });
 });

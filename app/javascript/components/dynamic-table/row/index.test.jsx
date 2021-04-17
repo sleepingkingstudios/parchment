@@ -100,4 +100,17 @@ describe('<DynamicTableRow />', () => {
       });
     });
   });
+
+  describe('with resourceName: multiword value', () => {
+    const resourceName = 'rocketParts';
+
+    it('should render the table row', () => {
+      const rendered = shallow(<DynamicTableRow {...defaultProps} resourceName={resourceName} />);
+
+      expect(rendered).toHaveDisplayName('div');
+      expect(rendered).toHaveClassName('dynamic-table-row');
+      expect(rendered).toHaveClassName('rocket-parts-table-row');
+      expect(rendered).toHaveClassName('row');
+    });
+  });
 });

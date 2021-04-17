@@ -98,6 +98,22 @@ RSpec.describe Operations::Records::FindBySlugOperation do
       end
     end
 
+    describe 'with a non-normalized slug' do
+      let(:slug) { 'slug-of-customization' }
+      let(:expected_error) do
+        Errors::NotFound.new(
+          attributes:   { 'slug' => slug },
+          record_class: record_class
+        )
+      end
+
+      it 'should have a failing result' do
+        expect(call_operation)
+          .to have_failing_result
+          .with_error(expected_error)
+      end
+    end
+
     describe 'with a non-slug string' do
       let(:slug) { 'Custom Name' }
       let(:expected_error) do
@@ -123,6 +139,20 @@ RSpec.describe Operations::Records::FindBySlugOperation do
 
       describe 'with a valid slug' do
         let(:slug) { records.first.slug }
+
+        it 'should have a passing result' do
+          expect(call_operation)
+            .to have_passing_result
+            .with_value(records.first)
+        end
+      end
+
+      describe 'with a non-normalized slug' do
+        let(:slug) { 'slug-of-customization' }
+
+        before(:example) do
+          records.first.update(slug: slug)
+        end
 
         it 'should have a passing result' do
           expect(call_operation)

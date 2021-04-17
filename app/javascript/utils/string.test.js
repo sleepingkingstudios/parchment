@@ -2,6 +2,7 @@ import {
   camelize,
   capitalize,
   interpolate,
+  kebabize,
   safeCapitalize,
   slugify,
   titleize,
@@ -141,6 +142,60 @@ describe('String utils', () => {
         const expected = '/path/to/resource/0/with?option=value';
 
         expect(interpolate(str, rxp, params)).toEqual(expected);
+      });
+    });
+  });
+
+  describe('kebabize', () => {
+    it('should be a function', () => {
+      expect(typeof kebabize).toEqual('function');
+    });
+
+    describe('with undefined', () => {
+      it('should return an empty string', () => {
+        expect(kebabize(undefined)).toEqual('');
+      });
+    });
+
+    describe('with null', () => {
+      it('should return an empty string', () => {
+        expect(kebabize(null)).toEqual('');
+      });
+    });
+
+    describe('with an empty string', () => {
+      it('should return an empty string', () => {
+        expect(kebabize('')).toEqual('');
+      });
+    });
+
+    describe('with a lowercase string', () => {
+      it('should return the string', () => {
+        expect(kebabize('greetings')).toEqual('greetings');
+      });
+    });
+
+    describe('with a camelCase string', () => {
+      it('should convert the string to kebab-case', () => {
+        expect(kebabize('greetingsPrograms')).toEqual('greetings-programs');
+      });
+    });
+
+    describe('with an underscored string', () => {
+      it('should convert the string to kebab-case', () => {
+        expect(kebabize('greetings_programs')).toEqual('greetings-programs');
+      });
+    });
+
+    describe('with a kebab-case string', () => {
+      it('should return the string', () => {
+        expect(kebabize('greetings-programs')).toEqual('greetings-programs');
+      });
+    });
+
+    describe('with a multiword string', () => {
+      it('should convert the string to kebab-case', () => {
+        expect(kebabize('Greetings Programs')).toEqual('greetings-programs');
       });
     });
   });

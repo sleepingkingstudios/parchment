@@ -376,6 +376,78 @@ describe('RedirectToShow middleware', () => {
     });
   });
 
+  describe('with resourceName: multiple words and on: :failure', () => {
+    const customResourceName = 'rocketParts';
+    const middleware = redirectToShow({ resourceName: customResourceName, on: 'failure' });
+    const { handleFailure } = middleware;
+
+    describe('handleFailure()', () => {
+      const id = '00000000-0000-0000-0000-000000000000';
+
+      shouldCallTheNextFunction(handleFailure, buildProps({ rocket_part: { id } }));
+
+      it('should redirect to the show page', () => {
+        const next = jest.fn();
+        const url = `/rocketParts/${id}`;
+        const props = buildProps({ rocket_part: { id } });
+
+        handleFailure(next)(props);
+
+        expect(props.dispatch).toHaveBeenCalledWith(push(url));
+      });
+
+      describe('when the data has a slug', () => {
+        const slug = 'self-sealing-stem-bolt';
+
+        it('should redirect to the show page', () => {
+          const next = jest.fn();
+          const url = `/rocketParts/${slug}`;
+          const props = buildProps({ rocket_part: { slug } });
+
+          handleFailure(next)(props);
+
+          expect(props.dispatch).toHaveBeenCalledWith(push(url));
+        });
+      });
+    });
+  });
+
+  describe('with resourceName: multiple words and on: :success', () => {
+    const customResourceName = 'rocketParts';
+    const middleware = redirectToShow({ resourceName: customResourceName, on: 'success' });
+    const { handleSuccess } = middleware;
+
+    describe('handleSuccess()', () => {
+      const id = '00000000-0000-0000-0000-000000000000';
+
+      shouldCallTheNextFunction(handleSuccess, buildProps({ rocket_part: { id } }));
+
+      it('should redirect to the show page', () => {
+        const next = jest.fn();
+        const url = `/rocketParts/${id}`;
+        const props = buildProps({ rocket_part: { id } });
+
+        handleSuccess(next)(props);
+
+        expect(props.dispatch).toHaveBeenCalledWith(push(url));
+      });
+
+      describe('when the data has a slug', () => {
+        const slug = 'self-sealing-stem-bolt';
+
+        it('should redirect to the show page', () => {
+          const next = jest.fn();
+          const url = `/rocketParts/${slug}`;
+          const props = buildProps({ rocket_part: { slug } });
+
+          handleSuccess(next)(props);
+
+          expect(props.dispatch).toHaveBeenCalledWith(push(url));
+        });
+      });
+    });
+  });
+
   describe('with singularResourceName: value and on: :failure', () => {
     const singularResourceName = 'gadget';
     const middleware = redirectToShow({

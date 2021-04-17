@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import HeadingWithButtons from 'components/heading-with-buttons';
 import Page from 'components/page';
 import { valueOrDefault } from 'utils/object';
-import { titleize } from 'utils/string';
+import {
+  titleize,
+  underscore,
+} from 'utils/string';
 import ShowPageContent from './content';
 
 const generateActions = ({ destroy, resources }) => {
@@ -96,12 +99,12 @@ const ShowPage = (props) => {
   const pluralDisplayName = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
     props.pluralDisplayName,
-    resourceName,
+    underscore(resourceName).replace(/_/, ' '),
   );
   const singularDisplayName = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
     props.singularDisplayName,
-    singularResourceName,
+    underscore(singularResourceName).replace(/_/, ' '),
   );
   const mapData = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment

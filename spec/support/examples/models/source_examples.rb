@@ -25,7 +25,10 @@ module Spec::Support::Examples::Models
       end
       let(:origin) { source.origin }
 
-      before(:example) { source.tap(&:save!) }
+      before(:example) do
+        subject.tap(&:save!) # rubocop:disable RSpec/NamedSubject
+        source.tap(&:save!)
+      end
     end
 
     shared_examples 'should define a has_one :source association' do

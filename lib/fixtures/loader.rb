@@ -62,16 +62,16 @@ module Fixtures
       return @options_file_path unless @options_file_path == UNDEFINED
 
       @options_file_path =
-        if data_dir_exists?
-          resolved_data_path.join(resource_name, '_options.yml')
-        elsif data_file_exists?
+        if data_file_exists?
           resolved_data_path.join("#{resource_name}_options.yml")
+        elsif data_dir_exists?
+          resolved_data_path.join(resource_name, '_options.yml')
         end
     end
 
     def read_data
-      return read_data_dir  if data_dir_exists?
       return read_data_file if data_file_exists?
+      return read_data_dir  if data_dir_exists?
 
       message =
         "Unable to load fixtures from /data/#{data_path}/#{resource_name}"

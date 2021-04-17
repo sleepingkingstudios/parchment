@@ -93,4 +93,25 @@ describe('<IndexPageContent />', () => {
       });
     });
   });
+
+  describe('with mapData: function', () => {
+    const mapData = obj => obj.widgets;
+    const rendered = shallow(<IndexPageContent {...defaultProps} mapData={mapData} />);
+
+    describe('when the status is SUCCESS', () => {
+      const content = rendered.renderProp('renderSuccess')({});
+
+      it('should display the table with the data', () => {
+        expect(content).toHaveDisplayName('Table');
+
+        expect(content).toHaveProp({ actions });
+        expect(content).toHaveProp({ baseUrl });
+        expect(content).toHaveProp({ data });
+        expect(content).toHaveProp({ mapData });
+        expect(content).toHaveProp({ pluralDisplayName });
+        expect(content).toHaveProp({ resourceName });
+        expect(content).toHaveProp({ useDestroyRequest });
+      });
+    });
+  });
 });

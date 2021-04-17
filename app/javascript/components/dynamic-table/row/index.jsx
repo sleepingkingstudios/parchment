@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { exists } from 'utils/object';
+import { addClassName } from 'utils/react';
+import { kebabize } from 'utils/string';
 import DynamicTableRowCell from './cell';
 import { columnsType } from '../entities';
-import { exists } from '../../../utils/object';
-import { addClassName } from '../../../utils/react';
 
 const DynamicTableRow = (props) => {
   const {
@@ -15,7 +16,7 @@ const DynamicTableRow = (props) => {
   } = props;
   const className = addClassName(
     'dynamic-table-row',
-    exists(resourceName) ? `${resourceName}-table-row` : null,
+    exists(resourceName) ? `${kebabize(resourceName)}-table-row` : null,
     'row',
   );
 

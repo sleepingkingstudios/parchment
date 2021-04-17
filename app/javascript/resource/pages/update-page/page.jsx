@@ -6,7 +6,10 @@ import {
   exists,
   valueOrDefault,
 } from 'utils/object';
-import { titleize } from 'utils/string';
+import {
+  titleize,
+  underscore,
+} from 'utils/string';
 import UpdatePageContent from './content';
 
 const defaultBreadcrumbs = [
@@ -61,12 +64,12 @@ const UpdatePage = (props) => {
   const pluralDisplayName = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
     props.pluralDisplayName,
-    resourceName,
+    underscore(resourceName).replace(/_/, ' '),
   );
   const singularDisplayName = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
     props.singularDisplayName,
-    singularResourceName,
+    underscore(singularResourceName).replace(/_/, ' '),
   );
   const mapData = valueOrDefault(
     // eslint-disable-next-line react/destructuring-assignment
@@ -108,6 +111,7 @@ const UpdatePage = (props) => {
 
       <UpdatePageContent
         Form={Form}
+        baseUrl={baseUrl}
         data={data}
         errors={errors}
         onChangeAction={updateForm}

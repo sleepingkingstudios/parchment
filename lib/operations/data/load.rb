@@ -16,6 +16,7 @@ module Operations::Data
       Mechanics::Action
       Mechanics::Condition
       References::Item
+      References::Items::MagicItem
       References::Language
       References::Skill
       Spell

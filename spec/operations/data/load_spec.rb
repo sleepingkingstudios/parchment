@@ -23,6 +23,7 @@ RSpec.describe Operations::Data::Load do
         Mechanics::Action
         Mechanics::Condition
         References::Item
+        References::Items::MagicItem
         References::Language
         References::Skill
         Spell

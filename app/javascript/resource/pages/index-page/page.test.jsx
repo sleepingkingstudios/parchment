@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import { PENDING } from 'api/status';
 import { titleize } from 'utils/string';
 import IndexPage from './page';
+import IndexPageContent from './content';
 
 describe('<IndexPage />', () => {
   const Table = () => (<div />);
@@ -18,6 +19,7 @@ describe('<IndexPage />', () => {
     useRequestData: jest.fn(() => requestData),
   };
   const resourceName = 'widgets';
+  const singularResourceName = 'widget';
   const defaultProps = {
     Table,
     hooks,
@@ -27,6 +29,7 @@ describe('<IndexPage />', () => {
       show: true,
       update: true,
     },
+    singularResourceName,
   };
 
   beforeEach(() => {
@@ -89,6 +92,30 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
+      expect(content).toHaveProp({ status });
+      expect(content).toHaveProp({ useDestroyRequest });
+    });
+  });
+
+  describe('with Content: value', () => {
+    const CustomContent = () => (<div />);
+    const rendered = shallow(<IndexPage {...defaultProps} Content={CustomContent} />);
+
+    it('should render the default content', () => {
+      const actions = ['create', 'show', 'update', 'destroy'];
+      const content = rendered.find('CustomContent');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ DefaultContent: IndexPageContent });
+      expect(content).toHaveProp({ Table });
+      expect(content).toHaveProp({ actions });
+      expect(content).toHaveProp({ baseUrl: '/widgets' });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
+      expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -139,6 +166,7 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -186,6 +214,27 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
+      expect(content).toHaveProp({ status });
+      expect(content).toHaveProp({ useDestroyRequest });
+    });
+  });
+
+  describe('with mapData: function', () => {
+    const mapData = obj => obj.widgets;
+    const rendered = shallow(<IndexPage {...defaultProps} mapData={mapData} />);
+
+    it('should render the default content', () => {
+      const content = rendered.find('IndexPageContent');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ Table });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ mapData });
+      expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
+      expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -238,6 +287,26 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
+      expect(content).toHaveProp({ status });
+      expect(content).toHaveProp({ useDestroyRequest });
+    });
+  });
+
+  describe('with resourceName: a multiword string', () => {
+    const customResourceName = 'rocket_parts';
+    const rendered = shallow(<IndexPage {...defaultProps} resourceName={customResourceName} />);
+
+    it('should render the default content', () => {
+      const content = rendered.find('IndexPageContent');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ Table });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ pluralDisplayName: 'rocket parts' });
+      expect(content).toHaveProp({ resourceName: customResourceName });
+      expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -271,6 +340,7 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName: 'widget' });
+      expect(content).toHaveProp({ singularResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });
@@ -307,6 +377,28 @@ describe('<IndexPage />', () => {
       expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
       expect(content).toHaveProp({ resourceName });
       expect(content).toHaveProp({ singularDisplayName });
+      expect(content).toHaveProp({ singularResourceName });
+      expect(content).toHaveProp({ status });
+      expect(content).toHaveProp({ useDestroyRequest });
+    });
+  });
+
+  describe('with singularResourceName: a multiword string', () => {
+    const customResourceName = 'rocket_part';
+    const rendered = shallow(
+      <IndexPage {...defaultProps} singularResourceName={customResourceName} />,
+    );
+
+    it('should render the default content', () => {
+      const content = rendered.find('IndexPageContent');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ Table });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ pluralDisplayName: 'widgets' });
+      expect(content).toHaveProp({ resourceName });
+      expect(content).toHaveProp({ singularDisplayName: 'rocket part' });
+      expect(content).toHaveProp({ singularResourceName: customResourceName });
       expect(content).toHaveProp({ status });
       expect(content).toHaveProp({ useDestroyRequest });
     });

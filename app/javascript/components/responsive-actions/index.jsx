@@ -123,7 +123,8 @@ const ResponsiveActions = (props) => {
       { actions.includes('show') && renderShowLink({ resourceName, url }) }
       { actions.includes('update') && renderUpdateLink({ resourceName, url }) }
       {
-        actions.includes('delete') && renderDeleteLink({
+        // TODO: 'delete' action is deprecated.
+        (actions.includes('delete') || actions.includes('destroy')) && renderDeleteLink({
           destroyHook,
           id,
           onDelete,

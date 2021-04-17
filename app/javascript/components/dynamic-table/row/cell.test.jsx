@@ -48,6 +48,24 @@ describe('<DynamicTableRowCell />', () => {
     });
   });
 
+  describe('with resourceName: multiword value', () => {
+    const resourceName = 'rocketParts';
+
+    it('should render the row cell', () => {
+      const rendered = shallow(
+        <DynamicTableRowCell {...defaultProps} resourceName={resourceName} />,
+      );
+      const { name } = data;
+
+      expect(rendered).toHaveDisplayName('div');
+      expect(rendered).toHaveClassName('dynamic-table-row-cell');
+      expect(rendered).toHaveClassName('rocket-parts-table-row-cell');
+      expect(rendered).toHaveClassName('rocket-parts-table-row-name-cell');
+      expect(rendered).toHaveClassName('col');
+      expect(rendered).toHaveText(name);
+    });
+  });
+
   describe('with value: a component', () => {
     const CellValue = (props) => {
       const { price, quantity } = props;

@@ -66,6 +66,7 @@ describe('<CreatePage />', () => {
       const content = rendered.find('Form');
 
       expect(content).toExist();
+      expect(content).toHaveProp({ baseUrl: '/widgets' });
       expect(content).toHaveProp({ data });
       expect(content).toHaveProp({ errors });
       expect(content).toHaveProp({ status });
@@ -96,6 +97,18 @@ describe('<CreatePage />', () => {
       ];
 
       expect(rendered).toHaveProp({ breadcrumbs: expected });
+    });
+
+    it('should render the form', () => {
+      const content = rendered.find('Form');
+
+      expect(content).toExist();
+      expect(content).toHaveProp({ baseUrl });
+      expect(content).toHaveProp({ data });
+      expect(content).toHaveProp({ errors });
+      expect(content).toHaveProp({ status });
+      expect(content).toHaveProp({ onChangeAction: updateForm });
+      expect(content).toHaveProp({ onSubmitAction: submitRequest });
     });
   });
 

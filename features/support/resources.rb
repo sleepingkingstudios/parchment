@@ -8,6 +8,7 @@ module Features
         Book
         Condition
         Item
+        Items::MagicItem
         Language
         Skill
         Spell

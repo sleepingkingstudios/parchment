@@ -42,6 +42,7 @@ const renderSuccess = (props) => {
     actions,
     baseUrl,
     data,
+    mapData,
     resourceName,
     pluralDisplayName,
     useDestroyRequest,
@@ -52,6 +53,7 @@ const renderSuccess = (props) => {
       actions={actions}
       baseUrl={baseUrl}
       data={data}
+      mapData={mapData}
       pluralDisplayName={pluralDisplayName}
       resourceName={resourceName}
       useDestroyRequest={useDestroyRequest}
@@ -67,6 +69,7 @@ const IndexPageContent = (props) => {
     actions,
     baseUrl,
     data,
+    mapData,
     pluralDisplayName,
     resourceName,
     status,
@@ -79,6 +82,7 @@ const IndexPageContent = (props) => {
     actions,
     baseUrl,
     data,
+    mapData,
     pluralDisplayName,
     resourceName,
     useDestroyRequest,
@@ -96,6 +100,7 @@ const IndexPageContent = (props) => {
 };
 
 IndexPageContent.defaultProps = {
+  mapData: null,
   useDestroyRequest: null,
 };
 
@@ -104,6 +109,7 @@ IndexPageContent.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   actions: PropTypes.arrayOf(PropTypes.string).isRequired,
   data: PropTypes.objectOf(PropTypes.any).isRequired,
+  mapData: PropTypes.func,
   pluralDisplayName: PropTypes.string.isRequired,
   resourceName: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,

@@ -9,17 +9,23 @@ end
 def be_displayed_for_resource(current_resource:, resource:)
   expect(current_resource).not_to be nil
 
-  key = "#{resource.singularize.underscore}_id"
+  resource_key = resource_key_for(resource)
 
   unless current_resource.respond_to?(:slug)
-    return be_displayed(key => current_resource.id)
+    return be_displayed(resource_key => current_resource.id)
   end
 
   be_displayed(
-    key => current_resource.id
+    resource_key => current_resource.id
   ).or be_displayed(
-    key => current_resource.slug
+    resource_key => current_resource.slug
   )
+end
+
+def resource_key_for(resource)
+  resource_name = resource.split('::').last
+
+  "#{resource_name.singularize.underscore}_id"
 end
 
 When('I visit the {string} page for {string} {string}') \
@@ -29,10 +35,11 @@ do |action, resource, attribute_value|
   @current_resource =
     resource_class.where(definition.primary_attribute => attribute_value).first
   @current_page     = action_page(action, resource)
+  resource_key      = resource_key_for(resource)
   resource_id       =
     @current_resource&.id || '00000000-0000-0000-0000-000000000000'
 
-  @current_page.load("#{resource.singularize.underscore}_id": resource_id)
+  @current_page.load("#{resource_key}": resource_id)
 
   @current_page.wait_until_loading_message_invisible
 end

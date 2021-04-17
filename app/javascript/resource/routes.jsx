@@ -2,10 +2,11 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { injectProps } from 'utils/react';
+import { kebabize } from 'utils/string';
 
 const joinPath = (...segments) => {
   const trimmed = segments.map(
-    segment => segment.replace(/^\/|\/$/g, ''),
+    segment => kebabize(segment).replace(/^\/|\/$/g, ''),
   );
 
   return `/${trimmed.join('/').replace(/\/$/, '')}`;

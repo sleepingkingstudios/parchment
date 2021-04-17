@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ItemsIndexPageContent /> with default props should match the snapshot 1`] = `
+<Fragment>
+  <PageNavigation
+    className="items-navigation"
+    items={
+      Object {
+        "Items": "/reference/items",
+        "Magic Items": "/reference/items/magic-items",
+      }
+    }
+  />
+  <br />
+  <DefaultContent
+    DefaultContent={[Function]}
+    Table={[Function]}
+    data={Array []}
+    other="other property"
+  />
+</Fragment>
+`;

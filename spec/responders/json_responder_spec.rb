@@ -364,69 +364,6 @@ RSpec.describe Responders::JsonResponder do
       end
     end
 
-    describe 'with a passing result with a mixed plural resource' do
-      let(:book) { FactoryBot.build(:book) }
-      let(:spells) do
-        [
-          FactoryBot.build(:spell),
-          book,
-          FactoryBot.build(:spell)
-        ]
-      end
-      let(:result) { Cuprum::Result.new(value: { spells: spells }) }
-      let(:json) do
-        {
-          'ok'    => false,
-          'error' => {
-            'message' => 'Something went wrong when processing the request.'
-          }
-        }
-      end
-      let(:expected) { { json: json, status: :internal_server_error } }
-      let(:controller_class) do
-        instance_double(Class, name: 'Api::WidgetsController')
-      end
-      let(:log_message) do
-        "Internal Server Error in #{controller_class.name}: Unable to" \
-        " serialize #{book.inspect} with Serializers::SpellSerializer" \
-        ' (Serializers::InvalidObjectError)'
-      end
-
-      before(:example) do
-        allow(controller).to receive(:class).and_return(controller_class)
-
-        allow(Rails.logger).to receive(:error)
-      end
-
-      it 'should render 500 Internal Server Error with a generic JSON error' do
-        responder.call(result)
-
-        expect(controller).to have_received(:render).with(expected)
-      end
-
-      it 'should log the exception' do
-        responder.call(result)
-
-        expect(Rails.logger).to have_received(:error).with(log_message)
-      end
-
-      describe 'with options[:action] => value' do
-        let(:log_message) do
-          "Internal Server Error in #{controller_class.name}##{action}:" \
-          " Unable to serialize #{book.inspect} with" \
-          ' Serializers::SpellSerializer (Serializers::InvalidObjectError)'
-        end
-        let(:action) { :create }
-        let(:options) { { action: action } }
-
-        it 'should log the exception' do
-          responder.call(result, options)
-
-          expect(Rails.logger).to have_received(:error).with(log_message)
-        end
-      end
-    end
-
     describe 'with a passing result with a nil value' do
       let(:result) { Cuprum::Result.new(value: nil) }
       let(:json) do
@@ -591,6 +528,43 @@ RSpec.describe Responders::JsonResponder do
           'data' => {
             'book'   => Serializers.serialize(book),
             'spells' => spells.map { |spell| Serializers.serialize(spell) }
+          }
+        }
+      end
+      let(:expected) { { json: json, status: :ok } }
+
+      it 'should render 200 OK and serialize the resource' do
+        responder.call(result)
+
+        expect(controller).to have_received(:render).with(expected)
+      end
+
+      describe 'with status: value' do
+        let(:options)  { { status: :created } }
+        let(:expected) { { json: json, status: :created } }
+
+        it 'should render 201 Created and serialize the resource' do
+          responder.call(result, options)
+
+          expect(controller).to have_received(:render).with(expected)
+        end
+      end
+    end
+
+    describe 'with a passing result with many STI resources' do
+      let(:items) do
+        [
+          FactoryBot.build(:magic_item),
+          FactoryBot.build(:item),
+          FactoryBot.build(:magic_item)
+        ]
+      end
+      let(:result) { Cuprum::Result.new(value: { items: items }) }
+      let(:json) do
+        {
+          'ok'   => true,
+          'data' => {
+            'items' => items.map { |item| Serializers.serialize(item) }
           }
         }
       end

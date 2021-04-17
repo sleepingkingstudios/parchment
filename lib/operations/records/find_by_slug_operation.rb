@@ -28,6 +28,8 @@ module Operations::Records
     end
 
     def normalize_slug(slug, as:)
+      return success(slug) if slug =~ /\A[a-z0-9]+(-[a-z0-9]+)*\z/
+
       operation = Operations::Attributes::GenerateSlug.new
       result    = operation.call(slug)
 

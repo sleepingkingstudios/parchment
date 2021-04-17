@@ -8,6 +8,20 @@ class References::Item < Reference
 
   Factory = Operations::References::Factory.new(self)
 
+  class << self
+    private
+
+    def data_attribute(attr_name)
+      attr_name   = attr_name.to_s
+      reader_name = attr_name.intern
+      writer_name = :"#{attr_name}="
+
+      define_method(reader_name) { data[attr_name] }
+
+      define_method(writer_name) { |value| data[attr_name] = value }
+    end
+  end
+
   ### Validations
   validates :cost,        presence: true
   validates :description, presence: true

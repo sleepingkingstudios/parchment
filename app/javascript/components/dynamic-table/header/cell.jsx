@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { columnProps } from '../entities';
-import { addClassName } from '../../../utils/react';
-import { exists } from '../../../utils/object';
+import { exists } from 'utils/object';
+import { addClassName } from 'utils/react';
 import {
   capitalize,
+  kebabize,
   underscore,
-} from '../../../utils/string';
+} from 'utils/string';
+import { columnProps } from '../entities';
 
 const cellValue = ({ label, prop }) => {
   if (label === false) { return (<Fragment>&nbsp;</Fragment>); }
@@ -22,7 +23,10 @@ const cellValue = ({ label, prop }) => {
 const customClassName = ({ prop, resourceName }) => {
   const classifiedProp = underscore(prop).replace(/_/i, '-');
 
-  return `${resourceName}-table-header-cell ${resourceName}-table-header-${classifiedProp}-cell`;
+  return addClassName(
+    `${kebabize(resourceName)}-table-header-cell`,
+    `${kebabize(resourceName)}-table-header-${classifiedProp}-cell`,
+  );
 };
 
 const DynamicTableHeaderCell = (props) => {

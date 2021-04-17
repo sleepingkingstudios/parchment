@@ -24,6 +24,7 @@ const renderPending = ({ singularDisplayName }) => {
 const renderSuccess = (props) => {
   const {
     Form,
+    baseUrl,
     data,
     errors,
     onChangeAction,
@@ -33,6 +34,7 @@ const renderSuccess = (props) => {
 
   const UpdatePageForm = () => (
     <Form
+      baseUrl={baseUrl}
       data={data}
       errors={errors}
       onChangeAction={onChangeAction}
@@ -48,6 +50,7 @@ const renderSuccess = (props) => {
 const UpdatePageContent = (props) => {
   const {
     Form,
+    baseUrl,
     data,
     errors,
     onChangeAction,
@@ -60,6 +63,7 @@ const UpdatePageContent = (props) => {
   const pending = renderPending({ singularDisplayName });
   const success = renderSuccess({
     Form,
+    baseUrl,
     data,
     errors,
     onChangeAction,
@@ -84,6 +88,7 @@ UpdatePageContent.defaultProps = {
 
 UpdatePageContent.propTypes = {
   Form: PropTypes.elementType.isRequired,
+  baseUrl: PropTypes.string.isRequired,
   data: PropTypes.objectOf(PropTypes.any).isRequired,
   errors: PropTypes.objectOf(PropTypes.any),
   onChangeAction: PropTypes.func.isRequired,

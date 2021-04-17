@@ -1,0 +1,399 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MagicItemForm /> should match the snapshot 1`] = `
+<Form
+  className="magic-item-form"
+  form={
+    Object {
+      "data": Object {
+        "magicItem": Object {
+          "category": "wondrous item",
+          "cost": "Priceless",
+          "data": Object {
+            "magic": "eldritch",
+            "masonry": "Cyclopean",
+            "texture": "squamous",
+          },
+          "description": "Not even strange aeons can kill the phone company.",
+          "id": "00000000-0000-0000-0000-000000000000",
+          "name": "Collect Call of Cthulhu",
+          "rarity": "artifact",
+          "shortDescription": "A direct line to the halls of R'lyeh.",
+          "slug": "collect-call-cthulhu",
+          "type": "References::Items::MagicItem",
+        },
+      },
+      "errors": Object {},
+      "onChangeAction": [MockFunction],
+      "onSubmitAction": [MockFunction],
+      "path": Array [
+        "magicItem",
+      ],
+    }
+  }
+>
+  <FormRow
+    align="left"
+    className=""
+    verticalAlign="top"
+  >
+    <NameField
+      colWidth={8}
+      form={
+        Object {
+          "data": Object {
+            "magicItem": Object {
+              "category": "wondrous item",
+              "cost": "Priceless",
+              "data": Object {
+                "magic": "eldritch",
+                "masonry": "Cyclopean",
+                "texture": "squamous",
+              },
+              "description": "Not even strange aeons can kill the phone company.",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Collect Call of Cthulhu",
+              "rarity": "artifact",
+              "shortDescription": "A direct line to the halls of R'lyeh.",
+              "slug": "collect-call-cthulhu",
+              "type": "References::Items::MagicItem",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "magicItem",
+          ],
+        }
+      }
+    />
+    <SlugField
+      colWidth={4}
+      form={
+        Object {
+          "data": Object {
+            "magicItem": Object {
+              "category": "wondrous item",
+              "cost": "Priceless",
+              "data": Object {
+                "magic": "eldritch",
+                "masonry": "Cyclopean",
+                "texture": "squamous",
+              },
+              "description": "Not even strange aeons can kill the phone company.",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Collect Call of Cthulhu",
+              "rarity": "artifact",
+              "shortDescription": "A direct line to the halls of R'lyeh.",
+              "slug": "collect-call-cthulhu",
+              "type": "References::Items::MagicItem",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "magicItem",
+          ],
+        }
+      }
+    />
+    <CategoryField
+      colWidth={4}
+      form={
+        Object {
+          "data": Object {
+            "magicItem": Object {
+              "category": "wondrous item",
+              "cost": "Priceless",
+              "data": Object {
+                "magic": "eldritch",
+                "masonry": "Cyclopean",
+                "texture": "squamous",
+              },
+              "description": "Not even strange aeons can kill the phone company.",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Collect Call of Cthulhu",
+              "rarity": "artifact",
+              "shortDescription": "A direct line to the halls of R'lyeh.",
+              "slug": "collect-call-cthulhu",
+              "type": "References::Items::MagicItem",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "magicItem",
+          ],
+        }
+      }
+      options={
+        Array [
+          Object {
+            "label": "Armor",
+            "value": "armor",
+          },
+          Object {
+            "label": "Potion",
+            "value": "potion",
+          },
+          Object {
+            "label": "Ring",
+            "value": "ring",
+          },
+          Object {
+            "label": "Rod",
+            "value": "rod",
+          },
+          Object {
+            "label": "Scroll",
+            "value": "scroll",
+          },
+          Object {
+            "label": "Staff",
+            "value": "staff",
+          },
+          Object {
+            "label": "Wand",
+            "value": "wand",
+          },
+          Object {
+            "label": "Weapon",
+            "value": "weapon",
+          },
+          Object {
+            "label": "Wondrous Item",
+            "value": "wondrous item",
+          },
+        ]
+      }
+    />
+    <RarityField
+      colWidth={4}
+      form={
+        Object {
+          "data": Object {
+            "magicItem": Object {
+              "category": "wondrous item",
+              "cost": "Priceless",
+              "data": Object {
+                "magic": "eldritch",
+                "masonry": "Cyclopean",
+                "texture": "squamous",
+              },
+              "description": "Not even strange aeons can kill the phone company.",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Collect Call of Cthulhu",
+              "rarity": "artifact",
+              "shortDescription": "A direct line to the halls of R'lyeh.",
+              "slug": "collect-call-cthulhu",
+              "type": "References::Items::MagicItem",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "magicItem",
+          ],
+        }
+      }
+      options={
+        Array [
+          Object {
+            "label": "Common",
+            "value": "common",
+          },
+          Object {
+            "label": "Uncommon",
+            "value": "uncommon",
+          },
+          Object {
+            "label": "Rare",
+            "value": "rare",
+          },
+          Object {
+            "label": "Very Rare",
+            "value": "very rare",
+          },
+          Object {
+            "label": "Legendary",
+            "value": "legendary",
+          },
+          Object {
+            "label": "Artifact",
+            "value": "artifact",
+          },
+        ]
+      }
+    />
+    <CostField
+      colWidth={4}
+      form={
+        Object {
+          "data": Object {
+            "magicItem": Object {
+              "category": "wondrous item",
+              "cost": "Priceless",
+              "data": Object {
+                "magic": "eldritch",
+                "masonry": "Cyclopean",
+                "texture": "squamous",
+              },
+              "description": "Not even strange aeons can kill the phone company.",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Collect Call of Cthulhu",
+              "rarity": "artifact",
+              "shortDescription": "A direct line to the halls of R'lyeh.",
+              "slug": "collect-call-cthulhu",
+              "type": "References::Items::MagicItem",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "magicItem",
+          ],
+        }
+      }
+    />
+    <ShortDescriptionField
+      colWidth={12}
+      form={
+        Object {
+          "data": Object {
+            "magicItem": Object {
+              "category": "wondrous item",
+              "cost": "Priceless",
+              "data": Object {
+                "magic": "eldritch",
+                "masonry": "Cyclopean",
+                "texture": "squamous",
+              },
+              "description": "Not even strange aeons can kill the phone company.",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Collect Call of Cthulhu",
+              "rarity": "artifact",
+              "shortDescription": "A direct line to the halls of R'lyeh.",
+              "slug": "collect-call-cthulhu",
+              "type": "References::Items::MagicItem",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "magicItem",
+          ],
+        }
+      }
+    />
+    <DescriptionField
+      colWidth={12}
+      form={
+        Object {
+          "data": Object {
+            "magicItem": Object {
+              "category": "wondrous item",
+              "cost": "Priceless",
+              "data": Object {
+                "magic": "eldritch",
+                "masonry": "Cyclopean",
+                "texture": "squamous",
+              },
+              "description": "Not even strange aeons can kill the phone company.",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Collect Call of Cthulhu",
+              "rarity": "artifact",
+              "shortDescription": "A direct line to the halls of R'lyeh.",
+              "slug": "collect-call-cthulhu",
+              "type": "References::Items::MagicItem",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "magicItem",
+          ],
+        }
+      }
+    />
+  </FormRow>
+  <FormRow
+    align="right"
+    className=""
+    verticalAlign="top"
+  >
+    <CancelButton
+      baseUrl="/magic-items"
+      colWidth="3"
+      form={
+        Object {
+          "data": Object {
+            "magicItem": Object {
+              "category": "wondrous item",
+              "cost": "Priceless",
+              "data": Object {
+                "magic": "eldritch",
+                "masonry": "Cyclopean",
+                "texture": "squamous",
+              },
+              "description": "Not even strange aeons can kill the phone company.",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Collect Call of Cthulhu",
+              "rarity": "artifact",
+              "shortDescription": "A direct line to the halls of R'lyeh.",
+              "slug": "collect-call-cthulhu",
+              "type": "References::Items::MagicItem",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "magicItem",
+          ],
+        }
+      }
+      isUpdate={false}
+    />
+    <SubmitButton
+      actionName="Create"
+      colWidth="3"
+      form={
+        Object {
+          "data": Object {
+            "magicItem": Object {
+              "category": "wondrous item",
+              "cost": "Priceless",
+              "data": Object {
+                "magic": "eldritch",
+                "masonry": "Cyclopean",
+                "texture": "squamous",
+              },
+              "description": "Not even strange aeons can kill the phone company.",
+              "id": "00000000-0000-0000-0000-000000000000",
+              "name": "Collect Call of Cthulhu",
+              "rarity": "artifact",
+              "shortDescription": "A direct line to the halls of R'lyeh.",
+              "slug": "collect-call-cthulhu",
+              "type": "References::Items::MagicItem",
+            },
+          },
+          "errors": Object {},
+          "onChangeAction": [MockFunction],
+          "onSubmitAction": [MockFunction],
+          "path": Array [
+            "magicItem",
+          ],
+        }
+      }
+      status="initialized"
+    />
+  </FormRow>
+</Form>
+`;

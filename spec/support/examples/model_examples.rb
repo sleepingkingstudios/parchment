@@ -31,8 +31,11 @@ module Spec::Support::Examples
               hsh.delete(attr_name.to_s)
             end
           end
+          let(:default_value) do
+            default.is_a?(Proc) ? instance_exec(&default) : default
+          end
 
-          it { expect(subject.send(attr_name)).to be == default }
+          it { expect(subject.send(attr_name)).to be == default_value }
         end
 
         context "when the attributes include #{attr_name}" do
@@ -46,6 +49,69 @@ module Spec::Support::Examples
           it { expect(subject.public_send(attr_name)).to be == expected }
         end
       end
+    alias_shared_examples 'should define attribute', 'should have attribute'
+
+    shared_examples 'should have attribute option' \
+      do |options_attr, option_name, default: nil, value: DEFAULT_VALUE|
+        options_attr = options_attr.intern
+        option_name  = option_name.intern
+
+        include_examples 'should have attribute',
+          option_name,
+          default: default,
+          value:   value
+
+        context "when the #{options_attr} attribute does not include" \
+                " #{option_name}" \
+        do
+          let(:attributes) do
+            super().tap do |hsh|
+              hsh.delete(option_name.intern)
+              hsh.delete(option_name.to_s)
+
+              options = hsh[options_attr.intern] || hsh[options_attr.to_s] || {}
+              options.delete(option_name.intern)
+              options.delete(option_name.to_s)
+            end
+          end
+
+          it { expect(subject.send(option_name)).to be == default }
+        end
+
+        context "when the #{options_attr} attribute includes #{option_name}" do
+          if value == DEFAULT_VALUE
+            let(:attributes) do
+              super().tap do |hsh|
+                hsh.delete(option_name.intern)
+                hsh.delete(option_name.to_s)
+              end
+            end
+            let(:expected) do
+              attributes.dig(options_attr.intern, option_name.intern)
+            end
+          else
+            # :nocov:
+            let(:attributes) do
+              super().tap do |hsh|
+                hsh.delete(option_name.intern)
+                hsh.delete(option_name.to_s)
+
+                options = hsh[options_attr.intern] || hsh[options_attr.to_s]
+                options ||= (hsh[options_attr] = {})
+
+                options.delete(option_name.to_s)
+                options[option_name] = value
+              end
+            end
+            let(:expected) { value }
+            # :nocov:
+          end
+
+          it { expect(subject.send(option_name)).to be == expected }
+        end
+      end
+    alias_shared_examples 'should define attribute option',
+      'should have attribute option'
 
     shared_examples 'should have primary key' do
       describe '#id' do
@@ -54,6 +120,8 @@ module Spec::Support::Examples
           value: '00000000-0000-0000-0000-000000000000'
       end
     end
+    alias_shared_examples 'should define primary key',
+      'should have primary key'
 
     shared_examples 'should have slug' do
       describe '#slug' do
@@ -93,6 +161,7 @@ module Spec::Support::Examples
         include_examples 'should validate the uniqueness of', :slug
       end
     end
+    alias_shared_examples 'should define slug', 'should have slug'
 
     shared_examples 'should have timestamps' do
       describe '#created_at' do
@@ -103,5 +172,6 @@ module Spec::Support::Examples
         include_examples 'should have reader', :updated_at
       end
     end
+    alias_shared_examples 'should define timestamps', 'should have timestamps'
   end
 end

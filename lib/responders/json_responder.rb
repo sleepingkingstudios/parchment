@@ -85,9 +85,13 @@ module Responders
 
       return [] if value.empty?
 
-      serializer = Serializers.serializer_for!(value.first)
+      serializers = Hash.new do |hsh, item|
+        hsh[item] = Serializers.serializer_for!(item)
+      end
 
-      value.map { |item| serializer.call(item) }
+      value.map do |item|
+        serializers[item].call(item)
+      end
     end
   end
 end

@@ -22,7 +22,13 @@ module Features::Resources
     end
 
     def fetch_data(item)
-      convert_keys(item.data).to_json
+      item.data.to_json
+    end
+
+    def fetch_type(item)
+      return '(None)' if item.type.nil?
+
+      item.type.split('::').last.underscore.split('_').map(&:titleize).join(' ')
     end
 
     def invalid_attributes
@@ -33,26 +39,12 @@ module Features::Resources
       @table_columns ||= %w[
         name
         cost
+        type
       ]
     end
 
     def valid_attributes
       super.merge(name: 'Big Red Button')
-    end
-
-    private
-
-    def convert_keys(obj)
-      case obj
-      when Hash
-        obj
-          .map { |key, value| [key.to_s.camelize, value] }
-          .yield_self { |ary| Hash[ary] }
-      when Array
-        obj.map { |item| convert_keys(item) }
-      else
-        obj
-      end
     end
   end
 end

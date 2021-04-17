@@ -1,7 +1,7 @@
 import ResponsiveActions from 'components/responsive-actions';
 import { injectProps } from 'utils/react';
 
-const generateColumns = ({ useDestroyRequest }) => ([
+const generateColumns = ({ actions, baseUrl, useDestroyRequest }) => ([
   {
     label: 'Title',
     prop: 'title',
@@ -18,6 +18,8 @@ const generateColumns = ({ useDestroyRequest }) => ([
     value: injectProps(
       ResponsiveActions,
       {
+        actions,
+        baseUrl,
         resourceName: 'book',
         useDestroyRequest,
       },
