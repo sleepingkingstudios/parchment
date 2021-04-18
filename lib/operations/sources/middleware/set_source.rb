@@ -35,6 +35,7 @@ module Operations::Sources::Middleware
       [attributes.except(*ORIGIN_KEYS), attributes.slice(*ORIGIN_KEYS)]
     end
 
+    # rubocop:disable Metrics/MethodLength
     def process(next_command, attributes: {}, **kwargs)
       attributes, origin_attributes = extract_origin_attributes(attributes)
 
@@ -43,11 +44,15 @@ module Operations::Sources::Middleware
           super(next_command, attributes: attributes, **kwargs)
         end
 
-        step :set_source,
-          reference: reference,
-          **origin_attributes.symbolize_keys
+        step do
+          set_source(
+            reference: reference,
+            **origin_attributes.symbolize_keys
+          )
+        end
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     def set_source(reference:, **kwargs)
       operation = Operations::Sources::SetSourceOperation.new

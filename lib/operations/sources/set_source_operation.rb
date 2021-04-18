@@ -27,7 +27,7 @@ module Operations::Sources
 
     # rubocop:disable Metrics/MethodLength
     def process(origin: nil, origin_id: nil, origin_type: nil, reference:)
-      step :handle_invalid_reference, reference
+      step { handle_invalid_reference(reference) }
 
       return reference if same_origin?(
         origin:      origin,

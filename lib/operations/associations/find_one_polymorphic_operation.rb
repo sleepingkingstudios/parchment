@@ -42,9 +42,9 @@ module Operations::Associations
     end
 
     def process(id:, type:)
-      step :handle_invalid_id,              id,   as: foreign_key_name
-      step :handle_invalid_foreign_type,    type, as: foreign_type_name
-      step :handle_unexpected_foreign_type, type
+      step { handle_invalid_id(id, as: foreign_key_name) }
+      step { handle_invalid_foreign_type(type, as: foreign_type_name) }
+      step { handle_unexpected_foreign_type(type) }
 
       factory   = Operations::Records::Factory.for(type)
       operation = factory.find_one

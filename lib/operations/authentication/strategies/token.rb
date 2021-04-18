@@ -22,10 +22,10 @@ module Operations::Authentication::Strategies
     attr_reader :session_key
 
     def create_session(payload)
-      credential = step :find_credential, payload['sub']
-      expires_at = step :parse_timestamp, payload['exp']
+      credential = step { find_credential(payload['sub']) }
+      expires_at = step { parse_timestamp(payload['exp']) }
 
-      step :validate_credential, credential
+      step { validate_credential(credential) }
 
       Authorization::Session.new(credential: credential, expires_at: expires_at)
     end
@@ -65,16 +65,16 @@ module Operations::Authentication::Strategies
     end
 
     def process(token)
-      step :validate_token, token
+      step { validate_token(token) }
 
-      payload, _headers = step :decode_token, token
+      payload, _headers = step { decode_token(token) }
 
-      step :create_session, payload
+      step { create_session(payload) }
     end
 
     def validate_credential(credential)
-      step :validate_credential_active,      credential
-      step :validate_credential_not_expired, credential
+      step { validate_credential_active(credential) }
+      step { validate_credential_not_expired(credential) }
     end
 
     def validate_credential_active(credential)

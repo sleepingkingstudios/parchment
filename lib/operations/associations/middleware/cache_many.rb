@@ -40,7 +40,7 @@ module Operations::Associations::Middleware
     def process(next_command, *args, **kwargs)
       records = super(next_command, *args, **kwargs)
 
-      step :cache_association, records
+      step { cache_association(records) }
     end
   end
 end

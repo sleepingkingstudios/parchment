@@ -14,14 +14,14 @@ module Operations::Records
     end
 
     def process(attributes: {})
-      step :handle_invalid_attributes, attributes
+      step { handle_invalid_attributes(attributes) }
 
       attributes = normalize_attributes(attributes)
       unless attributes.key?(:id)
         attributes = attributes.merge(id: SecureRandom.uuid)
       end
 
-      step :handle_invalid_id, attributes[:id]
+      step { handle_invalid_id(attributes[:id]) }
 
       handle_unknown_attribute { record_class.new(attributes: attributes) }
     end

@@ -47,7 +47,7 @@ module Operations::Records
       query   = build_query(order: order, where: where)
       records = query.to_a
 
-      step :validate_result, records, where
+      step { validate_result(records, where) }
 
       success(records)
     end
@@ -57,8 +57,8 @@ module Operations::Records
     def validate_result(records, where = {}, **keywords)
       where = keywords.merge(where) if where.is_a?(Hash)
 
-      step :validate_result_exists, records, where
-      step :validate_record_unique, records, where
+      step { validate_result_exists(records, where) }
+      step { validate_record_unique(records, where) }
     end
 
     # @note The keywords/attributes merge handles pre-2.7 keyword delegation.

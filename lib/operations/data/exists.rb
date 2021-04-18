@@ -21,8 +21,8 @@ module Operations::Data
     def process(directory_name:)
       directory_path = Rails.root.join 'data', directory_name
 
-      step :directory_exists?,  directory_path
-      step :repository_exists?, directory_path
+      step { directory_exists?(directory_path) }
+      step { repository_exists?(directory_path) }
     end
 
     def repository_exists?(directory_path)

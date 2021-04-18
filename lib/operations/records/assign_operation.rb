@@ -8,8 +8,8 @@ module Operations::Records
     private
 
     def process(attributes: {}, record:)
-      step :handle_invalid_attributes, attributes
-      step :handle_invalid_record,     record
+      step { handle_invalid_attributes(attributes) }
+      step { handle_invalid_record(record) }
 
       handle_unknown_attribute do
         record.tap { record.assign_attributes(attributes) }

@@ -97,10 +97,10 @@ module Operations::Associations
       association_id   = indifferent_fetch(attributes, foreign_key_name)
       association_type = indifferent_fetch(attributes, foreign_type_name)
 
-      step :ensure_association_is_record,    association
-      step :ensure_association_id_matches,   association, association_id
-      step :ensure_association_type_matches, association, association_type
-      step :ensure_association_exists,       association
+      step { ensure_association_is_record(association) }
+      step { ensure_association_id_matches(association, association_id) }
+      step { ensure_association_type_matches(association, association_type) }
+      step { ensure_association_exists(association) }
 
       association
     end

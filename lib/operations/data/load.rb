@@ -44,17 +44,17 @@ module Operations::Data
     end
 
     def process(directory_name:)
-      step :require_directory, directory_name
+      step { require_directory(directory_name) }
 
-      step :load_fixtures,
-        directory_name: directory_name,
-        model_classes:  AUTHENTICATION_MODELS
-      step :load_fixtures,
-        directory_name: directory_name,
-        model_classes:  SOURCE_MODELS
-      step :load_fixtures,
-        directory_name: directory_name,
-        model_classes:  DATA_MODELS
+      [AUTHENTICATION_MODELS, SOURCE_MODELS, DATA_MODELS].each \
+      do |model_classes|
+        step do
+          load_fixtures(
+            directory_name: directory_name,
+            model_classes:  model_classes
+          )
+        end
+      end
     end
 
     def require_directory(directory_name)

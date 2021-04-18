@@ -8,7 +8,7 @@ module Operations::Records
     private
 
     def process(record)
-      step :handle_invalid_record, record
+      step { handle_invalid_record(record) }
 
       record.tap(&:destroy)
     end

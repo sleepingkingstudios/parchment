@@ -37,7 +37,7 @@ module Operations::Authentication
     end
 
     def process(session)
-      step :validate_session, session
+      step { validate_session(session) }
 
       generate_token(session)
     end
@@ -54,17 +54,19 @@ module Operations::Authentication
       failure(Errors::Authentication::ExpiredCredential.new)
     end
 
+    # rubocop:disable Metrics/AbcSize
     def validate_session(session)
       unless session.is_a?(Authorization::Session)
         return failure(Errors::Authentication::InvalidSession.new)
       end
 
-      step :validate_credential_active,      session.credential
-      step :validate_credential_not_expired, session.credential
-      step :validate_session_authenticated,  session
-      step :validate_session_not_expired,    session
-      step :validate_session_valid,          session
+      step { validate_credential_active(session.credential) }
+      step { validate_credential_not_expired(session.credential) }
+      step { validate_session_authenticated(session) }
+      step { validate_session_not_expired(session) }
+      step { validate_session_valid(session) }
     end
+    # rubocop:enable Metrics/AbcSize
 
     def validate_session_authenticated(session)
       return unless session.anonymous?

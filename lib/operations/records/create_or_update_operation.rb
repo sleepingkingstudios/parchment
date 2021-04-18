@@ -61,10 +61,10 @@ module Operations::Records
     # rubocop:disable Metrics/MethodLength
 
     def process(attributes: {})
-      step :validate_primary_key, attributes
+      step { validate_primary_key(attributes) }
 
       query  = build_query(attributes)
-      record = step :find_record, query
+      record = step { find_record(query) }
 
       if record
         update_operation.call(
@@ -101,7 +101,7 @@ module Operations::Records
 
       value = fetch_attribute(attributes, :id)
 
-      step :handle_invalid_id, value
+      step { handle_invalid_id(value) }
     end
   end
 end

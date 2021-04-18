@@ -24,7 +24,7 @@ module Operations::Records
     end
 
     def process(id, as: :id)
-      step :handle_invalid_id, id
+      step { handle_invalid_id(id) }
 
       find_record(id, as: as)
     end

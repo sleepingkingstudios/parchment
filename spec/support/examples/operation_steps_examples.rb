@@ -90,10 +90,10 @@ module Spec::Support::Examples
           id = widget_id
 
           lambda do
-            step :validate_parameters
+            step { validate_parameters }
 
-            widget       = step :find_resource,    id
-            manufacturer = step :find_association, widget[:manufacturer_id]
+            widget       = step { find_resource(id) }
+            manufacturer = step { find_association(widget[:manufacturer_id]) }
 
             format_response(widget: widget, manufacturer: manufacturer)
           end

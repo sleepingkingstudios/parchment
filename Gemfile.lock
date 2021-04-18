@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/sleepingkingstudios/cuprum.git
-  revision: ffd164f832f33041b20cde21cff9212e487f67cb
+  revision: 9fb1f06156830a8d41e60f17fe6c810fc5dfd736
   specs:
     cuprum (0.10.0)
       sleeping_king_studios-tools (~> 1.0)
@@ -276,7 +276,7 @@ GEM
       erubi (~> 1.6)
       sleeping_king_studios-tools (>= 0.8.0, < 2)
       thor (>= 0.19.4, < 2.0)
-    sleeping_king_studios-tools (1.0.0)
+    sleeping_king_studios-tools (1.0.2)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)

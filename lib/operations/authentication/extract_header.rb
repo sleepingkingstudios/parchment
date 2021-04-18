@@ -31,11 +31,11 @@ module Operations::Authentication
     end
 
     def process(headers = {})
-      step :validate_headers, headers
+      step { validate_headers(headers) }
 
-      header_value = step :extract_header, headers
+      header_value = step { extract_header(headers) }
 
-      step :extract_token, header_value
+      step { extract_token(header_value) }
     end
 
     def scheme_valid?(scheme)
