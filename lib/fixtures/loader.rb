@@ -84,6 +84,9 @@ module Fixtures
         next if file_name.start_with?('_', '.')
 
         file_path = File.join(data_dir_path, file_name)
+
+        next if File.directory?(file_path)
+
         file_data = YAML.safe_load(File.read(file_path))
 
         file_data.is_a?(Array) ? data.concat(file_data) : data << file_data

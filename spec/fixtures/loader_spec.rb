@@ -641,6 +641,30 @@ RSpec.describe Fixtures::Loader do
         it { expect(loader.send :read_data_dir).to be == data }
       end
     end
+
+    context 'when the data dir has nested resources' do
+      include_context 'when data is defined for the resource'
+
+      let(:dir_files) do
+        data
+          .map
+          .with_object({}) do |item, hsh|
+            file_name = "#{item['name'].underscore.tr(' ', '_')}.yml"
+
+            hsh[file_name] = YAML.dump(item)
+          end
+          .merge('periodicals' => nil)
+      end
+
+      before(:example) do
+        file_path = File.join(dir_path, 'periodicals')
+
+        allow(File).to receive(:directory?).and_return(false)
+        allow(File).to receive(:directory?).with(file_path).and_return(true)
+      end
+
+      it { expect(loader.send :read_data_dir).to be == data }
+    end
   end
 
   describe '#read_data_file' do
