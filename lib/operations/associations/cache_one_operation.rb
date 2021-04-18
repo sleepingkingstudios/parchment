@@ -76,10 +76,10 @@ module Operations::Associations
     end
 
     def normalize_records(records)
-      step :handle_invalid_record, records if records.nil?
+      step { handle_invalid_record(records) } if records.nil?
 
       Array(records).each do |record|
-        step :handle_invalid_record, record
+        step { handle_invalid_record(record) }
       end
     end
 
@@ -90,10 +90,13 @@ module Operations::Associations
     def process(records)
       plural             = records.is_a?(Array)
       records            = normalize_records(records)
-      associated_records = step :find_associated_records, records
-      records            = step :assign_associated_records,
-        associated_records: associated_records,
-        records:            records
+      associated_records = step { find_associated_records(records) }
+      records            = step do
+        assign_associated_records(
+          associated_records: associated_records,
+          records:            records
+        )
+      end
 
       plural ? records : records.first
     end

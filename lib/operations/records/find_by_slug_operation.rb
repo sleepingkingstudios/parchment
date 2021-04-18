@@ -46,11 +46,11 @@ module Operations::Records
     end
 
     def process(slug, as: :slug)
-      step :require_slug, slug, as: as
+      step { require_slug(slug, as: as) }
 
-      slug = step :normalize_slug, slug, as: as
+      slug = step { normalize_slug(slug, as: as) }
 
-      step :find_record, slug
+      step { find_record(slug) }
     end
 
     def require_slug(slug, as:)

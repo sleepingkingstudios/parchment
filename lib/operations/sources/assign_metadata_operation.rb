@@ -26,8 +26,8 @@ module Operations::Sources
     end
 
     def process(record)
-      step :handle_invalid_record, record
-      step :handle_invalid_origin, record.origin
+      step { handle_invalid_record(record) }
+      step { handle_invalid_origin(record.origin) }
 
       update_metadata(record)
 
@@ -37,7 +37,7 @@ module Operations::Sources
     def update_metadata(record)
       origin_class = origin_types.find { |type| record.origin.is_a?(type) }
 
-      step :"update_metadata_from_#{origin_class.name.underscore}", record
+      update_metadata_from_book(record) if origin_class == Book
     end
 
     def update_metadata_from_book(record)

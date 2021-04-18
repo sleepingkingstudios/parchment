@@ -37,8 +37,8 @@ module Operations::Sources
 
     attr_reader :resolve_reference_operation
 
-    def process(attributes: {})
-      step :handle_invalid_attributes, attributes
+    def process(attributes: {}) # rubocop:disable Metrics/AbcSize
+      step { handle_invalid_attributes(attributes) }
 
       origin     = step { resolve_origin_operation.call(attributes) }
       reference  = step { resolve_reference_operation.call(attributes) }

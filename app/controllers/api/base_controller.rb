@@ -42,9 +42,9 @@ module Api
 
     def deserialize_session
       steps do
-        token = step :extract_authorization_token
+        token = step { extract_authorization_token }
 
-        step :parse_authorization_token, token
+        step { parse_authorization_token(token) }
       end
     end
 

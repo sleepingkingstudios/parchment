@@ -125,10 +125,10 @@ module Operations::Records
       # rubocop:enable Metrics/MethodLength
 
       def handle_invalid_foreign_type(type, as:)
-        step :handle_nil_foreign_type,            type, as: as
-        step :handle_foreign_type_type_invalid,   type, as: as
-        step :handle_empty_foreign_type,          type, as: as
-        step :handle_foreign_type_not_class_name, type, as: as
+        step { handle_nil_foreign_type(type, as: as) }
+        step { handle_foreign_type_type_invalid(type, as: as) }
+        step { handle_empty_foreign_type(type, as: as) }
+        step { handle_foreign_type_not_class_name(type, as: as) }
       end
 
       def handle_id_type_invalid(id, as: :id)
@@ -143,9 +143,9 @@ module Operations::Records
 
       def handle_invalid_id(id, as: :id)
         steps do
-          step :handle_nil_id,          id, as: as
-          step :handle_id_type_invalid, id, as: as
-          step :handle_empty_id,        id, as: as
+          step { handle_nil_id(id, as: as) }
+          step { handle_id_type_invalid(id, as: as) }
+          step { handle_empty_id(id, as: as) }
         end
       end
 

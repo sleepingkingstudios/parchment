@@ -57,10 +57,10 @@ module Fixtures::Middleware
         return success(user)
       end
 
-      encrypted = step :encrypt_password, password
+      encrypted = step { encrypt_password(password) }
 
-      step :destroy_credential, user: user
-      step :create_credential,  encrypted: encrypted, user: user
+      step { destroy_credential(user: user) }
+      step { create_credential(encrypted: encrypted, user: user) }
 
       success(user)
     end

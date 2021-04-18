@@ -39,7 +39,7 @@ module Api
       create_operation = operation_factory.create
 
       steps do
-        attributes = step :require_resource_params
+        attributes = step { require_resource_params }
         resource   = step { create_operation.call(attributes: attributes) }
 
         { resource_name => resource }
@@ -82,7 +82,7 @@ module Api
       find_operation = operation_factory.find_matching
 
       steps do
-        order     = step :normalize_sort, index_order
+        order     = step { normalize_sort(index_order) }
         resources = step { find_operation.call(order: order) }
 
         { plural_resource_name => resources }
@@ -193,7 +193,7 @@ module Api
       update_operation = operation_factory.update
 
       steps do
-        attributes = step :require_resource_params
+        attributes = step { require_resource_params }
         resource   = step { find_operation.call(resource_id) }
         resource   = step do
           update_operation.call(

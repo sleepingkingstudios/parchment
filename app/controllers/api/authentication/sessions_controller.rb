@@ -21,13 +21,13 @@ module Api::Authentication
 
     def create_session
       steps do
-        username = step :validate_username
-        password = step :validate_password
+        username = step { validate_username }
+        password = step { validate_password }
         session  = step do
           operation = Operations::Authentication::Strategies::Password.new
           operation.call(username: username, password: password)
         end
-        token = step :generate_token, session
+        token = step { generate_token(session) }
 
         { token: token, user: session.user }
       end

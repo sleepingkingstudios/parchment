@@ -32,7 +32,7 @@ module Operations::Attributes
     end
 
     def process(value)
-      step :validate_value, value
+      step { validate_value(value) }
 
       slug = convert_to_words(value).join('-')
 

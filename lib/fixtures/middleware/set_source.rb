@@ -31,8 +31,8 @@ module Fixtures::Middleware
     def find_origin(source_data)
       origin_type = source_data.fetch(:type, source_data['type'])
 
-      step :handle_invalid_foreign_type,    origin_type, as: 'origin_type'
-      step :handle_unexpected_foreign_type, origin_type
+      step { handle_invalid_foreign_type(origin_type, as: 'origin_type') }
+      step { handle_unexpected_foreign_type(origin_type) }
 
       records = step do
         Operations::Records::Factory
@@ -71,6 +71,7 @@ module Fixtures::Middleware
       Source::ORIGIN_TYPES.map(&:constantize)
     end
 
+    # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
     def process(next_command, attributes:)
       source_data = attributes.fetch(:source, attributes.fetch('source', {}))
@@ -82,16 +83,20 @@ module Fixtures::Middleware
       return success(reference) if non_persisted_record?(reference)
       return success(reference) if source_data.blank?
 
-      step :handle_invalid_reference, reference
+      step { handle_invalid_reference(reference) }
 
-      origin = step :find_origin, source_data
-      step :create_source,
-        origin:      origin,
-        reference:   reference,
-        source_data: source_data
+      origin = step { find_origin(source_data) }
+      step do
+        create_source(
+          origin:      origin,
+          reference:   reference,
+          source_data: source_data
+        )
+      end
 
       reference
     end
+    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
 
     def reference_types

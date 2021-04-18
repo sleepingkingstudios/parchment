@@ -32,14 +32,14 @@ module Operations::Records
     #   failing result unless records are found for all of the input ids.
     #   Defaults to false.
     def process(ids, allow_partial: false)
-      step :handle_nil_ids_array,          ids
-      step :handle_ids_array_type_invalid, ids
-      step :handle_empty_ids_array,        ids
+      step { handle_nil_ids_array(ids) }
+      step { handle_ids_array_type_invalid(ids) }
+      step { handle_empty_ids_array(ids) }
 
       ids.each.with_index do |id, index|
-        step :handle_nil_id,          id, index
-        step :handle_id_type_invalid, id, index
-        step :handle_empty_id,        id, index
+        step { handle_nil_id(id, index) }
+        step { handle_id_type_invalid(id, index) }
+        step { handle_empty_id(id, index) }
       end
 
       find_records(ids, allow_partial: allow_partial)
