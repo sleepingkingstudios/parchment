@@ -54,6 +54,8 @@ module Serializers
     def serializer_class_for(object)
       klass = object.is_a?(Class) ? object : object.class
 
+      return Serializers::ValueSerializer if value?(klass)
+
       klass.ancestors.each do |mod|
         return nil if mod == ApplicationRecord
         return nil if mod == Object
@@ -89,6 +91,12 @@ module Serializers
 
       raise UndefinedSerializerError, UndefinedSerializerError.message(object)
     end
+
+    private
+
+    def value?(klass)
+      Serializers::ValueSerializer::LITERAL_TYPES.include?(klass)
+    end
   end
 
   autoload :Authentication,     'serializers/authentication'
@@ -98,4 +106,5 @@ module Serializers
   autoload :SourceSerializer,   'serializers/source_serializer'
   autoload :StringSerializer,   'serializers/string_serializer'
   autoload :SpellSerializer,    'serializers/spell_serializer'
+  autoload :ValueSerializer,    'serializers/value_serializer'
 end

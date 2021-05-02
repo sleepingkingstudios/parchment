@@ -11,7 +11,9 @@ module Spec::Support::Examples
     shared_examples 'should route to API resource' do |resource_name, only: nil|
       root_route      = "api/#{resource_name}"
       controller_name =
-        "Api::#{resource_name.split('/').map(&:classify).join('::')}"
+        resource_name.split('/').map(&:classify).map(&:pluralize).join('::')
+      controller_name =
+        "Api::#{controller_name}Controller"
       expected_routes = %i[
         index
         create

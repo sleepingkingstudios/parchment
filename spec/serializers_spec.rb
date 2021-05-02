@@ -5,16 +5,6 @@ require 'rails_helper'
 require 'serializers'
 
 RSpec.describe Serializers do
-  describe '::SerializerError' do
-    include_examples 'should define constant', :SerializerError
-
-    it { expect(described_class::SerializerError).to be_a Class }
-
-    it 'should be an exception class' do
-      expect(described_class::SerializerError).to be < StandardError
-    end
-  end
-
   describe '::InvalidObjectError' do
     include_examples 'should define constant', :UndefinedSerializerError
 
@@ -48,6 +38,16 @@ RSpec.describe Serializers do
       end
 
       it { expect(message).to be == expected }
+    end
+  end
+
+  describe '::SerializerError' do
+    include_examples 'should define constant', :SerializerError
+
+    it { expect(described_class::SerializerError).to be_a Class }
+
+    it 'should be an exception class' do
+      expect(described_class::SerializerError).to be < StandardError
     end
   end
 
@@ -89,12 +89,36 @@ RSpec.describe Serializers do
   describe '::serialize' do
     it { expect(described_class).to respond_to(:serialize).with(1).argument }
 
+    describe 'with nil' do
+      it { expect(described_class.serialize(nil)).to be nil }
+    end
+
+    describe 'with false' do
+      it { expect(described_class.serialize(false)).to be false }
+    end
+
+    describe 'with true' do
+      it { expect(described_class.serialize(true)).to be true }
+    end
+
+    describe 'with a Float' do
+      it { expect(described_class.serialize(1.0)).to be == 1.0 }
+    end
+
+    describe 'with an Integer' do
+      it { expect(described_class.serialize(1)).to be 1 }
+    end
+
+    describe 'with a String' do
+      it { expect(described_class.serialize('string')).to be == 'string' }
+    end
+
     describe 'with an object with no serializer' do
       let(:error_class)   { described_class::UndefinedSerializerError }
-      let(:error_message) { 'No serializer defined for NilClass' }
+      let(:error_message) { 'No serializer defined for Object' }
 
       it 'should raise an error' do
-        expect { described_class.serialize(nil) }
+        expect { described_class.serialize(Object.new.freeze) }
           .to raise_error error_class, error_message
       end
     end
@@ -115,7 +139,87 @@ RSpec.describe Serializers do
     end
 
     describe 'with nil' do
-      it { expect(described_class.serializer_class_for(nil)).to be nil }
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for(nil))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with false' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for(false))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with true' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for(true))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with a Float' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for(1.0))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with an Integer' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for(1))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with a String' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for('string'))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with FalseClass' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for(FalseClass))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with Float' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for(Float))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with Integer' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for(Integer))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with NilClass' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for(NilClass))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with String' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for(String))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with TrueClass' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for(TrueClass))
+          .to be Serializers::ValueSerializer
+      end
     end
 
     describe 'with a class with no serializer' do
@@ -149,12 +253,86 @@ RSpec.describe Serializers do
     end
 
     describe 'with nil' do
-      let(:error_class)   { described_class::UndefinedSerializerError }
-      let(:error_message) { 'No serializer defined for NilClass' }
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for!(nil))
+          .to be Serializers::ValueSerializer
+      end
+    end
 
-      it 'should raise an error' do
-        expect { described_class.serializer_class_for!(nil) }
-          .to raise_error error_class, error_message
+    describe 'with false' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for!(false))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with true' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for!(true))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with a Float' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for!(1.0))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with an Integer' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for!(1))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with a String' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for!('string'))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with FalseClass' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for!(FalseClass))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with Float' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for!(Float))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with Integer' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for!(Integer))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with NilClass' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for!(NilClass))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with String' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for!(String))
+          .to be Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with TrueClass' do
+      it 'should return ValueSerializer' do
+        expect(described_class.serializer_class_for!(TrueClass))
+          .to be Serializers::ValueSerializer
       end
     end
 
@@ -193,40 +371,6 @@ RSpec.describe Serializers do
     end
   end
 
-  describe '::serializer_for' do
-    it 'should define the method' do
-      expect(described_class)
-        .to respond_to(:serializer_for)
-        .with(1).argument
-    end
-
-    describe 'with nil' do
-      it { expect(described_class.serializer_for(nil)).to be nil }
-    end
-
-    describe 'with a class with no serializer' do
-      it { expect(described_class.serializer_for(Object)).to be nil }
-    end
-
-    describe 'with an object with no serializer' do
-      it { expect(described_class.serializer_for(Object.new)).to be nil }
-    end
-
-    describe 'with a class with a defined serializer' do
-      it 'should return the serializer' do
-        expect(described_class.serializer_for(Spell))
-          .to be_a Serializers::SpellSerializer
-      end
-    end
-
-    describe 'with an object with a defined serializer' do
-      it 'should return the serializer' do
-        expect(described_class.serializer_for(Spell.new))
-          .to be_a Serializers::SpellSerializer
-      end
-    end
-  end
-
   describe '::serializer_for!' do
     it 'should define the method' do
       expect(described_class)
@@ -235,12 +379,86 @@ RSpec.describe Serializers do
     end
 
     describe 'with nil' do
-      let(:error_class)   { described_class::UndefinedSerializerError }
-      let(:error_message) { 'No serializer defined for NilClass' }
+      it 'should return an instance of ValueSerializer' do
+        expect(described_class.serializer_for!(nil))
+          .to be_a Serializers::ValueSerializer
+      end
+    end
 
-      it 'should raise an error' do
-        expect { described_class.serializer_for!(nil) }
-          .to raise_error error_class, error_message
+    describe 'with false' do
+      it 'should return an instance of ValueSerializer' do
+        expect(described_class.serializer_for!(false))
+          .to be_a Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with true' do
+      it 'should return an instance of ValueSerializer' do
+        expect(described_class.serializer_for!(true))
+          .to be_a Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with a Float' do
+      it 'should return an instance of ValueSerializer' do
+        expect(described_class.serializer_for!(1.0))
+          .to be_a Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with an Integer' do
+      it 'should return an instance of ValueSerializer' do
+        expect(described_class.serializer_for!(1))
+          .to be_a Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with a String' do
+      it 'should return an instance of ValueSerializer' do
+        expect(described_class.serializer_for!('string'))
+          .to be_a Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with FalseClass' do
+      it 'should return an instance of ValueSerializer' do
+        expect(described_class.serializer_for!(FalseClass))
+          .to be_a Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with Float' do
+      it 'should return an instance of ValueSerializer' do
+        expect(described_class.serializer_for!(Float))
+          .to be_a Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with Integer' do
+      it 'should return an instance of ValueSerializer' do
+        expect(described_class.serializer_for!(Integer))
+          .to be_a Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with NilClass' do
+      it 'should return an instance of ValueSerializer' do
+        expect(described_class.serializer_for!(NilClass))
+          .to be_a Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with String' do
+      it 'should return an instance of ValueSerializer' do
+        expect(described_class.serializer_for!(String))
+          .to be_a Serializers::ValueSerializer
+      end
+    end
+
+    describe 'with TrueClass' do
+      it 'should return an instance of ValueSerializer' do
+        expect(described_class.serializer_for!(TrueClass))
+          .to be_a Serializers::ValueSerializer
       end
     end
 
