@@ -71,6 +71,8 @@ Rails.application.routes.draw do
     end
 
     api_resources :spells
+
+    resource :status, only: :show, controller: 'status'
   end
 
   client_resources :books
