@@ -12,6 +12,7 @@ gem 'rack-timeout', '~> 0.6'
 
 gem 'annotate', '~> 2.7', '>= 2.7.4' # https://github.com/ctran/annotate_models
 gem 'pg', '>= 0.18', '< 2.0' # Use postgresql as the database for Active Record
+gem 'mongoid', '~>  7.2.0'
 
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
