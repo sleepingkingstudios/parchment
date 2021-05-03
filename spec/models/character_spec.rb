@@ -4,7 +4,7 @@ require 'rails_helper'
 
 require 'support/examples/model_examples'
 
-RSpec.describe Character, type: :model do
+RSpec.fdescribe Character, type: :model do
   include Spec::Support::Examples::ModelExamples
 
   subject(:character) { described_class.new(attributes) }
