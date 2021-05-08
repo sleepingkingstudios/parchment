@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.6'
 
-gem 'rails', '~> 6.0.0', '>= 6.0.3.6'
+gem 'rails', '~> 6.0.0', '>= 6.0.3.7'
 
 gem 'rack-timeout', '~> 0.6'
 
