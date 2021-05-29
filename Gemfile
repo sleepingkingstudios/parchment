@@ -17,7 +17,7 @@ gem 'pg', '>= 0.18', '< 2.0' # Use postgresql as the database for Active Record
 gem 'puma', '~> 4.3'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.0.0', '>= 5.0.1'
+gem 'webpacker', '~> 5.4.0'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
