@@ -91,7 +91,7 @@ module Operations
 
       @command    = build_definition(command,    *args, **kwargs)
       @middleware = build_middleware(middleware, *args, **kwargs)
-      @applied = Operations::Middleware.apply(
+      @applied = Cuprum::Middleware.apply(
         command:    @command,
         middleware: @middleware
       )

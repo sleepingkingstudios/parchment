@@ -17,7 +17,7 @@ gem 'pg', '>= 0.18', '< 2.0' # Use postgresql as the database for Active Record
 gem 'puma', '~> 4.3'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.0.0', '>= 5.0.1'
+gem 'webpacker', '~> 5.4.0'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -26,7 +26,9 @@ gem 'webpacker', '~> 5.0.0', '>= 5.0.1'
 gem 'bootsnap', '>= 1.4.1', require: false
 
 gem 'bcrypt', '~> 3.1'
-gem 'cuprum', git: 'https://github.com/sleepingkingstudios/cuprum.git'
+gem 'cuprum',
+  branch: 'main',
+  git:    'https://github.com/sleepingkingstudios/cuprum.git'
 gem 'jwt', '~> 2.2'
 
 gem 'sleeping_king_studios-tools', '~> 1.0'
