@@ -109,7 +109,7 @@ module Fixtures
 
       unless skip_middleware
         command =
-          Operations::Middleware.apply(command: command, middleware: middleware)
+          Cuprum::Middleware.apply(command: command, middleware: middleware)
       end
 
       data.map { |hsh| warn_on_failure(hsh) { command.call(attributes: hsh) } }

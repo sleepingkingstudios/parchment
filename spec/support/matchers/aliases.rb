@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'cuprum/rspec/be_a_result'
-
 module RSpec
   module Matchers
     alias_matcher :have_failing_result, :be_a_failing_result

@@ -26,7 +26,9 @@ gem 'webpacker', '~> 5.4.0'
 gem 'bootsnap', '>= 1.4.1', require: false
 
 gem 'bcrypt', '~> 3.1'
-gem 'cuprum', git: 'https://github.com/sleepingkingstudios/cuprum.git'
+gem 'cuprum',
+  branch: 'main',
+  git:    'https://github.com/sleepingkingstudios/cuprum.git'
 gem 'jwt', '~> 2.2'
 
 gem 'sleeping_king_studios-tools', '~> 1.0'
