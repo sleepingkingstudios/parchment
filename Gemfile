@@ -4,9 +4,9 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.6'
+ruby '2.7.4'
 
-gem 'rails', '~> 6.0.0', '>= 6.0.3.7'
+gem 'rails', '~> 6.0.0', '>= 6.0.4.1'
 
 gem 'rack-timeout', '~> 0.6'
 
@@ -14,7 +14,7 @@ gem 'annotate', '~> 2.7', '>= 2.7.4' # https://github.com/ctran/annotate_models
 gem 'pg', '>= 0.18', '< 2.0' # Use postgresql as the database for Active Record
 
 # Use Puma as the app server
-gem 'puma', '~> 4.3'
+gem 'puma', '~> 4.3', '>= 4.3.9'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 5.4.0'
