@@ -68,3 +68,25 @@ jobs:
     # Run the RSpec tests.
     - name: Run tests
       run: bundle exec rspec
+
+  rubocop:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Downloads a copy of the code in your repository before running CI tests
+    - uses: actions/checkout@v2
+
+    # Sets up the Ruby environment and runs `bundle install'.
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.6.6
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    # Set up local configuration files.
+    - name: Set up RuboCop configuration
+      run: cp .rubocop.example .rubocop
+
+    # Run the RSpec tests.
+    - name: Run tests
+      run: bundle exec rubocop
