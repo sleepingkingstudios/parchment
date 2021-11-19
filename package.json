@@ -33,7 +33,7 @@
     "react-router-dom": "^5.0.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "striptags": "^3.1.1",
+    "striptags": "^3.2.0",
     "trim": "0.0.3",
     "uuid": "^3.3.2",
     "yaml": "^1.7.0",
