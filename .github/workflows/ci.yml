@@ -12,6 +12,29 @@ on:
   - pull_request
 
 jobs:
+  eslint:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Downloads a copy of the code in your repository before running CI tests
+    - uses: actions/checkout@v2
+
+    # Sets up the Node environment.
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        cache: 'yarn'
+
+    # Installs Yarn and runs 'yarn install'.
+    - name: Set up Yarn
+      run: |
+        npm install yarn
+        yarn install
+
+    # Runs the ESLint linter tool.
+    - name: Lint JavaScript
+      run: yarn run lint
+
   jest:
     runs-on: ubuntu-latest
 
@@ -32,7 +55,7 @@ jobs:
         yarn install
 
     # Runs the JestJS test suite.
-    - name: Run tests
+    - name: Run JavaScript tests
       run: yarn run test
 
   rspec:
@@ -89,7 +112,7 @@ jobs:
       run: cp .rspec.example .rspec
 
     # Run the RSpec tests.
-    - name: Run tests
+    - name: Run Ruby tests
       run: bundle exec rspec
 
   rubocop:
@@ -110,6 +133,6 @@ jobs:
     - name: Set up RuboCop configuration
       run: cp .rubocop.example .rubocop
 
-    # Run the RSpec tests.
-    - name: Run tests
+    # Run the RuboCop linter tool.
+    - name: Lint Ruby
       run: bundle exec rubocop
