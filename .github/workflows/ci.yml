@@ -12,6 +12,155 @@ on:
   - pull_request
 
 jobs:
+  cucumber-core:
+    runs-on: ubuntu-latest
+
+    # Sets up the build environment.
+    env:
+      DATABASE_PORT:     5432
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres_password
+      DATABASE_URL:      localhost
+
+    services:
+      # Initialize a PostgreSQL service on postgres:5432.
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_PASSWORD: postgres_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    # Downloads a copy of the code in your repository before running CI tests
+    - uses: actions/checkout@v2
+
+    # Sets up the Node environment.
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        cache: 'yarn'
+
+    # Installs Yarn and runs 'yarn install'.
+    - name: Set up Yarn
+      run: |
+        npm install yarn
+        yarn install
+
+    # Sets up the Ruby environment and runs `bundle install'.
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.6.6
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    # Smoke check to ensure database connection is established.
+    - name: Query database
+      run: psql "postgresql://postgres:postgres_password@localhost:5432/postgres" -c 'SELECT 1;'
+
+    # Create the test database and set the schema.
+    - name: Set up Database
+      run: bundle exec rails db:create db:structure:load
+
+    # Compile Webpacker and Sprockets assets.
+    - name: Compile Assets
+      run: |
+        ./bin/webpack
+        bundle exec rake assets:precompile webpacker:compile
+
+    # Start a daemonized Rails server.
+    - name: Start Server
+      run: AUTHENTICATION_SESSION_KEY="$(bundle exec rails secret)" bundle exec rails server --port=5101 --daemon
+
+    # Run the core Cucumber features.
+    - name: Run core Cucumber features
+      run: bundle exec cucumber --tags @core
+
+    # Kill the server process.
+    - name: Stop Server
+      run: kill -9 $(cat tmp/pids/server.pid)
+
+  cucumber-full:
+    runs-on: ubuntu-latest
+
+    if: ${{ github.event_name == 'pull_request' }}
+
+    # Sets up the build environment.
+    env:
+      DATABASE_PORT:     5432
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres_password
+      DATABASE_URL:      localhost
+
+    services:
+      # Initialize a PostgreSQL service on postgres:5432.
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_PASSWORD: postgres_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    # Downloads a copy of the code in your repository before running CI tests
+    - uses: actions/checkout@v2
+
+    # Sets up the Node environment.
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        cache: 'yarn'
+
+    # Installs Yarn and runs 'yarn install'.
+    - name: Set up Yarn
+      run: |
+        npm install yarn
+        yarn install
+
+    # Sets up the Ruby environment and runs `bundle install'.
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.6.6
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    # Smoke check to ensure database connection is established.
+    - name: Query database
+      run: psql "postgresql://postgres:postgres_password@localhost:5432/postgres" -c 'SELECT 1;'
+
+    # Create the test database and set the schema.
+    - name: Set up Database
+      run: bundle exec rails db:create db:structure:load
+
+    # Compile Webpacker and Sprockets assets.
+    - name: Compile Assets
+      run: |
+        ./bin/webpack
+        bundle exec rake assets:precompile webpacker:compile
+
+    # Start a daemonized Rails server.
+    - name: Start Server
+      run: AUTHENTICATION_SESSION_KEY="$(bundle exec rails secret)" bundle exec rails server --port=5101 --daemon
+
+    # Run the full Cucumber suite (except for @core tags, which are covered elsewhere).
+    - name: Run all Cucumber features [Pull Request]
+      run: bundle exec cucumber --tags 'not @core'
+      if: ${{ github.event_name == 'pull_request' }}
+
+    # Kill the server process.
+    - name: Stop Server
+      run: kill -9 $(cat tmp/pids/server.pid)
+
   eslint:
     runs-on: ubuntu-latest
 
