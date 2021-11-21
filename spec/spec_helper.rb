@@ -13,6 +13,7 @@ require 'byebug'
 # Isolated namespace for defining spec-only or transient objects.
 module Spec; end
 
+require 'support/contract_helpers'
 require 'support/matchers/aliases'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
@@ -22,6 +23,7 @@ RSpec.configure do |config|
   config.extend  RSpec::SleepingKingStudios::Concerns::FocusExamples
   config.extend  RSpec::SleepingKingStudios::Concerns::WrapExamples
   config.include RSpec::SleepingKingStudios::Examples::PropertyExamples
+  config.extend  Spec::ContractHelpers
 
   config.disable_monkey_patching!
 
