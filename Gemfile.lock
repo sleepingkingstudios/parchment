@@ -1,14 +1,4 @@
 GIT
-  remote: https://github.com/sleepingkingstudios/cuprum-rails.git
-  revision: 96392ee526982a12e35da26a182d2459a4767bb3
-  branch: main
-  specs:
-    cuprum-rails (0.1.0)
-      cuprum (>= 0.11.0, < 2.0)
-      cuprum-collections (~> 0.2)
-      stannum (~> 0.2)
-
-GIT
   remote: https://github.com/sleepingkingstudios/cuprum.git
   revision: 0be41fb5a7422f7cb863a487332485ccbc2ccd1a
   branch: main
@@ -24,6 +14,14 @@ GIT
       hashdiff (~> 0.3.8)
       rspec (~> 3.4)
       sleeping_king_studios-tools (>= 0.8.0, < 2)
+
+PATH
+  remote: ../cuprum-rails
+  specs:
+    cuprum-rails (0.1.0)
+      cuprum (>= 0.11.0, < 2.0)
+      cuprum-collections (~> 0.2)
+      stannum (~> 0.2)
 
 GEM
   remote: https://rubygems.org/

@@ -70,6 +70,10 @@ Rails.application.routes.draw do
       api_resources :skills, only: %i[index show]
     end
 
+    namespace :sources do
+      api_resources :books
+    end
+
     api_resources :spells
 
     resource :status, only: :show, controller: 'status'

@@ -29,9 +29,9 @@ gem 'bcrypt', '~> 3.1'
 gem 'cuprum',
   branch: 'main',
   git:    'https://github.com/sleepingkingstudios/cuprum.git'
-gem 'cuprum-rails',
-  branch: 'main',
-  git:    'https://github.com/sleepingkingstudios/cuprum-rails.git'
+gem 'cuprum-rails', path: '../cuprum-rails'
+  # branch: 'main',
+  # git:    'https://github.com/sleepingkingstudios/cuprum-rails.git'
 gem 'jwt', '~> 2.2'
 
 gem 'sleeping_king_studios-tools', '~> 1.0'

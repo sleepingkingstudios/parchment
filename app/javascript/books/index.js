@@ -5,7 +5,7 @@ import { Table } from './components/table';
 import { buildBook } from './entities';
 
 const resourceName = 'books';
-const url = '/api/books';
+const url = '/api/sources/books';
 const resources = {
   create: { options: { data: { book: buildBook() } } },
   index: true,
