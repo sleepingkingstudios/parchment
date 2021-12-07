@@ -7,7 +7,7 @@ require 'models/commands/attributes'
 module Models::Commands::Attributes
   # Generates a url-friendly slug from an attribute value.
   class GenerateSlug < Cuprum::Command
-    EXCLUDED_ARTICLES = %w[of on the].freeze
+    EXCLUDED_ARTICLES = %w[a of on the].freeze
     private_constant :EXCLUDED_ARTICLES
 
     EXCLUDED_CHARACTERS_PATTERN = /[^a-z0-9]+/.freeze
