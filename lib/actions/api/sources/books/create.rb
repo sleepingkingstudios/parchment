@@ -7,16 +7,18 @@ require 'models/commands/attributes/generate_slug'
 
 module Actions::Api::Sources::Books
   class Create < Cuprum::Rails::Actions::Create
-    def create_resource(resource_params)
-      resource_params = resource_params.merge({
-        'slug' => step { generate_slug(resource_params) }
+    private
+
+    def create_entity(attributes:)
+      attributes = attributes.merge({
+        'slug' => step { generate_slug(attributes) }
       })
 
-      super(resource_params)
+      super(attributes: attributes)
     end
 
     def generate_slug(attributes)
-      return success(attributes['slug']) if attributes.key?('slug')
+      return success(attributes['slug']) if attributes['slug'].present?
 
       Models::Commands::Attributes::GenerateSlug.new.call(attributes['title'])
     end

@@ -8,9 +8,10 @@ GIT
 
 GIT
   remote: https://github.com/sleepingkingstudios/rspec-sleeping_king_studios
-  revision: ff2449e8ce5afbcc75869d6fcd81ca9f1f060294
+  revision: 70480fe5b1d6bb0536fa66f2bbec9fdc3238bf27
+  branch: main
   specs:
-    rspec-sleeping_king_studios (2.5.1)
+    rspec-sleeping_king_studios (2.7.0.rc.0)
       hashdiff (~> 0.3.8)
       rspec (~> 3.4)
       sleeping_king_studios-tools (>= 0.8.0, < 2)
@@ -21,6 +22,7 @@ PATH
     cuprum-rails (0.1.0)
       cuprum (>= 0.11.0, < 2.0)
       cuprum-collections (~> 0.2)
+      rails (~> 6.0)
       stannum (~> 0.2)
 
 GEM
